@@ -24,7 +24,7 @@ class DevUtils
       puts e.inspect
   end
 
-  def createService(label, url)
+  def create_service(label, url)
 
     service = @client.service
     service.label = label
@@ -39,15 +39,15 @@ class DevUtils
       puts e.inspect
   end
 
-  def createServicePlan(name, descripton, serviceGuid)
+  def createServicePlan(name, description, service_guid)
 
-    service = @client.service(serviceGuid)
+    service = @client.service(service_guid)
 
-    serviceplan = @client.service_plan
-    serviceplan.name = name
-    serviceplan.description = descripton
-    serviceplan.service = service
-    serviceplan.create!
+    service_plan = @client.service_plan
+    service_plan.name = name
+    service_plan.description = description
+    service_plan.service = service
+    service_plan.create!
 
     rescue Exception => e
       puts e.inspect

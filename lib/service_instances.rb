@@ -10,10 +10,10 @@ class ServiceInstances
     @client = CFoundry::V2::Client.new(UhuruConfig.cloud_controller_api, token)
   end
   
-  def createServiceInstance(name, spaceGuid, serviceplanGuid)
+  def createServiceInstance(name, space_guid, service_plan_guid)
     
-    space = @client.space(spaceGuid)
-    service_plan = @client.service_plan(serviceplanGuid)
+    space = @client.space(space_guid)
+    service_plan = @client.service_plan(service_plan_guid)
     
     service = @client.service_instance
     service.name = name

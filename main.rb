@@ -67,7 +67,7 @@ get'/organization/:org_guid' do
   @timeNow = @time.inspect
   @spc_name = 'Ruby space'
 
-  $path_1 = $slash + chmod 0777 /share/git-core/templates/hooks/commit-msg'<a href="/organization" class="breadcrumb_element">' + $organization_name + '</a>'
+  $path_1 = $slash + '<a href="/organization" class="breadcrumb_element">' + $organization_name + '</a>'
   $path_2 = ''
 
   erb :organization, {:layout => :layout_user}

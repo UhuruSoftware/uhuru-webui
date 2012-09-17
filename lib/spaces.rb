@@ -10,40 +10,40 @@ class Spaces
     @client = CFoundry::Client.new(UhuruConfig.cloud_controller_api, token)
   end
 
-  def getName(spaceGuid)
-    space = @client.space(spaceGuid)
+  def get_name(space_guid)
+    space = @client.space(space_guid)
     space.name
 
   end
 
-  def isBillable(spaceGuid)
+  def isBillable(space_guid)
     false
 
   end
 
-  def readBillingManagers(spaceGuid)
-    billingManagers = @client.space(spaceGuid).auditors
+  def readBillingManagers(space_guid)
+    billing_managers = @client.space(space_guid).auditors
 
-    emailslist = "'#{billingManagers.map { |x| x.email }.join("','")}'"
+    emails_list = "'#{billing_managers.map { |x| x.email }.join("','")}'"
 
   end
 
-  def create(orgGuid, name)
+  def create(org_guid, name)
 
-    org = @client.organization(orgGuid)
+    org = @client.organization(org_guid)
 
-    newspace = @client.space
-    newspace.organization = org
-    newspace.name = name
-    newspace.create!
+    new_space = @client.space
+    new_space.organization = org
+    new_space.name = name
+    new_space.create!
 
   rescue Exception => e
     puts e.inspect
   end
 
-  def update(name, spaceGuid)
+  def update(name, space_guid)
 
-    space = @client.space(spaceGuid)
+    space = @client.space(space_guid)
     space.name = name
     space.update!
 
@@ -52,9 +52,9 @@ class Spaces
 
   end
 
-  def delete(spaceGuid)
+  def delete(space_guid)
 
-    space = @client.space(spaceGuid)
+    space = @client.space(space_guid)
     space.delete!
 
   rescue Exception => e
@@ -62,26 +62,26 @@ class Spaces
 
   end
 
-  def readApps(spaceGuid)
-    appslist = []
-    apps = @client.space(spaceGuid).apps
+  def readApps(space_guid)
+    apps_list = []
+    apps = @client.space(space_guid).apps
 
     apps.each do |app|
-      appslist << Applications::Application.new(app.name, app.framework, app.guid)
+      apps_list << Applications::Application.new(app.name, app.framework, app.guid)
     end
 
     appslist
   end
 
-  def readServiceInstances(spaceGuid)
-    serviceslist = []
-    services = @client.space(spaceGuid).service_instances
+  def read_service_instances(space_guid)
+    services_list = []
+    services = @client.space(space_guid).service_instances
 
     services.each do |service|
-      serviceslist << ServiceInstances::Service.new(service.name, service.framework, service.guid)
+      services_list << ServiceInstances::Service.new(service.name, service.framework, service.guid)
     end
 
-    appslist
+    apps_list
   end
 
   class Space
