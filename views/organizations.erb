@@ -1,33 +1,34 @@
 <div class="sections">
     <div class="manage_content_header">
         <h2 class="section_title">
-            <span class="organizations_icon"></span><span id="organization_text">Organizations </span><span class="count">(<span>17</span>)</span>
+            <span class="organizations_icon"></span><span id="organization_text">Organizations </span><span class="count">(<span><%= organizations_count  %></span>)</span>
         </h2>
         <a class="section_help" ref="tooltip" title="Your apps live here!">What is this?</a>
     </div>
 
-  <!--THIS SHOULD HAVE A LOOP THAT SEARCH HOW MANY ORGANIZATIONS THERE ARE-->
 
-    <ul class="tile_list">
-        <a href="/organization">
+  <ul class="tile_list">
+    <% organizations_list.each do |org| %>
+        <a href="/organization/<%= org.guid %>">
             <li class="tileblack">
-                    <span class="organization_name_span"><%= @org_name %></span>
-                    <span class="organization_members_span"># of members: </span><span class="organization_members_span_value">22</span>
-                    <span class="organization_cost_span">monthly cost: </span><span class="organization_cost_span_value">$15</span>
-                    <span class="control-icon trash delete-team-button"></span>
+                <span class="organization_name_span"><%= org.name %></span>
+                <span class="organization_members_span"># of members: </span><span class="organization_members_span_value"><%= org.members_count  %></span>
+                <span class="organization_cost_span">monthly cost: </span><span class="organization_cost_span_value"><%= org.cost %></span>
+                <span class="control-icon trash delete-team-button"></span>
 
-                        <div id="organization_icons">
-                            <span class="alien_icons"></span>
-                            <span class="organization_cube"></span>
-                            <span class="organization_key"></span>
-                        </div>
+                <div id="organization_icons">
+                    <span class="alien_icons"></span>
+                    <span class="organization_cube"></span>
+                    <span class="organization_key"></span>
+                </div>
             </li>
         </a>
-        <li class="new tile" id="create_organization_btn">
-            <span class="icon"></span>
-        </li>
-    </ul>
-  <!--//  THIS SHOULD HAVE A LOOP THAT SEARCH HOW MANY ORGANIZATIONS THERE ARE-->
+    <% end %>
+
+    <li class="new tile" id="create_organization_btn">
+        <span class="icon"></span>
+    </li>
+  </ul>
 </div>
 
 

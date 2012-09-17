@@ -1,13 +1,27 @@
+$:.unshift(File.join(File.dirname(__FILE__)))
+require 'rubygems'
 require 'sinatra'
-#require
+require 'yaml'
+require 'uhuru_config'
+require 'dev_utils'
 
+UhuruConfig.load
+
+set :port, UhuruConfig.uhuru_webui_port
 
 $space_name = 'breadcrumb space'
 $organization_name = 'breadcrumb org'
 $path_1
 $path_2
-
 $slash = '<span class="breadcrumb_slash"> / </span>'
+
+def user_token
+  if (UhuruConfig.dev_mode)
+    DevUtils.test_token
+  else
+    ''
+  end
+end
 
 get'/' do
   @time = Time.now
@@ -37,17 +51,18 @@ get'/organizations' do
   @usertitle = "User" + " " + "Uhuru"
   @time = Time.now
   @timeNow = @time.inspect
-  @org_name = 'Ruby org'
-
 
   $path_1 = ''
   $path_2 = ''
 
-  erb :organizations, {:layout => :layout_user}
+  organizations = Organizations.new(user_token)
+  organizations_list = organizations.readAll
+
+  erb :organizations, {:locals => {:organizations_list => organizations_list, :organizations_count => organizations_list.count}, :layout => :layout_user}
 end
 
 
-get'/organization' do
+get'/organization/:org_guid' do
   @time = Time.now
   @timeNow = @time.inspect
   @spc_name = 'Ruby space'

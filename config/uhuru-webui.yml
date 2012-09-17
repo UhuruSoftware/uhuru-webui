@@ -1,0 +1,8 @@
+
+cloudfoundry:
+  cloud-controller-api: "http://localhost:8181"
+
+uhuru:
+  webui-port: 9494
+  dev-mode: true
+
