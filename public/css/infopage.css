@@ -1,0 +1,292 @@
+html, body
+{
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+body
+{
+    font-size: .85em;
+    font-family: "Segoe UI", Verdana, Helvetica, Sans-Serif;
+    color: #232323;
+    background-color: #fff;
+}
+
+header,
+footer,
+nav,
+section {
+    display: block;
+}
+
+.page-margin
+{
+    width: 940px;
+    margin: 0 auto;
+}
+
+/* Styles for basic forms
+-----------------------------------------------------------*/
+
+fieldset 
+{
+    border:1px solid #ddd;
+    padding:0 1.4em 1.4em 1.4em;
+    margin:0 0 1.5em 0;
+}
+
+legend 
+{
+    font-size:1.2em;
+    font-weight: bold;
+}
+
+textarea 
+{
+    min-height: 75px;
+}
+
+#site_header
+{
+    height: 50px;
+    background-color: #2d2d2d;
+}
+
+#site_header h1
+{
+    height: 50px;
+    margin: 0;
+    float: left;
+    font-weight: normal;
+    font-size: 1.8em;
+    line-height: 50px;
+    color: #fff;
+}
+#site_footer
+{
+    margin-top: 0px;
+}
+
+#site_footer .top
+{
+    height: 130px;
+    background-color: #6eb43c;
+    padding: 20px 0;
+}
+
+#site_footer .bottom
+{
+    height: 60px;
+    background-color: #2d2d2d;
+}
+
+#footer_top_content
+{
+    height: 60px;
+    padding-top: 20px;
+}
+
+#footer_top_content tbody tr td
+{
+    padding: 0 40px;
+    color: #f2f7fa;
+    font-size: 14px;
+}
+
+#site_footer .bottom
+{
+    font-size: 11px;
+}
+
+#site_footer .bottom .page-margin
+{
+    padding-top: 20px;
+}
+
+#site_footer .bottom
+{
+    color: #706e6e;
+}
+
+
+#site_footer .footer-menu
+{
+    list-style: none;
+    margin: 0 50px;
+    padding: 0;
+    display: inline-block;
+}
+#site_footer .footer-menu li
+{
+    border-right: 1px solid #aaa;
+    display: inline-block; 
+    padding: 0 10px;
+    
+}
+
+#site_footer .cloud-target-url
+{
+    color: #6eb53c;
+}
+
+#site_footer .footer-menu li a 
+{
+    color: #6eb53c;
+}
+
+#site_footer .footer-menu li.last
+{
+    border: 0;
+}
+
+.header-shading
+{
+    height: 22px;
+    background: transparent url('../images/top_header_shading.png') repeat-x scroll 0 0;
+    position: absolute;
+    left: 0;
+    top: 30px;
+    right: 0;
+}
+#info_page_container
+{
+    margin: 5px auto;
+	padding-top:10px;
+	height:100px;
+}
+#info_heading
+{
+	font-size:25px;
+}
+#info_paragraph
+{
+    margin-top:5px;
+    margin-bottom:0px;
+    padding:3px;  
+	font-size:15px;
+}
+
+#info_table
+{ 	
+    width:640px;  
+	margin:5px auto;
+	
+}
+.info_left
+{
+	color:white;
+	font-size:22px;
+}
+.info_right
+{
+	/*color:#D8D8D8;*/
+	color:white;
+	font-size:22px;
+}
+
+.info_subtitle
+{
+	font-size:18px;
+	color:white;
+	
+}
+
+/*
+#FD950D 
+#0071B7 
+#6eb53c;
+*/
+
+
+.splash
+{
+    background: transparent url('../images/bg_clouds.png') no-repeat scroll center top;
+	background-color:#0071B7;
+    height: 900px;
+    color: #e4eef0;
+}
+
+#splash_content_area
+{
+    margin-left: 440px;
+    position: relative;
+    padding-top: 20px;
+}
+
+.splash h2
+{
+    font-weight: normal;
+    font-size: 30px;
+    margin: 0 0 20px;
+}
+
+.splash p
+{
+    margin: 0 0 40px;
+    font-size: 14px;
+}
+
+a{
+	text-decoration:none;
+}
+
+a:hover
+{
+    text-decoration:none;
+}
+
+.info_img
+{
+    margin-right:0px; 
+    margin-top:30px; 
+    float:right;
+    width:60px;
+    height:60px;
+}
+
+
+.tile
+{
+	width:300px;
+	height:100px;
+	padding:5px;
+	background-repeat:no-repeat;
+	background-position: 220px 50px;
+}
+
+#cloud_admin_dl
+{
+	background-color:#6eb53c;
+	background-image:url("../images/cloud_white.png");
+}
+
+#cloud_admin_info
+{
+	background-color:#6eb53c;
+    background-image:url("../images/howto_white.png");
+}
+
+#visual_studio_dl
+{
+	background-color:#2d2d2d;
+    background-image:url("../images/cloud_white.png");
+}
+
+#visual_studio_info
+{
+	background-color:#2d2d2d;
+    background-image:url("../images/howto_white.png");
+}
+
+#vmcu_dl
+{
+	background-color:#FD950D;
+    background-image:url("../images/cloud_white.png");
+}
+
+#vmcu_info
+{
+	background-color:#FD950D;
+    background-image:url("../images/howto_white.png");
+}

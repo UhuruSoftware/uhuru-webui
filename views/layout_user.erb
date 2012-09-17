@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+		<title><%= @usertitle %></title>
+
+        <script type="text/javascript" src="js/jquery-1.5.js"></script>
+        <script type="text/javascript" src="js/showHide.js"></script>
+        <script type="text/javascript" src="js/fadeIn.js"></script>
+        <script type="text/javascript" src="js/editHeaders.js"></script>
+
+        <link rel="stylesheet" type="text/css" href="css/Site.css"/>
+        <link rel="stylesheet" type="text/css" href="css/ez.css"/>
+        <link rel="stylesheet" type="text/css" href="css/ini.css"/>
+
+        <meta charset="utf-8" />
+
+          <script type="text/javascript">
+            window.q = [];
+            window.$ = function (f) {
+                q.push(f);
+            };
+
+            //fix to make html5 sections work in IE8 and other browsers that don't support html5
+            document.createElement('header');
+            document.createElement('hgroup');
+            document.createElement('nav');
+            document.createElement('menu');
+            document.createElement('section');
+            document.createElement('article');
+            document.createElement('aside');
+            document.createElement('footer');
+
+        </script>
+</head>
+
+
+<body class="manage">
+<div id="screen">
+
+</div>
+    <div id="container">
+        <header id="site_header">
+            <div class="page-margin">
+                <h1><span style="color: #0172b6">Uhuru</span> AppCloud</h1>
+
+                    <!-- LOGIN CONTROL  -->
+                     <div id="login_control">
+                        <span class="welcome-message">
+                            Welcome
+                            <span id="the_user_name"></span>
+                            <span class="login-control-username"><span class="user-name"></span></span>
+                            <span class="control-icon edit" id="user_name_edit_button" onclick="editUsernameDiv();"><a class="tooltips" href="#" rel="tooltip" title="Edit">&nbsp;</a></span>
+
+                                <div class="tile blue" id="welcome" style="display: none;">
+                                    <h2>
+                                        <input type="text" class="user-name" id="user_name_input" onfocus="editUser();"/>
+                                        <span style="display: block; font-size: 0.55em; font-style: italic; color: #fff">
+                                            Enter to confirm, escape to cancel
+                                            Saving...
+                                        </span>
+                                    </h2>
+                                    <div class="user-info">
+                                        <span class="user-email" data-bind="text: email"></span>
+                                    </div>
+                                </div>
+                        </span>
+                     </div>
+                    <!-- LOGIN CONTROL  -->
+            </div>
+        </header>
+        <div class="page-margin" id="body">
+
+        <ul id="manage_menu" class="unstyled">
+          <li class="active">
+              <a href="/organizations">Home</a>
+          </li>
+          <li>
+              <a href="http://uhurusoftware.zendesk.com" target="_blank">Support</a>
+          </li>
+          <li>
+              <a href="http://www.uhurusoftware.com" target="_blank">Company</a>
+          </li>
+        </ul>
+
+        <div class="breadcrumb">
+            <span class="breadcrumb_element_home">Home:</span><%= $path_1 %><%= $path_2 %>
+        </div>
+
+            <%= yield %>
+
+
+
+        </div>
+        <footer id="site_footer">
+            <div class="page-margin">
+                <div class="ez-box" style="height: 50px; margin-bottom: 20px;">
+                    <span style="line-height: 48px; display: inline-block; float: left">
+                        <span class="title_icon"></span>Tools:
+                    </span>
+                    <div style="height: 50px; margin-left: 20px; float: left">
+                        <strong>
+                        <a href="#" class="footer_links">Visual Studio Plugin</a> |
+                        <a href="#" class="footer_links">AppCloud Admin</a> |
+                        <a href="http://support.uhurusoftware.com/entries/21454287-deploying-and-managing-apps-with-command-line" target="_blank" class="footer_links">Command Line</a>
+                        </strong>
+                    </div>
+                </div>
+            </div>
+            <div class="bottom">
+                <div class="page-margin" id="footer_container">
+                    <span class="copyright">
+                        &copy; <%= @timeNow %> Uhuru Software. All rights reserved.
+                    </span>
+                    <ul class="footer-menu">
+                        <li><a href="#">Terms of Service</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li class="last"><a href="http://uhurusoftware.zendesk.com" target="_blank">Support</a></li>
+                    </ul>
+                    <span class="cloud-target">
+                        Your cloud target: <span class="cloud-target-url">http://services.uhurucloud.com</span>
+                    </span>
+                    
+
+                </div>
+            </div>
+        
+        </footer>
+    </div>
+    <!--@Html.Partial("UrlsPartial")
+    @Bundles.RenderScripts()
+       -->
+    <script type="text/javascript">
+
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-32996838-1']);
+        _gaq.push(['_trackPageview']);
+
+        (function () {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+ 
+    </script>
+
+<script type="text/javascript" src="js/jquery-1.5.js"></script>
+<script type="text/javascript" src="js/fadeIn.js"></script>
+
+</body>
+</html>

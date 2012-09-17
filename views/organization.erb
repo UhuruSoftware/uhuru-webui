@@ -1,0 +1,188 @@
+<div class="sections">
+
+        <div class="manage_content_header">
+            <h2 class="section_title">
+                <span class="organizations_icon"></span>
+                <span id="organization_name"></span>
+                <input type="text" value="" id="organization_input" onkeydown="if(event.keyCode == 13){hideOrganizationsInput();}" maxlength="20"/>
+            </h2>
+            <div class="icons_options">
+                <span class="control-icon-large edit" onclick="showOrganizationsInput();">Edit</span>
+                <span class="control-icon-large trash">Delete</span>
+                <span class="token-icon-large">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+            </div>
+        </div>
+
+         <div id="organization_div">
+
+
+                <ul id="tabs" class="nav nav-tabs">
+                    <li id="spaces_btn" onclick="showSpaces();" onmouseover="hoverSpaces();" onmouseout="unhoverSpaces();"><a href="#apps" id="spaces_btn_link">Spaces (<span>232</span>)</a></li>
+                    <li id="members_btn" onclick="showMembers();" onmouseover="hoverMembers();" onmouseout="unhoverMembers();"><a href="#services" id="members_btn_link">Members (<span>3232</span>)</a></li>
+                </ul>
+
+         <!--THERE ARE 2 TABS-->
+                 <!--SPACES TAB-->
+
+                <div id="spaces">
+                    <ul class="tile_list">
+
+
+                      <!--THIS SHOULD HAVE A LOOP THAT LOOKS FOR MULTIPLE SPACES-->
+                        <a href="/space">
+                            <li class="tileorange">
+                                <span class="space_name"><%= @spc_name %></span>
+                                <span class="costs_span">monthly cost: </span><span class="costs_span_value">$100</span>
+                                <span class="count-label apps"># of apps: </span><span class="count-value apps">12</span>
+                                <span class="count-label services"># of services: </span><span class="count-value services">31</span>
+                                <span class="control-icon trash delete-app-button"></span>
+                            </li>
+                        </a>
+
+                      <!--// //-->
+
+
+                      <!--THIS IS THE + BUTTON WHERE THE USER CAN ADD MORE SPACES-->
+                        <li class="new tile" id="create_space_btn">
+                            <span class="icon"></span>
+                        </li>
+                      <!--// //-->
+                    </ul>
+
+                <div style="height: 250px; width: 100%"></div>
+                </div>
+
+
+                <!--MEMBERS TAB-->
+
+
+                <div id="members">
+                <p class="member_titles_p">Owners</p>
+                    <ul class="tile_list">
+
+                      <!--THIS SHOULD HAVE A LOOP THAT LOOKS FOR ALL THE OWNERS-->
+
+                        <li class="tileorange_members">
+                            <span class="organization_question">qu</span>
+                            <span class="organization_check">chk</span>
+                            <span class="user_name_span">NoName</span>
+                            <span class="user_type_span">Developer</span>
+                            <span class="control-icon edit edit-user-button"></span>
+                            <span class="control-icon trash delete-user-button"></span>
+                        </li>
+
+                      <!--// //-->
+
+
+                      <!--THIS IS WHERE USER CA ADD MORE OWNERS-->
+
+                        <li class="new tile" id="add_user_btn1">
+                            <span class="icon"></span>
+                        </li>
+
+                      <!--// //-->
+                    </ul>
+                <p class="member_titles_p">Developers</p>
+                    <ul class="tile_list">
+
+                      <!--THIS SHOUD HAVE A LOOP THAT LOOKS FOR ALL DEVELOPERS-->
+
+                        <li class="tileblue">
+                            <span class="organization_question">qu</span>
+                            <span class="organization_check">chk</span>
+                            <span class="user_name_span">NoName</span>
+                            <span class="user_type_span">Developer</span>
+                            <span class="control-icon edit edit-user-button"></span>
+                            <span class="control-icon trash delete-user-button"></span>
+                        </li>
+                      <!--// //-->
+
+                      <!--THIS IS THE + BUTTON FOR DEVELOPERS-->
+                        <li class="new tile" id="add_user_btn2">
+                            <span class="icon"></span>
+                        </li>
+                      <!--// //-->
+                    </ul>
+                <p class="member_titles_p">Business Manager</p>
+                    <ul class="tile_list">
+
+                      <!--THIS SHOULD HAVE A LOOP THAT LOOKS FOR ALL MANAGERS-->
+
+                        <li class="tilered">
+                            <span class="organization_question">qu</span>
+                            <span class="organization_check">chk</span>
+                            <span class="user_name_span">NoName</span>
+                            <span class="user_type_span">Developer</span>
+                            <span class="control-icon edit edit-user-button"></span>
+                            <span class="control-icon trash delete-user-button"></span>
+                        </li>
+
+                      <!--// //-->
+
+                      <!--THIS IS THE MANAGERS + BUTTON-->
+                        <li class="new tile" id="add_user_btn3">
+                            <span class="icon"></span>
+                        </li>
+                      <!--// //-->
+                    </ul>
+
+                <div style="height: 50px; width: 100%"></div>
+                </div>
+
+         </div>
+
+
+
+<!--THIS IS THE MODAL THAT CREATES A NEW SPACE-->
+<div class="modal hide" id="create_space">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">×</button>
+        <h3>Create Space</h3>
+    </div>
+    <div class="modal-body">
+        <p>
+            <label for="team_name">Name</label>
+            <input type="text" id="team_name" />
+        </p>
+    </div>
+    <div class="modal-footer">
+        <a href="#" class="btn" data-dismiss="modal">Cancel</a>
+        <a href="#" class="btn btn-success" data-bind="click: saveTeamChanges">Create</a>
+        Creating space...
+    </div>
+</div>
+
+<!--// //-->
+
+<!--THIS IS A MODAL THAT ADDS A NEW USER : OWNER : DEV : MANAGER-->
+
+<div class="modal fade" id="add_user">
+    <div class="modal-header">
+        <button class="close" data-dismiss="modal" >×</button>
+        <h3>Invite user</h3>
+        <br />
+        <p>
+        <strong>Note:</strong> Invitation only works with email addresses that are registered with Windows LiveID, GoogleID or Facebook.
+        Please confirm this with the invitee before sending the invitation
+        </p>
+    </div>
+    <div class="modal-body" style="left:300">
+        <div>
+            <label for="inviteEmail">Email address</label>
+            <input id="inviteEmail" type="text" />
+
+            <ul class="unstyled">
+                <li style="padding-bottom: 5px"><img width="32" height="32"  src="../../Content/images/Gmail_logo.png" alt=""/>&nbsp;GoogleID</li>
+                <li style="padding-bottom: 5px"><img width="32" height="32"  src="../../Content/images/msn_logo.png" alt=""/>&nbsp;Microsoft LiveID</li>
+                <li style="padding-bottom: 5px"><img  width="32" height="32"  src="../../Content/images/facebook_logo.png" alt=""/>&nbsp;Facebook</li>
+            </ul>
+        </div>
+        <p data-bind="visible: mode() === 'saving'">Inviting user...</p>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-success">Invite User</button>
+    </div>
+</div>
+
+<!--// //-->
+</div>

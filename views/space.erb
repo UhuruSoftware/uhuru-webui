@@ -1,0 +1,773 @@
+<div class="sections">
+
+        <div class="manage_content_header">
+            <h2 class="section_title">
+                <span class="organizations_icon"></span>
+                <span id="space_name"></span>
+                <input type="text" id="space_input" onkeydown="if(event.keyCode == 13){hideSpacesInput();}" maxlength="20"/>
+            </h2>
+            <div class="icons_options">
+                <span class="control-icon-large edit" onclick="showSpacesInput();">Edit</span>
+                <span class="control-icon-large trash">Delete</span>
+                <span class="token-icon-large">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+            </div>
+        </div>
+
+         <div id="team_tabs">
+
+           <!--THIS IS THE UL THAT CONTAINS THE 3 TABS-->
+
+           <ul id="spaces_tabs" class="nav nav-tabs">
+                <li onclick="showApps();" id="apps_li" onmouseover="hoverApps();" onmouseout="unhoverApps();">Apps (<span>232</span>)</li>
+                <li onclick="showServices();" id="services_li" onmouseover="hoverServices();" onmouseout="unhoverServices();">Services (<span>3232</span>)</li>
+                <li onclick="showSubscriptions();" id="subscriptions_li" onmouseover="hoverSubscriptions();" onmouseout="unhoverSubscribtions();">Subscriptions (<span>3232</span>)</li>
+            </ul>
+           <!--// //-->
+
+           <!--THIS IS THE APPS TAB THAT NEEDS A LOOP TO READ APPS AND A SCRIPT TO ADD A NEW APP-->
+                <div id="apps" class="tab-pane">
+                    <ul class="tile_list">
+                        <li class="tileblue" id="app_detail">
+                            <a>
+                                <span class="app_name">test app name</span>
+                                <span class="control-icon trash delete-app-button"></span>
+                            </a>
+                        </li>
+                        <li class="new tile" id="create_app">
+                            <span class="icon"></span>
+                        </li>
+                    </ul>
+                </div>
+           <!--// //-->
+
+           <!--THIS IS THE SERVICES TAB THAT NEEDS A LOOP TO READ ALL SERVICES AND A SCRIPT TO ADD MORE SERVICES-->
+
+
+                <div id="services" class="tab-pane">
+                    <ul class="tile_list">
+                        <li class="tileblue">
+                            <span>
+                                <span class="service_name">test service name</span>
+                                <span class="control-icon trash delete-service-button"></span>
+                            </span>
+                        </li>
+                        <li class="new tile" id="add_ctService_modal_btn">
+                            <span class="icon"></span>
+                        </li>
+                    </ul>
+                </div>
+           <!--// //-->
+
+
+
+       <!--THIS IS THE SUBSCRIPTION TAB THAT NEEDS SOME MORE SCRIPTS-->
+
+
+                <div id="subscriptions">
+                    <div id="subscriptions_memory">
+                       <div class="services_subdiv">
+                            <span class="plusminus_class">
+                                  <span class="app-services minus" style="float: none" id="minus_memory"></span>
+                                  <span class="app-services plus" style="float: none" id="plus_memory"></span>
+                            </span>
+                            <p class="subscriptions_titles_p">Memory</p>
+                       </div>
+
+                          <ul class="tile_list">
+                            <li class="tile_blue_small">
+                                <span>
+                                    <span class="memory_unit">GB</span>
+                                    <span class="memory_unit_number" id="memory_number">0</span>
+                                </span>
+                            </li>
+
+                            <div id="memory_slider">
+                                    <div id="memory_slider_bar2" class="app-value-slider">
+                                      >>>>> slider >>>>>>>>>
+                                    </div>
+                                    Max memory: 1024MB
+                            </div>
+                           </ul>
+                    </div>
+
+                  <!--HERE WE SHOULD HAVE 0 BLOCKS OF HTML LIST ITEMS, WE SHOULD HAVE A LOOP TO READ ALL SERVICES INSTEAD-->
+
+                    <div id="subscriptions_services">
+                        <div class="services_subdiv">
+                            <span class="plusminus_class">
+                                  <span class="app-services minus" style="float: none"></span>
+                                  <span class="app-services plus" style="float: none" id="plus_service"></span>
+                            </span>
+                            <p class="subscriptions_titles_p">Services</p>
+                        </div>
+
+                        <ul class="tile_list">
+                            <li class="tile_darkblue_dark">
+                                <span>
+                                    <div class="subscribtions_background_image_mssql"></div>
+                                    <span class="subscribtions_plan">plan: <span class="subscribtions_plan_value">100 MB Buffer</span></span>
+                                    <span class="subscribtions_quality">quality: <span class="subscribtions_quality_value">2</span></span>
+                                    <span class="subscribtions_cost">cost: <span class="subscribtions_cost_value">$500</span></span>
+                                    <span class="control-icon trash delete-service-button"></span>
+                                </span>
+                            </li>
+                            <li class="tile_darkblue_dark">
+                                <span>
+                                    <div class="subscribtions_background_image_redis"></div>
+                                    <span class="subscribtions_plan">plan: <span class="subscribtions_plan_value">300 MB Buffer</span></span>
+                                    <span class="subscribtions_quality">quality: <span class="subscribtions_quality_value">233</span></span>
+                                    <span class="subscribtions_cost">cost: <span class="subscribtions_cost_value">$180</span></span>
+                                    <span class="control-icon trash delete-service-button"></span>
+                                </span>
+                            </li>
+                            <li class="tile_darkblue_dark">
+                                <span>
+                                    <div class="subscribtions_background_image_mysql"></div>
+                                    <span class="subscribtions_plan">plan: <span class="subscribtions_plan_value">10 MB Buffer</span></span>
+                                    <span class="subscribtions_quality">quality: <span class="subscribtions_quality_value">22323</span></span>
+                                    <span class="subscribtions_cost">cost: <span class="subscribtions_cost_value">$200</span></span>
+                                    <span class="control-icon trash delete-service-button"></span>
+                                </span>
+                            </li>
+                            <li class="tile_darkblue_dark">
+                                <span>
+                                    <div class="subscribtions_background_image_ruby"></div>
+                                    <span class="subscribtions_plan">plan: <span class="subscribtions_plan_value">10333 MB Buffer</span></span>
+                                    <span class="subscribtions_quality">quality: <span class="subscribtions_quality_value">2231231</span></span>
+                                    <span class="subscribtions_cost">cost: <span class="subscribtions_cost_value">$5300</span></span>
+                                    <span class="control-icon trash delete-service-button"></span>
+                                </span>
+                            </li>
+                        </ul>
+
+                  <!--// //-->
+
+                    </div>
+                </div>
+
+
+       <!--// //-->
+
+</div>
+
+
+<!--END OF THE PAGE-->
+
+<!--// //-->
+            <!--HERE WE HAVE ALL THE MODALS FOR THIS PAGE MPST THEY'RE ID'S OR CLASSES ARE SELFEXPLAINATORI, ALL OF THEM NEEDS A SCRIPT -->
+<!--// //-->
+
+
+
+
+<!--THIS IS THE APP DETAILS MODAL THIS READ ALL DETAILS FROM AN APP-->
+
+<div class="modal fade hide" id="app_details_modal">
+    <div class="modal_header" id="app_details_header">
+        <button class="close" id="app_details_closebtn">x</button>
+    </div>
+
+
+    <div class="modal-body" id="app_body">
+        <table>
+            <tr>
+                <td>
+                    <div class="app-control">
+                        <div class="tile blue">
+                            <h3>
+                                <span class="app_name_big">name</span>
+                            </h3>
+
+                            <span class="app_status" style="font-weight: bold">Status: <span style="font-weight: normal"></span></span>
+                            <span class="control-icon trash delete-service-button"></span>
+                        </div>
+                        <div class="app-actions start"></div>
+                        <div class="app-actions stop"></div>
+                    </div>
+                </td>
+              <td></td>
+            </tr>
+
+
+            <tr>
+                <td>
+                    <h4 class="app_details_titles">Services Bound</h4>
+                    <ul class="unstyled">
+                        <li class="tile blue">
+                            <span></span>
+                            <span class="service-name"></span>
+                            <span class="control-icon trash delete-service-button"></span>
+                        </li>
+                        <li class="tile blue">
+                            <span></span>
+                            <span class="service-name"></span>
+                            <span class="control-icon trash delete-service-button"></span>
+                        </li>
+                    </ul>
+                </td>
+                <td>
+                    <h4 class="app_details_titles">URIs Bound <span style="float: right" class="app-services plus" data-bind="click: startBindUriCFApp, visible: uris().length < 5"></span></h4>
+                    <ul class="unstyled">
+                        <li class="tile blue">
+                            <a target="_blank">
+                                <span class="service-name"></span>
+                                <span class="control-icon trash delete-service-button"></span>
+                            </a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    <h4 class="app_details_titles">App Instances
+                        <span style="float: right">
+                            <span class="app-services minus" style="float: none"></span>
+                            <span class="app-services plus" style="float: none"></span>
+                        </span>
+                    </h4>
+
+                    <ul class="unstyled">
+                        <li class="tile blue half-height">
+                            <span class="instance-info">
+                                <span class="instance-count"></span>
+                                <span class="instance-type">Provisioned</span>
+                            </span>
+                            <span class="instance-info">
+                                <span class="instance-count"></span>
+                                <span class="instance-type">Running</span>
+                            </span>
+                        </li>
+                    </ul>
+                    <div class="float: right; padding-top: 40px;">
+                        Max app instances: 5
+                    </div>
+                </td>
+                <td>
+                    <h4 class="app_details_titles">Memory Provisioned
+                        <span style="float: right">
+                            <span class="app-services minus" style="float: none"></span>
+                            <span class="app-services plus" style="float: none"></span>
+                        </span>
+                    </h4>
+                    <ul class="unstyled">
+                        <li class="tile blue half-height half-width" style="color: #fff">
+                            <span class="instance-count"></span>
+                            <span class="instance-type">MB</span>
+                        </li>
+                    </ul>
+                    <div style="float: right; width: 300px">
+                        <div id="memory_slider_bar1" class="app-value-slider"></div>
+                        //slider//
+                        Max memory: 1024MB
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="modal-footer" id="app_details_footer">
+        <a href="#" class="btn" id="app_details_closebtnfooter">Close</a>
+    </div>
+</div>
+
+<!--// //-->
+
+
+<!--THIS IS THE DELETE TEAM MODAL
+
+
+﻿<div class="modal fade hide" id="delete_team_modal">
+    <div class="modal-header">
+        <button class="close" data-dismiss="modal">×</button>
+        <h3>Delete cloud</h3>
+    </div>
+    <div class="modal-body">
+        <p>
+            Are you sure you want to delete the cloud "<span data-bind="text: name"></span>"?
+        </p>
+        <br />
+        <p>
+            <strong>
+                WARNING!!! All applications and services in this cloud will be DELETED!!! This action cannot be reversed.
+            </strong>
+        </p>
+    </div>
+    <div class="modal-footer">
+        <a href="#" class="btn" data-dismiss="modal">No</a>
+        <a href="#" class="btn btn-danger" data-bind="click: deleteCloudTeam">Yes</a>
+            Deleting cloud...
+    </div>
+</div>
+-->
+
+
+<!--THIS IS THE MODAL TO DELETE A CLOUD TEAM SERVICE-->
+
+<div class="modal fade hide" id="add_ctService_modal">
+    <div class="modal-header">
+        <button class="close">×</button>
+        <h3>New Service</h3>
+    </div>
+
+    <div class="modal-body">
+        <p>
+            <label for="team_services_list">Service Type</label>
+            <select id="team_services_list" data-bind="options: uhuru.viewModel.servicesList, optionsText: 'vendor', value: selectedServiceItem">
+            </select>
+        </p>
+        <p>
+            <label for="service_name">Name</label>
+            <input type="text" id="service_name" data-bind="value: name"/>
+        </p>
+    </div>
+
+    <div class="modal-footer">
+        <a href="#" class="btn" data-bind="click: function() { $('#add_ctService_modal').modal('hide'); }">Close</a>
+        <a href="#" class="btn btn-success" data-bind="click: saveServiceChanges">Create Service</a>
+            Creating Service...
+    </div>
+</div>
+
+<!--// //-->
+
+<!--THIS IS THE SAVING MODAL-->
+
+
+<div class="modal fade hide" id="saving_modal">
+    <div class="modal-header">
+        <h3>Saving changes</h3>
+    </div>
+
+
+    <div class="modal-body">
+        <p>
+            Please wait while your changes are saved.
+        </p>
+        <p style="font-size: 0.8em">
+            This dialog will be dismissed automatically after the changes are made.
+        </p>
+    </div>
+</div>
+
+<!--// //-->
+
+
+<!--UNBIND-->
+
+
+<div class="modal fade hide" id="unbind_ctsTOcta_modal">
+    <div class="modal-header">
+        <button class="close" data-dismiss="modal">×</button>
+        <h3>Unbind service</h3>
+    </div>
+    <div class="modal-body">
+        <p>
+            Are you sure you want to unbind <span style="font-weight: bold" data-bind="text: unbindService">
+            </span> from <span style="font-weight: bold" data-bind="text: name"></span>? Your
+            app will no longer be able to connect to this service.
+        </p>
+        <p>
+            Unbinding does not delete the service. Please delete service from service page to permanently delete it.
+        </p>
+    </div>
+    <div class="modal-footer">
+        <a href="#" class="btn" data-bind="click: cancelUnbindServiceCFApp">Cancel</a>
+        <a href="#" class="btn btn-danger" data-bind="click: unbindServiceCFApp">Unbind service</a>
+    </div>
+</div>
+
+
+
+<div class="modal fade hide" id="bind_ctsTOcta_modal">
+    <div class="modal-header">
+        <h3>Add service</h3>
+    </div>
+    <div class="modal-body">
+        <p>Add a new service to <span data-bind="text: name"></span></p>
+        <p>
+            <label for="bind_services_list">Available services</label>
+            <select id="bind_services_list" data-bind="options: existingSrvList, value: selectedService">
+            </select>
+        </p>
+    </div>
+    <div class="modal-footer">
+        <a href="#" class="btn" data-bind="click: cancelBindCTAService">Cancel</a>
+        <a href="#" class="btn btn-success" data-bind="click: bindCTAService">Bind service</a>
+    </div>
+</div>
+
+
+
+<div class="modal fade hide" id="bind_uriTOcta_modal">
+    <div class="modal-header">
+        <h3>Add new URI</h3>
+    </div>
+    <div class="modal-body">
+        <p>
+            <label for="newUri">New URI</label>
+            <table id="new_app_name_table">
+                <tbody>
+                    <tr>
+                        <td>
+                            <input id="newUri" data-bind="value: newUri, valueUpdate: 'afterkeydown'" />
+                        </td>
+                        <td style="vertical-align: top">
+                            .uhurucloud.com
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </p>
+    </div>
+    <div class="modal-footer">
+        <a href="#" class="btn" data-bind="click: canceBindUriCTA">cancel</a>
+        <a href="#" class="btn btn-success" data-bind="click: bindUriCTA">bind URI</a>
+        binding URL...
+    </div>
+</div>
+
+
+
+<div class="modal fade hide" id="unbind_uriTOcta_modal">
+    <div class="modal-header">
+        <h3>Unbind URI</h3>
+    </div>
+    <div class="modal-body">
+        <p>
+            Are you sure you want to unbind this app from <span style="font-weight: bold" data-bind="text: unbindUri">
+            </span>? Your app will no longer be able to use this URI.<br />
+        </p>
+    </div>
+    <div class="modal-footer">
+        <a href="#" class="btn" data-bind="click: cancelUnbindUriCFApp">Cancel</a>
+        <a href="#" class="btn btn-success" data-bind="click: unbindUriCFApp">Unbind URI</a>
+        unbinding URL...
+    </div>
+</div>
+
+
+
+<div class="modal fade" id="inv_ctUser_modal">
+    <div class="modal-header">
+        <button class="close" data-dismiss="modal" data-bind="visible: mode() === 'view'">×</button>
+        <h3>Invite user</h3>
+        <br />
+        <p>
+        <strong>Note:</strong> Invitation only works with email addresses that are registered with Windows LiveID, GoogleID or Facebook.
+        Please confirm this with the invitee before sending the invitation
+        </p>
+    </div>
+    <div class="modal-body" style="left:300">
+        <div data-bind="visible: mode() !== 'saving'">
+            <label for="inviteEmail">Email address</label>
+            <input id="inviteEmail" type="text" data-bind="value: inviteEmail" />
+
+            <ul class="unstyled">
+                <li style="padding-bottom: 5px"><img width="32" height="32"  src="../../Content/images/Gmail_logo.png" alt=""/>&nbsp;GoogleID</li>
+                <li style="padding-bottom: 5px"><img width="32" height="32"  src="../../Content/images/msn_logo.png" alt=""/>&nbsp;Microsoft LiveID</li>
+                <li style="padding-bottom: 5px"><img  width="32" height="32"  src="../../Content/images/facebook_logo.png" alt=""/>&nbsp;Facebook</li>
+            </ul>
+        </div>
+        <p data-bind="visible: mode() === 'saving'">Inviting user...</p>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-success" data-bind="click: inviteCTUser, visible: mode() !== 'saving'">Invite User</button>
+    </div>
+</div>
+
+ <!--THIS IS THE MODAL THAT DELETES A CLOU TEAM USER-->
+
+<div class="modal fade hide" id="delete_ctUser_modal">
+    <div class="modal-header">
+        <h3>Delete user</h3>
+    </div>
+    <div class="modal-body">
+        <p>
+            Are you sure you want to delete <span data-bind="text: userEmail"></span>?
+        </p>
+    </div>
+    <div class="modal-footer">
+            <a href="#" class="btn btn-danger" data-bind="click: deleteCTUser">Delete user</a>
+            <a href="#" class="btn" data-bind="click: function() { $('#delete_ctUser_modal').modal('hide'); }">Cancel</a>
+    </div>
+</div>
+
+
+<!--// //-->
+
+
+<div class="modal fade hide" id="cannot_delete_ctUser_modal">
+    <div class="modal-header">
+        <button class="close" data-dismiss="modal">×</button>
+        <h3>Delete user</h3>
+    </div>
+    <div class="modal-body">
+        <p>
+            You cannot delete yourself.
+        </p>
+    </div>
+    <div class="modal-footer">
+        <a href="#" class="btn btn-success" data-dismiss="modal">OK</a>
+    </div>
+</div>
+
+
+
+<div class="modal fade hide" id="toggle_user_admin_modal">
+    <div class="modal-header">
+        <button class="close" data-dismiss="modal">×</button>
+        <h3>User details</h3>
+    </div>
+    <div class="modal-body">
+        <p>
+            <label>Email address</label>
+            <span data-bind="text: userEmail"></span>
+        </p>
+        <p>
+            <input type="checkbox" data-bind="checked: isAdmin, attr: { disabled: loggedIn }" />
+            <label style="display: inline">Is administrator</label>
+        </p>
+    </div>
+    <div class="modal-footer">
+            <a href="#" class="btn" data-dismiss="modal">Close</a>
+                <a href="#" class="btn btn-success" data-bind="click: saveCTUChanges">Save changes</a>
+                <a href="#" class="btn" data-dismiss="modal">Cancel</a>
+    </div>
+</div>
+
+
+
+<div class="modal fade hide" id="show_CT_token">
+
+    <div class="modal-header">
+        <button class="close" data-dismiss="modal">×</button>
+        <h3>one time token for VMCU</h3><br />
+    </div>
+    <div class="modal-body">
+        <p>
+            <h2><span data-bind="text: oneTimeToken()"></span></h2>
+        </p>
+        <p>
+            use this token to login into Uhuru Command Line interface, for more help refer to our support forum:
+            <a style="height: 50px; display: inline-block; line-height: 50px" href="http://support.uhurusoftware.com/entries/21454287-deploying-and-managing-apps-with-command-line" target="_blank">Command Line Instructions</a>
+        </p>
+    </div>
+</div>
+
+
+
+<div class="modal fade hide" id="create_tempcta_modal">
+    <div class="modal-header">
+        <button class="close">x</button>
+        <h3>Add a new template app</h3>
+    </div>
+    <div class="modal-body">
+            <label for="team_tempapps_list">App template</label>
+
+<!-- APP TABLE -->
+            <div id="app_smallcontainer">
+                <table id="app_table">
+
+                    <tr>
+                        <td>
+                            <div class="app_tiles" id = "app_magento">
+                                <span class="app_name_span" data-bind="value: uhuru.viewModel.tempAppList()[2], text: uhuru.viewModel.tempAppList()[2]"></span>
+                            </div>
+                        </td>
+                        <td>
+                            <a data-bind="attr:{href: uhuru.viewModel.appUrlList()[2]}">
+                                <div class="app_tiles_download">
+                                    <span class="app_download_span">Download</span>
+                                </div>
+                            </a>
+                        </td>
+                        <td>
+                            <a href="#" onclick = "selectMagento();" data-bind="click: saveCreateApp, visible: mode() !== 'saving'">
+                                <div class="app_tiles_cloudpush">
+                                    <span class="app_cloudpush_span">Cloud Push</span>
+                               </div>
+                           </a>
+                        </td>
+                    </tr>
+
+
+
+
+                    <tr>
+                        <td>
+                            <div class="app_tiles" id = "app_wordpress">
+                                <span class="app_name_span" data-bind="value: uhuru.viewModel.tempAppList()[0], text: uhuru.viewModel.tempAppList()[0]"></span>
+                            </div>
+                        </td>
+                        <td>
+                            <a data-bind="attr:{href: uhuru.viewModel.appUrlList()[0]}">
+                                <div class="app_tiles_download">
+                                    <span class="app_download_span">Download</span>
+                                </div>
+                            </a>
+                        </td>
+                        <td>
+                            <a href="#" onclick = "selectWordpress();" data-bind="click: saveCreateApp, visible: mode() !== 'saving'">
+                                <div class="app_tiles_cloudpush">
+                                    <span class="app_cloudpush_span">Cloud Push</span>
+                               </div>
+                           </a>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <div class="app_tiles" id = "app_sugarCRM">
+                                <span class="app_name_span" data-bind="value: uhuru.viewModel.tempAppList()[6], text: uhuru.viewModel.tempAppList()[6]"></span>
+                            </div>
+                        </td>
+                        <td>
+                            <a data-bind="attr:{href: uhuru.viewModel.appUrlList()[6]}">
+                                <div class="app_tiles_download">
+                                    <span class="app_download_span">Download</span>
+                                </div>
+                            </a>
+                        </td>
+                        <td>
+                            <a href="#" onclick = "selectSugarCRM();" data-bind="click: saveCreateApp, visible: mode() !== 'saving'">
+                                <div class="app_tiles_cloudpush">
+                                    <span class="app_cloudpush_span">Cloud Push</span>
+                               </div>
+                           </a>
+                        </td>
+                    </tr>
+
+
+
+
+                     <tr>
+                        <td>
+                            <div class="app_tiles" id = "app_joomla">
+                                <span class="app_name_span" data-bind="value: uhuru.viewModel.tempAppList()[1], text: uhuru.viewModel.tempAppList()[1]"></span>
+                            </div>
+                        </td>
+                        <td>
+                            <a data-bind="attr:{href: uhuru.viewModel.appUrlList()[1]}">
+                                <div class="app_tiles_download">
+                                    <span class="app_download_span">Download</span>
+                                </div>
+                            </a>
+                        </td>
+                        <td>
+                            <a href="#" onclick = "selectJoomla();" data-bind="click: saveCreateApp, visible: mode() !== 'saving'">
+                                <div class="app_tiles_cloudpush">
+                                    <span class="app_cloudpush_span">Cloud Push</span>
+                               </div>
+                           </a>
+                        </td>
+                    </tr>
+
+
+
+
+                     <tr>
+                        <td>
+                            <div class="app_tiles" id = "app_drupal">
+                                <span class="app_name_span" data-bind="value: uhuru.viewModel.tempAppList()[3], text: uhuru.viewModel.tempAppList()[3]"></span>
+                            </div>
+                        </td>
+                        <td>
+                           <a data-bind="attr:{href: uhuru.viewModel.appUrlList()[3]}">
+                                <div class="app_tiles_download">
+                                    <span class="app_download_span">Download</span>
+                                </div>
+                            </a>
+                        </td>
+                        <td>
+                            <a href="#" onclick = "selectDrupal();" data-bind="click: saveCreateApp, visible: mode() !== 'saving'">
+                                <div class="app_tiles_cloudpush">
+                                    <span class="app_cloudpush_span">Cloud Push</span>
+                               </div>
+                           </a>
+                        </td>
+                    </tr>
+
+
+
+
+                     <tr>
+                        <td>
+                            <div class="app_tiles" id = "app_umbraco">
+                                <span class="app_name_span" data-bind="value: uhuru.viewModel.tempAppList()[4], text: uhuru.viewModel.tempAppList()[4]"></span>
+                            </div>
+                        </td>
+                        <td>
+                            <a data-bind="attr:{href: uhuru.viewModel.appUrlList()[4]}">
+                                <div class="app_tiles_download">
+                                    <span class="app_download_span">Download</span>
+                                </div>
+                            </a>
+                        </td>
+                        <td>
+                            <a href="#" onclick = "selectUmbraco();" data-bind="click: saveCreateApp, visible: mode() !== 'saving'">
+                                <div class="app_tiles_cloudpush">
+                                    <span class="app_cloudpush_span">Cloud Push</span>
+                               </div>
+                           </a>
+                        </td>
+                    </tr>
+
+
+
+
+                     <tr>
+                        <td>
+                            <div class="app_tiles" id = "app_orchard">
+                                <span class="app_name_span" data-bind="value: uhuru.viewModel.tempAppList()[5], text: uhuru.viewModel.tempAppList()[5]"></span>
+                            </div>
+                        </td>
+                        <td>
+                            <a data-bind="attr:{href: uhuru.viewModel.appUrlList()[5]}">
+                                <div class="app_tiles_download">
+                                    <span class="app_download_span">Download</span>
+                                </div>
+                            </a>
+                        </td>
+                        <td>
+                            <a href="#" onclick = "selectOrchard();" data-bind="click: saveCreateApp, visible: mode() !== 'saving'">
+                                <div class="app_tiles_cloudpush">
+                                    <span class="app_cloudpush_span">Cloud Push</span>
+                               </div>
+                           </a>
+                        </td>
+                    </tr>
+
+                </table>
+            </div>
+<!-- APP TABLE -->
+        <p>
+            <label for="app_name">* App Name</label>
+            <table id="new_app_name_tablet">
+                <tbody>
+                    <tr>
+                        <td>
+                            <input type="text" id="app_name" />
+                        </td>
+                        <td style="vertical-align: top">
+                            .uhurucloud.com
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+        </p>
+    </div>
+
+    <div class="modal-footer">
+        <a href="#" class="btn">Cancel</a>
+
+        <p>
+            Your app is being created. This could take a minute or two.
+        </p>
+    </div>
+</div>
+
+
+
+</div>

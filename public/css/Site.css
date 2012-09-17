@@ -1,0 +1,1302 @@
+
+/*LANDING PAGE*/
+
+.splash
+{
+    background: transparent url('../images/bg_clouds.png') no-repeat scroll center top;
+    height: 380px;
+    color: #e4eef0;
+}
+
+#splash_content_area
+{
+    margin-left: 440px;
+    position: relative;
+    padding-top: 40px;
+}
+
+.splash h2
+{
+    font-weight: normal;
+    font-size: 33px;
+    margin: 0 0 20px;
+}
+
+.splash p
+{
+    margin: 0 0 40px;
+    font-size: 14px;
+}
+
+#try_it
+{
+    background-color: rgba(34, 160, 237, 0.9);
+    padding: 10px;
+    width: 120px;
+    height: 120px;
+    position: relative;
+    float: left;
+    margin-right: 20px;
+}
+#try_it .title
+{
+    font-size: 28px;
+    display: block;
+}
+
+#try_it .byline
+{
+    font-size: 14px;
+    position: absolute;
+    width: 100%;
+    bottom: 10px;
+    height: auto;
+    display: block;
+}
+#signup_container
+{
+    float: left;
+    width: 280px;
+}
+#signup_container_text
+{
+    float: left;
+    width: 280px;
+}
+
+#promo_code_container
+{
+    background-color: rgba(34, 160, 237, 0.9);
+    width: 260px;
+    height: 50px;
+    padding: 10px;
+    margin-bottom: 20px;
+}
+
+#promo_code_container p
+{
+    margin:  0 0 10px;
+    font-size: 12px;
+}
+#promo_code_input
+{
+    width: 255px;
+    border: 1px solid #000;
+}
+
+#signup_button
+{
+    width: 140px;
+    height: 35px;
+    color: inherit;
+    background-color: #6eb53d;
+    border: 0;
+    float: right;
+    font-size: 18px;
+    text-align: left;
+    font-family: inherit;
+    cursor: pointer;
+}
+
+.icon-quote
+{
+    height: 25px;
+    width: 25px;
+    background: transparent url("../images/quotes.png") no-repeat left top;
+    display: inline-block;
+}
+.icon-quote.start
+{
+    background-position: -25px 0;
+    margin: 0 0 0 -50px;
+    position: absolute;
+}
+.icon-quote.end
+{
+    background-position: 0 0;
+    margin: 10px 0 0 10px;
+    position: absolute;
+}
+
+#video_table
+{
+    width: 100%;
+    margin: 100px 0 200px;
+}
+#video_placeholder
+{
+    width: 340px;
+    height: 241px;
+}
+#video_description
+{
+    vertical-align: middle;
+    padding-left: 40px;
+}
+#video_coming_soon
+{
+    background: transparent url("../images/video_coming_soon.png") no-repeat scroll left top;
+    text-indent: -9999em;
+    width: 340px;
+    height: 241px;
+}
+.divider
+{
+    width: 100%;
+    height: 5px;
+    background: transparent url("../images/divider_line.png") no-repeat scroll left top;
+}
+#testimonials
+{
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    font-family: "Times New Roman", Serif;
+    color: #2d2d2d;
+}
+#testimonials li
+{
+    padding: 20px 0;
+    min-height: 150px;
+    position: relative;
+    width: 95%;
+}
+#testimonials li p
+{
+    font-size: 22px;
+}
+.customer-logo
+{
+    float: left;
+    width: 150px;
+    height: 150px;
+}
+.customer-quote
+{
+    padding-left: 200px;
+    padding-right: 60px;
+}
+.customer-name
+{
+    position: absolute;
+    bottom: 20px;
+    right: 0;
+    font-size:  30px;
+}
+
+html, body
+{
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+/*LANDING PAGE*/
+
+
+
+/*MANAGE LAYOUT*/
+
+#manage_menu {
+  color: #2d2d2d;
+  font-size: 12px;
+  font-weight: bold;
+  height: 1em;
+  margin: 10px 0 20px;
+  text-transform: uppercase;
+}
+
+.unstyled
+{
+    list-style: none;
+    text-decoration: none;
+}
+
+
+#manage_menu li
+{
+    float: left;
+    margin-right: 40px;
+}
+
+#manage_menu li.active
+{
+    color: #6eb53c;
+}
+
+#manage_menu li a
+{
+    color: inherit;
+}
+
+.manage #site_footer
+{
+    margin-top: 100px;
+}
+
+#welcome {
+    color: #fff;
+    float: right;
+    height: 110px;
+    padding: 10px 20px 20px;
+    position: absolute;
+    /*right: 135px; */
+    top: 50px;
+    width: 340px;
+    z-index: 5;
+}
+
+
+
+#welcome h2, #cloud_target h2
+{
+    margin: 0 0 10px 0;
+    padding: 0;
+    font-weight: normal;
+    font-size: 22px;
+}
+
+#welcome h2 span
+{
+    display: block;
+}
+
+#welcome h2 .user-name
+{
+    font-size: 30px;
+    font-family: inherit;
+    max-width: 300px;
+}
+
+#cloud_target
+{
+    margin-left: 20px;
+
+}
+
+input.user-name
+{
+    background-color: rgba(255, 255, 255, 0.6);
+    border: 0;
+    height: 41px;
+    line-height: 41px;
+    margin: 0;
+    width: 300px;
+}
+
+.user-email, .user-cloud-target
+{
+    color: #6eb53c;
+    font-size: 12px;
+}
+
+.sections h2.section-title
+{
+    margin: 40px 0 20px 0;
+    font-size: 56px;
+    line-height: 56px;
+    color: #2d2d2d;
+    font-weight: normal;
+    float: left;
+}
+
+.section-help
+{
+    float: left;
+}
+
+.sections a.section-help:hover
+{
+    text-decoration: underline;
+}
+
+.title-icon.downloads
+{
+    background-position: -48px 0;
+    float: left;
+}
+
+#my_teams, #downloads
+{
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: block;
+    margin-top: 20px;
+    height: 130px;
+}
+
+
+.tile
+{
+    float: left;
+    margin: 0 10px 10px 0;
+    width: 170px;
+    height: 115px;
+    padding: 5px;
+    background-color: #2d2d2d;
+    position: relative;
+    cursor: pointer;
+}
+
+.tile.half-height
+{
+    height: 57px;
+}
+
+.tile.half-width
+{
+    width: 80px;
+}
+
+.tile-icon
+{
+    display: inline-block;
+    width: 100%;
+    height: 100%;
+}
+
+#user_name_edit_button {
+  background-position: left center;
+  display: inline-block;
+  height: 50px;
+  margin-left: 10px;
+  width: 20px;
+}
+
+.delete-team-button, .delete-service-button, .delete-app-button, .delete-user-button
+{
+    position: absolute;
+    right: 5px;
+    bottom: 5px;
+    width: 20px;
+    height: 20px;
+}
+
+.edit-user-button
+{
+    position: absolute;
+    right: 35px;
+    bottom: 5px;
+    width: 20px;
+    height: 20px;
+}
+
+
+li.new
+{
+    background-color: #dbdbdb !important;
+}
+
+li.new .icon
+{
+    background: transparent url('../images/add_icon.png') no-repeat scroll 0 0;
+    display: inline-block;
+    height: 48px;
+    width: 48px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-top: -24px;
+    margin-left: -24px;
+
+}
+
+#downloads li
+{
+    float: left;
+
+}
+
+#downloads li .icon
+{
+    background: transparent url('../images/downloads_icons.png') no-repeat scroll 0 0;
+    display: inline-block;
+    height: 64px;
+    width: 64px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-top: -32px;
+    margin-left: -32px;
+
+}
+
+#downloads li .icon.visual-studio
+{
+    background-position: 0 0;
+}
+
+#downloads li .icon.windows-tools
+{
+    background-position: -64px 0;
+}
+
+.tile .title
+{
+    color: #efefef;
+    font-size: 13px;
+    position: absolute;
+    bottom: 5px;
+    left: 5px;
+}
+
+.tile .team-name
+{
+    font-size: 24px;
+    color: #efefef;
+}
+
+.count-label
+{
+    font-size: 13px;
+    color: #efefef;
+    display: inline-block;
+}
+
+.count-value.apps
+{
+    position: absolute;
+    bottom: 30px;
+    left: 110px;
+}
+
+.count-value.services
+{
+    position: absolute;
+    bottom: 5px;
+    left: 110px;
+}
+
+.count-label.apps
+{
+    position: absolute;
+    bottom: 30px;
+    left: 5px;
+}
+
+.count-label.services
+{
+    position: absolute;
+    bottom: 5px;
+    left: 5px;
+}
+
+.count-value
+{
+    font-size: 13px;
+    color: #6eb53c;
+    display: inline-block;
+}
+
+.tile a
+{
+    display: inline-block;
+    width: 100%;
+    height: 100%;
+}
+
+#selected_team .team-name
+{
+    max-width: 625px;
+    margin: 0 40px 0 0;
+    display: inline-block;
+    float: left;
+}
+  /*
+#selected_team .team-name input
+{
+}  */
+
+#selected_team .team-options
+{
+    float: left;
+    padding-top: 10px;
+}
+
+#selected_team .team-options span
+{
+    margin-right: 20px;
+}
+
+#team_tabs h3
+{
+    font-size: 36px;
+    color: #fff;
+    font-weight: normal;
+    margin-bottom: 10px;
+    max-height: 2em;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    line-height: normal;
+}
+
+#team_tabs li.tile
+{
+    background-color: #0071b7;
+}
+
+.tile .service-name, .tile .app-name {
+  bottom: 5px;
+  color: #efefef;
+  display: inline-block;
+  font-size: 13px;
+  left: 5px;
+  max-width: 140px;
+  overflow: hidden;
+  position: absolute;
+  text-overflow: ellipsis;
+}
+
+#app_details_table
+{
+    width: 100%;
+    border-collapse: collapse;
+}
+
+#app_details_table td
+{
+    padding: 8px;
+}
+
+#app_details_table tbody tr td
+{
+    height: 45px;
+}
+
+.app-value-slider
+{
+    width: 90%;
+}
+
+
+
+
+
+
+#container {
+   min-height:100%;
+   position:relative;
+}
+
+#body {
+   padding-bottom: 120px;   /* Height of the footer */
+   position: relative;
+}
+#site_footer {
+   position:absolute;
+   bottom:0;
+   width:100%;
+   height:120px;   /* Height of the footer */
+}
+
+
+
+.app-default
+{
+
+}
+
+.app-dotnet
+{
+    background: transparent url("../images/.net_icon.png") no-repeat scroll center center;
+}
+.app-php
+{
+    background: transparent url("../images/.php_icon.png") no-repeat scroll center center;
+}
+.app-node
+{
+    background: transparent url("../images/node.js_icon.png") no-repeat scroll center center;
+}
+.app-ruby
+{
+    background: transparent url("../images/ruby_icon.png") no-repeat scroll center center;
+}
+.app-java
+{
+    background: transparent url("../images/java_icon.png") no-repeat scroll center center;
+}
+
+.service-icon-mysql
+{
+    background: transparent url("../images/mySQL_icon.png") no-repeat scroll center center;
+}
+
+.service-icon-mssql
+{
+    background: transparent url("../images/mssql_icon.png") no-repeat scroll center center;
+}
+
+.service-icon-mongodb
+{
+    background: transparent url("../images/mongo_db_icon.png") no-repeat scroll center center;
+}
+
+.service-icon-redis
+{
+    background: transparent url("../images/redis_icon.png") no-repeat scroll center center;
+}
+
+.service-icon-rabbitmq
+{
+    background-image: url("../images/members_icon.png");
+    background-repeat: no-repeat;
+    background-attachment: scroll;
+    background-position: center  15px;
+}
+
+#team_tabs li.tile.users .service-name
+{
+    bottom: 25px;
+}
+
+#team_tabs li.tile.users .user-type
+{
+    position: absolute;
+    left: 5px;
+    bottom: 5px;
+    font-size: 13px;
+    color: #fff;
+}
+
+.tile.app-control
+{
+    height: 48px;
+    width: 48px;
+}
+
+.app-control
+{
+    width: 280px;
+    height: 200px;
+    float: left;
+}
+
+.back-button
+{
+  background: transparent url("../images/back_button.png") no-repeat scroll left center;
+  float: left;
+  height: 52px;
+  width: 52px;
+  margin-top: 36px;
+}
+
+.app-info li.section {
+  float: left;
+  margin: 0 30px 40px 0;
+  width: 420px;
+}
+
+.app-info h4 {
+  border-bottom: 1px solid #ddd;
+  color: #0071b7;
+  font-size: 22px;
+  font-weight: normal;
+  margin-bottom: 40px;
+  padding-bottom: 5px;
+}
+
+.app-info h4 .control-icon
+{
+    float: right;
+}
+
+.instance-count
+{
+    font-size: 40px;
+    text-align: center;
+    display: inline-block;
+    width: 100%;
+    padding-top: 10px;
+}
+
+.instance-type
+{
+    font-size: 12px;
+    position: absolute;
+    left: 5px;
+    bottom: 5px;
+    display: inline-block;
+}
+
+.instance-info
+{
+    display: inline-block;
+    width: 49%;
+    height: 65px;
+    position: relative;
+    color: #fff;
+    float: left;
+}
+
+#app_details_modal .modal-body
+{
+    max-height: none;
+}
+
+#app_details_modal
+{
+    width: 970px;
+    position: absolute;
+    top: 0;
+    left: 50%;
+    margin-left: -485px;
+    margin-top: 0;
+    background-color: #fff;
+}
+
+#new_app_name_table .validationMessage
+{
+    display: block;
+}
+
+.icon-tile
+{
+    width: 80px;
+    height: 80px;
+
+}
+
+/* --- MANAGE LAYOUT --- */
+
+
+
+
+
+ /*
+
+
+
+
+/*                            SITE                           */
+
+html, body
+{
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+body
+{
+    font-size: .85em;
+    font-family: "Segoe UI", Verdana, Helvetica, Sans-Serif;
+    color: #232323;
+    background-color: #fff;
+}
+
+header,
+footer,
+nav,
+section {
+    display: block;
+}
+
+.page-margin
+{
+    width: 940px;
+    margin: 0 auto;
+}
+
+/* Styles for basic forms
+-----------------------------------------------------------*/
+
+fieldset
+{
+    border:1px solid #ddd;
+    padding:0 1.4em 1.4em 1.4em;
+    margin:0 0 1.5em 0;
+}
+
+legend
+{
+    font-size:1.2em;
+    font-weight: bold;
+}
+
+textarea
+{
+    min-height: 75px;
+}
+
+.editor-label
+{
+    margin: 1em 0 0 0;
+}
+
+.editor-field
+{
+    margin:0.5em 0 0 0;
+}
+
+
+/* Styles for validation helpers
+-----------------------------------------------------------*/
+.field-validation-error
+{
+    color: #ff0000;
+}
+
+.field-validation-valid
+{
+    display: none;
+}
+
+.input-validation-error
+{
+    border: 1px solid #ff0000;
+    background-color: #ffeeee;
+}
+
+.validation-summary-errors
+{
+    font-weight: bold;
+    color: #ff0000;
+}
+
+.validation-summary-valid
+{
+    display: none;
+}
+
+#site_header
+{
+    height: 50px;
+    background-color: #2d2d2d;
+}
+
+#site_header h1
+{
+    height: 50px;
+    margin: 0;
+    float: left;
+    font-weight: normal;
+    font-size: 1.8em;
+    line-height: 50px;
+    color: #fff;
+}
+
+#login_control
+{
+    float: right;
+    height: 50px;
+    line-height: 50px;
+    color: #fff;
+}
+
+#login_control .welcome-message
+{
+    margin-right: 20px;
+    display: inline-block;
+}
+
+#login_control a
+{
+    text-decoration: none;
+    display: inline-block;
+}
+
+#login_control a:hover
+{
+    text-decoration: underline;
+}
+
+#site_footer
+{
+    margin-top: 100px;
+}
+
+#site_footer .top
+{
+    height: 130px;
+    background-color: #6eb43c;
+    padding: 20px 0;
+}
+
+#site_footer .bottom
+{
+    height: 60px;
+    background-color: #2d2d2d;
+}
+
+.icon-social
+{
+    display: inline-block;
+    width: 44px;
+    height: 44px;
+    background: transparent url('../images/social_icons.png') no-repeat scroll 0 0;
+    text-indent: -9999em;
+    margin: 10px 0;
+}
+
+.icon-social.facebook
+{
+    background-position: 0 0;
+}
+
+.icon-social.facebook:hover
+{
+    background-position: -44px 0;
+}
+
+.icon-social.twitter
+{
+    background-position: -88px 0;
+}
+
+.icon-social.twitter:hover
+{
+    background-position: -132px;
+}
+
+#footer_top_content
+{
+    height: 130px;
+    padding-top: 20px;
+}
+
+#footer_top_content tbody tr td
+{
+    padding: 0 40px;
+    color: #f2f7fa;
+    font-size: 14px;
+}
+
+#site_footer .bottom
+{
+    font-size: 11px;
+}
+
+#site_footer .bottom .page-margin
+{
+    padding-top: 20px;
+}
+
+#site_footer .bottom
+{
+    color: #706e6e;
+}
+
+
+#site_footer .footer-menu
+{
+    list-style: none;
+    margin: 0 50px;
+    padding: 0;
+    display: inline-block;
+}
+#site_footer .footer-menu li
+{
+    border-right: 1px solid #aaa;
+    display: inline-block;
+    padding: 0 10px;
+
+}
+
+#site_footer .cloud-target-url
+{
+    color: #6eb53c;
+}
+
+#site_footer .footer-menu li a
+{
+    color: #6eb53c;
+}
+
+#site_footer .footer-menu li.last
+{
+    border: 0;
+}
+
+.icon-login
+{
+    height: 21px;
+    width: 21px;
+    background: transparent url('../images/login_arrow.png') no-repeat scroll left top;
+    display: inline-block;
+    float: right;
+}
+
+.tile
+{
+    position: relative;
+    overflow: hidden;
+}
+
+.tile.blue
+{
+    background-color: #0071b7 !important;
+}
+
+.tile.lime
+{
+    background-color: #6eb53c !important;
+}
+
+.tile.darkGrey
+{
+    background-color: #2d2d2d !important;
+}
+
+.tile.lightGrey
+{
+    background-color: #aaa !important;
+}
+
+.tile.purple
+{
+    background-color: #a200ff !important;
+}
+
+.tile.turquoise
+{
+    background-color: #0080c1 !important;
+}
+
+.tile.orange
+{
+    background-color: #fd950d !important;
+}
+
+.control-icon
+{
+    background: transparent url('../images/control_icons_tile.png') no-repeat scroll 0 0;
+    text-indent: -99999em;
+    display: inline-block;
+    cursor: pointer;
+    width: 20px;
+    height: 20px;
+}
+
+.control-icon.dark
+{
+    background-image: url("../images/edit_delete_team_title.png");
+}
+
+.control-icon.edit
+{
+    background-position: 0 0;
+}
+
+.control-icon.trash
+{
+    background-position: -40px 0;
+}
+
+.control-icon.dark.trash
+{
+    background-position: -40px 0;
+}
+
+.token-icon-large
+{
+    background: transparent url("../images/token_icon.png") no-repeat scroll center center;
+    cursor: pointer;
+    background-color:#0080c1 !important;
+    width: 100px;
+    height: 40px;
+}
+
+.control-icon-large
+{
+    background: transparent url('../images/edit_delete_team_title_large.png') no-repeat scroll 0 0;
+    text-indent: -99999em;
+    display: inline-block;
+    cursor: pointer;
+    width: 40px;
+    height: 40px;
+}
+
+.control-icon-large.edit
+{
+    background-position: 0 0;
+}
+
+.control-icon-large.trash
+{
+    background-position: -80px 0;
+}
+
+.header-shading
+{
+    height: 22px;
+    background: transparent url('../images/top_header_shading.png') repeat-x scroll 0 0;
+    position: absolute;
+    left: 0;
+    top: 30px;
+    right: 0;
+}
+
+.noty_bar
+{
+    position: relative;
+}
+
+.btn.login, .btn.logout
+{
+    text-align: left;
+    width: 80px;
+}
+
+.validationMessage
+{
+    color: #a00;
+    display: inline-block;
+    margin-left: 20px;
+}
+
+/* Styles for App Detail helpers
+-----------------------------------------------------------*/
+.app-services
+{
+    background: transparent url('../images/app_services_icons.png') no-repeat scroll 0 0;
+    text-indent: -99999em;
+    display: inline-block;
+    cursor: pointer;
+    width: 21px;
+    height: 21px;
+}
+
+.app-services.bind
+{
+    background-position: 0 0;
+}
+
+.app-services.plus
+{
+    background-position: -42px 0;
+}
+
+.app-services.minus
+{
+    background-position: -84px 0;
+}
+
+
+.app-actions
+{
+    background: transparent url('../images/start_stop_icons.png') no-repeat scroll 0 0;
+    text-indent: -99999em;
+    display: inline-block;
+    cursor: pointer;
+    width: 31px;
+    height: 31px;
+}
+
+.app-actions.start
+{
+    background-position: 0 1px;
+    width: 30px;
+}
+
+.app-actions.stop
+{
+    background-position: -60px 1px;
+    width: 31px;
+}
+
+/* Styles for App Detail helpers
+-----------------------------------------------------------*/
+
+
+/*Tile structure*/
+#app_smallcontainer
+{
+    margin:10px auto 15px;
+}
+
+.app_tiles
+{
+    width:160px;
+    height:70px;
+    background-color:#2d2d2d;
+    background-position:120px 30px;
+	background-repeat:no-repeat;
+	margin:1px;
+}
+
+.app_tiles_download
+{
+    width:100px;
+    height:70px;
+    background-color:#2d2d2d;
+    background-image:url("../images/cloud_white_small.png");
+    background-position:40px 30px;
+	background-repeat:no-repeat;
+	margin:1px;
+}
+
+.app_tiles_cloudpush
+{
+    width:100px;
+    height:70px;
+    background-color:#2d2d2d;
+    background-image:url("../images/howto_white_small.png");
+    background-position:40px 30px;
+	background-repeat:no-repeat;
+	margin:1px;
+}
+
+#app_magento
+{
+    background-image:url("../images/app_magento.png");
+}
+#app_wordpress
+{
+    background-image:url("../images/app_wordpress.png");
+}
+#app_sugarCRM
+{
+    background-image:url("../images/app_sugarcrm.png");
+}
+#app_orchard
+{
+    background-image:url("../images/app_orchard.png");
+}
+#app_umbraco
+{
+    background-image:url("../images/app_umbraco.png");
+}
+#app_joomla
+{
+    background-image:url("../images/app_joomla.png");
+}
+#app_drupal
+{
+    background-image:url("../images/app_drupal.png");
+}
+.app_name_span
+{
+    color:#efefef;
+    font-size:18px;
+    float:left;
+    margin-left:3px;
+}
+
+.app_download_span
+{
+    color:#efefef;
+    font-size:12px;
+    float:left;
+    margin-left:3px;
+}
+
+.app_cloudpush_span
+{
+    color:#efefef;
+    font-size:12px;
+    float:left;
+    margin-left:3px;
+}
+#app_table
+{
+    margin:5px auto 5px;
+}
+
+a
+{
+    text-decoration: none; !important
+}
+

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title><%= @title %></title>
+
+		<link rel="stylesheet" type="text/css" href="css/Site.css" src="../public/css/Site.css"/>
+		<link rel="stylesheet" type="text/css" href="css/infopage.css" src="../public/css/Site.css"/>
+
+        <meta charset="utf-8" />
+
+          <script type="text/javascript">
+            window.q = [];
+            window.$ = function (f) {
+                q.push(f);
+            };
+
+            //fix to make html5 sections work in IE8 and other browsers that don't support html5
+            document.createElement('header');
+            document.createElement('hgroup');
+            document.createElement('nav');
+            document.createElement('menu');
+            document.createElement('section');
+            document.createElement('article');
+            document.createElement('aside');
+            document.createElement('footer');
+
+        </script>
+	</head>
+
+
+<body class="main">
+
+
+    <header id="site_header">
+        <div class="page-margin">
+            <h1><span style="color: #0172b6">Uhuru</span> AppCloud</h1>
+
+        </div>
+    </header>
+
+
+
+    <%= yield %>
+
+
+
+
+    <footer id="site_footer">
+            <div class="top">
+                <div class="page-margin">
+
+                <table id="footer_top_content">
+                    <tbody>
+                        <tr>
+                            <td style="border-right: 1px dotted #000">
+                                <p>
+                                    Give us feedback on your experience with the App Cloud beta and get 1 year free premium hosting when we go commercial.
+                                    Click <a href="http://bit.ly/uhrbloglife">here</a> for more details
+                                </p>
+                            </td>
+                            <td>
+                                <a href="https://www.twitter.com/uhurusoftware" class="icon-social twitter">Twitter</a>
+                                <br />
+                                <a href="https://www.facebook.com/uhurusoftware" class="icon-social facebook">Facebook</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                </div>
+            </div>
+            <div class="bottom">
+                <div class="page-margin">
+                    <span class="copyright">
+                        &copy; <%= @timeNow %> Uhuru Software. All rights reserved.
+                    </span>
+                    <ul class="footer-menu">
+                        <li><a href="#tos">Terms of Service</a></li>
+                        <li><a href="#privacy">Privacy Policy</a></li>
+                        <li class="last"><a href="http://uhurusoftware.zendesk.com">Support</a></li>
+                    </ul>
+                </div>
+            </div>
+
+    </footer>
+
+    <script type="text/javascript">
+        $.each(q, function (index, f) {
+            $(f);
+        });
+    </script>
+</body>
+</html>
+
+
+	</body>
+</html>
