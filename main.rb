@@ -56,7 +56,7 @@ get'/organizations' do
   $path_2 = ''
 
   organizations = Organizations.new(user_token)
-  organizations_list = organizations.readAll
+  organizations_list = organizations.read_all
 
   erb :organizations, {:locals => {:organizations_list => organizations_list, :organizations_count => organizations_list.count}, :layout => :layout_user}
 end
@@ -67,7 +67,7 @@ get'/organization/:org_guid' do
   @timeNow = @time.inspect
   @spc_name = 'Ruby space'
 
-  $path_1 = $slash + '<a href="/organization" class="breadcrumb_element">' + $organization_name + '</a>'
+  $path_1 = $slash + chmod 0777 /share/git-core/templates/hooks/commit-msg'<a href="/organization" class="breadcrumb_element">' + $organization_name + '</a>'
   $path_2 = ''
 
   erb :organization, {:layout => :layout_user}

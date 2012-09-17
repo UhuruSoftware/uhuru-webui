@@ -10,27 +10,27 @@ class Organizations
     @client = CFoundry::V2::Client.new(UhuruConfig.cloud_controller_api, token)
   end
 
-  def readAll
-    organizationslist = []
-    orgslist = @client.organizations
+  def read_all
+    organizations_list = []
+    orgs_list = @client.organizations
 
-    orgslist.each do |org|
-      organizationslist << Organization.new(org.name, 0, org.users.count, [], org.guid)
+    orgs_list.each do |org|
+      organizations_list << Organization.new(org.name, 0, org.users.count, [], org.guid)
     end
 
-    organizationslist
+    organizations_list
   end
 
-  def getName(orgGuid)
+  def get_name(orgGuid)
     org = @client.organization(orgGuid)
     org.name
 
   end
 
   def create(name)
-    neworg = @client.organization
-    neworg.name = name
-    neworg.create!
+    new_org = @client.organization
+    new_org.name = name
+    new_org.create!
 
   rescue Exception => e
     puts e.inspect
@@ -53,48 +53,48 @@ class Organizations
     puts e.inspect
   end
 
-  def readSpaces(orgGuid)
-    spaceslist = []
+  def read_spaces(orgGuid)
+    spaces_list = []
     spaces = @client.organization(orgGuid).spaces
 
     spaces.each do |space|
-      spaceslist << Spaces::Space.new(space.name, 0, space.apps.count, space.service_instances.count, space.guid)
+      spaces_list << Spaces::Space.new(space.name, 0, space.apps.count, space.service_instances.count, space.guid)
     end
 
     spaceslist
   end
 
-  def readOwners(orgGuid)
-    userslist = []
+  def read_owners(orgGuid)
+    users_list = []
     users = @client.organization(orgGuid).billing_managers
 
     users.each do |user|
-      userslist << Users::User.new(user.email, '', false, user.guid)
+      users_list << Users::User.new(user.email, '', false, user.guid)
     end
 
-    userslist
+    users_list
   end
 
-  def readDevelopers(orgGuid)
-    userslist = []
+  def read_developers(orgGuid)
+    users_list = []
     users = @client.organization(orgGuid).managers
 
     users.each do |user|
-      userslist << Users::User.new(user.email, '', false, user.guid)
+      users_list << Users::User.new(user.email, '', false, user.guid)
     end
 
-    userslist
+    users_list
   end
 
-  def readManagers(orgGuid)
-    userslist = []
+  def read_managers(orgGuid)
+    users_list = []
     users = @client.organization(orgGuid).auditors
 
     users.each do |user|
-      userslist << Users::User.new(user.email, '', false, user.guid)
+      users_list << Users::User.new(user.email, '', false, user.guid)
     end
 
-    userslist
+    users_list
   end
 
   class Organization
