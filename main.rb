@@ -80,7 +80,7 @@ get'/organization:org_guid' do
 
   @this_guid = params[:org_guid]
   $organization_name = organizations_Obj.get_name(@this_guid)
-  $path_1 = $slash + '<a href="/organization" class="breadcrumb_element">' + $organization_name + '</a>'
+  $path_1 = $slash + '<a href="/organization' + @this_guid + ' "class="breadcrumb_element">' + $organization_name + '</a>'
   $path_2 = ''
 
   spaces_list = organizations_Obj.read_spaces(@this_guid)
@@ -103,9 +103,9 @@ get'/space:space_guid' do
 
   @this_guid = params[:space_guid]
   $space_name = spaces_Obj.get_name(@this_guid)
-  $path_2 = $slash + '<a href="/space" class="breadcrumb_element">' + $space_name + '</a>'
+  $path_2 = $slash + '<a href="/space' + @this_guid + '" class="breadcrumb_element">' + $space_name + '</a>'
 
-  apps_list = spaces_Obj.readApps(@this_guid)
+  apps_list = spaces_Obj.read_apps(@this_guid)
   services_list = spaces_Obj.read_service_instances(@this_guid)
 
   erb :space, {:locals => {:apps_list => apps_list, :services_list => services_list}, :layout => :layout_user}
