@@ -4,16 +4,25 @@ require 'sinatra'
 require 'yaml'
 require 'uhuru_config'
 require 'dev_utils'
+require 'date'
 
 UhuruConfig.load
 
 set :port, UhuruConfig.uhuru_webui_port
 
+
+
 $space_name = 'breadcrumb space'
 $organization_name = 'breadcrumb org'
+
 $path_1
 $path_2
+
 $slash = '<span class="breadcrumb_slash"> / </span>'
+
+@time = Time.now
+$this_time = @time.strftime("%m/%d/%Y")
+
 
 def user_token
   if (UhuruConfig.dev_mode)
@@ -24,8 +33,7 @@ def user_token
 end
 
 get'/' do
-  @time = Time.now
-  @timeNow = @time.inspect
+  @timeNow = $this_time
   @title = 'Uhuru App Cloud'
 
   $path_1 = ''
@@ -37,8 +45,7 @@ end
 
 get'/infopage' do
   @title = "Uhuru Info"
-  @time = Time.now
-  @timeNow = @time.inspect
+  @timeNow = $this_time
 
   $path_1 = ''
   $path_2 = ''
@@ -47,60 +54,61 @@ get'/infopage' do
 end
 
 
+###################################################################################################
+
 get'/organizations' do
   @usertitle = "User" + " " + "Uhuru"
-  @time = Time.now
-  @timeNow = @time.inspect
+  @timeNow = $this_time
 
   $path_1 = ''
   $path_2 = ''
 
-  organizations = Organizations.new(user_token)
-  organizations_list = organizations.read_all
+  organizations_Obj = Organizations.new(user_token)
+  organizations_list = organizations_Obj.read_all
 
   erb :organizations, {:locals => {:organizations_list => organizations_list, :organizations_count => organizations_list.count}, :layout => :layout_user}
 end
 
 
-get'/organization/:org_guid' do
-  @time = Time.now
-  @timeNow = @time.inspect
-  @spc_name = 'Ruby space'
 
+
+
+get'/organization:org_guid' do
+  @timeNow = $this_time
+
+  organizations_Obj = Organizations.new(user_token)
+
+  @this_guid = params[:org_guid]
+  $organization_name = organizations_Obj.get_name(@this_guid)
   $path_1 = $slash + '<a href="/organization" class="breadcrumb_element">' + $organization_name + '</a>'
   $path_2 = ''
 
-  erb :organization, {:layout => :layout_user}
+  spaces_list = organizations_Obj.read_spaces(@this_guid)
+  owners_list = organizations_Obj.read_owners(@this_guid)
+  developers_list = organizations_Obj.read_developers(@this_guid)
+  managers_list = organizations_Obj.read_managers(@this_guid)
+
+  erb :organization, {:locals => {:spaces_list => spaces_list, :owners_list => owners_list, :developers_list => developers_list, :managers_list => managers_list}, :layout => :layout_user}
 end
 
-get'/space' do
-  @time = Time.now
-  @timeNow = @time.inspect
 
+
+
+
+get'/space:space_guid' do
+  @timeNow = $this_time
+
+  organizations_Obj = Organizations.new(user_token)
+  spaces_Obj = Spaces.new(user_token)
+
+  @this_guid = params[:space_guid]
+  $space_name = spaces_Obj.get_name(@this_guid)
   $path_2 = $slash + '<a href="/space" class="breadcrumb_element">' + $space_name + '</a>'
 
-  erb :space, {:layout => :layout_user}
+  apps_list = spaces_Obj.readApps(@this_guid)
+  services_list = spaces_Obj.read_service_instances(@this_guid)
+
+  erb :space, {:locals => {:apps_list => apps_list, :services_list => services_list}, :layout => :layout_user}
 end
 
 
-
-
-
-
-get'/modal_createapp' do
-  @time = Time.now
-  @timeNow = @time.inspect
-  erb :modal_createapp, {:layout => :layout_user}
-end
-
-  #testing links between views
-get'/test' do
-  erb :test, {:layout => :layout_user}
-end
-
-
-  #testing variables passed between views
-get '/test' do
-  @message = "apare pe pagina"
-  erb :test, {:layout => :layout_user }
-end

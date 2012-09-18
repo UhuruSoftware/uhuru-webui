@@ -21,32 +21,27 @@
                     <li id="members_btn" onclick="showMembers();" onmouseover="hoverMembers();" onmouseout="unhoverMembers();"><a href="#services" id="members_btn_link">Members (<span>3232</span>)</a></li>
                 </ul>
 
-         <!--THERE ARE 2 TABS-->
                  <!--SPACES TAB-->
 
                 <div id="spaces">
                     <ul class="tile_list">
 
-
-                      <!--THIS SHOULD HAVE A LOOP THAT LOOKS FOR MULTIPLE SPACES-->
-                        <a href="/space">
+                    <% spaces_list.each do |space| %>
+                        <a href="/space<%= space.guid %>">
                             <li class="tileorange">
-                                <span class="space_name"><%= @spc_name %></span>
-                                <span class="costs_span">monthly cost: </span><span class="costs_span_value">$100</span>
-                                <span class="count-label apps"># of apps: </span><span class="count-value apps">12</span>
-                                <span class="count-label services"># of services: </span><span class="count-value services">31</span>
-                                <span class="control-icon trash delete-app-button"></span>
+                                <span class="space_name"><%= space.name %></span>
+                                <span class="costs_span">monthly cost: </span><span class="costs_span_value">33</span>
+                                <span class="count-label apps"># of apps: </span><span class="count-value apps"><%= space.apps.count %></span>
+                                <span class="count-label services"># of services: </span><span class="count-value services"><%= space.service_instances %></span>
+                                <span class="control-icon trash delete-app-button">  </span>
                             </li>
                         </a>
+                    <% end %>
 
-                      <!--// //-->
-
-
-                      <!--THIS IS THE + BUTTON WHERE THE USER CAN ADD MORE SPACES-->
                         <li class="new tile" id="create_space_btn">
                             <span class="icon"></span>
                         </li>
-                      <!--// //-->
+
                     </ul>
 
                 <div style="height: 250px; width: 100%"></div>
@@ -57,76 +52,75 @@
 
 
                 <div id="members">
-                <p class="member_titles_p">Owners</p>
-                    <ul class="tile_list">
 
-                      <!--THIS SHOULD HAVE A LOOP THAT LOOKS FOR ALL THE OWNERS-->
+                    <p class="member_titles_p">Owners</p>
+                        <ul class="tile_list">
 
-                        <li class="tileorange_members">
-                            <span class="organization_question">qu</span>
-                            <span class="organization_check">chk</span>
-                            <span class="user_name_span">NoName</span>
-                            <span class="user_type_span">Developer</span>
-                            <span class="control-icon edit edit-user-button"></span>
-                            <span class="control-icon trash delete-user-button"></span>
-                        </li>
+                          <% owners_list.each do |owner| %>
+                            <li class="tileorange_members">
+                                <span class="organization_question">qu</span>
+                                <span class="organization_check">chk</span>
+                                <span class="user_name_span"><%= owner.email %></span>
+                                <span class="user_type_span">Developer</span>
+                                <span class="control-icon edit edit-user-button"></span>
+                                <span class="control-icon trash delete-user-button"></span>
+                            </li>
+                          <% end %>
 
-                      <!--// //-->
 
+                          <!--THIS IS WHERE USER CA ADD MORE OWNERS-->
 
-                      <!--THIS IS WHERE USER CA ADD MORE OWNERS-->
+                            <li class="new tile" id="add_user_btn1">
+                                <span class="icon"></span>
+                            </li>
 
-                        <li class="new tile" id="add_user_btn1">
-                            <span class="icon"></span>
-                        </li>
+                          <!--// //-->
+                        </ul>
+                    <p class="member_titles_p">Developers</p>
+                        <ul class="tile_list">
 
-                      <!--// //-->
-                    </ul>
-                <p class="member_titles_p">Developers</p>
-                    <ul class="tile_list">
+                          <% developers_list.each do |developer| %>
 
-                      <!--THIS SHOUD HAVE A LOOP THAT LOOKS FOR ALL DEVELOPERS-->
+                            <li class="tileblue">
+                                <span class="organization_question">qu</span>
+                                <span class="organization_check">chk</span>
+                                <span class="user_name_span"><%= developer.email %></span>
+                                <span class="user_type_span">Developer</span>
+                                <span class="control-icon edit edit-user-button"></span>
+                                <span class="control-icon trash delete-user-button"></span>
+                            </li>
+                          <% end %>
 
-                        <li class="tileblue">
-                            <span class="organization_question">qu</span>
-                            <span class="organization_check">chk</span>
-                            <span class="user_name_span">NoName</span>
-                            <span class="user_type_span">Developer</span>
-                            <span class="control-icon edit edit-user-button"></span>
-                            <span class="control-icon trash delete-user-button"></span>
-                        </li>
-                      <!--// //-->
+                          <!--THIS IS THE + BUTTON FOR DEVELOPERS-->
+                            <li class="new tile" id="add_user_btn2">
+                                <span class="icon"></span>
+                            </li>
+                          <!--// //-->
+                        </ul>
+                    <p class="member_titles_p">Business Manager</p>
+                        <ul class="tile_list">
 
-                      <!--THIS IS THE + BUTTON FOR DEVELOPERS-->
-                        <li class="new tile" id="add_user_btn2">
-                            <span class="icon"></span>
-                        </li>
-                      <!--// //-->
-                    </ul>
-                <p class="member_titles_p">Business Manager</p>
-                    <ul class="tile_list">
+                          <% managers_list.each do |manager| %>
 
-                      <!--THIS SHOULD HAVE A LOOP THAT LOOKS FOR ALL MANAGERS-->
+                            <li class="tilered">
+                                <span class="organization_question">qu</span>
+                                <span class="organization_check">chk</span>
+                                <span class="user_name_span">NoName</span>
+                                <span class="user_type_span"><%= manager.email  %></span>
+                                <span class="control-icon edit edit-user-button"></span>
+                                <span class="control-icon trash delete-user-button"></span>
+                            </li>
 
-                        <li class="tilered">
-                            <span class="organization_question">qu</span>
-                            <span class="organization_check">chk</span>
-                            <span class="user_name_span">NoName</span>
-                            <span class="user_type_span">Developer</span>
-                            <span class="control-icon edit edit-user-button"></span>
-                            <span class="control-icon trash delete-user-button"></span>
-                        </li>
+                          <% end %>
 
-                      <!--// //-->
+                          <!--THIS IS THE MANAGERS + BUTTON-->
+                            <li class="new tile" id="add_user_btn3">
+                                <span class="icon"></span>
+                            </li>
+                          <!--// //-->
+                        </ul>
 
-                      <!--THIS IS THE MANAGERS + BUTTON-->
-                        <li class="new tile" id="add_user_btn3">
-                            <span class="icon"></span>
-                        </li>
-                      <!--// //-->
-                    </ul>
-
-                <div style="height: 50px; width: 100%"></div>
+                    <div style="height: 50px; width: 100%"></div>
                 </div>
 
          </div>

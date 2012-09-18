@@ -70,7 +70,7 @@ class Spaces
       apps_list << Applications::Application.new(app.name, app.framework, app.guid)
     end
 
-    appslist
+    #appslist
   end
 
   def read_service_instances(space_guid)
@@ -81,7 +81,7 @@ class Spaces
       services_list << ServiceInstances::Service.new(service.name, service.framework, service.guid)
     end
 
-    apps_list
+    #apps_list
   end
 
   class Space

@@ -27,12 +27,16 @@
            <!--THIS IS THE APPS TAB THAT NEEDS A LOOP TO READ APPS AND A SCRIPT TO ADD A NEW APP-->
                 <div id="apps" class="tab-pane">
                     <ul class="tile_list">
+
+                      <% apps_list.each do |app| %>
                         <li class="tileblue" id="app_detail">
                             <a>
-                                <span class="app_name">test app name</span>
+                                <span class="app_name"><%= app.name %></span>
                                 <span class="control-icon trash delete-app-button"></span>
                             </a>
                         </li>
+                      <% end %>
+
                         <li class="new tile" id="create_app">
                             <span class="icon"></span>
                         </li>
@@ -45,14 +49,19 @@
 
                 <div id="services" class="tab-pane">
                     <ul class="tile_list">
+
+                        <% services_list.each do |service| %>
                         <li class="tileblue">
                             <span>
-                                <span class="service_name">test service name</span>
+                                <span class="service_name"><%= service.name %></span>
                                 <span class="control-icon trash delete-service-button"></span>
                             </span>
                         </li>
+                        <% end %>
+
+
                         <li class="new tile" id="add_ctService_modal_btn">
-                            <span class="icon"></span>
+                        <span class="icon"></span>
                         </li>
                     </ul>
                 </div>

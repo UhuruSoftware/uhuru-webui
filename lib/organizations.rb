@@ -61,7 +61,7 @@ class Organizations
       spaces_list << Spaces::Space.new(space.name, 0, space.apps.count, space.service_instances.count, space.guid)
     end
 
-    spaceslist
+    #spaceslist
   end
 
   def read_owners(orgGuid)
@@ -72,7 +72,7 @@ class Organizations
       users_list << Users::User.new(user.email, '', false, user.guid)
     end
 
-    users_list
+    #users_list
   end
 
   def read_developers(orgGuid)
@@ -83,7 +83,7 @@ class Organizations
       users_list << Users::User.new(user.email, '', false, user.guid)
     end
 
-    users_list
+    #users_list
   end
 
   def read_managers(orgGuid)
@@ -94,7 +94,7 @@ class Organizations
       users_list << Users::User.new(user.email, '', false, user.guid)
     end
 
-    users_list
+    #users_list
   end
 
   class Organization
