@@ -62,7 +62,7 @@ class Spaces
 
   end
 
-  def readApps(space_guid)
+  def read_apps(space_guid)
     apps_list = []
     apps = @client.space(space_guid).apps
 
@@ -85,13 +85,13 @@ class Spaces
   end
 
   class Space
-    attr_reader :name, :cost, :apps, :services, :guid
+    attr_reader :name, :cost, :apps_count, :services_count, :guid
 
-    def initialize(name, cost, apps, services, guid)
+    def initialize(name, cost, apps_count, services_count, guid)
       @name = name
       @cost = cost
-      @apps = apps
-      @services = services
+      @apps = apps_count
+      @services = services_count
       @guid = guid
     end
   end

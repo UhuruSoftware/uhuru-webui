@@ -21,8 +21,8 @@ class Organizations
     organizations_list
   end
 
-  def get_name(orgGuid)
-    org = @client.organization(orgGuid)
+  def get_name(org_guid)
+    org = @client.organization(org_guid)
     org.name
 
   end
@@ -36,8 +36,8 @@ class Organizations
     puts e.inspect
   end
 
-  def update(name, orgGuid)
-    org = @client.organization(orgGuid)
+  def update(name, org_guid)
+    org = @client.organization(org_guid)
     org.name = name
     org.update!
 
@@ -45,17 +45,17 @@ class Organizations
     puts e.inspect
   end
 
-  def delete(orgGuid)
-    org = @client.organization(orgGuid)
+  def delete(org_guid)
+    org = @client.organization(org_guid)
     org.delete!
 
   rescue Exception => e
     puts e.inspect
   end
 
-  def read_spaces(orgGuid)
+  def read_spaces(org_guid)
     spaces_list = []
-    spaces = @client.organization(orgGuid).spaces
+    spaces = @client.organization(org_guid).spaces
 
     spaces.each do |space|
       spaces_list << Spaces::Space.new(space.name, 0, space.apps.count, space.service_instances.count, space.guid)
@@ -64,9 +64,9 @@ class Organizations
     spaces_list
   end
 
-  def read_owners(orgGuid)
+  def read_owners(org_guid)
     users_list = []
-    users = @client.organization(orgGuid).billing_managers
+    users = @client.organization(org_guid).billing_managers
 
     users.each do |user|
       users_list << Users::User.new(user.email, '', false, user.guid)
@@ -75,9 +75,9 @@ class Organizations
     users_list
   end
 
-  def read_developers(orgGuid)
+  def read_developers(org_guid)
     users_list = []
-    users = @client.organization(orgGuid).managers
+    users = @client.organization(org_guid).managers
 
     users.each do |user|
       users_list << Users::User.new(user.email, '', false, user.guid)
@@ -86,9 +86,9 @@ class Organizations
     users_list
   end
 
-  def read_managers(orgGuid)
+  def read_managers(org_guid)
     users_list = []
-    users = @client.organization(orgGuid).auditors
+    users = @client.organization(org_guid).auditors
 
     users.each do |user|
       users_list << Users::User.new(user.email, '', false, user.guid)
