@@ -4,17 +4,23 @@ require 'sinatra'
 require 'yaml'
 require 'uhuru_config'
 require 'dev_utils'
+require 'date'
 
 UhuruConfig.load
 
 set :port, UhuruConfig.uhuru_webui_port
 
+
+
 $space_name = 'breadcrumb space'
 $organization_name = 'breadcrumb org'
+
 $path_1
 $path_2
 $slash = '<span class="breadcrumb_slash"> / </span>'
 
+@time = Time.now
+$this_time = @time.strftime("%m/%d/%Y")
 def user_token
   if (UhuruConfig.dev_mode)
     DevUtils.test_token
@@ -24,8 +30,7 @@ def user_token
 end
 
 get'/' do
-  @time = Time.now
-  @timeNow = @time.inspect
+  @timeNow = $this_time
   @title = 'Uhuru App Cloud'
 
   $path_1 = ''
@@ -37,8 +42,7 @@ end
 
 get'/infopage' do
   @title = "Uhuru Info"
-  @time = Time.now
-  @timeNow = @time.inspect
+  @timeNow = $this_time
 
   $path_1 = ''
   $path_2 = ''
@@ -49,8 +53,7 @@ end
 
 get'/organizations' do
   @usertitle = "User" + " " + "Uhuru"
-  @time = Time.now
-  @timeNow = @time.inspect
+  @timeNow = $this_time
 
   $path_1 = ''
   $path_2 = ''
@@ -62,45 +65,28 @@ get'/organizations' do
 end
 
 
-get'/organization/:org_guid' do
-  @time = Time.now
-  @timeNow = @time.inspect
-  @spc_name = 'Ruby space'
+get'/organization:org_guid' do
+  @timeNow = $this_time
 
+  @this_guid = params[:org_guid]
+  $organization_name = @this_guid
   $path_1 = $slash + '<a href="/organization" class="breadcrumb_element">' + $organization_name + '</a>'
   $path_2 = ''
 
-  erb :organization, {:layout => :layout_user}
+  spaces = Organizations.new(user_token)
+  spaces_list = spaces.read_spaces(@this_guid)
+
+  erb :organization, {:locals => {:spaces_list => spaces_list}, :layout => :layout_user}
 end
 
-get'/space' do
-  @time = Time.now
-  @timeNow = @time.inspect
+get'/space:space_guid' do
+  @timeNow = $this_time
 
+  @this_guid = params[:space_guid]
+  $space_name = @this_guid
   $path_2 = $slash + '<a href="/space" class="breadcrumb_element">' + $space_name + '</a>'
 
   erb :space, {:layout => :layout_user}
 end
 
 
-
-
-
-
-get'/modal_createapp' do
-  @time = Time.now
-  @timeNow = @time.inspect
-  erb :modal_createapp, {:layout => :layout_user}
-end
-
-  #testing links between views
-get'/test' do
-  erb :test, {:layout => :layout_user}
-end
-
-
-  #testing variables passed between views
-get '/test' do
-  @message = "apare pe pagina"
-  erb :test, {:layout => :layout_user }
-end

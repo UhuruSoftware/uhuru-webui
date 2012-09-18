@@ -21,25 +21,20 @@
                     <li id="members_btn" onclick="showMembers();" onmouseover="hoverMembers();" onmouseout="unhoverMembers();"><a href="#services" id="members_btn_link">Members (<span>3232</span>)</a></li>
                 </ul>
 
-         <!--THERE ARE 2 TABS-->
-                 <!--SPACES TAB-->
-
                 <div id="spaces">
                     <ul class="tile_list">
 
-
-                      <!--THIS SHOULD HAVE A LOOP THAT LOOKS FOR MULTIPLE SPACES-->
-                        <a href="/space">
+                    <% spaces_list.each do |space| %>
+                        <a href="/space<%= space.guid %>">
                             <li class="tileorange">
-                                <span class="space_name"><%= @spc_name %></span>
-                                <span class="costs_span">monthly cost: </span><span class="costs_span_value">$100</span>
-                                <span class="count-label apps"># of apps: </span><span class="count-value apps">12</span>
-                                <span class="count-label services"># of services: </span><span class="count-value services">31</span>
-                                <span class="control-icon trash delete-app-button"></span>
+                                <span class="space_name"><%= space.name %></span>
+                                <span class="costs_span">monthly cost: </span><span class="costs_span_value">33</span>
+                                <span class="count-label apps"># of apps: </span><span class="count-value apps"><%= space.apps.count %></span>
+                                <span class="count-label services"># of services: </span><span class="count-value services"><%= space.service_instances %></span>
+                                <span class="control-icon trash delete-app-button">  </span>
                             </li>
                         </a>
-
-                      <!--// //-->
+                    <% end %>
 
 
                       <!--THIS IS THE + BUTTON WHERE THE USER CAN ADD MORE SPACES-->

@@ -61,7 +61,7 @@ class Organizations
       spaces_list << Spaces::Space.new(space.name, 0, space.apps.count, space.service_instances.count, space.guid)
     end
 
-    spaceslist
+    #spaceslist
   end
 
   def read_owners(orgGuid)
