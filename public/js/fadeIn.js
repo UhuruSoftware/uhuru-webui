@@ -3,6 +3,14 @@ $('#div2').click(function (){
 });
 $(function(){
 
+var delete_organization_modal = function(){
+	$('#screen').css({	"display": "block", opacity: 0.7, "width": "10000px", "height": "10000px"});
+	$('body').css({"overflow":"hidden"});
+	$('#delete_organization_modal').slideDown(200);
+    $('.close').click(function(){$("#delete_organization_modal").css("display", "none");$('#screen').css("display", "none")});
+    $('.btn').click(function(){$("#delete_organization_modal").css("display", "none");$('#screen').css("display", "none")});
+}
+
 
 var create_tempcta_modal = function(){
 	$('#screen').css({	"display": "block", opacity: 0.7, "width": "10000px", "height": "10000px"});
@@ -121,7 +129,7 @@ var app_details_modal = function(){
 }
 
 
-    var create_organization = function(){
+var create_organization = function(){
 	$('#screen').css({	"display": "block", opacity: 0.7, "width": "10000px", "height": "10000px"});
 	$('body').css({"overflow":"hidden"});
 	$('#create_organization').slideDown(1000);
@@ -129,7 +137,7 @@ var app_details_modal = function(){
     $('.btn').click(function(){$("#create_organization").css("display", "none");$('#screen').css("display", "none")});
 }
 
-      var create_space = function(){
+var create_space = function(){
 	$('#screen').css({	"display": "block", opacity: 0.7, "width": "10000px", "height": "10000px"});
 	$('body').css({"overflow":"hidden"});
 	$('#create_space').slideDown(1000);
@@ -137,7 +145,7 @@ var app_details_modal = function(){
     $('.btn').click(function(){$("#create_space").css("display", "none");$('#screen').css("display", "none")});
 }
 
-         var add_user = function(){
+var add_user = function(){
 	$('#screen').css({	"display": "block", opacity: 0.7, "width": "10000px", "height": "10000px"});
 	$('body').css({"overflow":"hidden"});
 	$('#add_user').slideDown(1000);
@@ -159,6 +167,8 @@ $('#cannot_delete_ctUser_modalb').click(cannot_delete_ctUser_modal);
 $('#toggle_user_admin_modalb').click(toggle_user_admin_modal);
 $('#show_CT_tokenb').click(show_CT_token);
 
+
+$('.delete-organization-button').click(delete_organization_modal);
 
 
 $('#create_app').click(create_tempcta_modal);

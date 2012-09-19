@@ -3,12 +3,22 @@
         <div class="manage_content_header">
             <h2 class="section_title">
                 <span class="organizations_icon"></span>
-                <span id="space_name"></span>
-                <input type="text" id="space_input" onkeydown="if(event.keyCode == 13){hideSpacesInput();}" maxlength="20"/>
+
+                <span id="space_name"><%= $currentSpace_Name %></span>
+
+                <form action="/updateSpace" method="post">
+                    <input type="text" value="" id="space_input" maxlength="20" name="m_spaceName"/>
+                    <input type="submit" style="display: none; width: 1px; height: 1px;">
+                </form>
+
             </h2>
             <div class="icons_options">
                 <span class="control-icon-large edit" onclick="showSpacesInput();">Edit</span>
-                <span class="control-icon-large trash">Delete</span>
+
+                <form action="/deleteCurrentSpace" method="post">
+                        <input type="submit" class="control-icon-large trash">
+                </form>
+
                 <span class="token-icon-large">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
             </div>
         </div>

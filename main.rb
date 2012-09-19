@@ -12,17 +12,23 @@ set :port, UhuruConfig.uhuru_webui_port
 
 
 
-$space_name = 'breadcrumb space'
-$organization_name = 'breadcrumb org'
+$space_name = 'breadcrumb space'                              #this variable will be shown at breadcrumb navigation
+$organization_name = 'breadcrumb org'                         #this variable will be shown at breadcrumb navigation
 
-$path_1
-$path_2
+$path_1                                                       #this is an empty string that will take the value of $organization_name
+$path_2                                                       #this is an empty string that will take the value of $space_name
 
-$slash = '<span class="breadcrumb_slash"> / </span>'
+$currentOrganization                                          #this is the Organization Guid for the current space on the website
+$currentSpace                                                 #this is the Space Guid for the current apps, services and subscriptions on the website
 
-@time = Time.now
-$this_time = @time.strftime("%m/%d/%Y")
+$currentOrganization_Name                                     #this is the Organization NAME STRING for the current space on the website
+$currentSpace_Name                                            #this is the Space NAME STRING for the current space on the website
 
+$slash = '<span class="breadcrumb_slash"> / </span>'          #this is a variable witch holds the / symbol to be rendered afterwards in css, it is used at breadcrumb navigation
+
+@time = Time.now                                              #
+$this_time = @time.strftime("%m/%d/%Y")                       # this is the time variable witch will be passed at every page at the bottom
+                                                              #
 
 def user_token
   if (UhuruConfig.dev_mode)
@@ -54,7 +60,7 @@ get'/infopage' do
 end
 
 
-###################################################################################################
+                  #  --- READ ---  #
 
 get'/organizations' do
   @usertitle = "User" + " " + "Uhuru"
@@ -66,11 +72,11 @@ get'/organizations' do
   organizations_Obj = Organizations.new(user_token)
   organizations_list = organizations_Obj.read_all
 
+  $currentOrganization = nil
+  $currentSpace = nil
+
   erb :organizations, {:locals => {:organizations_list => organizations_list, :organizations_count => organizations_list.count}, :layout => :layout_user}
 end
-
-
-
 
 
 get'/organization:org_guid' do
@@ -80,8 +86,12 @@ get'/organization:org_guid' do
 
   @this_guid = params[:org_guid]
   $organization_name = organizations_Obj.get_name(@this_guid)
-  $path_1 = $slash + '<a href="/organization' + @this_guid + ' "class="breadcrumb_element">' + $organization_name + '</a>'
+  $path_1 = $slash + '<a href="/organization' + @this_guid + ' "class="breadcrumb_element" id="element_organization">' + $organization_name + '</a>'
   $path_2 = ''
+
+  $currentOrganization = @this_guid
+  $currentOrganization_Name = organizations_Obj.get_name(@this_guid)
+  $currentSpace = nil
 
   spaces_list = organizations_Obj.read_spaces(@this_guid)
   owners_list = organizations_Obj.read_owners(@this_guid)
@@ -93,8 +103,6 @@ end
 
 
 
-
-
 get'/space:space_guid' do
   @timeNow = $this_time
 
@@ -103,7 +111,11 @@ get'/space:space_guid' do
 
   @this_guid = params[:space_guid]
   $space_name = spaces_Obj.get_name(@this_guid)
-  $path_2 = $slash + '<a href="/space' + @this_guid + '" class="breadcrumb_element">' + $space_name + '</a>'
+  $path_2 = $slash + '<a href="/space' + @this_guid + '" class="breadcrumb_element" id="element_space">' + $space_name + '</a>'
+
+#  $currentOrganization = nil
+  $currentSpace = @this_guid
+  $currentSpace_Name = spaces_Obj.get_name(@this_guid)
 
   apps_list = spaces_Obj.read_apps(@this_guid)
   services_list = spaces_Obj.read_service_instances(@this_guid)
@@ -112,3 +124,54 @@ get'/space:space_guid' do
 end
 
 
+          # --- CREATE --- UPDATE --- DELETE ---   #
+
+
+post '/createOrganization' do
+  @name = params[:orgName]
+  @message = "Creating organization... Please wait"
+
+  organizations_Obj = Organizations.new(user_token)
+  organizations_Obj.create(@name)
+  redirect "/organizations"
+end
+
+post '/createSpace' do
+  @name = params[:spaceName]
+  @message = "Creating space... Please wait"
+
+  organizations_Obj = Organizations.new(user_token)
+  spaces_Obj = Spaces.new(user_token)
+
+  spaces_Obj.create($currentOrganization, @name)
+  redirect "/organization" + $currentOrganization
+end
+
+post '/updateOrganization' do
+  @name = params[:m_organizationName]
+  organizations_Obj = Organizations.new(user_token)
+  organizations_Obj.update(@name, $currentOrganization)
+  redirect "/organization" + $currentOrganization
+end
+
+post '/deleteCurrentOrganization' do
+  organizations_Obj = Organizations.new(user_token)
+  organizations_Obj.delete($currentOrganization)
+  redirect "/organizations"
+end
+
+post '/updateSpace' do
+  @name = params[:m_spaceName]
+  organizations_Obj = Organizations.new(user_token)
+  spaces_Obj = Spaces.new(user_token)
+
+  spaces_Obj.update(@name, $currentSpace)
+  redirect "/space" + $currentSpace
+end
+
+post '/deleteCurrentSpace' do
+  organizations_Obj = Organizations.new(user_token)
+  spaces_Obj = Spaces.new(user_token)
+  spaces_Obj.delete($currentSpace)
+  redirect "/organizations"
+end
