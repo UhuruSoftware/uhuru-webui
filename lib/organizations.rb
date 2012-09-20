@@ -47,6 +47,13 @@ class Organizations
 
   def delete(org_guid)
     org = @client.organization(org_guid)
+    unless org.spaces.count == 0
+      org.spaces.each do |space|
+        space_gen = Spaces.new(@client.base.token)
+        space_gen.delete(space.guid)
+      end
+    end
+
     org.delete!
 
   rescue Exception => e

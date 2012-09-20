@@ -55,6 +55,20 @@ class Spaces
   def delete(space_guid)
 
     space = @client.space(space_guid)
+    unless space.apps == 0
+      space.apps.each do |app|
+        app_gen = Applications.new(@client.base.token)
+        app_gen.delete(app.guid)
+      end
+    end
+
+    unless space.service_instances.count == 0
+      space.service_instances.each do |service|
+        service_gen = ServiceInstances.new(@client.base.token)
+        service_gen.delete(service.guid)
+      end
+    end
+
     space.delete!
 
   rescue Exception => e

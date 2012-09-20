@@ -24,6 +24,14 @@ class ServiceInstances
     rescue Exception => e
       puts e.inspect
   end
+
+  def delete(service_instance_guid)
+    service_instance = @client.service_instance(service_instance_guid)
+    service_instance.delete!
+
+    rescue Exception => e
+      puts e.inspect
+  end
   
   class Service
     attr_reader :name, :type, :guid

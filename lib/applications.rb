@@ -27,6 +27,15 @@ class Applications
     puts e.inspect
   end
 
+  def delete(app_guid)
+    app = @client.app(app_guid)
+    app.delete!
+
+    rescue Exception => e
+      puts e.inspect
+  end
+
+
   class Application
     attr_reader :name, :framework, :guid
 
