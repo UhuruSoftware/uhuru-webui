@@ -124,7 +124,7 @@ get'/space:space_guid' do
 end
 
 
-          # --- CREATE --- UPDATE --- DELETE ---   #
+          # --- CREATE --- UPDATE --- DELETE ---        ORGANIZATIONS AND SPACES #
 
 
 post '/createOrganization' do
@@ -194,4 +194,21 @@ post '/deleteClickedSpace' do
 
   spaces_Obj.delete(@guid)
   redirect "/organization" + $currentOrganization
+end
+
+
+
+
+post '/testAppCreate' do
+  @name = "java runtime and framework - Test"
+  @runtime = 'd6766cd3-7ef5-4630-ae0e-4bb5dc487b1e'
+  @framework = '526d16a0-78e6-47ea-a64b-055718b998f8'
+
+  organizations_Obj = Organizations.new(user_token)
+  spaces_Obj = Spaces.new(user_token)
+  apps_obj = Applications.new(user_token)
+
+  apps_obj.create($currentSpace, @name, @runtime, @framework)
+
+  redirect "/space" + $currentSpace
 end

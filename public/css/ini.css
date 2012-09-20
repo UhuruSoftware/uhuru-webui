@@ -56,7 +56,7 @@ body
 {
     padding-left: 15px;
     margin-bottom: 10px;
-    font-size: 16px;
+    font-size: 12px;
     font-weight: normal;
     font-family: "Sagoe UI", Verdana, Helvetica, SANS-SERIF;
     text-align: left;
@@ -64,27 +64,27 @@ body
 
 .breadcrumb_element_home
 {
-    padding: 5px;
+    padding: 0px;
     text-decoration: none;
     color: #6eb53c;
 }
 
 .breadcrumb_element
 {
-    padding: 5px;
+    padding: 0px;
     text-decoration: none;
     color: #6eb53c;
 }
 .breadcrumb_element:hover
 {
-    padding: 5px;
+    padding: 0px;
     text-decoration: none;
     color: #6eb53c;
 }
 
 .breadcrumb_slash
 {
-    padding: 5px;
+    padding: 0px;
     text-decoration: none;
     color: #6eb53c;
 }
@@ -284,7 +284,7 @@ button.close {
 {
     position: relative;
     float: left;
-    width: 550px;
+    width: 350px;
     height: 60px;
     margin-top: 0px;
     margin-bottom: 10px;
@@ -293,16 +293,24 @@ button.close {
 .icons_options
 {
     position: relative;
-    width: 200px;
+    width: 250px;
     height: 50px;
     float: right;
-    margin-right: 100px;
+    margin-right: 300px;
 }
 
+.token-icon-large
+{
+    position: absolute;
+    width: 65px;
+    height: 30px;
+    right: 0px;
+    top: 0px;
+}
 #organization_input,
 #space_input
 {
-    width: 420px;
+    width: 360px;
     height: 50px;
     margin: 0px;
     padding: 2px;
@@ -333,15 +341,18 @@ button.close {
     color: #2d2d2d;
     line-height: 40px;
     padding: 0px;
-    margin-left: 40px;
+    margin-left: 70px;
 }
 
 h2 .count
 {
+    position: absolute;
     color: #6eb53c;
     font-size: 56px;
     font-weight: normal;
     line-height: 40px;
+    top: 0px;
+    left: 440px;
 }
 
 .sections a.section_help
@@ -353,6 +364,7 @@ h2 .count
     cursor: default;
     float: left;
     margin-top: 0px;
+    margin-left: 180px;
 }
 
 
@@ -425,8 +437,8 @@ h2 .count
     padding-left: 7px;
     padding-right: 7px;
     padding-top: 7px;
-    -webkit-border-top-left-radius: 10px;
-    -webkit-border-top-right-radius: 10px;
+    -webkit-border-top-left-radius: 3px;
+    -webkit-border-top-right-radius: 3px;
 }
 
 #services_li,
@@ -438,8 +450,8 @@ h2 .count
     padding-left: 7px;
     padding-right: 7px;
     padding-top: 7px;
-    -webkit-border-top-left-radius: 10px;
-    -webkit-border-top-right-radius: 10px;
+    -webkit-border-top-left-radius: 3px;
+    -webkit-border-top-right-radius: 3px;
 }
 
 
@@ -468,8 +480,8 @@ h2 .count
     padding-left: 7px;
     padding-right: 7px;
     padding-top: 7px;
-    -webkit-border-top-left-radius: 10px;
-    -webkit-border-top-right-radius: 10px;
+    -webkit-border-top-left-radius: 3px;
+    -webkit-border-top-right-radius: 3px;
 }
 
 #members_btn_link
@@ -479,8 +491,8 @@ h2 .count
     padding-right: 7px;
     padding-top: 7px;
     background-color: white;
-    -webkit-border-top-left-radius: 10px;
-    -webkit-border-top-right-radius: 10px;
+    -webkit-border-top-left-radius: 3px;
+    -webkit-border-top-right-radius: 3px;
 }
 
 
@@ -680,6 +692,7 @@ h2 .count
     height: 26px;
     width: 26px;
     background: transparent url('../images/alien_hd.png') no-repeat scroll left top;
+    margin-top: 40px;
     display: inline-block;
 }
 
@@ -687,18 +700,20 @@ h2 .count
 {
     background-color: red;
     padding: 2px;
+    display: none;
 }
 .organization_key
 {
     height: 21px;
     width: 21px;
     background: transparent url('../images/alien_hd.png') no-repeat scroll left top;
-    display: inline-block;
+    display: none;
 }
 .organization_cube
 {
     background-color: blue;
     padding: 2px;
+    display: none;
 }
 .organization_check
 {
@@ -768,6 +783,7 @@ h2 .count
 {
     height: 130px;
     clear: both;
+    padding-left: 5px;
 }
 
 
