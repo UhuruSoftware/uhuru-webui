@@ -160,6 +160,15 @@ post '/deleteCurrentOrganization' do
   redirect "/organizations"
 end
 
+post '/deleteClickedOrganization' do
+  @guid = params[:orgGuid]
+  @message = "Deleting organization... Please wait"
+
+  organizations_Obj = Organizations.new(user_token)
+  organizations_Obj.delete(@guid)
+  redirect "/organizations"
+end
+
 post '/updateSpace' do
   @name = params[:m_spaceName]
   organizations_Obj = Organizations.new(user_token)
@@ -173,5 +182,16 @@ post '/deleteCurrentSpace' do
   organizations_Obj = Organizations.new(user_token)
   spaces_Obj = Spaces.new(user_token)
   spaces_Obj.delete($currentSpace)
-  redirect "/organizations"
+  redirect "/organization" + $currentOrganization
+end
+
+post '/deleteClickedSpace' do
+  @guid = params[:spaceGuid]
+  @message = "Deleting organization... Please wait"
+
+  organizations_Obj = Organizations.new(user_token)
+  spaces_Obj = Spaces.new(user_token)
+
+  spaces_Obj.delete(@guid)
+  redirect "/organization" + $currentOrganization
 end

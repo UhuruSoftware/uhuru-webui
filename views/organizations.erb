@@ -15,7 +15,7 @@
                 <span class="organization_members_span"># of members: </span><span class="organization_members_span_value"><%= org.members_count  %></span>
                 <span class="organization_cost_span">monthly cost: </span><span class="organization_cost_span_value"><%= org.cost %></span>
 
-                <a href="#" style="z-index: 5;" class="control-icon trash delete-organization-button"></a>
+                <a href="#"><span style="z-index: 5;" class="control-icon trash delete-organization-button" id="<%= org.name %>" title="<%= org.guid %>" onmousemove="setOrganizationGuid(this);"></span></a>
 
                 <div id="organization_icons">
                     <span class="alien_icons"></span>
@@ -55,7 +55,7 @@
 </div>
 
 
-<div class="modal hide" id="delete_organization_modal">
+<div class="modal hide" id="delete_organization_modal" onmousemove="getOrganizationGuid()">
     <div class="modal-header">
         <button class="close">×</button>
         <h3>Delete cloud</h3>
@@ -67,13 +67,18 @@
         <br />
         <p>
             <strong>
-                WARNING!!! All applications and services in this cloud will be DELETED!!! This action cannot be reversed.
+                WARNING!!! All Spaces, applications and services in this organization will be DELETED!!! This action cannot be reversed.
             </strong>
         </p>
     </div>
     <div class="modal-footer">
         <a href="#" class="btn">No</a>
-        <a href="#" class="btn btn-danger">Yes</a>
-            Deleting cloud...
+
+            <form action="/deleteClickedOrganization" method="post">
+                <input type="submit" class="btn btn-danger" />
+                <input type="text" id="pass_guid" name="orgGuid" style="display: none;" />
+                <%= @message %>
+            </form>
+
     </div>
 </div>

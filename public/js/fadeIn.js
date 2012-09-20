@@ -3,6 +3,14 @@ $('#div2').click(function (){
 });
 $(function(){
 
+var delete_space_modal = function(){
+	$('#screen').css({	"display": "block", opacity: 0.7, "width": "10000px", "height": "10000px"});
+	$('body').css({"overflow":"hidden"});
+	$('#delete_space_modal').slideDown(200);
+    $('.close').click(function(){$("#delete_space_modal").css("display", "none");$('#screen').css("display", "none")});
+    $('.btn').click(function(){$("#delete_space_modal").css("display", "none");$('#screen').css("display", "none")});
+}
+
 var delete_organization_modal = function(){
 	$('#screen').css({	"display": "block", opacity: 0.7, "width": "10000px", "height": "10000px"});
 	$('body').css({"overflow":"hidden"});
@@ -132,17 +140,19 @@ var app_details_modal = function(){
 var create_organization = function(){
 	$('#screen').css({	"display": "block", opacity: 0.7, "width": "10000px", "height": "10000px"});
 	$('body').css({"overflow":"hidden"});
-	$('#create_organization').slideDown(1000);
+	$('#create_organization').slideDown(300);
     $('.close').click(function(){$("#create_organization").css("display", "none");$('#screen').css("display", "none")});
     $('.btn').click(function(){$("#create_organization").css("display", "none");$('#screen').css("display", "none")});
+    $('#org_name').focus();
 }
 
 var create_space = function(){
 	$('#screen').css({	"display": "block", opacity: 0.7, "width": "10000px", "height": "10000px"});
 	$('body').css({"overflow":"hidden"});
-	$('#create_space').slideDown(1000);
+	$('#create_space').slideDown(300);
     $('.close').click(function(){$("#create_space").css("display", "none");$('#screen').css("display", "none")});
     $('.btn').click(function(){$("#create_space").css("display", "none");$('#screen').css("display", "none")});
+    $('#org_name').focus();
 }
 
 var add_user = function(){
@@ -169,6 +179,7 @@ $('#show_CT_tokenb').click(show_CT_token);
 
 
 $('.delete-organization-button').click(delete_organization_modal);
+$('.delete-space-button').click(delete_space_modal);
 
 
 $('#create_app').click(create_tempcta_modal);

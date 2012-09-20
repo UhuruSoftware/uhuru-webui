@@ -1,4 +1,4 @@
-<div class="sections" style="border: 1px solid red;">
+<div class="sections">
 
         <div class="manage_content_header">
             <h2 class="section_title">
@@ -43,7 +43,9 @@
                                 <span class="costs_span">monthly cost: </span><span class="costs_span_value">33</span>
                                 <span class="count-label apps"># of apps: </span><span class="count-value apps"><%= space.apps_count %></span>
                                 <span class="count-label services"># of services: </span><span class="count-value services"><%= space.services_count %></span>
-                                <span class="control-icon trash delete-app-button">  </span>
+
+                                <a href="#"><span class="control-icon trash delete-space-button" id="<%= space.name %>" title="<%= space.guid %>" onmousemove="setSpaceGuid(this);"></span></a>
+
                             </li>
                         </a>
                     <% end %>
@@ -157,6 +159,35 @@
         </div>
 
     </form>
+</div>
+
+
+<div class="modal hide" id="delete_space_modal" onmousemove="getSpaceGuid()">
+    <div class="modal-header">
+        <button class="close">×</button>
+        <h3>Delete Space</h3>
+    </div>
+    <div class="modal-body">
+        <p>
+            Are you sure you want to delete the space "<span></span>"?
+        </p>
+        <br />
+        <p>
+            <strong>
+                WARNING!!! All applications and services in this space will be DELETED!!! This action cannot be reversed.
+            </strong>
+        </p>
+    </div>
+    <div class="modal-footer">
+        <a href="#" class="btn">No</a>
+
+            <form action="/deleteClickedSpace" method="post">
+                <input type="submit" class="btn btn-danger" />
+                <input type="text" id="pass_guid" name="spaceGuid" style="display: none;" />
+                <%= @message %>
+            </form>
+
+    </div>
 </div>
 
 

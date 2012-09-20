@@ -4,6 +4,7 @@ body
 	margin: 0 auto;
 }
 
+#delete_space_modal,
 #delete_organization_modal,
 #add_ctService_modal,
 #saving_modal,
