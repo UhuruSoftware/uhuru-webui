@@ -1,6 +1,7 @@
-$('#div2').click(function (){
-    $('#create_tempcta_modal').fadeIn('slow');
-});
+$('#organizations_page').fadeIn(1500);
+$('#organization_page').fadeIn(1500);
+$('#space_page').slideDown(500);
+
 $(function(){
 
 var delete_space_modal = function(){
@@ -191,6 +192,10 @@ $('#add_user_btn2').click(add_user);
 $('#add_user_btn3').click(add_user);
 
 $('#plus_service').click(add_ctService_modal);
+
+
+
+
 
 //
     //plus and minus memory at SUBSCRIPTIONS

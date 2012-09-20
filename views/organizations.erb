@@ -1,4 +1,4 @@
-<div class="sections">
+<div class="sections" id="organizations_page">
     <div class="manage_content_header">
         <h2 class="section_title">
             <span class="organizations_icon"></span><span id="organization_text">Organizations </span><span class="count">(<span><%= organizations_count  %></span>)</span>
@@ -12,10 +12,10 @@
         <a href="/organization<%= org.guid%>">
             <li class="tileblack">
                 <span class="organization_name_span" id="organization_name_span"><%= org.name %></span>
-                <span class="organization_members_span"># of members: </span><span class="organization_members_span_value"><%= org.members_count  %></span>
+                <span class="organization_members_span"># of members: </span><span class="organization_members_span_value"><%= org.members_count %></span>
                 <span class="organization_cost_span">monthly cost: </span><span class="organization_cost_span_value"><%= org.cost %></span>
 
-                <a href="#"><span style="z-index: 5;" class="control-icon trash delete-organization-button" id="<%= org.name %>" title="<%= org.guid %>" onmousemove="setOrganizationGuid(this);"></span></a>
+                <a href="#"><span class="control-icon trash delete-organization-button" id="<%= org.name %>" title="<%= org.guid %>" onmousemove="setOrganizationGuid(this);"></span></a>
 
                 <div id="organization_icons">
                     <span class="alien_icons"></span>
@@ -31,6 +31,7 @@
     </li>
   </ul>
 </div>
+
 
 
 <div class="modal hide" id="create_organization">

@@ -36,6 +36,12 @@ body
     overflow: auto;
 }
 
+#organizations_page,
+#organization_page,
+#space_page
+{
+    display: none;
+}
 
 #screen
 {

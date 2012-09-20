@@ -98,7 +98,7 @@ get'/organization:org_guid' do
   developers_list = organizations_Obj.read_developers(@this_guid)
   managers_list = organizations_Obj.read_managers(@this_guid)
 
-  erb :organization, {:locals => {:spaces_list => spaces_list, :owners_list => owners_list, :developers_list => developers_list, :managers_list => managers_list}, :layout => :layout_user}
+  erb :organization, {:locals => {:spaces_list => spaces_list, :spaces_count => spaces_list.count, :members_count => owners_list.count + developers_list.count + managers_list.count, :owners_list => owners_list, :developers_list => developers_list, :managers_list => managers_list}, :layout => :layout_user}
 end
 
 
