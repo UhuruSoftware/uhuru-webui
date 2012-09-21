@@ -11,18 +11,15 @@ class ServiceInstances
   end
   
   def create_service_instance(name, space_guid, service_plan_guid)
-    
-    space = @client.space(space_guid)
-    service_plan = @client.service_plan(service_plan_guid)
-    
+
     service = @client.service_instance
     service.name = name
-    service.space = space
-    service.service_plan = service_plan
+    service.space = @client.space(space_guid)
+    service.service_plan = @client.service_plan(service_plan_guid)
     service.create!
     
     rescue Exception => e
-      puts e.inspect
+      puts "#{e.inspect}, #{e.backtrace}"
   end
 
   def delete(service_instance_guid)
@@ -30,7 +27,7 @@ class ServiceInstances
     service_instance.delete!
 
     rescue Exception => e
-      puts e.inspect
+      puts "#{e.inspect}, #{e.backtrace}"
   end
   
   class Service

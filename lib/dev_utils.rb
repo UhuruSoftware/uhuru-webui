@@ -6,7 +6,7 @@ require 'uhuru_config'
 class DevUtils
 
   def self.test_token
-    "bearer eyJhbGciOiJIUzI1NiJ9.eyJpZCI6ImIzZDRlNDY5LWFiN2QtNDRlNy1iNTYwLTc2MzcwN2E5NWFiZiIsInJlc291cmNlX2lkcyI6WyJvcGVuaWQiLCJjbG91ZF9jb250cm9sbGVyIiwicGFzc3dvcmQiXSwiZXhwaXJlc19hdCI6MTM0ODE2ODY5OCwic2NvcGUiOlsib3BlbmlkIl0sImVtYWlsIjoic3JlQHZtd2FyZS5jb20iLCJjbGllbnRfYXV0aG9yaXRpZXMiOlsiUk9MRV9VTlRSVVNURUQiXSwiZXhwaXJlc19pbiI6NDMyMDAsInVzZXJfYXV0aG9yaXRpZXMiOlsiUk9MRV9VU0VSIl0sInVzZXJfaWQiOiJzcmVAdm13YXJlLmNvbSIsImNsaWVudF9pZCI6InZtYyJ9.WFO_XtQSu_LLFEsU689CvKIr9YCiYPBdJxxWfxgupA4"
+    "bearer eyJhbGciOiJIUzI1NiJ9.eyJpZCI6ImIzZDRlNDY5LWFiN2QtNDRlNy1iNTYwLTc2MzcwN2E5NWFiZiIsInJlc291cmNlX2lkcyI6WyJvcGVuaWQiLCJjbG91ZF9jb250cm9sbGVyIiwicGFzc3dvcmQiXSwiZXhwaXJlc19hdCI6MTM0ODI1ODc0OCwic2NvcGUiOlsib3BlbmlkIl0sImVtYWlsIjoic3JlQHZtd2FyZS5jb20iLCJjbGllbnRfYXV0aG9yaXRpZXMiOlsiUk9MRV9VTlRSVVNURUQiXSwiZXhwaXJlc19pbiI6NDMyMDAsInVzZXJfYXV0aG9yaXRpZXMiOlsiUk9MRV9VU0VSIl0sInVzZXJfaWQiOiJzcmVAdm13YXJlLmNvbSIsImNsaWVudF9pZCI6InZtYyJ9.Z6Sdc-FnSxFbCS8m29Y1NOpxDzkbaxK0ITj-P3G1quo"
   end
 
   def initialize(token)
@@ -14,14 +14,14 @@ class DevUtils
   end
 
   def auth_service_token(label, provider, token)
-    servauth = @client.service_auth_token
-    servauth.label = label
-    servauth.provider = provider
-    servauth.token = token
-    servauth.create!
+    serv_auth = @client.service_auth_token
+    serv_auth.label = label
+    serv_auth.provider = provider
+    serv_auth.token = token
+    serv_auth.create!
 
     rescue Exception => e
-      puts e.inspect
+      puts "#{e.inspect}, #{e.backtrace}"
   end
 
   def create_service(label, url)
@@ -36,7 +36,7 @@ class DevUtils
     service.create!
 
     rescue Exception => e
-      puts e.inspect
+      puts "#{e.inspect}, #{e.backtrace}"
   end
 
   def createServicePlan(name, description, service_guid)
@@ -50,7 +50,7 @@ class DevUtils
     service_plan.create!
 
     rescue Exception => e
-      puts e.inspect
+      puts "#{e.inspect}, #{e.backtrace}"
   end
 
 end

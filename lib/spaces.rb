@@ -38,7 +38,7 @@ class Spaces
     new_space.create!
 
   rescue Exception => e
-    puts e.inspect
+    puts "#{e.inspect}, #{e.backtrace}"
   end
 
   def update(name, space_guid)
@@ -48,7 +48,7 @@ class Spaces
     space.update!
 
   rescue Exception => e
-    puts e.inspect
+    puts "#{e.inspect}, #{e.backtrace}"
 
   end
 
@@ -72,7 +72,7 @@ class Spaces
     space.delete!
 
   rescue Exception => e
-    puts e.inspect
+    puts "#{e.inspect}, #{e.backtrace}"
 
   end
 
@@ -81,7 +81,7 @@ class Spaces
     apps = @client.space(space_guid).apps
 
     apps.each do |app|
-      apps_list << Applications::Application.new(app.name, app.framework, app.guid)
+      apps_list << Applications::Application.new(app.name, app.framework, app.guid, app.state, [], app.instances, app.memory)
     end
 
     apps_list

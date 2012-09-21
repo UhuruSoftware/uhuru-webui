@@ -27,13 +27,19 @@ class Organizations
 
   end
 
+  def get_members_count(org_guid)
+    org = @client.organization(org_guid)
+    org.users.count
+
+  end
+
   def create(name)
     new_org = @client.organization
     new_org.name = name
     new_org.create!
 
   rescue Exception => e
-    puts e.inspect
+    puts "#{e.inspect}, #{e.backtrace}"
   end
 
   def update(name, org_guid)
@@ -42,7 +48,7 @@ class Organizations
     org.update!
 
   rescue Exception => e
-    puts e.inspect
+    puts "#{e.inspect}, #{e.backtrace}"
   end
 
   def delete(org_guid)
@@ -57,7 +63,7 @@ class Organizations
     org.delete!
 
   rescue Exception => e
-    puts e.inspect
+    puts "#{e.inspect}, #{e.backtrace}"
   end
 
   def read_spaces(org_guid)

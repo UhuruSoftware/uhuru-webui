@@ -10,7 +10,7 @@ class Applications
     @client = CFoundry::V2::Client.new(UhuruConfig.cloud_controller_api, token)
   end
 
-  def create(space_guid, name, runtime_guid, framework_guid)
+  def create(space_guid, name, runtime_guid, framework_guid, state, services, instances, memory)
 
     space = @client.space(space_guid)
     runtime = @client.runtime(runtime_guid)
@@ -21,10 +21,14 @@ class Applications
     new_app.runtime = runtime
     new_app.framework = framework
     new_app.name = name
+    new_app.state = state
+    new_app.services = services
+    new_app.instances = instances
+    new_app.memory = memory
     new_app.create!
 
   rescue Exception => e
-    puts e.inspect
+    puts "#{e.inspect}, #{e.backtrace}"
   end
 
   def delete(app_guid)
@@ -32,17 +36,21 @@ class Applications
     app.delete!
 
     rescue Exception => e
-      puts e.inspect
+      puts "#{e.inspect}, #{e.backtrace}"
   end
 
 
   class Application
-    attr_reader :name, :framework, :guid
+    attr_accessor :name, :framework, :guid, :state, :services, :instances, :memory
 
-    def initialize(name, framework, guid)
+    def initialize(name, framework, guid, state, services, instances, memory)
       @name = name
       @framework = framework
       @guid = guid
+      @state = state
+      @services = services
+      @instances = instances
+      @memory = memory
     end
   end
 
