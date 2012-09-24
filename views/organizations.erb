@@ -9,9 +9,9 @@
 
   <ul class="tile_list">
     <% organizations_list.each do |org| %>
-        <a href="/organization<%= org.guid%>">
             <li class="tileblack">
-                <span class="organization_name_span" id="organization_name_span"><%= org.name %></span>
+                <a href="/organization<%= org.guid%>" class="link_tiles_ organization_name_span"title="<%= org.guid %>"><span class="to_be_underlined" title="<%= org.guid %>"><%= org.name %></span></a>
+
                 <span class="organization_members_span"># of members: </span><span class="organization_members_span_value"><%= org.members_count %></span>
                 <span class="organization_cost_span">monthly cost: </span><span class="organization_cost_span_value"><%= org.cost %></span>
 
@@ -23,7 +23,6 @@
                     <span class="organization_key"></span>
                 </div>
             </li>
-        </a>
     <% end %>
 
     <li class="new tile" id="create_organization_btn">

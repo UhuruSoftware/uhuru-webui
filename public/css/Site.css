@@ -202,7 +202,8 @@ html, body
   font-size: 12px;
   font-weight: bold;
   height: 1em;
-  margin: 10px 0 20px;
+  margin: 10px 0px 40px 0px;
+  padding: 0px;
   text-transform: uppercase;
 }
 
@@ -337,6 +338,7 @@ input.user-name
     background-color: #2d2d2d;
     position: relative;
     cursor: pointer;
+    list-style: none;
 }
 
 .tile.half-height
@@ -972,6 +974,7 @@ textarea
 #site_footer .bottom .page-margin
 {
     padding-top: 20px;
+    text-align: left;
 }
 
 #site_footer .bottom

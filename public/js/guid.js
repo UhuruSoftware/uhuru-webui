@@ -23,5 +23,3 @@ function getSpaceGuid()
 {
     document.getElementById('pass_guid').value =  thisSpaceGuid;
 }
-
-
