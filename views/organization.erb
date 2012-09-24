@@ -37,17 +37,16 @@
                     <ul class="tile_list">
 
                     <% spaces_list.each do |space| %>
-                        <a href="/space<%= space.guid %>">
                             <li class="tileorange">
-                                <span class="space_name"><%= space.name %></span>
-                                <span class="costs_span">monthly cost: </span><span class="costs_span_value">33</span>
-                                <span class="count-label apps"># of apps: </span><span class="count-value apps"><%= space.apps_count %></span>
-                                <span class="count-label services"># of services: </span><span class="count-value services"><%= space.services_count %></span>
+                                <a href="/space<%= space.guid %>" class="link_tiles_">
+                                    <span class="space_name"><%= space.name %></span>
+                                    <span class="costs_span">monthly cost: </span><span class="costs_span_value">33</span>
+                                    <span class="count-label apps"># of apps: </span><span class="count-value apps"><%= space.apps_count %></span>
+                                    <span class="count-label services"># of services: </span><span class="count-value services"><%= space.services_count %></span>
 
-                                <a href="#"><span class="control-icon trash delete-space-button" id="<%= space.name %>" title="<%= space.guid %>" onmousemove="setSpaceGuid(this);"></span></a>
-
+                                    <a href="#"><span class="control-icon trash delete-space-button" id="<%= space.name %>" title="<%= space.guid %>" onmousemove="setSpaceGuid(this);"></span></a>
+                                </a>
                             </li>
-                        </a>
                     <% end %>
 
                         <li class="new tile" id="create_space_btn">

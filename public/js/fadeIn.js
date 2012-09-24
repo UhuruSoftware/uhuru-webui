@@ -1,6 +1,6 @@
-$('#organizations_page').fadeIn(500);
-$('#organization_page').fadeIn(500);
-$('#space_page').fadeIn(500);
+$('#organizations_page').fadeIn(200);
+$('#organization_page').fadeIn(200);
+$('#space_page').fadeIn(200);
 
 $(function(){
 

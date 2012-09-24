@@ -1,6 +1,6 @@
 
 cloudfoundry:
-  cloud-controller-api: "http://192.168.1.125:8181"
+  cloud-controller-api: "http://192.168.1.113:8181"
 
 uhuru:
   webui-port: 9494

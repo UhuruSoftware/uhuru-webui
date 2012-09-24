@@ -337,6 +337,7 @@ input.user-name
     background-color: #2d2d2d;
     position: relative;
     cursor: pointer;
+    list-style: none;
 }
 
 .tile.half-height
