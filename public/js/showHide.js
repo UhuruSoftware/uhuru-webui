@@ -1,5 +1,12 @@
 //Show hide Members and Spaces from Organization page
 
+var Hspaces = false;
+var Hmembers = true;
+
+var Happs = false;
+var Hservices = true;
+var Hsubscriptions = true;
+
 function showSpaces()
 {
      document.getElementById('spaces').style.display = 'block';
@@ -8,13 +15,24 @@ function showSpaces()
         document.getElementById('spaces_btn_link').style.borderLeft = '1px solid #DDD';
         document.getElementById('spaces_btn_link').style.borderRight = '1px solid #DDD';
         document.getElementById('spaces_btn_link').style.backgroundColor = 'white';
+        document.getElementById('spaces_btn_link').style.color = "#0071b7";
+        document.getElementById('spaces_btn_link').style.fontWeight = "bold";
+
+
 
         document.getElementById('members_btn_link').style.paddingBottom = '0px';
         document.getElementById('members_btn_link').style.borderTop = '0px solid #DDD';
         document.getElementById('members_btn_link').style.borderLeft = '0px solid #DDD';
         document.getElementById('members_btn_link').style.borderRight = '0px solid #DDD';
+
+        document.getElementById('members_btn_link').style.color = "#404040";
+        document.getElementById('members_btn_link').style.fontWeight = "normal";
+
         document.getElementById('tabs').style.borderBottom = '1px solid #DDD';
      document.getElementById('members').style.display = 'none';
+
+    Hspaces = false;
+    Hmembers = true;
 }
 
 function showMembers()
@@ -25,18 +43,33 @@ function showMembers()
         document.getElementById('members_btn_link').style.borderLeft = '1px solid #DDD';
         document.getElementById('members_btn_link').style.borderRight = '1px solid #DDD';
         document.getElementById('members_btn_link').style.backgroundColor = 'white';
+        document.getElementById('members_btn_link').style.color = "#0071b7";
+        document.getElementById('members_btn_link').style.fontWeight = "bold";
+
+
 
         document.getElementById('spaces_btn_link').style.paddingBottom = '0px';
         document.getElementById('spaces_btn_link').style.borderTop = '0px solid #DDD';
         document.getElementById('spaces_btn_link').style.borderLeft = '0px solid #DDD';
         document.getElementById('spaces_btn_link').style.borderRight = '0px solid #DDD';
+
+
+        document.getElementById('spaces_btn_link').style.color = "#404040";
+        document.getElementById('spaces_btn_link').style.fontWeight = "normal";
+
         document.getElementById('tabs').style.borderBottom = '1px solid #DDD';
      document.getElementById('spaces').style.display = 'none';
+
+    Hmembers = false;
+    Hspaces = true;
 }
 
 function hoverSpaces()
 {
-    document.getElementById('spaces_btn_link').style.backgroundColor = '#effbfb';
+    if(Hspaces)
+    {
+        document.getElementById('spaces_btn_link').style.backgroundColor = '#efefef';
+    }
 }
 function unhoverSpaces()
 {
@@ -45,7 +78,10 @@ function unhoverSpaces()
 
 function hoverMembers()
 {
-    document.getElementById('members_btn_link').style.backgroundColor = '#effbfb';
+    if(Hmembers)
+    {
+    document.getElementById('members_btn_link').style.backgroundColor = '#efefef';
+    }
 }
 function unhoverMembers()
 {
@@ -67,6 +103,9 @@ function showApps()
         document.getElementById('apps_li').style.borderRight = '1px solid #DDD';
         document.getElementById('apps_li').style.backgroundColor = 'white';
 
+        document.getElementById('apps_li').style.color = "#0071b7";
+        document.getElementById('apps_li').style.fontWeight = "bold";
+
 
 
         document.getElementById('services_li').style.paddingBottom = '0px';
@@ -74,6 +113,10 @@ function showApps()
         document.getElementById('services_li').style.borderLeft = '0px solid #DDD';
         document.getElementById('services_li').style.borderRight = '0px solid #DDD';
         document.getElementById('spaces_tabs').style.borderBottom = '1px solid #DDD';
+
+        document.getElementById('services_li').style.color = "#404040";
+        document.getElementById('services_li').style.fontWeight = "normal";
+
      document.getElementById('services').style.display = 'none';
 
         document.getElementById('subscriptions_li').style.paddingBottom = '0px';
@@ -81,7 +124,15 @@ function showApps()
         document.getElementById('subscriptions_li').style.borderLeft = '0px solid #DDD';
         document.getElementById('subscriptions_li').style.borderRight = '0px solid #DDD';
         document.getElementById('spaces_tabs').style.borderBottom = '1px solid #DDD';
+
+        document.getElementById('subscriptions_li').style.color = "#404040";
+        document.getElementById('subscriptions_li').style.fontWeight = "normal";
+
      document.getElementById('subscriptions').style.display = 'none';
+
+    Happs = false;
+    Hservices = true;
+    Hsubscriptions = true;
 }
 
 function showServices()
@@ -92,6 +143,8 @@ function showServices()
         document.getElementById('services_li').style.borderLeft = '1px solid #DDD';
         document.getElementById('services_li').style.borderRight = '1px solid #DDD';
         document.getElementById('services_li').style.backgroundColor = 'white';
+        document.getElementById('services_li').style.color = "#0071b7";
+        document.getElementById('services_li').style.fontWeight = "bold";
 
 
 
@@ -101,6 +154,10 @@ function showServices()
         document.getElementById('apps_li').style.borderLeft = '0px solid #DDD';
         document.getElementById('apps_li').style.borderRight = '0px solid #DDD';
         document.getElementById('spaces_tabs').style.borderBottom = '1px solid #DDD';
+
+        document.getElementById('apps_li').style.color = "#404040";
+        document.getElementById('apps_li').style.fontWeight = "normal";
+
      document.getElementById('apps').style.display = 'none';
 
         document.getElementById('subscriptions_li').style.paddingBottom = '0px';
@@ -108,7 +165,15 @@ function showServices()
         document.getElementById('subscriptions_li').style.borderLeft = '0px solid #DDD';
         document.getElementById('subscriptions_li').style.borderRight = '0px solid #DDD';
         document.getElementById('spaces_tabs').style.borderBottom = '1px solid #DDD';
+
+        document.getElementById('subscriptions_li').style.color = "#404040";
+        document.getElementById('subscriptions_li').style.fontWeight = "normal";
+
      document.getElementById('subscriptions').style.display = 'none';
+
+    Hservices = false;
+    Happs = true;
+    Hsubscriptions = true;
 }
 
 function showSubscriptions()
@@ -119,6 +184,8 @@ function showSubscriptions()
         document.getElementById('subscriptions_li').style.borderLeft = '1px solid #DDD';
         document.getElementById('subscriptions_li').style.borderRight = '1px solid #DDD';
         document.getElementById('subscriptions_li').style.backgroundColor = 'white';
+        document.getElementById('subscriptions_li').style.color = "#0071b7";
+        document.getElementById('subscriptions_li').style.fontWeight = "bold";
 
 
 
@@ -128,6 +195,10 @@ function showSubscriptions()
         document.getElementById('services_li').style.borderLeft = '0px solid #DDD';
         document.getElementById('services_li').style.borderRight = '0px solid #DDD';
         document.getElementById('spaces_tabs').style.borderBottom = '1px solid #DDD';
+
+        document.getElementById('services_li').style.color = "#404040";
+        document.getElementById('services_li').style.fontWeight = "normal";
+
      document.getElementById('services').style.display = 'none';
 
         document.getElementById('apps_li').style.paddingBottom = '0px';
@@ -135,13 +206,24 @@ function showSubscriptions()
         document.getElementById('apps_li').style.borderLeft = '0px solid #DDD';
         document.getElementById('apps_li').style.borderRight = '0px solid #DDD';
         document.getElementById('spaces_tabs').style.borderBottom = '1px solid #DDD';
+
+        document.getElementById('apps_li').style.color = "#404040";
+        document.getElementById('apps_li').style.fontWeight = "normal";
+
      document.getElementById('apps').style.display = 'none';
+
+    Hsubscriptions = false;
+    Happs = true;
+    Hservices = true;
 }
 
 
 function hoverApps()
 {
-    document.getElementById('apps_li').style.backgroundColor = '#effbfb';
+    if(Happs)
+    {
+    document.getElementById('apps_li').style.backgroundColor = '#efefef';
+    }
 }
 function unhoverApps()
 {
@@ -150,7 +232,10 @@ function unhoverApps()
 
 function hoverServices()
 {
-    document.getElementById('services_li').style.backgroundColor = '#effbfb';
+    if(Hservices)
+    {
+    document.getElementById('services_li').style.backgroundColor = '#efefef';
+    }
 }
 function unhoverServices()
 {
@@ -159,7 +244,10 @@ function unhoverServices()
 
 function hoverSubscriptions()
 {
-    document.getElementById('subscriptions_li').style.backgroundColor = '#effbfb';
+    if(Hsubscriptions)
+    {
+    document.getElementById('subscriptions_li').style.backgroundColor = '#efefef';
+    }
 }
 function unhoverSubscribtions()
 {

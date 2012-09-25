@@ -17,6 +17,7 @@ $organization_name = 'breadcrumb org'                         #this variable wil
 
 $path_1                                                       #this is an empty string that will take the value of $organization_name
 $path_2                                                       #this is an empty string that will take the value of $space_name
+$path_home                                                    #= <a href="/organizations" class="breadcrumb_element_home">Organizations:</a>
 
 $currentOrganization                                          #this is the Organization Guid for the current space on the website
 $currentSpace                                                 #this is the Space Guid for the current apps, services and subscriptions on the website
@@ -68,6 +69,7 @@ get'/organizations' do
 
   $path_1 = ''
   $path_2 = ''
+  $path_home = '<a href="/organizations" class="breadcrumb_element_home">Organizations:</a>'
 
   organizations_Obj = Organizations.new(user_token)
   organizations_list = organizations_Obj.read_all
@@ -88,6 +90,7 @@ get'/organization:org_guid' do
   $organization_name = organizations_Obj.get_name(@this_guid)
   $path_1 = $slash + '<a href="/organization' + @this_guid + ' "class="breadcrumb_element" id="element_organization">' + $organization_name + '</a>'
   $path_2 = ''
+  $path_home = '<a href="/organizations" class="breadcrumb_element_home">Organizations:</a>'
 
   $currentOrganization = @this_guid
   $currentOrganization_Name = organizations_Obj.get_name(@this_guid)
@@ -112,6 +115,7 @@ get'/space:space_guid' do
   @this_guid = params[:space_guid]
   $space_name = spaces_Obj.get_name(@this_guid)
   $path_2 = $slash + '<a href="/space' + @this_guid + '" class="breadcrumb_element" id="element_space">' + $space_name + '</a>'
+  $path_home = '<a href="/organizations" class="breadcrumb_element_home">Organizations:</a>'
 
 #  $currentOrganization = nil
   $currentSpace = @this_guid
