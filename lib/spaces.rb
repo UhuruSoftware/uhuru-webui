@@ -28,6 +28,18 @@ class Spaces
 
   end
 
+  def set_current_space(space_guid)
+    space = nil
+    unless space_guid != nil
+      space = @client.space(space_guid)
+    end
+
+    @client.current_space = space
+
+    rescue Exception => e
+    puts "#{e.inspect}, #{e.backtrace}"
+  end
+
   def create(org_guid, name)
 
     org = @client.organization(org_guid)
@@ -81,7 +93,7 @@ class Spaces
     apps = @client.space(space_guid).apps
 
     apps.each do |app|
-      apps_list << Applications::Application.new(app.name, app.framework, app.guid, app.state, [], app.instances, app.memory)
+      apps_list << Applications::Application.new(app.name, app.framework, app.guid, app.state, [], app.total_instances, app.memory)
     end
 
     apps_list
@@ -92,7 +104,8 @@ class Spaces
     services = @client.space(space_guid).service_instances
 
     services.each do |service|
-      services_list << ServiceInstances::Service.new(service.name, service.framework, service.guid)
+      type = service.service_plan.service.label
+      services_list << ServiceInstances::Service.new(service.name, type, service.guid)
     end
 
     services_list

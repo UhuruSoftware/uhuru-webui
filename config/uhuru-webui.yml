@@ -1,8 +1,11 @@
 
 cloudfoundry:
-  cloud-controller-api: "http://192.168.1.113:8181"
+  cloud-controller-api: "http://api2.ccng-dev.net"
+  #cloud-controller-api: "http://192.168.1.113:8181"
 
 uhuru:
   webui-port: 9494
   dev-mode: true
 
+logger:
+  path: "logs/main.log"

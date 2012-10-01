@@ -33,6 +33,18 @@ class Organizations
 
   end
 
+  def set_current_org(org_guid)
+    org = nil
+    unless org_guid != nil
+      org = @client.organization(org_guid)
+    end
+
+    @client.current_organization = org
+
+    rescue Exception => e
+    puts "#{e.inspect}, #{e.backtrace}"
+  end
+
   def create(name)
     new_org = @client.organization
     new_org.name = name

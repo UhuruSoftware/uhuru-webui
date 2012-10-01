@@ -96,6 +96,7 @@ get'/organization:org_guid' do
   $currentOrganization_Name = organizations_Obj.get_name(@this_guid)
   $currentSpace = nil
 
+  organizations_Obj.set_current_org(@this_guid)
   spaces_list = organizations_Obj.read_spaces(@this_guid)
   owners_list = organizations_Obj.read_owners(@this_guid)
   developers_list = organizations_Obj.read_developers(@this_guid)
@@ -121,6 +122,7 @@ get'/space:space_guid' do
   $currentSpace = @this_guid
   $currentSpace_Name = spaces_Obj.get_name(@this_guid)
 
+  spaces_Obj.set_current_space(@this_guid)
   apps_list = spaces_Obj.read_apps(@this_guid)
   services_list = spaces_Obj.read_service_instances(@this_guid)
 

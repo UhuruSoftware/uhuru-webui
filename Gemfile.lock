@@ -1,0 +1,18 @@
+GIT
+  remote: https://github.com/cloudfoundry/common.git
+  revision: e36886a189b82f880a5aa3e9169712d5d9048a88
+  ref: e36886a1
+  specs:
+    vcap_logging (1.0.1)
+      rake
+
+GEM
+  remote: http://rubygems.org/
+  specs:
+    rake (0.9.2.2)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  vcap_logging!
