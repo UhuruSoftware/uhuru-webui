@@ -126,7 +126,7 @@ get'/space:space_guid' do
   apps_list = spaces_Obj.read_apps(@this_guid)
   services_list = spaces_Obj.read_service_instances(@this_guid)
 
-  erb :space, {:locals => {:apps_list => apps_list, :services_list => services_list}, :layout => :layout_user}
+  erb :space, {:locals => {:apps_list => apps_list, :services_list => services_list, :apps_count => apps_list.count, :services_count => services_list.count}, :layout => :layout_user}
 end
 
 
@@ -202,11 +202,43 @@ post '/deleteClickedSpace' do
   redirect "/organization" + $currentOrganization
 end
 
+post '/deleteClickedApp' do
+  @guid = params[:appGuid]
+  @message = "Deleting organization... Please wait"
 
+  organizations_Obj = Organizations.new(user_token)
+  spaces_Obj = Spaces.new(user_token)
+  applications_Obj = Applications.new(user_token)
+
+  applications_Obj.delete(@guid)
+  redirect "/space" + $currentSpace
+end
+
+post '/deleteClickedService' do
+  @guid = params[:serviceGuid]
+  @message = "Deleting organization... Please wait"
+
+  organizations_Obj = Organizations.new(user_token)
+  spaces_Obj = Spaces.new(user_token)
+
+ # applications_Obj = Applications.new(user_token)
+
+  #applications_Obj.delete(@guid)
+  #redirect "/space" + $currentSpace
+end
+
+
+
+
+
+get '/xml' do
+  content_type 'text/xml'
+  "<template name='Dddd' />"
+end
 
 
 post '/testAppCreate' do
-  @name = "java runtime and framework - Test"
+  @name =  params[:appName]
   @runtime = 'd6766cd3-7ef5-4630-ae0e-4bb5dc487b1e'
   @framework = '526d16a0-78e6-47ea-a64b-055718b998f8'
 

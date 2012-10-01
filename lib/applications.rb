@@ -29,9 +29,8 @@ class Applications
     path = "/home/adauser/Desktop/testphpinfo"
 
     if (new_app.create!)
-      new_app.upload(path, true)
-      new_app.start!
-
+#      new_app.upload(path, true)
+#      new_app.start!
     end
 
     rescue Exception => e

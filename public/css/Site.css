@@ -1213,15 +1213,15 @@ textarea
 /*Tile structure*/
 #app_smallcontainer
 {
-    margin:10px auto 15px;
+    margin:0px auto 15px;
 }
 
 .app_tiles
 {
     width:160px;
-    height:70px;
+    height:45px;
     background-color:#2d2d2d;
-    background-position:120px 30px;
+    background-position:120px 10px;
 	background-repeat:no-repeat;
 	margin:1px;
 }
@@ -1229,23 +1229,37 @@ textarea
 .app_tiles_download
 {
     width:100px;
-    height:70px;
+    height:45px;
     background-color:#2d2d2d;
     background-image:url("../images/cloud_white_small.png");
-    background-position:40px 30px;
+    background-position:40px 10px;
 	background-repeat:no-repeat;
 	margin:1px;
+    cursor: pointer;
+
+    border: 0px solid white;
+    color: #ffffff;
+    text-align: left;
+    font-weight: normal;
+    padding-bottom: 10px;
 }
 
 .app_tiles_cloudpush
 {
     width:100px;
-    height:70px;
+    height:45px;
     background-color:#2d2d2d;
     background-image:url("../images/howto_white_small.png");
-    background-position:40px 30px;
+    background-position:40px 10px;
 	background-repeat:no-repeat;
 	margin:1px;
+    cursor: pointer;
+
+    border: 0px solid white;
+    color: #ffffff;
+    text-align: left;
+    font-weight: normal;
+    padding-bottom: 10px;
 }
 
 #app_magento

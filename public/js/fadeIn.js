@@ -4,6 +4,8 @@ $('#space_page').fadeIn(200);
 
 $(function(){
 
+
+
 var delete_space_modal = function(){
 	$('#screen').css({	"display": "block", opacity: 0.7, "width": "10000px", "height": "10000px"});
 	$('body').css({"overflow":"hidden"});
@@ -19,6 +21,29 @@ var delete_organization_modal = function(){
     $('.close').click(function(){$("#delete_organization_modal").css("display", "none");$('#screen').css("display", "none")});
     $('.btn').click(function(){$("#delete_organization_modal").css("display", "none");$('#screen').css("display", "none")});
 }
+
+var delete_app = function(){
+	$('#screen').css({	"display": "block", opacity: 0.7, "width": "10000px", "height": "10000px"});
+	$('body').css({"overflow":"hidden"});
+	$('#delete_app').slideDown(200);
+    $('.close').click(function(){$("#delete_app").css("display", "none");$('#screen').css("display", "none")});
+    $('.btn').click(function(){$("#delete_app").css("display", "none");$('#screen').css("display", "none")});
+}
+
+var delete_service = function(){
+	$('#screen').css({	"display": "block", opacity: 0.7, "width": "10000px", "height": "10000px"});
+	$('body').css({"overflow":"hidden"});
+	$('#delete_service').slideDown(200);
+    $('.close').click(function(){$("#delete_service").css("display", "none");$('#screen').css("display", "none")});
+    $('.btn').click(function(){$("#delete_service").css("display", "none");$('#screen').css("display", "none")});
+}
+
+
+
+
+
+
+
 
 
 var create_tempcta_modal = function(){
@@ -181,7 +206,8 @@ $('#show_CT_tokenb').click(show_CT_token);
 
 $('.delete-organization-button').click(delete_organization_modal);
 $('.delete-space-button').click(delete_space_modal);
-
+    $('.delete-app-button').click(delete_app);
+    $('.delete-service-button').click(delete_service);
 
 $('#create_app').click(create_tempcta_modal);
 $('#app_detail').click(app_details_modal);

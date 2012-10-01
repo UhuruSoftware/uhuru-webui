@@ -4,6 +4,8 @@ body
 	margin: 0 auto;
 }
 
+#delete_app,
+#delete_service,
 #delete_space_modal,
 #delete_organization_modal,
 #add_ctService_modal,
@@ -487,6 +489,7 @@ h2 .count
     -webkit-border-top-right-radius: 3px;
     font-weight: bold;
     color: #0071b7;
+    cursor: pointer;
 }
 
 #members_btn_link
@@ -499,6 +502,7 @@ h2 .count
     -webkit-border-top-left-radius: 3px;
     -webkit-border-top-right-radius: 3px;
     color: #404040;
+    cursor: pointer;
 }
 
 
@@ -831,7 +835,7 @@ h2 .count
 {
     height: 130px;
     clear: both;
-    padding-left: 5px;
+    padding-left: 0px;
 }
 
 
