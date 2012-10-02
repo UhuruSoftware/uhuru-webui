@@ -5,6 +5,7 @@ require 'yaml'
 require 'uhuru_config'
 require 'dev_utils'
 require 'date'
+require 'readapps'
 
 UhuruConfig.load
 
@@ -102,6 +103,7 @@ get'/organization:org_guid' do
   developers_list = organizations_Obj.read_developers(@this_guid)
   managers_list = organizations_Obj.read_managers(@this_guid)
 
+
   erb :organization, {:locals => {:spaces_list => spaces_list, :spaces_count => spaces_list.count, :members_count => owners_list.count + developers_list.count + managers_list.count, :owners_list => owners_list, :developers_list => developers_list, :managers_list => managers_list}, :layout => :layout_user}
 end
 
@@ -112,6 +114,7 @@ get'/space:space_guid' do
 
   organizations_Obj = Organizations.new(user_token)
   spaces_Obj = Spaces.new(user_token)
+  readapps_Obj = TemplateApps.new
 
   @this_guid = params[:space_guid]
   $space_name = spaces_Obj.get_name(@this_guid)
@@ -126,7 +129,9 @@ get'/space:space_guid' do
   apps_list = spaces_Obj.read_apps(@this_guid)
   services_list = spaces_Obj.read_service_instances(@this_guid)
 
-  erb :space, {:locals => {:apps_list => apps_list, :services_list => services_list, :apps_count => apps_list.count, :services_count => services_list.count}, :layout => :layout_user}
+  apps_names = readapps_Obj.read_apps
+
+  erb :space, {:locals => {:apps_names => apps_names, :apps_list => apps_list, :services_list => services_list, :apps_count => apps_list.count, :services_count => services_list.count}, :layout => :layout_user}
 end
 
 
@@ -231,9 +236,17 @@ end
 
 
 
-get '/xml' do
-  content_type 'text/xml'
-  "<template name='Dddd' />"
+
+
+
+####test####
+
+
+get '/yaml' do
+
+  #temp = TemplateApps.new
+  #temp.read_apps.each {|x| puts x[name]}
+
 end
 
 

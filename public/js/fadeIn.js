@@ -204,13 +204,17 @@ $('#toggle_user_admin_modalb').click(toggle_user_admin_modal);
 $('#show_CT_tokenb').click(show_CT_token);
 
 
+
+
 $('.delete-organization-button').click(delete_organization_modal);
 $('.delete-space-button').click(delete_space_modal);
     $('.delete-app-button').click(delete_app);
     $('.delete-service-button').click(delete_service);
+$('.show_this_app_details').click(app_details_modal);
+
+
 
 $('#create_app').click(create_tempcta_modal);
-$('#app_detail').click(app_details_modal);
 $('#create_organization_btn').click(create_organization);
 $('#create_space_btn').click(create_space);
 $('#add_user_btn1').click(add_user);

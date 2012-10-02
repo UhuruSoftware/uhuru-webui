@@ -10,7 +10,7 @@
   <ul class="tile_list">
     <% organizations_list.each do |org| %>
             <li class="tileblack">
-                <a href="/organization<%= org.guid%>" class="link_tiles_org"title="<%= org.guid %>"><span class="to_be_underlined organization_name_span" title="<%= org.guid %>"><%= org.name %></span></a>
+                <a href="/organization<%= org.guid%>" class="link_tiles_org" title="<%= org.guid %>"><span class="to_be_underlined organization_name_span" title="<%= org.guid %>"><%= org.name %></span></a>
 
                 <span class="organization_members_span"># of members: </span><span class="organization_members_span_value"><%= org.members_count %></span>
                 <span class="organization_cost_span">monthly cost: </span><span class="organization_cost_span_value"><%= org.cost %></span>
@@ -75,7 +75,7 @@
         <a href="#" class="btn">No</a>
 
             <form action="/deleteClickedOrganization" method="post">
-                <input type="submit" class="btn btn-danger" />
+                <input type="submit" class="btn btn-danger yes_button" />
                 <input type="text" id="pass_guid" name="orgGuid" style="display: none;" />
                 <%= @message %>
             </form>

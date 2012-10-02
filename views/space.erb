@@ -39,7 +39,7 @@
                     <ul class="tile_list">
 
                       <% apps_list.each do |app| %>
-                        <li class="tileblue"> <!--  FOR EACH APP ID THE DETAILS SHOULD SPAWN NOT ONLY FOR THE FIRST TILE  -->
+                        <li class="tileblue show_this_app_details" id="<%= app.name %>" onmousemove="setAppName(this);"> <!--  FOR EACH APP ID THE DETAILS SHOULD SPAWN NOT ONLY FOR THE FIRST TILE  -->
                             <a>
                                 <span class="app_name"><%= app.name %></span>
                                 <a href="#"><span class="control-icon trash delete-app-button" id="<%= app.name %>" title="<%= app.guid %>" onmousemove="setAppGuid(this);"></span></a>
@@ -194,11 +194,11 @@
                     <div class="app-control">
                         <div class="tile blue">
                             <h3>
-                                <span class="app_name_big">name</span>
+                                <span class="app_name_big" id="app_name_big"></span>
                             </h3>
 
                             <span class="app_status" style="font-weight: bold">Status: <span style="font-weight: normal"></span></span>
-                            <span class="control-icon trash delete-service-button"></span>
+                            <a href="#"><span class="control-icon trash delete-app-button"></span></a>
                         </div>
                         <div class="app-actions start"></div>
                         <div class="app-actions stop"></div>
@@ -601,141 +601,31 @@
 
     <div class="modal-body">
 <!-- APP TABLE -->
+
             <div id="app_smallcontainer">
                 <table id="app_table">
 
-                    <tr>
-                        <td>
-                            <div class="app_tiles" id = "app_magento">
-                                <span class="app_name_span"></span>
-                            </div>
-                        </td>
-                        <td>
-                            <a href="#">
-                                <input type="button" value="Download" class="app_tiles_download" />
-                            </a>
-                        </td>
-                        <td>
-                            <input type="submit" value="Push" class="app_tiles_cloudpush" />
-                        </td>
-                    </tr>
+                    <% apps_names.each do |name| %>
+                        <tr>
+                            <td>
+                                <div class="app_tiles" id = "<%= name['id'] %>">
+                                    <span class="app_name_span"><%= name['name'] %></span>
+                                </div>
+                            </td>
+                            <td>
+                                <a href="<%= name['download-location'] %>">
+                                    <input type="button" value="Download" class="app_tiles_download" />
+                                </a>
+                            </td>
+                            <td>
+                                <input type="submit" value="Push" class="app_tiles_cloudpush" />
+                            </td>
+                        </tr>
+                    <% end %>
 
-
-
-
-                    <tr>
-                        <td>
-                            <div class="app_tiles" id = "app_wordpress">
-                                <span class="app_name_span"></span>
-                            </div>
-                        </td>
-                        <td>
-                            <a href="#">
-                                <input type="button" value="Download" class="app_tiles_download" />
-                            </a>
-                        </td>
-                        <td>
-                            <input type="submit" value="Push" class="app_tiles_cloudpush" />
-                        </td>
-                    </tr>
-
-
-
-
-                    <tr>
-                        <td>
-                            <div class="app_tiles" id = "app_sugarCRM">
-                                <span class="app_name_span"></span>
-                            </div>
-                        </td>
-                        <td>
-                            <a href="#">
-                                <input type="button" value="Download" class="app_tiles_download" />
-                            </a>
-                        </td>
-                        <td>
-                            <input type="submit" value="Push" class="app_tiles_cloudpush" />
-                        </td>
-                    </tr>
-
-
-
-
-                     <tr>
-                        <td>
-                            <div class="app_tiles" id = "app_joomla">
-                                <span class="app_name_span"></span>
-                            </div>
-                        </td>
-                        <td>
-                            <a href="#">
-                                <input type="button" value="Download" class="app_tiles_download" />
-                            </a>
-                        </td>
-                        <td>
-                            <input type="submit" value="Push" class="app_tiles_cloudpush" />
-                        </td>
-                    </tr>
-
-
-
-
-                     <tr>
-                        <td>
-                            <div class="app_tiles" id = "app_drupal">
-                                <span class="app_name_span"></span>
-                            </div>
-                        </td>
-                        <td>
-                            <a href="#">
-                                <input type="button" value="Download" class="app_tiles_download" />
-                            </a>
-                        </td>
-                        <td>
-                            <input type="submit" value="Push" class="app_tiles_cloudpush" />
-                        </td>
-                    </tr>
-
-
-
-
-
-                     <tr>
-                        <td>
-                            <div class="app_tiles" id = "app_umbraco">
-                                <span class="app_name_span"></span>
-                            </div>
-                        </td>
-                        <td>
-                            <a href="#">
-                                <input type="button" value="Download" class="app_tiles_download" />
-                            </a>
-                        </td>
-                        <td>
-                            <input type="submit" value="Push" class="app_tiles_cloudpush" />
-                        </td>
-                    </tr>
-
-
-
-
-                     <tr>
-                        <td>
-                            <div class="app_tiles" id = "app_orchard">
-                                <span class="app_name_span"></span>
-                            </div>
-                        </td>
-                        <td>
-                            <a href="#">
-                                <input type="button" value="Download" class="app_tiles_download" />
-                            </a>
-                        </td>
-                        <td>
-                            <input type="submit" value="Push" class="app_tiles_cloudpush" />
-                        </td>
-                    </tr>
                 </table>
             </div>
+
 <!-- APP TABLE -->
     </div>
 
