@@ -33,12 +33,12 @@ function getSpaceGuid()
 
 function setAppGuid(obj)
 {
-    thisSpaceGuid = obj.title;
+    thisApp = obj.title;
 }
 
 function getAppGuid()
 {
-    document.getElementById('pass_app').value =  thisSpaceGuid;
+    document.getElementById('pass_app').value =  thisApp;
 }
 
 function setAppName(obj)
@@ -48,12 +48,13 @@ function setAppName(obj)
 
 
 
+
 function setServiceGuid(obj)
 {
-    thisSpaceGuid = obj.title;
+    thisService = obj.title;
 }
 
 function getServiceGuid()
 {
-    document.getElementById('pass_service').value =  thisSpaceGuid;
+    document.getElementById('pass_service').value =  thisService;
 }

@@ -233,22 +233,24 @@ post '/deleteClickedService' do
 end
 
 
-post '/createAppDDD' do
+ post '/createApp' do
   @name =  params[:appName]
-  @runtime = 'd6766cd3-7ef5-4630-ae0e-4bb5dc487b1e'
-  @framework = '526d16a0-78e6-47ea-a64b-055718b998f8'
+  @runtime = params[:appRuntime]
+  @framework = params[:appFramework]
+  @instance = 1
+  @memory = params[:appMemory]
+
+  @domain = "ccng-dev.net"
+  @path = "/home/ubuntu/Desktop/rubytest"
 
   organizations_Obj = Organizations.new(user_token)
   spaces_Obj = Spaces.new(user_token)
   apps_obj = Applications.new(user_token)
 
-  apps_obj.create($currentSpace, @name, "php", "php")
+  apps_obj.create($currentOrganization, $currentSpace, @name, "ruby19", "sinatra", @instance, 128, @domain, @path)
 
   redirect "/space" + $currentSpace
 end
-
-
-
 
 
 
@@ -268,16 +270,16 @@ post '/createApp' do
   @name =  params[:appName]
   @runtime = params[:appRuntime]
   @framework = params[:appFramework]
-  @state = params[:appState]
-  @service = params[:appService]
-  @instances = params[:appInstances]
+  @instance = 1
   @memory = params[:appMemory]
 
-  organizations_Obj = Organizations.new(user_token)
-  spaces_Obj = Spaces.new(user_token)
-  apps_obj = Applications.new(user_token)
-
-  apps_obj.create($currentSpace, @name, @runtime, @framework)
-
+  puts @name + "\n"
+  puts @runtime + "\n"
+  puts @memory + "\n"
+  puts @framework + "\n"
   redirect "/space" + $currentSpace
+end
+
+post '/startOrstop' do
+  #
 end

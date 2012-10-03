@@ -105,7 +105,7 @@ class Applications
 
     def initialize(name, runtime, guid, state, services, instances, memory)
       @name = name
-      @framework = runtime
+      @runtime = runtime
       @guid = guid
       @state = state
       @services = services

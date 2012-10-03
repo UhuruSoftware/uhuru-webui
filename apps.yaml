@@ -1,88 +1,80 @@
 ---
 joomla:
+  id: app_joomla
+  name: Joomla
   framework:
     info:
-      description: Php Web App
-      mem: 512M
+      description: Php Web
+      mem: 512
       exec: php
     name: php
   runtime: php
-  mem: 128M
+  memory: 256
   url: ${name}.${target-base}
   instances: 5
   services:
-    mysql:
       type: mssql
-  name: Joomla
-  description: none
+  description: Joomla CMS
   git-hub-link: "git hub path for joomla"
   download-location: "/path/joomla"
-  id: app_joomla
-  state: none
 
 drupal:
+  id: app_drupal
+  name: Drupal
   framework:
     info:
-      description: Php Web App
-      mem: 512M
-      exec: "/"
+      description: Php Web
+      mem: 512
+      exec: php
     name: php
   runtime: php
-  mem: 128M
+  memory: 128
   url: ${name}.${target-base}
   instances: 5
   services:
-    mysql:
       type: mssql
-  name: Drupal
-  description: none
+  description: drupal CMS
   git-hub-link: "git hub path for drupal"
   download-location: "/path/drupal"
-  id: app_drupal
-  state: none
 
 orchard:
+  id: app_orchard
+  name: Orchard
   framework:
     info:
-      description: .Net Web App
-      mem: 512M
-      exec: "/"
+      description: a .Net framework
+      mem: 512
+      exec: "/framework"
     name: .net
-  runtime: .net
-  mem: 128M
+  runtime: iis
+  memory: 256
   url: ${name}.${target-base}
   instances: 5
   services:
-    mysql:
       type: mssql
-  name: Orchard
-  description: none
+  description: this is orchard CMS
   git-hub-link: "git hub path for orchard"
   download-location: "/path/orchard"
-  id: app_orchard
-  state: none
 
 
 umbraco:
+  id: app_umbraco
+  name: Umbraco
   framework:
     info:
-      description: .Net Web App
-      mem: 512M
-      exec: "/"
+      description: a .Net framework
+      mem: 128
+      exec: "/framework"
     name: .net
-  runtime: .net
-  mem: 128M
+  runtime: iis
+  memory: 128
   url: ${name}.${target-base}
   instances: 5
   services:
-    mysql:
       type: mssql
-  name: Umbraco
-  description: none
+  description: this is the umbraco CMS
   git-hub-link: "git hub path for umbraco"
   download-location: "/path/umbraco"
-  id: app_umbraco
-  state: none
 
 
 

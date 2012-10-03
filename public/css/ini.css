@@ -793,6 +793,7 @@ h2 .count
     color: #efefef;
     position: absolute;
     bottom: 55px;
+    left: 90px;
 }
 .organization_check,
 .organization_question

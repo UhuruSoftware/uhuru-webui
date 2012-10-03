@@ -39,10 +39,10 @@
                     <ul class="tile_list">
 
                       <% apps_list.each do |app| %>
-                        <li class="tileblue show_this_app_details" id="<%= app.name %>" class="app-<%= app.runtime %>" onmousemove="setAppName(this);"> <!--  FOR EACH APP ID THE DETAILS SHOULD SPAWN NOT ONLY FOR THE FIRST TILE  -->
+                        <li class="tileblue show_this_app_details app-<%= app.runtime.name %>" id="<%= app.name %>" onmousemove="setAppName(this);"> <!--  FOR EACH APP ID THE DETAILS SHOULD SPAWN NOT ONLY FOR THE FIRST TILE  -->
                             <a>
                                 <span class="app_name"><%= app.name %></span>
-                                <a href="#"><span class="control-icon trash delete-app-button" id="<%= app.name %>" title="<%= app.guid %>" onmousemove="setAppGuid(this);"></span></a>
+                                <a href="#"><span class="control-icon trash delete-app-button" id="<%= app.name %>" title="<%= app.name %>" onmousemove="setAppGuid(this);"></span></a>
                             </a>
                         </li>
                       <% end %>
@@ -200,8 +200,11 @@
                             <span class="app_status" style="font-weight: bold">Status: <span style="font-weight: normal"></span></span>
                             <a href="#"><span class="control-icon trash delete-app-button"></span></a>
                         </div>
-                        <div class="app-actions start"></div>
-                        <div class="app-actions stop"></div>
+                        <form action="/startOrstop" method="post">
+                            <input type="submit" name="startApp" class="app-actions start"/>
+                            <input type="submit" name="startStop" class="app-actions stop"/>
+                            <div class="app-actions stop"></div>
+                        </form>
                     </div>
                 </td>
               <td></td>
@@ -545,8 +548,6 @@
 
 
 <div class="modal fade hide" id="create_tempcta_modal">
-<form action="/createApp" method="post">
-
     <div class="modal-header">
         <button class="close">x</button>
         <h3>Add a new template app</h3>
@@ -558,7 +559,7 @@
         <tbody>
             <tr>
                 <td>
-                    <input type="text" id="app_name" name="appName"/>
+                    <input name="user_app" type="text" id="app_name"/>
                 </td>
                 <td style="vertical-align: top">
                     .uhurucloud.com
@@ -574,16 +575,15 @@
                 <table id="app_table">
 
                     <% apps_names.each do |name| %>
+                      <form action="/createApp" method="post">
                           <tr>
                                 <td>
                                     <div class="app_tiles" id = "<%= name['id'] %>">
                                         <span class="app_name_span"><%= name['name'] %></span>
                                         <input type="text" value="<%= name['framework']['info']['exec'] %>" name="appFramework" class="blanck_input" />
                                         <input type="text" value="<%= name['runtime'] %>" name="appRuntime"  class="blanck_input" />
-                                        <input type="text" value="<%= name['framework']['info']['mem'] %>" name="appMemory" class="blanck_input" />
-                                        <input type="text" value="<%= name['services']['mysql']['type'] %>" name="appService" class="blanck_input" />
-                                        <input type="text" value="<%= name['state'] %>" name="appState" class="blanck_input" />
-                                        <input type="text" value="<%= name['instances'] %>" name="appInstances" class="blanck_input" />
+                                        <input type="text" value="<%= name['memory'] %>" name="appMemory" class="blanck_input" />
+                                        <input type="text" name="appName" class="send_app_name blanck_input"/>
                                     </div>
                                 </td>
                                 <td>
@@ -594,7 +594,8 @@
                                 <td>
                                     <input type="submit" value="Push" class="app_tiles_cloudpush" />
                                 </td>
-                            </tr>
+                           </tr>
+                      </form>
                     <% end %>
 
                 </table>
@@ -617,7 +618,6 @@
         </p>
       -->
     </div>
-</form>
 </div>
 
 
