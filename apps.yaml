@@ -4,20 +4,21 @@ joomla:
     info:
       description: Php Web App
       mem: 512M
-      exec: "/"
+      exec: php
     name: php
   runtime: php
   mem: 128M
   url: ${name}.${target-base}
   instances: 5
   services:
-    mssql-a340:
+    mysql:
       type: mssql
   name: Joomla
   description: none
   git-hub-link: "git hub path for joomla"
   download-location: "/path/joomla"
   id: app_joomla
+  state: none
 
 drupal:
   framework:
@@ -31,13 +32,14 @@ drupal:
   url: ${name}.${target-base}
   instances: 5
   services:
-    mssql-a340:
+    mysql:
       type: mssql
   name: Drupal
   description: none
   git-hub-link: "git hub path for drupal"
   download-location: "/path/drupal"
   id: app_drupal
+  state: none
 
 orchard:
   framework:
@@ -51,13 +53,14 @@ orchard:
   url: ${name}.${target-base}
   instances: 5
   services:
-    mssql-a340:
+    mysql:
       type: mssql
   name: Orchard
   description: none
   git-hub-link: "git hub path for orchard"
   download-location: "/path/orchard"
   id: app_orchard
+  state: none
 
 
 umbraco:
@@ -72,13 +75,14 @@ umbraco:
   url: ${name}.${target-base}
   instances: 5
   services:
-    mssql-a340:
+    mysql:
       type: mssql
   name: Umbraco
   description: none
   git-hub-link: "git hub path for umbraco"
   download-location: "/path/umbraco"
   id: app_umbraco
+  state: none
 
 
 

@@ -12,6 +12,9 @@ class TemplateApps
     @i = 0
 
     file = YAML.load_file "apps.yaml"
+    app_file = File.join(File.dirname(__FILE__), "../apps.yaml")
+
+    file = YAML.load_file app_file
     file.each_key { |key|
       @apps[@i] = file[key]
       @i = @i + 1

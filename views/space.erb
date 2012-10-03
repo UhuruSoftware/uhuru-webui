@@ -19,7 +19,7 @@
                         <input type="submit" class="control-icon-large trash">
                 </form>
 
-                <span class="token-icon-large">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+              <span class="title_icon" style="position: absolute; top:0px; right: -15px;">dollar</span>
             </div>
         </div>
 
@@ -39,10 +39,12 @@
                     <ul class="tile_list">
 
                       <% apps_list.each do |app| %>
-                        <li class="tileblue show_this_app_details" id="<%= app.name %>" onmousemove="setAppName(this);"> <!--  FOR EACH APP ID THE DETAILS SHOULD SPAWN NOT ONLY FOR THE FIRST TILE  -->
+                        <li class="tileblue show_this_app_details" id="<%= app.name %>" class="app-<%= app.runtime %>" onmousemove="setAppName(this);"> <!--  FOR EACH APP ID THE DETAILS SHOULD SPAWN NOT ONLY FOR THE FIRST TILE  -->
                             <a>
                                 <span class="app_name"><%= app.name %></span>
                                 <a href="#"><span class="control-icon trash delete-app-button" id="<%= app.name %>" title="<%= app.guid %>" onmousemove="setAppGuid(this);"></span></a>
+
+                                <label name="<%= app.framework %>"></label>
                             </a>
                         </li>
                       <% end %>
@@ -290,38 +292,6 @@
     </div>
 </div>
 
-<!--// //-->
-
-
-<!--THIS IS THE DELETE TEAM MODAL
-
-
-﻿<div class="modal fade hide" id="delete_team_modal">
-    <div class="modal-header">
-        <button class="close" data-dismiss="modal">×</button>
-        <h3>Delete cloud</h3>
-    </div>
-    <div class="modal-body">
-        <p>
-            Are you sure you want to delete the cloud "<span data-bind="text: name"></span>"?
-        </p>
-        <br />
-        <p>
-            <strong>
-                WARNING!!! All applications and services in this cloud will be DELETED!!! This action cannot be reversed.
-            </strong>
-        </p>
-    </div>
-    <div class="modal-footer">
-        <a href="#" class="btn" data-dismiss="modal">No</a>
-        <a href="#" class="btn btn-danger" data-bind="click: deleteCloudTeam">Yes</a>
-            Deleting cloud...
-    </div>
-</div>
--->
-
-
-<!--THIS IS THE MODAL TO DELETE A CLOUD TEAM SERVICE-->
 
 <div class="modal fade hide" id="add_ctService_modal">
     <div class="modal-header">
@@ -332,18 +302,18 @@
     <div class="modal-body">
         <p>
             <label for="team_services_list">Service Type</label>
-            <select id="team_services_list" data-bind="options: uhuru.viewModel.servicesList, optionsText: 'vendor', value: selectedServiceItem">
+            <select id="team_services_list">
             </select>
         </p>
         <p>
             <label for="service_name">Name</label>
-            <input type="text" id="service_name" data-bind="value: name"/>
+            <input type="text" id="service_name"/>
         </p>
     </div>
 
     <div class="modal-footer">
-        <a href="#" class="btn" data-bind="click: function() { $('#add_ctService_modal').modal('hide'); }">Close</a>
-        <a href="#" class="btn btn-success" data-bind="click: saveServiceChanges">Create Service</a>
+        <a href="#" class="btn">Close</a>
+        <a href="#" class="btn btn-success">Create Service</a>
             Creating Service...
     </div>
 </div>
@@ -377,13 +347,13 @@
 
 <div class="modal fade hide" id="unbind_ctsTOcta_modal">
     <div class="modal-header">
-        <button class="close" data-dismiss="modal">×</button>
+        <button class="close">×</button>
         <h3>Unbind service</h3>
     </div>
     <div class="modal-body">
         <p>
-            Are you sure you want to unbind <span style="font-weight: bold" data-bind="text: unbindService">
-            </span> from <span style="font-weight: bold" data-bind="text: name"></span>? Your
+            Are you sure you want to unbind <span style="font-weight: bold">
+            </span> from <span style="font-weight: bold"></span>? Your
             app will no longer be able to connect to this service.
         </p>
         <p>
@@ -391,8 +361,8 @@
         </p>
     </div>
     <div class="modal-footer">
-        <a href="#" class="btn" data-bind="click: cancelUnbindServiceCFApp">Cancel</a>
-        <a href="#" class="btn btn-danger" data-bind="click: unbindServiceCFApp">Unbind service</a>
+        <a href="#" class="btn">Cancel</a>
+        <a href="#" class="btn btn-danger">Unbind service</a>
     </div>
 </div>
 
@@ -403,16 +373,16 @@
         <h3>Add service</h3>
     </div>
     <div class="modal-body">
-        <p>Add a new service to <span data-bind="text: name"></span></p>
+        <p>Add a new service to <span></span></p>
         <p>
             <label for="bind_services_list">Available services</label>
-            <select id="bind_services_list" data-bind="options: existingSrvList, value: selectedService">
+            <select id="bind_services_list">
             </select>
         </p>
     </div>
     <div class="modal-footer">
-        <a href="#" class="btn" data-bind="click: cancelBindCTAService">Cancel</a>
-        <a href="#" class="btn btn-success" data-bind="click: bindCTAService">Bind service</a>
+        <a href="#" class="btn">Cancel</a>
+        <a href="#" class="btn btn-success">Bind service</a>
     </div>
 </div>
 
@@ -429,7 +399,7 @@
                 <tbody>
                     <tr>
                         <td>
-                            <input id="newUri" data-bind="value: newUri, valueUpdate: 'afterkeydown'" />
+                            <input id="newUri" />
                         </td>
                         <td style="vertical-align: top">
                             .uhurucloud.com
@@ -440,8 +410,8 @@
         </p>
     </div>
     <div class="modal-footer">
-        <a href="#" class="btn" data-bind="click: canceBindUriCTA">cancel</a>
-        <a href="#" class="btn btn-success" data-bind="click: bindUriCTA">bind URI</a>
+        <a href="#" class="btn">cancel</a>
+        <a href="#" class="btn btn-success">bind URI</a>
         binding URL...
     </div>
 </div>
@@ -454,13 +424,13 @@
     </div>
     <div class="modal-body">
         <p>
-            Are you sure you want to unbind this app from <span style="font-weight: bold" data-bind="text: unbindUri">
+            Are you sure you want to unbind this app from <span style="font-weight: bold">
             </span>? Your app will no longer be able to use this URI.<br />
         </p>
     </div>
     <div class="modal-footer">
-        <a href="#" class="btn" data-bind="click: cancelUnbindUriCFApp">Cancel</a>
-        <a href="#" class="btn btn-success" data-bind="click: unbindUriCFApp">Unbind URI</a>
+        <a href="#" class="btn">Cancel</a>
+        <a href="#" class="btn btn-success">Unbind URI</a>
         unbinding URL...
     </div>
 </div>
@@ -469,7 +439,7 @@
 
 <div class="modal fade" id="inv_ctUser_modal">
     <div class="modal-header">
-        <button class="close" data-dismiss="modal" data-bind="visible: mode() === 'view'">×</button>
+        <button class="close">×</button>
         <h3>Invite user</h3>
         <br />
         <p>
@@ -478,9 +448,9 @@
         </p>
     </div>
     <div class="modal-body" style="left:300">
-        <div data-bind="visible: mode() !== 'saving'">
+        <div>
             <label for="inviteEmail">Email address</label>
-            <input id="inviteEmail" type="text" data-bind="value: inviteEmail" />
+            <input id="inviteEmail" type="text" />
 
             <ul class="unstyled">
                 <li style="padding-bottom: 5px"><img width="32" height="32"  src="../../Content/images/Gmail_logo.png" alt=""/>&nbsp;GoogleID</li>
@@ -488,10 +458,10 @@
                 <li style="padding-bottom: 5px"><img  width="32" height="32"  src="../../Content/images/facebook_logo.png" alt=""/>&nbsp;Facebook</li>
             </ul>
         </div>
-        <p data-bind="visible: mode() === 'saving'">Inviting user...</p>
+        <p>Inviting user...</p>
     </div>
     <div class="modal-footer">
-        <button class="btn btn-success" data-bind="click: inviteCTUser, visible: mode() !== 'saving'">Invite User</button>
+        <button class="btn btn-success">Invite User</button>
     </div>
 </div>
 
@@ -503,12 +473,12 @@
     </div>
     <div class="modal-body">
         <p>
-            Are you sure you want to delete <span data-bind="text: userEmail"></span>?
+            Are you sure you want to delete <span>email...</span>?
         </p>
     </div>
     <div class="modal-footer">
-            <a href="#" class="btn btn-danger" data-bind="click: deleteCTUser">Delete user</a>
-            <a href="#" class="btn" data-bind="click: function() { $('#delete_ctUser_modal').modal('hide'); }">Cancel</a>
+            <a href="#" class="btn btn-danger">Delete user</a>
+            <a href="#" class="btn">Cancel</a>
     </div>
 </div>
 
@@ -518,7 +488,7 @@
 
 <div class="modal fade hide" id="cannot_delete_ctUser_modal">
     <div class="modal-header">
-        <button class="close" data-dismiss="modal">×</button>
+        <button class="close">×</button>
         <h3>Delete user</h3>
     </div>
     <div class="modal-body">
@@ -527,7 +497,7 @@
         </p>
     </div>
     <div class="modal-footer">
-        <a href="#" class="btn btn-success" data-dismiss="modal">OK</a>
+        <a href="#" class="btn btn-success">OK</a>
     </div>
 </div>
 
@@ -535,23 +505,23 @@
 
 <div class="modal fade hide" id="toggle_user_admin_modal">
     <div class="modal-header">
-        <button class="close" data-dismiss="modal">×</button>
+        <button class="close">×</button>
         <h3>User details</h3>
     </div>
     <div class="modal-body">
         <p>
             <label>Email address</label>
-            <span data-bind="text: userEmail"></span>
+            <span></span>
         </p>
         <p>
-            <input type="checkbox" data-bind="checked: isAdmin, attr: { disabled: loggedIn }" />
+            <input type="checkbox"/>
             <label style="display: inline">Is administrator</label>
         </p>
     </div>
     <div class="modal-footer">
-            <a href="#" class="btn" data-dismiss="modal">Close</a>
-                <a href="#" class="btn btn-success" data-bind="click: saveCTUChanges">Save changes</a>
-                <a href="#" class="btn" data-dismiss="modal">Cancel</a>
+            <a href="#" class="btn">Close</a>
+                <a href="#" class="btn btn-success">Save changes</a>
+                <a href="#" class="btn">Cancel</a>
     </div>
 </div>
 
@@ -560,12 +530,12 @@
 <div class="modal fade hide" id="show_CT_token">
 
     <div class="modal-header">
-        <button class="close" data-dismiss="modal">×</button>
+        <button class="close">×</button>
         <h3>one time token for VMCU</h3><br />
     </div>
     <div class="modal-body">
         <p>
-            <h2><span data-bind="text: oneTimeToken()"></span></h2>
+            <h2><span></span></h2>
         </p>
         <p>
             use this token to login into Uhuru Command Line interface, for more help refer to our support forum:
@@ -577,7 +547,7 @@
 
 
 <div class="modal fade hide" id="create_tempcta_modal">
-<form action="/testAppCreate" method="post">
+<form action="/createApp" method="post">
 
     <div class="modal-header">
         <button class="close">x</button>
@@ -606,21 +576,27 @@
                 <table id="app_table">
 
                     <% apps_names.each do |name| %>
-                        <tr>
-                            <td>
-                                <div class="app_tiles" id = "<%= name['id'] %>">
-                                    <span class="app_name_span"><%= name['name'] %></span>
-                                </div>
-                            </td>
-                            <td>
-                                <a href="<%= name['download-location'] %>">
-                                    <input type="button" value="Download" class="app_tiles_download" />
-                                </a>
-                            </td>
-                            <td>
-                                <input type="submit" value="Push" class="app_tiles_cloudpush" />
-                            </td>
-                        </tr>
+                          <tr>
+                                <td>
+                                    <div class="app_tiles" id = "<%= name['id'] %>">
+                                        <span class="app_name_span"><%= name['name'] %></span>
+                                        <input type="text" value="<%= name['framework']['info']['exec'] %>" name="appFramework" class="blanck_input" />
+                                        <input type="text" value="<%= name['runtime'] %>" name="appRuntime"  class="blanck_input" />
+                                        <input type="text" value="<%= name['framework']['info']['mem'] %>" name="appMemory" class="blanck_input" />
+                                        <input type="text" value="<%= name['services']['mysql']['type'] %>" name="appService" class="blanck_input" />
+                                        <input type="text" value="<%= name['state'] %>" name="appState" class="blanck_input" />
+                                        <input type="text" value="<%= name['instances'] %>" name="appInstances" class="blanck_input" />
+                                    </div>
+                                </td>
+                                <td>
+                                    <a href="<%= name['download-location'] %>">
+                                        <input type="button" value="Download" class="app_tiles_download" />
+                                    </a>
+                                </td>
+                                <td>
+                                    <input type="submit" value="Push" class="app_tiles_cloudpush" />
+                                </td>
+                            </tr>
                     <% end %>
 
                 </table>
@@ -661,7 +637,7 @@
         <a href="#" class="btn">No</a>
         <form action="/deleteClickedApp" method="post">
             <input type="submit" value="Yes" class="btn btn-danger" />
-            <input type="text" id="pass_app" name="appGuid" style="display: none;" />
+            <input type="text" id="pass_app" name="appGuid" class="blanck_input" />
             Deleting app...
         </form>
     </div>
@@ -682,7 +658,7 @@
         <a href="#" class="btn">No</a>
         <form action="/deleteClickedService" method="post">
             <input type="submit" value="Yes" class="btn btn-danger" />
-            <input type="text" id="pass_service" name="serviceGuid" style="display: none;" />
+            <input type="text" id="pass_service" name="serviceGuid" class="blanck_input" />
             Deleting app...
         </form>
     </div>

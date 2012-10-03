@@ -209,7 +209,7 @@ end
 
 post '/deleteClickedApp' do
   @guid = params[:appGuid]
-  @message = "Deleting organization... Please wait"
+  @message = "Deleting app... Please wait"
 
   organizations_Obj = Organizations.new(user_token)
   spaces_Obj = Spaces.new(user_token)
@@ -221,7 +221,7 @@ end
 
 post '/deleteClickedService' do
   @guid = params[:serviceGuid]
-  @message = "Deleting organization... Please wait"
+  @message = "Deleting service... Please wait"
 
   organizations_Obj = Organizations.new(user_token)
   spaces_Obj = Spaces.new(user_token)
@@ -232,6 +232,20 @@ post '/deleteClickedService' do
   #redirect "/space" + $currentSpace
 end
 
+
+post '/createAppDDD' do
+  @name =  params[:appName]
+  @runtime = 'd6766cd3-7ef5-4630-ae0e-4bb5dc487b1e'
+  @framework = '526d16a0-78e6-47ea-a64b-055718b998f8'
+
+  organizations_Obj = Organizations.new(user_token)
+  spaces_Obj = Spaces.new(user_token)
+  apps_obj = Applications.new(user_token)
+
+  apps_obj.create($currentSpace, @name, "php", "php")
+
+  redirect "/space" + $currentSpace
+end
 
 
 
@@ -250,10 +264,14 @@ get '/yaml' do
 end
 
 
-post '/testAppCreate' do
+post '/createApp' do
   @name =  params[:appName]
-  @runtime = 'd6766cd3-7ef5-4630-ae0e-4bb5dc487b1e'
-  @framework = '526d16a0-78e6-47ea-a64b-055718b998f8'
+  @runtime = params[:appRuntime]
+  @framework = params[:appFramework]
+  @state = params[:appState]
+  @service = params[:appService]
+  @instances = params[:appInstances]
+  @memory = params[:appMemory]
 
   organizations_Obj = Organizations.new(user_token)
   spaces_Obj = Spaces.new(user_token)

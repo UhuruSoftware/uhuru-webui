@@ -954,6 +954,10 @@ h2 .count
     left: 5px;
 }
 
+.blanck_input
+{
+    display: none;
+}
 
 
 
