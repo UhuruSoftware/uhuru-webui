@@ -79,8 +79,15 @@ class Applications
   end
 
   def delete(app_name)
+
     app = @client.apps.find { |a| a.name == app_name }
-    app.delete!
+    routes = app.routes
+
+    if app.delete!
+      routes.each do |r|
+        r.delete!
+      end
+    end
 
     rescue Exception => e
       puts "#{e.inspect}, #{e.backtrace}"
