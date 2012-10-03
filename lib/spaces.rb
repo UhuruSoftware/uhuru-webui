@@ -70,7 +70,7 @@ class Spaces
     unless space.apps == 0
       space.apps.each do |app|
         app_gen = Applications.new(@client.base.token)
-        app_gen.delete(app.guid)
+        app_gen.delete(app.name)
       end
     end
 
@@ -93,7 +93,7 @@ class Spaces
     apps = @client.space(space_guid).apps
 
     apps.each do |app|
-      apps_list << Applications::Application.new(app.name, app.framework, app.guid, app.state, [], app.total_instances, app.memory)
+      apps_list << Applications::Application.new(app.name, app.runtime, app.guid, app.state, [], app.total_instances, app.memory)
     end
 
     apps_list

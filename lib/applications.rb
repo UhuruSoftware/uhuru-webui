@@ -101,11 +101,11 @@ class Applications
   end
 
   class Application
-    attr_accessor :name, :framework, :guid, :state, :services, :instances, :memory
+    attr_accessor :name, :runtime, :guid, :state, :services, :instances, :memory
 
-    def initialize(name, framework, guid, state, services, instances, memory)
+    def initialize(name, runtime, guid, state, services, instances, memory)
       @name = name
-      @framework = framework
+      @framework = runtime
       @guid = guid
       @state = state
       @services = services

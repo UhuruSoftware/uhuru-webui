@@ -11,7 +11,6 @@ class TemplateApps
     @apps = Array.new
     @i = 0
 
-    file = YAML.load_file "apps.yaml"
     app_file = File.join(File.dirname(__FILE__), "../apps.yaml")
 
     file = YAML.load_file app_file
