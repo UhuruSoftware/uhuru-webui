@@ -93,7 +93,14 @@ class Spaces
     apps = @client.space(space_guid).apps
 
     apps.each do |app|
-      apps_list << Applications::Application.new(app.name, app.runtime, app.guid, app.state, [], app.total_instances, app.memory)
+
+      app_service_instances = []
+      app.services.each do |s|
+        type = s.service_plan.service.label
+        app_service_instances << ServiceInstances::Service.new(s.name, type, s.guid)
+      end
+
+      apps_list << Applications::Application.new(app.name, app.runtime.name, app.guid, app.state, app_service_instances, app.total_instances, app.memory)
     end
 
     apps_list

@@ -39,7 +39,7 @@
                     <ul class="tile_list">
 
                       <% apps_list.each do |app| %>
-                        <li class="tileblue show_this_app_details app-<%= app.runtime.name %>" id="<%= app.name %>" onmousemove="setAppName(this);"> <!--  FOR EACH APP ID THE DETAILS SHOULD SPAWN NOT ONLY FOR THE FIRST TILE  -->
+                        <li class="tileblue show_this_app_details app-<%= app.runtime %>" id="<%= app.name %>" onmousemove="setAppName(this);"> <!--  FOR EACH APP ID THE DETAILS SHOULD SPAWN NOT ONLY FOR THE FIRST TILE  -->
                             <a>
                                 <span class="app_name"><%= app.name %></span>
                                 <a href="#"><span class="control-icon trash delete-app-button" id="<%= app.name %>" title="<%= app.name %>" onmousemove="setAppGuid(this);"></span></a>
