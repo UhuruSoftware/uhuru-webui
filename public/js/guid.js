@@ -41,9 +41,13 @@ function getAppGuid()
     document.getElementById('pass_app').value =  thisApp;
 }
 
+//this sets the name on the app details
+
 function setAppName(obj)
 {
     document.getElementById('app_name_big').innerHTML = obj.id;
+    document.getElementById('details_app_name_start').value = obj.id;
+    document.getElementById('details_app_name_stop').value = obj.id;
 }
 
 

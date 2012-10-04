@@ -266,7 +266,7 @@ get '/yaml' do
 end
 
 
-post '/createApp' do
+post '/test' do
   @name =  params[:appName]
   @runtime = params[:appRuntime]
   @framework = params[:appFramework]
@@ -280,6 +280,23 @@ post '/createApp' do
   redirect "/space" + $currentSpace
 end
 
-post '/startOrstop' do
-  #
+
+post '/startApp' do
+  @name = params[:appName]
+  apps_obj = Applications.new(user_token)
+  puts "starting app"
+  apps_obj.start_app(@name)
+  puts "start app COMPLETE"
+
+  redirect "/space" + $currentSpace
+end
+
+post '/stopApp' do
+  @name = params[:appName]
+  apps_obj = Applications.new(user_token)
+  puts "stoping app"
+  apps_obj.stop_app(@name)
+  puts "stoping app COMPLETE"
+
+  redirect "/space" + $currentSpace
 end

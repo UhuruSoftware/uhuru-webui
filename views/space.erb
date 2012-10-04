@@ -42,6 +42,7 @@
                         <li class="tileblue show_this_app_details app-<%= app.runtime %>" id="<%= app.name %>" onmousemove="setAppName(this);"> <!--  FOR EACH APP ID THE DETAILS SHOULD SPAWN NOT ONLY FOR THE FIRST TILE  -->
                             <a>
                                 <span class="app_name"><%= app.name %></span>
+                              <span class="app_name" style="color: #8b0000; position: absolute; top: 0px; left: 0px;"><%= app.state %></span>
                                 <a href="#"><span class="control-icon trash delete-app-button" id="<%= app.name %>" title="<%= app.name %>" onmousemove="setAppGuid(this);"></span></a>
                             </a>
                         </li>
@@ -191,7 +192,7 @@
         <table>
             <tr>
                 <td>
-                    <div class="app-control">
+                    <div class="app-control" style="border: 1px solid red;">
                         <div class="tile blue">
                             <h3>
                                 <span class="app_name_big" id="app_name_big"></span>
@@ -200,11 +201,17 @@
                             <span class="app_status" style="font-weight: bold">Status: <span style="font-weight: normal"></span></span>
                             <a href="#"><span class="control-icon trash delete-app-button"></span></a>
                         </div>
-                        <form action="/startOrstop" method="post">
-                            <input type="submit" name="startApp" class="app-actions start"/>
-                            <input type="submit" name="startStop" class="app-actions stop"/>
-                            <div class="app-actions stop"></div>
+
+                        <form action="/startApp" method="post">
+                            <input type="text" id="details_app_name_start" name="appName" class="blanck_input" />
+                            <input type="submit" name="startApp" class="app-actions start start_button_apps"/>
                         </form>
+
+                        <form action="/stopApp" method="post">
+                            <input type="text" id="details_app_name_stop" name="appName" class="blanck_input" />
+                            <input type="submit" name="stopApp" class="app-actions stop stop_button_apps"/>
+                        </form>
+                       <!-- <div class="app-actions stop"></div>  -->
                     </div>
                 </td>
               <td></td>
@@ -435,116 +442,6 @@
         unbinding URL...
     </div>
 </div>
-
-
-
-<div class="modal fade" id="inv_ctUser_modal">
-    <div class="modal-header">
-        <button class="close">×</button>
-        <h3>Invite user</h3>
-        <br />
-        <p>
-        <strong>Note:</strong> Invitation only works with email addresses that are registered with Windows LiveID, GoogleID or Facebook.
-        Please confirm this with the invitee before sending the invitation
-        </p>
-    </div>
-    <div class="modal-body" style="left:300">
-        <div>
-            <label for="inviteEmail">Email address</label>
-            <input id="inviteEmail" type="text" />
-
-            <ul class="unstyled">
-                <li style="padding-bottom: 5px"><img width="32" height="32"  src="../../Content/images/Gmail_logo.png" alt=""/>&nbsp;GoogleID</li>
-                <li style="padding-bottom: 5px"><img width="32" height="32"  src="../../Content/images/msn_logo.png" alt=""/>&nbsp;Microsoft LiveID</li>
-                <li style="padding-bottom: 5px"><img  width="32" height="32"  src="../../Content/images/facebook_logo.png" alt=""/>&nbsp;Facebook</li>
-            </ul>
-        </div>
-        <p>Inviting user...</p>
-    </div>
-    <div class="modal-footer">
-        <button class="btn btn-success">Invite User</button>
-    </div>
-</div>
-
- <!--THIS IS THE MODAL THAT DELETES A CLOU TEAM USER-->
-
-<div class="modal fade hide" id="delete_ctUser_modal">
-    <div class="modal-header">
-        <h3>Delete user</h3>
-    </div>
-    <div class="modal-body">
-        <p>
-            Are you sure you want to delete <span>email...</span>?
-        </p>
-    </div>
-    <div class="modal-footer">
-            <a href="#" class="btn btn-danger">Delete user</a>
-            <a href="#" class="btn">Cancel</a>
-    </div>
-</div>
-
-
-<!--// //-->
-
-
-<div class="modal fade hide" id="cannot_delete_ctUser_modal">
-    <div class="modal-header">
-        <button class="close">×</button>
-        <h3>Delete user</h3>
-    </div>
-    <div class="modal-body">
-        <p>
-            You cannot delete yourself.
-        </p>
-    </div>
-    <div class="modal-footer">
-        <a href="#" class="btn btn-success">OK</a>
-    </div>
-</div>
-
-
-
-<div class="modal fade hide" id="toggle_user_admin_modal">
-    <div class="modal-header">
-        <button class="close">×</button>
-        <h3>User details</h3>
-    </div>
-    <div class="modal-body">
-        <p>
-            <label>Email address</label>
-            <span></span>
-        </p>
-        <p>
-            <input type="checkbox"/>
-            <label style="display: inline">Is administrator</label>
-        </p>
-    </div>
-    <div class="modal-footer">
-            <a href="#" class="btn">Close</a>
-                <a href="#" class="btn btn-success">Save changes</a>
-                <a href="#" class="btn">Cancel</a>
-    </div>
-</div>
-
-
-
-<div class="modal fade hide" id="show_CT_token">
-
-    <div class="modal-header">
-        <button class="close">×</button>
-        <h3>one time token for VMCU</h3><br />
-    </div>
-    <div class="modal-body">
-        <p>
-            <h2><span></span></h2>
-        </p>
-        <p>
-            use this token to login into Uhuru Command Line interface, for more help refer to our support forum:
-            <a style="height: 50px; display: inline-block; line-height: 50px" href="http://support.uhurusoftware.com/entries/21454287-deploying-and-managing-apps-with-command-line" target="_blank">Command Line Instructions</a>
-        </p>
-    </div>
-</div>
-
 
 
 <div class="modal fade hide" id="create_tempcta_modal">

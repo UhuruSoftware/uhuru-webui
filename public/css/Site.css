@@ -376,6 +376,23 @@ input.user-name
     border: 0px solid white;
 }
 
+
+.start_button_apps
+{
+    border: 0px solid white;
+    float: left;
+    margin-left: 0px;
+    display: inline-block;
+}
+.stop_button_apps
+{
+    border: 0px solid white;
+    float: left;
+    margin-left: 5px;
+    display: inline-block;
+}
+
+
 .edit-user-button
 {
     position: absolute;
@@ -603,11 +620,11 @@ li.new .icon
 
 .app-dotnet
 {
-    background: transparent url("../images/.net_icon.png") no-repeat scroll center center;
+    background: transparent url("../images/net_icon.png") no-repeat scroll center center;
 }
 .app-php
 {
-    background: transparent url("../images/.php_icon.png") no-repeat scroll center center;
+    background: transparent url("../images/php_icon.png") no-repeat scroll center center;
 }
 .app-node,
 .app-nodejs,
