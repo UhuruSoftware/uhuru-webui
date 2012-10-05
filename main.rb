@@ -40,6 +40,9 @@ def user_token
   end
 end
 
+space = Spaces.new(user_token)
+space.read_apps("77a16804-bc5b-4482-9ae4-f6a62cfb7af8")
+
 get'/' do
   @timeNow = $this_time
   @title = 'Uhuru App Cloud'
