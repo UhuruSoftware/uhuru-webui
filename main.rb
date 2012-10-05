@@ -257,15 +257,6 @@ end
 
 ####test####
 
-
-get '/yaml' do
-
-  #temp = TemplateApps.new
-  #temp.read_apps.each {|x| puts x[name]}
-
-end
-
-
 post '/test' do
   @name =  params[:appName]
   @runtime = params[:appRuntime]
@@ -273,11 +264,9 @@ post '/test' do
   @instance = 1
   @memory = params[:appMemory]
 
-  puts @name + "\n"
-  puts @runtime + "\n"
-  puts @memory + "\n"
-  puts @framework + "\n"
-  redirect "/space" + $currentSpace
+  puts "@name"
+  puts "\n"
+
 end
 
 

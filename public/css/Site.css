@@ -377,19 +377,13 @@ input.user-name
 }
 
 
-.start_button_apps
-{
-    border: 0px solid white;
-    float: left;
-    margin-left: 0px;
-    display: inline-block;
-}
+.start_button_apps,
 .stop_button_apps
 {
     border: 0px solid white;
-    float: left;
-    margin-left: 5px;
     display: inline-block;
+    position: absolute;
+    left: 200px;
 }
 
 

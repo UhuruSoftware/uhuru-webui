@@ -64,15 +64,6 @@ var add_ctService_modal = function(){
 }
 
 
-var saving_modal = function(){
-	$('#screen').css({	"display": "block", opacity: 0.7, "width": "10000px", "height": "10000px"});
-	$('body').css({"overflow":"hidden"});
-	$('#saving_modal').slideDown(1000);
-    $('.close').click(function(){$("#saving_modal").css("display", "none");$('#screen').css("display", "none")});
-    $('.btn').click(function(){$("#saving_modal").css("display", "none");$('#screen').css("display", "none")});
-}
-
-
 var unbind_ctsTOcta_modal = function(){
 	$('#screen').css({	"display": "block", opacity: 0.7, "width": "10000px", "height": "10000px"});
 	$('body').css({"overflow":"hidden"});
@@ -192,7 +183,6 @@ var add_user = function(){
 
 
 $('#add_ctService_modal_btn').click(add_ctService_modal);
-$('#saving_modalb').click(saving_modal);
 $('#unbind_ctsTOcta_modalb').click(unbind_ctsTOcta_modal);
 $('#bind_ctsTOcta_modalb').click(bind_ctsTOcta_modal);
 $('#bind_uriTOcta_modalb').click(bind_uriTOcta_modal);
@@ -211,6 +201,8 @@ $('.delete-space-button').click(delete_space_modal);
     $('.delete-app-button').click(delete_app);
     $('.delete-service-button').click(delete_service);
 $('.show_this_app_details').click(app_details_modal);
+
+
 
 
 

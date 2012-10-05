@@ -39,12 +39,18 @@
                     <ul class="tile_list">
 
                       <% apps_list.each do |app| %>
-                        <li class="tileblue show_this_app_details app-<%= app.runtime %>" id="<%= app.name %>" onmousemove="setAppName(this);"> <!--  FOR EACH APP ID THE DETAILS SHOULD SPAWN NOT ONLY FOR THE FIRST TILE  -->
-                            <a>
-                                <span class="app_name"><%= app.name %></span>
-                              <span class="app_name" style="color: #8b0000; position: absolute; top: 0px; left: 0px;"><%= app.state %></span>
-                                <a href="#"><span class="control-icon trash delete-app-button" id="<%= app.name %>" title="<%= app.name %>" onmousemove="setAppGuid(this);"></span></a>
+                        <li class="tileblue show_this_app_details app-<%= app.runtime %>" id="<%= app.name %>"> <!--  FOR EACH APP ID THE DETAILS SHOULD SPAWN NOT ONLY FOR THE FIRST TILE  -->
+
+                            <span class="app_name"><%= app.name %></span>
+
+                            <a href="#">
+                                <span class="control-icon trash delete-app-button" id="<%= app.name %>" title="<%= app.name %>" onmousemove="setAppGuid(this);"></span>
+                                <span class="app_state" id="<%= app.state %>"></span>
+                                <span class="app_instances" id="<%= app.instances %>"></span>
+                                <span class="app_memory" id="<%= app.memory %>"></span>
+                                <span class="app_services" id="<%= app.services %>"></span>
                             </a>
+
                         </li>
                       <% end %>
 
@@ -198,18 +204,18 @@
                                 <span class="app_name_big" id="app_name_big"></span>
                             </h3>
 
-                            <span class="app_status" style="font-weight: bold">Status: <span style="font-weight: normal"></span></span>
+                            <span class="app_status" style="font-weight: bold">Status: <span style="font-weight: normal" id="pass_app_status"></span></span>
                             <a href="#"><span class="control-icon trash delete-app-button"></span></a>
                         </div>
 
                         <form action="/startApp" method="post">
                             <input type="text" id="details_app_name_start" name="appName" class="blanck_input" />
-                            <input type="submit" name="startApp" class="app-actions start start_button_apps"/>
+                            <input type="submit" name="startApp" class="app-actions start start_button_apps" id="startApp_btn" />
                         </form>
 
                         <form action="/stopApp" method="post">
                             <input type="text" id="details_app_name_stop" name="appName" class="blanck_input" />
-                            <input type="submit" name="stopApp" class="app-actions stop stop_button_apps"/>
+                            <input type="submit" name="stopApp" class="app-actions stop stop_button_apps" id="stopApp_btn" />
                         </form>
                        <!-- <div class="app-actions stop"></div>  -->
                     </div>
@@ -224,18 +230,13 @@
                     <ul class="unstyled">
                         <li class="tile blue">
                             <span></span>
-                            <span class="service-name"></span>
-                            <span class="control-icon trash delete-service-button"></span>
-                        </li>
-                        <li class="tile blue">
-                            <span></span>
-                            <span class="service-name"></span>
+                            <span class="service-name" id="pass_service_name"></span>
                             <span class="control-icon trash delete-service-button"></span>
                         </li>
                     </ul>
                 </td>
                 <td>
-                    <h4 class="app_details_titles">URIs Bound <span style="float: right" class="app-services plus" data-bind="click: startBindUriCFApp, visible: uris().length < 5"></span></h4>
+                    <h4 class="app_details_titles">URIs Bound <span style="float: right" class="app-services plus"></span></h4>
                     <ul class="unstyled">
                         <li class="tile blue">
                             <a target="_blank">
@@ -263,7 +264,7 @@
                                 <span class="instance-type">Provisioned</span>
                             </span>
                             <span class="instance-info">
-                                <span class="instance-count"></span>
+                                <span class="instance-count" id="pass_app_instances"></span>
                                 <span class="instance-type">Running</span>
                             </span>
                         </li>
@@ -281,7 +282,7 @@
                     </h4>
                     <ul class="unstyled">
                         <li class="tile blue half-height half-width" style="color: #fff">
-                            <span class="instance-count"></span>
+                            <span class="instance-count" id="pass_app_memory"></span>
                             <span class="instance-type">MB</span>
                         </li>
                     </ul>
