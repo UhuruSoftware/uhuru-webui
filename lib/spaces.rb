@@ -102,7 +102,7 @@ class Spaces
 
       app_uris = []
       app.routes.each do |r|
-        app_uris << Application::Url.new(r.host + "." + r.domain.name)
+        app_uris << Applications::Url.new(r.host + "." + r.domain.name)
       end
 
       apps_list << Applications::Application.new(app.name, app.runtime.name, app.guid, app.state, app_service_instances, app_uris, app.total_instances, app.memory)
