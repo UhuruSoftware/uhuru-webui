@@ -17,7 +17,9 @@ class ServiceInstances
     service.space = @client.space(space_guid)
     service.service_plan = @client.service_plan(service_plan_guid)
     service.create!
-    
+
+    service
+
     rescue Exception => e
       puts "#{e.inspect}, #{e.backtrace}"
   end
