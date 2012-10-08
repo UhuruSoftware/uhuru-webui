@@ -55,15 +55,6 @@ var create_tempcta_modal = function(){
 }
 
 
-var add_ctService_modal = function(){
-	$('#screen').css({	"display": "block", opacity: 0.7, "width": "10000px", "height": "10000px"});
-	$('body').css({"overflow":"hidden"});
-	$('#add_ctService_modal').slideDown(1000);
-    $('.close').click(function(){$("#add_ctService_modal").css("display", "none");$('#screen').css("display", "none")});
-    $('.btn').click(function(){$("#add_ctService_modal").css("display", "none");$('#screen').css("display", "none")});
-}
-
-
 var unbind_ctsTOcta_modal = function(){
 	$('#screen').css({	"display": "block", opacity: 0.7, "width": "10000px", "height": "10000px"});
 	$('body').css({"overflow":"hidden"});
@@ -100,24 +91,6 @@ var unbind_uriTOcta_modal = function(){
 }
 
 
-var inv_ctUser_modal = function(){
-	$('#screen').css({	"display": "block", opacity: 0.7, "width": "10000px", "height": "10000px"});
-	$('body').css({"overflow":"hidden"});
-	$('#inv_ctUser_modal').slideDown(1000);
-    $('.close').click(function(){$("#inv_ctUser_modal").css("display", "none");$('#screen').css("display", "none")});
-    $('.btn').click(function(){$("#inv_ctUser_modal").css("display", "none");$('#screen').css("display", "none")});
-}
-
-
-var delete_ctUser_modal = function(){
-	$('#screen').css({	"display": "block", opacity: 0.7, "width": "10000px", "height": "10000px"});
-	$('body').css({"overflow":"hidden"});
-	$('#delete_ctUser_modal').slideDown(1000);
-    $('.close').click(function(){$("#delete_ctUser_modal").css("display", "none");$('#screen').css("display", "none")});
-    $('.btn').click(function(){$("#delete_ctUser_modal").css("display", "none");$('#screen').css("display", "none")});
-}
-
-
 var cannot_delete_ctUser_modal = function(){
 	$('#screen').css({	"display": "block", opacity: 0.7, "width": "10000px", "height": "10000px"});
 	$('body').css({"overflow":"hidden"});
@@ -144,6 +117,14 @@ var show_CT_token = function(){
     $('.btn').click(function(){$("#show_CT_token").css("display", "none");$('#screen').css("display", "none")});
 }
 
+
+var add_ctService_modal = function(){
+	$('#screen').css({	"display": "block", opacity: 0.7, "width": "10000px", "height": "10000px"});
+	$('body').css({"overflow":"hidden"});
+	$('#add_ctService_modal').slideDown(200);
+    $('.close').click(function(){$("#add_ctService_modal").css("display", "none");$('#screen').css("display", "none")});
+    $('.btn').click(function(){$("#add_ctService_modal").css("display", "none");$('#screen').css("display", "none")});
+}
 
 var app_details_modal = function(){
 	$('#screen').css({	"display": "block", opacity: 0.7, "width": "10000px", "height": "10000px"});
@@ -187,8 +168,6 @@ $('#unbind_ctsTOcta_modalb').click(unbind_ctsTOcta_modal);
 $('#bind_ctsTOcta_modalb').click(bind_ctsTOcta_modal);
 $('#bind_uriTOcta_modalb').click(bind_uriTOcta_modal);
 $('#unbind_uriTOcta_modalb').click(unbind_uriTOcta_modal);
-$('#inv_ctUser_modalb').click(inv_ctUser_modal);
-$('#delete_ctUser_modalb').click(delete_ctUser_modal);
 $('#cannot_delete_ctUser_modalb').click(cannot_delete_ctUser_modal);
 $('#toggle_user_admin_modalb').click(toggle_user_admin_modal);
 $('#show_CT_tokenb').click(show_CT_token);
@@ -209,9 +188,9 @@ $('.show_this_app_details').click(app_details_modal);
 $('#create_app').click(create_tempcta_modal);
 $('#create_organization_btn').click(create_organization);
 $('#create_space_btn').click(create_space);
-$('#add_user_btn1').click(add_user);
-$('#add_user_btn2').click(add_user);
-$('#add_user_btn3').click(add_user);
+$('#add_user_btn_owner').click(add_user);
+$('#add_user_btn_developer').click(add_user);
+$('#add_user_btn_manager').click(add_user);
 
 $('#plus_service').click(add_ctService_modal);
 

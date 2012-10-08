@@ -1,57 +1,59 @@
 
-//JAVASCRIPT CANt SHOW GUID'S
+//JAVASCRIPT CAN'T SHOW GUID'S
 
-var thisOrgGuid;
-var thisSpaceGuid;
+//these functions pass the parameters needed to the "Are you sure?" modals, so they can be posted
 
-var thisApp;
-var thisService;
 
-function setOrganizationGuid(obj)
+function prepareToDeleteOrganization(obj)
 {
-    thisOrgGuid = obj.title;
+    document.getElementById('this_organization_name').innerHTML = obj.id;
+    document.getElementById('pass_guid').value = obj.title;
 }
 
-function getOrganizationGuid()
+function prepareToDeleteSpace(obj)
 {
-    document.getElementById('pass_guid').value =  thisOrgGuid;
+    document.getElementById('this_space_name').innerHTML = obj.id;
+    document.getElementById('pass_guid').value = obj.title;
 }
 
-
-
-function setSpaceGuid(obj)
+function prepareToDeleteApp(obj)
 {
-    thisSpaceGuid = obj.title;
-}
-
-function getSpaceGuid()
-{
-    document.getElementById('pass_guid').value =  thisSpaceGuid;
+    document.getElementById('pass_app').value = obj.title;
+    document.getElementById('this_app_name').innerHTML = obj.title;
 }
 
 
-
-
-//THIS IS WHERE JAVASCRIPT PASSES TO THE DELETE FORM THE GUID TO APPS/SPACES
-// THE DELETE FORM LOOKS LIKE "Do you want to delete the service/app?   YES|NO"
-
-function setAppGuid(obj)
+function prepareToDeleteService(obj)
 {
-    thisApp = obj.title;
-}
-
-function getAppGuid()
-{
-    document.getElementById('pass_app').value =  thisApp;
+    document.getElementById('pass_service').value = obj.title;
+    document.getElementById('this_service_name').innerHTML = obj.id;
 }
 
 
-function setServiceGuid(obj)
+
+
+function prepareToAddNewUser(userType)
 {
-    thisService = obj.title;
+    document.getElementById('new_user_type').value = userType;
+}
+function prepareToAddNewUserEmail()
+{
+    document.getElementById('new_user_email').value = document.getElementById('user_email').value;
 }
 
-function getServiceGuid()
+
+
+
+
+
+
+
+function newServiceType() //this is the combo box
 {
-    document.getElementById('pass_service').value =  thisService;
+    document.getElementById('new_user_type').value = userType;
+}
+
+function newServiceName()
+{
+    document.getElementById('new_service_name').value = document.getElementById('service_name').value;
 }

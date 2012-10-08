@@ -44,7 +44,7 @@
                             <span class="app_name"><%= app.name %></span>
 
                             <a href="#">
-                                <span class="control-icon trash delete-app-button" id="<%= app.name %>" title="<%= app.name %>" onmousemove="setAppGuid(this);"></span>
+                                <span class="control-icon trash delete-app-button" id="<%= app.name %>" title="<%= app.name %>" onmousemove="prepareToDeleteApp(this);"></span>
                                 <span class="app_state" id="<%= app.state %>"></span>
                                 <span class="app_instances" id="<%= app.instances %>"></span>
                                 <span class="app_memory" id="<%= app.memory %>"></span>
@@ -71,7 +71,7 @@
                         <li class="tileblue">
                             <span>
                                 <span class="service_name"><%= service.name %></span>
-                                <a href="#"><span class="control-icon trash delete-service-button" id="<%= service.name %>" title="<%= service.guid %>" onmousemove="setServiceGuid(this);"></span></a>
+                                <a href="#"><span class="control-icon trash delete-service-button" id="<%= service.name %>" title="<%= service.guid %>" onmousemove="prepareToDeleteService(this);"></span></a>
                             </span>
                         </li>
                         <% end %>
@@ -391,14 +391,14 @@
 </div>
 
 
-<div class="modal fade hide" id="delete_app" onmousemove="getAppGuid();">
+<div class="modal fade hide" id="delete_app">
     <div class="modal-header">
         <button class="close">×</button>
         <h3>Delete App</h3>
     </div>
     <div class="modal-body">
         <p>
-            Are you sure you want to delete the app?
+            Are you sure you want to delete the app &nbsp;<span id="this_app_name"></span>?
         </p>
     </div>
     <div class="modal-footer">
@@ -423,6 +423,9 @@
         <p>
             <label for="team_services_list">Service Type</label>
             <select id="team_services_list">
+                <option value="test1">1</option>
+                <option value="test2">2</option>
+                <option value="test3">3</option>
             </select>
         </p>
         <p>
@@ -431,23 +434,29 @@
         </p>
     </div>
 
-    <div class="modal-footer">
+    <div class="modal-footer" onmousemove="newServiceName();">
+
         <div class="button_case_create_organization_and_space">
-            <a href="#" class="btn btn_right_create_organization_and_space">Close</a>
-            <a href="#" class="btn btn-success btn_left_create_organization_and_space">Create Service</a>
+          <a href="#" class="btn btn_right_create_organization_and_space">Close</a>
+
+          <form action="/createService" method="post">
+                <input type="text" id="new_service_name" name="serviceName"/>
+                <input type="submit" value="Create Service" class="btn btn-success btn_left_create_organization_and_space" />
+          </form>
+
         </div>
     </div>
 </div>
 
 
-<div class="modal fade hide" id="delete_service" onmousemove="getServiceGuid();">
+<div class="modal fade hide" id="delete_service">
     <div class="modal-header">
         <button class="close">×</button>
-        <h3>Delete App</h3>
+        <h3>Delete Service</h3>
     </div>
     <div class="modal-body">
         <p>
-            Are you sure you want to delete the service?
+            Are you sure you want to delete the service &nbsp;<span id="this_service_name"></span>?
         </p>
     </div>
     <div class="modal-footer">

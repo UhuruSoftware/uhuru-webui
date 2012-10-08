@@ -143,7 +143,7 @@ end
 
 post '/createOrganization' do
   @name = params[:orgName]
-  @message = "Creating organization... Please wait"
+  @organization_message = "Creating organization... Please wait"
 
   organizations_Obj = Organizations.new(user_token)
   organizations_Obj.create(@name)
@@ -263,24 +263,37 @@ end
 end
 
 
+post '/createService' do
+  @name = params[:serviceName]
 
+  organizations_Obj = Organizations.new(user_token)
+  spaces_Obj = ServiceInstances.new(user_token)
 
-####test####
+  @plan = "d85b0ad5-02d3-49e7-8bcb-19057a847bf7"
 
-get '/test' do
-  @name =  params[:appName]
-  @runtime = params[:appRuntime]
-  @framework = params[:appFramework]
-  @instance = 1
-  @memory = params[:appMemory]
+  spaces_Obj.create_service_instance(@name, $currentSpace, @plan)
 
-  apps_obj = Applications.new(user_token)
-  apps_obj.bind_app_services("1", "1DB")
-
-  puts ""
-  puts "\n"
-
+  redirect "/spaces" + $currentSpace
 end
+
+
+post '/addUsers' do
+  @email =  params[:userEmail]
+  @type = params[:userType]
+
+  organizations_Obj = Organizations.new(user_token)
+  users_Obj = Users.new(user_token)
+
+  users_Obj.create_user_add_to_org($currentOrganization, @email)
+
+  puts $currentOrganization + "--- ORG"
+  puts @email + "--- email"
+  puts @type + "--- type"
+
+  redirect "/organization" + $currentOrganization
+end
+
+
 
 
 post '/startApp' do
@@ -302,3 +315,24 @@ post '/stopApp' do
 
   redirect "/space" + $currentSpace
 end
+
+
+
+
+
+
+####test####
+
+post '/test' do
+  @name = params[:serviceName]
+
+  organizations_Obj = Organizations.new(user_token)
+  spaces_Obj = ServiceInstances.new(user_token)
+
+  @plan = "d85b0ad5-02d3-49e7-8bcb-19057a847bf7"
+
+  spaces_Obj.create_service_instance(@name, $currentSpace, @plan)
+
+  redirect "/spaces" + $currentSpace
+end
+

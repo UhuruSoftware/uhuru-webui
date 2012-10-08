@@ -44,7 +44,7 @@
                                     <span class="count-label apps"># of apps: </span><span class="count-value apps"><%= space.apps_count %></span>
                                     <span class="count-label services"># of services: </span><span class="count-value services"><%= space.services_count %></span>
 
-                                    <a href="#"><span class="control-icon trash delete-space-button" id="<%= space.name %>" title="<%= space.guid %>" onmousemove="setSpaceGuid(this);"></span></a>
+                                    <a href="#"><span class="control-icon trash delete-space-button" id="<%= space.name %>" title="<%= space.guid %>" onmousemove="prepareToDeleteSpace(this);"></span></a>
                                 </a>
                             </li>
                     <% end %>
@@ -81,7 +81,7 @@
 
                           <!--THIS IS WHERE USER CA ADD MORE OWNERS-->
 
-                            <li class="new tile" id="add_user_btn1">
+                            <li class="new tile" id="add_user_btn_owner" onclick="prepareToAddNewUser(this.title)" title="owner">
                                 <span class="icon"></span>
                             </li>
 
@@ -103,7 +103,7 @@
                           <% end %>
 
                           <!--THIS IS THE + BUTTON FOR DEVELOPERS-->
-                            <li class="new tile" id="add_user_btn2">
+                            <li class="new tile" id="add_user_btn_developer" onclick="prepareToAddNewUser(this.title)" title="developer">
                                 <span class="icon"></span>
                             </li>
                           <!--// //-->
@@ -125,7 +125,7 @@
                           <% end %>
 
                           <!--THIS IS THE MANAGERS + BUTTON-->
-                            <li class="new tile" id="add_user_btn3">
+                            <li class="new tile" id="add_user_btn_manager" onclick="prepareToAddNewUser(this.title)" title="manager">
                                 <span class="icon"></span>
                             </li>
                           <!--// //-->
@@ -163,14 +163,14 @@
 </div>
 
 
-<div class="modal hide" id="delete_space_modal" onmousemove="getSpaceGuid()">
+<div class="modal hide" id="delete_space_modal">
     <div class="modal-header">
         <button class="close">×</button>
         <h3>Delete Space</h3>
     </div>
     <div class="modal-body">
         <p>
-            Are you sure you want to delete the space "<span></span>"?
+            Are you sure you want to delete the space "<span id="this_space_name"></span>"?
         </p>
         <br />
         <p>
@@ -197,29 +197,36 @@
 
 <div class="modal fade" id="add_user">
     <div class="modal-header">
-        <button class="close" data-dismiss="modal" >×</button>
+        <button class="close">×</button>
         <h3>Invite user</h3>
-        <br />
-        <p>
-        <strong>Note:</strong> Invitation only works with email addresses that are registered with Windows LiveID, GoogleID or Facebook.
-        Please confirm this with the invitee before sending the invitation
-        </p>
+            <br />
+            <p>
+                <strong>Note:</strong> Invitation only works with email addresses that are registered with Windows LiveID, GoogleID or Facebook.
+                Please confirm this with the invitee before sending the invitation
+            </p>
     </div>
-    <div class="modal-body" style="left:300">
+    <div class="modal-body">
         <div>
-            <label for="inviteEmail">Email address</label>
-            <input id="inviteEmail" type="text" />
+            <ul class="user_email_ul">
+                <label for="inviteEmail">Email address</label>
+                <input id="user_email" type="text" />
+            </ul>
 
-            <ul class="unstyled">
-                <li style="padding-bottom: 5px"><img width="32" height="32"  src="../images/Gmail_logo.png" alt=""/>&nbsp;GoogleID</li>
-                <li style="padding-bottom: 5px"><img width="32" height="32"  src="../images/msn_logo.png" alt=""/>&nbsp;Microsoft LiveID</li>
-                <li style="padding-bottom: 5px"><img  width="32" height="32"  src="../images/facebook_logo.png" alt=""/>&nbsp;Facebook</li>
+            <ul class="create_user_modal_ul" id="user_logos">
+                <li class="user_modal_li"><img width="32" height="32"  src="../images/Gmail_logo.png" alt=""/>&nbsp;GoogleID</li>
+                <li class="user_modal_li"><img width="32" height="32"  src="../images/msn_logo.png" alt=""/>&nbsp;Microsoft LiveID</li>
+                <li class="user_modal_li"><img  width="32" height="32"  src="../images/facebook_logo.png" alt=""/>&nbsp;Facebook</li>
             </ul>
         </div>
-        <p data-bind="visible: mode() === 'saving'">Inviting user...</p>
     </div>
-    <div class="modal-footer">
-        <button class="btn btn-success">Invite User</button>
+    <div class="modal-footer" onmousemove="prepareToAddNewUserEmail();">
+            <form action="/addUsers" method="post">
+                <input type="text" id="new_user_type" name="userType" />
+                <input type="text" id="new_user_email" name="userEmail" />
+
+                <input type="submit" value="Invite User" class="btn btn-success" />
+
+            </form>
     </div>
 </div>
 

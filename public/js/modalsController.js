@@ -1,8 +1,10 @@
 
+//THIS FUNCTION SETS THE VARIABLES TO THE APP DETAILS ON THE CURRENT HOWERED APP TILE
 
 $(function(){
 
 $('.show_this_app_details').hover(function(){
+
 
         var name = $(this).contents().find("span:nth-child(1)").attr("id");
         var state = $(this).contents().children("span:nth-child(2)").attr("id");
@@ -21,6 +23,7 @@ $('.show_this_app_details').hover(function(){
         $('#details_app_name_start').val(name);
         $('#details_app_name_stop').val(name);
 
+        //this sets the button startapp/stopapp poses
 
         if(state == "stopped" || state == "STOPPED")
         {
@@ -40,14 +43,14 @@ $('.show_this_app_details').hover(function(){
 $(function(){
     var instance = $('#app_instances_count span').text();
     var memory = $('#app_instances_count span').text();
+
     //instance = parseInt(instance);
     //memory = parseInt(memory);
      //
         //plus and minus instances at app details
     //
-    var plus_instance = function(){
 
-    alert(memory);
+    var plus_instance = function(){
         instance+=1;
         instance = instance + ""
         $('#app_instances_count').text(instance);
@@ -94,6 +97,18 @@ $(function(){
 
     $('#app_plus_memory').click(plus_memory);
     $('#app_minus_memory').click(minus_memory);
+
+});
+
+
+//THIS FUNCTION MANIPULATES THE BEHAVIOR OF THE RADIO BUTTONS
+
+$(function(){
+
+    //$('input:radio[name=user_radio]:checked').val();
+
+    //$('input:radio[name=user_radio]:nth(0)').attr('checked', true);
+    //$('input:radio[name=user_radio]')[1].checked = true;
 
 });
 
