@@ -18,7 +18,7 @@ class Applications
   end
 
   # parameters with default arguments (= nil) may be
-  def create(org_guid, space_guid, name, runtime, framework, instances, memory, domain_name, path, service_plan_guid = nil)
+  def create(org_guid, space_guid, name, runtime, framework, instances, memory, domain_name, path, service_plan_guid)
 
     org = @client.organization(org_guid)
     space = @client.space(space_guid)

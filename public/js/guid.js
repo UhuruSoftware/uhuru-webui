@@ -31,6 +31,10 @@ function getSpaceGuid()
 
 
 
+
+//THIS IS WHERE JAVASCRIPT PASSES TO THE DELETE FORM THE GUID TO APPS/SPACES
+// THE DELETE FORM LOOKS LIKE "Do you want to delete the service/app?   YES|NO"
+
 function setAppGuid(obj)
 {
     thisApp = obj.title;
@@ -40,10 +44,6 @@ function getAppGuid()
 {
     document.getElementById('pass_app').value =  thisApp;
 }
-
-
-
-
 
 
 function setServiceGuid(obj)

@@ -78,7 +78,7 @@
 
 
                         <li class="new tile" id="add_ctService_modal_btn">
-                        <span class="icon"></span>
+                            <span class="icon"></span>
                         </li>
                     </ul>
                 </div>
@@ -198,7 +198,7 @@
         <table>
             <tr>
                 <td>
-                    <div class="app-control" style="border: 1px solid red;">
+                    <div class="app-control">
                         <div class="tile blue">
                             <h3>
                                 <span class="app_name_big" id="app_name_big"></span>
@@ -217,19 +217,16 @@
                             <input type="text" id="details_app_name_stop" name="appName" class="blanck_input" />
                             <input type="submit" name="stopApp" class="app-actions stop stop_button_apps" id="stopApp_btn" />
                         </form>
-                       <!-- <div class="app-actions stop"></div>  -->
                     </div>
                 </td>
               <td></td>
             </tr>
 
-
             <tr>
                 <td>
                     <h4 class="app_details_titles">Services Bound</h4>
-                    <ul class="unstyled">
+                    <ul class="app_details_ul">
                         <li class="tile blue">
-                            <span></span>
                             <span class="service-name" id="pass_service_name"></span>
                             <span class="control-icon trash delete-service-button"></span>
                         </li>
@@ -237,7 +234,7 @@
                 </td>
                 <td>
                     <h4 class="app_details_titles">URIs Bound <span style="float: right" class="app-services plus"></span></h4>
-                    <ul class="unstyled">
+                    <ul class="app_details_ul">
                         <li class="tile blue">
                             <a target="_blank">
                                 <span class="service-name"></span>
@@ -252,19 +249,19 @@
                 <td>
                     <h4 class="app_details_titles">App Instances
                         <span style="float: right">
-                            <span class="app-services minus" style="float: none"></span>
-                            <span class="app-services plus" style="float: none"></span>
+                            <span class="app-services minus" id="app_minus_instance"></span>
+                            <span class="app-services plus" id="app_plus_instance"></span>
                         </span>
                     </h4>
 
-                    <ul class="unstyled">
+                    <ul class="app_details_ul">
                         <li class="tile blue half-height">
                             <span class="instance-info">
-                                <span class="instance-count"></span>
+                                <span class="instance-count pass_app_instances" id="app_instances_count"></span>
                                 <span class="instance-type">Provisioned</span>
                             </span>
                             <span class="instance-info">
-                                <span class="instance-count" id="pass_app_instances"></span>
+                                <span class="instance-count pass_app_instances" ></span>
                                 <span class="instance-type">Running</span>
                             </span>
                         </li>
@@ -276,20 +273,18 @@
                 <td>
                     <h4 class="app_details_titles">Memory Provisioned
                         <span style="float: right">
-                            <span class="app-services minus" style="float: none"></span>
-                            <span class="app-services plus" style="float: none"></span>
+                            <span class="app-services minus" style="float: none" id="app_minus_memory"></span>
+                            <span class="app-services plus" style="float: none" id="app_plus_memory"></span>
                         </span>
                     </h4>
-                    <ul class="unstyled">
+                    <ul class="app_details_ul">
                         <li class="tile blue half-height half-width" style="color: #fff">
-                            <span class="instance-count" id="pass_app_memory"></span>
+                            <span class="instance-count pass_app_memory" id="app_memory_count"></span>
                             <span class="instance-type">MB</span>
                         </li>
                     </ul>
                     <div style="float: right; width: 300px">
                         <div id="memory_slider_bar1" class="app-value-slider"></div>
-                        //slider//
-                        Max memory: 1024MB
                     </div>
                 </td>
             </tr>
@@ -297,56 +292,14 @@
     </div>
 
     <div class="modal-footer" id="app_details_footer">
-        <a href="#" class="btn" id="app_details_closebtnfooter">Close</a>
+        <div class="button_case_app_details">
+            <input type="submit" value="Save Changes" class="btn btn-success btn_right_app_details" />
+            <a href="#" class="btn btn_left_app_details">Close</a>
+        </div>
     </div>
 </div>
 
 
-<div class="modal fade hide" id="add_ctService_modal">
-    <div class="modal-header">
-        <button class="close">×</button>
-        <h3>New Service</h3>
-    </div>
-
-    <div class="modal-body">
-        <p>
-            <label for="team_services_list">Service Type</label>
-            <select id="team_services_list">
-            </select>
-        </p>
-        <p>
-            <label for="service_name">Name</label>
-            <input type="text" id="service_name"/>
-        </p>
-    </div>
-
-    <div class="modal-footer">
-        <a href="#" class="btn">Close</a>
-        <a href="#" class="btn btn-success">Create Service</a>
-            Creating Service...
-    </div>
-</div>
-
-<!--// //-->
-
-<!--THIS IS THE SAVING MODAL-->
-
-
-<div class="modal fade hide" id="saving_modal">
-    <div class="modal-header">
-        <h3>Saving changes</h3>
-    </div>
-
-
-    <div class="modal-body">
-        <p>
-            Please wait while your changes are saved.
-        </p>
-        <p style="font-size: 0.8em">
-            This dialog will be dismissed automatically after the changes are made.
-        </p>
-    </div>
-</div>
 
 <!--// //-->
 
@@ -377,74 +330,6 @@
 
 
 
-<div class="modal fade hide" id="bind_ctsTOcta_modal">
-    <div class="modal-header">
-        <h3>Add service</h3>
-    </div>
-    <div class="modal-body">
-        <p>Add a new service to <span></span></p>
-        <p>
-            <label for="bind_services_list">Available services</label>
-            <select id="bind_services_list">
-            </select>
-        </p>
-    </div>
-    <div class="modal-footer">
-        <a href="#" class="btn">Cancel</a>
-        <a href="#" class="btn btn-success">Bind service</a>
-    </div>
-</div>
-
-
-
-<div class="modal fade hide" id="bind_uriTOcta_modal">
-    <div class="modal-header">
-        <h3>Add new URI</h3>
-    </div>
-    <div class="modal-body">
-        <p>
-            <label for="newUri">New URI</label>
-            <table id="new_app_name_table">
-                <tbody>
-                    <tr>
-                        <td>
-                            <input id="newUri" />
-                        </td>
-                        <td style="vertical-align: top">
-                            .uhurucloud.com
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </p>
-    </div>
-    <div class="modal-footer">
-        <a href="#" class="btn">cancel</a>
-        <a href="#" class="btn btn-success">bind URI</a>
-        binding URL...
-    </div>
-</div>
-
-
-
-<div class="modal fade hide" id="unbind_uriTOcta_modal">
-    <div class="modal-header">
-        <h3>Unbind URI</h3>
-    </div>
-    <div class="modal-body">
-        <p>
-            Are you sure you want to unbind this app from <span style="font-weight: bold">
-            </span>? Your app will no longer be able to use this URI.<br />
-        </p>
-    </div>
-    <div class="modal-footer">
-        <a href="#" class="btn">Cancel</a>
-        <a href="#" class="btn btn-success">Unbind URI</a>
-        unbinding URL...
-    </div>
-</div>
-
-
 <div class="modal fade hide" id="create_tempcta_modal">
     <div class="modal-header">
         <button class="close">x</button>
@@ -467,8 +352,6 @@
     </table>
 
     <div class="modal-body">
-<!-- APP TABLE -->
-
             <div id="app_smallcontainer">
                 <table id="app_table">
 
@@ -498,23 +381,12 @@
 
                 </table>
             </div>
-
-<!-- APP TABLE -->
     </div>
 
     <div class="modal-footer">
-        <a href="#" class="btn">Cancel</a>
-
-      <!--
-        create btn
-
-        <input type="submit" value="Create" class="btn btn-success" />
-
-        message
-      <p>
-            Your app is being created. This could take a minute or two.
-        </p>
-      -->
+        <div class="button_case_create_organization_and_space">
+            <a href="#" class="btn btn_right_create_organization_and_space">Cancel</a>
+        </div>
     </div>
 </div>
 
@@ -530,12 +402,40 @@
         </p>
     </div>
     <div class="modal-footer">
-        <a href="#" class="btn">No</a>
-        <form action="/deleteClickedApp" method="post">
-            <input type="submit" value="Yes" class="btn btn-danger" />
-            <input type="text" id="pass_app" name="appGuid" class="blanck_input" />
-            Deleting app...
-        </form>
+        <div class="button_case_delete_organization_and_space">
+            <a href="#" class="btn btn_right_delete_organization_and_space">No</a>
+            <form action="/deleteClickedApp" method="post">
+                <input type="submit" value="Yes" class="btn btn-danger btn_left_delete_organization_and_space" />
+                <input type="text" id="pass_app" name="appGuid" class="blanck_input" />
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade hide" id="add_ctService_modal">
+    <div class="modal-header">
+        <button class="close">×</button>
+        <h3>New Service</h3>
+    </div>
+
+    <div class="modal-body">
+        <p>
+            <label for="team_services_list">Service Type</label>
+            <select id="team_services_list">
+            </select>
+        </p>
+        <p>
+            <label for="service_name">Name</label>
+            <input type="text" id="service_name"/>
+        </p>
+    </div>
+
+    <div class="modal-footer">
+        <div class="button_case_create_organization_and_space">
+            <a href="#" class="btn btn_right_create_organization_and_space">Close</a>
+            <a href="#" class="btn btn-success btn_left_create_organization_and_space">Create Service</a>
+        </div>
     </div>
 </div>
 
@@ -547,17 +447,37 @@
     </div>
     <div class="modal-body">
         <p>
-            Are you sure you want to delete the app?
+            Are you sure you want to delete the service?
         </p>
     </div>
     <div class="modal-footer">
-        <a href="#" class="btn">No</a>
-        <form action="/deleteClickedService" method="post">
-            <input type="submit" value="Yes" class="btn btn-danger" />
-            <input type="text" id="pass_service" name="serviceGuid" class="blanck_input" />
-            Deleting app...
-        </form>
+        <div class="button_case_delete_organization_and_space">
+            <a href="#" class="btn btn_right_delete_organization_and_space">No</a>
+            <form action="/deleteClickedService" method="post">
+                <input type="submit" value="Yes" class="btn btn-danger btn_left_delete_organization_and_space" />
+                <input type="text" id="pass_service" name="serviceGuid" class="blanck_input" />
+            </form>
+        </div>
     </div>
 </div>
+
+<div class="modal fade hide" id="saving_modal">
+    <div class="modal-header">
+        <h3>Saving changes</h3>
+    </div>
+
+
+    <div class="modal-body">
+        <p>
+            Please wait while your changes are saved.
+        </p>
+        <p style="font-size: 0.8em">
+            This dialog will be dismissed automatically after the changes are made.
+        </p>
+    </div>
+</div>
+
+
+
 
 </div>

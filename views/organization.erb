@@ -152,9 +152,11 @@
             </p>
         </div>
         <div class="modal-footer">
-                <a href="#" class="btn">Cancel</a>
-                <input type="submit" value="Create" class="btn btn-success" />
+            <div class="button_case_create_organization_and_space">
+                <a href="#" class="btn btn_right_create_organization_and_space">Cancel</a>
+                <input type="submit" value="Create" class="btn btn-success btn_left_create_organization_and_space" />
                 <%= @message %>
+            </div>
         </div>
 
     </form>
@@ -178,13 +180,14 @@
         </p>
     </div>
     <div class="modal-footer">
-        <a href="#" class="btn">No</a>
-
+        <div class="button_case_delete_organization_and_space">
+            <a href="#" class="btn btn_right_delete_organization_and_space">No</a>
             <form action="/deleteClickedSpace" method="post">
-                <input type="submit" class="btn btn-danger" />
+                <input type="submit" class="btn btn-danger btn_left_delete_organization_and_space" />
                 <input type="text" id="pass_guid" name="spaceGuid" style="display: none;" />
                 <%= @message %>
             </form>
+        </div>
 
     </div>
 </div>

@@ -47,9 +47,11 @@
             </p>
         </div>
         <div class="modal-footer">
-            <a href="#" class="btn">Cancel</a>
-            <input type="submit" value="Create" class="btn btn-success" />
-            <%= @message %>
+            <div class="button_case_create_organization_and_space">
+                <a href="#" class="btn btn_right_create_organization_and_space">Cancel</a>
+                <input type="submit" value="Create" class="btn btn-success btn_left_create_organization_and_space" />
+                <%= @message %>
+            </div>
         </div>
     </form>
 </div>
@@ -72,13 +74,13 @@
         </p>
     </div>
     <div class="modal-footer">
-        <a href="#" class="btn">No</a>
-
-            <form action="/deleteClickedOrganization" method="post">
-                <input type="submit" class="btn btn-danger yes_button" />
-                <input type="text" id="pass_guid" name="orgGuid" style="display: none;" />
-                <%= @message %>
-            </form>
-
+            <div class="button_case_delete_organization_and_space">
+                <a href="#" class="btn btn_right_delete_organization_and_space">No</a>
+                <form action="/deleteClickedOrganization" method="post">
+                    <input type="submit" class="btn btn-danger btn_left_delete_organization_and_space" />
+                    <input type="text" id="pass_guid" name="orgGuid" style="display: none;" />
+                    <%= @message %>
+                </form>
+            </div>
     </div>
 </div>

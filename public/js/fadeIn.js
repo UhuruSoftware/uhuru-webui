@@ -215,36 +215,6 @@ $('#add_user_btn3').click(add_user);
 
 $('#plus_service').click(add_ctService_modal);
 
-
-
-
-
-//
-    //plus and minus memory at SUBSCRIPTIONS
-//
-
-//var counter = document.getElementById('memory_number').innerHTML;
-
-//var plus = function(){
-  //  if(counter < 2048)
-  //  {
-  //      counter = parseInt(counter);
-  //      counter+=32;
-  //      document.getElementById('memory_number').innerHTML = counter;
-  //  }
-//}
-
-//var minus = function(){
-    //if(counter > 0)
-    //{
-      //  counter = parseInt(counter);
-      // counter-=32;
-      //  document.getElementById('memory_number').innerHTML = counter;
-    //}
-//}
-
-
-//$('#plus_memory').click(plus);
-//$('#minus_memory').click(minus);
 });
+
 

@@ -228,11 +228,12 @@ post '/deleteClickedService' do
 
   organizations_Obj = Organizations.new(user_token)
   spaces_Obj = Spaces.new(user_token)
+  applications_Obj = Applications.new(user_token)
+  services_Obj = ServiceInstances.new(user_token)
 
- # applications_Obj = Applications.new(user_token)
+  services_Obj.delete(@guid)
 
-  #applications_Obj.delete(@guid)
-  #redirect "/space" + $currentSpace
+  redirect "/space" + $currentSpace
 end
 
 
@@ -243,15 +244,21 @@ end
   @instance = 1
   @memory = params[:appMemory]
 
+
+
   @domain = "ccng-dev.net"
   @path = "/home/ubuntu/Desktop/rubytest"
 
   organizations_Obj = Organizations.new(user_token)
   spaces_Obj = Spaces.new(user_token)
   apps_obj = Applications.new(user_token)
+  #spaces_obj = ServiceInstances.new(user_token)
 
-  apps_obj.create($currentOrganization, $currentSpace, @name, "ruby19", "sinatra", @instance, 128, @domain, @path)
 
+  @plan = "d85b0ad5-02d3-49e7-8bcb-19057a847bf7"
+
+  apps_obj.create($currentOrganization, $currentSpace, @name, "ruby19", "sinatra", @instance, 128, @domain, @path, @plan)
+  #apps_obj.bind_app_services(@name, @name + "DB")
   redirect "/space" + $currentSpace
 end
 
@@ -260,14 +267,17 @@ end
 
 ####test####
 
-post '/test' do
+get '/test' do
   @name =  params[:appName]
   @runtime = params[:appRuntime]
   @framework = params[:appFramework]
   @instance = 1
   @memory = params[:appMemory]
 
-  puts "@name"
+  apps_obj = Applications.new(user_token)
+  apps_obj.bind_app_services("1", "1DB")
+
+  puts ""
   puts "\n"
 
 end

@@ -211,8 +211,8 @@ html, body
 {
     list-style: none;
     text-decoration: none;
+    margin-left: 5px;
 }
-
 
 #manage_menu li
 {
@@ -725,11 +725,9 @@ li.new .icon
 
 .instance-count
 {
-    font-size: 40px;
+    font-size: 35px;
     text-align: center;
     display: inline-block;
-    width: 100%;
-    padding-top: 10px;
 }
 
 .instance-type

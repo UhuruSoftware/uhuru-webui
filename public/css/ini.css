@@ -1016,9 +1016,10 @@ h2 .count
 }
 #app_details_closebtn
 {
-    font-size: 14px;
+    font-size: 16px;
     font-weight: bold;
     font-family: "Sagoe UI", Verdana, Helvetica, SANS-SERIF;
+    margin-right: 8px;
 }
 #app_details_footer
 {
@@ -1027,18 +1028,11 @@ h2 .count
     height: 10px;
     border: 0px solid white;
 }
-#app_details_closebtnfooter
-{
-    position: absolute;
-    height: 15px;
-    top: 15px;
-    right: 15px;
-}
 
 #app_details_modal
 {
     display: none;
-    width: 910px;
+    width: 960px;
     padding: 0px;
     z-index: 15;
     overflow: hidden;
@@ -1047,23 +1041,30 @@ h2 .count
 .app_details_titles
 {
     color: #0071b7;
-    border-bottom: 1px solid #0071b7;
+    border-bottom: 1px solid #ddd;
     font-size: 20px;
     font-weight: normal;
     font-family: "Sagoe UI", Verdana, Helvetica, SANS-SERIF;
     text-align: left;
 }
- /*
-#app_details_modal table tr
+
+.app_details_ul
 {
-    margin: 5px auto;
-    padding: 100px;
-} */
+    display: block;
+    margin-left: 0px;
+    padding-left: 10px;
+}
+
+#app_details_modal table
+{
+    margin-bottom: 30px;
+}
+
 #app_details_modal table td
 {
     width: 430px;
-    padding: 0px;
 }
+
 #app_body
 {
     background-color: #ffffff;
@@ -1090,3 +1091,76 @@ h2 .count
 
 
 /*APP DETAILS*/                                                                                                             /*APP DETAILS*/
+
+/*some buttons*/
+.button_case_delete_organization_and_space,  /*THIS ALSO CONTAINS CREATE AND DELETE APP MODAL*/
+.button_case_create_organization_and_space
+{
+    position: absolute;
+    display: block;
+    width: 200px;
+    height: 50px;
+    bottom: 0px;
+    right: 0px;
+    margin-right: 10px;
+}
+
+.button_case_app_details
+{
+    position: absolute;
+    display: block;
+    width: 200px;
+    height: 50px;
+    top: 0px;
+    right: 0px;
+    margin-right: 10px;
+}
+
+.btn_left_app_details
+{
+    position: absolute;
+    margin: 0px;
+    top: 10px;
+    right: 0px;
+}
+.btn_right_app_details
+{
+    position: absolute;
+    margin: 0px;
+    top: 10px;
+    right: 60px;
+}
+
+.btn_right_create_organization_and_space
+{
+    position: absolute;
+    margin: 0px;
+    bottom: 10px;
+    right: 0px;
+}
+
+.btn_left_create_organization_and_space
+{
+    position: absolute;
+    margin: 0px;
+    bottom: 10px;
+    right: 65px;
+}
+
+
+
+.btn_right_delete_organization_and_space /*THIS ALSO CONTAINS CREATE AND DELETE APP MODAL*/
+{
+    position: absolute;
+    margin: 0px;
+    bottom: 10px;
+    right: 0px;
+}
+
+.btn_left_delete_organization_and_space /*THIS ALSO CONTAINS CREATE AND DELETE APP MODAL*/
+{
+    position: absolute;
+    margin: 0px;
+    bottom: 10px;
+    right: 45px;
+}
