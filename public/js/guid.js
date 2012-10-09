@@ -29,9 +29,7 @@ function prepareToDeleteService(obj)
     document.getElementById('this_service_name').innerHTML = obj.id;
 }
 
-
-
-
+//add a USER EMAIL
 function prepareToAddNewUser(userType)
 {
     document.getElementById('new_user_type').value = userType;

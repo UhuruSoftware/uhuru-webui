@@ -154,7 +154,7 @@
         <div class="modal-footer">
             <div class="button_case_create_organization_and_space">
                 <a href="#" class="btn btn_right_create_organization_and_space">Cancel</a>
-                <input type="submit" value="Create" class="btn btn-success btn_left_create_organization_and_space" />
+                <input type="submit" value="Create" class="btn btn-success btn_left_create_organization_and_space white_btn_text" />
                 <%= @message %>
             </div>
         </div>
@@ -183,7 +183,7 @@
         <div class="button_case_delete_organization_and_space">
             <a href="#" class="btn btn_right_delete_organization_and_space">No</a>
             <form action="/deleteClickedSpace" method="post">
-                <input type="submit" class="btn btn-danger btn_left_delete_organization_and_space" />
+                <input type="submit" class="btn btn-danger btn_left_delete_organization_and_space white_btn_text" />
                 <input type="text" id="pass_guid" name="spaceGuid" style="display: none;" />
                 <%= @message %>
             </form>
@@ -195,7 +195,7 @@
 
 <!--THIS IS A MODAL THAT ADDS A NEW USER : OWNER : DEV : MANAGER-->
 
-<div class="modal fade" id="add_user">
+<div class="modal fade" id="add_user" onmousemove="prepareToAddNewUserEmail();">
     <div class="modal-header">
         <button class="close">×</button>
         <h3>Invite user</h3>
@@ -219,14 +219,16 @@
             </ul>
         </div>
     </div>
-    <div class="modal-footer" onmousemove="prepareToAddNewUserEmail();">
+    <div class="modal-footer">
+        <div class="button_case_create_organization_and_space">
             <form action="/addUsers" method="post">
-                <input type="text" id="new_user_type" name="userType" />
-                <input type="text" id="new_user_email" name="userEmail" />
+                <input type="text" id="new_user_type" name="userType" class="blank_input" />
+                <input type="text" id="new_user_email" name="userEmail" class="blank_input" />
 
-                <input type="submit" value="Invite User" class="btn btn-success" />
+                <input type="submit" value="Invite User" class="btn btn-success btn_right_create_organization_and_space white_btn_text" />
 
             </form>
+        </div>
     </div>
 </div>
 

@@ -1025,7 +1025,7 @@ h2 .count
     left: 5px;
 }
 
-.blanck_input
+.blank_input
 {
     display: none;
 }
@@ -1071,10 +1071,11 @@ h2 .count
 {
     color: #0071b7;
     border-bottom: 1px solid #ddd;
-    font-size: 20px;
+    font-size: 22px;
     font-weight: normal;
-    font-family: "Sagoe UI", Verdana, Helvetica, SANS-SERIF;
+    font-family: "Segoe UI", Verdana, Helvetica, Sans-Serif;
     text-align: left;
+    margin-bottom: 40px;
 }
 
 .app_details_ul
@@ -1092,6 +1093,7 @@ h2 .count
 #app_details_modal table td
 {
     width: 430px;
+    padding-right: 24px;
 }
 
 #app_body
@@ -1151,6 +1153,7 @@ h2 .count
     margin: 0px;
     top: 10px;
     right: 0px;
+    color: #ffffff;
 }
 .btn_right_app_details
 {
@@ -1158,6 +1161,7 @@ h2 .count
     margin: 0px;
     top: 10px;
     right: 60px;
+    color: #ffffff;
 }
 
 .btn_right_create_organization_and_space
@@ -1192,6 +1196,15 @@ h2 .count
     margin: 0px;
     bottom: 10px;
     right: 45px;
+}
+
+.white_btn_text
+{
+    color: #ffffff;
+}
+.black_button_text
+{
+    color: #000000;
 }
 
 

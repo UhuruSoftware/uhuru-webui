@@ -1339,3 +1339,8 @@ a
     text-decoration: none; !important
 }
 
+#app_close
+{
+    font-size: 17px;
+    font-weight: bold;
+}

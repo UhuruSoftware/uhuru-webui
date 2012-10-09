@@ -209,12 +209,12 @@
                         </div>
 
                         <form action="/startApp" method="post">
-                            <input type="text" id="details_app_name_start" name="appName" class="blanck_input" />
+                            <input type="text" id="details_app_name_start" name="appName" class="blank_input" />
                             <input type="submit" name="startApp" class="app-actions start start_button_apps" id="startApp_btn" />
                         </form>
 
                         <form action="/stopApp" method="post">
-                            <input type="text" id="details_app_name_stop" name="appName" class="blanck_input" />
+                            <input type="text" id="details_app_name_stop" name="appName" class="blank_input" />
                             <input type="submit" name="stopApp" class="app-actions stop stop_button_apps" id="stopApp_btn" />
                         </form>
                     </div>
@@ -293,8 +293,15 @@
 
     <div class="modal-footer" id="app_details_footer">
         <div class="button_case_app_details">
-            <input type="submit" value="Save Changes" class="btn btn-success btn_right_app_details" />
-            <a href="#" class="btn btn_left_app_details">Close</a>
+            <a href="#" class="btn btn_left_app_details black_button_text">Close</a>
+
+                <form action="/updateAppDetails" method="post">
+                    <input type="text" id="send_app_name" name="appName"/>
+                    <input type="text" id="send_app_instances" name="appInstances"/>
+                    <input type="text" id="send_app_memory" name="appMemory" />
+
+                    <input type="submit" value="Save Changes" class="btn btn-success btn_right_app_details white_btn_text blank_input" id="hidden_app_details_submit_button" />
+                </form>
         </div>
     </div>
 </div>
@@ -332,8 +339,8 @@
 
 <div class="modal fade hide" id="create_tempcta_modal">
     <div class="modal-header">
-        <button class="close">x</button>
-        <h3>Add a new template app</h3>
+        <button class="close">×</button>
+        <h3>Add a new app template</h3>
     </div>
 
 
@@ -361,10 +368,10 @@
                                 <td>
                                     <div class="app_tiles" id = "<%= name['id'] %>">
                                         <span class="app_name_span"><%= name['name'] %></span>
-                                        <input type="text" value="<%= name['framework']['info']['exec'] %>" name="appFramework" class="blanck_input" />
-                                        <input type="text" value="<%= name['runtime'] %>" name="appRuntime"  class="blanck_input" />
-                                        <input type="text" value="<%= name['memory'] %>" name="appMemory" class="blanck_input" />
-                                        <input type="text" name="appName" class="send_app_name blanck_input"/>
+                                        <input type="text" value="<%= name['framework']['info']['exec'] %>" name="appFramework" class="blank_input" />
+                                        <input type="text" value="<%= name['runtime'] %>" name="appRuntime"  class="blank_input" />
+                                        <input type="text" value="<%= name['memory'] %>" name="appMemory" class="blank_input" />
+                                        <input type="text" name="appName" class="send_app_name blank_input"/>
                                     </div>
                                 </td>
                                 <td>
@@ -405,15 +412,15 @@
         <div class="button_case_delete_organization_and_space">
             <a href="#" class="btn btn_right_delete_organization_and_space">No</a>
             <form action="/deleteClickedApp" method="post">
-                <input type="submit" value="Yes" class="btn btn-danger btn_left_delete_organization_and_space" />
-                <input type="text" id="pass_app" name="appGuid" class="blanck_input" />
+                <input type="submit" value="Yes" class="btn btn-danger btn_left_delete_organization_and_space white_btn_text" />
+                <input type="text" id="pass_app" name="appGuid" class="blank_input" />
             </form>
         </div>
     </div>
 </div>
 
 
-<div class="modal fade hide" id="add_ctService_modal">
+<div class="modal fade hide" id="add_ctService_modal" onmousemove="newServiceName();">
     <div class="modal-header">
         <button class="close">×</button>
         <h3>New Service</h3>
@@ -434,14 +441,14 @@
         </p>
     </div>
 
-    <div class="modal-footer" onmousemove="newServiceName();">
+    <div class="modal-footer">
 
         <div class="button_case_create_organization_and_space">
           <a href="#" class="btn btn_right_create_organization_and_space">Close</a>
 
           <form action="/createService" method="post">
-                <input type="text" id="new_service_name" name="serviceName"/>
-                <input type="submit" value="Create Service" class="btn btn-success btn_left_create_organization_and_space" />
+                <input type="text" id="new_service_name" name="serviceName" class="blank_input"/>
+                <input type="submit" value="Create Service" class="btn btn-success btn_left_create_organization_and_space white_btn_text" />
           </form>
 
         </div>
@@ -463,8 +470,8 @@
         <div class="button_case_delete_organization_and_space">
             <a href="#" class="btn btn_right_delete_organization_and_space">No</a>
             <form action="/deleteClickedService" method="post">
-                <input type="submit" value="Yes" class="btn btn-danger btn_left_delete_organization_and_space" />
-                <input type="text" id="pass_service" name="serviceGuid" class="blanck_input" />
+                <input type="submit" value="Yes" class="btn btn-danger btn_left_delete_organization_and_space white_btn_text" />
+                <input type="text" id="pass_service" name="serviceGuid" class="blank_input" />
             </form>
         </div>
     </div>

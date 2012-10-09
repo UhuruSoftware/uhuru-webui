@@ -49,7 +49,7 @@ var delete_service = function(){
 var create_tempcta_modal = function(){
 	$('#screen').css({	"display": "block", opacity: 0.7, "width": "10000px", "height": "10000px"});
 	$('body').css({"overflow":"hidden"});
-	$('#create_tempcta_modal').slideDown(200);
+	$('#create_tempcta_modal').fadeIn(1200);
     $('.close').click(function(){$("#create_tempcta_modal").css("display", "none");$('#screen').css("display", "none")});
     $('.btn').click(function(){$("#create_tempcta_modal").css("display", "none");$('#screen').css("display", "none")});
 }
@@ -121,7 +121,7 @@ var show_CT_token = function(){
 var add_ctService_modal = function(){
 	$('#screen').css({	"display": "block", opacity: 0.7, "width": "10000px", "height": "10000px"});
 	$('body').css({"overflow":"hidden"});
-	$('#add_ctService_modal').slideDown(200);
+	$('#add_ctService_modal').fadeIn(1200);
     $('.close').click(function(){$("#add_ctService_modal").css("display", "none");$('#screen').css("display", "none")});
     $('.btn').click(function(){$("#add_ctService_modal").css("display", "none");$('#screen').css("display", "none")});
 }
@@ -129,7 +129,7 @@ var add_ctService_modal = function(){
 var app_details_modal = function(){
 	$('#screen').css({	"display": "block", opacity: 0.7, "width": "10000px", "height": "10000px"});
 	$('body').css({"overflow":"hidden"});
-	$('#app_details_modal').slideDown(1000);
+	$('#app_details_modal').fadeIn(1200);
     $('.close').click(function(){$("#app_details_modal").css("display", "none");$('#screen').css("display", "none")});
     $('.btn').click(function(){$("#app_details_modal").css("display", "none");$('#screen').css("display", "none")});
 }
@@ -138,7 +138,7 @@ var app_details_modal = function(){
 var create_organization = function(){
 	$('#screen').css({	"display": "block", opacity: 0.7, "width": "10000px", "height": "10000px"});
 	$('body').css({"overflow":"hidden"});
-	$('#create_organization').slideDown(300);
+	$('#create_organization').fadeIn(1200);
     $('.close').click(function(){$("#create_organization").css("display", "none");$('#screen').css("display", "none")});
     $('.btn').click(function(){$("#create_organization").css("display", "none");$('#screen').css("display", "none")});
     $('#org_name').focus();
@@ -147,7 +147,7 @@ var create_organization = function(){
 var create_space = function(){
 	$('#screen').css({	"display": "block", opacity: 0.7, "width": "10000px", "height": "10000px"});
 	$('body').css({"overflow":"hidden"});
-	$('#create_space').slideDown(300);
+	$('#create_space').fadeIn(1200);
     $('.close').click(function(){$("#create_space").css("display", "none");$('#screen').css("display", "none")});
     $('.btn').click(function(){$("#create_space").css("display", "none");$('#screen').css("display", "none")});
     $('#org_name').focus();
@@ -156,7 +156,7 @@ var create_space = function(){
 var add_user = function(){
 	$('#screen').css({	"display": "block", opacity: 0.7, "width": "10000px", "height": "10000px"});
 	$('body').css({"overflow":"hidden"});
-	$('#add_user').slideDown(1000);
+	$('#add_user').fadeIn(1200);
     $('.close').click(function(){$("#add_user").css("display", "none");$('#screen').css("display", "none")});
     $('.btn').click(function(){$("#add_user").css("display", "none");$('#screen').css("display", "none")});
 }

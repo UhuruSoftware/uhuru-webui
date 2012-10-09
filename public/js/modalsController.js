@@ -14,6 +14,7 @@ $('.show_this_app_details').hover(function(){
 
 
         $('#app_name_big').text(name);
+        $('#send_app_name').val(name);
         $('#pass_service_name').text(services);
         $('#pass_app_status').text(state);
 
@@ -22,6 +23,7 @@ $('.show_this_app_details').hover(function(){
 
         $('#details_app_name_start').val(name);
         $('#details_app_name_stop').val(name);
+
 
         //this sets the button startapp/stopapp poses
 
@@ -41,8 +43,15 @@ $('.show_this_app_details').hover(function(){
 });
 
 $(function(){
+
+    var changed = false;
+
+
     var instance = $('#app_instances_count span').text();
     var memory = $('#app_instances_count span').text();
+
+    var firstMemory = $('#app_instances_count span').html();
+    var firstInstance = $('#app_instances_count span').html();
 
     //instance = parseInt(instance);
     //memory = parseInt(memory);
@@ -51,18 +60,26 @@ $(function(){
     //
 
     var plus_instance = function(){
-        instance+=1;
-        instance = instance + ""
-        $('#app_instances_count').text(instance);
-        instance = parseInt(instance);
+            instance+=1;
+            instance = instance + ""
+            $('#app_instances_count').text(instance);
+            $('#send_app_instances').val(instance);
+            instance = parseInt(instance);
 
+            showButton();
     }
 
     var minus_instance = function(){
-        instance-=1;
-        instance = instance + ""
-        $('#app_instances_count').text(instance);
-        instance = parseInt(instance);
+        if(instance > 0)
+        {
+            instance-=1;
+            instance = instance + ""
+            $('#app_instances_count').text(instance);
+            $('#send_app_instances').val(instance);
+            instance = parseInt(instance);
+
+            showButton();
+        }
     }
 
      //
@@ -75,7 +92,10 @@ $(function(){
             memory+=32;
             memory = memory + ""
             $('#app_memory_count').text(memory);
+            $('#send_app_memory').val(memory);
             memory = parseInt(memory);
+
+            showButton();
         }
     }
 
@@ -85,7 +105,10 @@ $(function(){
             memory-=32;
             memory = memory + ""
             $('#app_memory_count').text(memory);
+            $('#send_app_memory').val(memory);
             memory = parseInt(memory);
+
+            showButton();
         }
     }
 
@@ -98,19 +121,13 @@ $(function(){
     $('#app_plus_memory').click(plus_memory);
     $('#app_minus_memory').click(minus_memory);
 
-});
-
-
-//THIS FUNCTION MANIPULATES THE BEHAVIOR OF THE RADIO BUTTONS
-
-$(function(){
-
-    //$('input:radio[name=user_radio]:checked').val();
-
-    //$('input:radio[name=user_radio]:nth(0)').attr('checked', true);
-    //$('input:radio[name=user_radio]')[1].checked = true;
+    function showButton()
+    {
+        $('#hidden_app_details_submit_button').show();
+    }
 
 });
+
 
 
 

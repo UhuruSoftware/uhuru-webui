@@ -120,6 +120,7 @@ get'/space:space_guid' do
   readapps_Obj = TemplateApps.new
 
   @this_guid = params[:space_guid]
+
   $space_name = spaces_Obj.get_name(@this_guid)
   $path_2 = $slash + '<a href="/space' + @this_guid + '" class="breadcrumb_element" id="element_space">' + $space_name + '</a>'
   $path_home = '<a href="/organizations" class="breadcrumb_element_home">Organizations:</a>'
@@ -237,7 +238,7 @@ post '/deleteClickedService' do
 end
 
 
- post '/createApp' do
+post '/createApp' do
   @name =  params[:appName]
   @runtime = params[:appRuntime]
   @framework = params[:appFramework]
@@ -263,6 +264,19 @@ end
 end
 
 
+post '/updateAppDetails' do
+  @name = params[:appName]
+  @memory = params[:appMemory]
+  @instances = params[:appInstances]
+
+  apps_obj = Applications.new(user_token)
+  apps_obj.update(@name, @instances, @memory)
+
+  redirect "/spaces" + $currentSpace
+end
+
+
+
 post '/createService' do
   @name = params[:serviceName]
 
@@ -273,7 +287,7 @@ post '/createService' do
 
   spaces_Obj.create_service_instance(@name, $currentSpace, @plan)
 
-  redirect "/spaces" + $currentSpace
+  redirect "/space" + $currentSpace
 end
 
 
@@ -283,12 +297,8 @@ post '/addUsers' do
 
   organizations_Obj = Organizations.new(user_token)
   users_Obj = Users.new(user_token)
+  users_Obj.add_user_to_org_with_role($currentOrganization, @name, @type)
 
-  users_Obj.create_user_add_to_org($currentOrganization, @email)
-
-  puts $currentOrganization + "--- ORG"
-  puts @email + "--- email"
-  puts @type + "--- type"
 
   redirect "/organization" + $currentOrganization
 end
@@ -326,12 +336,6 @@ end
 post '/test' do
   @name = params[:serviceName]
 
-  organizations_Obj = Organizations.new(user_token)
-  spaces_Obj = ServiceInstances.new(user_token)
-
-  @plan = "d85b0ad5-02d3-49e7-8bcb-19057a847bf7"
-
-  spaces_Obj.create_service_instance(@name, $currentSpace, @plan)
 
   redirect "/spaces" + $currentSpace
 end
