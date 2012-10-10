@@ -38,7 +38,7 @@
 
                     <% spaces_list.each do |space| %>
                             <li class="tilegreen">
-                                <a href="/space<%= space.guid %>" class="link_tiles_">
+                                <a href="/space<%= space.guid %>" class="link_tiles_space">
                                     <span class="space_name"><%= space.name %></span>
                                     <span class="costs_span">monthly cost: </span><span class="costs_span_value">33</span>
                                     <span class="count-label apps"># of apps: </span><span class="count-value apps"><%= space.apps_count %></span>
@@ -153,9 +153,9 @@
         </div>
         <div class="modal-footer">
             <div class="button_case_create_organization_and_space">
-                <a href="#" class="btn btn_right_create_organization_and_space">Cancel</a>
-                <input type="submit" value="Create" class="btn btn-success btn_left_create_organization_and_space white_btn_text" />
-                <%= @message %>
+                <a href="#" class="btn btn_right_create_organization_and_space" id="cancel_b_c_space">Cancel</a>
+                <input type="submit" value="Create" class="btn btn-success btn_left_create_organization_and_space white_btn_text" id="b_c_space" />
+                <p class="hidden_modal_messages" id="p_c_space">Your space is being created...</p>
             </div>
         </div>
 
@@ -181,11 +181,11 @@
     </div>
     <div class="modal-footer">
         <div class="button_case_delete_organization_and_space">
-            <a href="#" class="btn btn_right_delete_organization_and_space">No</a>
+            <a href="#" class="btn btn_right_delete_organization_and_space" id="cancel_b_d_space">No</a>
             <form action="/deleteClickedSpace" method="post">
-                <input type="submit" class="btn btn-danger btn_left_delete_organization_and_space white_btn_text" />
+                <input type="submit" class="btn btn-danger btn_left_delete_organization_and_space white_btn_text" id="b_d_space" />
                 <input type="text" id="pass_guid" name="spaceGuid" style="display: none;" />
-                <%= @message %>
+                <p class="hidden_modal_messages" id="p_d_space">Your space is being removed...</p>
             </form>
         </div>
 

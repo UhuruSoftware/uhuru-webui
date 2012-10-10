@@ -24,18 +24,14 @@ h1, h2, h3, h4, h5, h6
 #delete_space_modal,
 #delete_organization_modal,
 #add_ctService_modal,
-#unbind_ctsTOcta_modal,
-#bind_ctsTOcta_modal,
-#bind_uriTOcta_modal,
-#unbind_uriTOcta_modal,
 #inv_ctUser_modal,
-#delete_ctUser_modal,
-#cannot_delete_ctUser_modal,
-#toggle_user_admin_modal,
-#show_CT_token,
 #create_organization,
 #create_space,
-#create_tempcta_modal
+#create_tempcta_modal,
+#bind_service_modal,
+#unbind_service_modal,
+#bind_uri_modal,
+#unbind_uri_modal
 {
 
 	width: 600px;
@@ -66,6 +62,7 @@ h1, h2, h3, h4, h5, h6
     overflow: auto;
 }
 
+#add_new_template_app_modal,
 #saving_modal
 {
     width: 600px;
@@ -75,7 +72,7 @@ h1, h2, h3, h4, h5, h6
     margin-top: -100px;
     left: 50%;
     top: 50%;
-    z-index: 20;
+    z-index: 30;
     display: none;
     background-color: #e0dfdd;
     overflow: auto;
@@ -105,10 +102,10 @@ h1, h2, h3, h4, h5, h6
 #opac_screen
 {
     position: absolute;
-    left: 0;
-    top: 0;
-    background: #000;
-    z-index: 15;
+	left: 0;
+	top: 0;
+	background: #000;
+    z-index: 10;
 }
 
 .breadcrumb
@@ -202,6 +199,17 @@ button.close {
     background: transparent;
     border: 0;
     -webkit-appearance: none;
+}
+
+.close_small_modal {
+    float: right;
+    font-size: 20px;
+    font-weight: bold;
+    line-height: 18px;
+    color: #000000;
+    text-shadow: 0 1px 0 white;
+    opacity: 0.2;
+    filter: alpha(opacity=20);
 }
 
 .close {
@@ -756,15 +764,10 @@ h2 .count
     border-bottom: 1px solid #0071b7;
 }
 
-.link_tiles_
-{
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    top: 0px;
-    left: 0px;
-}
-.link_tiles_org
+
+.link_tiles_org,
+.link_tiles_space,
+.link_tiles_app
 {
     position: absolute;
     width: 100%;
@@ -1029,6 +1032,11 @@ h2 .count
 {
     display: none;
 }
+.hidden_modal_messages
+{
+    display: none;
+    float: right;
+}
 
 
 
@@ -1050,7 +1058,7 @@ h2 .count
     font-family: "Sagoe UI", Verdana, Helvetica, SANS-SERIF;
     margin-right: 8px;
 }
-#app_details_footer
+.app_details_footer
 {
     position: relative;
     margin: 0px auto;
@@ -1058,7 +1066,8 @@ h2 .count
     border: 0px solid white;
 }
 
-#app_details_modal
+#app_details_modal,
+.app_details_modal
 {
     display: none;
     width: 960px;
@@ -1084,19 +1093,19 @@ h2 .count
     margin-left: 0px;
     padding-left: 10px;
 }
-
-#app_details_modal table
+#app_details_modal table,
+.app_details_modal table
 {
     margin-bottom: 30px;
 }
-
-#app_details_modal table td
+#app_details_modal table td,
+.app_details_modal table td
 {
     width: 430px;
     padding-right: 24px;
 }
 
-#app_body
+.app_body
 {
     background-color: #ffffff;
 }
@@ -1197,6 +1206,40 @@ h2 .count
     bottom: 10px;
     right: 45px;
 }
+
+.btn_right_bind /*THIS ALSO CONTAINS CREATE AND DELETE APP MODAL*/
+{
+    position: absolute;
+    margin: 0px;
+    bottom: 10px;
+    right: 0px;
+}
+
+.btn_left_bind /*THIS ALSO CONTAINS CREATE AND DELETE APP MODAL*/
+{
+    position: absolute;
+    margin: 0px;
+    bottom: 10px;
+    right: 65px;
+}
+
+.btn_right_unbind /*THIS ALSO CONTAINS CREATE AND DELETE APP MODAL*/
+{
+    position: absolute;
+    margin: 0px;
+    bottom: 10px;
+    right: 0px;
+}
+
+.btn_left_unbind /*THIS ALSO CONTAINS CREATE AND DELETE APP MODAL*/
+{
+    position: absolute;
+    margin: 0px;
+    bottom: 10px;
+    right: 65px;
+}
+
+
 
 .white_btn_text
 {

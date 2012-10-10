@@ -40,8 +40,6 @@ def user_token
   end
 end
 
-space = Spaces.new(user_token)
-space.read_apps("77a16804-bc5b-4482-9ae4-f6a62cfb7af8")
 
 get'/' do
   @timeNow = $this_time
@@ -153,7 +151,6 @@ end
 
 post '/createSpace' do
   @name = params[:spaceName]
-  @message = "Creating space... Please wait"
 
   organizations_Obj = Organizations.new(user_token)
   spaces_Obj = Spaces.new(user_token)
@@ -177,7 +174,6 @@ end
 
 post '/deleteClickedOrganization' do
   @guid = params[:orgGuid]
-  @message = "Deleting organization... Please wait"
 
   organizations_Obj = Organizations.new(user_token)
   organizations_Obj.delete(@guid)
@@ -202,7 +198,6 @@ end
 
 post '/deleteClickedSpace' do
   @guid = params[:spaceGuid]
-  @message = "Deleting organization... Please wait"
 
   organizations_Obj = Organizations.new(user_token)
   spaces_Obj = Spaces.new(user_token)
@@ -213,7 +208,6 @@ end
 
 post '/deleteClickedApp' do
   @guid = params[:appGuid]
-  @message = "Deleting app... Please wait"
 
   organizations_Obj = Organizations.new(user_token)
   spaces_Obj = Spaces.new(user_token)
@@ -225,7 +219,6 @@ end
 
 post '/deleteClickedService' do
   @guid = params[:serviceGuid]
-  @message = "Deleting service... Please wait"
 
   organizations_Obj = Organizations.new(user_token)
   spaces_Obj = Spaces.new(user_token)
@@ -314,6 +307,7 @@ post '/startApp' do
   puts "start app COMPLETE"
 
   redirect "/space" + $currentSpace
+  erb :space, {:locals => {:apps_names => apps_names, :apps_list => apps_list, :services_list => services_list, :apps_count => apps_list.count, :services_count => services_list.count}, :layout => :layout_user}
 end
 
 post '/stopApp' do
@@ -326,6 +320,27 @@ post '/stopApp' do
   redirect "/space" + $currentSpace
 end
 
+post '/bindServices' do
+  @app_name = "test"
+  @service_name = "testDB"
+
+  apps_obj = Applications.new(user_token)
+  apps_obj.bind_app_services(@app_name, @service_name)
+
+  redirect "/space" + $currentSpace
+end
+
+
+post '/unbindServices' do
+  @app_name = "test"
+  @service_name = "testDB"
+
+  apps_obj = Applications.new(user_token)
+  apps_obj.bind_app_services(@app_name, @service_name)
+
+  redirect "/space" + $currentSpace
+end
+
 
 
 
@@ -333,7 +348,7 @@ end
 
 ####test####
 
-post '/test' do
+get '/test' do
   @name = params[:serviceName]
 
 

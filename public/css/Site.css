@@ -366,7 +366,7 @@ input.user-name
   width: 20px;
 }
 
-.delete-organization-button, .delete-space-button, .delete-service-button, .delete-app-button, .delete-user-button
+.delete-organization-button, .delete-space-button, .delete-service-button, .delete-app-button, .delete-user-button, .button_unbound_services, .button_unbound_uri
 {
     position: absolute;
     right: 5px;
@@ -749,12 +749,12 @@ li.new .icon
     float: left;
 }
 
-#app_details_modal .modal-body
+.app_details_modal .modal-body
 {
     max-height: none;
 }
 
-#app_details_modal
+.app_details_modal
 {
     width: 970px;
     position: absolute;

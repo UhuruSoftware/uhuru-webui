@@ -48,9 +48,9 @@
         </div>
         <div class="modal-footer">
             <div class="button_case_create_organization_and_space">
-                <a href="#" class="btn btn_right_create_organization_and_space">Cancel</a>
-                <input type="submit" value="Create" class="btn btn-success btn_left_create_organization_and_space white_btn_text" />
-                <%= @organization_message %>
+                <a href="#" class="btn btn_right_create_organization_and_space" id="cancel_b_c_organization">Cancel</a>
+                <input type="submit" value="Create" class="btn btn-success btn_left_create_organization_and_space white_btn_text" id="b_c_organization"/>
+                <p class="hidden_modal_messages" id="p_c_organization">Your organization is being created...</p>
             </div>
         </div>
     </form>
@@ -75,11 +75,11 @@
     </div>
     <div class="modal-footer">
             <div class="button_case_delete_organization_and_space">
-                <a href="#" class="btn btn_right_delete_organization_and_space">No</a>
+                <a href="#" class="btn btn_right_delete_organization_and_space" id="cancel_b_d_organization">No</a>
                 <form action="/deleteClickedOrganization" method="post">
-                    <input type="submit" class="btn btn-danger btn_left_delete_organization_and_space white_btn_text" />
-                    <input type="text" id="pass_guid" name="orgGuid" style="display: none;" />
-                    <%= @message %>
+                    <input type="submit" class="btn btn-danger btn_left_delete_organization_and_space white_btn_text" id="b_d_organization" />
+                    <input type="text" id="pass_guid" name="orgGuid" class="blank_input" />
+                    <p class="hidden_modal_messages" id="p_d_organization">Your organization is being removed...</p>
                 </form>
             </div>
     </div>
