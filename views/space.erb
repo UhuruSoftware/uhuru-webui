@@ -54,7 +54,7 @@
 
                             <div class="modal fade hide app_details_modal" id="<%= app.name %>">
                                 <div class="modal_header" id="app_details_header">
-                                    <button class="close app_details_closebtn">x</button>
+                                    <button class="close app_details_closebtn">×</button>
                                 </div>
 
 
@@ -149,12 +149,16 @@
                                                 </h4>
                                                 <ul class="app_details_ul">
                                                     <li class="tile blue half-height half-width" style="color: #fff;">
-                                                        <span class="instance-count pass_app_memory app_memory_count"><%= app.memory %></span>
+                                                        <span class="instance-count pass_app_memory">
+                                                              <div class="app_memory_count">
+                                                                 <%= app.memory %>
+                                                              </div>
+                                                        </span>
                                                         <span class="instance-type">MB</span>
                                                     </li>
                                                 </ul>
-                                                <div id="slider_case" style="border: 0px solid red; position: relative; margin-left: 120px;">
-                                                    <div id="slider" style="width: 310px; height: 12px; margin: 0px;"></div>
+                                                <div class="slider_case">
+                                                    <div id="memory_slider_app_details" style="height: 12px;"></div>
 
                                                     <p style="text-align: left;">
                                                         Max memory: 1024MB
@@ -193,7 +197,7 @@
                     <ul class="tile_list">
 
                         <% services_list.each do |service| %>
-                            <li class="tileblue">
+                            <li class="tileblue service-icon-<%= service.type %>">
                                 <span>
                                     <span class="service_name"><%= service.name %></span>
                                     <a href="#"><span class="control-icon trash delete-service-button" id="<%= service.name %>" title="<%= service.guid %>" onmousemove="prepareToDeleteService(this);"></span></a>
@@ -218,8 +222,8 @@
                     <div id="subscriptions_memory">
                        <div class="services_subdiv">
                             <span class="plusminus_class">
-                                  <span class="app-services minus" style="float: none" id="minus_memory"></span>
-                                  <span class="app-services plus" style="float: none" id="plus_memory"></span>
+                                  <span class="app-services minus sub_minus_memory" style="float: none" id="minus_memory"></span>
+                                  <span class="app-services plus sub_plus_memory" style="float: none" id="plus_memory"></span>
                             </span>
                             <p class="subscriptions_titles_p">Memory</p>
                        </div>
@@ -228,20 +232,22 @@
                             <li class="tile_blue_small">
                                 <span>
                                     <span class="memory_unit">GB</span>
-                                    <span class="memory_unit_number" id="memory_number">0</span>
+                                    <span class="memory_unit_number" id="memory_number">
+                                      <div class="sub_memory_count">
+                                             1
+                                      </div>
+                                    </span>
                                 </span>
                             </li>
 
+                                 <div class="slider_case slider_case_sub">
+                                        <div id="memory_slider_subscriptions" style="height: 12px;"></div>
 
+                                        <p style="text-align: left;">
+                                            Max memory: 64 Gb
+                                        </p>
+                                 </div>
 
-
-                            <div id="memory_slider">
-
-
-
-
-
-                            </div>
                            </ul>
                     </div>
 

@@ -51,7 +51,7 @@ h1, h2, h3, h4, h5, h6
 .app_details_modal
 {
     display: none;
-    width: 900px;
+    width: 960px;
     padding: 0px;
     z-index: 15;
     overflow: hidden;
@@ -782,7 +782,7 @@ h2 .count
 .subscriptions_titles_p
 {
     text-align: left;
-    margin-left: 15px;
+    margin-left: 0px;
     margin-bottom: 10px;
     font-family: "Sagoe UI", Verdana, Helvetica, SANS-SERIF;
     font-size: 20px;
@@ -939,7 +939,7 @@ h2 .count
     margin: auto;
     position: absolute;
     top: 15px;
-    right: 30px;
+    right: 20px;
 }
 
 .subscribtions_plan
@@ -1295,4 +1295,17 @@ h2 .count
     padding: 0px;
     display: block;
     float: left;
+}
+
+.slider_case
+{
+    position: relative;
+    margin-left: 120px;
+    margin-top: -10px;
+}
+
+.slider_case_sub
+{
+    width: 400px;
+    height: 30px;
 }
