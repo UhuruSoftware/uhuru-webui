@@ -84,7 +84,7 @@ $(function(){
     var instance = $('.app_instances_count').text();
     var memory = $('.app_memory_count').text();
     //alert(instance);
-    var firstMemory = $('.send_app_memory').val();
+    var firstMemory = $('.app_memory_count').text();
     var firstInstance = $('.send_app_instances').val();
 
     instance = parseInt(instance);
@@ -114,64 +114,46 @@ $(function(){
         }
     }
 
-     //
-        //plus and minus memory at app details
-    //
 
-    var plus_memory = function(){
-        if(memory < 2048)
-        {
-            memory+=32;
-            memory = memory + ""
-            $('.app_memory_count').text(memory);
-            $('.send_app_memory').val(memory);
-            memory = parseInt(memory);
+    $(function() {
 
+    var select = $( "#memory_slider_app_details" );
+            var slider = $( "<div id='app_mem'></div>" ).insertAfter( select ).slider({
+                min: 0,
+                max: 1024,
+                step: 32,
+            value: memory,
+                range: "min",
+    change: function(event, ui) {
+             var sliderValue = $( "#app_mem" ).slider( "option", "value" );
+            $('.app_memory_count').html(sliderValue);
+            $('.send_app_memory').val(sliderValue);
             showButton();
-        }
-    }
+            }
+            });
 
-    var minus_memory = function(){
-        if(memory > 0)
+
+$('.app_plus_memory').click(function() {
+var sliderCurrentValue = $( "#app_mem" ).slider( "option", "value" );
+  slider.slider( "value", sliderCurrentValue + 32 );
+});
+
+$('.app_minus_memory').click(function() {
+var sliderCurrentValue = $( "#app_mem" ).slider( "option", "value" );
+  slider.slider( "value", sliderCurrentValue - 32 );
+});
+
+
+});
+
+$('.app_plus_instance').click(plus_instance);
+$('.app_minus_instance').click(minus_instance);
+
+
+        function showButton()
         {
-            memory-=32;
-            memory = memory + ""
-            $('.app_memory_count').text(memory);
-            $('.send_app_memory').val(memory);
-            memory = parseInt(memory);
-
-            showButton();
+            $('.hidden_app_details_submit_button').show();
         }
-    }
-
-
-//PLUS AND MINUS
-
-    $('.app_plus_instance').click(plus_instance);
-    $('.app_minus_instance').click(minus_instance);
-
-    $('.app_plus_memory').click(plus_memory);
-    $('.app_minus_memory').click(minus_memory);
-
-
-
-    $( "#slider" ).slider({
-        value:memory,
-        min: 0,
-        max: 2048,
-        step: 32,
-        slide: function( event, ui ) {
-            $( ".app_memory_count" ).text( ui.value );
-        }
-    });
-    $( ".app_memory_count" ).text( $( "#slider" ).slider( "value" ) );
-
-
-
-    function showButton()
-    {
-        $('.hidden_app_details_submit_button').show();
-    }
 
 
 

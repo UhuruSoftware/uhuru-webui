@@ -137,9 +137,6 @@ get'/space:space_guid' do
 end
 
 
-          # --- CREATE --- UPDATE --- DELETE ---        ORGANIZATIONS AND SPACES #
-
-
 post '/createOrganization' do
   @name = params[:orgName]
   @organization_message = "Creating organization... Please wait"
@@ -238,7 +235,7 @@ post '/createApp' do
   @instance = 1
   @memory = params[:appMemory]
 
-
+  puts @runtime
 
   @domain = "ccng-dev.net"
   @path = "/home/ubuntu/Desktop/rubytest"
@@ -246,13 +243,11 @@ post '/createApp' do
   organizations_Obj = Organizations.new(user_token)
   spaces_Obj = Spaces.new(user_token)
   apps_obj = Applications.new(user_token)
-  #spaces_obj = ServiceInstances.new(user_token)
 
 
   @plan = "d85b0ad5-02d3-49e7-8bcb-19057a847bf7"
 
-  apps_obj.create($currentOrganization, $currentSpace, @name, "ruby19", "sinatra", @instance, 128, @domain, @path, @plan)
-  #apps_obj.bind_app_services(@name, @name + "DB")
+  apps_obj.create($currentOrganization, $currentSpace, @name, @runtime, @framework, @instance, @memory.to_i, @domain, @path, @plan)
   redirect "/space" + $currentSpace
 end
 
@@ -369,15 +364,4 @@ end
 
 
 
-
-
-
-####test####
-
-get '/test' do
-  @name = params[:serviceName]
-
-
-  redirect "/spaces" + $currentSpace
-end
 
