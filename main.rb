@@ -302,9 +302,9 @@ end
 post '/startApp' do
   @name = params[:appName]
   apps_obj = Applications.new(user_token)
-  puts "starting app"
+
   apps_obj.start_app(@name)
-  puts "start app COMPLETE"
+  puts @name
 
   redirect "/space" + $currentSpace
   erb :space, {:locals => {:apps_names => apps_names, :apps_list => apps_list, :services_list => services_list, :apps_count => apps_list.count, :services_count => services_list.count}, :layout => :layout_user}
@@ -313,9 +313,9 @@ end
 post '/stopApp' do
   @name = params[:appName]
   apps_obj = Applications.new(user_token)
-  puts "stoping app"
+
   apps_obj.stop_app(@name)
-  puts "stoping app COMPLETE"
+  puts @name
 
   redirect "/space" + $currentSpace
 end
