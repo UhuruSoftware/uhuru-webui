@@ -47,6 +47,18 @@ h1, h2, h3, h4, h5, h6
     overflow: auto;
 }
 
+
+.app_details_modal
+{
+    display: none;
+    width: 900px;
+    padding: 0px;
+    z-index: 15;
+    overflow: hidden;
+	margin-top: -270px;
+	top: 50%;
+}
+
 #add_user
 {
     width: 600px;
@@ -143,6 +155,20 @@ h1, h2, h3, h4, h5, h6
     padding: 0px;
     text-decoration: none;
     color: #6eb53c;
+}
+
+.tab_pane
+{
+    position: relative;
+    width: 100%;
+}
+
+.tile_list
+{
+    clear: both;
+    padding-left: 0px;
+    display: inline-block;
+    width: 100%;
 }
 
 .yes_button
@@ -672,7 +698,7 @@ h2 .count
 
 .tileblue
 {
-    margin: 0 10px 10px 0;
+    margin: 0 7px 7px 0;
     width: 170px;
     height: 115px;
     padding: 5px;
@@ -765,9 +791,17 @@ h2 .count
 }
 
 
-.link_tiles_org,
-.link_tiles_space,
 .link_tiles_app
+{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0px;
+    left: 0px;
+}
+
+.link_tiles_org,
+.link_tiles_space
 {
     position: absolute;
     width: 100%;
@@ -878,12 +912,6 @@ h2 .count
     position: absolute;
     bottom: 5px;
     left: 5px;
-}
-.tile_list
-{
-    height: 130px;
-    clear: both;
-    padding-left: 0px;
 }
 
 
@@ -1064,16 +1092,6 @@ h2 .count
     margin: 0px auto;
     height: 10px;
     border: 0px solid white;
-}
-
-#app_details_modal,
-.app_details_modal
-{
-    display: none;
-    width: 960px;
-    padding: 0px;
-    z-index: 15;
-    overflow: hidden;
 }
 
 .app_details_titles

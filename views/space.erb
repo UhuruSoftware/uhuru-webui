@@ -30,159 +30,163 @@
                 <li onclick="showServices();" id="services_li" onmouseover="hoverServices();" onmouseout="unhoverServices();">Services (<span><%= services_count %></span>)</li>
                 <li onclick="showSubscriptions();" id="subscriptions_li" onmouseover="hoverSubscriptions();" onmouseout="unhoverSubscribtions();">Subscriptions (<span>---</span>)</li>
             </ul>
-                <div id="apps" class="tab-pane">
+                <div id="apps" class="tab_pane">
                     <ul class="tile_list">
 
-<% apps_list.each do |app| %>
-<li class="tileblue read_app_details">
+                    <% apps_list.each do |app| %>
+                    <li class="tileblue read_app_details">
 
-    <a href="#" class="link_tiles_app show_this_app_details app-<%= app.runtime %>" id="<%= app.name %>">
-        <span class="blank_input" id="<%= app.name %>" title="<%= app.name %>"></span>
-        <span class="app_state blank_input" id="<%= app.state %>"></span>
-        <span class="app_instances blank_input" id="<%= app.instances %>"></span>
-        <span class="app_memory blank_input" id="<%= app.memory %>"></span>
-    </a>
+                        <a href="#" class="link_tiles_app show_this_app_details app-<%= app.runtime %>" id="<%= app.name %>">
+                            <span class="blank_input" id="<%= app.name %>" title="<%= app.name %>"></span>
+                            <span class="app_state blank_input" id="<%= app.state %>"></span>
+                            <span class="app_instances blank_input" id="<%= app.instances %>"></span>
+                            <span class="app_memory blank_input" id="<%= app.memory %>"></span>
+                        </a>
 
-    <span class="app_name"><%= app.name %></span>
+                        <span class="app_name"><%= app.name %></span>
 
-    <a href="#">
-        <span class="control-icon trash delete-app-button" id="<%= app.name %>" title="<%= app.name %>" onmousemove="prepareToDeleteApp(this);"></span>
-    </a>
+                        <a href="#">
+                            <span class="control-icon trash delete-app-button" id="<%= app.name %>" title="<%= app.name %>" onmousemove="prepareToDeleteApp(this);"></span>
+                        </a>
 
-</li>
-
-
-        <div class="modal fade hide app_details_modal" id="<%= app.name %>">
-            <div class="modal_header" id="app_details_header">
-                <button class="close app_details_closebtn">x</button>
-            </div>
+                    </li>
 
 
-            <div class="modal-body app_body">
-                <table>
-                    <tr>
-                        <td>
-                            <div class="app-control">
-                                <div class="tile blue">
-                                    <h3>
-                                        <span class="app_name_big"><%= app.name %></span>
-                                    </h3>
-
-                                    <span class="app_status" style="font-weight: bold">Status: <span style="font-weight: normal" class="pass_app_status"><%= app.state %></span></span>
-                                    <a href="#"><span class="control-icon trash delete-app-button"></span></a>
+                            <div class="modal fade hide app_details_modal" id="<%= app.name %>">
+                                <div class="modal_header" id="app_details_header">
+                                    <button class="close app_details_closebtn">x</button>
                                 </div>
 
-                                <form action="/startApp" method="post">
-                                    <input type="text" name="appName" class="blank_input details_app_name_start" />
-                                    <input type="submit" name="startApp" class="app-actions start start_button_apps startApp_btn" />
-                                </form>
 
-                                <form action="/stopApp" method="post">
-                                    <input type="text" name="appName" class="blank_input details_app_name_stop" />
-                                    <input type="submit" name="stopApp" class="app-actions stop stop_button_apps stopApp_btn" />
-                                </form>
+                                <div class="modal-body app_body">
+                                    <table>
+                                        <tr>
+                                            <td>
+                                                <div class="app-control">
+                                                    <div class="tile blue">
+                                                        <h3>
+                                                            <span class="app_name_big"><%= app.name %></span>
+                                                        </h3>
+
+                                                        <span class="app_status" style="font-weight: bold">Status: <span style="font-weight: normal" class="pass_app_status"><%= app.state %></span></span>
+                                                        <a href="#"><span class="control-icon trash delete-app-button"></span></a>
+                                                    </div>
+
+                                                    <form action="/startApp" method="post">
+                                                        <input type="text" name="appName" value="<%= app.name %>" class="blank_input" />
+                                                        <input type="submit" name="startApp" class="app-actions start start_button_apps startApp_btn" />
+                                                    </form>
+
+                                                    <form action="/stopApp" method="post">
+                                                        <input type="text" name="appName" value="<%= app.name %>" class="blank_input" />
+                                                        <input type="submit" name="stopApp" class="app-actions stop stop_button_apps stopApp_btn" />
+                                                    </form>
+                                                </div>
+                                            </td>
+                                          <td></td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>
+                                                <h4 class="app_details_titles">Services Bound
+                                                <span class="app-services plus button_bound_services get_service_name" style="float: right;" title="<%= app.name %>"></span></h4>
+                                                <div id="hidden_app_div" style="display: none;">
+                                                    <span class="hidden_span"></span>
+                                                </div>
+                                                <ul class="app_details_ul">
+                                                    <% app.services.each do |service| %>
+                                                        <li class="tile blue get_service_name" id="<%= service.name %>" title="<%= app.name %>">
+                                                            <span class="service_name"><%= service.name %></span>
+                                                            <input type="button" class="control-icon trash button_unbound_services" />
+                                                        </li>
+                                                    <% end %>
+                                                </ul>
+                                            </td>
+                                            <td>
+                                                <h4 class="app_details_titles">URIs Bound <span class="app-services plus button_bound_uri get_uri_name" style="float: right;" title="<%= app.name %>"></span></h4>
+                                                <ul class="app_details_ul">
+                                                    <% app.uris.each do |uri| %>
+                                                        <li class="tile blue get_uri_name" id="<%= uri.url %>" title="<%= app.name %>">
+                                                            <span class="uri_name"><%= uri.url %></span>
+                                                            <input type="button" class="control-icon trash button_unbound_uri" />
+                                                        </li>
+                                                    <% end %>
+                                                </ul>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>
+                                                <h4 class="app_details_titles">App Instances
+                                                    <span style="float: right">
+                                                        <span class="app-services minus app_minus_instance"></span>
+                                                        <span class="app-services plus app_plus_instance"></span>
+                                                    </span>
+                                                </h4>
+
+                                                <ul class="app_details_ul">
+                                                    <li class="tile blue half-height">
+                                                        <span class="instance-info">
+                                                            <span class="instance-count pass_app_instances app_instances_count"><%= app.instances %></span>
+                                                            <span class="instance-type">Provisioned</span>
+                                                        </span>
+                                                        <span class="instance-info">
+                                                            <span class="instance-count pass_app_instances"><%= app.instances %></span>
+                                                            <span class="instance-type">Running</span>
+                                                        </span>
+                                                    </li>
+                                                </ul>
+                                                <div class="float: right; padding-top: 40px;">
+                                                    Max app instances: 5
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <h4 class="app_details_titles">Memory Provisioned
+                                                    <span style="float: right">
+                                                        <span class="app-services minus app_minus_memory"></span>
+                                                        <span class="app-services plus app_plus_memory"></span>
+                                                    </span>
+                                                </h4>
+                                                <ul class="app_details_ul">
+                                                    <li class="tile blue half-height half-width" style="color: #fff;">
+                                                        <span class="instance-count pass_app_memory app_memory_count"><%= app.memory %></span>
+                                                        <span class="instance-type">MB</span>
+                                                    </li>
+                                                </ul>
+                                                <div id="slider_case" style="border: 0px solid red; position: relative; margin-left: 120px;">
+                                                    <div id="slider" style="width: 310px; height: 12px; margin: 0px;"></div>
+
+                                                    <p style="text-align: left;">
+                                                        Max memory: 1024MB
+                                                    </p>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+
+                                <div class="modal-footer app_details_footer">
+                                    <form action="/updateApp" method="post">
+                                        <input type="text" class="send_app_name blank_input" name="appName" value="<%= app.name %>" />
+                                        <input type="text" class="send_app_instances blank_input" name="appInstances" value="<%= app.instances %>"/>
+                                        <input type="text" class="send_app_memory blank_input" name="appMemory" value="<%= app.memory %>" />
+
+                                        <div class="button_case_app_details">
+                                            <a href="#" class="btn btn_left_app_details black_button_text close_app_details">Close</a>
+                                            <input type="submit" value="Save Changes" class="btn btn-success btn_right_app_details white_btn_text blank_input hidden_app_details_submit_button"/>
+                                        </div>
+                                    </form>
+                                </div>
                             </div>
-                        </td>
-                      <td></td>
-                    </tr>
-
-                    <tr>
-                        <td>
-                            <h4 class="app_details_titles">Services Bound
-                            <span class="app-services plus button_bound_services" style="float: right;"></span></h4>
-                            <div id="hidden_app_div" style="display: none;">
-                                <span class="hidden_span"></span>
-                            </div>
-                            <ul class="app_details_ul">
-                                <% app.services.each do |service| %>
-                                    <li class="tile blue">
-                                        <span class="service-name pass_service_name"><%= service.name %></span>
-                                        <input type="button" class="control-icon trash button_unbound_services" />
-                                    </li>
-                                <% end %>
-                            </ul>
-                        </td>
-                        <td>
-                            <h4 class="app_details_titles">URIs Bound <span class="app-services plus button_bound_uri" style="float: right;"></span></h4>
-                            <ul class="app_details_ul">
-                                <% app.uris.each do |uri| %>
-                                    <li class="tile blue">
-                                        <span class="uri-name"><%= uri.url %></span>
-                                        <input type="button" class="control-icon trash button_unbound_uri" />
-                                    </li>
-                                <% end %>
-                            </ul>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td>
-                            <h4 class="app_details_titles">App Instances
-                                <span style="float: right">
-                                    <span class="app-services minus app_minus_instance"></span>
-                                    <span class="app-services plus app_plus_instance"></span>
-                                </span>
-                            </h4>
-
-                            <ul class="app_details_ul">
-                                <li class="tile blue half-height">
-                                    <span class="instance-info">
-                                        <span class="instance-count pass_app_instances app_instances_count"></span>
-                                        <span class="instance-type">Provisioned</span>
-                                    </span>
-                                    <span class="instance-info">
-                                        <span class="instance-count pass_app_instances"></span>
-                                        <span class="instance-type">Running</span>
-                                    </span>
-                                </li>
-                            </ul>
-                            <div class="float: right; padding-top: 40px;">
-                                Max app instances: 5
-                            </div>
-                        </td>
-                        <td>
-                            <h4 class="app_details_titles">Memory Provisioned
-                                <span style="float: right">
-                                    <span class="app-services minus app_minus_memory" style="float: none"></span>
-                                    <span class="app-services plus app_plus_memory" style="float: none"></span>
-                                </span>
-                            </h4>
-                            <ul class="app_details_ul">
-                                <li class="tile blue half-height half-width" style="color: #fff">
-                                    <span class="instance-count pass_app_memory app_memory_count"></span>
-                                    <span class="instance-type">MB</span>
-                                </li>
-                            </ul>
-                            <div style="float: right; width: 300px">
-                                <div id="memory_slider_bar1" class="app-value-slider"></div>
-                            </div>
-                        </td>
-                    </tr>
-                </table>
-            </div>
-
-            <div class="modal-footer app_details_footer">
-                <form action="/updateAppDetails" method="post">
-                    <input type="text" class="send_app_name" name="appName"/>
-                    <input type="text" class="send_app_instances" name="appInstances"/>
-                    <input type="text" class="send_app_memory" name="appMemory" />
-
-                    <div class="button_case_app_details">
-                        <a href="#" class="btn btn_left_app_details black_button_text close_app_details">Close</a>
-                        <input type="submit" value="Save Changes" class="btn btn-success btn_right_app_details white_btn_text blank_input hidden_app_details_submit_button"/>
-                    </div>
-                </form>
-            </div>
-        </div>
 
 
-<% end %>
+                    <% end %>
 
-<li class="new tile" id="create_app">
-    <span class="icon"></span>
-</li>
-</ul>
-</div>
+                    <li class="new tile" id="create_app">
+                        <span class="icon"></span>
+                    </li>
+                    </ul>
+                </div>
 
 
                 <div id="services" class="tab-pane">
@@ -228,11 +232,15 @@
                                 </span>
                             </li>
 
+
+
+
                             <div id="memory_slider">
-                                    <div id="memory_slider_bar2" class="app-value-slider">
-                                      >>>>> slider >>>>>>>>>
-                                    </div>
-                                    Max memory: 1024MB
+
+
+
+
+
                             </div>
                            </ul>
                     </div>
@@ -441,25 +449,30 @@
 
 
 <div class="modal fade hide" id="bind_service_modal">
-    <div class="modal-header">
-        <h3>Add service</h3>
-    </div>
-    <div class="modal-body">
-        <p>Add a new service to <span></span></p>
-        <p>
-            <label for="bind_services_list">Available services</label>
-            <select id="bind_services_list">
-            </select>
-        </p>
-    </div>
-    <div class="modal-footer">
-        <form action="/bindServices" method="post">
+    <form action="/bindServices" method="post">
+
+        <div class="modal-header">
+            <h3>Add service</h3>
+        </div>
+        <div class="modal-body">
+            <p>Add a new service to <span></span></p>
+            <p>
+                <label for="bind_services_list">Available services</label>
+                <select id="bind_services_list" name="serviceName">
+                    <% services_list.each do |service| %>
+                        <option value="<%= service.name %>" id="<%= service.name %>"> <%= service.name %> </option>
+                    <% end %>
+                </select>
+            </p>
+        </div>
+        <div class="modal-footer">
+            <input type="text" id="bind_service_app_name" name="appName" class="blank_input"/>
             <div class="button_case_create_organization_and_space">
                 <a href="#" class="btn btn_right_bind">Cancel</a>
                 <input type="submit" value="Bind Service" class="btn btn-danger btn_left_bind" />
             </div>
-        </form>
-    </div>
+        </div>
+    </form>
 </div>
 
 
@@ -481,6 +494,8 @@
     </div>
     <div class="modal-footer">
         <form action="/unbindServices" method="post">
+            <input type="text" name="serviceName" id="unbind_serviceName" class="blank_input"/>
+            <input type="text" id="unbind_service_app_name" name="appName" class="blank_input" />
             <div class="button_case_create_organization_and_space">
                 <a href="#" class="btn btn_right_unbind">Cancel</a>
                 <input type="submit" value="Unbind services" class="btn btn-danger btn_left_unbind" />
@@ -512,13 +527,14 @@
             </table>
         </p>
     </div>
-    <div class="modal-footer">
+    <div class="modal-footer bind_uri_footer">
         <form action="/bindUri" method="post">
+            <input type="text" name="uriName" id="uriName" class="blank_input"/>
+            <input type="text" id="bind_uri_app_name" name="appName" class="blank_input" />
             <div class="button_case_create_organization_and_space">
                 <a href="#" class="btn btn_right_bind">Cancel</a>
                 <input type="submit" value="Bind URI" class="btn btn-success btn_left_bind" />
             </div>
-            binding URL...
         </form>
     </div>
 </div>
@@ -536,11 +552,12 @@
     </div>
     <div class="modal-footer">
         <form action="/unbindUri" method="post">
+            <input type="text" name="uriName" id="unbind_uriName" class="blank_input" />
+            <input type="text" id="unbind_uri_app_name" name="appName" class="blank_input" />
             <div class="button_case_create_organization_and_space">
                 <a href="#" class="btn btn_right_unbind">Cancel</a>
                 <input type="submit" value="Unbind URI" class="btn btn-success btn_left_unbind" />
             </div>
-            unbinding URL...
         </form>
     </div>
 </div>
