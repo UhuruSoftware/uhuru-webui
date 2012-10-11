@@ -551,7 +551,7 @@ li.new .icon
     background-color: #0071b7;
 }
 
-.tile .service-name, .tile .app-name {
+.tile .service_name, .uri_name, .tile .app-name {
   bottom: 5px;
   color: #efefef;
   display: inline-block;

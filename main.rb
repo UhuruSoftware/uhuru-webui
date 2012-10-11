@@ -257,19 +257,6 @@ post '/createApp' do
 end
 
 
-post '/updateAppDetails' do
-  @name = params[:appName]
-  @memory = params[:appMemory]
-  @instances = params[:appInstances]
-
-  apps_obj = Applications.new(user_token)
-  apps_obj.update(@name, @instances, @memory)
-
-  redirect "/spaces" + $currentSpace
-end
-
-
-
 post '/createService' do
   @name = params[:serviceName]
 
@@ -302,9 +289,9 @@ end
 post '/startApp' do
   @name = params[:appName]
   apps_obj = Applications.new(user_token)
-  puts "starting app"
+
   apps_obj.start_app(@name)
-  puts "start app COMPLETE"
+  puts @name
 
   redirect "/space" + $currentSpace
   erb :space, {:locals => {:apps_names => apps_names, :apps_list => apps_list, :services_list => services_list, :apps_count => apps_list.count, :services_count => services_list.count}, :layout => :layout_user}
@@ -313,30 +300,69 @@ end
 post '/stopApp' do
   @name = params[:appName]
   apps_obj = Applications.new(user_token)
-  puts "stoping app"
+
   apps_obj.stop_app(@name)
-  puts "stoping app COMPLETE"
+  puts @name
 
   redirect "/space" + $currentSpace
 end
 
-post '/bindServices' do
-  @app_name = "test"
-  @service_name = "testDB"
+
+
+post '/updateApp' do
+  @name = params[:appName]
+  @memory = params[:appMemory]
+  @instances = params[:appInstances]
 
   apps_obj = Applications.new(user_token)
-  apps_obj.bind_app_services(@app_name, @service_name)
+  apps_obj.update(@name, @instances, @memory)
+
+  redirect "/spaces" + $currentSpace
+end
+
+
+
+post '/bindServices' do
+  @app_name = params[:appName]
+  @service_name = params[:serviceName]
+
+  apps = Applications.new(user_token)
+  apps.bind_app_services(@app_name, @service_name)
 
   redirect "/space" + $currentSpace
 end
 
 
 post '/unbindServices' do
-  @app_name = "test"
-  @service_name = "testDB"
+  @app_name = params[:appName]
+  @service_name = params[:serviceName]
 
-  apps_obj = Applications.new(user_token)
-  apps_obj.bind_app_services(@app_name, @service_name)
+  apps = Applications.new(user_token)
+  apps.unbind_app_services(@app_name, @service_name)
+
+  redirect "/space" + $currentSpace
+end
+
+
+post '/bindUri' do
+  @app_name = params[:appName]
+  @uri_name = params[:uriName]
+  @domain_name = "api3.ccng-dev.net"
+
+  apps = Applications.new(user_token)
+  apps.bind_app_url(@app_name, $currentOrganization, @domain_name, @uri_name)
+
+  redirect "/space" + $currentSpace
+end
+
+
+post '/unbindUri' do
+  @app_name = params[:appName]
+  @uri_name = params[:uriName]
+  @domain_name = "http://api3.ccng-dev.net"
+
+  apps = Applications.new(user_token)
+  apps.unbind_app_url(@app_name, @domain_name, @uri_name)
 
   redirect "/space" + $currentSpace
 end

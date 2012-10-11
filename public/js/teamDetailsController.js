@@ -16,7 +16,7 @@ $('.read_app_details').hover(function(){
             $('.close_app_details').click(function(){$('.app_details_modal').css("display", "none");$('#opac_screen').css("display", "none")});
         }
 
-    $(this).click(displayAppDetails);
+    $('.show_this_app_details').click(displayAppDetails);
 });
 
 
@@ -40,22 +40,56 @@ $('.read_app_details').hover(function(){
     });
 });
 
+//THIS GETS ALL THE VALUES TO EACH MODAL
+
+$(function(){
+
+$('.bind_uri_footer').hover(function(){
+    var name = $('#newUri').val();
+    $('#uriName').val(name);
+});
+
+
+
+$('.get_uri_name').hover(function(){
+    var name = $(this).attr("id");
+    var app = $(this).attr("title");
+
+    $('#unbind_uriName').val(name);
+
+    $('#bind_uri_app_name').val(app);
+    $('#unbind_uri_app_name').val(app);
+});
+$('.get_service_name').hover(function(){
+    var name = $(this).attr("id");
+    var app = $(this).attr("title");
+
+    $('#unbind_serviceName').val(name);
+
+    $('#bind_service_app_name').val(app);
+    $('#unbind_service_app_name').val(app);
+});
+
+
+});
+
+
+
+
 $(function(){
 
     var changed = false;
 
 
-    var instance = $('.app_instances_count span').text();
-    var memory = $('.app_instances_count span').text();
+    var instance = $('.app_instances_count').text();
+    var memory = $('.app_memory_count').text();
     //alert(instance);
-    var firstMemory = $('.app_instances_count span').html();
-    var firstInstance = $('.app_instances_count span').html();
+    var firstMemory = $('.send_app_memory').val();
+    var firstInstance = $('.send_app_instances').val();
 
-    //instance = parseInt(instance);
-    //memory = parseInt(memory);
-     //
-        //plus and minus instances at app details
-    //
+    instance = parseInt(instance);
+    memory = parseInt(memory);
+
 
     var plus_instance = function(){
             instance+=1;
@@ -119,10 +153,27 @@ $(function(){
     $('.app_plus_memory').click(plus_memory);
     $('.app_minus_memory').click(minus_memory);
 
+
+
+    $( "#slider" ).slider({
+        value:memory,
+        min: 0,
+        max: 2048,
+        step: 32,
+        slide: function( event, ui ) {
+            $( ".app_memory_count" ).text( ui.value );
+        }
+    });
+    $( ".app_memory_count" ).text( $( "#slider" ).slider( "value" ) );
+
+
+
     function showButton()
     {
         $('.hidden_app_details_submit_button').show();
     }
+
+
 
 });
 
