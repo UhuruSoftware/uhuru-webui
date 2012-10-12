@@ -6,10 +6,10 @@ joomla:
     info:
       description: Php Web
       mem: 512
-      exec: php
+      exec: grails
     name: php
-  runtime: php
-  memory: 256
+  runtime: java
+  memory: 512
   url: ${name}.${target-base}
   instances: 5
   services:
@@ -24,11 +24,11 @@ drupal:
   framework:
     info:
       description: Php Web
-      mem: 512
-      exec: php
+      mem: 256
+      exec: lift
     name: php
-  runtime: php
-  memory: 128
+  runtime: node08
+  memory: 256
   url: ${name}.${target-base}
   instances: 5
   services:
@@ -44,10 +44,10 @@ orchard:
     info:
       description: a .Net framework
       mem: 512
-      exec: "/framework"
+      exec: "sinatra"
     name: .net
-  runtime: iis
-  memory: 256
+  runtime: ruby19
+  memory: 128
   url: ${name}.${target-base}
   instances: 5
   services:
