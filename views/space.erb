@@ -265,36 +265,19 @@
                             <li class="tile_darkblue_dark">
                                 <span>
                                     <div class="subscriptions_background_image_mssql"></div>
-                                    <span class="subscriptions_plan">plan: <span class="subscriptions_plan_value">100 MB Buffer</span></span>
-                                    <span class="subscriptions_quality">quality: <span class="subscriptions_quality_value">2</span></span>
-                                    <span class="subscriptions_cost">cost: <span class="subscriptions_cost_value">$500</span></span>
+                                    <span class="subscriptions_plan">Plan: <span class="subscriptions_plan_value">100 MB Buffer</span></span>
+                                    <span class="subscriptions_quantity">Quantity: <span class="subscriptions_quantity_value">2</span></span>
+                                    <span class="subscriptions_cost">Cost: <span class="subscriptions_cost_value">$500</span></span>
                                     <span class="control-icon trash delete-service-button"></span>
                                 </span>
                             </li>
-                            <li class="tile_darkblue_dark">
-                                <span>
-                                    <div class="subscriptions_background_image_redis"></div>
-                                    <span class="subscriptions_plan">plan: <span class="subscriptions_plan_value">300 MB Buffer</span></span>
-                                    <span class="subscriptions_quality">quality: <span class="subscriptions_quality_value">233</span></span>
-                                    <span class="subscriptions_cost">cost: <span class="subscriptions_cost_value">$180</span></span>
-                                    <span class="control-icon trash delete-service-button"></span>
-                                </span>
-                            </li>
+
                             <li class="tile_darkblue_dark">
                                 <span>
                                     <div class="subscriptions_background_image_mysql"></div>
-                                    <span class="subscriptions_plan">plan: <span class="subscriptions_plan_value">10 MB Buffer</span></span>
-                                    <span class="subscriptions_quality">quality: <span class="subscriptions_quality_value">22323</span></span>
-                                    <span class="subscriptions_cost">cost: <span class="subscriptions_cost_value">$200</span></span>
-                                    <span class="control-icon trash delete-service-button"></span>
-                                </span>
-                            </li>
-                            <li class="tile_darkblue_dark">
-                                <span>
-                                    <div class="subscriptions_background_image_ruby"></div>
-                                    <span class="subscriptions_plan">plan: <span class="subscriptions_plan_value">10333 MB Buffer</span></span>
-                                    <span class="subscriptions_quality">quality: <span class="subscriptions_quality_value">2231231</span></span>
-                                    <span class="subscriptions_cost">cost: <span class="subscriptions_cost_value">$5300</span></span>
+                                    <span class="subscriptions_plan">Plan: <span class="subscriptions_plan_value">100 MB Buffer</span></span>
+                                    <span class="subscriptions_quantity">Quantity: <span class="subscriptions_quantity_value">2</span></span>
+                                    <span class="subscriptions_cost">Cost: <span class="subscriptions_cost_value">$500</span></span>
                                     <span class="control-icon trash delete-service-button"></span>
                                 </span>
                             </li>
@@ -577,252 +560,73 @@
 
 <div class="modal fade hide subscriptions_modal this_sub">
     <div class="modal-header">
-        <h3>Saving changes</h3>
+        <div id="subscriptions_modal_header">
+            <h2>Select one of the services and chose one of the packs</h2>
+        </div>
     </div>
 
     <div class="modal-body-subscriptions">
-       <ul class="subscription_services_list">
-         <li class="subscriptions_services_list_li" id="mysql_btn">
-            <span>
-                <div class="subscriptions_background_image_mysql"></div>
-            </span>
+
+       <ul class="add_subscription_services_list">
+
+       <li class="add_subscription_services_list_li">
+            <span class="list_title">MySql 10Gb</span>
+       </li>
+
+
+        <li class="add_subscription_services_list_hidden">
+        <div class="sub_descriptions">
+          <h3 class="sub_descriptions_title">frame 1</h3>
+          <div class="sub_descriptions_paragraph"><div class="subscription_push">Push Pack<div class="subscription_push_btn"></div></div><span class="text_sub_descriptions"> Button is the MySql 10Gb pack, for this plan you get bla bla, on a machine. This is a multi tenant service</span></div>
+        </div>
+        </li>
+
+       <li class="add_subscription_services_list_li">
+            <span class="list_title">MySql 10Gb</span>
+       </li>
+
+
+        <li class="add_subscription_services_list_hidden">
+        <div class="sub_descriptions">
+          <h1 class="sub_descriptions_title">MySql 100Gb Pack:</h1>
+          <div class="sub_descriptions_paragraph"><div class="subscription_push">Push Pack<div class="subscription_push_btn"></div></div><span class="text_sub_descriptions"> This is the MySql 10Gb pack, for this plan you get bla bla, on a machine. This is a multi tenant service</span></div>
+        </div>
+        </li>
+
+        <li class="add_subscription_services_list_li">
+            <span class="list_title">MsSql 10Gb</span>
+        </li>
+
+
+        <li class="add_subscription_services_list_hidden">
+        <div class="sub_descriptions">
+          <h1 class="sub_descriptions_title">MsSql 10Gb Pack:</h1>
+          <div class="sub_descriptions_paragraph"><div class="subscription_push">Push Pack<div class="subscription_push_btn"></div></div><span class="text_sub_descriptions"> This is the MySql 10Gb pack, for this plan you get bla bla, on a machine. This is a multi tenant service</span></div>
+        </div>
+        </li>
+
+         <li class="add_subscription_services_list_li">
+            <span class="list_title">MsSql 100Gb</span>
          </li>
 
-         <li class="subscriptions_services_list_li" id="mssql_btn">
-            <span>
-                <div class="subscriptions_background_image_mssql"></div>
-            </span>
-         </li>
 
-         <li class="subscriptions_services_list_li" id="redis_btn">
-            <span>
-                <div class="subscriptions_background_image_redis"></div>
-            </span>
-         </li>
+        <li class="add_subscription_services_list_hidden">
+        <div class="sub_descriptions">
+          <h1 class="sub_descriptions_title">MsSql 100Gb Pack:</h1>
+          <div class="sub_descriptions_paragraph"><div class="subscription_push">Push Pack<div class="subscription_push_btn"></div></div><span class="text_sub_descriptions"> This is the MySql 10Gb pack, for this plan you get bla bla, on a machine. This is a multi tenant service</span></div>
+        </div>
+        </li>
 
-         <li class="subscriptions_services_list_li" id="mongo_db_btn">
-            <span>
-                <div class="subscriptions_background_image_mongo_db"></div>
-            </span>
-         </li>
-
-         <li class="subscriptions_services_list_li" id="rabbitmq_btn">
-            <span>
-                <div class="subscriptions_background_image_rabbitmq"></div>
-            </span>
-         </li>
-
-         <li class="subscriptions_services_list_li" id="uhurufs_btn">
-            <span>
-                <div class="subscriptions_background_image_uhurufs"></div>
-            </span>
-         </li>
        </ul>
 
 
 
-
-
-
-
-      <ul class="subscription_plans_list_mysql">
-        <li class="subscription_plans_list_li_mysql">
-            <span>
-                <div class="subscriptions_background_image_mysql"></div>
-                <span class="subscriptions_quality">RAM Memory: <span class="subscriptions_quality_value">8Gb</span></span>
-                <span class="subscriptions_cost">Total Cost: <span class="subscriptions_cost_value">$100</span></span>
-            </span>
-        </li>
-
-        <li class="subscription_plans_list_li_mysql">
-            <span>
-                <div class="subscriptions_background_image_mysql"></div>
-                <span class="subscriptions_quality">RAM Memory: <span class="subscriptions_quality_value">8Gb</span></span>
-                <span class="subscriptions_cost">Total Cost: <span class="subscriptions_cost_value">$100</span></span>
-            </span>
-        </li>
-      </ul>
-
-
-      <ul class="subscription_plans_list_mssql">
-        <li class="subscription_plans_list_li_mssql">
-            <span>
-                <div class="subscriptions_background_image_mssql"></div>
-                <span class="subscriptions_quality">RAM Memory: <span class="subscriptions_quality_value">8Gb</span></span>
-                <span class="subscriptions_cost">Total Cost: <span class="subscriptions_cost_value">$100</span></span>
-            </span>
-        </li>
-
-        <li class="subscription_plans_list_li_mssql">
-            <span>
-                <div class="subscriptions_background_image_mssql"></div>
-                <span class="subscriptions_quality">RAM Memory: <span class="subscriptions_quality_value">8Gb</span></span>
-                <span class="subscriptions_cost">Total Cost: <span class="subscriptions_cost_value">$100</span></span>
-            </span>
-        </li>
-      </ul>
-
-
-      <ul class="subscription_plans_list_redis">
-        <li class="subscription_plans_list_li_redis">
-            <span>
-                <div class="subscriptions_background_image_redis"></div>
-                <span class="subscriptions_quality">RAM Memory: <span class="subscriptions_quality_value">8Gb</span></span>
-                <span class="subscriptions_cost">Total Cost: <span class="subscriptions_cost_value">$100</span></span>
-            </span>
-        </li>
-
-        <li class="subscription_plans_list_li_redis">
-            <span>
-                <div class="subscriptions_background_image_redis"></div>
-                <span class="subscriptions_quality">RAM Memory: <span class="subscriptions_quality_value">8Gb</span></span>
-                <span class="subscriptions_cost">Total Cost: <span class="subscriptions_cost_value">$100</span></span>
-            </span>
-        </li>
-      </ul>
-
-
-
-      <ul class="subscription_plans_list_rabbitmq">
-        <li class="subscription_plans_list_li_rabbitmq">
-            <span>
-                <div class="subscriptions_background_image_rabbitmq"></div>
-                <span class="subscriptions_quality">RAM Memory: <span class="subscriptions_quality_value">8Gb</span></span>
-                <span class="subscriptions_cost">Total Cost: <span class="subscriptions_cost_value">$100</span></span>
-            </span>
-        </li>
-
-        <li class="subscription_plans_list_li_rabbitmq">
-            <span>
-                <div class="subscriptions_background_image_rabbitmq"></div>
-                <span class="subscriptions_quality">RAM Memory: <span class="subscriptions_quality_value">8Gb</span></span>
-                <span class="subscriptions_cost">Total Cost: <span class="subscriptions_cost_value">$100</span></span>
-            </span>
-        </li>
-      </ul>
-
-
-
-      <ul class="subscription_plans_list_mongo_db">
-        <li class="subscription_plans_list_li_mongo_db">
-            <span>
-                <div class="subscriptions_background_image_mongo_db"></div>
-                <span class="subscriptions_quality">RAM Memory: <span class="subscriptions_quality_value">8Gb</span></span>
-                <span class="subscriptions_cost">Total Cost: <span class="subscriptions_cost_value">$100</span></span>
-            </span>
-        </li>
-
-        <li class="subscription_plans_list_li_mongo_db">
-            <span>
-                <div class="subscriptions_background_image_mongo_db"></div>
-                <span class="subscriptions_quality">RAM Memory: <span class="subscriptions_quality_value">8Gb</span></span>
-                <span class="subscriptions_cost">Total Cost: <span class="subscriptions_cost_value">$100</span></span>
-            </span>
-        </li>
-      </ul>
-
-
-
-      <ul class="subscription_plans_list_uhurufs">
-        <li class="subscription_plans_list_li_uhurufs">
-            <span>
-                <div class="subscriptions_background_image_uhurufs"></div>
-                <span class="subscriptions_quality">RAM Memory: <span class="subscriptions_quality_value">8Gb</span></span>
-                <span class="subscriptions_cost">Total Cost: <span class="subscriptions_cost_value">$100</span></span>
-            </span>
-        </li>
-
-        <li class="subscription_plans_list_li_uhurufs">
-            <span>
-                <div class="subscriptions_background_image_uhurufs"></div>
-                <span class="subscriptions_quality">RAM Memory: <span class="subscriptions_quality_value">8Gb</span></span>
-                <span class="subscriptions_cost">Total Cost: <span class="subscriptions_cost_value">$100</span></span>
-            </span>
-        </li>
-
-        <li class="subscription_plans_list_li_uhurufs">
-            <span>
-                <div class="subscriptions_background_image_uhurufs"></div>
-                <span class="subscriptions_quality">RAM Memory: <span class="subscriptions_quality_value">8Gb</span></span>
-                <span class="subscriptions_cost">Total Cost: <span class="subscriptions_cost_value">$100</span></span>
-            </span>
-        </li>
-      </ul>
-
-
-
-
-
-
-
-
-
-      <ul class="subscription_qt_list">
-
-        <li class="subscription_qt_list_li_mysql">
-            <span>
-                <div class="subscriptions_background_image_mysql"></div>
-                <span class="subscriptions_cost">Quantity:</span>
-            </span>
-            <div class="qt_count" >1</div>
-        </li>
-
-         <li class="subscription_qt_list_li_mssql">
-            <span>
-                <div class="subscriptions_background_image_mssql"></div>
-                <span class="subscriptions_cost">Quantity:</span>
-            </span>
-            <div class="qt_count" >1</div>
-        </li>
-
-         <li class="subscription_qt_list_li_redis">
-            <span>
-                <div class="subscriptions_background_image_redis"></div>
-                <span class="subscriptions_cost">Quantity:</span>
-            </span>
-            <div class="qt_count" >1</div>
-        </li>
-
-         <li class="subscription_qt_list_li_rabbitmq">
-            <span>
-                <div class="subscriptions_background_image_rabbitmq"></div>
-                <span class="subscriptions_cost">Quantity:</span>
-            </span>
-            <div class="qt_count" >1</div>
-        </li>
-
-         <li class="subscription_qt_list_li_mongo_db">
-            <span>
-                <div class="subscriptions_background_image_mongo_db"></div>
-                <span class="subscriptions_cost">Quantity:</span>
-            </span>
-            <div class="qt_count" >1</div>
-        </li>
-
-         <li class="subscription_qt_list_li_uhurufs">
-            <span>
-                <div class="subscriptions_background_image_uhurufs"></div>
-                <span class="subscriptions_cost">Quantity:</span>
-            </span>
-            <div class="qt_count" >1</div>
-        </li>
-
-
-        <li id="quantity_slider" style="margin-left: -100px;">
-            <div class="slider_case">
-                <div id="plan_quantity" style="height: 12px;"></div>
-                    <input type="button" class="app-services minus qt_minus" style="float: left; margin-left: 5px; border: 0px solid white;" />
-                    <input type="button" class="app-services plus qt_plus" style="float: left; margin-left: 5px; border: 0px solid white;" />
-            </div>
-        </li>
-      </ul>
-
-
-
     </div>
-    <div class="modal-footer">
-        <h3>footer</h3>
-        <a href="#" class="btn btn_right_unbind">Close</a>
+
+    <div class="modal-footer app_details_footer">
+        <div class="button_case_app_details">
+            <a href="#" class="btn btn_left_app_details black_button_text close_app_details">Close</a>
+        </div>
     </div>
 </div>
 

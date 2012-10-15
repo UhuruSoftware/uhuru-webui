@@ -16,7 +16,6 @@ function showSpaces()
         document.getElementById('spaces_btn_link').style.borderRight = '1px solid #DDD';
         document.getElementById('spaces_btn_link').style.backgroundColor = 'white';
         document.getElementById('spaces_btn_link').style.color = "#0071b7";
-        document.getElementById('spaces_btn_link').style.fontWeight = "bold";
 
 
 
@@ -26,7 +25,6 @@ function showSpaces()
         document.getElementById('members_btn_link').style.borderRight = '0px solid #DDD';
 
         document.getElementById('members_btn_link').style.color = "#404040";
-        document.getElementById('members_btn_link').style.fontWeight = "normal";
 
         document.getElementById('tabs').style.borderBottom = '1px solid #DDD';
      document.getElementById('members').style.display = 'none';
@@ -44,7 +42,6 @@ function showMembers()
         document.getElementById('members_btn_link').style.borderRight = '1px solid #DDD';
         document.getElementById('members_btn_link').style.backgroundColor = 'white';
         document.getElementById('members_btn_link').style.color = "#0071b7";
-        document.getElementById('members_btn_link').style.fontWeight = "bold";
 
 
 
@@ -55,7 +52,6 @@ function showMembers()
 
 
         document.getElementById('spaces_btn_link').style.color = "#404040";
-        document.getElementById('spaces_btn_link').style.fontWeight = "normal";
 
         document.getElementById('tabs').style.borderBottom = '1px solid #DDD';
      document.getElementById('spaces').style.display = 'none';
@@ -104,7 +100,6 @@ function showApps()
         document.getElementById('apps_li').style.backgroundColor = 'white';
 
         document.getElementById('apps_li').style.color = "#0071b7";
-        document.getElementById('apps_li').style.fontWeight = "bold";
 
 
 
@@ -115,7 +110,6 @@ function showApps()
         document.getElementById('spaces_tabs').style.borderBottom = '1px solid #DDD';
 
         document.getElementById('services_li').style.color = "#404040";
-        document.getElementById('services_li').style.fontWeight = "normal";
 
      document.getElementById('services').style.display = 'none';
 
@@ -144,7 +138,6 @@ function showServices()
         document.getElementById('services_li').style.borderRight = '1px solid #DDD';
         document.getElementById('services_li').style.backgroundColor = 'white';
         document.getElementById('services_li').style.color = "#0071b7";
-        document.getElementById('services_li').style.fontWeight = "bold";
 
 
 
@@ -156,7 +149,6 @@ function showServices()
         document.getElementById('spaces_tabs').style.borderBottom = '1px solid #DDD';
 
         document.getElementById('apps_li').style.color = "#404040";
-        document.getElementById('apps_li').style.fontWeight = "normal";
 
      document.getElementById('apps').style.display = 'none';
 
@@ -185,7 +177,6 @@ function showSubscriptions()
         document.getElementById('subscriptions_li').style.borderRight = '1px solid #DDD';
         document.getElementById('subscriptions_li').style.backgroundColor = 'white';
         document.getElementById('subscriptions_li').style.color = "#0071b7";
-        document.getElementById('subscriptions_li').style.fontWeight = "bold";
 
 
 
@@ -197,7 +188,6 @@ function showSubscriptions()
         document.getElementById('spaces_tabs').style.borderBottom = '1px solid #DDD';
 
         document.getElementById('services_li').style.color = "#404040";
-        document.getElementById('services_li').style.fontWeight = "normal";
 
      document.getElementById('services').style.display = 'none';
 

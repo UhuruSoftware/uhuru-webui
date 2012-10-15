@@ -70,13 +70,28 @@ h1, h2, h3, h4, h5, h6
     overflow: auto;
 	display: none;
 }
+
+#subscriptions_modal_header
+{
+    text-align: left;
+    float: left;
+    width: 100%;
+    padding: 0px;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #050368;
+}
+
+#subscriptions_modal_header h3
+{
+    margin-left: 30px;
+}
+
 .modal-body-subscriptions
 {
-    height: 600px;
     padding: 0px;
 }
 
-.subscription_services_list
+.add_subscription_services_list
 {
     list-style: none;
     padding: 0px;
@@ -86,135 +101,119 @@ h1, h2, h3, h4, h5, h6
     padding: 0px;
 }
 
-.subscription_plans_list_mysql,
-.subscription_plans_list_mssql,
-.subscription_plans_list_redis,
-.subscription_plans_list_rabbitmq,
-.subscription_plans_list_mongo_db,
-.subscription_plans_list_uhurufs
+.add_subscription_services_list_li
 {
-    list-style: none;
-    padding: 0px;
-    width: 90%;
-    margin-bottom: 0px;
-    padding: 0px;
-    display: none;
-}
-
-.subscription_qt_list
-{
-    list-style: none;
-    padding: 0px;
-    display: inline-block;
-    width: 90%;
-    padding: 0px;
-}
-
-.subscriptions_services_list_li
-{
-    margin: 0 10px 0 0;
-    width: 160px;
-    height: 80px;
-    padding: 10px;
+    width: 100%;
+    padding: 5px;
     background-color: #232323;
-    position: relative;
+    margin-bottom: 10px;
     cursor: pointer;
-    float: left;
-    display: list-item;
+    opacity: .7;
+    background-image: url('../images/plus_.png');
+    background-position: 10px 10px;
+    background-repeat: no-repeat;
 }
 
-
-
-
-
-
-.subscription_plans_list_li_mysql,
-.subscription_plans_list_li_mssql,
-.subscription_plans_list_li_redis,
-.subscription_plans_list_li_rabbitmq,
-.subscription_plans_list_li_mongo_db,
-.subscription_plans_list_li_uhurufs
+.list_title
 {
-    margin: 0 20px 0 0;
-    width: 230px;
-    height: 130px;
-    padding: 10px;
-    background-color: #050368;
-    position: relative;
-    cursor: pointer;
-    float: left;
-    display: list-item;
+    text-align: left;
+    margin-left: 15px;
+    color: white;display: block;
+    height: 32px;
+    padding-left: 36px;
+    padding-top: 5px;
+    font-family: 'Segoe UI', 'Open Sans', Verdana, Arial, Helvetica, sans-serif;
+    font-weight: 400;
+    font-size: 16pt;
+    letter-spacing: 0.01em;
+    line-height: 20pt;
 }
 
-
-.subscription_qt_list_li_mysql,
-.subscription_qt_list_li_mssql,
-.subscription_qt_list_li_redis,
-.subscription_qt_list_li_rabbitmq,
-.subscription_qt_list_li_mongo_db,
-.subscription_qt_list_li_uhurufs
+.add_subscription_services_list_hidden
 {
-    margin: 0 25px 0 0;
-    width: 200px;
+    width: 100%;
     height: 100px;
-    padding: 10px;
     position: relative;
-    cursor: pointer;
-    float: left;
+    padding: 5px;
     display: none;
-    /*display: list-item;*/
+    margin-bottom: 30px;
 }
 
-#quantity_slider
+.sub_descriptions
 {
-    display: none;
-    width: 500px;
-    float: left;
+
 }
-.qt_count
+
+.sub_descriptions_title
 {
-    position: absolute;
-    font-size: 30px;
+    font-family: 'Segoe UI Light', 'Open Sans', Verdana, Arial, Helvetica, sans-serif;;
+    font-weight: 200;
+    font-size: 16pt;
+    line-height: 24px;
+    letter-spacing: 0.02cm;
+
+    margin-bottom: 10px;
+    margin-left: 0;
+    margin-right: 0;
+    margin-top: 10px;
+}
+
+.sub_descriptions_paragraph
+{
+    float: left;
+    width: 100%;
+    margin-left: 10px;
+    margin-top: 10px;
+}
+
+.text_sub_descriptions
+{
+    color: #232323;
+    margin-left: 15px;
+    float: left;
+    font-family: 'Segoe UI Semilight', 'Open Sans', Verdana, Arial, Helvetica, sans-serif;
+    font-weight: 300;
+    letter-spacing: 0.02em;
+    line-height: 20px;
+}
+
+h2
+{
+    font-family: 'Segoe UI Light', 'Open Sans', Verdana, Arial, Helvetica, sans-serif;
+    font-weight: 200;
+    font-size: 20pt;
+    letter-spacing: 0.01em;
+    line-height: 24pt;
+    color: black;
+}
+
+.subscription_push
+{
+    float: left;
+    background-color: #232323;
     color: white;
-    right: 20px;
-    bottom: 5px;
+    cursor: pointer;
+    width: 150px;
+    height: 24px;
+    font-size: 16px;
+    font-family: 'Segoe UI Semilight', 'Open Sans', Verdana, Arial, Helvetica, sans-serif;
 }
 
-.subscription_qt_list_li_mysql,
-.subscription_plans_list_li_mysql
+.subscription_push_btn
 {
-    background-color: #050368;
+    margin: auto;
+    height: 24px;
+    width: 34px;
+    float: right;
+    background: transparent url("../images/push_sub_small.png") no-repeat;
+    background-color: #007003;
+    background-position: 0 0;
+    font-family: 'Segoe UI Semilight', 'Open Sans', Verdana, Arial, Helvetica, sans-serif;
 }
 
-.subscription_qt_list_li_mssql,
-.subscription_plans_list_li_mssql
-{
-    background-color: #0317af;
-}
 
-.subscription_qt_list_li_redis,
-.subscription_plans_list_li_redis
-{
-    background-color: #0956d2;
-}
 
-.subscription_qt_list_li_rabbitmq,
-.subscription_plans_list_li_rabbitmq
-{
-    background-color: #450368;
-}
 
-.subscription_qt_list_li_mongo_db,
-.subscription_plans_list_li_mongo_db
-{
-    background-color: #7f058c;
-}
-
-.subscription_qt_list_li_uhurufs,
-.subscription_plans_list_li_uhurufs
-{
-    background-color: #0996d2;
-}
 
 
 
@@ -328,7 +327,7 @@ h1, h2, h3, h4, h5, h6
 .tile_list
 {
     clear: both;
-    padding-left: 0px;
+    padding-left: 7px;
     display: inline-block;
     width: 100%;
 }
@@ -647,6 +646,17 @@ h2 .count
 #subscriptions
 {
     display: none;
+    border-bottom: 1px solid #ddd;
+    border-right: 1px solid #ddd;
+    border-left: 1px solid #ddd;
+}
+
+#spaces,
+#apps
+{
+    border-bottom: 1px solid #ddd;
+    border-right: 1px solid #ddd;
+    border-left: 1px solid #ddd;
 }
 
 
@@ -657,6 +667,8 @@ h2 .count
     display: block;
     text-align: left;
     border-bottom: 1px solid #ddd;
+    padding-right: 20px;
+    margin-bottom: 0;
 }
 #apps_li,
 #services_li,
@@ -681,8 +693,11 @@ h2 .count
     padding-top: 7px;
     -webkit-border-top-left-radius: 3px;
     -webkit-border-top-right-radius: 3px;
-    font-weight: bold;
     color: #0071b7;
+    margin-left: 30px;
+    cursor: pointer; font-family: 'Segoe UI', 'Open Sans', Verdana, Arial, Helvetica, sans-serif;
+    font-weight: 400;
+    letter-spacing: 0.01em;
 }
 
 #services_li,
@@ -697,6 +712,9 @@ h2 .count
     -webkit-border-top-left-radius: 3px;
     -webkit-border-top-right-radius: 3px;
     color: #404040;
+    cursor: pointer; font-family: 'Segoe UI', 'Open Sans', Verdana, Arial, Helvetica, sans-serif;
+    font-weight: 400;
+    letter-spacing: 0.01em;
 }
 
 
@@ -707,6 +725,7 @@ h2 .count
     display: block;
     text-align: left;
     border-bottom: 1px solid #ddd;
+    margin-bottom: 0;
 }
 
 #tabs li
@@ -727,9 +746,13 @@ h2 .count
     padding-top: 7px;
     -webkit-border-top-left-radius: 3px;
     -webkit-border-top-right-radius: 3px;
-    font-weight: bold;
     color: #0071b7;
     cursor: pointer;
+    margin-left: 30px;
+    cursor: pointer; font-family: 'Segoe UI', 'Open Sans', Verdana, Arial, Helvetica, sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+    letter-spacing: 0.01em;
 }
 
 #members_btn_link
@@ -742,7 +765,10 @@ h2 .count
     -webkit-border-top-left-radius: 3px;
     -webkit-border-top-right-radius: 3px;
     color: #404040;
-    cursor: pointer;
+    cursor: pointer; font-family: 'Segoe UI', 'Open Sans', Verdana, Arial, Helvetica, sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+    letter-spacing: 0.01em;
 }
 
 
@@ -755,7 +781,7 @@ h2 .count
 
 .tileblack
 {
-    margin: 0 10px 10px 0;
+    margin: 0 7px 7px 0;
     width: 170px;
     height: 115px;
     padding: 5px;
@@ -813,7 +839,7 @@ h2 .count
 
 .tilegreen
 {
-    margin: 0 10px 10px 0;
+    margin: 0 7px 7px 0;
     width: 170px;
     height: 115px;
     padding: 5px;
@@ -829,7 +855,7 @@ h2 .count
 
 .tileorange
 {
-    margin: 0 10px 10px 0;
+    margin: 0 7px 7px 0;
     width: 170px;
     height: 115px;
     padding: 5px;
@@ -844,7 +870,7 @@ h2 .count
 }
 .tileorange_members
 {
-    margin: 0 10px 10px 0;
+    margin: 0 7px 7px 0;
     width: 170px;
     height: 115px;
     padding: 5px;
@@ -875,7 +901,7 @@ h2 .count
 }
 .tilered
 {
-    margin: 0 10px 10px 0;
+    margin: 0 7px 7px 0;
     width: 170px;
     height: 115px;
     padding: 5px;
@@ -890,7 +916,7 @@ h2 .count
 }
 .tile_blue_small
 {
-    margin: 0 10px 10px 0;
+    margin: 0 7px 7px 0;
     width: 80px;
     height: 60px;
     padding: 5px;
@@ -905,7 +931,7 @@ h2 .count
 
 .tile_blue_halfheight
 {
-    margin: 0 10px 10px 0;
+    margin: 0 7px 7px 0;
     width: 170px;
     height: 60px;
     padding: 5px;
@@ -921,13 +947,18 @@ h2 .count
 .tile_darkblue_dark
 {
     list-style: none;
-    margin: 0 10px 10px 0;
+    margin: 0 7px 7px 0;
     width: 170px;
     height: 150px;
     padding: 5px;
     background-color: #0071b7;
-    position: relative;
     float: left;
+    width: 170px;
+    padding: 5px;
+    position: relative;
+    cursor: pointer;
+    line-height: 18px;
+    display: list-item;
 }
 
 .member_titles_p
@@ -1080,9 +1111,9 @@ h2 .count
 #subscriptions_memory,
 #subscriptions_services
 {
-    margin: 5px auto 0px;
+    margin: 0 auto 0;
     padding: 5px;
-    height: 150px;
+    display: block;
 }
 .tile_blue_small .memory_unit
 {
@@ -1113,7 +1144,7 @@ h2 .count
     left: 5px;
 }
 
-.subscriptions_quality
+.subscriptions_quantity
 {
     font-size: 15px;
     color: #ffffff;
@@ -1130,7 +1161,7 @@ h2 .count
     bottom: 5px;
     left:5px;
 }
-.subscriptions_quality_value,
+.subscriptions_quantity_value,
 .subscriptions_cost_value,
 .subscriptions_plan_value
 {
@@ -1498,4 +1529,102 @@ h2 .count
 {
     width: 400px;
     height: 30px;
+}
+
+
+
+
+
+
+
+
+
+
+
+/* REW TO ALL THE FONTS AND TEXT STYLES, THESE OVERLAP THE PREVIOUS DESIGN */
+
+h3
+{
+    font-family: 'Segoe UI Light', 'Open Sans', Verdana, Arial, Helvetica, sans-serif;
+    font-weight: 200;
+    font-size: 25pt;
+    letter-spacing: 0.01em;
+    line-height: 24pt;
+    color: black;
+    margin-bottom: 20px;
+}
+
+.breadcrumb_element,
+.breadcrumb_element_home,
+.breadcrumb_slash
+{
+    font-family: 'Segoe UI Light', 'Open Sans', Verdana, Arial, Helvetica, sans-serif;
+    font-weight: 300;
+    font-size: 16pt;
+    letter-spacing: 0.01em;
+}
+
+.organization_name_span
+{
+    font-family: 'Segoe UI Light', 'Open Sans', Verdana, Arial, Helvetica, sans-serif;
+    font-weight: 200;
+    font-size: 20pt;
+    letter-spacing: 0.01em;
+}
+
+.organization_members_span,
+.organization_members_span_value,
+.organization_cost_span,
+.organization_cost_span_value,
+.costs_span,
+.costs_span_value,
+.apps_count_span,
+.apps_count_span_value,
+.services_count_span,
+.services_count_span_value,
+.subscriptions_plan,
+.subscriptions_quantity,
+.subscriptions_cost,
+.subscriptions_cost_value,
+.subscriptions_plan_value,
+.subscriptions_quantity_value
+{
+    font-family: 'Segoe UI Light', 'Open Sans', Verdana, Arial, Helvetica, sans-serif;
+    font-weight: 300;
+    font-size: 12pt;
+    letter-spacing: 0.01em;
+}
+
+.space_name
+{
+    font-family: 'Segoe UI Light', 'Open Sans', Verdana, Arial, Helvetica, sans-serif;
+    font-weight: 200;
+    font-size: 24pt;
+    letter-spacing: 0.01em;
+}
+
+
+.app_name,
+.service_name
+{
+    font-family: 'Segoe UI Light', 'Open Sans', Verdana, Arial, Helvetica, sans-serif;
+    font-weight: 200;
+    font-size: 12pt;
+    letter-spacing: 0.01em;
+}
+.app_name_big
+{
+    font-family: 'Segoe UI Light', 'Open Sans', Verdana, Arial, Helvetica, sans-serif;
+    font-weight: 300;
+    font-size: 24pt;
+    letter-spacing: 0.01em;
+}
+
+.member_titles_p
+{
+    font-family: 'Segoe UI Light', 'Open Sans', Verdana, Arial, Helvetica, sans-serif;
+    font-weight: 200;
+    font-size: 20pt;
+    letter-spacing: 0.01em;
+    margin-top: 0px;
 }

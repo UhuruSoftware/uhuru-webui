@@ -235,8 +235,6 @@ post '/createApp' do
   @instance = 1
   @memory = params[:appMemory]
 
-  puts @runtime
-
   @domain = "ccng-dev.net"
   @path = "/home/ubuntu/Desktop/rubytest"
 
