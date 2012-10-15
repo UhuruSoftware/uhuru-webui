@@ -41,8 +41,8 @@
                                 <a href="/space<%= space.guid %>" class="link_tiles_space">
                                     <span class="space_name"><%= space.name %></span>
                                     <span class="costs_span">monthly cost: </span><span class="costs_span_value">33</span>
-                                    <span class="count-label apps"># of apps: </span><span class="count-value apps"><%= space.apps_count %></span>
-                                    <span class="count-label services"># of services: </span><span class="count-value services"><%= space.services_count %></span>
+                                    <span class="count-label apps apps_count_span"># of apps: </span><span class="count-value apps apps_count_span_value"><%= space.apps_count %></span>
+                                    <span class="count-label services services_count_span"># of services: </span><span class="count-value services services_count_span_value"><%= space.services_count %></span>
 
                                     <a href="#"><span class="control-icon trash delete-space-button" id="<%= space.name %>" title="<%= space.guid %>" onmousemove="prepareToDeleteSpace(this);"></span></a>
                                 </a>
