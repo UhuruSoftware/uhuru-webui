@@ -148,6 +148,19 @@ $('.button_bound_uri').click(bind_uri);
 $('.button_unbound_uri').click(unbind_uri);
 
 
+
+var add_subscription = function(){
+	$('#screen').css({	"display": "block", opacity: 0.7, "width": "10000px", "height": "10000px"});
+	$('body').css({"overflow":"hidden"});
+	$('.this_sub').fadeIn(200);
+    $('.close').click(function(){$(".this_sub").css("display", "none");$('#screen').css("display", "none")});
+    $('.btn').click(function(){$(".this_sub").css("display", "none");$('#screen').css("display", "none")});
+    $('#quantity_slider').css("display", "none");
+}
+
+$('.button_add_subscription').click(add_subscription);
+
+
 });
 
 

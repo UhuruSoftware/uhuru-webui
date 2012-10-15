@@ -115,31 +115,31 @@ $(function(){
     }
 
 
-    $(function() {
+$(function() {
 
-    var select = $( "#memory_slider_app_details" );
-            var slider = $( "<div id='app_mem'></div>" ).insertAfter( select ).slider({
+        var select = $( ".slider_div_app" );
+            var slider = $( "<div class='app_slider'><samp class='blank_input'>x</span></div>" ).insertAfter( select ).slider({
                 min: 0,
                 max: 1024,
                 step: 32,
             value: memory,
                 range: "min",
-    change: function(event, ui) {
-             var sliderValue = $( "#app_mem" ).slider( "option", "value" );
-            $('.app_memory_count').html(sliderValue);
-            $('.send_app_memory').val(sliderValue);
-            showButton();
-            }
-            });
+                change: function(event, ui) {
+                            var sliderValue = $( ".app_slider" ).slider( "option", "value" );
+                            $('.app_memory_count').html(sliderValue);
+                            $('.send_app_memory').val(sliderValue);
+                            showButton();
+                            }
+                    });
 
 
 $('.app_plus_memory').click(function() {
-var sliderCurrentValue = $( "#app_mem" ).slider( "option", "value" );
+var sliderCurrentValue = $( ".app_slider" ).slider( "option", "value" );
   slider.slider( "value", sliderCurrentValue + 32 );
 });
 
 $('.app_minus_memory').click(function() {
-var sliderCurrentValue = $( "#app_mem" ).slider( "option", "value" );
+var sliderCurrentValue = $( ".app_slider" ).slider( "option", "value" );
   slider.slider( "value", sliderCurrentValue - 32 );
 });
 
@@ -154,8 +154,6 @@ $('.app_minus_instance').click(minus_instance);
         {
             $('.hidden_app_details_submit_button').show();
         }
-
-
 
 });
 
