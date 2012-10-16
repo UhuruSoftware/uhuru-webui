@@ -9,7 +9,7 @@
 
   <ul class="tile_list">
     <% organizations_list.each do |org| %>
-            <li class="tileblack">
+            <li class="tile_purple">
                 <a href="/organization<%= org.guid%>" class="link_tiles_org" title="<%= org.guid %>"><span class="to_be_underlined organization_name_span" title="<%= org.guid %>"><%= org.name %></span></a>
 
                 <span class="organization_members_span"># of members: </span><span class="organization_members_span_value"><%= org.members_count %></span>
