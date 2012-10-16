@@ -81,8 +81,11 @@ $(function(){
     var changed = false;
 
 
-    var instance = $('.app_instances_count').text();
+    //var instance = $('.app_instances_count').text();
     var memory = $('.app_memory_count').text();
+    var instance = 1;
+
+
     //alert(instance);
     var firstMemory = $('.app_memory_count').text();
     var firstInstance = $('.send_app_instances').val();

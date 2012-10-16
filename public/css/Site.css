@@ -233,6 +233,7 @@ html, body
 .manage #site_footer
 {
     margin-top: 100px;
+    background-color: #0e4769;
 }
 
 #welcome {
@@ -882,7 +883,7 @@ textarea
 #site_header
 {
     height: 50px;
-    background-color: #2d2d2d;
+    background-color: #09293e;
 }
 
 #site_header h1
@@ -924,6 +925,8 @@ textarea
 #site_footer
 {
     margin-top: 100px;
+    padding-top: 20px;
+    background-color: #6eb43c;
 }
 
 #site_footer .top
@@ -936,7 +939,7 @@ textarea
 #site_footer .bottom
 {
     height: 60px;
-    background-color: #2d2d2d;
+    background-color: #0e4769;
 }
 
 .icon-social

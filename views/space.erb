@@ -89,7 +89,7 @@
                                         <tr>
                                             <td>
                                                 <h4 class="app_details_titles">Services Bound
-                                                <span class="app-services plus button_bound_services get_service_name" style="float: right;" title="<%= app.name %>"></span></h4>
+                                                <input type="button" class="app-services plus button_bound_services get_service_name" style="float: right; border: 0px solid #ffffff;" title="<%= app.name %>" /></h4>
                                                 <div id="hidden_app_div" style="display: none;">
                                                     <span class="hidden_span"></span>
                                                 </div>
@@ -103,7 +103,7 @@
                                                 </ul>
                                             </td>
                                             <td>
-                                                <h4 class="app_details_titles">URIs Bound <span class="app-services plus button_bound_uri get_uri_name" style="float: right;" title="<%= app.name %>"></span></h4>
+                                                <h4 class="app_details_titles">URIs Bound <input type="button" class="app-services plus button_bound_uri get_uri_name" style="float: right; border: 0px solid #ffffff;" title="<%= app.name %>" /></h4>
                                                 <ul class="app_details_ul">
                                                     <% app.uris.each do |uri| %>
                                                         <li class="tile blue get_uri_name" id="<%= uri.url %>" title="<%= app.name %>">
@@ -119,8 +119,8 @@
                                             <td>
                                                 <h4 class="app_details_titles">App Instances
                                                     <span style="float: right">
-                                                        <span class="app-services minus app_minus_instance"></span>
-                                                        <span class="app-services plus app_plus_instance"></span>
+                                                        <input type="button" class="app-services minus app_minus_instance" style="border: 0px solid #ffffff;"/>
+                                                        <input type="button" class="app-services plus app_plus_instance"  style="border: 0px solid #ffffff;"/>
                                                     </span>
                                                 </h4>
 
@@ -143,8 +143,8 @@
                                             <td>
                                                 <h4 class="app_details_titles">Memory Provisioned
                                                     <span style="float: right">
-                                                        <span class="app-services minus app_minus_memory"></span>
-                                                        <span class="app-services plus app_plus_memory"></span>
+                                                        <input type="button" class="app-services minus app_minus_memory" style="border: 0px solid #ffffff;" />
+                                                        <input type="button" class="app-services plus app_plus_memory" style="border: 0px solid #ffffff;" />
                                                     </span>
                                                 </h4>
                                                 <ul class="app_details_ul">
@@ -222,8 +222,8 @@
                     <div id="subscriptions_memory">
                        <div class="services_subdiv">
                             <span class="plusminus_class">
-                                  <span class="app-services minus sub_minus_memory" style="float: none" id="minus_memory"></span>
-                                  <span class="app-services plus sub_plus_memory" style="float: none" id="plus_memory"></span>
+                                  <input type="button" class="app-services minus sub_minus_memory" style="float: none; border: 0px solid #ffffff;" id="minus_memory" />
+                                  <input type="button" class="app-services plus sub_plus_memory" style="float: none; border: 0px solid #ffffff;" id="plus_memory" />
                             </span>
                             <p class="subscriptions_titles_p">Memory</p>
                        </div>
@@ -256,7 +256,7 @@
                     <div id="subscriptions_services">
                         <div class="services_subdiv">
                             <span class="plusminus_class">
-                                  <span class="app-services plus button_add_subscription" style="float: right; margin-right: 25px;"></span>
+                                  <input type="button" class="app-services plus button_add_subscription" style="float: right; margin-right: 25px; border: 0px solid #ffffff;" />
                             </span>
                             <p class="subscriptions_titles_p">Services</p>
                         </div>
