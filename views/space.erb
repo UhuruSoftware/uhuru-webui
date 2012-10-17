@@ -2,8 +2,6 @@
 
         <div class="manage_content_header">
             <h2 class="section_title">
-                <span class="organizations_icon"></span>
-
                 <span id="space_name"><%= $currentSpace_Name %></span>
 
                 <form action="/updateSpace" method="post">
@@ -34,7 +32,7 @@
                     <ul class="tile_list">
 
                     <% apps_list.each do |app| %>
-                    <li class="tileblue read_app_details">
+                    <li class="tilebrown read_app_details">
 
                         <a href="#" class="link_tiles_app show_this_app_details app-<%= app.runtime %>" id="<%= app.name %>">
                             <span class="blank_input" id="<%= app.name %>" title="<%= app.name %>"></span>
@@ -197,11 +195,13 @@
                     <ul class="tile_list">
 
                         <% services_list.each do |service| %>
-                            <li class="tileblue service-icon-<%= service.type %>">
+                            <li class="tilered">
+                              <a href="#" class="link_tiles_app  service-icon-<%= service.type %>">
                                 <span>
                                     <span class="service_name"><%= service.name %></span>
                                     <a href="#"><span class="control-icon trash delete-service-button" id="<%= service.name %>" title="<%= service.guid %>" onmousemove="prepareToDeleteService(this);"></span></a>
                                 </span>
+                              </a>
                             </li>
                         <% end %>
 

@@ -71,7 +71,7 @@ get'/organizations' do
 
   $path_1 = ''
   $path_2 = ''
-  $path_home = '<a href="/organizations" class="breadcrumb_element_home">Organizations:</a>'
+  $path_home = '<a href="/organizations" class="breadcrumb_element_home">ORGANIZATIONS</a>'
 
   organizations_Obj = Organizations.new(user_token)
   organizations_list = organizations_Obj.read_all
@@ -92,7 +92,7 @@ get'/organization:org_guid' do
   $organization_name = organizations_Obj.get_name(@this_guid)
   $path_1 = $slash + '<a href="/organization' + @this_guid + ' "class="breadcrumb_element" id="element_organization">' + $organization_name + '</a>'
   $path_2 = ''
-  $path_home = '<a href="/organizations" class="breadcrumb_element_home">Organizations:</a>'
+  $path_home = '<a href="/organizations" class="breadcrumb_element_home">ORGANIZATIONS</a>'
 
   $currentOrganization = @this_guid
   $currentOrganization_Name = organizations_Obj.get_name(@this_guid)
@@ -121,7 +121,7 @@ get'/space:space_guid' do
 
   $space_name = spaces_Obj.get_name(@this_guid)
   $path_2 = $slash + '<a href="/space' + @this_guid + '" class="breadcrumb_element" id="element_space">' + $space_name + '</a>'
-  $path_home = '<a href="/organizations" class="breadcrumb_element_home">Organizations:</a>'
+  $path_home = '<a href="/organizations" class="breadcrumb_element_home">ORGANIZATIONS</a>'
 
 #  $currentOrganization = nil
   $currentSpace = @this_guid

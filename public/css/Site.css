@@ -333,10 +333,12 @@ input.user-name
 {
     float: left;
     margin: 0 10px 10px 0;
-    width: 170px;
+    width: 175px;
     height: 115px;
     padding: 5px;
-    background-color: #2d2d2d;
+    background-image: url("../images/brown_tile.png");
+    background-repeat: repeat-y;
+    border: 1px solid #4e341a;
     position: relative;
     cursor: pointer;
     list-style: none;
@@ -1005,7 +1007,7 @@ textarea
 #site_footer .footer-menu
 {
     list-style: none;
-    margin: 0 50px;
+    margin: 0 14px;
     padding: 0;
     display: inline-block;
 }
@@ -1017,14 +1019,9 @@ textarea
 
 }
 
-#site_footer .cloud-target-url
-{
-    color: #6eb53c;
-}
-
 #site_footer .footer-menu li a
 {
-    color: #6eb53c;
+    color: #08c;
 }
 
 #site_footer .footer-menu li.last

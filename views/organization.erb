@@ -2,8 +2,6 @@
 
         <div class="manage_content_header">
             <h2 class="section_title">
-                <span class="organizations_icon"></span>
-
                 <span id="organization_name"><%= $currentOrganization_Name %></span>
 
     <!--UPDATE-->   <form action="/updateOrganization" method="post">
@@ -18,8 +16,6 @@
                     <form action="/deleteCurrentOrganization" method="post">
                         <input type="submit" class="control-icon-large trash">
                     </form>
-
-                <span class="token-icon-large">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
             </div>
         </div>
 
@@ -39,7 +35,7 @@
                     <% spaces_list.each do |space| %>
                             <li class="tilegreen">
                                 <a href="/space<%= space.guid %>" class="link_tiles_space">
-                                    <span class="space_name"><%= space.name %></span>
+                                    <span class="space_name to_underlined"><%= space.name %></span>
                                     <span class="costs_span">monthly cost: </span><span class="costs_span_value">33</span>
                                     <span class="count-label apps apps_count_span"># of apps: </span><span class="count-value apps apps_count_span_value"><%= space.apps_count %></span>
                                     <span class="count-label services services_count_span"># of services: </span><span class="count-value services services_count_span_value"><%= space.services_count %></span>

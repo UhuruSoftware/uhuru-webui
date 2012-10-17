@@ -2,6 +2,7 @@ body
 {
 	text-align: center;
 	margin: 0 auto;
+    background-color: #187ebc;
 }
 
 h1, h2, h3, h4, h5, h6
@@ -18,6 +19,27 @@ h1, h2, h3, h4, h5, h6
     padding-top: 6px;
     padding-right: 6px;
 }
+
+
+#header_links
+{
+    width: 300px;
+    height: 50px;
+    float: right;
+    text-align: right;
+}
+.head_link
+{
+    float: right;
+    margin-right: 20px;
+    font-family: 'Segoe UI Light', 'Open Sans', Verdana, Arial, Helvetica, sans-serif;
+    font-weight: 200;
+    font-size: 14pt;
+    letter-spacing: 0.01em;
+    line-height: 50px;
+    color: #ffffff;
+}
+
 
 #delete_app,
 #delete_service,
@@ -285,37 +307,39 @@ h2
 {
     padding-left: 5px;
     margin-bottom: 10px;
-    font-size: 12px;
-    font-weight: normal;
-    font-family: "Sagoe UI", Verdana, Helvetica, SANS-SERIF;
-    text-align: left;
+    text-align: right;
+    font-family: 'Segoe UI Light', 'Open Sans', Verdana, Arial, Helvetica, sans-serif;
+    font-weight: 200;
+    font-size: 14pt;
+    letter-spacing: 0.01em;
+    color: #ffffff;
 }
 
 .breadcrumb_element_home
 {
     padding: 0px;
     text-decoration: none;
-    color: #6eb53c;
+    color: #ffffff;
 }
 
 .breadcrumb_element
 {
     padding: 0px;
     text-decoration: none;
-    color: #6eb53c;
+    color: #ffffff;
 }
 .breadcrumb_element:hover
 {
     padding: 0px;
     text-decoration: none;
-    color: #6eb53c;
+    color: #f5deb3;
 }
 
 .breadcrumb_slash
 {
     padding: 0px;
     text-decoration: none;
-    color: #6eb53c;
+    color: #ffffff;
 }
 
 .tab_pane
@@ -555,7 +579,7 @@ button.close {
     height: 50px;
     margin: 0px;
     padding: 2px;
-    margin-left: 60px;
+    margin-left: 0;
     font-size: 45px;
     display: none;
     z-index: 10;
@@ -570,8 +594,9 @@ button.close {
     font-weight: normal;
     line-height: 46px;
     float: left;
-    margin-left: 60px;
+    margin-left: 0;
     z-index: 8;
+    color: #ffffff;
 }
 
 
@@ -579,33 +604,23 @@ button.close {
 {
     font-size: 56px;
     font-weight: normal;
-    color: #2d2d2d;
+    color: #ffffff;
     line-height: 40px;
     padding: 0px;
-    margin-left: 70px;
+    margin-left: 5px;
 }
 
 h2 .count
 {
     position: absolute;
-    color: #6eb53c;
+    color: #ffffff;
     font-size: 56px;
-    font-weight: normal;
     line-height: 40px;
     top: 0px;
-    left: 440px;
-}
-
-.sections a.section_help
-{
-    color: #6eb53c;
-    font-size: 12px;
-    line-height: 20px;
-    display: inline-block;
-    cursor: default;
-    float: left;
-    margin-top: 0px;
-    margin-left: 180px;
+    left: 350px;
+    font-family: 'Segoe UI Light', 'Open Sans', Verdana, Arial, Helvetica, sans-serif;
+    font-weight: 200;
+    letter-spacing: 0.01em;
 }
 
 
@@ -627,13 +642,30 @@ h2 .count
     display: inline-block;
     line-height: 50px;
     color: #08c;
+    font-family: 'Segoe UI Light', 'Open Sans', Verdana, Arial, Helvetica, sans-serif;
+    font-weight: 200;
+    font-size: 12pt;
+    letter-spacing: 0.01em;
 }
 .footer_links:hover
 {
     text-decoration: underline;
-    color: #005580;
+    color: #08c;    font-family: 'Segoe UI Light', 'Open Sans', Verdana, Arial, Helvetica, sans-serif;
+    font-weight: 300;
+    letter-spacing: 0.01em;
 }
 
+#tools_
+{
+    position: absolute;
+    display: block;
+    margin-left: 65px;
+    color: #ffffff;
+    font-family: 'Segoe UI Light', 'Open Sans', Verdana, Arial, Helvetica, sans-serif;
+    font-weight: 300;
+    letter-spacing: 0.01em;
+    font-size: 13pt;
+}
 
 
 
@@ -646,19 +678,7 @@ h2 .count
 #subscriptions
 {
     display: none;
-    border-bottom: 1px solid #ddd;
-    border-right: 1px solid #ddd;
-    border-left: 1px solid #ddd;
 }
-
-#spaces,
-#apps
-{
-    border-bottom: 1px solid #ddd;
-    border-right: 1px solid #ddd;
-    border-left: 1px solid #ddd;
-}
-
 
 
 #spaces_tabs
@@ -666,7 +686,7 @@ h2 .count
     list-style: none;
     display: block;
     text-align: left;
-    border-bottom: 1px solid #ddd;
+    border-bottom: 1px solid #0e4769;
     padding-right: 20px;
     margin-bottom: 0;
 }
@@ -683,17 +703,17 @@ h2 .count
 {
     font-size: 16px;
     padding-bottom: 1px;
-    border-top: 1px solid #DDD;
-    border-left: 1px solid #DDD;
-    border-right: 1px solid #DDD;
-    background-color: white;
+    border-top: 1px solid #0e4769;
+    border-left: 1px solid #0e4769;
+    border-right: 1px solid #0e4769;
     cursor: pointer;
     padding-left: 7px;
     padding-right: 7px;
     padding-top: 7px;
     -webkit-border-top-left-radius: 3px;
     -webkit-border-top-right-radius: 3px;
-    color: #0071b7;
+    color: #ffffff;
+    background-color: #187ebc;
     margin-left: 30px;
     cursor: pointer; font-family: 'Segoe UI', 'Open Sans', Verdana, Arial, Helvetica, sans-serif;
     font-weight: 400;
@@ -704,14 +724,13 @@ h2 .count
 #subscriptions_li
 {
     font-size: 16px;
-    background-color: white;
     cursor: pointer;
     padding-left: 7px;
     padding-right: 7px;
     padding-top: 7px;
     -webkit-border-top-left-radius: 3px;
     -webkit-border-top-right-radius: 3px;
-    color: #404040;
+    color: #ffffff;
     cursor: pointer; font-family: 'Segoe UI', 'Open Sans', Verdana, Arial, Helvetica, sans-serif;
     font-weight: 400;
     letter-spacing: 0.01em;
@@ -724,7 +743,7 @@ h2 .count
     list-style: none;
     display: block;
     text-align: left;
-    border-bottom: 1px solid #ddd;
+    border-bottom: 1px solid #0e4769;
     margin-bottom: 0;
 }
 
@@ -737,19 +756,19 @@ h2 .count
 #spaces_btn_link
 {
     padding-bottom: 1px;
-    border-top: 1px solid #DDD;
-    border-left: 1px solid #DDD;
-    border-right: 1px solid #DDD;
-    background-color: white;
+    border-top: 1px solid #0e4769;
+    border-left: 1px solid #0e4769;
+    border-right: 1px solid #0e4769;
+    background-color: #187ebc;
     padding-left: 7px;
     padding-right: 7px;
     padding-top: 7px;
     -webkit-border-top-left-radius: 3px;
     -webkit-border-top-right-radius: 3px;
-    color: #0071b7;
+    color: #ffffff;
     cursor: pointer;
     margin-left: 30px;
-    cursor: pointer; font-family: 'Segoe UI', 'Open Sans', Verdana, Arial, Helvetica, sans-serif;
+    font-family: 'Segoe UI', 'Open Sans', Verdana, Arial, Helvetica, sans-serif;
     font-weight: 400;
     font-size: 16px;
     letter-spacing: 0.01em;
@@ -761,10 +780,9 @@ h2 .count
     padding-left: 7px;
     padding-right: 7px;
     padding-top: 7px;
-    background-color: white;
     -webkit-border-top-left-radius: 3px;
     -webkit-border-top-right-radius: 3px;
-    color: #404040;
+    color: #ffffff;
     cursor: pointer; font-family: 'Segoe UI', 'Open Sans', Verdana, Arial, Helvetica, sans-serif;
     font-weight: 400;
     font-size: 16px;
@@ -782,11 +800,12 @@ h2 .count
 .tile_purple
 {
     margin: 0 7px 7px 0;
-    width: 170px;
+    width: 175px;
     height: 115px;
     padding: 5px;
-    background-image: url("../images/tile_purple.png");
-    border: 1px solid #9845f7;
+    background-image: url("../images/purple_tile.png");
+    background-repeat: repeat-y;
+    border: 1px solid #684bba;
     position: relative;
     cursor: pointer;
     overflow: hidden;
@@ -841,10 +860,12 @@ h2 .count
 .tilegreen
 {
     margin: 0 7px 7px 0;
-    width: 170px;
+    width: 175px;
     height: 115px;
     padding: 5px;
-    background-color: #046827;
+    background-image: url("../images/dark_green_tile.png");
+    background-repeat: repeat-y;
+    border: 1px solid #1a962f;
     position: relative;
     cursor: pointer;
     overflow: hidden;
@@ -857,10 +878,11 @@ h2 .count
 .tileorange
 {
     margin: 0 7px 7px 0;
-    width: 170px;
+    width: 175px;
     height: 115px;
     padding: 5px;
-    background-color: #ff4500;
+    background-image: url("../images/orange_tile.png");
+    background-repeat: repeat-y;
     position: relative;
     cursor: pointer;
     overflow: hidden;
@@ -869,13 +891,15 @@ h2 .count
     float: left;
     list-style: none;
 }
-.tileorange_members
+.tileorange_members           /*light green*/
 {
     margin: 0 7px 7px 0;
-    width: 170px;
+    width: 175px;
     height: 115px;
     padding: 5px;
-    background-color: #fea025;
+    background-image: url("../images/light_green_tile.png");
+    background-repeat: repeat-y;
+    border: 1px solid #e06843;
     position: relative;
     cursor: pointer;
     overflow: hidden;
@@ -888,10 +912,12 @@ h2 .count
 .tileblue
 {
     margin: 0 7px 7px 0;
-    width: 170px;
+    width: 175px;
     height: 115px;
     padding: 5px;
-    background-color: #0071b7;
+    background-image: url("../images/blue_tile.png");
+    background-repeat: repeat-y;
+    border: 1px solid #3c80ee;
     position: relative;
     cursor: pointer;
     overflow: hidden;
@@ -900,13 +926,34 @@ h2 .count
     float: left;
     list-style: none;
 }
+
+.tilebrown
+{
+    margin: 0 7px 7px 0;
+    width: 175px;
+    height: 115px;
+    padding: 5px;
+    background-image: url("../images/brown_tile.png");
+    background-repeat: repeat-y;
+    border: 1px solid #4e341a;
+    position: relative;
+    cursor: pointer;
+    overflow: hidden;
+    line-height: 18px;
+    display: list-item;
+    float: left;
+    list-style: none;
+}
+
 .tilered
 {
     margin: 0 7px 7px 0;
-    width: 170px;
+    width: 175px;
     height: 115px;
     padding: 5px;
-    background-color: #ce0000;
+    background-image: url("../images/red_tile.png");
+    background-repeat: repeat-y;
+    border: 1px solid #b43051;
     position: relative;
     cursor: pointer;
     overflow: hidden;
@@ -921,7 +968,9 @@ h2 .count
     width: 80px;
     height: 60px;
     padding: 5px;
-    background-color: #08c;
+    background-image: url("../images/blue_tile.png");
+    background-repeat: repeat-y;
+    border: 1px solid #3c80ee;
     position: relative;
     list-style: none;
     line-height: 18px;
@@ -933,10 +982,12 @@ h2 .count
 .tile_blue_halfheight
 {
     margin: 0 7px 7px 0;
-    width: 170px;
+    width: 175px;
     height: 60px;
     padding: 5px;
-    background-color: #08c;
+    background-image: url("../images/blue_tile.png");
+    background-repeat: repeat-y;
+    border: 1px solid #3c80ee;
     position: relative;
     cursor: pointer;
     overflow: hidden;
@@ -949,10 +1000,12 @@ h2 .count
 {
     list-style: none;
     margin: 0 7px 7px 0;
-    width: 170px;
+    width: 175px;
     height: 150px;
     padding: 5px;
-    background-color: #0071b7;
+    background-image: url("../images/blue_tile.png");
+    background-repeat: repeat-y;
+    border: 1px solid #3c80ee;
     float: left;
     width: 170px;
     padding: 5px;
@@ -969,7 +1022,8 @@ h2 .count
     margin-bottom: 10px;
     font-family: "Sagoe UI", Verdana, Helvetica, SANS-SERIF;
     font-size: 15px;
-    border-bottom: 1px solid #ddd;
+    color: #ffffff;
+    border-bottom: 1px solid #ffffff;
     list-style: none;
 }
 
@@ -980,8 +1034,8 @@ h2 .count
     margin-top: 15px;
     font-family: "Sagoe UI", Verdana, Helvetica, SANS-SERIF;
     font-size: 20px;
-    color: #0071b7;
-    border-bottom: 1px solid #0071b7;
+    color: #ffffff;
+    border-bottom: 1px solid #ffffff;
 }
 
 
@@ -1641,7 +1695,46 @@ p
     margin-top: 0px;
 }
 
-body
+
+.footer-menu li
 {
-    background-color: #187ebc;
+    font-family: 'Segoe UI Light', 'Open Sans', Verdana, Arial, Helvetica, sans-serif;
+    font-weight: 200;
+    font-size: 12pt;
+    letter-spacing: 0.01em;
+    color: #ffffff;
+}
+
+.cloud-target
+{
+    font-family: 'Segoe UI Light', 'Open Sans', Verdana, Arial, Helvetica, sans-serif;
+    font-weight: 200;
+    font-size: 10pt;
+    letter-spacing: 0.01em;
+    color: #ffffff;
+    float: right;
+
+}
+.copyright
+{
+    font-family: 'Segoe UI Light', 'Open Sans', Verdana, Arial, Helvetica, sans-serif;
+    font-weight: 200;
+    font-size: 10pt;
+    letter-spacing: 0.01em;
+    color: #ffffff;
+}
+
+
+.cloud-target-url
+{
+    font-family: 'Segoe UI Light', 'Open Sans', Verdana, Arial, Helvetica, sans-serif;
+    font-weight: 200;
+    font-size: 10pt;
+    letter-spacing: 0.01em;
+    color: #08c;
+}
+
+#site_footer .footer-menu a
+{
+    color: #ffffff;
 }
