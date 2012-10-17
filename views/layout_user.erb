@@ -45,46 +45,15 @@
     <div id="container">
         <header id="site_header">
             <div class="page-margin">
-                <h1><span style="color: #0172b6">Uhuru</span> AppCloud</h1>
+                <a href="/organizations"><h1><span style="color: #0172b6">Uhuru</span> AppCloud</h1></a>
 
-                    <!-- LOGIN CONTROL  -->
-                     <div id="login_control">
-                        <span class="welcome-message">
-                            Welcome
-                            <span id="the_user_name"></span>
-                            <span class="login-control-username"><span class="user-name"></span></span>
-                            <span class="control-icon edit" id="user_name_edit_button" onclick="editUsernameDiv();"><a class="tooltips" href="#" rel="tooltip" title="Edit">&nbsp;</a></span>
-
-                                <div class="tile blue" id="welcome" style="display: none;">
-                                    <h2>
-                                        <input type="text" class="user-name" id="user_name_input" onfocus="editUser();"/>
-                                        <span style="display: block; font-size: 0.55em; font-style: italic; color: #fff">
-                                            Enter to confirm, escape to cancel
-                                            Saving...
-                                        </span>
-                                    </h2>
-                                    <div class="user-info">
-                                        <span class="user-email" data-bind="text: email"></span>
-                                    </div>
-                                </div>
-                        </span>
-                     </div>
-                    <!-- LOGIN CONTROL  -->
+                <div id="header_links">
+                  <a href="http://www.uhurusoftware.com" target="_blank"><span class="head_link">COMPANY</span></a>
+                  <a href="http://uhurusoftware.zendesk.com" target="_blank"><span class="head_link">SUPPORT</span></a>
+                </div>
             </div>
         </header>
         <div class="page-margin" id="body">
-
-        <ul id="manage_menu" class="unstyled">
-          <li class="active">
-              <a href="/organizations">Home</a>
-          </li>
-          <li>
-              <a href="http://uhurusoftware.zendesk.com" target="_blank">Support</a>
-          </li>
-          <li>
-              <a href="http://www.uhurusoftware.com" target="_blank">Company</a>
-          </li>
-        </ul>
 
         <div class="breadcrumb">
             <%= $path_home %><%= $path_1 %><%= $path_2 %>
@@ -99,13 +68,13 @@
             <div class="page-margin">
                 <div class="ez-box" style="height: 50px; margin-bottom: 20px;">
                     <span style="line-height: 48px; display: inline-block; float: left">
-                        <span class="title_icon"></span>  <span style="position: absolute; display: block; margin-left: 65px;">Tools:</span>
+                        <span class="title_icon"></span>  <span id="tools_">Tools:</span>
                     </span>
 
                     <div style="height: 50px; margin-left: 45px; float: left">
                         <strong>
-                        <a href="#" class="footer_links">Visual Studio Plugin</a> |
-                        <a href="#" class="footer_links">AppCloud Admin</a> |
+                        <a href="#" class="footer_links">Visual Studio Plugin</a><span style="color: #ffffff;"> | </span>
+                        <a href="#" class="footer_links">AppCloud Admin</a><span style="color: #ffffff;"> | </span>
                         <a href="http://support.uhurusoftware.com/entries/21454287-deploying-and-managing-apps-with-command-line" target="_blank" class="footer_links">Command Line</a>
                         </strong>
                     </div>
