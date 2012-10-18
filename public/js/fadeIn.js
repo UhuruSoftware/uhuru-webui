@@ -85,6 +85,24 @@ var delete_service = function(){
 
 
 
+var delete_this_space_modal = function(){
+	$('#screen').css({	"display": "block", opacity: 0.7, "width": "10000px", "height": "10000px"});
+	$('body').css({"overflow":"hidden"});
+	$('#delete_this_space_modal').slideDown(200);
+    $('.close').click(function(){$("#delete_this_space_modal").css("display", "none");$('#screen').css("display", "none")});
+    $('.btn').click(function(){$("#delete_this_space_modal").css("display", "none");$('#screen').css("display", "none")});
+}
+
+var delete_this_organization_modal = function(){
+	$('#screen').css({	"display": "block", opacity: 0.7, "width": "10000px", "height": "10000px"});
+	$('body').css({"overflow":"hidden"});
+	$('#delete_this_organization_modal').slideDown(200);
+    $('.close').click(function(){$("#delete_this_organization_modal").css("display", "none");$('#screen').css("display", "none")});
+    $('.btn').click(function(){$("#delete_this_organization_modal").css("display", "none");$('#screen').css("display", "none")});
+}
+
+
+
 $('#create_organization_btn').click(create_organization);
 $('#create_space_btn').click(create_space);
 $('#create_app').click(create_tempcta_modal);
@@ -99,6 +117,9 @@ $('.delete-space-button').click(delete_space_modal);
 $('.delete-app-button').click(delete_app);
 $('.delete-service-button').click(delete_service);
 
+
+$('.delete_this_organization').click(delete_this_organization_modal);
+$('.delete_this_space').click(delete_this_space_modal);
 
 
 

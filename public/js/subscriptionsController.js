@@ -34,13 +34,13 @@ $('.add_subscription_services_list_li').click(function(){
     var element = $(this).next();
     $('.add_subscription_services_list_hidden').not(element).slideUp(800);
 
-    $('.add_subscription_services_list_li').css("background-image", "url('../images/plus_.png')");
+    $('.add_subscription_services_list_li').css("background-image", "url('../images/plus_24px.png')");
     $('.add_subscription_services_list_li').css("background-repeat", "no-repeat");
     $('.add_subscription_services_list_li').css("background-position", "10px 10px");
 
-    element.slideToggle();
+    element.slideToggle(1000);
 
-    $(this).css("background-image", "url('../images/minus_.png')");
+    $(this).css("background-image", "url('../images/minus_24px.png')");
     $(this).css("background-repeat", "no-repeat");
     $(this).css("background-position", "10px 10px");
 });

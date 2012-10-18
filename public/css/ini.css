@@ -2,7 +2,7 @@ body
 {
 	text-align: center;
 	margin: 0 auto;
-    background-color: #187ebc;
+    background-color: #09293e;
 }
 
 h1, h2, h3, h4, h5, h6
@@ -31,7 +31,7 @@ h1, h2, h3, h4, h5, h6
 .head_link
 {
     float: right;
-    margin-right: 20px;
+    margin-right: 10px;
     font-family: 'Segoe UI Light', 'Open Sans', Verdana, Arial, Helvetica, sans-serif;
     font-weight: 200;
     font-size: 14pt;
@@ -41,6 +41,8 @@ h1, h2, h3, h4, h5, h6
 }
 
 
+#delete_this_organization_modal,
+#delete_this_space_modal,
 #delete_app,
 #delete_service,
 #delete_space_modal,
@@ -76,8 +78,9 @@ h1, h2, h3, h4, h5, h6
     padding: 0px;
     z-index: 15;
     overflow: hidden;
-	margin-top: -270px;
-	top: 50%;
+    background-color: #fff;
+	top: -100px;
+    position: absolute;
 }
 
 .subscriptions_modal
@@ -110,7 +113,7 @@ h1, h2, h3, h4, h5, h6
 
 .modal-body-subscriptions
 {
-    padding: 0px;
+    padding: 0;
 }
 
 .add_subscription_services_list
@@ -131,7 +134,7 @@ h1, h2, h3, h4, h5, h6
     margin-bottom: 10px;
     cursor: pointer;
     opacity: .7;
-    background-image: url('../images/plus_.png');
+    background-image: url('../images/plus_24px.png');
     background-position: 10px 10px;
     background-repeat: no-repeat;
 }
@@ -307,10 +310,10 @@ h2
 {
     padding-left: 5px;
     margin-bottom: 10px;
+    margin-right: 10px;
     text-align: right;
     font-family: 'Segoe UI Light', 'Open Sans', Verdana, Arial, Helvetica, sans-serif;
-    font-weight: 200;
-    font-size: 14pt;
+    font-weight: 400;
     letter-spacing: 0.01em;
     color: #ffffff;
 }
@@ -511,38 +514,173 @@ button.close {
 
 
 }
- /*    ------     MAIN HEADER    ------- */                                                                                /*--> THE HEADER OF THE PAGES*/
 
 
 #organization_input
 {
-    font-family: inherit;
     font-size: inherit;
     width: 500px;
     height: 60px;
     margin-left: 90px;
 }
 
-.organizations_icon
-{
-    display: inline-block;
-    position: absolute;
 
-    padding: 0px;
+.small_trash
+{
+    background: transparent url('../images/trash_24px.png') no-repeat;
+    border: 0px solid #ffffff;
+    width: 30px;
+    height: 30px;
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
+    cursor: pointer;
+}
+
+
+.small_edit
+{
+    background: transparent url('../images/edit_24px.png') no-repeat;
+    border: 0px solid #ffffff;
+    width: 30px;
+    height: 30px;
+    position: absolute;
+    bottom: 5px;
+    right: 35px;
+    cursor: pointer;
+}
+
+.plus
+{
+    background: transparent url('../images/plus_24px.png') no-repeat;
+    border: 0px solid #ffffff;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+}
+
+.minus
+{
+    background: transparent url('../images/minus_24px.png') no-repeat;
+    border: 0px solid #ffffff;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+}
+
+
+
+
+
+
+
+.start
+{
+    background: transparent url('../images/play_24px.png') no-repeat;
+    border: 0px solid #ffffff;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+}
+
+.stop
+{
+    background: transparent url('../images/pause_24px.png') no-repeat;
+    border: 0px solid #ffffff;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+}
+
+
+
+.plus_sign_48
+{
+    background-image: url("../images/plus_48px.png");
+    border: 0 solid white;
     width: 48px;
     height: 48px;
-    background: transparent url('../images/title_icons.png') no-repeat scroll 0 0;
-    background-position: 0 0;
-    top: 0px;
-    left:0px;
+    background-color: transparent;
+    cursor: pointer;
 }
+.edit_sign_48
+{
+    background-image: url("../images/edit_48px.png");
+    border: 0 solid white;
+    width: 48px;
+    height: 48px;
+    background-color: transparent;
+    cursor: pointer;
+}
+.trash_sign_48
+{
+    background-image: url("../images/trash_48px.png");
+    border: 0 solid white;
+    width: 48px;
+    height: 48px;
+    background-color: transparent;
+    cursor: pointer;
+}
+
+.money_bag_sign_48
+{
+    background-image: url("../images/money_bag_48px.png");
+    border: 0 solid white;
+    width: 48px;
+    height: 48px;
+    background-color: transparent;
+    cursor: pointer;
+}
+
+
+
+
+.plus_sign_organization
+{
+    float: right;
+    margin-right: 100px;
+    line-height: 40px;
+}
+
+
+.icons_options
+{
+    position: absolute;
+    width: 600px;
+    height: 50px;
+    right: 0;
+}
+
+.plus_sign_position_48
+{
+    position: absolute;
+    right: 100px;
+}
+.edit_sign_position_48
+{
+    position: absolute;
+    right: 200px;
+}
+.trash_sign_position_48
+{
+    position: absolute;
+    right: 0;
+}
+.money_bag_sign_position_48
+{
+    position: absolute;
+    left: 30px;
+}
+
+
+
 
 
 .manage_content_header
 {
     margin: auto;
-    padding: 0px;
-    height: 60px;
+    padding: 0;
+    height: 50px;
 }
 
 .section_title
@@ -550,33 +688,17 @@ button.close {
     position: relative;
     float: left;
     width: 350px;
-    height: 60px;
-    margin-top: 0px;
-    margin-bottom: 10px;
-}
-
-.icons_options
-{
-    position: relative;
-    width: 250px;
     height: 50px;
-    float: right;
-    margin-right: 300px;
+    margin-top: 0;
+    margin-bottom: 0;
 }
 
-.token-icon-large
-{
-    position: absolute;
-    width: 65px;
-    height: 30px;
-    right: 0px;
-    top: 0px;
-}
+
 #organization_input,
 #space_input
 {
     width: 360px;
-    height: 50px;
+    height: 45px;
     margin: 0px;
     padding: 2px;
     margin-left: 0;
@@ -590,7 +712,7 @@ button.close {
 {
     margin: 0px;
     padding: 2px;
-    font-size: 45px;
+    font-size: 30px;
     font-weight: normal;
     line-height: 46px;
     float: left;
@@ -602,7 +724,7 @@ button.close {
 
 #organization_text
 {
-    font-size: 56px;
+    font-size: 24px;
     font-weight: normal;
     color: #ffffff;
     line-height: 40px;
@@ -614,10 +736,10 @@ h2 .count
 {
     position: absolute;
     color: #ffffff;
-    font-size: 56px;
+    font-size: 24px;
     line-height: 40px;
     top: 0px;
-    left: 350px;
+    left: 160px;
     font-family: 'Segoe UI Light', 'Open Sans', Verdana, Arial, Helvetica, sans-serif;
     font-weight: 200;
     letter-spacing: 0.01em;
@@ -709,11 +831,11 @@ h2 .count
     cursor: pointer;
     padding-left: 7px;
     padding-right: 7px;
-    padding-top: 7px;
+    padding-top: 2px;
     -webkit-border-top-left-radius: 3px;
     -webkit-border-top-right-radius: 3px;
     color: #ffffff;
-    background-color: #187ebc;
+    background-color: #09293e;
     margin-left: 30px;
     cursor: pointer; font-family: 'Segoe UI', 'Open Sans', Verdana, Arial, Helvetica, sans-serif;
     font-weight: 400;
@@ -727,7 +849,7 @@ h2 .count
     cursor: pointer;
     padding-left: 7px;
     padding-right: 7px;
-    padding-top: 7px;
+    padding-top: 2px;
     -webkit-border-top-left-radius: 3px;
     -webkit-border-top-right-radius: 3px;
     color: #ffffff;
@@ -759,10 +881,10 @@ h2 .count
     border-top: 1px solid #0e4769;
     border-left: 1px solid #0e4769;
     border-right: 1px solid #0e4769;
-    background-color: #187ebc;
+    background-color: #09293e;
     padding-left: 7px;
     padding-right: 7px;
-    padding-top: 7px;
+    padding-top: 2px;
     -webkit-border-top-left-radius: 3px;
     -webkit-border-top-right-radius: 3px;
     color: #ffffff;
@@ -779,7 +901,7 @@ h2 .count
     padding-bottom: 0px;
     padding-left: 7px;
     padding-right: 7px;
-    padding-top: 7px;
+    padding-top: 2px;
     -webkit-border-top-left-radius: 3px;
     -webkit-border-top-right-radius: 3px;
     color: #ffffff;
@@ -797,11 +919,93 @@ h2 .count
  /*  ORGANIZATION PAGE + INNER ORGANIZATION PAGE WITH SPACES AND MEMBERS ->SPANS AND TILES<-  */                              /*  ORGANIZATION PAGE + INNER ORGANIZATION PAGE WITH SPACES AND MEMBERS ->SPANS AND TILES<-  */
 
 
+.tile_invisible
+{
+    margin: 0 7px 7px 0;
+    width: 200px;
+    height: 200px;
+    background-repeat: repeat-y;
+    position: relative;
+    overflow: hidden;
+    line-height: 18px;
+    display: list-item;
+    float: left;
+    list-style: none;
+}
+
+.custom_list
+{
+    list-style: none;
+    display: block;
+    padding: 0;
+    margin: 0;
+}
+.custom_list
+{
+    display: inline-block;
+    padding: 0;
+    margin: 0;
+}
+
+.tile_organization_name
+{
+    margin: 5px;
+    width: 190px;
+    height: 70px;
+    background-color: #c92446;
+    position: relative;
+    cursor: pointer;
+    overflow: hidden;
+    line-height: 18px;
+    display: list-item;
+    float: left;
+    list-style: none;
+}
+
+.tile_organization_members
+{
+    margin: 5px;
+    width: 90px;
+    height: 70px;
+    background-image: url("../images/users_24px.png");
+    background-repeat: no-repeat;
+    background-position: 90% 90%;
+    background-color: #64be0f;
+    position: relative;
+    cursor: pointer;
+    overflow: hidden;
+    line-height: 18px;
+    display: list-item;
+    float: left;
+    list-style: none;
+}
+
+.tile_organization_cost
+{
+    margin: 5px;
+    width: 90px;
+    height: 70px;
+    background-image: url("../images/money_bag_24px.png");
+    background-repeat: no-repeat;
+    background-position: 90% 90%;
+    background-color: #ea7128;
+    position: relative;
+    cursor: pointer;
+    overflow: hidden;
+    line-height: 18px;
+    display: list-item;
+    float: left;
+    list-style: none;
+}
+
+
+
+
 .tile_purple
 {
     margin: 0 7px 7px 0;
-    width: 175px;
-    height: 115px;
+    width: 150px;
+    height: 150px;
     padding: 5px;
     background-image: url("../images/purple_tile.png");
     background-repeat: repeat-y;
@@ -825,7 +1029,6 @@ h2 .count
 }
 .organization_members_span
 {
-    font-size: 13px;
     position: absolute;
     bottom: 30px;
     left: 5px;
@@ -833,7 +1036,6 @@ h2 .count
 }
 .organization_cost_span
 {
-    font-size: 13px;
     position: absolute;
     bottom: 5px;
     left: 5px;
@@ -841,7 +1043,6 @@ h2 .count
 }
 .organization_members_span_value
 {
-    font-size: 13px;
     position: absolute;
     bottom: 30px;
     right: 50px;
@@ -849,7 +1050,6 @@ h2 .count
 }
 .organization_cost_span_value
 {
-    font-size: 13px;
     position: absolute;
     bottom: 5px;
     right: 50px;
@@ -861,7 +1061,7 @@ h2 .count
 {
     margin: 0 7px 7px 0;
     width: 175px;
-    height: 115px;
+    height: 175px;
     padding: 5px;
     background-image: url("../images/dark_green_tile.png");
     background-repeat: repeat-y;
@@ -879,7 +1079,7 @@ h2 .count
 {
     margin: 0 7px 7px 0;
     width: 175px;
-    height: 115px;
+    height: 175px;
     padding: 5px;
     background-image: url("../images/orange_tile.png");
     background-repeat: repeat-y;
@@ -895,7 +1095,7 @@ h2 .count
 {
     margin: 0 7px 7px 0;
     width: 175px;
-    height: 115px;
+    height: 175px;
     padding: 5px;
     background-image: url("../images/light_green_tile.png");
     background-repeat: repeat-y;
@@ -913,7 +1113,7 @@ h2 .count
 {
     margin: 0 7px 7px 0;
     width: 175px;
-    height: 115px;
+    height: 175px;
     padding: 5px;
     background-image: url("../images/blue_tile.png");
     background-repeat: repeat-y;
@@ -931,7 +1131,7 @@ h2 .count
 {
     margin: 0 7px 7px 0;
     width: 175px;
-    height: 115px;
+    height: 175px;
     padding: 5px;
     background-image: url("../images/brown_tile.png");
     background-repeat: repeat-y;
@@ -949,7 +1149,7 @@ h2 .count
 {
     margin: 0 7px 7px 0;
     width: 175px;
-    height: 115px;
+    height: 175px;
     padding: 5px;
     background-image: url("../images/red_tile.png");
     background-repeat: repeat-y;
@@ -966,7 +1166,7 @@ h2 .count
 {
     margin: 0 7px 7px 0;
     width: 80px;
-    height: 60px;
+    height: 80px;
     padding: 5px;
     background-image: url("../images/blue_tile.png");
     background-repeat: repeat-y;
@@ -983,7 +1183,7 @@ h2 .count
 {
     margin: 0 7px 7px 0;
     width: 175px;
-    height: 60px;
+    height: 90px;
     padding: 5px;
     background-image: url("../images/blue_tile.png");
     background-repeat: repeat-y;
@@ -1001,13 +1201,12 @@ h2 .count
     list-style: none;
     margin: 0 7px 7px 0;
     width: 175px;
-    height: 150px;
+    height: 175px;
     padding: 5px;
     background-image: url("../images/blue_tile.png");
     background-repeat: repeat-y;
     border: 1px solid #3c80ee;
     float: left;
-    width: 170px;
     padding: 5px;
     position: relative;
     cursor: pointer;
@@ -1044,8 +1243,9 @@ h2 .count
     position: absolute;
     width: 100%;
     height: 100%;
-    top: 0px;
-    left: 0px;
+    top: 0;
+    left: 0;
+    z-index: 4;
 }
 
 .link_tiles_org,
@@ -1076,40 +1276,9 @@ h2 .count
     display: inline-block;
 }
 
-.organization_dollar
-{
-    background-color: red;
-    padding: 2px;
-    display: none;
-}
-.organization_key
-{
-    height: 21px;
-    width: 21px;
-    background: transparent url('../images/alien_hd.png') no-repeat scroll left top;
-    display: none;
-}
-.organization_cube
-{
-    background-color: blue;
-    padding: 2px;
-    display: none;
-}
-.organization_check
-{
-    background-color: #4169e1;
-    padding: 2px;
-}
-.organization_question
-{
-    background-color: #8b0000;
-    padding: 2px;
-}
-
 
 .tilegreen .space_name
 {
-    font-size: 24px;
     color: #efefef;
     position: absolute;
     left: 5px;
@@ -1296,7 +1465,7 @@ h2 .count
     float: right;
     width: 100px;
     height: 30px;
-    margin-top: 15px;
+    margin-top: 5px;
 }
 #memory_slider
 {
@@ -1311,11 +1480,9 @@ h2 .count
 .app_name,
 .service_name
 {
-    font-size: 15px;
-    font-weight: normal;
     color: #ffffff;
     position: absolute;
-    bottom: 5px;
+    top: 5px;
     left: 5px;
 }
 
@@ -1615,28 +1782,67 @@ h3
 {
     font-family: 'Segoe UI Light', 'Open Sans', Verdana, Arial, Helvetica, sans-serif;
     font-weight: 300;
-    font-size: 16pt;
+    font-size: 12px;
     letter-spacing: 0.01em;
 }
+
 
 .organization_name_span
 {
     font-family: 'Segoe UI Light', 'Open Sans', Verdana, Arial, Helvetica, sans-serif;
-    font-weight: 200;
-    font-size: 20pt;
+    font-weight: 700;
+    font-size: 16pt;
     letter-spacing: 0.01em;
+    margin-top: 30px;
+    margin-left: 5px;
+    height: 20px;
 }
 
+
+
 .organization_members_span,
+.organization_cost_span
+{
+    font-family: 'Segoe UI Light', 'Open Sans', Verdana, Arial, Helvetica, sans-serif;
+    font-weight: 300;
+    font-size: 10pt;
+    letter-spacing: 0.01em;
+    position: absolute;
+    bottom: 15px;
+    left: 3px;
+}
+
+
 .organization_members_span_value,
-.organization_cost_span,
-.organization_cost_span_value,
+.organization_cost_span_value
+{
+    font-family: 'Segoe UI Light', 'Open Sans', Verdana, Arial, Helvetica, sans-serif;
+    font-weight: 500;
+    font-size: 25px;
+    letter-spacing: 0.01em;
+    position: absolute;
+    top: 10px;
+    left: 35px;
+    color: #ffffff;
+}
+
+
+
+.apps_count_span_value,
+.services_count_span_value
+{
+    font-family: 'Segoe UI Light', 'Open Sans', Verdana, Arial, Helvetica, sans-serif;
+    font-weight: 300;
+    font-size: 10pt;
+    letter-spacing: 0.01em;
+    color: #ffffff;
+}
+
+
 .costs_span,
 .costs_span_value,
 .apps_count_span,
-.apps_count_span_value,
 .services_count_span,
-.services_count_span_value,
 .subscriptions_plan,
 .subscriptions_quantity,
 .subscriptions_cost,
@@ -1646,15 +1852,15 @@ h3
 {
     font-family: 'Segoe UI Light', 'Open Sans', Verdana, Arial, Helvetica, sans-serif;
     font-weight: 300;
-    font-size: 12pt;
+    font-size: 10pt;
     letter-spacing: 0.01em;
 }
 
 .space_name
 {
     font-family: 'Segoe UI Light', 'Open Sans', Verdana, Arial, Helvetica, sans-serif;
-    font-weight: 200;
-    font-size: 24pt;
+    font-weight: 700;
+    font-size: 26px;
     letter-spacing: 0.01em;
 }
 
@@ -1663,9 +1869,10 @@ h3
 .service_name
 {
     font-family: 'Segoe UI Light', 'Open Sans', Verdana, Arial, Helvetica, sans-serif;
-    font-weight: 200;
-    font-size: 12pt;
+    font-weight: 700;
+    font-size: 26px;
     letter-spacing: 0.01em;
+    z-index: 2;
 }
 .app_name_big
 {
@@ -1738,3 +1945,18 @@ p
 {
     color: #ffffff;
 }
+
+#site_header h1
+{
+    font-family: 'Segoe UI Light', 'Open Sans', Verdana, Arial, Helvetica, sans-serif;
+    font-weight: 200;
+    font-size: 30px;
+    letter-spacing: 0.01em;
+    color: #ffffff;
+    height: 50px;
+    margin: 0;
+    float: left;
+    line-height: 50px;
+}
+
+

@@ -336,9 +336,8 @@ input.user-name
     width: 175px;
     height: 115px;
     padding: 5px;
-    background-image: url("../images/brown_tile.png");
     background-repeat: repeat-y;
-    border: 1px solid #4e341a;
+    border: 1px solid white;
     position: relative;
     cursor: pointer;
     list-style: none;
@@ -402,12 +401,12 @@ input.user-name
 
 li.new
 {
-    background-color: #dbdbdb !important;
+    background-color: #7f7f7f !important;
 }
 
 li.new .icon
 {
-    background: transparent url('../images/add_icon.png') no-repeat scroll 0 0;
+    background: transparent url('../images/plus_48px.png') no-repeat scroll 0 0;
     display: inline-block;
     height: 48px;
     width: 48px;
@@ -598,9 +597,21 @@ li.new .icon
 }
 
 #body {
-   padding-bottom: 120px;   /* Height of the footer */
-   position: relative;
+    padding-bottom: 120px;   /* Height of the footer */
+    position: relative;
 }
+
+#cloud_img
+{
+    background-image: url("../images/cloud_bg.png");
+    background-repeat: no-repeat;
+    position: absolute;
+    width: 550px;
+    height: 400px;
+    top: 450px;
+    right: -400px;
+}
+
 #site_footer {
    position:absolute;
    bottom:0;
@@ -754,18 +765,9 @@ li.new .icon
 
 .app_details_modal .modal-body
 {
+    width: 100%;
     max-height: none;
-}
-
-.app_details_modal
-{
-    width: 970px;
-    position: absolute;
-    top: 0;
-    left: 50%;
-    margin-left: -485px;
-    margin-top: 0;
-    background-color: #fff;
+    background-color: #09293e;
 }
 
 #new_app_name_table .validationMessage
@@ -885,18 +887,7 @@ textarea
 #site_header
 {
     height: 50px;
-    background-color: #09293e;
-}
-
-#site_header h1
-{
-    height: 50px;
-    margin: 0;
-    float: left;
-    font-weight: normal;
-    font-size: 1.8em;
-    line-height: 50px;
-    color: #fff;
+    background-color: #187ebc;
 }
 
 #login_control
@@ -1044,105 +1035,6 @@ textarea
     overflow: hidden;
 }
 
-.tile.blue
-{
-    background-color: #0071b7 !important;
-}
-
-.tile.lime
-{
-    background-color: #6eb53c !important;
-}
-
-.tile.darkGrey
-{
-    background-color: #2d2d2d !important;
-}
-
-.tile.lightGrey
-{
-    background-color: #aaa !important;
-}
-
-.tile.purple
-{
-    background-color: #a200ff !important;
-}
-
-.tile.turquoise
-{
-    background-color: #0080c1 !important;
-}
-
-.tile.orange
-{
-    background-color: #fd950d !important;
-}
-
-.control-icon
-{
-    background: transparent url('../images/control_icons_tile.png') no-repeat scroll 0 0;
-    text-indent: -99999em;
-    display: inline-block;
-    cursor: pointer;
-    width: 20px;
-    height: 20px;
-}
-
-.control-icon.dark
-{
-    background-image: url("../images/edit_delete_team_title.png");
-}
-
-.control-icon.edit
-{
-    background-position: 0 0;
-}
-
-.control-icon.trash
-{
-    background-position: -40px 0;
-}
-
-.control-icon.dark.trash
-{
-    background-position: -40px 0;
-}
-
-.token-icon-large
-{
-    background: transparent url("../images/token_icon.png") no-repeat scroll center center;
-    cursor: pointer;
-    background-color:#0080c1 !important;
-    width: 100px;
-    height: 40px;
-}
-
-.control-icon-large
-{
-    background: transparent url('../images/edit_delete_team_title_large.png') no-repeat scroll 0 0;
-    text-indent: -99999em;
-    display: inline-block;
-    cursor: pointer;
-    width: 40px;
-    height: 40px;
-    margin-right: 50px;
-}
-
-.control-icon-large.edit
-{
-    background-position: 0 0;
-    margin-right: 100px;
-}
-
-.control-icon-large.trash
-{
-    background-position: -80px 0;
-    border: 0px solid white;
-    position: absolute;
-    top: 0px;
-    right: 35px;
-}
 
 .header-shading
 {
@@ -1171,59 +1063,6 @@ textarea
     display: inline-block;
     margin-left: 20px;
 }
-
-/* Styles for App Detail helpers
------------------------------------------------------------*/
-.app-services
-{
-    background: transparent url('../images/app_services_icons.png') no-repeat scroll 0 0;
-    text-indent: -99999em;
-    display: inline-block;
-    cursor: pointer;
-    width: 21px;
-    height: 21px;
-}
-
-.app-services.bind
-{
-    background-position: 0 0;
-}
-
-.app-services.plus
-{
-    background-position: -42px 0;
-}
-
-.app-services.minus
-{
-    background-position: -84px 0;
-}
-
-
-.app-actions
-{
-    background: transparent url('../images/start_stop_icons.png') no-repeat scroll 0 0;
-    text-indent: -99999em;
-    display: inline-block;
-    cursor: pointer;
-    width: 31px;
-    height: 31px;
-}
-
-.app-actions.start
-{
-    background-position: 0 1px;
-    width: 30px;
-}
-
-.app-actions.stop
-{
-    background-position: -60px 1px;
-    width: 31px;
-}
-
-/* Styles for App Detail helpers
------------------------------------------------------------*/
 
 
 /*Tile structure*/
@@ -1309,7 +1148,6 @@ textarea
 .app_name_span
 {
     color:#efefef;
-    font-size:18px;
     float:left;
     margin-left:3px;
 }
