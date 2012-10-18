@@ -3,30 +3,35 @@
         <h2 class="section_title">
             <span id="organization_text">Organizations </span><span class="count">(<span><%= organizations_count  %></span>)</span>
         </h2>
+        <input type="button" class="plus_sign_48 plus_sign_organization" id="create_organization_btn" value="" />
     </div>
 
 
   <ul class="tile_list">
     <% organizations_list.each do |org| %>
-            <li class="tile_purple">
-                <a href="/organization<%= org.guid%>" class="link_tiles_org" title="<%= org.guid %>"><span class="to_be_underlined organization_name_span" title="<%= org.guid %>"><%= org.name %></span></a>
+            <li class="tile_invisible">
 
-                <span class="organization_members_span"># of members: </span><span class="organization_members_span_value"><%= org.members_count %></span>
-                <span class="organization_cost_span">monthly cost: </span><span class="organization_cost_span_value"><%= org.cost %></span>
+                <ul class="custom_list">
+                    <li class="tile_organization_name">
+                        <a href="/organization<%= org.guid%>" class="link_tiles_org" title="<%= org.guid %>"><span class="to_be_underlined organization_name_span" title="<%= org.guid %>"><%= org.name %></span></a>
+                    </li>
 
-                <a href="#"><span class="control-icon trash delete-organization-button" id="<%= org.name %>" title="<%= org.guid %>" onmousemove="prepareToDeleteOrganization(this)"></span></a>
+                    <li class="tile_organization_members">
+                        <span class="organization_members_span">members</span><span class="organization_members_span_value"><%= org.members_count %></span>
+                    </li>
 
-                <div id="organization_icons">
-                    <span class="alien_icons"></span>
-                    <span class="organization_cube"></span>
-                    <span class="organization_key"></span>
-                </div>
+                    <li class="tile_organization_cost">
+                        <span class="organization_cost_span">cost</span><span class="organization_cost_span_value"><%= org.cost %></span>
+                    </li>
+
+                    <a href="#"><input type="button" class="small_trash delete-organization-button" id="<%= org.name %>" title="<%= org.guid %>" onmousemove="prepareToDeleteOrganization(this)" /></a>
+                </ul>
             </li>
     <% end %>
 
-    <li class="new tile" id="create_organization_btn">
+    <!--<li class="new tile" id="create_organization_btn">
         <span class="icon"></span>
-    </li>
+    </li>-->
   </ul>
 </div>
 

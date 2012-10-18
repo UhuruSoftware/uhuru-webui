@@ -14,7 +14,7 @@ function showSpaces()
         document.getElementById('spaces_btn_link').style.borderTop = '1px solid #0e4769';
         document.getElementById('spaces_btn_link').style.borderLeft = '1px solid #0e4769';
         document.getElementById('spaces_btn_link').style.borderRight = '1px solid #0e4769';
-        document.getElementById('spaces_btn_link').style.backgroundColor = '#187ebc';
+        document.getElementById('spaces_btn_link').style.backgroundColor = '#09293e';
         document.getElementById('spaces_btn_link').style.color = "#ffffff";
 
 
@@ -40,7 +40,7 @@ function showMembers()
         document.getElementById('members_btn_link').style.borderTop = '1px solid #0e4769';
         document.getElementById('members_btn_link').style.borderLeft = '1px solid #0e4769';
         document.getElementById('members_btn_link').style.borderRight = '1px solid #0e4769';
-        document.getElementById('members_btn_link').style.backgroundColor = '#187ebc';
+        document.getElementById('members_btn_link').style.backgroundColor = '#09293e';
         document.getElementById('members_btn_link').style.color = "#ffffff";
 
 
@@ -97,7 +97,7 @@ function showApps()
         document.getElementById('apps_li').style.borderTop = '1px solid #0e4769';
         document.getElementById('apps_li').style.borderLeft = '1px solid #0e4769';
         document.getElementById('apps_li').style.borderRight = '1px solid #0e4769';
-        document.getElementById('apps_li').style.backgroundColor = '#187ebc';
+        document.getElementById('apps_li').style.backgroundColor = '#09293e';
 
         document.getElementById('apps_li').style.color = "#ffffff";
 
@@ -136,7 +136,7 @@ function showServices()
         document.getElementById('services_li').style.borderTop = '1px solid #0e4769';
         document.getElementById('services_li').style.borderLeft = '1px solid #0e4769';
         document.getElementById('services_li').style.borderRight = '1px solid #0e4769';
-        document.getElementById('services_li').style.backgroundColor = '#187ebc';
+        document.getElementById('services_li').style.backgroundColor = '#09293e';
         document.getElementById('services_li').style.color = "#ffffff";
 
 
@@ -175,7 +175,7 @@ function showSubscriptions()
         document.getElementById('subscriptions_li').style.borderTop = '1px solid #0e4769';
         document.getElementById('subscriptions_li').style.borderLeft = '1px solid #0e4769';
         document.getElementById('subscriptions_li').style.borderRight = '1px solid #0e4769';
-        document.getElementById('subscriptions_li').style.backgroundColor = '#187ebc';
+        document.getElementById('subscriptions_li').style.backgroundColor = '#09293e';
         document.getElementById('subscriptions_li').style.color = "#ffffff";
 
 

@@ -11,13 +11,10 @@
 
             </h2>
             <div class="icons_options">
-                <span class="control-icon-large edit" onclick="showSpacesInput();">Edit</span>
-
-                <form action="/deleteCurrentSpace" method="post">
-                        <input type="submit" class="control-icon-large trash">
-                </form>
-
-              <span class="title_icon" style="position: absolute; top:0px; right: -15px;">dollar</span>
+                <input type="button" value="" class="plus_sign_48 plus_sign_position_48" id="create_app" />
+                <input type="button" value="" class="edit_sign_48 edit_sign_position_48" onclick="showSpacesInput();" />
+                <input type="button" value="" class="money_bag_sign_48 money_bag_sign_position_48" />
+                <input type="button" class="trash_sign_48 trash_sign_position_48 delete_this_space" value="" />
             </div>
         </div>
 
@@ -44,7 +41,7 @@
                         <span class="app_name"><%= app.name %></span>
 
                         <a href="#">
-                            <span class="control-icon trash delete-app-button" id="<%= app.name %>" title="<%= app.name %>" onmousemove="prepareToDeleteApp(this);"></span>
+                            <span class="small_trash delete-app-button" id="<%= app.name %>" title="<%= app.name %>" onmousemove="prepareToDeleteApp(this);"></span>
                         </a>
 
                     </li>
@@ -61,23 +58,23 @@
                                         <tr>
                                             <td>
                                                 <div class="app-control">
-                                                    <div class="tile blue">
+                                                    <div class="tilebrown">
                                                         <h3>
                                                             <span class="app_name_big"><%= app.name %></span>
                                                         </h3>
 
                                                         <span class="app_status" style="font-weight: bold">Status: <span style="font-weight: normal" class="pass_app_status"><%= app.state %></span></span>
-                                                        <a href="#"><span class="control-icon trash delete-app-button"></span></a>
+                                                        <a href="#"><span class="small_trash delete-app-button"></span></a>
                                                     </div>
 
                                                     <form action="/startApp" method="post">
                                                         <input type="text" name="appName" value="<%= app.name %>" class="blank_input" />
-                                                        <input type="submit" name="startApp" class="app-actions start start_button_apps startApp_btn" />
+                                                        <input type="submit" name="startApp" class="start start_button_apps startApp_btn" value="" />
                                                     </form>
 
                                                     <form action="/stopApp" method="post">
                                                         <input type="text" name="appName" value="<%= app.name %>" class="blank_input" />
-                                                        <input type="submit" name="stopApp" class="app-actions stop stop_button_apps stopApp_btn" />
+                                                        <input type="submit" name="stopApp" class="stop stop_button_apps stopApp_btn" value="" />
                                                     </form>
                                                 </div>
                                             </td>
@@ -87,26 +84,26 @@
                                         <tr>
                                             <td>
                                                 <h4 class="app_details_titles">Services Bound
-                                                <input type="button" class="app-services plus button_bound_services get_service_name" style="float: right; border: 0px solid #ffffff;" title="<%= app.name %>" /></h4>
+                                                <input type="button" class="plus button_bound_services get_service_name" style="float: right;" title="<%= app.name %>" /></h4>
                                                 <div id="hidden_app_div" style="display: none;">
                                                     <span class="hidden_span"></span>
                                                 </div>
                                                 <ul class="app_details_ul">
                                                     <% app.services.each do |service| %>
-                                                        <li class="tile blue get_service_name" id="<%= service.name %>" title="<%= app.name %>">
+                                                        <li class="tilered get_service_name" id="<%= service.name %>" title="<%= app.name %>">
                                                             <span class="service_name"><%= service.name %></span>
-                                                            <input type="button" class="control-icon trash button_unbound_services" />
+                                                            <input type="button" class="small_trash button_unbound_services" value="" />
                                                         </li>
                                                     <% end %>
                                                 </ul>
                                             </td>
                                             <td>
-                                                <h4 class="app_details_titles">URIs Bound <input type="button" class="app-services plus button_bound_uri get_uri_name" style="float: right; border: 0px solid #ffffff;" title="<%= app.name %>" /></h4>
+                                                <h4 class="app_details_titles">URIs Bound <input type="button" class="plus button_bound_uri get_uri_name" style="float: right;" title="<%= app.name %>" /></h4>
                                                 <ul class="app_details_ul">
                                                     <% app.uris.each do |uri| %>
-                                                        <li class="tile blue get_uri_name" id="<%= uri.url %>" title="<%= app.name %>">
+                                                        <li class="tilegreen get_uri_name" id="<%= uri.url %>" title="<%= app.name %>">
                                                             <span class="uri_name"><%= uri.url %></span>
-                                                            <input type="button" class="control-icon trash button_unbound_uri" />
+                                                            <input type="button" class="small_trash button_unbound_uri" value="" />
                                                         </li>
                                                     <% end %>
                                                 </ul>
@@ -117,8 +114,8 @@
                                             <td>
                                                 <h4 class="app_details_titles">App Instances
                                                     <span style="float: right">
-                                                        <input type="button" class="app-services minus app_minus_instance" style="border: 0px solid #ffffff;"/>
-                                                        <input type="button" class="app-services plus app_plus_instance"  style="border: 0px solid #ffffff;"/>
+                                                        <input type="button" class="minus app_minus_instance" />
+                                                        <input type="button" class="plus app_plus_instance"  />
                                                     </span>
                                                 </h4>
 
@@ -141,8 +138,8 @@
                                             <td>
                                                 <h4 class="app_details_titles">Memory Provisioned
                                                     <span style="float: right">
-                                                        <input type="button" class="app-services minus app_minus_memory" style="border: 0px solid #ffffff;" />
-                                                        <input type="button" class="app-services plus app_plus_memory" style="border: 0px solid #ffffff;" />
+                                                        <input type="button" class="minus app_minus_memory" />
+                                                        <input type="button" class="plus app_plus_memory" />
                                                     </span>
                                                 </h4>
                                                 <ul class="app_details_ul">
@@ -184,9 +181,9 @@
 
                     <% end %>
 
-                    <li class="new tile" id="create_app">
+                    <!--<li class="new tile" id="create_app">
                         <span class="icon"></span>
-                    </li>
+                    </li> -->
                     </ul>
                 </div>
 
@@ -199,7 +196,7 @@
                               <a href="#" class="link_tiles_app  service-icon-<%= service.type %>">
                                 <span>
                                     <span class="service_name"><%= service.name %></span>
-                                    <a href="#"><span class="control-icon trash delete-service-button" id="<%= service.name %>" title="<%= service.guid %>" onmousemove="prepareToDeleteService(this);"></span></a>
+                                    <a href="#"><span class="small_trash delete-service-button" id="<%= service.name %>" title="<%= service.guid %>" onmousemove="prepareToDeleteService(this);"></span></a>
                                 </span>
                               </a>
                             </li>
@@ -286,6 +283,36 @@
                 </div>
 
 
+</div>
+
+
+
+<div class="modal hide" id="delete_this_space_modal">
+    <div class="modal-header">
+        <button class="close">×</button>
+        <h3>Delete Space</h3>
+    </div>
+    <div class="modal-body">
+        <p>
+            Are you sure you want to delete this space?
+        </p>
+        <br />
+        <p>
+            <strong>
+                WARNING!!! All applications and services in this space will be DELETED!!! This action cannot be reversed.
+            </strong>
+        </p>
+    </div>
+    <div class="modal-footer">
+        <div class="button_case_delete_organization_and_space">
+            <a href="#" class="btn btn_right_delete_organization_and_space" id="cancel_b_d_space">No</a>
+            <form action="/deleteCurrentSpace" method="post">
+                <input type="submit" class="btn btn-danger btn_left_delete_organization_and_space white_btn_text" />
+                <p class="hidden_modal_messages" id="p_d_space">Your space is being removed...</p>
+            </form>
+        </div>
+
+    </div>
 </div>
 
 
