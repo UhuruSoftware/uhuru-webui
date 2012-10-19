@@ -1,12 +1,14 @@
 
 //THIS FUNCTION SETS THE VARIABLES TO THE APP DETAILS ON THE CURRENT HOWERED APP TILE
 
+var element = "";
 
 
-$('.read_app_details').hover(function(){
+$('.tile_app_name').hover(function(){
 
     var id = $(this).contents().find("span:nth-child(1)").attr("id");
-    var element = $('body').find('#' + id);
+    element = $('body').find('#details_' + id);
+    //alert(id);
 
     var displayAppDetails = function(){
             $('#opac_screen').css({	"display": "block", opacity: 0.7, "width": "10000px", "height": "10000px"});

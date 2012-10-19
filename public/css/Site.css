@@ -655,7 +655,7 @@ li.new .icon
 
 .service-icon-mysql
 {
-    background: transparent url("../images/mySQL_icon.png") no-repeat scroll center center;
+    background: transparent url("../images/mysql_icon.png") no-repeat scroll center center;
 }
 
 .service-icon-mssql
@@ -675,7 +675,7 @@ li.new .icon
 
 .service-icon-rabbitmq
 {
-    background-image: url("../images/members_icon.png");
+    background-image: url("../images/rabbitmq_icon.png");
     background-repeat: no-repeat;
     background-attachment: scroll;
     background-position: center  15px;

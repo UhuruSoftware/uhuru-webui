@@ -12,6 +12,9 @@
             </h2>
             <div class="icons_options">
                 <input type="button" value="" class="plus_sign_48 plus_sign_position_48" id="create_app" />
+                <input type="button" value="" class="plus_sign_48 plus_sign_position_48" id="create_service" style="display: none;" />
+                <input type="button" value="" class="plus_sign_48 plus_sign_position_48" id="button_add_subscription" style="display: none;" />
+
                 <input type="button" value="" class="edit_sign_48 edit_sign_position_48" onclick="showSpacesInput();" />
                 <input type="button" value="" class="money_bag_sign_48 money_bag_sign_position_48" />
                 <input type="button" class="trash_sign_48 trash_sign_position_48 delete_this_space" value="" />
@@ -29,25 +32,36 @@
                     <ul class="tile_list">
 
                     <% apps_list.each do |app| %>
-                    <li class="tilebrown read_app_details">
+                    <li class="tile_invisible read_app_details">
+                        <ul class="custom_list">
+                            <li class="tile_app_name">
+                                <a href="#" class="link_tiles_app show_this_app_details" id="<%= app.name %>">
+                                    <span class="white_app_name" id="<%= app.name %>" title="<%= app.name %>"><%= app.name %></span>
+                                    <span class="app_state blank_input" id="<%= app.state %>"></span>
+                                    <span class="app_instances blank_input" id="<%= app.instances %>"></span>
+                                    <span class="app_memory blank_input" id="<%= app.memory %>"></span>
+                                </a>
 
-                        <a href="#" class="link_tiles_app show_this_app_details app-<%= app.runtime %>" id="<%= app.name %>">
-                            <span class="blank_input" id="<%= app.name %>" title="<%= app.name %>"></span>
-                            <span class="app_state blank_input" id="<%= app.state %>"></span>
-                            <span class="app_instances blank_input" id="<%= app.instances %>"></span>
-                            <span class="app_memory blank_input" id="<%= app.memory %>"></span>
-                        </a>
+                                <a href="#">
+                                    <span class="small_trash delete-app-button" id="<%= app.name %>" title="<%= app.name %>" onmousemove="prepareToDeleteApp(this);"></span>
+                                </a>
+                            </li>
 
-                        <span class="app_name"><%= app.name %></span>
+                            <li class="tile_app_logo">
+                                <a href="#" class="link_tiles_app show_this_app_details app-<%= app.runtime %>" id="<%= app.name %>"></a>
+                            </li>
 
-                        <a href="#">
-                            <span class="small_trash delete-app-button" id="<%= app.name %>" title="<%= app.name %>" onmousemove="prepareToDeleteApp(this);"></span>
-                        </a>
-
+                            <li class="tile_app_details">
+                                <span class="app_state" id="<%= app.state %>"><%= app.state %></span>
+                                <span class="app_instances" id="<%= app.instances %>">instances: <%= app.instances %></span>
+                                <span class="app_memory" id="<%= app.memory %>">memory: <%= app.memory %></span>
+                                <span class="app_runtime" id="<%= app.runtime %>"><%= app.runtime %></span>
+                            </li>
+                        </ul>
                     </li>
 
 
-                            <div class="modal fade hide app_details_modal" id="<%= app.name %>">
+                            <div class="modal fade hide app_details_modal" id="details_<%= app.name %>">
                                 <div class="modal_header" id="app_details_header">
                                     <button class="close app_details_closebtn">×</button>
                                 </div>
@@ -58,7 +72,7 @@
                                         <tr>
                                             <td>
                                                 <div class="app-control">
-                                                    <div class="tilebrown">
+                                                    <div class="tile_app_name">
                                                         <h3>
                                                             <span class="app_name_big"><%= app.name %></span>
                                                         </h3>
@@ -90,7 +104,7 @@
                                                 </div>
                                                 <ul class="app_details_ul">
                                                     <% app.services.each do |service| %>
-                                                        <li class="tilered get_service_name" id="<%= service.name %>" title="<%= app.name %>">
+                                                        <li class="tile_service_name get_service_name" id="<%= service.name %>" title="<%= app.name %>">
                                                             <span class="service_name"><%= service.name %></span>
                                                             <input type="button" class="small_trash button_unbound_services" value="" />
                                                         </li>
@@ -101,7 +115,7 @@
                                                 <h4 class="app_details_titles">URIs Bound <input type="button" class="plus button_bound_uri get_uri_name" style="float: right;" title="<%= app.name %>" /></h4>
                                                 <ul class="app_details_ul">
                                                     <% app.uris.each do |uri| %>
-                                                        <li class="tilegreen get_uri_name" id="<%= uri.url %>" title="<%= app.name %>">
+                                                        <li class="tile_space_name get_uri_name" id="<%= uri.url %>" title="<%= app.name %>">
                                                             <span class="uri_name"><%= uri.url %></span>
                                                             <input type="button" class="small_trash button_unbound_uri" value="" />
                                                         </li>
@@ -192,20 +206,25 @@
                     <ul class="tile_list">
 
                         <% services_list.each do |service| %>
-                            <li class="tilered">
-                              <a href="#" class="link_tiles_app  service-icon-<%= service.type %>">
-                                <span>
-                                    <span class="service_name"><%= service.name %></span>
-                                    <a href="#"><span class="small_trash delete-service-button" id="<%= service.name %>" title="<%= service.guid %>" onmousemove="prepareToDeleteService(this);"></span></a>
-                                </span>
-                              </a>
+                            <li class="tile_invisible">
+                              <ul class="custom_list">
+                                  <li class="tile_service_name">
+                                        <span>
+                                            <span class="service_name"><%= service.name %></span>
+                                            <a href="#"><span class="small_trash delete-service-button" id="<%= service.name %>" title="<%= service.guid %>" onmousemove="prepareToDeleteService(this);"></span></a>
+                                        </span>
+                                  </li>
+
+                                  <li class="tile_service_logo">
+                                        <a href="#" class="link_tiles_app  service-icon-<%= service.type %>"></a>
+                                  </li>
+
+                                  <li class="tile_service_details">
+                                    <span class="app_state"><%= service.type %></span>
+                                  </li>
+                              </ul>
                             </li>
                         <% end %>
-
-
-                        <li class="new tile" id="create_service">
-                            <span class="icon"></span>
-                        </li>
                     </ul>
                 </div>
            <!--// //-->
@@ -252,31 +271,120 @@
 
                     <div id="subscriptions_services">
                         <div class="services_subdiv">
-                            <span class="plusminus_class">
-                                  <input type="button" class="app-services plus button_add_subscription" style="float: right; margin-right: 25px; border: 0px solid #ffffff;" />
-                            </span>
                             <p class="subscriptions_titles_p">Services</p>
                         </div>
 
                         <ul class="tile_list">
-                            <li class="tile_darkblue_dark">
-                                <span>
-                                    <div class="subscriptions_background_image_mssql"></div>
-                                    <span class="subscriptions_plan">Plan: <span class="subscriptions_plan_value">100 MB Buffer</span></span>
-                                    <span class="subscriptions_quantity">Quantity: <span class="subscriptions_quantity_value">2</span></span>
-                                    <span class="subscriptions_cost">Cost: <span class="subscriptions_cost_value">$500</span></span>
-                                    <span class="control-icon trash delete-service-button"></span>
-                                </span>
+                            <li class="tile_invisible">
+                                <ul class="custom_list">
+                                    <li class="tile_app_name">
+                                        <span class="subscriptions_plan">Plan: <span class="subscriptions_plan_value">5 GB Buffer</span></span>
+                                        <span class="control-icon trash delete-service-button"></span>
+                                    </li>
+
+                                    <li class="tile_service_logo">
+                                        <div class="subscriptions_background_image_mssql"></div>
+                                    </li>
+
+                                    <li class="tile_service_details">
+                                        <span class="subscriptions_quantity">Quantity: <span class="subscriptions_quantity_value">2</span></span>
+                                        <span class="subscriptions_cost">Cost: <span class="subscriptions_cost_value">$500</span></span>
+                                    </li>
+                                </ul>
                             </li>
 
-                            <li class="tile_darkblue_dark">
-                                <span>
-                                    <div class="subscriptions_background_image_mysql"></div>
-                                    <span class="subscriptions_plan">Plan: <span class="subscriptions_plan_value">100 MB Buffer</span></span>
-                                    <span class="subscriptions_quantity">Quantity: <span class="subscriptions_quantity_value">2</span></span>
-                                    <span class="subscriptions_cost">Cost: <span class="subscriptions_cost_value">$500</span></span>
-                                    <span class="control-icon trash delete-service-button"></span>
-                                </span>
+                            <li class="tile_invisible">
+                                <ul class="custom_list">
+                                    <li class="tile_app_name">
+                                        <span class="subscriptions_plan">Plan: <span class="subscriptions_plan_value">15 GB Buffer</span></span>
+                                        <span class="control-icon trash delete-service-button"></span>
+                                    </li>
+
+                                    <li class="tile_service_logo">
+                                        <div class="subscriptions_background_image_mysql"></div>
+                                    </li>
+
+                                    <li class="tile_service_details">
+                                        <span class="subscriptions_quantity">Quantity: <span class="subscriptions_quantity_value">2</span></span>
+                                        <span class="subscriptions_cost">Cost: <span class="subscriptions_cost_value">$500</span></span>
+                                    </li>
+                                </ul>
+                            </li>
+
+
+                            <li class="tile_invisible">
+                                <ul class="custom_list">
+                                    <li class="tile_app_name">
+                                        <span class="subscriptions_plan">Plan: <span class="subscriptions_plan_value">100 MB Buffer</span></span>
+                                        <span class="control-icon trash delete-service-button"></span>
+                                    </li>
+
+                                    <li class="tile_service_logo">
+                                        <div class="subscriptions_background_image_mongo_db"></div>
+                                    </li>
+
+                                    <li class="tile_service_details">
+                                        <span class="subscriptions_quantity">Quantity: <span class="subscriptions_quantity_value">2</span></span>
+                                        <span class="subscriptions_cost">Cost: <span class="subscriptions_cost_value">$500</span></span>
+                                    </li>
+                                </ul>
+                            </li>
+
+
+                            <li class="tile_invisible">
+                                <ul class="custom_list">
+                                    <li class="tile_app_name">
+                                        <span class="subscriptions_plan">Plan: <span class="subscriptions_plan_value">10 GB Buffer</span></span>
+                                        <span class="control-icon trash delete-service-button"></span>
+                                    </li>
+
+                                    <li class="tile_service_logo">
+                                        <div class="subscriptions_background_image_rabbitmq"></div>
+                                    </li>
+
+                                    <li class="tile_service_details">
+                                        <span class="subscriptions_quantity">Quantity: <span class="subscriptions_quantity_value">2</span></span>
+                                        <span class="subscriptions_cost">Cost: <span class="subscriptions_cost_value">$500</span></span>
+                                    </li>
+                                </ul>
+                            </li>
+
+
+                            <li class="tile_invisible">
+                                <ul class="custom_list">
+                                    <li class="tile_app_name">
+                                        <span class="subscriptions_plan">Plan: <span class="subscriptions_plan_value">300 MB Buffer</span></span>
+                                        <span class="control-icon trash delete-service-button"></span>
+                                    </li>
+
+                                    <li class="tile_service_logo">
+                                        <div class="subscriptions_background_image_uhurufs"></div>
+                                    </li>
+
+                                    <li class="tile_service_details">
+                                        <span class="subscriptions_quantity">Quantity: <span class="subscriptions_quantity_value">2</span></span>
+                                        <span class="subscriptions_cost">Cost: <span class="subscriptions_cost_value">$500</span></span>
+                                    </li>
+                                </ul>
+                            </li>
+
+
+                            <li class="tile_invisible">
+                                <ul class="custom_list">
+                                    <li class="tile_app_name">
+                                        <span class="subscriptions_plan">Plan: <span class="subscriptions_plan_value">100 MB Buffer</span></span>
+                                        <span class="control-icon trash delete-service-button"></span>
+                                    </li>
+
+                                    <li class="tile_service_logo">
+                                        <div class="subscriptions_background_image_redis"></div>
+                                    </li>
+
+                                    <li class="tile_service_details">
+                                        <span class="subscriptions_quantity">Quantity: <span class="subscriptions_quantity_value">2</span></span>
+                                        <span class="subscriptions_cost">Cost: <span class="subscriptions_cost_value">$500</span></span>
+                                    </li>
+                                </ul>
                             </li>
                         </ul>
                     </div>

@@ -251,9 +251,8 @@ h2
 	text-align: center;
 	position: absolute;
 	margin-left: -300px;
-	margin-top: -300px;
 	left: 50%;
-	top: 50%;
+	top: 120px;
 	z-index: 20;
 	display: none;
     background-color: #e0dfdd;
@@ -596,38 +595,42 @@ button.close {
 
 .plus_sign_48
 {
-    background-image: url("../images/plus_48px.png");
+    background-image: url("../images/plus_32px.png");
+    background-repeat: no-repeat;
     border: 0 solid white;
-    width: 48px;
-    height: 48px;
+    width: 32px;
+    height: 32px;
     background-color: transparent;
     cursor: pointer;
 }
 .edit_sign_48
 {
-    background-image: url("../images/edit_48px.png");
+    background-image: url("../images/edit_32px.png");
+    background-repeat: no-repeat;
     border: 0 solid white;
-    width: 48px;
-    height: 48px;
+    width: 32px;
+    height: 32px;
     background-color: transparent;
     cursor: pointer;
 }
 .trash_sign_48
 {
-    background-image: url("../images/trash_48px.png");
+    background-image: url("../images/trash_32px.png");
+    background-repeat: no-repeat;
     border: 0 solid white;
-    width: 48px;
-    height: 48px;
+    width: 32px;
+    height: 32px;
     background-color: transparent;
     cursor: pointer;
 }
 
 .money_bag_sign_48
 {
-    background-image: url("../images/money_bag_48px.png");
+    background-image: url("../images/money_bag_32px.png");
+    background-repeat: no-repeat;
     border: 0 solid white;
-    width: 48px;
-    height: 48px;
+    width: 32px;
+    height: 32px;
     background-color: transparent;
     cursor: pointer;
 }
@@ -919,6 +922,14 @@ h2 .count
  /*  ORGANIZATION PAGE + INNER ORGANIZATION PAGE WITH SPACES AND MEMBERS ->SPANS AND TILES<-  */                              /*  ORGANIZATION PAGE + INNER ORGANIZATION PAGE WITH SPACES AND MEMBERS ->SPANS AND TILES<-  */
 
 
+.custom_list
+{
+    list-style: none;
+    display: block;
+    padding: 0;
+    margin: 0;
+}
+
 .tile_invisible
 {
     margin: 0 7px 7px 0;
@@ -933,26 +944,52 @@ h2 .count
     list-style: none;
 }
 
-.custom_list
-{
-    list-style: none;
-    display: block;
-    padding: 0;
-    margin: 0;
-}
-.custom_list
-{
-    display: inline-block;
-    padding: 0;
-    margin: 0;
-}
 
-.tile_organization_name
+.tile_organization_name,
+.tile_space_name,
+.tile_app_name,
+.tile_service_name
 {
-    margin: 5px;
+    margin: 4px;
     width: 190px;
     height: 70px;
-    background-color: #c92446;
+    background-image: url("../images/tile_big_red.png");
+    background-repeat: repeat-y;
+    border: 1px solid #b43051;
+    position: relative;
+    cursor: pointer;
+    overflow: hidden;
+    line-height: 18px;
+    display: list-item;
+    float: left;
+    list-style: none;
+}
+.tile_space_name
+{
+    background-image: url("../images/tile_big_dark_green.png");
+    border: 1px solid #1a972f;
+}
+.tile_app_name
+{
+    background-image: url("../images/tile_big_blue.png");
+    border: 1px solid #4399f1;
+}
+.tile_service_name
+{
+    background-image: url("../images/tile_big_red.png");
+    border: 1px solid #b43051;
+}
+
+.tile_organization_members,
+.tile_space_apps,
+.tile_space_services
+{
+    margin: 4px;
+    width: 90px;
+    height: 70px;
+    background-image: url("../images/tile_small_light_green.png");
+    background-repeat: repeat-y;
+    border: 1px solid #7ec135;
     position: relative;
     cursor: pointer;
     overflow: hidden;
@@ -962,101 +999,102 @@ h2 .count
     list-style: none;
 }
 
-.tile_organization_members
+.tile_service_logo,
+.tile_app_logo
 {
-    margin: 5px;
+    margin: 4px;
     width: 90px;
     height: 70px;
+    background-image: url("../images/tile_small_purple.png");
+    background-repeat: repeat-y;
+    border: 1px solid #7452c6;
+    position: relative;
+    cursor: pointer;
+    overflow: hidden;
+    line-height: 18px;
+    display: list-item;
+    float: left;
+    list-style: none;
+}
+
+
+
+.tile_service_details
+{
+    margin: 4px;
+    width: 90px;
+    height: 70px;
+    background-image: url("../images/tile_small_blue.png");
+    background-repeat: repeat-y;
+    border: 1px solid #4399f1;
+    position: relative;
+    cursor: pointer;
+    overflow: hidden;
+    line-height: 18px;
+    display: list-item;
+    float: left;
+    list-style: none;
+}
+
+.tile_organization_cost,
+.tile_space_mothly_cost
+{
+    margin: 4px;
+    width: 90px;
+    height: 70px;
+    background-image: url("../images/tile_small_orange.png");
+    background-repeat: repeat-y;
+    border: 1px solid #d75a3c;
+    position: relative;
+    cursor: pointer;
+    overflow: hidden;
+    line-height: 18px;
+    display: list-item;
+    float: left;
+    list-style: none;
+}
+
+.tile_app_details
+{
+    margin: 4px;
+    width: 90px;
+    height: 70px;
+    background-image: url("../images/tile_small_blue.png");
+    background-repeat: repeat-y;
+    border: 1px solid #3c80ee;
+    position: relative;
+    cursor: pointer;
+    overflow: hidden;
+    line-height: 18px;
+    display: list-item;
+    float: left;
+    list-style: none;
+}
+
+
+.span_members_icon,
+.span_cost_icon
+{
+    width: 25px;
+    height: 25px;
+    position: absolute;
+    bottom: 2px;
+    right: 2px;
+}
+.span_members_icon
+{
     background-image: url("../images/users_24px.png");
     background-repeat: no-repeat;
-    background-position: 90% 90%;
-    background-color: #64be0f;
-    position: relative;
-    cursor: pointer;
-    overflow: hidden;
-    line-height: 18px;
-    display: list-item;
-    float: left;
-    list-style: none;
 }
 
-.tile_organization_cost
+.span_cost_icon
 {
-    margin: 5px;
-    width: 90px;
-    height: 70px;
     background-image: url("../images/money_bag_24px.png");
     background-repeat: no-repeat;
-    background-position: 90% 90%;
-    background-color: #ea7128;
-    position: relative;
-    cursor: pointer;
-    overflow: hidden;
-    line-height: 18px;
-    display: list-item;
-    float: left;
-    list-style: none;
 }
 
 
-
-
-.tile_purple
-{
-    margin: 0 7px 7px 0;
-    width: 150px;
-    height: 150px;
-    padding: 5px;
-    background-image: url("../images/purple_tile.png");
-    background-repeat: repeat-y;
-    border: 1px solid #684bba;
-    position: relative;
-    cursor: pointer;
-    overflow: hidden;
-    line-height: 18px;
-    display: list-item;
-    float: left;
-    list-style: none;
-}
-.organization_name_span
-{
-    font-size: 24px;
-    color: #efefef;
-   /* font-family: "Sagoe UI", Verdana, Helvetica, SANS-SERIF;  */
-    position: absolute;
-    left: 5px;
-    top: 5px;
-}
-.organization_members_span
-{
-    position: absolute;
-    bottom: 30px;
-    left: 5px;
-    color: #efefef;
-}
-.organization_cost_span
-{
-    position: absolute;
-    bottom: 5px;
-    left: 5px;
-    color: #efefef;
-}
-.organization_members_span_value
-{
-    position: absolute;
-    bottom: 30px;
-    right: 50px;
-    color: green;
-}
-.organization_cost_span_value
-{
-    position: absolute;
-    bottom: 5px;
-    right: 50px;
-    color: green;
-}
-
-
+ /*
 .tilegreen
 {
     margin: 0 7px 7px 0;
@@ -1074,101 +1112,15 @@ h2 .count
     float: left;
     list-style: none;
 }
+   */
 
-.tileorange
-{
-    margin: 0 7px 7px 0;
-    width: 175px;
-    height: 175px;
-    padding: 5px;
-    background-image: url("../images/orange_tile.png");
-    background-repeat: repeat-y;
-    position: relative;
-    cursor: pointer;
-    overflow: hidden;
-    line-height: 18px;
-    display: list-item;
-    float: left;
-    list-style: none;
-}
-.tileorange_members           /*light green*/
-{
-    margin: 0 7px 7px 0;
-    width: 175px;
-    height: 175px;
-    padding: 5px;
-    background-image: url("../images/light_green_tile.png");
-    background-repeat: repeat-y;
-    border: 1px solid #e06843;
-    position: relative;
-    cursor: pointer;
-    overflow: hidden;
-    line-height: 18px;
-    display: list-item;
-    float: left;
-    list-style: none;
-}
-
-.tileblue
-{
-    margin: 0 7px 7px 0;
-    width: 175px;
-    height: 175px;
-    padding: 5px;
-    background-image: url("../images/blue_tile.png");
-    background-repeat: repeat-y;
-    border: 1px solid #3c80ee;
-    position: relative;
-    cursor: pointer;
-    overflow: hidden;
-    line-height: 18px;
-    display: list-item;
-    float: left;
-    list-style: none;
-}
-
-.tilebrown
-{
-    margin: 0 7px 7px 0;
-    width: 175px;
-    height: 175px;
-    padding: 5px;
-    background-image: url("../images/brown_tile.png");
-    background-repeat: repeat-y;
-    border: 1px solid #4e341a;
-    position: relative;
-    cursor: pointer;
-    overflow: hidden;
-    line-height: 18px;
-    display: list-item;
-    float: left;
-    list-style: none;
-}
-
-.tilered
-{
-    margin: 0 7px 7px 0;
-    width: 175px;
-    height: 175px;
-    padding: 5px;
-    background-image: url("../images/red_tile.png");
-    background-repeat: repeat-y;
-    border: 1px solid #b43051;
-    position: relative;
-    cursor: pointer;
-    overflow: hidden;
-    line-height: 18px;
-    display: list-item;
-    float: left;
-    list-style: none;
-}
 .tile_blue_small
 {
     margin: 0 7px 7px 0;
     width: 80px;
     height: 80px;
     padding: 5px;
-    background-image: url("../images/blue_tile.png");
+    background-image: url("../images/tile_small_blue.png");
     background-repeat: repeat-y;
     border: 1px solid #3c80ee;
     position: relative;
@@ -1185,7 +1137,7 @@ h2 .count
     width: 175px;
     height: 90px;
     padding: 5px;
-    background-image: url("../images/blue_tile.png");
+    background-image: url("../images/tile_big_blue.png");
     background-repeat: repeat-y;
     border: 1px solid #3c80ee;
     position: relative;
@@ -1196,14 +1148,14 @@ h2 .count
     float: left;
     list-style: none;
 }
-.tile_darkblue_dark
+.tile_big_blue
 {
     list-style: none;
     margin: 0 7px 7px 0;
     width: 175px;
     height: 175px;
     padding: 5px;
-    background-image: url("../images/blue_tile.png");
+    background-image: url("../images/tile_big_blue.png");
     background-repeat: repeat-y;
     border: 1px solid #3c80ee;
     float: left;
@@ -1266,16 +1218,6 @@ h2 .count
     float: right;
     margin-top: 25px;
 }
-
-.alien_icons
-{
-    height: 26px;
-    width: 26px;
-    background: transparent url('../images/alien_hd.png') no-repeat scroll left top;
-    margin-top: 40px;
-    display: inline-block;
-}
-
 
 .tilegreen .space_name
 {
@@ -1393,64 +1335,53 @@ h2 .count
     color: #ffffff;
 }
 
+
+.subscriptions_background_image_mysql,
+.subscriptions_background_image_uhurufs,
+.subscriptions_background_image_rabbitmq,
+.subscriptions_background_image_mongo_db,
+.subscriptions_background_image_ruby,
+.subscriptions_background_image_redis,
 .subscriptions_background_image_mssql
 {
-    margin: auto;
-    margin-top: 5px;
-    height: 140px;
-    background: transparent url("../images/mssql_icon.png") no-repeat;
-    background-position: 20px 0px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-repeat: no-repeat;
+    background-position: 5% 5%;
 }
 .subscriptions_background_image_mysql
 {
-    margin: auto;
-    margin-top: 5px;
-    height: 140px;
-    background: transparent url("../images/mySQL_icon.png") no-repeat;
-    background-position: 20px 0px;
+    background: transparent url("../images/mysql_icon.png") no-repeat;
+    background-position: 0% 30%;
+}
+
+.subscriptions_background_image_mssql
+{
+    background: transparent url("../images/mssql_icon.png") no-repeat;
+    background-position: 30% 0%;
 }
 .subscriptions_background_image_redis
 {
-    margin: auto;
-    margin-top: 5px;
-    height: 140px;
     background: transparent url("../images/redis_icon.png") no-repeat;
-    background-position: 20px 0px;
+    background-position: 40% 0%;
 }
-.subscriptions_background_image_ruby
-{
-    margin: auto;
-    margin-top: 5px;
-    height: 140px;
-    background: transparent url("../images/ruby_icon.png") no-repeat;
-    background-position: 20px 0px;
-}
-
-.subscriptions_background_image_mongo_db
-{
-    margin: auto;
-    margin-top: 5px;
-    height: 140px;
-    background: transparent url("../images/mongo_db_icon.png") no-repeat;
-    background-position: 20px 0px;
-}
-
 .subscriptions_background_image_rabbitmq
 {
-    margin: auto;
-    margin-top: 5px;
-    height: 140px;
     background: transparent url("../images/rabbitmq_icon.png") no-repeat;
-    background-position: 20px 0px;
+    background-position: 0% 30%;
 }
-
+.subscriptions_background_image_mongo_db
+{
+    background: transparent url("../images/mongo_db_icon.png") no-repeat;
+    background-position: 0% 30%;
+}
 .subscriptions_background_image_uhurufs
 {
-    margin: auto;
-    margin-top: 5px;
-    height: 140px;
-    background: transparent url("../images/python_icon.png") no-repeat;
-    background-position: 20px 0px;
+    background: transparent url("../images/filesystem_icon.png") no-repeat;
+    background-position: 0% 30%;
 }
 
 
@@ -1511,16 +1442,12 @@ h2 .count
 
 
 
-
- /* THE MODALS THAT POP UP*/                                                                                               /* THE MODALS THAT POP UP*/
-
-
-/*APP DETAILS*/                                                                                                             /*APP DETAILS*/
 #app_details_header
 {
     padding: 0px;
     margin: 0px auto;
-    height: 20px;
+    height: 45px;
+    background-color: #09293e;
 }
 #app_details_closebtn
 {
@@ -1534,6 +1461,7 @@ h2 .count
     position: relative;
     margin: 0px auto;
     height: 10px;
+    background-color: #09293e;
     border: 0px solid white;
 }
 
@@ -1571,15 +1499,6 @@ h2 .count
     background-color: #ffffff;
 }
 
-.app_name_big
-{
-    position: absolute;
-    color: #ffffff;
-    font-size: 30px;
-    font-weight: normal;
-    top: 10px;
-    left: 5px;
-}
 .app_status
 {
     position: absolute;
@@ -1786,20 +1705,58 @@ h3
     letter-spacing: 0.01em;
 }
 
-
+.service_name,
+.white_app_name,
+.space_name,
 .organization_name_span
 {
     font-family: 'Segoe UI Light', 'Open Sans', Verdana, Arial, Helvetica, sans-serif;
     font-weight: 700;
-    font-size: 16pt;
     letter-spacing: 0.01em;
-    margin-top: 30px;
-    margin-left: 5px;
+    position: absolute;
+    top: 30px;
+    left: 5px;
     height: 20px;
+    font-size: 26px;
+    color: #ffffff;
+}
+
+
+.app_state,
+.app_memory,
+.app_runtime,
+.app_instances
+{
+    font-family: 'Segoe UI Light', 'Open Sans', Verdana, Arial, Helvetica, sans-serif;
+    font-weight: 300;
+    font-size: 10pt;
+    letter-spacing: 0.01em;
+    position: absolute;
+    bottom: 5px;
+    left: 3px;
+    color: #ffffff;
+}
+.app_memory
+{
+    bottom: 20px;
+}
+
+.app_instances
+{
+    bottom: 35px;
+}
+.app_runtime
+{
+    bottom: 50px;
+}
+.app_state
+{
+    font-weight: bold;
 }
 
 
 
+.costs_span,
 .organization_members_span,
 .organization_cost_span
 {
@@ -1810,9 +1767,11 @@ h3
     position: absolute;
     bottom: 15px;
     left: 3px;
+    color: #ffffff;
 }
 
 
+.costs_span_value,
 .organization_members_span_value,
 .organization_cost_span_value
 {
@@ -1839,8 +1798,6 @@ h3
 }
 
 
-.costs_span,
-.costs_span_value,
 .apps_count_span,
 .services_count_span,
 .subscriptions_plan,
@@ -1854,14 +1811,7 @@ h3
     font-weight: 300;
     font-size: 10pt;
     letter-spacing: 0.01em;
-}
-
-.space_name
-{
-    font-family: 'Segoe UI Light', 'Open Sans', Verdana, Arial, Helvetica, sans-serif;
-    font-weight: 700;
-    font-size: 26px;
-    letter-spacing: 0.01em;
+    color: #ffffff;
 }
 
 
@@ -1878,8 +1828,12 @@ h3
 {
     font-family: 'Segoe UI Light', 'Open Sans', Verdana, Arial, Helvetica, sans-serif;
     font-weight: 300;
-    font-size: 24pt;
+    font-size: 24px;
     letter-spacing: 0.01em;
+    position: absolute;
+    color: #ffffff;
+    top: 10px;
+    left: 5px;
 }
 
 .member_titles_p,
@@ -1958,5 +1912,4 @@ p
     float: left;
     line-height: 50px;
 }
-
 

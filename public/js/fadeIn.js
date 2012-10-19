@@ -1,6 +1,6 @@
-$('#organizations_page').fadeIn(200);
-$('#organization_page').fadeIn(200);
-$('#space_page').fadeIn(200);
+$('#organizations_page').fadeIn(800);
+$('#organization_page').fadeIn(800);
+$('#space_page').fadeIn(800);
 
 $(function(){
 
@@ -179,7 +179,7 @@ var add_subscription = function(){
     $('#quantity_slider').css("display", "none");
 }
 
-$('.button_add_subscription').click(add_subscription);
+$('#button_add_subscription').click(add_subscription);
 
 
 });

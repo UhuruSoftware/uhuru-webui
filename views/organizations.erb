@@ -14,17 +14,18 @@
                 <ul class="custom_list">
                     <li class="tile_organization_name">
                         <a href="/organization<%= org.guid%>" class="link_tiles_org" title="<%= org.guid %>"><span class="to_be_underlined organization_name_span" title="<%= org.guid %>"><%= org.name %></span></a>
+                        <a href="#"><input type="button" class="small_trash delete-organization-button" id="<%= org.name %>" title="<%= org.guid %>" onmousemove="prepareToDeleteOrganization(this)" /></a>
                     </li>
 
                     <li class="tile_organization_members">
                         <span class="organization_members_span">members</span><span class="organization_members_span_value"><%= org.members_count %></span>
+                        <span class="span_members_icon"></span>
                     </li>
 
                     <li class="tile_organization_cost">
                         <span class="organization_cost_span">cost</span><span class="organization_cost_span_value"><%= org.cost %></span>
+                        <span class="span_cost_icon"></span>
                     </li>
-
-                    <a href="#"><input type="button" class="small_trash delete-organization-button" id="<%= org.name %>" title="<%= org.guid %>" onmousemove="prepareToDeleteOrganization(this)" /></a>
                 </ul>
             </li>
     <% end %>

@@ -29,6 +29,10 @@ function showSpaces()
         document.getElementById('tabs').style.borderBottom = '1px solid #0e4769';
      document.getElementById('members').style.display = 'none';
 
+
+    document.getElementById('add_user_btn_owner').style.display = "none";
+    document.getElementById('create_space_btn').style.display = "block";
+
     Hspaces = false;
     Hmembers = true;
 }
@@ -56,6 +60,9 @@ function showMembers()
         document.getElementById('tabs').style.borderBottom = '1px solid #0e4769';
      document.getElementById('spaces').style.display = 'none';
 
+
+    document.getElementById('create_space_btn').style.display = "none";
+    document.getElementById('add_user_btn_owner').style.display = "block";
     Hmembers = false;
     Hspaces = true;
 }
@@ -124,6 +131,12 @@ function showApps()
 
      document.getElementById('subscriptions').style.display = 'none';
 
+
+
+     document.getElementById('create_app').style.display = 'block';
+     document.getElementById('create_service').style.display = 'none';
+     document.getElementById('button_add_subscription').style.display = 'none';
+
     Happs = false;
     Hservices = true;
     Hsubscriptions = true;
@@ -163,6 +176,12 @@ function showServices()
 
      document.getElementById('subscriptions').style.display = 'none';
 
+
+
+     document.getElementById('create_app').style.display = 'none';
+     document.getElementById('create_service').style.display = 'block';
+     document.getElementById('button_add_subscription').style.display = 'none';
+
     Hservices = false;
     Happs = true;
     Hsubscriptions = true;
@@ -201,6 +220,12 @@ function showSubscriptions()
         document.getElementById('apps_li').style.fontWeight = "normal";
 
      document.getElementById('apps').style.display = 'none';
+
+
+
+     document.getElementById('create_app').style.display = 'none';
+     document.getElementById('create_service').style.display = 'none';
+     document.getElementById('button_add_subscription').style.display = 'block';
 
     Hsubscriptions = false;
     Happs = true;
