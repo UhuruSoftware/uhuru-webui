@@ -534,6 +534,7 @@ button.close {
     bottom: 5px;
     right: 5px;
     cursor: pointer;
+    z-index: 5;
 }
 
 
@@ -752,8 +753,8 @@ h2 .count
  /*--> THE FOOTER OF PAGES*/                                                                                                                    /*--> THE FOOTER OF PAGES*/
 .title_icon
 {
-    background: transparent url("../images/title_icons.png") no-repeat scroll left top;
-    background-position: -48px 0;
+    background: transparent url("../images/gears_48px.png") no-repeat scroll left top;
+    background-repeat: no-repeat;
     display: inline-block;
     height: 48px;
     width: 48px;
@@ -1408,14 +1409,6 @@ h2 .count
     border: 1px solid red;
 }
 
-.app_name,
-.service_name
-{
-    color: #ffffff;
-    position: absolute;
-    top: 5px;
-    left: 5px;
-}
 
 .app_details,
 .app_instances,
@@ -1463,17 +1456,6 @@ h2 .count
     height: 10px;
     background-color: #09293e;
     border: 0px solid white;
-}
-
-.app_details_titles
-{
-    color: #0071b7;
-    border-bottom: 1px solid #ddd;
-    font-size: 22px;
-    font-weight: normal;
-    font-family: "Segoe UI", Verdana, Helvetica, Sans-Serif;
-    text-align: left;
-    margin-bottom: 40px;
 }
 
 .app_details_ul
@@ -1691,8 +1673,9 @@ h3
     font-size: 25pt;
     letter-spacing: 0.01em;
     line-height: 24pt;
+    height: 25px;
     color: black;
-    margin-bottom: 20px;
+    padding-bottom: 30px;
 }
 
 .breadcrumb_element,
@@ -1704,23 +1687,6 @@ h3
     font-size: 12px;
     letter-spacing: 0.01em;
 }
-
-.service_name,
-.white_app_name,
-.space_name,
-.organization_name_span
-{
-    font-family: 'Segoe UI Light', 'Open Sans', Verdana, Arial, Helvetica, sans-serif;
-    font-weight: 700;
-    letter-spacing: 0.01em;
-    position: absolute;
-    top: 30px;
-    left: 5px;
-    height: 20px;
-    font-size: 26px;
-    color: #ffffff;
-}
-
 
 .app_state,
 .app_memory,
@@ -1815,25 +1781,31 @@ h3
 }
 
 
+
+
+.space_name,
+.organization_name_span,
 .app_name,
-.service_name
+.app_name_big,
+.service_name,
+.uri_name,
+.subscriptions_plan
 {
     font-family: 'Segoe UI Light', 'Open Sans', Verdana, Arial, Helvetica, sans-serif;
     font-weight: 700;
     font-size: 26px;
     letter-spacing: 0.01em;
-    z-index: 2;
-}
-.app_name_big
-{
-    font-family: 'Segoe UI Light', 'Open Sans', Verdana, Arial, Helvetica, sans-serif;
-    font-weight: 300;
-    font-size: 24px;
-    letter-spacing: 0.01em;
+    z-index: 2;  color: #ffffff;
     position: absolute;
-    color: #ffffff;
-    top: 10px;
+    height: 26px;
+    width: 100%;
+    top: 5px;
     left: 5px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-align: left;
+    text-overflow: ellipsis;
+    padding: 0;
 }
 
 .member_titles_p,
@@ -1845,15 +1817,27 @@ h3
     font-size: 20pt;
     letter-spacing: 0.01em;
     margin-top: 0px;
+    color: #ffffff;
+}
+.app_details_titles
+{
+    text-align: left;
+    margin-bottom: 40px;
+    border-bottom: 1px solid white;
 }
 
-p
+p,
+.app_text_p
 {
     font-family: 'Segoe UI Light', 'Open Sans', Verdana, Arial, Helvetica, sans-serif;
     font-weight: 200;
-    font-size: 16pt;
+    font-size: 16px;
     letter-spacing: 0.01em;
-    margin-top: 0px;
+    margin-top: 0;
+}
+.app_text_p
+{
+    color: #ffffff;
 }
 
 
@@ -1912,4 +1896,3 @@ p
     float: left;
     line-height: 50px;
 }
-

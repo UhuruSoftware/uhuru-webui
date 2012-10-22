@@ -385,7 +385,7 @@ input.user-name
     border: 0px solid white;
     display: inline-block;
     position: absolute;
-    left: 200px;
+    left: 220px;
 }
 
 
@@ -1086,8 +1086,8 @@ textarea
     width:100px;
     height:45px;
     background-color:#2d2d2d;
-    background-image:url("../images/cloud_white_small.png");
-    background-position:40px 10px;
+    background-image:url("../images/disk_16px.png");
+    background-position: 90% 90%;
 	background-repeat:no-repeat;
 	margin:1px;
     cursor: pointer;
@@ -1104,8 +1104,8 @@ textarea
     width:100px;
     height:45px;
     background-color:#2d2d2d;
-    background-image:url("../images/howto_white_small.png");
-    background-position:40px 10px;
+    background-image:url("../images/upload_32.png");
+    background-position: 90% 90%;
 	background-repeat:no-repeat;
 	margin:1px;
     cursor: pointer;

@@ -39,7 +39,6 @@
                                     <li class="tile_space_name">
                                         <a href="/space<%= space.guid %>" class="link_tiles_space">
                                             <span class="space_name to_underlined"><%= space.name %></span>
-
                                             <a href="#"><span class="small_trash delete-space-button" id="<%= space.name %>" title="<%= space.guid %>" onmousemove="prepareToDeleteSpace(this);"></span></a>
                                         </a>
                                     </li>
@@ -76,7 +75,7 @@
                         <ul class="tile_list">
 
                           <% owners_list.each do |owner| %>
-                            <li class="tileorange">
+                            <li class="tile_app_name">
                                 <span class="organization_question">qu</span>
                                 <span class="organization_check">chk</span>
                                 <span class="user_name_span"><%= owner.email %></span>
@@ -88,7 +87,7 @@
 
                           <% developers_list.each do |developer| %>
 
-                            <li class="tileblue">
+                            <li class="tile_app_name">
                                 <span class="organization_question">qu</span>
                                 <span class="organization_check">chk</span>
                                 <span class="user_name_span"><%= developer.email %></span>
@@ -100,7 +99,7 @@
 
                           <% managers_list.each do |manager| %>
 
-                            <li class="tilered">
+                            <li class="tile_app_name">
                                 <span class="organization_question">qu</span>
                                 <span class="organization_check">chk</span>
                                 <span class="user_name_span">NoName</span>

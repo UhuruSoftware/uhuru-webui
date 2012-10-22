@@ -3,11 +3,11 @@
 
 var element = "";
 
-
 $('.tile_app_name').hover(function(){
 
     var id = $(this).contents().find("span:nth-child(1)").attr("id");
     element = $('body').find('#details_' + id);
+
     //alert(id);
 
     var displayAppDetails = function(){
@@ -120,36 +120,61 @@ $(function(){
     }
 
 
+
+
+
+$('.tile_app_name').click(function(){
+
+var appName = $(this).contents().find("span:nth-child(1)").attr("id");
+var sliderId = $('body').find('#slider_' + appName);
+var insMemory = $(this).contents().find("span:nth-child(4)").attr("id");
+
 $(function() {
 
-        var select = $( ".slider_div_app" );
-            var slider = $( "<div class='app_slider'><samp class='blank_input'>x</span></div>" ).insertAfter( select ).slider({
+
+            var slider = sliderId.slider({
                 min: 0,
                 max: 1024,
                 step: 32,
-            value: memory,
+            value: insMemory,
                 range: "min",
                 change: function(event, ui) {
-                            var sliderValue = $( ".app_slider" ).slider( "option", "value" );
+                            var sliderValue = sliderId.slider( "option", "value" );
                             $('.app_memory_count').html(sliderValue);
                             $('.send_app_memory').val(sliderValue);
-                            showButton();
+                            if(insMemory != sliderValue)
+                                {
+                                    $('.hidden_app_details_submit_button').fadeIn('slow');
+                                }
+                            else
+                                {
+                                    $('.hidden_app_details_submit_button').fadeOut('slow');
+                                }
                             }
+
                     });
 
 
-$('.app_plus_memory').click(function() {
-var sliderCurrentValue = $( ".app_slider" ).slider( "option", "value" );
-  slider.slider( "value", sliderCurrentValue + 32 );
+    $('.app_plus_memory').click(function() {
+    var sliderCurrentValue = sliderId.slider( "option", "value" );
+      slider.slider( "value", sliderCurrentValue + 32 );
+    });
+
+    $('.app_minus_memory').click(function() {
+    var sliderCurrentValue = sliderId.slider( "option", "value" );
+      slider.slider( "value", sliderCurrentValue - 32 );
+    });
+
 });
 
-$('.app_minus_memory').click(function() {
-var sliderCurrentValue = $( ".app_slider" ).slider( "option", "value" );
-  slider.slider( "value", sliderCurrentValue - 32 );
 });
 
 
-});
+
+
+
+
+
 
 $('.app_plus_instance').click(plus_instance);
 $('.app_minus_instance').click(minus_instance);
