@@ -27,9 +27,9 @@ $(function(){
 
 $('.read_app_details').hover(function(){
 
-    var state = $(this).contents().children("span:nth-child(2)").attr("id");
+    var state = $(this).contents().find("span:nth-child(2)").attr("id");
 
-    if(state == "stopped" || state == "STOPPED")
+    if(state == "stopped" || state == "STOPPED" || state == "running" || state == "RUNNING")
     {
         $('.stopApp_btn').css("display", "none");
         $('.startApp_btn').css("display", "block");

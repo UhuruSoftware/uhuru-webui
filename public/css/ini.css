@@ -642,7 +642,7 @@ button.close {
 .plus_sign_organization
 {
     float: right;
-    margin-right: 100px;
+    margin-right: 0;
     line-height: 40px;
 }
 
@@ -650,30 +650,26 @@ button.close {
 .icons_options
 {
     position: absolute;
-    width: 600px;
+    width: 250px;
     height: 50px;
+    padding-top: 7px;
     right: 0;
 }
 
 .plus_sign_position_48
 {
     position: absolute;
-    right: 100px;
+    right: 50px;
 }
 .edit_sign_position_48
 {
     position: absolute;
-    right: 200px;
+    right: 100px;
 }
 .trash_sign_position_48
 {
     position: absolute;
     right: 0;
-}
-.money_bag_sign_position_48
-{
-    position: absolute;
-    left: 30px;
 }
 
 
@@ -691,7 +687,7 @@ button.close {
 {
     position: relative;
     float: left;
-    width: 350px;
+    width: 650px;
     height: 50px;
     margin-top: 0;
     margin-bottom: 0;
@@ -714,14 +710,7 @@ button.close {
 #space_name,
 #organization_name
 {
-    margin: 0px;
-    padding: 2px;
-    font-size: 30px;
-    font-weight: normal;
     line-height: 46px;
-    float: left;
-    margin-left: 0;
-    z-index: 8;
     color: #ffffff;
 }
 
@@ -930,12 +919,21 @@ h2 .count
     padding: 0;
     margin: 0;
 }
+.custom_list li
+{
+    display: block;
+    padding: 0;
+}
 
 .tile_invisible
 {
-    margin: 0 7px 7px 0;
+    margin-top: 5px;
+    margin-bottom: 0;
+    margin-left: 0;
+    margin-right: 0;
+    padding: 0;
     width: 200px;
-    height: 200px;
+    height: 160px;
     background-repeat: repeat-y;
     position: relative;
     overflow: hidden;
@@ -1057,19 +1055,36 @@ h2 .count
 
 .tile_app_details
 {
+    display: block;
     margin: 4px;
     width: 90px;
     height: 70px;
-    background-image: url("../images/tile_small_blue.png");
-    background-repeat: repeat-y;
-    border: 1px solid #3c80ee;
     position: relative;
     cursor: pointer;
     overflow: hidden;
     line-height: 18px;
-    display: list-item;
     float: left;
     list-style: none;
+}
+
+.RUNNING
+{
+    background-image: url("../images/tile_small_light_green.png");
+    background-repeat: repeat-y;
+    border: 1px solid #7ec135;
+
+}
+.STARTED
+{
+    background-image: url("../images/tile_small_blue.png");
+    background-repeat: repeat-y;
+    border: 1px solid #4399f1;
+}
+.STOPPED
+{
+    background-image: url("../images/tile_small_red.png");
+    background-repeat: repeat-y;
+    border: 1px solid #b43051;
 }
 
 
@@ -1079,8 +1094,8 @@ h2 .count
     width: 25px;
     height: 25px;
     position: absolute;
-    bottom: 2px;
-    right: 2px;
+    bottom: 7px;
+    right: 3px;
 }
 .span_members_icon
 {
@@ -1274,14 +1289,6 @@ h2 .count
     left: 5px;
 }
 
-
-#subscriptions_memory,
-#subscriptions_services
-{
-    margin: 0 auto 0;
-    padding: 5px;
-    display: block;
-}
 .tile_blue_small .memory_unit
 {
     position: absolute;
@@ -1301,90 +1308,6 @@ h2 .count
     top: 15px;
     right: 20px;
 }
-
-.subscriptions_plan
-{
-    font-size: 15px;
-    color: #ffffff;
-    position: absolute;
-    bottom: 45px;
-    left: 5px;
-}
-
-.subscriptions_quantity
-{
-    font-size: 15px;
-    color: #ffffff;
-    position: absolute;
-    bottom: 25px;
-    left: 5px;
-}
-
-.subscriptions_cost
-{
-    font-size: 15px;
-    color: #ffffff;
-    position: absolute;
-    bottom: 5px;
-    left:5px;
-}
-.subscriptions_quantity_value,
-.subscriptions_cost_value,
-.subscriptions_plan_value
-{
-    font-size: 14px;
-    color: #ffffff;
-}
-
-
-.subscriptions_background_image_mysql,
-.subscriptions_background_image_uhurufs,
-.subscriptions_background_image_rabbitmq,
-.subscriptions_background_image_mongo_db,
-.subscriptions_background_image_ruby,
-.subscriptions_background_image_redis,
-.subscriptions_background_image_mssql
-{
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-repeat: no-repeat;
-    background-position: 5% 5%;
-}
-.subscriptions_background_image_mysql
-{
-    background: transparent url("../images/mysql_icon.png") no-repeat;
-    background-position: 0% 30%;
-}
-
-.subscriptions_background_image_mssql
-{
-    background: transparent url("../images/mssql_icon.png") no-repeat;
-    background-position: 30% 0%;
-}
-.subscriptions_background_image_redis
-{
-    background: transparent url("../images/redis_icon.png") no-repeat;
-    background-position: 40% 0%;
-}
-.subscriptions_background_image_rabbitmq
-{
-    background: transparent url("../images/rabbitmq_icon.png") no-repeat;
-    background-position: 0% 30%;
-}
-.subscriptions_background_image_mongo_db
-{
-    background: transparent url("../images/mongo_db_icon.png") no-repeat;
-    background-position: 0% 30%;
-}
-.subscriptions_background_image_uhurufs
-{
-    background: transparent url("../images/filesystem_icon.png") no-repeat;
-    background-position: 0% 30%;
-}
-
 
 .services_subdiv
 {
@@ -1409,19 +1332,6 @@ h2 .count
     border: 1px solid red;
 }
 
-
-.app_details,
-.app_instances,
-.app_memory,
-.app_services
-{
-    font-size: 15px;
-    font-weight: normal;
-    color: #ffffff;
-    position: absolute;
-    bottom: 5px;
-    left: 5px;
-}
 
 .blank_input
 {
@@ -1704,16 +1614,16 @@ h3
 }
 .app_memory
 {
-    bottom: 20px;
+    bottom: 2px;
 }
 
 .app_instances
 {
-    bottom: 35px;
+    bottom: 17px;
 }
 .app_runtime
 {
-    bottom: 50px;
+    bottom: 25px;
 }
 .app_state
 {
@@ -1731,7 +1641,7 @@ h3
     font-size: 10pt;
     letter-spacing: 0.01em;
     position: absolute;
-    bottom: 15px;
+    bottom: 7px;
     left: 3px;
     color: #ffffff;
 }
@@ -1742,12 +1652,12 @@ h3
 .organization_cost_span_value
 {
     font-family: 'Segoe UI Light', 'Open Sans', Verdana, Arial, Helvetica, sans-serif;
-    font-weight: 500;
-    font-size: 25px;
+    font-weight: 200;
+    font-size: 30px;
     letter-spacing: 0.01em;
     position: absolute;
     top: 10px;
-    left: 35px;
+    left: 10px;
     color: #ffffff;
 }
 
@@ -1765,13 +1675,7 @@ h3
 
 
 .apps_count_span,
-.services_count_span,
-.subscriptions_plan,
-.subscriptions_quantity,
-.subscriptions_cost,
-.subscriptions_cost_value,
-.subscriptions_plan_value,
-.subscriptions_quantity_value
+.services_count_span
 {
     font-family: 'Segoe UI Light', 'Open Sans', Verdana, Arial, Helvetica, sans-serif;
     font-weight: 300;
@@ -1782,17 +1686,36 @@ h3
 
 
 
+#space_name,
+#organization_name
+{
+    font-family: 'Segoe UI Light', 'Open Sans', Verdana, Arial, Helvetica, sans-serif;
+    font-weight: 200;
+    font-size: 26px;
+    letter-spacing: 0.01em;
+    z-index: 2;  color: #ffffff;
+    position: absolute;
+    height: 40px;
+    width: 100%;
+    top: 5px;
+    left: 5px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-align: left;
+    text-overflow: ellipsis;
+    padding: 0;
+}
 
-.space_name,
+
+.space_name_span,
 .organization_name_span,
 .app_name,
 .app_name_big,
 .service_name,
-.uri_name,
-.subscriptions_plan
+.uri_name
 {
     font-family: 'Segoe UI Light', 'Open Sans', Verdana, Arial, Helvetica, sans-serif;
-    font-weight: 700;
+    font-weight: 200;
     font-size: 26px;
     letter-spacing: 0.01em;
     z-index: 2;  color: #ffffff;
