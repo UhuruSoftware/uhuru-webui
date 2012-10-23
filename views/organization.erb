@@ -5,7 +5,7 @@
                 <span id="organization_name"><%= $currentOrganization_Name %></span>
 
                 <form action="/updateOrganization" method="post">
-                    <input type="text" value="" id="organization_input" maxlength="20" name="m_organizationName" />   <!--if(event.keyCode == 13){hideOrganizationsInput();} -->
+                    <input type="text" value="" id="organization_input" maxlength="20" name="m_organizationName" class="modal_input_box" />   <!--if(event.keyCode == 13){hideOrganizationsInput();} -->
                     <input type="submit" style="display: none; width: 1px; height: 1px;" />
                 </form>
 
@@ -36,7 +36,7 @@
                     <% spaces_list.each do |space| %>
                             <li class="tile_invisible">
                               <ul class="custom_list">
-                                    <li class="tile_space_name">
+                                    <li class="tile_space_name" title="<%= space.name %>">
                                         <a href="/space<%= space.guid %>" class="link_tiles_space">
                                             <span class="space_name_span to_underlined"><%= space.name %></span>
                                             <a href="#"><span class="small_trash delete-space-button" id="<%= space.name %>" title="<%= space.guid %>" onmousemove="prepareToDeleteSpace(this);"></span></a>
@@ -70,42 +70,37 @@
 
 
                 <div id="members">
-
-                    <p class="member_titles_p">Users</p>
                         <ul class="tile_list">
 
                           <% owners_list.each do |owner| %>
-                            <li class="tile_app_name">
-                                <span class="organization_question">qu</span>
-                                <span class="organization_check">chk</span>
+                            <li class="tile_user_owner" title="<%= owner.email %>">
                                 <span class="user_name_span"><%= owner.email %></span>
-                                <span class="user_type_span">Developer</span>
+                                <span class="user_type_span">Owner</span>
                                 <span class="small_edit edit-user-button"></span>
                                 <span class="small_trash delete-user-button"></span>
+                                <span class="span_bg_icon"></span>
                             </li>
                           <% end %>
 
                           <% developers_list.each do |developer| %>
 
-                            <li class="tile_app_name">
-                                <span class="organization_question">qu</span>
-                                <span class="organization_check">chk</span>
+                            <li class="tile_user_developer" title="<%= developer.email %>">
                                 <span class="user_name_span"><%= developer.email %></span>
                                 <span class="user_type_span">Developer</span>
                                 <span class="small_edit edit-user-button"></span>
                                 <span class="small_trash delete-user-button"></span>
+                                <span class="span_bg_icon"></span>
                             </li>
                           <% end %>
 
                           <% managers_list.each do |manager| %>
 
-                            <li class="tile_app_name">
-                                <span class="organization_question">qu</span>
-                                <span class="organization_check">chk</span>
-                                <span class="user_name_span">NoName</span>
-                                <span class="user_type_span"><%= manager.email  %></span>
+                            <li class="tile_user_manager" title="<%= manager.email %>">
+                                <span class="user_name_span"><%= manager.email  %></span>
+                                <span class="user_type_span">Manager</span>
                                 <span class="small_edit edit-user-button"></span>
                                 <span class="small_trash delete-user-button"></span>
+                                <span class="span_bg_icon"></span>
                             </li>
 
                           <% end %>
@@ -128,7 +123,7 @@
         <div class="modal-body">
              <p>
                 <label for="team_name">Space Name:</label>
-                <input type="text" id="org_name" name="spaceName"/>
+                <input type="text" id="org_name" name="spaceName" class="modal_input_box" />
             </p>
         </div>
         <div class="modal-footer">
@@ -216,7 +211,7 @@
         <div>
             <ul class="user_email_ul">
                 <label for="inviteEmail">Email address</label>
-                <input id="user_email" type="text" />
+                <input id="user_email" type="text" class="modal_input_box" />
             </ul>
 
             <ul class="create_user_modal_ul" id="user_logos">

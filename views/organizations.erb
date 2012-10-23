@@ -12,9 +12,9 @@
             <li class="tile_invisible">
 
                 <ul class="custom_list">
-                    <li class="tile_organization_name">
-                        <a href="/organization<%= org.guid%>" class="link_tiles_org" title="<%= org.guid %>"><span class="to_be_underlined organization_name_span" title="<%= org.guid %>"><%= org.name %></span></a>
-                        <a href="#"><input type="button" class="small_trash delete-organization-button" id="<%= org.name %>" title="<%= org.guid %>" onmousemove="prepareToDeleteOrganization(this)" /></a>
+                    <li class="tile_organization_name" title="<%= org.name %>">
+                        <a href="/organization<%= org.guid%>" class="link_tiles_org" title="<%= org.name %>"><span class="to_be_underlined organization_name_span" title="<%= org.name %>"><%= org.name %></span></a>
+                        <a href="#"><input type="button" class="small_trash delete-organization-button" title="<%= org.name %>" id="<%= org.guid %>" onmousemove="prepareToDeleteOrganization(this)" /></a>
                     </li>
 
                     <li class="tile_organization_members">
@@ -44,11 +44,11 @@
         <h3>Create Organization</h3>
     </div>
 
-    <form action="/createOrganization" method="post">
+    <form action="/createOrganization" method="post" autocomplete="off">
         <div class="modal-body">
             <p>
                 <label for="org_name">Organization Name: </label>
-                <input type="text" id="org_name" name="orgName"/>
+                <input type="text" id="org_name" name="orgName" class="modal_input_box" />
             </p>
         </div>
         <div class="modal-footer">

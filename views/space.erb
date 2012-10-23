@@ -5,7 +5,7 @@
                 <span id="space_name"><%= $currentSpace_Name %></span>
 
                 <form action="/updateSpace" method="post">
-                    <input type="text" value="" id="space_input" maxlength="20" name="m_spaceName"/>
+                    <input type="text" value="" id="space_input" maxlength="20" name="m_spaceName" class="modal_input_box" />
                     <input type="submit" style="display: none; width: 1px; height: 1px;">
                 </form>
 
@@ -31,7 +31,7 @@
                     <% apps_list.each do |app| %>
                     <li class="tile_invisible read_app_details">
                         <ul class="custom_list">
-                            <li class="tile_app_name">
+                            <li class="tile_app_name" title="<%= app.name %>">
                                     <a href="#" class="link_tiles_app show_this_app_details" id="<%= app.name %>">
                                         <span class="app_name" id="<%= app.name %>" title="<%= app.name %>"><%= app.name %></span>
                                         <span class="app_state blank_input" id="<%= app.state %>"></span>
@@ -46,7 +46,7 @@
                             </li>
 
                             <li class="tile_app_logo">
-                                <a href="#" class="link_tiles_app show_this_app_details app-<%= app.runtime %>" id="<%= app.name %>"></a>
+                                <span href="#" class="link_tiles_app show_this_app_details app-<%= app.runtime %>" id="<%= app.name %>"></span>
                             </li>
 
                             <li class="tile_app_details <%= app.state %>">
@@ -126,18 +126,18 @@
                                                 </span>
                                             </h4>
 
-                                            <ul class="app_details_ul">
-                                                <li class="tile blue half-height">
-                                                    <span class="instance-info">
-                                                        <span class="instance-count pass_app_instances app_instances_count"><%= app.instances %></span>
-                                                        <span class="instance-type">Provisioned</span>
-                                                    </span>
-                                                    <span class="instance-info">
-                                                        <span class="instance-count pass_app_instances"><%= app.instances %></span>
-                                                        <span class="instance-type">Running</span>
-                                                    </span>
-                                                </li>
-                                            </ul>
+                                                <ul class="app_details_ul">
+                                                    <li class="tile_app_details_instances">
+                                                        <span class="instance-info">
+                                                            <span class="instance-count pass_app_instances app_instances_count"><%= app.instances %></span>
+                                                            <span class="instance-type">Provisioned</span>
+                                                        </span>
+                                                        <span class="instance-info">
+                                                            <span class="instance-count pass_app_instances"><%= app.instances %></span>
+                                                            <span class="instance-type">Running</span>
+                                                        </span>
+                                                    </li>
+                                                </ul>
                                                 <p class="app_text_p" style="text-align: left;">
                                                     Max memory: 1024MB
                                                 </p>
@@ -150,7 +150,7 @@
                                                 </span>
                                             </h4>
                                             <ul class="app_details_ul">
-                                                <li class="tile blue half-height half-width" style="color: #fff;">
+                                                <li class="tile_app_details_memory" style="color: #fff;">
                                                     <span class="instance-count pass_app_memory">
                                                           <div class="app_memory_count">
                                                              <%= app.memory %>
@@ -199,7 +199,7 @@
                     <% services_list.each do |service| %>
                         <li class="tile_invisible">
                           <ul class="custom_list">
-                              <li class="tile_service_name">
+                              <li class="tile_service_name" title="<%= service.name %>">
                                     <span>
                                         <span class="service_name"><%= service.name %></span>
                                         <a href="#"><span class="small_trash delete-service-button" id="<%= service.name %>" title="<%= service.guid %>" onmousemove="prepareToDeleteService(this);"></span></a>
@@ -207,11 +207,12 @@
                               </li>
 
                               <li class="tile_service_logo">
-                                    <a href="#" class="link_tiles_app  service-icon-<%= service.type %>"></a>
+                                    <span href="#" class="link_tiles_app  service-icon-<%= service.type %>"></span>
                               </li>
 
                               <li class="tile_service_details">
-                                <span class="app_state"><%= service.type %></span>
+                                <span class="service_plan_span">Plan: <%= service.type %></span>
+                                <span class="service_cost_span">Cost: <%= service.type %></span>
                               </li>
                           </ul>
                         </li>
@@ -264,9 +265,9 @@
         <tbody>
             <tr>
                 <td>
-                    <input name="user_app" type="text" id="app_name"/>
+                    <input name="user_app" type="text" id="app_name" class="modal_input_box"/>
                 </td>
-                <td style="vertical-align: top">
+                <td style="text-align: left; color: #ffffff;">
                     .uhurucloud.com
                 </td>
             </tr>
@@ -344,7 +345,7 @@
     <div class="modal-body">
         <p>
             <label for="team_services_list">Service Type</label>
-            <select id="team_services_list">
+            <select id="team_services_list" class="modal_input_box">
                 <option value="test1">1</option>
                 <option value="test2">2</option>
                 <option value="test3">3</option>
@@ -352,7 +353,7 @@
         </p>
         <p>
             <label for="service_name">Name</label>
-            <input type="text" id="service_name"/>
+            <input type="text" id="service_name" class="modal_input_box"/>
         </p>
     </div>
 
@@ -407,7 +408,7 @@
             <p>Add a new service to <span></span></p>
             <p>
                 <label for="bind_services_list">Available services</label>
-                <select id="bind_services_list" name="serviceName">
+                <select id="bind_services_list" name="serviceName" class="modal_input_box">
                     <% services_list.each do |service| %>
                         <option value="<%= service.name %>" id="<%= service.name %>"> <%= service.name %> </option>
                     <% end %>
@@ -461,14 +462,13 @@
     </div>
     <div class="modal-body">
         <p>
-            <label for="newUri">New URI</label>
             <table id="new_app_name_table">
                 <tbody>
                     <tr>
                         <td>
-                            <input id="newUri" />
+                            <input id="newUri" class="modal_input_box"/>
                         </td>
-                        <td style="vertical-align: top">
+                        <td style="vertical-align: top; color: #ffffff;">
                             .uhurucloud.com
                         </td>
                     </tr>

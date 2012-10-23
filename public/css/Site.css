@@ -343,16 +343,6 @@ input.user-name
     list-style: none;
 }
 
-.tile.half-height
-{
-    height: 57px;
-}
-
-.tile.half-width
-{
-    width: 80px;
-}
-
 .tile-icon
 {
     display: inline-block;
@@ -519,10 +509,6 @@ li.new .icon
     display: inline-block;
     float: left;
 }
-  /*
-#selected_team .team-name input
-{
-}  */
 
 #selected_team .team-options
 {
@@ -601,16 +587,6 @@ li.new .icon
     position: relative;
 }
 
-#cloud_img
-{
-    background-image: url("../images/cloud_bg.png");
-    background-repeat: no-repeat;
-    position: absolute;
-    width: 550px;
-    height: 400px;
-    top: 450px;
-    right: -400px;
-}
 
 #site_footer {
    position:absolute;
@@ -704,7 +680,8 @@ li.new .icon
 .app-control
 {
     width: 280px;
-    height: 200px;
+    height: 90px;
+    padding-left: 7px;
     float: left;
 }
 

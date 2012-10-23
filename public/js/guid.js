@@ -6,8 +6,8 @@
 
 function prepareToDeleteOrganization(obj)
 {
-    document.getElementById('this_organization_name').innerHTML = obj.id;
-    document.getElementById('pass_guid').value = obj.title;
+    document.getElementById('this_organization_name').innerHTML = obj.title;
+    document.getElementById('pass_guid').value = obj.id;
 }
 
 function prepareToDeleteSpace(obj)
