@@ -30,9 +30,11 @@ function prepareToDeleteService(obj)
 }
 
 
-function prepareToAddNewUser(userType)
+
+
+function selectUserType(userType)
 {
-    document.getElementById('new_user_type').value = userType;
+    document.getElementById('new_user_type').value = userType.id;
 }
 function prepareToAddNewUserEmail()
 {

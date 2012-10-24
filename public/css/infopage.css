@@ -10,7 +10,7 @@ body
     font-size: .85em;
     font-family: "Segoe UI", Verdana, Helvetica, Sans-Serif;
     color: #232323;
-    background-color: #fff;
+    background-color: #09293e;
 }
 
 header,
@@ -50,7 +50,7 @@ textarea
 #site_header
 {
     height: 50px;
-    background-color: #2d2d2d;
+    background-color: #09293e;
 }
 
 #site_header h1
@@ -58,10 +58,12 @@ textarea
     height: 50px;
     margin: 0;
     float: left;
-    font-weight: normal;
-    font-size: 1.8em;
     line-height: 50px;
-    color: #fff;
+    font-weight: 200;
+    font-size: 30px;
+    letter-spacing: 0.01em;
+    color: #ffffff;
+    font-family: 'Segoe UI Light', 'Open Sans', Verdana, Arial, Helvetica, sans-serif;
 }
 #site_footer
 {
@@ -71,14 +73,14 @@ textarea
 #site_footer .top
 {
     height: 130px;
-    background-color: #6eb43c;
+    background-color: #0e4769;
     padding: 20px 0;
 }
 
 #site_footer .bottom
 {
     height: 60px;
-    background-color: #2d2d2d;
+    background-color: #0e4769;
 }
 
 #footer_top_content
@@ -127,10 +129,10 @@ textarea
 
 #site_footer .cloud-target-url
 {
-    color: #6eb53c;
+    color: #0e4769;
 }
 
-#site_footer .footer-menu li a 
+#site_footer .footer-menu li a
 {
     color: #6eb53c;
 }
@@ -162,9 +164,12 @@ textarea
 #info_paragraph
 {
     margin-top:5px;
-    margin-bottom:0px;
-    padding:3px;  
-	font-size:15px;
+    margin-bottom:0;
+    padding:3px;
+    font-family: 'Segoe UI', 'Open Sans', Verdana, Arial, Helvetica, sans-serif;
+    font-weight: 200;
+    font-size: 16px;
+    letter-spacing: 0.01em;
 }
 
 #info_table
@@ -192,18 +197,11 @@ textarea
 	
 }
 
-/*
-#FD950D 
-#0071B7 
-#6eb53c;
-*/
-
-
 .splash
 {
     background: transparent url('../images/bg_clouds.png') no-repeat scroll center top;
 	background-color:#0071B7;
-    height: 900px;
+    height: 1000px;
     color: #e4eef0;
 }
 
@@ -216,9 +214,12 @@ textarea
 
 .splash h2
 {
-    font-weight: normal;
     font-size: 30px;
     margin: 0 0 20px;
+    font-family: 'Segoe UI', 'Open Sans', Verdana, Arial, Helvetica, sans-serif;
+    font-weight: 200;
+    letter-spacing: 0.01em;
+    color: #ffffff;
 }
 
 .splash p
@@ -289,4 +290,113 @@ a:hover
 {
 	background-color:#FD950D;
     background-image:url("../images/howto_white.png");
+}
+
+
+#site_footer .top
+{
+    height: 130px;
+    background-color: #0e4769;
+    padding: 20px 0;
+}
+
+#site_footer .bottom
+{
+    height: 60px;
+    background-color: #0e4769;
+}
+
+.icon-social
+{
+    display: inline-block;
+    width: 44px;
+    height: 44px;
+    background: transparent url('../images/social_icons.png') no-repeat scroll 0 0;
+    text-indent: -9999em;
+    margin: 10px 0;
+}
+
+.icon-social.facebook
+{
+    background-position: 0 0;
+}
+
+.icon-social.facebook:hover
+{
+    background-position: -44px 0;
+}
+
+.icon-social.twitter
+{
+    background-position: -88px 0;
+}
+
+.icon-social.twitter:hover
+{
+    background-position: -132px;
+}
+
+#footer_top_content
+{
+    height: 130px;
+    padding-top: 20px;
+}
+
+#footer_top_content tbody tr td
+{
+    padding: 0 40px;
+    color: #f2f7fa;
+    font-size: 14px;
+}
+
+#site_footer .bottom
+{
+    font-size: 11px;
+}
+
+#site_footer .bottom .page-margin
+{
+    padding-top: 20px;
+    text-align: left;
+}
+
+#site_footer .bottom
+{
+    color: #706e6e;
+}
+
+
+#site_footer .footer-menu
+{
+    list-style: none;
+    margin: 0 14px;
+    padding: 0;
+    display: inline-block;
+}
+#site_footer .footer-menu li
+{
+    border-right: 1px solid #aaa;
+    display: inline-block;
+    padding: 0 10px;
+
+}
+
+#site_footer .footer-menu li a
+{
+    color: #08c;
+}
+
+#site_footer .footer-menu li.last
+{
+    border: 0;
+}
+
+
+a, span, p, h3, h4, h5, h6, li, label
+{
+
+    font-family: 'Segoe UI', 'Open Sans', Verdana, Arial, Helvetica, sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+    letter-spacing: 0.01em;
 }

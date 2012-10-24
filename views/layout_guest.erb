@@ -3,7 +3,8 @@
 	<head>
 		<title><%= @title %></title>
 		<script type="text/javascript" src="js/jquery-1.5.js"></script>
-		<link rel="stylesheet" type="text/css" href="css/Site.css" src="../public/css/Site.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/ini.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/Site.css"/>
         <meta charset="utf-8" />
 
           <script type="text/javascript">
@@ -28,23 +29,22 @@
 
 <body class="main">
 
+<div id="screen"> </div>
+<div id="opac_screen"> </div>
+
 
     <header id="site_header">
         <div class="page-margin">
-            <h1><span style="color: #0172b6">Uhuru</span> AppCloud</h1>
+            <h1>Uhuru AppCloud</h1>
 
-                <div id="login_control">
-                    <a href="/users/login" class="btn btn-success login">Login <i class="icon-login"></i></a>
-                </div>
-
+            <div id="login_control">
+                <a href="#" id="login_button"><button class="btn btn-success login" id="login_btn">Login<i class="icon-login"></i></button></a>
+            </div>
         </div>
     </header>
 
 
-
-    <%= yield %>
-
-
+   <%= yield %>
 
 
     <footer id="site_footer">
@@ -57,7 +57,7 @@
                             <td style="border-right: 1px dotted #000">
                                 <p>
                                     Give us feedback on your experience with the App Cloud beta and get 1 year free premium hosting when we go commercial.
-                                    Click <a href="http://bit.ly/uhrbloglife">here</a> for more details
+                                    Click <a href="http://bit.ly/uhrbloglife" style="color: #187ebc;">here</a> for more details
                                 </p>
                             </td>
                             <td>
@@ -90,9 +90,9 @@
             $(f);
         });
     </script>
+
+		<script type="text/javascript" src="js/jquery-1.5.js"></script>
+		<script type="text/javascript" src="js/landingPageController.js"></script>
 </body>
 </html>
 
-
-	</body>
-</html>

@@ -115,7 +115,7 @@
 
 <div class="modal hide" id="create_space">
     <div class="modal-header">
-        <button type="button" class="close">×</button>
+        <button type="button" class="close"></button>
         <h3>Create Space</h3>
     </div>
     <form action="/createSpace" method="post">
@@ -140,7 +140,7 @@
 
 <div class="modal hide" id="delete_space_modal">
     <div class="modal-header">
-        <button class="close">×</button>
+        <button class="close"></button>
         <h3>Delete Space</h3>
     </div>
     <div class="modal-body">
@@ -171,7 +171,7 @@
 
 <div class="modal hide" id="delete_this_organization_modal">
     <div class="modal-header">
-        <button class="close">×</button>
+        <button class="close"></button>
         <h3>Delete organization</h3>
     </div>
     <div class="modal-body">
@@ -197,9 +197,9 @@
 </div>
 
 
-<div class="modal fade" id="add_user" onmousemove="prepareToAddNewUserEmail();">
+<div class="modal fade" id="add_user">
     <div class="modal-header">
-        <button class="close">×</button>
+        <button class="close"></button>
         <h3>Invite user</h3>
             <br />
             <p>
@@ -208,10 +208,9 @@
             </p>
     </div>
     <div class="modal-body">
-        <div>
             <ul class="user_email_ul">
                 <label for="inviteEmail">Email address</label>
-                <input id="user_email" type="text" class="modal_input_box" />
+                <input id="user_email" type="text" class="modal_input_box" onmousemove="prepareToAddNewUserEmail();" />
             </ul>
 
             <ul class="create_user_modal_ul" id="user_logos">
@@ -219,7 +218,12 @@
                 <li class="user_modal_li"><img width="32" height="32"  src="../images/msn_logo.png" alt=""/>&nbsp;Microsoft LiveID</li>
                 <li class="user_modal_li"><img  width="32" height="32"  src="../images/facebook_logo.png" alt=""/>&nbsp;Facebook</li>
             </ul>
-        </div>
+
+            <ul class="create_user_modal_ul" id="radio_buttons">
+                <li><input type="radio" name="type" value="owner" id="owner" onclick="selectUserType(this);">Owner</li>
+                <li><input type="radio" name="type" value="developer" id="developer" onclick="selectUserType(this);">Developer</li>
+                <li><input type="radio" name="type" value="manager" id="manager" onclick="selectUserType(this);">Manager</li>
+            </ul>
     </div>
     <div class="modal-footer">
         <div class="button_case_create_organization_and_space">

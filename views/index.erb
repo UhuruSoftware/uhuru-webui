@@ -1,37 +1,36 @@
 <div class="splash">
     <div class="page-margin">
+    <div id="cloud_photo"></div>
+
     <div id="splash_content_area">
-        <h2>Uhuru AppCloud - Ready To Go</h2>
-        <p>
+        <h2  class="layout_page_header">Uhuru AppCloud - Ready To Go</h2>
+        <p class="layout_page_paragraph">
             Host your web applications in minutes. We support apps written in PHP, Node.js, Ruby, Java and .NET.
             Sign up for your free beta account now. Find more details about the Uhuru App Cloud features on our
-            <a href="http://www.uhurusoftware.com"><Font color="6eb53c"> web site</Font></a>.
+            <a href="http://www.uhurusoftware.com"><Font color="187EBC"> web site</Font></a>.
 
         </p>
 
         <div id="try_it">
             <span class="title">Give It a <span style="font-weight: bold">Try</span></span>
-            <span class="byline">It takes <br />30 seconds</span>
+            <span class="byline" class="layout_page_paragraph">It takes <br />30 seconds</span>
         </div>
 
 
 
         <div id="signup_container">
-            <form action="/home/signup" method="post">
                 <div id="promo_code_container">
-                    <p>
+                    <p class="layout_page_paragraph">
                         Promo Code. No issues if you have none.
                     </p>
                     <input type="text" id="promo_code_input" name="promoCode" />
                 </div>
 
                 <button id="signup_button">Sign Up <i class="icon-login"></i></button>
-
-            </form>
             <div id="signup_container_text">
                 <br />
-                By using our service you agree to the  <a href="http://uhurusoftware.com/tos" target="_blank"><Font color="6eb53c">Terms of Service </Font></a>
-                and <a href="http://uhurusoftware.com/privacy/" target="_blank"><Font color="6eb53c">Privacy Policy </Font></a>
+                By using our service you agree to the  <a href="http://uhurusoftware.com/tos" target="_blank"><Font color="187EBC">Terms of Service </Font></a>
+                and <a href="http://uhurusoftware.com/privacy/" target="_blank"><Font color="187EBC">Privacy Policy </Font></a>
             </div>
 
         </div>
@@ -47,20 +46,92 @@
                 <iframe width="340" height="240" src="http://www.youtube.com/embed/Iv4VpPjz7y0" frameborder="0" allowfullscreen></iframe>
             </td>
             <td id="video_description">
-                <h3>Getting Started</h3>
-                <p>
+                <h3 class="layout_page_header">Getting Started</h3>
+                <p class="layout_page_paragraph">
                     Learn how to register with Ready To Go and start hosting your own web applications.
                     See how you can setup teams for collaboration on your applications and setup multiple app instances
                     for load balancing and fault tolerance
 
                 </p>
                 <br />
-                <p>
+                <p class="layout_page_paragraph">
                     We have more how-to videos and documentation in our support forum knowledge base
-                    <a href="http://support.uhurusoftware.com/forums/20507726-uhuru-knowledge-bases"><Font color="6eb53c">..more videos</Font></a>
+                    <a href="http://support.uhurusoftware.com/forums/20507726-uhuru-knowledge-bases"><Font color="187EBC">..more videos</Font></a>
                 </p>
             </td>
         </tr>
     </tbody>
 </table>
+</div>
+
+
+
+<div class="modal hide" id="login_modal">
+    <div class="modal-header">
+        <button type="button" class="close"></button>
+        <h3>Login</h3>
+    </div>
+    <form autocomplete="off">
+        <div class="modal-body" id="login_modal_content">
+            <p>
+                <label for="id">username: </label>
+                <input type="text" id="id" name="orgName" class="modal_input_box" />
+            </p>
+
+            <p>
+                <label for="pass">password: </label>
+                <input type="password" id="pass" name="orgName" class="modal_input_box" />
+            </p>
+
+            <p><span>Forgot you're password? Click <a href="#">here</a></span></p>
+        </div>
+    </form>
+
+    <div class="modal-footer">
+        <div class="button_case_create_organization_and_space">
+            <a href="#" class="btn btn_right_create_organization_and_space">Cancel</a>
+            <input type="submit" value="Log In" class="btn btn-success btn_left_create_organization_and_space white_btn_text" />
+        </div>
+    </div>
+</div>
+
+
+
+<div class="modal hide" id="signup_modal">
+    <div class="modal-header">
+        <button type="button" class="close"></button>
+        <h3>Sign Up</h3>
+    </div>
+    <form autocomplete="off">
+        <div class="modal-body" id="signup_modal_content">
+            <p>
+                <label for="username">username: </label>
+                <input type="text" id="username" name="orgName" class="modal_input_box" style="float: right;"/>
+            </p>
+
+            <p>
+                <label for="password">Password: </label>
+                <input type="password" id="password" name="orgName" class="modal_input_box" />
+            </p>
+
+            <p>
+                <label for="confirm_password">Confirm Password: </label>
+                <input type="password" id="confirm_password" name="orgName" class="modal_input_box" />
+            </p>
+
+            <p>
+                <label for="email">e-mail: </label>
+                <input type="email" id="email" name="orgName" class="modal_input_box" />
+            </p>
+
+            <p><span>Uhuru will use this email just for notifying you about....</span></p>
+        </div>
+    </form>
+
+    <div class="modal-footer">
+        <div class="button_case_create_organization_and_space">
+            <a href="#" class="btn btn_right_create_organization_and_space">Cancel</a>
+            <input type="submit" value="Sign Up" class="btn btn-success btn_left_create_organization_and_space white_btn_text" />
+        </div>
+    </div>
 </div>

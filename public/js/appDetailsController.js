@@ -14,8 +14,8 @@ $('.tile_app_name').hover(function(){
             $('#opac_screen').css({	"display": "block", opacity: 0.7, "width": "10000px", "height": "10000px"});
             $('body').css({"overflow":"hidden"});
             element.fadeIn(800);
-            $('.app_details_closebtn').click(function(){$('.app_details_modal').css("display", "none");$('#opac_screen').css("display", "none")});
             $('.close_app_details').click(function(){$('.app_details_modal').css("display", "none");$('#opac_screen').css("display", "none")});
+            $('.close').click(function(){$('.app_details_modal').css("display", "none");$('#opac_screen').css("display", "none")});
         }
 
     $('.show_this_app_details').click(displayAppDetails);

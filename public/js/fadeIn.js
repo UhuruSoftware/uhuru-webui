@@ -19,7 +19,7 @@ var create_space = function(){
 	$('#create_space').fadeIn(600);
     $('.close').click(function(){$("#create_space").css("display", "none");$('#screen').css("display", "none")});
     $('.btn').click(function(){$("#create_space").css("display", "none");$('#screen').css("display", "none")});
-    $('#org_name').focus();
+    $('#space_name').focus();
 }
 
 var create_tempcta_modal = function(){
