@@ -565,7 +565,8 @@ select
 {
     background-color: #0e4769;
     border-top: 1px solid #187ebc;
-    padding: 20px;
+    padding: 0;
+    height: 48px;
     /*   #0e4769-bottom  */
 }
 
@@ -616,16 +617,14 @@ select
     font-size: 16px;
 }
 
-.btn
-{
+.btn {
+
     border: 0;
     border-radius: 0;
     box-shadow: 0 0 0;
     background-image: none;
     background-color: #ccc;
-}
-.btn {
-    display: inline-block;
+    display: block;
     padding: 4px 10px 4px;
     margin-bottom: 0;
     font-size: 13px;
@@ -634,7 +633,6 @@ select
     text-align: center;
     vertical-align: middle;
     cursor: pointer;
-    background-color: #CCC;
     border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
     border-bottom-color: #B3B3B3;
     float: right;
@@ -650,6 +648,7 @@ select
 {
     background-color: #000000;
     color: #ffffff;
+    height: 26px;
 }
 
 .btn-success:hover
@@ -664,6 +663,7 @@ select
     float: right;
     margin-left: 3px;
     margin-right: 3px;
+    height: 26px;
 }
 
 .btn-danger:hover
@@ -1616,10 +1616,8 @@ h2 .count
 .app_details_footer
 {
     position: relative;
-    margin: 0px auto;
-    height: 10px;
+    margin: 0 auto;
     background-color: #09293e;
-    border: 0px solid white;
 }
 
 .app_details_ul

@@ -98,25 +98,34 @@ $(function(){
 
     var plus_instance = function(){
             instance+=1;
-            instance = instance + ""
+            instance = instance + "";
             $('.app_instances_count').text(instance);
             $('.send_app_instances').val(instance);
             instance = parseInt(instance);
-
-            showButton();
+                if(firstInstance != instance)
+                    {
+                        $('.hidden_app_details_submit_button').fadeIn('slow');
+                    }
+                else
+                    {
+                        $('.hidden_app_details_submit_button').fadeOut('slow');
+                    }
     }
 
     var minus_instance = function(){
-        if(instance > 0)
-        {
             instance-=1;
-            instance = instance + ""
+            instance = instance + "";
             $('.app_instances_count').text(instance);
             $('.send_app_instances').val(instance);
             instance = parseInt(instance);
-
-            showButton();
-        }
+                if(firstInstance != instance)
+                    {
+                        $('.hidden_app_details_submit_button').fadeIn('slow');
+                    }
+                else
+                    {
+                        $('.hidden_app_details_submit_button').fadeOut('slow');
+                    }
     }
 
 
