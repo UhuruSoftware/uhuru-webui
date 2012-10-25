@@ -5,6 +5,7 @@ var Hmembers = true;
 
 var Happs = false;
 var Hservices = true;
+var Hbillings = true;
 
 function showSpaces()
 {
@@ -75,14 +76,14 @@ function showMembers()
 
 function showApps()
 {
-     document.getElementById('apps').style.display = 'block';
         document.getElementById('apps_li').style.paddingBottom = '1px';
         document.getElementById('apps_li').style.borderTop = '1px solid #0e4769';
         document.getElementById('apps_li').style.borderLeft = '1px solid #0e4769';
         document.getElementById('apps_li').style.borderRight = '1px solid #0e4769';
         document.getElementById('apps_li').style.backgroundColor = '#09293e';
-
         document.getElementById('apps_li').style.color = "#ffffff";
+
+
 
 
 
@@ -90,21 +91,33 @@ function showApps()
         document.getElementById('services_li').style.borderTop = '0px solid #0e4769';
         document.getElementById('services_li').style.borderLeft = '0px solid #0e4769';
         document.getElementById('services_li').style.borderRight = '0px solid #0e4769';
-        document.getElementById('spaces_tabs').style.borderBottom = '1px solid #0e4769';
-
         document.getElementById('services_li').style.color = "#ffffff";
 
+
+        document.getElementById('billings_li').style.paddingBottom = '0px';
+        document.getElementById('billings_li').style.borderTop = '0px solid #0e4769';
+        document.getElementById('billings_li').style.borderLeft = '0px solid #0e4769';
+        document.getElementById('billings_li').style.borderRight = '0px solid #0e4769';
+        document.getElementById('billings_li').style.color = "#ffffff";
+
+
+
+
+     document.getElementById('spaces_tabs').style.borderBottom = '1px solid #0e4769';
+     document.getElementById('apps').style.display = 'block';
      document.getElementById('services').style.display = 'none';
+     document.getElementById('billings').style.display = 'none';
      document.getElementById('create_app').style.display = 'block';
      document.getElementById('create_service').style.display = 'none';
+     document.getElementById('create_credit_card').style.display = 'none';
 
     Happs = false;
     Hservices = true;
+    Hbillings = true;
 }
 
 function showServices()
 {
-     document.getElementById('services').style.display = 'block';
         document.getElementById('services_li').style.paddingBottom = '1px';
         document.getElementById('services_li').style.borderTop = '1px solid #0e4769';
         document.getElementById('services_li').style.borderLeft = '1px solid #0e4769';
@@ -115,20 +128,77 @@ function showServices()
 
 
 
+
+        document.getElementById('billings_li').style.paddingBottom = '0px';
+        document.getElementById('billings_li').style.borderTop = '0px solid #0e4769';
+        document.getElementById('billings_li').style.borderLeft = '0px solid #0e4769';
+        document.getElementById('billings_li').style.borderRight = '0px solid #0e4769';
+        document.getElementById('billings_li').style.color = "#ffffff";
+
+
         document.getElementById('apps_li').style.paddingBottom = '0px';
         document.getElementById('apps_li').style.borderTop = '0px solid #0e4769';
         document.getElementById('apps_li').style.borderLeft = '0px solid #0e4769';
         document.getElementById('apps_li').style.borderRight = '0px solid #0e4769';
-        document.getElementById('spaces_tabs').style.borderBottom = '1px solid #0e4769';
-
         document.getElementById('apps_li').style.color = "#ffffff";
 
+
+
+
+     document.getElementById('spaces_tabs').style.borderBottom = '1px solid #0e4769';
      document.getElementById('apps').style.display = 'none';
+     document.getElementById('services').style.display = 'block';
+     document.getElementById('billings').style.display = 'none';
      document.getElementById('create_app').style.display = 'none';
      document.getElementById('create_service').style.display = 'block';
+     document.getElementById('create_credit_card').style.display = 'none';
 
     Hservices = false;
     Happs = true;
+    Hbillings = true;
+}
+
+
+function showBillings()
+{
+        document.getElementById('billings_li').style.paddingBottom = '1px';
+        document.getElementById('billings_li').style.borderTop = '1px solid #0e4769';
+        document.getElementById('billings_li').style.borderLeft = '1px solid #0e4769';
+        document.getElementById('billings_li').style.borderRight = '1px solid #0e4769';
+        document.getElementById('billings_li').style.backgroundColor = '#09293e';
+        document.getElementById('billings_li').style.color = "#ffffff";
+
+
+
+
+
+        document.getElementById('services_li').style.paddingBottom = '0px';
+        document.getElementById('services_li').style.borderTop = '0px solid #0e4769';
+        document.getElementById('services_li').style.borderLeft = '0px solid #0e4769';
+        document.getElementById('services_li').style.borderRight = '0px solid #0e4769';
+        document.getElementById('services_li').style.color = "#ffffff";
+
+
+        document.getElementById('apps_li').style.paddingBottom = '0px';
+        document.getElementById('apps_li').style.borderTop = '0px solid #0e4769';
+        document.getElementById('apps_li').style.borderLeft = '0px solid #0e4769';
+        document.getElementById('apps_li').style.borderRight = '0px solid #0e4769';
+        document.getElementById('apps_li').style.color = "#ffffff";
+
+
+
+
+     document.getElementById('spaces_tabs').style.borderBottom = '1px solid #0e4769';
+     document.getElementById('apps').style.display = 'none';
+     document.getElementById('services').style.display = 'none';
+     document.getElementById('billings').style.display = 'block';
+     document.getElementById('create_app').style.display = 'none';
+     document.getElementById('create_service').style.display = 'none';
+     document.getElementById('create_credit_card').style.display = 'block';
+
+    Hservices = true;
+    Happs = true;
+    Hbillings = false;
 }
 
 

@@ -13,6 +13,7 @@
             <div class="icons_options">
                 <input type="button" value="" class="plus_sign_48 plus_sign_position_48" id="create_app" />
                 <input type="button" value="" class="plus_sign_48 plus_sign_position_48" id="create_service" style="display: none;" />
+                <input type="button" value="" class="plus_sign_48 plus_sign_position_48" id="create_credit_card" style="display: none;" />
 
                 <input type="button" value="" class="edit_sign_48 edit_sign_position_48" onclick="showSpacesInput();" />
                 <input type="button" class="trash_sign_48 trash_sign_position_48 delete_this_space" value="" />
@@ -22,8 +23,9 @@
          <div id="team_tabs">
 
            <ul id="spaces_tabs" class="nav nav-tabs">
-                <li onclick="showApps();" id="apps_li" onmouseover="hoverApps();" onmouseout="unhoverApps();">Apps (<span><%= apps_count %></span>)</li>
-                <li onclick="showServices();" id="services_li" onmouseover="hoverServices();" onmouseout="unhoverServices();">Services (<span><%= services_count %></span>)</li>
+                <li onclick="showApps();" id="apps_li">Apps (<span><%= apps_count %></span>)</li>
+                <li onclick="showServices();" id="services_li">Services (<span><%= services_count %></span>)</li>
+                <li onclick="showBillings();" id="billings_li">Credit Cards</li>
             </ul>
                 <div id="apps" class="tab_pane">
                     <ul class="tile_list">
@@ -220,6 +222,28 @@
                 </ul>
             </div>
 
+
+            <div id="billings" class="tab-pane">
+                <ul class="tile_list">
+                    <li class="tile_credit_card" title="test card">
+                        <span class="user_name_span"></span>
+                        <span class="user_type_span">PayPal</span>
+                        <span class="small_edit edit-user-button"></span>
+                        <span class="small_trash delete-user-button"></span>
+                        <span class="span_money_bg_icon"></span>
+                    </li>
+
+                    <li class="tile_credit_card" title="test card">
+                        <span class="user_name_span"></span>
+                        <span class="user_type_span">PayPal</span>
+                        <span class="small_edit edit-user-button"></span>
+                        <span class="small_trash delete-user-button"></span>
+                        <span class="span_money_bg_icon"></span>
+                    </li>
+
+                </ul>
+            </div>
+
 </div>
 
 
@@ -251,6 +275,98 @@
 
     </div>
 </div>
+
+
+
+
+<div class="modal hide" id="create_credit_card_modal">
+    <div class="custom_modal_header">
+        <button type="button" class="close"></button>
+        <h3>Create CreditCard</h3>
+    </div>
+
+        <div class="custom_modal_body credit_card_body">
+            <table>
+                <tr class="credit_card_rows">
+                    <td class="credit_card_left"><label for="first_name" class="credit_card_labels">First Name: </label><td>
+                    <td class="credit_card_right"><input type="text" id="first_name" name="orgName" class="modal_input_box credit_card_input_box" value="fname..." /><td>
+                </tr>
+
+                <tr class="credit_card_rows">
+                    <td class="credit_card_left"><label for="last_name" class="credit_card_labels">Last Name: </label><td>
+                    <td class="credit_card_right"><input type="text" id="last_name" name="orgName" class="modal_input_box credit_card_input_box" value="last name..." /><td>
+                </tr>
+
+                <tr class="credit_card_rows">
+                    <td class="credit_card_left"><label for="credit_card_number" class="credit_card_labels">Credi Card Number: </label><td>
+                    <td class="credit_card_right"><input type="text" id="credit_card_number" name="orgName" class="modal_input_box credit_card_input_box" value="number..." /><td>
+                </tr>
+
+                <tr class="credit_card_rows">
+                    <td class="credit_card_left"><label for="cvv" class="credit_card_labels">CVV: </label><td>
+                    <td class="credit_card_right"><input type="text" id="cvv" name="orgName" class="modal_input_box credit_card_input_box" value="cvv..." /><td>
+                </tr>
+
+                <tr class="credit_card_rows">
+                    <td class="credit_card_left"><label for="credit_card_type" class="credit_card_labels">Credit Card Type: </label><td>
+                        <td class="credit_card_right credit_card_icons">
+                            <select id="credit_card_type" class="modal_input_box credit_card_input_box credit_card_type_box">
+                                <option value="visa">Visa</option>
+                                <option value="visaexpress">Visa Express</option>
+                                <option value="mastercard">Mastercard</option>
+                            </select>
+                        <td>
+                </tr>
+
+                <tr class="credit_card_rows">
+                    <td class="credit_card_left"><label for="credit_card_expiration_year" class="credit_card_labels">Expiration Date: </label><td>
+                    <td class="credit_card_right">
+                        <label class="credit_card_labels">Year:</label>
+                        <select name="expiration_date" class="modal_input_box credit_card_year_combo">
+                            <option value="2012">2012</option>
+                            <option value="2013">2013</option>
+                            <option value="2014">2014</option>
+                            <option value="2015">2015</option>
+                        </select>
+
+
+                        <label class="credit_card_labels">Month:</label>
+                        <select name="expiration_date" class="modal_input_box credit_card_month_combo">
+                            <option value="1">January</option>
+                            <option value="2">February</option>
+                            <option value="3">March</option>
+                            <option value="4">April</option>
+                            <option value="5">May</option>
+                            <option value="6">June</option>
+                            <option value="7">July</option>
+                            <option value="8">August</option>
+                            <option value="9">September</option>
+                            <option value="10">October</option>
+                            <option value="11">November</option>
+                            <option value="12">December</option>
+                        </select>
+
+                    <td>
+                </tr>
+
+
+            </table>
+        </div>
+        <div class="modal-footer">
+            <div class="button_case_create_organization_and_space">
+                <a href="#" class="btn btn_right_create_organization_and_space" id="cancel_b_c_organization">Cancel</a>
+                <input type="submit" value="Create" class="btn btn-success btn_left_create_organization_and_space white_btn_text"/>
+            </div>
+        </div>
+</div>
+
+
+
+
+
+
+
+
 
 
 
