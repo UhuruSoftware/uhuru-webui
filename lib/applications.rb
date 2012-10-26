@@ -76,7 +76,7 @@ class Applications
     end
 
     rescue Exception => e
-      puts "#{e.inspect}, #{e.backtrace}"
+      "#{e.inspect}, #{e.backtrace}"
   end
 
   def start_app(app_name)
@@ -85,7 +85,7 @@ class Applications
     app.start!
 
     rescue Exception => e
-      puts "#{e.inspect}, #{e.backtrace}"
+      "#{e.inspect}, #{e.backtrace}"
   end
 
   def stop_app(app_name)
@@ -94,7 +94,7 @@ class Applications
     app.stop!
 
     rescue Exception => e
-      puts "#{e.inspect}, #{e.backtrace}"
+      "#{e.inspect}, #{e.backtrace}"
   end
 
   def update(app_name, instances, memory)
@@ -106,7 +106,7 @@ class Applications
     app.update!
 
     rescue Exception => e
-      puts "#{e.inspect}, #{e.backtrace}"
+      "#{e.inspect}, #{e.backtrace}"
   end
 
   def delete(app_name)
@@ -123,7 +123,7 @@ class Applications
     end
 
     rescue Exception => e
-      puts "#{e.inspect}, #{e.backtrace}"
+      "#{e.inspect}, #{e.backtrace}"
   end
 
   def bind_app_services(app_name, service_instance_name)
@@ -137,7 +137,7 @@ class Applications
     app.bind(service_instance)
 
     rescue Exception => e
-      puts "#{e.inspect}, #{e.backtrace}"
+      "#{e.inspect}, #{e.backtrace}"
   end
 
   def unbind_app_services(app_name, service_instance_name)
@@ -147,7 +147,7 @@ class Applications
     app.bind(service_instance)
 
     rescue Exception => e
-      puts "#{e.inspect}, #{e.backtrace}"
+      "#{e.inspect}, #{e.backtrace}"
   end
 
   #track cf to see how app routes are managed and what is owning organization for a domain

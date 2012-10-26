@@ -21,7 +21,7 @@ class ServiceInstances
     service
 
     rescue Exception => e
-      puts "#{e.inspect}, #{e.backtrace}"
+      "#{e.inspect}, #{e.backtrace}"
   end
 
   def read_service_plans()
@@ -38,7 +38,7 @@ class ServiceInstances
     service_instance.delete!
 
     rescue Exception => e
-      puts "#{e.inspect}, #{e.backtrace}"
+      "#{e.inspect}, #{e.backtrace}"
   end
   
   class Service
