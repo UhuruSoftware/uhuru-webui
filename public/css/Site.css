@@ -260,11 +260,6 @@ html, body
     color: inherit;
 }
 
-.manage #site_footer
-{
-    margin-top: 300px;
-    background-color: #0e4769;
-}
 
 #welcome {
     color: #fff;
@@ -619,10 +614,12 @@ li.new .icon
 
 
 #site_footer {
-   position:relative;
+   position:absolute;
    bottom:0;
    width:100%;
-   height:80px;   /* Height of the footer */
+   height:80px;
+   buttom: 0;
+    /* Height of the footer */
 }
 
 
@@ -658,6 +655,33 @@ li.new .icon
 {
     background: transparent url("../images/java_icon.png") no-repeat scroll center center;
 }
+
+
+.span_credit_card_icon_visa
+{
+    background-image: url("../images/visa.png");
+    background-repeat: no-repeat;
+    background-position: center center;
+}
+.span_credit_card_icon_mastercard
+{
+    background-image: url("../images/mastercard.png");
+    background-repeat: no-repeat;
+    background-position: center center;
+}
+.span_credit_card_icon_americanexpress
+{
+    background-image: url("../images/americanexpress.png");
+    background-repeat: no-repeat;
+    background-position: center center;
+}
+.span_credit_card_icon_discover
+{
+    background-image: url("../images/discover.png");
+    background-repeat: no-repeat;
+    background-position: center center;
+}
+
 
 .service-icon-mysql
 {
@@ -1206,6 +1230,7 @@ a
     float: left;
     margin-bottom: 30px;
     width: 100%;
+    position: relative;
 }
 .layout_page_paragraph
 {
@@ -1276,4 +1301,14 @@ a
     height: 40px;
     margin-right: 10px;
     line-height: 40px;
+}
+
+
+#site_footer
+{
+    display: block;
+    position: absolute;
+    margin-top: 100px;
+    background-color: #0e4769;
+    bottom: 0;
 }

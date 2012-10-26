@@ -3,6 +3,7 @@ body
 	text-align: center;
 	margin: 0 auto;
     background-color: #09293e;
+    overflow
 }
 
 h1, h2, h3, h4, h5, h6
@@ -26,7 +27,7 @@ h1, h2, h3, h4, h5, h6
 
 #header_links
 {
-    width: 300px;
+    width: 500px;
     height: 50px;
     float: right;
     text-align: right;
@@ -94,7 +95,7 @@ h1, h2, h3, h4, h5, h6
 	position: absolute;
 	margin-left: -400px;
 	left: 50%;
-	top: 10px;
+	top: 100px;
 	z-index: 20;
 	display: none;
     background-color: #09293e;
@@ -1093,7 +1094,7 @@ h2 .count
     margin-left: 0;
     margin-right: 10px;
     padding: 0;
-    width: 200px;
+    width: 202px;
     height: 160px;
     background-repeat: repeat-y;
     position: relative;
@@ -1104,7 +1105,8 @@ h2 .count
     list-style: none;
 }
 
-
+.tile_credit_card_name_unused,
+.tile_credit_card_name,
 .tile_organization_name,
 .tile_space_name,
 .tile_app_name,
@@ -1124,24 +1126,17 @@ h2 .count
     float: left;
     list-style: none;
 }
-
-.tile_credit_card
+.tile_credit_card_name
 {
-    margin: 4px;
-    width: 150px;
-    height: 100px;
-    position: relative;
-    cursor: pointer;
-    overflow: hidden;
-    line-height: 18px;
-    display: list-item;
-    float: left;
-    list-style: none;
-    background-image: url("../images/tile_big_red.png");
-    background-repeat: repeat-y;
-    border: 1px solid #b43051;
+    background-image: url("../images/tile_big_brown.png");
+    border: 1px solid #4e334a;
 }
-
+.tile_credit_card_name_unused
+{
+    background-image: none;
+    background-color: #b6bfb6;
+    border: 1px solid #7452c6;
+}
 
 .tile_user_owner,
 .tile_user_developer,
@@ -1241,6 +1236,7 @@ h2 .count
     list-style: none;
 }
 
+.tile_credit_card_logo,
 .tile_service_logo,
 .tile_app_logo
 {
@@ -1259,7 +1255,7 @@ h2 .count
 }
 
 
-
+.tile_credit_card_details,
 .tile_service_details
 {
     margin: 4px;
@@ -1326,7 +1322,6 @@ h2 .count
     border: 1px solid #b43051;
 }
 
-
 .span_members_icon,
 .span_cost_icon
 {
@@ -1347,7 +1342,6 @@ h2 .count
     background-image: url("../images/money_bag_24px.png");
     background-repeat: no-repeat;
 }
-
 
  /*
 .tilegreen
@@ -1898,6 +1892,8 @@ h3
 
 .service_cost_span,
 .service_plan_span,
+.credit_card_first_name_span,
+.credit_card_last_name_span,
 .costs_span,
 .organization_members_span,
 .organization_cost_span
@@ -1911,7 +1907,7 @@ h3
     left: 3px;
     color: #ffffff;
 }
-
+.credit_card_first_name_span,
 .service_cost_span
 {
     bottom: 23px;
@@ -1983,6 +1979,7 @@ h3
 .app_name,
 .app_name_big,
 .service_name,
+.credit_card_name,
 .uri_name
 {
     font-family: 'Segoe UI Light', 'Open Sans', Verdana, Arial, Helvetica, sans-serif;
@@ -1991,7 +1988,7 @@ h3
     letter-spacing: 0.01em;
     z-index: 2;  color: #ffffff;
     position: absolute;
-    height: 26px;
+    height: 32px;
     width: 100%;
     top: 5px;
     left: 5px;

@@ -109,7 +109,6 @@ function showApps()
      document.getElementById('billings').style.display = 'none';
      document.getElementById('create_app').style.display = 'block';
      document.getElementById('create_service').style.display = 'none';
-     document.getElementById('create_credit_card').style.display = 'none';
 
     Happs = false;
     Hservices = true;
@@ -151,7 +150,6 @@ function showServices()
      document.getElementById('billings').style.display = 'none';
      document.getElementById('create_app').style.display = 'none';
      document.getElementById('create_service').style.display = 'block';
-     document.getElementById('create_credit_card').style.display = 'none';
 
     Hservices = false;
     Happs = true;
@@ -194,7 +192,6 @@ function showBillings()
      document.getElementById('billings').style.display = 'block';
      document.getElementById('create_app').style.display = 'none';
      document.getElementById('create_service').style.display = 'none';
-     document.getElementById('create_credit_card').style.display = 'block';
 
     Hservices = true;
     Happs = true;

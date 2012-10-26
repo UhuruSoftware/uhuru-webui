@@ -1,5 +1,5 @@
 
-//THIS FUNCTION SETS THE VARIABLES TO THE APP DETAILS ON THE CURRENT HOWERED APP TILE
+//THIS FUNCTION SETS THE VARIABLES TO THE APP DETAILS ON THE CURRENT HOVERED APP TILE
 
 var element = "";
 
@@ -8,14 +8,12 @@ $('.tile_app_name').hover(function(){
     var id = $(this).contents().find("span:nth-child(1)").attr("id");
     element = $('body').find('#details_' + id);
 
-    //alert(id);
-
     var displayAppDetails = function(){
             $('#opac_screen').css({	"display": "block", opacity: 0.7, "width": "10000px", "height": "10000px"});
             $('body').css({"overflow":"hidden"});
             element.fadeIn(800);
-            $('.close_app_details').click(function(){$('.app_details_modal').css("display", "none");$('#opac_screen').css("display", "none")});
-            $('.close').click(function(){$('.app_details_modal').css("display", "none");$('#opac_screen').css("display", "none")});
+            $('.close_app_details').click(function(){$('.app_details_modal').css("display", "none");$('#opac_screen').css("display", "none");$('body').css({"overflow":"auto"});});
+            $('.close').click(function(){$('.app_details_modal').css("display", "none");$('#opac_screen').css("display", "none");$('body').css({"overflow":"auto"});});
         }
 
     $('.show_this_app_details').click(displayAppDetails);
@@ -79,17 +77,10 @@ $('.get_service_name').hover(function(){
 
 
 $(function(){
-
-    var changed = false;
-
-
-    //var instance = $('.app_instances_count').text();
     var memory = $('.app_memory_count').text();
     var instance = 1;
 
 
-    //alert(instance);
-    var firstMemory = $('.app_memory_count').text();
     var firstInstance = $('.send_app_instances').val();
 
     instance = parseInt(instance);

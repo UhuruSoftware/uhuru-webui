@@ -71,7 +71,7 @@ get'/organizations' do
 
   $path_1 = ''
   $path_2 = ''
-  $path_home = '<a href="/organizations" class="breadcrumb_element_home">ORGANIZATIONS</a>'
+  $path_home = '<a href="/organizations" class="breadcrumb_element_home"></a>'
 
   organizations_Obj = Organizations.new(user_token)
   organizations_list = organizations_Obj.read_all
@@ -81,6 +81,22 @@ get'/organizations' do
 
   erb :organizations, {:locals => {:organizations_list => organizations_list, :organizations_count => organizations_list.count}, :layout => :layout_user}
 end
+
+
+get'/credit' do
+  @usertitle = "User" + " " + "Uhuru"
+  @timeNow = $this_time
+
+  $path_1 = ''
+  $path_2 = ''
+  $path_home = '<a href="/organizations" class="breadcrumb_element_home"></a>'
+
+  erb :creditcard, {:layout => :layout_user}
+end
+
+
+
+
 
 
 get'/organization:org_guid' do
