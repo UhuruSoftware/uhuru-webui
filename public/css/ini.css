@@ -43,6 +43,10 @@ h1, h2, h3, h4, h5, h6
     line-height: 50px;
     color: #ffffff;
 }
+.credit_link
+{
+    margin-right: 50px;
+}
 
 
 #delete_this_organization_modal,
