@@ -18,7 +18,7 @@ class Organizations
       organizations_list << Organization.new(org.name, 0, org.users.count, [], org.guid)
     end
 
-    organizations_list
+    organizations_list.sort! { |a, b| a.name.downcase <=> b.name.downcase}
   end
 
   def get_name(org_guid)
@@ -42,7 +42,7 @@ class Organizations
     @client.current_organization = org
 
     rescue Exception => e
-    puts "#{e.inspect}, #{e.backtrace}"
+    "#{e.inspect}, #{e.backtrace}"
   end
 
   def create(name)
@@ -51,7 +51,7 @@ class Organizations
     new_org.create!
 
   rescue Exception => e
-    puts "#{e.inspect}, #{e.backtrace}"
+    "#{e.inspect}, #{e.backtrace}"
   end
 
   def update(name, org_guid)
@@ -60,7 +60,7 @@ class Organizations
     org.update!
 
   rescue Exception => e
-    puts "#{e.inspect}, #{e.backtrace}"
+    "#{e.inspect}, #{e.backtrace}"
   end
 
   def delete(org_guid)
@@ -75,7 +75,7 @@ class Organizations
     org.delete!
 
   rescue Exception => e
-    puts "#{e.inspect}, #{e.backtrace}"
+    "#{e.inspect}, #{e.backtrace}"
   end
 
   def read_spaces(org_guid)

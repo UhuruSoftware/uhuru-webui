@@ -1,6 +1,11 @@
 
 cloudfoundry:
   cloud-controller-api: "http://api3.ccng-dev.net"
+  client-id: "cloud_controller"
+  client-secret: "cc"
+
+uaa:
+  uaa-api: "http://uaa.ccng-dev.net"
 
 uhuru:
   webui-port: 9494

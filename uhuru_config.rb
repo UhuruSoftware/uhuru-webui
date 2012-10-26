@@ -12,6 +12,9 @@ class UhuruConfig
     config = YAML.load_file(DEFAULT_CONFIG_PATH)
 
     @cloud_controller_api = config["cloudfoundry"]["cloud-controller-api"]
+    @client_id = config["cloudfoundry"]["client-id"]
+    @client_id = config["cloudfoundry"]["client-secret"]
+    @uaa_api = config["uaa"]["uaa-api"]
     @uhuru_webui_port = config["uhuru"]["webui-port"]
     @dev_mode = config["uhuru"]["dev-mode"]
     @logger = self.set_logger(config["logger"]["path"])

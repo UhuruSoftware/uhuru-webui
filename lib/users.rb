@@ -24,7 +24,7 @@ class Users
 
     org.update!
     rescue Exception => e
-      puts "#{e.inspect}, #{e.backtrace}"
+      "#{e.inspect}, #{e.backtrace}"
   end
 
   def add_user_to_org_with_role(org_guid, email, role) # to use from invite user
@@ -63,7 +63,7 @@ class Users
     end
 
   rescue Exception => e
-    puts "#{e.inspect}, #{e.backtrace}"
+    "#{e.inspect}, #{e.backtrace}"
   end
 
   def delete(email)
@@ -71,7 +71,7 @@ class Users
     user.delete!
 
   rescue Exception => e
-    puts "#{e.inspect}, #{e.backtrace}"
+    "#{e.inspect}, #{e.backtrace}"
   end
 
   class User
