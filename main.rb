@@ -61,6 +61,34 @@ get'/' do
 end
 
 
+post '/login' do
+  @username = params[:username]
+  @password = params[:password]
+
+  user_login = UsersSetup.new
+  $user_token = user_login.get_user_token(@username, @password)
+
+  redirect '/organizations'
+
+end
+
+post '/signup' do
+  @email = params[:email]
+  @password = params[:password]
+  @given_name = params[:first_name]
+  @family_name = params[:last_name]
+
+  user_sign_up = UsersSetup.new
+  $user = user_sign_up.add_user(@email, @password, @given_name, @family_name)
+  $user_token = user_sign_up.get_user_token(@email, @password)
+
+  redirect '/organizations'
+
+end
+
+
+
+
 get'/infopage' do
   @title = "Uhuru Info"
   @timeNow = $this_time
@@ -386,16 +414,7 @@ post '/unbindUri' do
 end
 
 
-post '/login' do
-  @username = params[:username]
-  @password = params[:password]
 
-  user_login = UsersSetup.new
-  $user_token = user_login.get_user_token(@username, @password)
-
-  redirect '/organizations'
-
-end
 
 
 

@@ -99,15 +99,15 @@
 
 
 <div class="modal hide" id="signup_modal">
-    <form autocomplete="off" id="sign_up">
+    <form action="/signup" method="post" autocomplete="off" id="sign_up">
         <div class="modal-header">
             <button type="button" class="close"></button>
             <h3>Sign Up</h3>
         </div>
             <div class="modal-body" id="signup_modal_content">
                 <p>
-                    <label for="username">username: </label>
-                    <input type="text" id="username" name="username" class="modal_input_box" style="float: right;"/>
+                    <label for="email">e-mail: </label>
+                    <input type="text" id="email" name="email" class="modal_input_box"/>
                 </p>
 
                 <p>
@@ -121,8 +121,13 @@
                 </p>
 
                 <p>
-                    <label for="email">e-mail: </label>
-                    <input type="email" id="email" name="email" class="modal_input_box" />
+                    <label for="first_name">First Name: </label>
+                    <input type="email" id="first_name" name="first_name" class="modal_input_box" />
+                </p>
+
+                <p>
+                    <label for="last_name">Last Name: </label>
+                    <input type="email" id="last_name" name="last_name" class="modal_input_box" />
                 </p>
 
             </div>
