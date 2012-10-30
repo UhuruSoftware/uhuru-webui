@@ -24,6 +24,43 @@ h1, h2, h3, h4, h5, h6
 }
 
 
+#current_user
+{
+    position: absolute;
+    right: -305px;
+    line-height: 50px;
+    width: 320px;
+}
+
+
+#current_user_log_out
+{
+    background-color: #000000;
+    padding: 5px;
+    color: #ffffff;
+    font-size: 16px;
+}
+
+#current_user_edit_btn
+{
+    right: 120px;
+    line-height: 30px;
+}
+
+#current_user_edit_modal
+{
+    display: none;
+    width: 400px;
+    height: 100px;
+    background-color: #0E4769;
+    border: 1px solid red;
+    position: absolute;
+    top: 50px;
+    right: -405px;
+}
+
+
+
 
 #header_links
 {

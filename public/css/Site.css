@@ -854,6 +854,7 @@ section {
 {
     width: 940px;
     margin: 0 auto;
+    position: relative;
 }
 
 /* Styles for basic forms

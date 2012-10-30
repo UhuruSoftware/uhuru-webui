@@ -12,7 +12,7 @@ UhuruConfig.load
 
 set :port, UhuruConfig.uhuru_webui_port
 
-
+$user = nil
 
 $space_name = 'breadcrumb space'                              #this variable will be shown at breadcrumb navigation
 $organization_name = 'breadcrumb org'                         #this variable will be shown at breadcrumb navigation
@@ -56,6 +56,7 @@ get'/' do
   $path_1 = ''
   $path_2 = ''
 
+  $user = nil
 
   erb :index, {:layout => :layout_guest }
 end
@@ -67,6 +68,8 @@ post '/login' do
 
   user_login = UsersSetup.new
   $user_token = user_login.get_user_token(@username, @password)
+
+  $user = @username
 
   redirect '/organizations'
 

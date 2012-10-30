@@ -46,8 +46,20 @@
             <div class="page-margin">
                 <a href="/organizations"><h1>Uhuru AppCloud</h1></a>
 
+                <div id="current_user">
+                    <span id="current_user_name"><%= $user %></span>
+                    <input type="button" class="edit_sign_48" value="" id="current_user_edit_btn" />
+                    <a href="/" id="login_button"><button class="btn btn-success login" id="login_btn">Logout<i class="icon-login"></i></button></a>
+                </div>
 
-                <a href="/"><span class="head_link credit_link">logout</span></a>
+                <div id="current_user_edit_modal">
+
+                  <p>Welcome <%= $user %></p>
+                  <form action="" method="post">
+                        <input type="text" value="...press enter when ready" class="modal_input_box" />
+                        <input type="submit" value="" class="blank_input" id="current_user_update" />
+                  </form>
+                </div>
 
 
                 <div id="header_links">
