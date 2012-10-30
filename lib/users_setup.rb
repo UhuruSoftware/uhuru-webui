@@ -16,7 +16,7 @@ class UsersSetup
     token_issuer = CF::UAA::TokenIssuer.new(UhuruConfig.uaa_api, UhuruConfig.client_id, UhuruConfig.client_secret)
     token = token_issuer.client_credentials_grant()
 
-    uaac = CF::UAA::UserAccount.new('http://uaa.ccng-dev.net', token.info[:token_type] + ' ' + token.info[:access_token])
+    uaac = CF::UAA::UserAccount.new(UhuruConfig.uaa_api, token.info[:token_type] + ' ' + token.info[:access_token])
 
     emails = [email]
     uaac.create(email, password, emails, given_name, family_name, nil)
@@ -54,15 +54,6 @@ class UsersSetup
 
     token_issuer = CF::UAA::TokenIssuer.new(UhuruConfig.uaa_api, "vmc", "")
     token_obj = token_issuer.implicit_grant_with_creds(creds)
-
-    tokinfo = CF::UAA::TokenCoder.decode(token_obj.info[:access_token], nil, nil, false)
-
-    CF::UAA::Config.load(UhuruConfig.uaac_path)
-    CF::UAA::Config.context = tokinfo[:email]
-    CF::UAA::Config.add_opts(user_id: tokinfo[:user_id])
-    CF::UAA::Config.add_opts token
-
-
     token_obj.info[:token_type] + ' ' + token_obj.info[:access_token]
 
     rescue Exception => e
