@@ -32,14 +32,21 @@ $slash = '<span class="breadcrumb_slash"> / </span>'          #this is a variabl
 $this_time = @time.strftime("%m/%d/%Y")                       # this is the time variable witch will be passed at every page at the bottom
                                                               #
 
+$user_token
+
 def user_token
   if (UhuruConfig.dev_mode)
-    DevUtils.test_token
+    #DevUtils.test_token
+    $user_token
   else
-    ''
+    $user_token
   end
 end
 
+#user = UsersSetup.new
+#
+##user.add_user('adelyna@gmail.com', 'pass', 'a', 's')
+#user.get_user_token('adelyna@gmail.com', 'pass')
 
 get'/' do
   @timeNow = $this_time
@@ -48,7 +55,8 @@ get'/' do
   $path_1 = ''
   $path_2 = ''
 
-  erb :index, {:layout => :layout_guest}
+
+  erb :index, {:layout => :layout_guest }
 end
 
 
@@ -59,7 +67,7 @@ get'/infopage' do
   $path_1 = ''
   $path_2 = ''
 
-  erb :infopage, {:layout => :layout_infopage}
+  erb :infopage, {:layout => :layout_infopage }
 end
 
 
@@ -374,6 +382,18 @@ post '/unbindUri' do
   apps.unbind_app_url(@app_name, @domain_name, @uri_name)
 
   redirect "/space" + $currentSpace
+end
+
+
+post '/login' do
+  @username = params[:username]
+  @password = params[:password]
+
+  user_login = UsersSetup.new
+  $user_token = user_login.get_user_token(@username, @password)
+
+  redirect '/organizations'
+
 end
 
 

@@ -3,6 +3,7 @@ require 'lib/spaces'
 require 'lib/users'
 require 'lib/applications'
 require 'lib/service_instances'
+require 'lib/users_setup'
 require 'logger'
 
 class UhuruConfig
@@ -13,8 +14,9 @@ class UhuruConfig
 
     @cloud_controller_api = config["cloudfoundry"]["cloud-controller-api"]
     @client_id = config["cloudfoundry"]["client-id"]
-    @client_id = config["cloudfoundry"]["client-secret"]
+    @client_secret = config["cloudfoundry"]["client-secret"]
     @uaa_api = config["uaa"]["uaa-api"]
+    @uaac_path = config["uaa"]["uaac-path"]
     @uhuru_webui_port = config["uhuru"]["webui-port"]
     @dev_mode = config["uhuru"]["dev-mode"]
     @logger = self.set_logger(config["logger"]["path"])
@@ -22,6 +24,18 @@ class UhuruConfig
 
   def self.cloud_controller_api
     @cloud_controller_api
+  end
+
+  def self.client_id
+    @client_id
+  end
+
+  def self.client_secret
+    @client_secret
+  end
+
+  def self.uaa_api
+    @uaa_api
   end
 
   def self.uhuru_webui_port

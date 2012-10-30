@@ -5,7 +5,11 @@ require 'uhuru_config'
 require 'lib/users'
 require 'lib/organizations'
 
-class Users_Setup
+class UsersSetup
+
+  def initialize
+    UhuruConfig.load
+  end
 
   def add_user(email, password, given_name, family_name)
 
@@ -23,9 +27,9 @@ class Users_Setup
 
     organizations_Obj = Organizations.new(user_token)
 
-    org_name = email + "'s organization'"
+    org_name = email + "'s organization"
     if (organizations_Obj.create(org_name))
-      orgs = organizations_Obj.read_all
+      orgs = organizations_Obj.get_organization_by_name(org_name)
 
       org_guid = orgs[0].guid
 
@@ -41,8 +45,8 @@ class Users_Setup
   def get_user_token(email, password)
 
     #to be deleted when all users can create organizations and etc..
-    email = 'sre@vmware.com'
-    password = 'a'
+    #email = 'sre@vmware.com'
+    #password = 'a'
 
     creds = {}
     creds['username'] = email
@@ -50,6 +54,15 @@ class Users_Setup
 
     token_issuer = CF::UAA::TokenIssuer.new(UhuruConfig.uaa_api, "vmc", "")
     token_obj = token_issuer.implicit_grant_with_creds(creds)
+
+    tokinfo = CF::UAA::TokenCoder.decode(token_obj.info[:access_token], nil, nil, false)
+
+    CF::UAA::Config.load(UhuruConfig.uaac_path)
+    CF::UAA::Config.context = tokinfo[:email]
+    CF::UAA::Config.add_opts(user_id: tokinfo[:user_id])
+    CF::UAA::Config.add_opts token
+
+
     token_obj.info[:token_type] + ' ' + token_obj.info[:access_token]
 
     rescue Exception => e

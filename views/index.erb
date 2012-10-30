@@ -71,21 +71,21 @@
         <button type="button" class="close"></button>
         <h3>Login</h3>
     </div>
-    <form autocomplete="off">
+    <form action="/login" method="post" autocomplete="off">
         <div class="modal-body" id="login_modal_content">
             <p>
                 <label for="id">username: </label>
-                <input type="text" id="id" name="orgName" class="modal_input_box" />
+                <input type="text" id="id" name="username" class="modal_input_box" value=""/>
             </p>
 
             <p>
                 <label for="pass">password: </label>
-                <input type="password" id="pass" name="orgName" class="modal_input_box" />
+                <input type="password" id="pass" name="password" class="modal_input_box" value=""/>
             </p>
 
             <p><span>Forgot you're password? Click <a href="#">here</a></span></p>
         </div>
-    </form>
+
 
     <div class="modal-footer">
         <div class="button_case_create_organization_and_space">
@@ -93,6 +93,7 @@
             <input type="submit" value="Log In" class="btn btn-success btn_left_create_organization_and_space white_btn_text" />
         </div>
     </div>
+    </form>
 </div>
 
 

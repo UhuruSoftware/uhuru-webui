@@ -21,6 +21,14 @@ class Organizations
     organizations_list.sort! { |a, b| a.name.downcase <=> b.name.downcase}
   end
 
+  def get_organization_by_name(org_name)
+    org = @client.organization.find { |o|
+           o.name == org_name
+      }
+
+    org
+  end
+
   def get_name(org_guid)
     org = @client.organization(org_guid)
     org.name
