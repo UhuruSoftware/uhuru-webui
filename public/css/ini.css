@@ -95,11 +95,11 @@ h1, h2, h3, h4, h5, h6
 
 #create_credit_card_modal
 {
-	width: 800px;
+	width: 600px;
 	position: absolute;
-	margin-left: -400px;
+	margin-left: -300px;
 	left: 50%;
-	top: 100px;
+	top: 50px;
 	z-index: 20;
 	display: none;
     background-color: #09293e;
@@ -402,8 +402,8 @@ h2
 
 .credit_card_body
 {
-    padding-top: 10px;
-    padding-bottom: 10px;
+    padding-top: 5px;
+    padding-bottom: 5px;
 }
 
 .credit_card_rows
@@ -420,11 +420,12 @@ h2
 {
     font-family: 'Segoe UI Light', 'Open Sans', Verdana, Arial, Helvetica, sans-serif;
     font-weight: 200;
-    font-size: 20px;
     letter-spacing: 0.01em;
     color: #ffffff;
-    line-height: 40px;
-    height: 40px;
+    text-align: left;
+    font-size: 14px;
+    line-height: 14px;
+    height: 20px;
 }
 
 .credit_card_month_combo,
@@ -437,37 +438,58 @@ h2
 {
     background-image: url("../images/creditcards.png");
     background-repeat: no-repeat;
-    background-position: 8% 60%;
+    background-position: 40% 60%;
 }
 
 .credit_card_left
 {
     float: left;
     width: 250px;
-    margin: 5px;
+    margin: 1px;
     text-align: right;
 }
 .credit_card_right
 {
     float: right;
     width: 500px;
-    margin: 5px;
+    margin: 1px;
+    text-align: left;
+    line-height: 14px;
 }
 
 .credit_card_input_box
 {
-    width: 450px;
-    float: right;
-    padding-left: 10px;
-    margin-right: 10px
+    border: 1px solid #0e4769 !important;
+    background-color: #09293e;
+    outline: 0 solid #ffffff;
+    text-align: left;
+    font-family: 'Segoe UI Light', 'Open Sans', Verdana, Arial, Helvetica, sans-serif;
+    font-weight: 200;
+    letter-spacing: 0.01em;
+    font-size: 14px;
+    line-height: 14px;
+    width: 250px;
+    float: left;
+    height: 20px;
+    padding-right: 10px;
+    margin-right: 20px;
+    font-style: italic;
+    color: gray;
 }
 .credit_card_type_box
 {
-    width: 250px;
+    width: 110px;
+    color: #ffffff;
+    font-style: normal;
 }
 select
 {
   -webkit-appearance: button;
+}
+.opt
+{
+    font-style: italic;
+    color: gray;
 }
 
 

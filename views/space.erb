@@ -14,7 +14,7 @@
                 <input type="button" value="" class="plus_sign_48 plus_sign_position_48" id="create_app" />
                 <input type="button" value="" class="plus_sign_48 plus_sign_position_48" id="create_service" style="display: none;" />
 
-                <input type="button" value="" class="edit_sign_48 edit_sign_position_48" onclick="showSpacesInput();" />
+                <input type="button" value="" class="edit_sign_48 edit_sign_position_48" id="edit_space_btn" onclick="showSpacesInput();" />
                 <input type="button" class="trash_sign_48 trash_sign_position_48 delete_this_space" value="" />
             </div>
         </div>
@@ -24,7 +24,6 @@
            <ul id="spaces_tabs" class="nav nav-tabs">
                 <li onclick="showApps();" id="apps_li">Apps (<span><%= apps_count %></span>)</li>
                 <li onclick="showServices();" id="services_li">Services (<span><%= services_count %></span>)</li>
-                <li onclick="showBillings();" id="billings_li">Credit Cards</li>
             </ul>
                 <div id="apps" class="tab_pane">
                     <ul class="tile_list">
@@ -220,84 +219,6 @@
                     <% end %>
                 </ul>
             </div>
-
-
-            <div id="billings" class="tab-pane">
-                <ul class="tile_list" style="border-bottom: 1px solid #0e4769; padding-bottom: 50px;">
-                    <li class="tile_invisible">
-                        <ul class="custom_list">
-                            <li class="tile_credit_card_name" title="xxxx-xxxx-xxxx-1234">
-                              <span class="credit_card_name">xxxx-xxxx-xxxx-1234</span>
-                            </li>
-
-                            <li class="tile_credit_card_logo">
-                                <span class="link_tiles_app span_credit_card_icon_visa"></span>
-                            </li>
-
-                            <li class="tile_credit_card_details">
-                                <span class="credit_card_first_name_span">First Name</span>
-                                <span class="credit_card_last_name_span">Last Name</span>
-                            </li>
-                        </ul>
-                    </li>
-                </ul>
-
-
-                <ul class="tile_list">
-
-                    <li class="tile_invisible">
-                        <ul class="custom_list">
-                            <li class="tile_credit_card_name" title="xxxx-xxxx-xxxx-3241">
-                              <span class="credit_card_name">xxxx-xxxx-xxxx-3241</span>
-                            </li>
-
-                            <li class="tile_credit_card_logo">
-                                <span class="link_tiles_app span_credit_card_icon_mastercard"></span>
-                            </li>
-
-                            <li class="tile_credit_card_details">
-                                <span class="credit_card_first_name_span">First Name</span>
-                                <span class="credit_card_last_name_span">Last Name</span>
-                            </li>
-                        </ul>
-                    </li>
-
-                    <li class="tile_invisible">
-                        <ul class="custom_list">
-                            <li class="tile_credit_card_name_unused">
-                              <span class="credit_card_name">Uneditable</span>
-                            </li>
-
-                            <li class="tile_credit_card_logo">
-                                <span class="link_tiles_app span_credit_card_icon_mastercard"></span>
-                            </li>
-
-                            <li class="tile_credit_card_details">
-                                <span class="credit_card_first_name_span">First Name</span>
-                                <span class="credit_card_last_name_span">Last Name</span>
-                            </li>
-                        </ul>
-                    </li>
-
-                    <li class="tile_invisible">
-                        <ul class="custom_list">
-                            <li class="tile_credit_card_name_unused">
-                              <span class="credit_card_name">Not mine</span>
-                            </li>
-
-                            <li class="tile_credit_card_logo">
-                                <span class="link_tiles_app span_credit_card_icon_americanexpress"></span>
-                            </li>
-
-                            <li class="tile_credit_card_details">
-                                <span class="credit_card_first_name_span">First Name</span>
-                                <span class="credit_card_last_name_span">Last Name</span>
-                            </li>
-                        </ul>
-                    </li>
-                </ul>
-            </div>
-
 </div>
 
 
