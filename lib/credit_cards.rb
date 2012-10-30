@@ -40,8 +40,9 @@ class CreditCards
 
     credit_card.create!
 
-    rescue Exception => e
-      "#{e.inspect}, #{e.backtrace}"
+  rescue Exception => e
+    raise "#{e.inspect}"
+    #puts "#{e.inspect}, #{e.backtrace}"
   end
 
   def delete(card_id)
@@ -50,8 +51,9 @@ class CreditCards
 
     credit_card.delete!
 
-    rescue Exception => e
-      "#{e.inspect}, #{e.backtrace}"
+  rescue Exception => e
+    raise "#{e.inspect}"
+    #puts "#{e.inspect}, #{e.backtrace}"
   end
 
   class CreditCard

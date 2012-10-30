@@ -19,7 +19,14 @@ class UsersSetup
     uaac = CF::UAA::UserAccount.new(UhuruConfig.uaa_api, token.info[:token_type] + ' ' + token.info[:access_token])
 
     emails = [email]
-    uaac.create(email, password, emails, given_name, family_name, nil)
+
+    info = {userName: email, password: password, name: {givenName: given_name, familyName: family_name}}
+    info[:emails] = emails.respond_to?(:each) ?
+        emails.each_with_object([]) { |email, o| o.unshift({:value => email}) } :
+        [{:value => (emails || name)}]
+
+    user = uaac.add(info)
+    user_id = user[:id]
 
     #user_token = get_user_token(email, password)
 
@@ -28,36 +35,32 @@ class UsersSetup
     organizations_Obj = Organizations.new(user_token)
 
     org_name = email + "'s organization"
-    if (organizations_Obj.create(org_name))
-      orgs = organizations_Obj.get_organization_by_name(org_name)
+    org_guid = organizations_Obj.create(org_name)
 
-      org_guid = orgs[0].guid
+    users_obj = Users.new(user_token)
+    users_obj.add_user_to_org_with_role(org_guid, user_id, ['owner', 'manager'])
 
-      users_obj = Users.new(user_token)
-      users_obj.add_user_to_org_with_role(org_guid, email, nil)
-    end
+  rescue Exception => e
+    raise "#{e.inspect}"
+    #puts "#{e.inspect}, #{e.backtrace}"
 
-    rescue Exception => e
-      "#{e.inspect}, #{e.backtrace}"
-    
   end
-  
+
   def get_user_token(email, password)
-
-    #to be deleted when all users can create organizations and etc..
-    #email = 'sre@vmware.com'
-    #password = 'a'
-
     creds = {}
     creds['username'] = email
     creds['password'] = password
 
     token_issuer = CF::UAA::TokenIssuer.new(UhuruConfig.uaa_api, "vmc", "")
     token_obj = token_issuer.implicit_grant_with_creds(creds)
+
+    puts token_obj.info[:token_type] + ' ' + token_obj.info[:access_token]
+
     token_obj.info[:token_type] + ' ' + token_obj.info[:access_token]
 
-    rescue Exception => e
-      "#{e.inspect}, #{e.backtrace}"
-  end  
+  rescue Exception => e
+    raise "#{e.inspect}"
+    #puts "#{e.inspect}, #{e.backtrace}"
+  end
 
 end

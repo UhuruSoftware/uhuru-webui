@@ -36,8 +36,9 @@ class Spaces
 
     @client.current_space = space
 
-    rescue Exception => e
-    "#{e.inspect}, #{e.backtrace}"
+  rescue Exception => e
+    raise "#{e.inspect}"
+    #puts "#{e.inspect}, #{e.backtrace}"
   end
 
   def create(org_guid, name)
@@ -50,7 +51,8 @@ class Spaces
     new_space.create!
 
   rescue Exception => e
-    "#{e.inspect}, #{e.backtrace}"
+    raise "#{e.inspect}"
+    #puts "#{e.inspect}, #{e.backtrace}"
   end
 
   def update(name, space_guid)
@@ -60,8 +62,8 @@ class Spaces
     space.update!
 
   rescue Exception => e
-    "#{e.inspect}, #{e.backtrace}"
-
+    raise "#{e.inspect}"
+    #puts "#{e.inspect}, #{e.backtrace}"
   end
 
   def delete(space_guid)
@@ -84,7 +86,8 @@ class Spaces
     space.delete!
 
   rescue Exception => e
-    "#{e.inspect}, #{e.backtrace}"
+    raise "#{e.inspect}"
+    #puts "#{e.inspect}, #{e.backtrace}"
 
   end
 

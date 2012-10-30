@@ -18,13 +18,13 @@ class Organizations
       organizations_list << Organization.new(org.name, 0, org.users.count, [], org.guid)
     end
 
-    organizations_list.sort! { |a, b| a.name.downcase <=> b.name.downcase}
+    organizations_list.sort! { |a, b| a.name.downcase <=> b.name.downcase }
   end
 
   def get_organization_by_name(org_name)
-    org = @client.organization.find { |o|
-           o.name == org_name
-      }
+    org = @client.organizations.find { |o|
+      o.name == org_name
+    }
 
     org
   end
@@ -49,17 +49,21 @@ class Organizations
 
     @client.current_organization = org
 
-    rescue Exception => e
-    "#{e.inspect}, #{e.backtrace}"
+  rescue Exception => e
+    raise "#{e.inspect}"
+    #puts "#{e.inspect}, #{e.backtrace}"
   end
 
   def create(name)
     new_org = @client.organization
     new_org.name = name
-    new_org.create!
+    if new_org.create!
+      new_org.guid
+    end
 
   rescue Exception => e
-    "#{e.inspect}, #{e.backtrace}"
+    raise "#{e.inspect}"
+    #", #{e.backtrace}"
   end
 
   def update(name, org_guid)
@@ -68,7 +72,8 @@ class Organizations
     org.update!
 
   rescue Exception => e
-    "#{e.inspect}, #{e.backtrace}"
+    raise "#{e.inspect}"
+    #puts "#{e.inspect}, #{e.backtrace}"
   end
 
   def delete(org_guid)
@@ -83,7 +88,8 @@ class Organizations
     org.delete!
 
   rescue Exception => e
-    "#{e.inspect}, #{e.backtrace}"
+    raise "#{e.inspect}"
+    #puts "#{e.inspect}, #{e.backtrace}"
   end
 
   def read_spaces(org_guid)

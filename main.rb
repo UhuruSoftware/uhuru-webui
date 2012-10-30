@@ -44,10 +44,6 @@ def user_token
   end
 end
 
-#user = UsersSetup.new
-#
-##user.add_user('adelyna@gmail.com', 'pass', 'a', 's')
-#user.get_user_token('adelyna@gmail.com', 'pass')
 
 get'/' do
   @timeNow = $this_time

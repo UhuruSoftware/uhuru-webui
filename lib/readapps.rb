@@ -19,11 +19,11 @@ class TemplateApps
       @i = @i + 1
     }
     @apps
-    end
+  end
 end
 
 
- <<-Doc
+<<-Doc
     def read_apps
       @apps = Array.new
       @i = 0
@@ -83,4 +83,4 @@ end
       }
       @locations
     end
-  Doc
+Doc

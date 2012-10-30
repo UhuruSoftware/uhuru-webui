@@ -53,11 +53,11 @@ class Applications
       end
 
       domain = @client.domains.find { |d|
-           d.name == domain_name
+        d.name == domain_name
       }
 
       route = @client.routes.find { |r|
-           r.host == name && r.domain == domain
+        r.host == name && r.domain == domain
       }
 
       unless route
@@ -75,8 +75,9 @@ class Applications
       new_app.start!
     end
 
-    rescue Exception => e
-      "#{e.inspect}, #{e.backtrace}"
+  rescue Exception => e
+    raise "#{e.inspect}"
+    #puts "#{e.inspect}, #{e.backtrace}"
   end
 
   def start_app(app_name)
@@ -84,8 +85,9 @@ class Applications
 
     app.start!
 
-    rescue Exception => e
-      "#{e.inspect}, #{e.backtrace}"
+  rescue Exception => e
+    raise "#{e.inspect}"
+    #puts "#{e.inspect}, #{e.backtrace}"
   end
 
   def stop_app(app_name)
@@ -93,8 +95,9 @@ class Applications
 
     app.stop!
 
-    rescue Exception => e
-      "#{e.inspect}, #{e.backtrace}"
+  rescue Exception => e
+    raise "#{e.inspect}"
+    #puts "#{e.inspect}, #{e.backtrace}"
   end
 
   def update(app_name, instances, memory)
@@ -105,8 +108,9 @@ class Applications
 
     app.update!
 
-    rescue Exception => e
-      "#{e.inspect}, #{e.backtrace}"
+  rescue Exception => e
+    raise "#{e.inspect}"
+    #puts "#{e.inspect}, #{e.backtrace}"
   end
 
   def delete(app_name)
@@ -122,8 +126,9 @@ class Applications
       end
     end
 
-    rescue Exception => e
-      "#{e.inspect}, #{e.backtrace}"
+  rescue Exception => e
+    raise "#{e.inspect}"
+    #puts "#{e.inspect}, #{e.backtrace}"
   end
 
   def bind_app_services(app_name, service_instance_name)
@@ -136,8 +141,9 @@ class Applications
 
     app.bind(service_instance)
 
-    rescue Exception => e
-      "#{e.inspect}, #{e.backtrace}"
+  rescue Exception => e
+    raise "#{e.inspect}"
+    #puts "#{e.inspect}, #{e.backtrace}"
   end
 
   def unbind_app_services(app_name, service_instance_name)
@@ -146,8 +152,9 @@ class Applications
 
     app.bind(service_instance)
 
-    rescue Exception => e
-      "#{e.inspect}, #{e.backtrace}"
+  rescue Exception => e
+    raise "#{e.inspect}"
+    #puts "#{e.inspect}, #{e.backtrace}"
   end
 
   #track cf to see how app routes are managed and what is owning organization for a domain
@@ -159,12 +166,12 @@ class Applications
     route = @client.routes.find { |r| r.host == new_url && r.domain == domain }
 
     unless route
-       route = @client.route
+      route = @client.route
 
-       route.host = new_url
-       route.domain = domain
-       route.organization = @client.organization(org_guid)
-       route.create!
+      route.host = new_url
+      route.domain = domain
+      route.organization = @client.organization(org_guid)
+      route.create!
     end
 
     app.add_route(route)

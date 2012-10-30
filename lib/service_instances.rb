@@ -9,7 +9,7 @@ class ServiceInstances
   def initialize(token)
     @client = CFoundry::V2::Client.new(UhuruConfig.cloud_controller_api, token)
   end
-  
+
   def create_service_instance(name, space_guid, service_plan_guid)
 
     service = @client.service_instance
@@ -20,8 +20,9 @@ class ServiceInstances
 
     service
 
-    rescue Exception => e
-      "#{e.inspect}, #{e.backtrace}"
+  rescue Exception => e
+    raise "#{e.inspect}"
+    #puts "#{e.inspect}, #{e.backtrace}"
   end
 
   def read_service_plans()
@@ -37,10 +38,11 @@ class ServiceInstances
 
     service_instance.delete!
 
-    rescue Exception => e
-      "#{e.inspect}, #{e.backtrace}"
+  rescue Exception => e
+    raise "#{e.inspect}"
+    #puts "#{e.inspect}, #{e.backtrace}"
   end
-  
+
   class Service
     attr_reader :name, :type, :guid
 

@@ -20,8 +20,8 @@ class DevUtils
     serv_auth.token = token
     serv_auth.create!
 
-    rescue Exception => e
-      puts "#{e.inspect}, #{e.backtrace}"
+  rescue Exception => e
+    puts "#{e.inspect}, #{e.backtrace}"
   end
 
   def create_service(label, url)
@@ -35,8 +35,8 @@ class DevUtils
     service.version = '1.0'
     service.create!
 
-    rescue Exception => e
-      puts "#{e.inspect}, #{e.backtrace}"
+  rescue Exception => e
+    puts "#{e.inspect}, #{e.backtrace}"
   end
 
   def createServicePlan(name, description, service_guid)
@@ -49,8 +49,8 @@ class DevUtils
     service_plan.service = service
     service_plan.create!
 
-    rescue Exception => e
-      puts "#{e.inspect}, #{e.backtrace}"
+  rescue Exception => e
+    puts "#{e.inspect}, #{e.backtrace}"
   end
 
 end
