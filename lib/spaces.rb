@@ -48,7 +48,9 @@ class Spaces
     new_space = @client.space
     new_space.organization = org
     new_space.name = name
-    new_space.create!
+    if new_space.create!
+      new_space.guid
+    end
 
   rescue Exception => e
     raise "#{e.inspect}"

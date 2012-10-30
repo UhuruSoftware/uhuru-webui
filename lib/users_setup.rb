@@ -33,12 +33,17 @@ class UsersSetup
     user_token = get_user_token('sre@vmware.com', 'a')
 
     organizations_Obj = Organizations.new(user_token)
-
     org_name = email + "'s organization"
     org_guid = organizations_Obj.create(org_name)
 
     users_obj = Users.new(user_token)
     users_obj.add_user_to_org_with_role(org_guid, user_id, ['owner', 'manager'])
+
+    spaces_Obj = Spaces.new(user_token)
+    space_name = email + "'s space"
+    space_guid = spaces_Obj.create(org_guid, space_name)
+
+    users_obj.add_user_with_role_to_space(space_guid, user_id, ['owner', 'manager'])
 
   rescue Exception => e
     raise "#{e.inspect}"
