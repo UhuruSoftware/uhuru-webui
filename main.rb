@@ -7,12 +7,12 @@ require 'uhuru_config'
 require 'dev_utils'
 require 'date'
 require 'readapps'
+require 'credit_cards'
+require 'sinatra/session'
 
 UhuruConfig.load
 
 set :port, UhuruConfig.uhuru_webui_port
-
-$user = nil
 
 $space_name = 'breadcrumb space'                              #this variable will be shown at breadcrumb navigation
 $organization_name = 'breadcrumb org'                         #this variable will be shown at breadcrumb navigation
@@ -26,6 +26,10 @@ $currentSpace                                                 #this is the Space
 
 $currentOrganization_Name                                     #this is the Organization NAME STRING for the current space on the website
 $currentSpace_Name                                            #this is the Space NAME STRING for the current space on the website
+
+set :session_fail, '/login'
+set :session_secret, 'secret!'
+
 
 $slash = '<span class="breadcrumb_slash"> / </span>'          #this is a variable witch holds the / symbol to be rendered afterwards in css, it is used at breadcrumb navigation
 
@@ -45,10 +49,9 @@ def user_token
 end
 
 
-get'/' do
+get '/' do
   @timeNow = $this_time
   @title = 'Uhuru App Cloud'
-
   $path_1 = ''
   $path_2 = ''
 
@@ -58,18 +61,42 @@ get'/' do
 end
 
 
-post '/login' do
-  @username = params[:username]
-  @password = params[:password]
-
-  user_login = UsersSetup.new
-  $user_token = user_login.get_user_token(@username, @password)
-
-  $user = @username
-
-  redirect '/organizations'
-
+get '/login' do
+  if session?
+    redirect '/organizations'
+  else
+    redirect '/'
+  end
 end
+
+post '/login' do
+  if params[:username]
+    session_start!
+
+    @username = params[:username]
+    @password = params[:password]
+
+    session[:username] = params[:username]
+    puts 'sesion name is' + session[:username] + 'username is ' + params[:username]
+
+    user_login = UsersSetup.new
+    $user_token = user_login.get_user_token(@username, @password)
+
+    $user = @username
+
+    redirect '/organizations'
+  else
+    redirect '/'
+  end
+end
+
+
+get '/logout' do
+  session_end!
+  redirect '/'
+end
+
+
 
 post '/signup' do
   @email = params[:email]
@@ -102,7 +129,10 @@ end
                   #  --- READ ---  #
 
 get'/organizations' do
-  @usertitle = "User" + " " + "Uhuru"
+  session!
+  @this_user = session[:username]
+
+  @usertitle = @this_user
   @timeNow = $this_time
 
   $path_1 = ''
@@ -120,16 +150,81 @@ end
 
 
 get'/credit' do
-  @usertitle = "User" + " " + "Uhuru"
+  @usertitle = session[:username]
   @timeNow = $this_time
 
   $path_1 = ''
   $path_2 = ''
   $path_home = '<a href="/organizations" class="breadcrumb_element_home"></a>'
 
-  erb :creditcard, {:layout => :layout_user}
+  my_credit_cards = nil
+
+  erb :creditcard, {:locals => {:my_credit_cards => my_credit_cards}, :layout => :layout_user}
 end
 
+
+get'/account' do
+  @usertitle = "Account " + session[:username]
+  @timeNow = $this_time
+
+  $path_1 = ''
+  $path_2 = ''
+  $path_home = '<a href="/organizations" class="breadcrumb_element_home"></a>'
+
+
+  erb :usersettings, {:layout => :layout_user}
+end
+
+post '/createCard' do
+
+  @first_name = params[:first_name]
+  @last_name = params[:last_name]
+  @card_number = params[:card_number]
+  @expiration_year = params[:expiration_year]
+  @expiration_month = params[:expiration_month]
+
+
+  @cvv = params[:cvv]
+  @address1 = params[:address1]
+  @address2 = params[:address2]
+
+
+  @city = params[:city]
+  #@state = params[:state]
+  #@zip = params[:zip]
+  @country = params[:country]
+
+  @card_type = params[:card_type]
+
+  credit_cards_Obj = CreditCards.new(user_token)
+  new_credit_card = nil # credit_cards_Obj.create($currentOrganization, firs_name, last_name, card_number, expiration_year, expiration_month,
+                        #cvv, address1, address2, city, state, zip, country, card_type )
+
+
+  puts "first name" + @first_name + "\n"
+  puts "last name" + @last_name + "\n"
+  puts "card nr" + @card_number + "\n"
+  puts "year" + @expiration_year + "\n"
+  puts "month" + @expiration_month + "\n"
+
+
+  puts "cvv" + @cvv + "\n"
+  puts "add1" + @address1 + "\n"
+  puts "add2" + @address2 + "\n"
+
+
+  puts "city" + @city + "\n"
+  #puts "state" + @state + "\n"
+  #puts "zip" + @zip + "\n"
+  puts "country" + @country + "\n"
+
+
+  puts "card type : " + @card_type + "\n"
+
+
+
+  redirect "/credit"
+end
 
 
 
@@ -139,6 +234,7 @@ get'/organization:org_guid' do
   @timeNow = $this_time
 
   organizations_Obj = Organizations.new(user_token)
+  credit_cards_Obj = CreditCards.new(user_token)
 
   @this_guid = params[:org_guid]
   $organization_name = organizations_Obj.get_name(@this_guid)
@@ -157,7 +253,10 @@ get'/organization:org_guid' do
   managers_list = organizations_Obj.read_managers(@this_guid)
 
 
-  erb :organization, {:locals => {:spaces_list => spaces_list, :spaces_count => spaces_list.count, :members_count => owners_list.count + developers_list.count + managers_list.count, :owners_list => owners_list, :developers_list => developers_list, :managers_list => managers_list}, :layout => :layout_user}
+  credit_cards_list = nil # credit_cards_Obj.read_all($currentOrganization)
+
+
+  erb :organization, {:locals => {:credit_cards_list => credit_cards_list, :spaces_list => spaces_list, :spaces_count => spaces_list.count, :members_count => owners_list.count + developers_list.count + managers_list.count, :owners_list => owners_list, :developers_list => developers_list, :managers_list => managers_list}, :layout => :layout_user}
 end
 
 
@@ -411,10 +510,4 @@ post '/unbindUri' do
 
   redirect "/space" + $currentSpace
 end
-
-
-
-
-
-
 

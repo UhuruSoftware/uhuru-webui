@@ -23,45 +23,6 @@ h1, h2, h3, h4, h5, h6
     /*  #187ebc-top */
 }
 
-
-#current_user
-{
-    position: absolute;
-    right: -305px;
-    line-height: 50px;
-    width: 320px;
-}
-
-
-#current_user_log_out
-{
-    background-color: #000000;
-    padding: 5px;
-    color: #ffffff;
-    font-size: 16px;
-}
-
-#current_user_edit_btn
-{
-    right: 120px;
-    line-height: 30px;
-}
-
-#current_user_edit_modal
-{
-    display: none;
-    width: 400px;
-    height: 100px;
-    background-color: #0E4769;
-    border: 1px solid red;
-    position: absolute;
-    top: 50px;
-    right: -405px;
-}
-
-
-
-
 #header_links
 {
     width: 500px;
@@ -839,6 +800,29 @@ select
 .trash_sign_48
 {
     background-image: url("../images/trash_32px.png");
+    background-repeat: no-repeat;
+    border: 0 solid white;
+    width: 32px;
+    height: 32px;
+    background-color: transparent;
+    cursor: pointer;
+}
+
+
+.undo_sign_48
+{
+    background-image: url("../images/undo_32px.png");
+    background-repeat: no-repeat;
+    border: 0 solid white;
+    width: 32px;
+    height: 32px;
+    background-color: transparent;
+    cursor: pointer;
+}
+
+.gear_sign_48
+{
+    background-image: url("../images/gear_32px.png");
     background-repeat: no-repeat;
     border: 0 solid white;
     width: 32px;
@@ -2180,4 +2164,26 @@ p,
 #team_tabs li.tile
 {
     color: #000000;
+}
+
+#current_user
+{
+    position: absolute;
+    right: -105px;
+    line-height: 50px;
+    width: 120px;
+    height: 32px;
+}
+
+
+#current_user_edit_btn,
+#current_user_log_out
+{
+    position: absolute;
+    top: 10px;
+    left: 25px;
+}
+#current_user_log_out
+{
+    left: 75px;
 }

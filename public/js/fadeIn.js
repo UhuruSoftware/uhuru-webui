@@ -169,18 +169,6 @@ $('.button_bound_uri').click(bind_uri);
 $('.button_unbound_uri').click(unbind_uri);
 
 
-
-
-
-var edit_user = function(){
-	$('#current_user_edit_modal').slideToggle(600);
-    $('current_user_update').slideUp(300);
-}
-
-
-$('#current_user_edit_btn').click(edit_user);
-
-
 });
 
 

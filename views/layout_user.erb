@@ -47,20 +47,10 @@
                 <a href="/organizations"><h1>Uhuru AppCloud</h1></a>
 
                 <div id="current_user">
-                    <span id="current_user_name"><%= $user %></span>
-                    <input type="button" class="edit_sign_48" value="" id="current_user_edit_btn" />
-                    <a href="/" id="login_button"><button class="btn btn-success login" id="login_btn">Logout<i class="icon-login"></i></button></a>
+                    <span id="current_user_name"></span>
+                    <a href="/account"><input type="button" class="gear_sign_48" value="" id="current_user_edit_btn" /></a>
+                    <a href="/logout"><input type="button" class="undo_sign_48" value="" id="current_user_log_out" /></a>
                 </div>
-
-                <div id="current_user_edit_modal">
-
-                  <p>Welcome <%= $user %></p>
-                  <form action="" method="post">
-                        <input type="text" value="...press enter when ready" class="modal_input_box" />
-                        <input type="submit" value="" class="blank_input" id="current_user_update" />
-                  </form>
-                </div>
-
 
                 <div id="header_links">
                   <a href="http://www.uhurusoftware.com" target="_blank"><span class="head_link">COMPANY</span></a>
@@ -77,8 +67,8 @@
             <%= $path_home %><%= $path_1 %><%= $path_2 %>
         </div>
 
-            <%= yield %>
 
+        <%= yield %>
 
 
         </div>
@@ -111,11 +101,8 @@
                     <span class="cloud-target">
                         Your cloud target: <span class="cloud-target-url">http://services.uhurucloud.com</span>
                     </span>
-                    
-
                 </div>
             </div>
-        
         </footer>
     </div>
     <!--@Html.Partial("UrlsPartial")
