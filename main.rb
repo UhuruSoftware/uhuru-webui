@@ -6,8 +6,6 @@ require 'yaml'
 require 'uhuru_config'
 require 'dev_utils'
 require 'date'
-require 'readapps'
-require 'credit_cards'
 require 'sinatra/session'
 
 UhuruConfig.load
@@ -80,9 +78,10 @@ post '/login' do
     puts 'sesion name is' + session[:username] + 'username is ' + params[:username]
 
     user_login = UsersSetup.new
-    $user_token = user_login.get_user_token(@username, @password)
+    user = user_login.login(@username, @password)
+    $user_token = user.token
 
-    $user = @username
+    $user = user.first_name + ' ' + user.last_name
 
     redirect '/organizations'
   else
@@ -105,8 +104,9 @@ post '/signup' do
   @family_name = params[:last_name]
 
   user_sign_up = UsersSetup.new
-  $user = user_sign_up.add_user(@email, @password, @given_name, @family_name)
-  $user_token = user_sign_up.get_user_token(@email, @password)
+  user = user_sign_up.signup(@email, @password, @given_name, @family_name)
+  $user_token = user.token
+  $user = user.first_name + ' ' + user.last_name
 
   redirect '/organizations'
 

@@ -17,6 +17,20 @@ class CreditCards
     end
 
     credit_card_list
+  rescue Exception => e
+    raise "#{e.inspect}"
+    #puts "#{e.inspect}, #{e.backtrace}"
+  end
+
+  def read_card_by_id(card_id)
+    cc_billing = @client.credit_card(card_id)
+
+    credit_card = CreditCard.new(cc_billing.first_name, cc_billing.last_name, cc_billing.card_number, cc_billing.card_type)
+    credit_card
+
+  rescue Exception => e
+    raise "#{e.inspect}"
+    #puts "#{e.inspect}, #{e.backtrace}"
   end
 
   def create(org_guid, first_name, last_name, card_number, expiration_year, expiration_month, cvv, address, address2, city, state, zip, country, card_type)

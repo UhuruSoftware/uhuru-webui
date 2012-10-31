@@ -1,6 +1,5 @@
 $:.unshift(File.join(File.dirname(__FILE__)))
-require 'rubygems'
-require 'erb'
+
 require 'cfoundry'
 require 'uhuru_config'
 
@@ -49,6 +48,9 @@ class Spaces
     new_space.organization = org
     new_space.name = name
     if new_space.create!
+      users_obj = Users.new(@client.token)
+      users_obj.add_user_with_role_to_space(new_space.guid, @client.current_user.guid, ['owner'])
+
       new_space.guid
     end
 

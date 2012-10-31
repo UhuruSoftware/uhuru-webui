@@ -1,6 +1,5 @@
 $:.unshift(File.join(File.dirname(__FILE__)))
-require 'rubygems'
-require 'erb'
+
 require 'cfoundry'
 require "uhuru_config"
 
@@ -46,16 +45,16 @@ class Users
       roles.each do |role|
         case role
           when 'owner'
-            existing_billing_managers = org.billing_managers
-            existing_billing_managers << @client.user(user_guid)
-
-            org.billing_managers = existing_billing_managers
-          when 'developer'
             existing_managers = org.managers
             existing_managers << @client.user(user_guid)
 
             org.managers = existing_managers
-          when 'manager'
+          when 'billing'
+            existing_billing_managers = org.billing_managers
+            existing_billing_managers << @client.user(user_guid)
+
+            org.billing_managers = existing_billing_managers
+          when 'auditor'
             existing_auditors = org.auditors
             existing_auditors << @client.user(user_guid)
 
@@ -83,16 +82,16 @@ class Users
       roles.each do |role|
         case role
           when 'owner'
-            existing_billing_managers = space.managers
-            existing_billing_managers << @client.user(user_guid)
+            existing_managers = space.managers
+            existing_managers << @client.user(user_guid)
 
-            space.managers = existing_billing_managers
+            space.managers = existing_managers
           when 'developer'
             existing_managers = space.developers
             existing_managers << @client.user(user_guid)
 
-            space.managers = existing_managers
-          when 'manager'
+            space.developers = existing_managers
+          when 'auditor'
             existing_auditors = space.auditors
             existing_auditors << @client.user(user_guid)
 
@@ -106,6 +105,11 @@ class Users
   rescue Exception => e
     raise "#{e.inspect}"
     #puts "#{e.inspect}, #{e.backtrace}"
+  end
+
+  def get_user_guid
+    user = @client.current_user
+    user.guid
   end
 
   def delete(user_guid)

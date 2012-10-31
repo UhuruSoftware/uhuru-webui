@@ -2,8 +2,6 @@ $:.unshift(File.join(File.dirname(__FILE__)))
 
 require 'uaa'
 require 'uhuru_config'
-require 'lib/users'
-require 'lib/organizations'
 
 class UsersSetup
 
@@ -11,12 +9,37 @@ class UsersSetup
     UhuruConfig.load
   end
 
+  def login(email, password)
+    user_token = get_user_token(email, password)
+
+    users_obj = Users.new(user_token)
+    user_guid = users_obj.get_user_guid
+
+    user_detail = get_user_details(user_guid)
+
+    user = UserDetails.new(user_token, user_guid, user_detail[:first_name], user_detail[:last_name])
+    user
+  rescue Exception => e
+    raise "#{e.inspect}"
+    #puts "#{e.inspect}, #{e.backtrace}"
+  end
+
+  def signup(email, password, first_name, last_name)
+    user_guid = add_user(email, password, first_name, last_name)
+    user_token = get_user_token(email, password)
+
+    user = UserDetails.new(user_token, user_guid, first_name, last_name)
+    user
+  rescue Exception => e
+    raise "#{e.inspect}"
+    #puts "#{e.inspect}, #{e.backtrace}"
+  end
+
+  private
+
   def add_user(email, password, given_name, family_name)
 
-    token_issuer = CF::UAA::TokenIssuer.new(UhuruConfig.uaa_api, UhuruConfig.client_id, UhuruConfig.client_secret)
-    token = token_issuer.client_credentials_grant()
-
-    uaac = CF::UAA::UserAccount.new(UhuruConfig.uaa_api, token.info[:token_type] + ' ' + token.info[:access_token])
+    uaac = get_uaa_client
 
     emails = [email]
 
@@ -26,24 +49,22 @@ class UsersSetup
         [{:value => (emails || name)}]
 
     user = uaac.add(info)
-    user_id = user[:id]
+    if (user != nil)
+      user_id = user[:id]
 
-    #user_token = get_user_token(email, password)
+      #user_token = get_user_token(email, password)
 
-    user_token = get_user_token('sre@vmware.com', 'a')
+      user_token = get_user_token('sre@vmware.com', 'a')
 
-    organizations_Obj = Organizations.new(user_token)
-    org_name = email + "'s organization"
-    org_guid = organizations_Obj.create(org_name)
+      organizations_Obj = Organizations.new(user_token)
+      org_name = email + "'s organization"
+      org_guid = organizations_Obj.create(org_name)
 
-    users_obj = Users.new(user_token)
-    users_obj.add_user_to_org_with_role(org_guid, user_id, ['owner', 'manager'])
+      users_obj = Users.new(user_token)
+      users_obj.add_user_to_org_with_role(org_guid, user_id, ['owner', 'billing'])
 
-    spaces_Obj = Spaces.new(user_token)
-    space_name = email + "'s space"
-    space_guid = spaces_Obj.create(org_guid, space_name)
-
-    users_obj.add_user_with_role_to_space(space_guid, user_id, ['owner', 'manager'])
+      user_id
+    end
 
   rescue Exception => e
     raise "#{e.inspect}"
@@ -58,14 +79,46 @@ class UsersSetup
 
     token_issuer = CF::UAA::TokenIssuer.new(UhuruConfig.uaa_api, "vmc", "")
     token_obj = token_issuer.implicit_grant_with_creds(creds)
+    token_user = token_obj.info[:token_type] + ' ' + token_obj.info[:access_token]
 
-    puts token_obj.info[:token_type] + ' ' + token_obj.info[:access_token]
-
-    token_obj.info[:token_type] + ' ' + token_obj.info[:access_token]
-
+    token_user
   rescue Exception => e
     raise "#{e.inspect}"
     #puts "#{e.inspect}, #{e.backtrace}"
+  end
+
+  def get_user_details(user_guid)
+    uaac = get_uaa_client
+
+    uaa_user = uaac.get(user_guid)
+
+    user_details = {:first_name => uaa_user[:name][:givenName], :last_name => uaa_user[:name][:familyName]}
+
+    user_details
+  rescue Exception => e
+    raise "#{e.inspect}"
+    #puts "#{e.inspect}, #{e.backtrace}"
+
+  end
+
+  def get_uaa_client
+    token_issuer = CF::UAA::TokenIssuer.new(UhuruConfig.uaa_api, UhuruConfig.client_id, UhuruConfig.client_secret)
+    token = token_issuer.client_credentials_grant()
+
+    uaac = CF::UAA::UserAccount.new(UhuruConfig.uaa_api, token.info[:token_type] + ' ' + token.info[:access_token])
+
+    uaac
+  end
+
+  class UserDetails
+    attr_reader :token, :guid, :first_name, :last_name
+
+    def initialize(token, guid, first_name, last_name)
+      @token = token
+      @guid = guid
+      @first_name = first_name
+      @last_name = last_name
+    end
   end
 
 end

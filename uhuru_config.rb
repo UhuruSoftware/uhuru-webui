@@ -4,6 +4,7 @@ require 'lib/users'
 require 'lib/applications'
 require 'lib/service_instances'
 require 'lib/users_setup'
+require 'lib/readapps'
 require 'logger'
 
 class UhuruConfig
