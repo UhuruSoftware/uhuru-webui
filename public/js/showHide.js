@@ -132,8 +132,6 @@ function showBillings()
 
 
 
-
-
 function showApps()
 {
         document.getElementById('apps_li').style.paddingBottom = '1px';
@@ -151,9 +149,6 @@ function showApps()
         document.getElementById('services_li').style.borderLeft = '0px solid #0e4769';
         document.getElementById('services_li').style.borderRight = '0px solid #0e4769';
         document.getElementById('services_li').style.color = "#ffffff";
-
-
-
 
 
      document.getElementById('spaces_tabs').style.borderBottom = '1px solid #0e4769';
@@ -183,8 +178,6 @@ function showServices()
         document.getElementById('apps_li').style.borderLeft = '0px solid #0e4769';
         document.getElementById('apps_li').style.borderRight = '0px solid #0e4769';
         document.getElementById('apps_li').style.color = "#ffffff";
-
-
 
 
      document.getElementById('spaces_tabs').style.borderBottom = '1px solid #0e4769';
