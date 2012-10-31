@@ -146,7 +146,6 @@ function showApps()
 
 
 
-
         document.getElementById('services_li').style.paddingBottom = '0px';
         document.getElementById('services_li').style.borderTop = '0px solid #0e4769';
         document.getElementById('services_li').style.borderLeft = '0px solid #0e4769';
@@ -154,19 +153,12 @@ function showApps()
         document.getElementById('services_li').style.color = "#ffffff";
 
 
-        document.getElementById('billings_li').style.paddingBottom = '0px';
-        document.getElementById('billings_li').style.borderTop = '0px solid #0e4769';
-        document.getElementById('billings_li').style.borderLeft = '0px solid #0e4769';
-        document.getElementById('billings_li').style.borderRight = '0px solid #0e4769';
-        document.getElementById('billings_li').style.color = "#ffffff";
-
 
 
 
      document.getElementById('spaces_tabs').style.borderBottom = '1px solid #0e4769';
      document.getElementById('apps').style.display = 'block';
      document.getElementById('services').style.display = 'none';
-     document.getElementById('billings').style.display = 'none';
      document.getElementById('create_app').style.display = 'block';
      document.getElementById('create_service').style.display = 'none';
 
@@ -186,14 +178,6 @@ function showServices()
 
 
 
-
-        document.getElementById('billings_li').style.paddingBottom = '0px';
-        document.getElementById('billings_li').style.borderTop = '0px solid #0e4769';
-        document.getElementById('billings_li').style.borderLeft = '0px solid #0e4769';
-        document.getElementById('billings_li').style.borderRight = '0px solid #0e4769';
-        document.getElementById('billings_li').style.color = "#ffffff";
-
-
         document.getElementById('apps_li').style.paddingBottom = '0px';
         document.getElementById('apps_li').style.borderTop = '0px solid #0e4769';
         document.getElementById('apps_li').style.borderLeft = '0px solid #0e4769';
@@ -206,7 +190,6 @@ function showServices()
      document.getElementById('spaces_tabs').style.borderBottom = '1px solid #0e4769';
      document.getElementById('apps').style.display = 'none';
      document.getElementById('services').style.display = 'block';
-     document.getElementById('billings').style.display = 'none';
      document.getElementById('create_app').style.display = 'none';
      document.getElementById('create_service').style.display = 'block';
 
