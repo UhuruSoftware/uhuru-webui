@@ -54,3 +54,12 @@ $('[placeholder]').parents('form').submit(function() {
 
 
 
+
+$('.tiped').bind({
+  focus: function() {
+    $('.tooltips').show(200);
+  },
+  blur: function() {
+    $('.tooltips').hide(300);
+  }
+});

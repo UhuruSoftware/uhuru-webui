@@ -2,10 +2,13 @@
 
         <div class="manage_content_header">
             <h2 class="section_title">
-                <span id="space_name"><%= $currentSpace_Name %></span>
+                <span id="space_name"><%= session[:currentSpace_Name] %></span>
 
                 <form action="/updateSpace" method="post">
-                    <input type="text" value="" id="space_input" name="m_spaceName" class="modal_input_box" />
+                    <input type="text" value="" id="space_input" name="m_spaceName" class="modal_input_box tiped" />
+                    <div class="tooltips">
+                        <p>Press enter to update the new name!</p>
+                    </div>
                     <input type="submit" style="display: none; width: 1px; height: 1px;">
                 </form>
 

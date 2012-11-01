@@ -2,10 +2,13 @@
 
         <div class="manage_content_header">
             <h2 class="section_title">
-                <span id="organization_name"><%= $currentOrganization_Name %></span>
+                <span id="organization_name"><%= session[:currentOrganization_Name] %></span>
 
                 <form action="/updateOrganization" method="post">
-                    <input type="text" value="" id="organization_input" name="m_organizationName" class="modal_input_box" />   <!--if(event.keyCode == 13){hideOrganizationsInput();} -->
+                    <input type="text" value="" id="organization_input" name="m_organizationName" class="modal_input_box tiped" />
+                    <div class="tooltips">
+                        <p>Press enter to update the new name!</p>
+                    </div>
                     <input type="submit" style="display: none; width: 1px; height: 1px;" />
                 </form>
 
@@ -24,8 +27,8 @@
 
 
                 <ul id="tabs" class="nav nav-tabs">
-                    <li onclick="showSpaces();" onmouseover="hoverSpaces();" onmouseout="unhoverSpaces();" id="spaces_btn_link">Spaces (<span><%= spaces_count %></span>)</li>
-                    <li onclick="showMembers();" onmouseover="hoverMembers();" onmouseout="unhoverMembers();" id="members_btn_link">Members (<span><%= members_count %></span>)</li>
+                    <li onclick="showSpaces();" id="spaces_btn_link">Spaces (<span><%= spaces_count %></span>)</li>
+                    <li onclick="showMembers();" id="members_btn_link">Members (<span><%= members_count %></span>)</li>
                     <li onclick="showBillings();" id="billings_li">Payment</li>
                 </ul>
 

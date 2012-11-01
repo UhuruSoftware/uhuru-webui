@@ -12,18 +12,16 @@ UhuruConfig.load
 
 set :port, UhuruConfig.uhuru_webui_port
 
-$space_name = 'breadcrumb space'                              #this variable will be shown at breadcrumb navigation
-$organization_name = 'breadcrumb org'                         #this variable will be shown at breadcrumb navigation
+#session[:space_name] = 'breadcrumb space'                              #this variable will be shown at breadcrumb navigation
+#session[:organization_name] = 'breadcrumb org'                         #this variable will be shown at breadcrumb navigation
 
-$path_1                                                       #this is an empty string that will take the value of $organization_name
-$path_2                                                       #this is an empty string that will take the value of $space_name
 $path_home                                                    #= <a href="/organizations" class="breadcrumb_element_home">Organizations:</a>
 
-$currentOrganization                                          #this is the Organization Guid for the current space on the website
-$currentSpace                                                 #this is the Space Guid for the current apps, services and subscriptions on the website
+#$currentOrganization                                          #this is the Organization Guid for the current space on the website
+#$currentSpace                                                 #this is the Space Guid for the current apps, services and subscriptions on the website
 
-$currentOrganization_Name                                     #this is the Organization NAME STRING for the current space on the website
-$currentSpace_Name                                            #this is the Space NAME STRING for the current space on the website
+#session[:currentOrganization_Name]                                     #this is the Organization NAME STRING for the current space on the website
+#session[:currentSpace_Name]                                            #this is the Space NAME STRING for the current space on the website
 
 set :session_fail, '/login'
 set :session_secret, 'secret!'
@@ -74,15 +72,14 @@ post '/login' do
     @username = params[:username]
     @password = params[:password]
 
-    session[:username] = params[:username]
-    puts 'sesion name is' + session[:username] + 'username is ' + params[:username]
-
     user_login = UsersSetup.new
     user = user_login.login(@username, @password)
-    $user_token = user.token
+    session[:token] = user.token
 
-    $user = user.first_name + ' ' + user.last_name
+    session[:fname] = user.first_name + ' ' + user.last_name
+    session[:username] = params[:username]
 
+    puts session[:token]
     redirect '/organizations'
   else
     redirect '/'
@@ -91,7 +88,7 @@ end
 
 
 get '/logout' do
-  session_end!
+  session_end!(destroy=true)
   redirect '/'
 end
 
@@ -104,12 +101,9 @@ post '/signup' do
   @family_name = params[:last_name]
 
   user_sign_up = UsersSetup.new
-  user = user_sign_up.signup(@email, @password, @given_name, @family_name)
-  $user_token = user.token
-  $user = user.first_name + ' ' + user.last_name
+  user_sign_up.signup(@email, @password, @given_name, @family_name)
 
-  redirect '/organizations'
-
+  redirect '/'
 end
 
 
@@ -135,26 +129,27 @@ get'/organizations' do
   @usertitle = @this_user
   @timeNow = $this_time
 
-  $path_1 = ''
-  $path_2 = ''
+  session[:path_1] = ''
+  session[:path_2] = ''
   $path_home = '<a href="/organizations" class="breadcrumb_element_home"></a>'
 
-  organizations_Obj = Organizations.new(user_token)
+  organizations_Obj = Organizations.new(session[:token])
   organizations_list = organizations_Obj.read_all
 
-  $currentOrganization = nil
-  $currentSpace = nil
+  session[:currentOrganization] = nil
+  session[:currentSpace] = nil
 
   erb :organizations, {:locals => {:organizations_list => organizations_list, :organizations_count => organizations_list.count}, :layout => :layout_user}
 end
 
 
 get'/credit' do
+  session!
   @usertitle = session[:username]
   @timeNow = $this_time
 
-  $path_1 = ''
-  $path_2 = ''
+  session[:path_1] = ''
+  session[:path_2] = ''
   $path_home = '<a href="/organizations" class="breadcrumb_element_home"></a>'
 
   my_credit_cards = nil
@@ -164,11 +159,12 @@ end
 
 
 get'/account' do
+  session!
   @usertitle = "Account " + session[:username]
   @timeNow = $this_time
 
-  $path_1 = ''
-  $path_2 = ''
+  session[:path_1] = ''
+  session[:path_2] = ''
   $path_home = '<a href="/organizations" class="breadcrumb_element_home"></a>'
 
 
@@ -176,7 +172,6 @@ get'/account' do
 end
 
 post '/createCard' do
-
   @first_name = params[:first_name]
   @last_name = params[:last_name]
   @card_number = params[:card_number]
@@ -196,7 +191,7 @@ post '/createCard' do
 
   @card_type = params[:card_type]
 
-  credit_cards_Obj = CreditCards.new(user_token)
+  credit_cards_Obj = CreditCards.new(session[:token])
   new_credit_card = nil # credit_cards_Obj.create($currentOrganization, firs_name, last_name, card_number, expiration_year, expiration_month,
                         #cvv, address1, address2, city, state, zip, country, card_type )
 
@@ -231,20 +226,22 @@ end
 
 
 get'/organization:org_guid' do
+  session!
+
   @timeNow = $this_time
 
-  organizations_Obj = Organizations.new(user_token)
-  credit_cards_Obj = CreditCards.new(user_token)
+  organizations_Obj = Organizations.new(session[:token])
+  credit_cards_Obj = CreditCards.new(session[:token])
 
   @this_guid = params[:org_guid]
-  $organization_name = organizations_Obj.get_name(@this_guid)
-  $path_1 = $slash + '<a href="/organization' + @this_guid + ' "class="breadcrumb_element" id="element_organization">' + $organization_name + '</a>'
-  $path_2 = ''
+  session[:organization_name] = organizations_Obj.get_name(@this_guid)
+  session[:path_1] = $slash + '<a href="/organization' + @this_guid + ' "class="breadcrumb_element" id="element_organization">' + session[:organization_name] + '</a>'
+  session[:path_2] = ''
   $path_home = '<a href="/organizations" class="breadcrumb_element_home">ORGANIZATIONS</a>'
 
-  $currentOrganization = @this_guid
-  $currentOrganization_Name = organizations_Obj.get_name(@this_guid)
-  $currentSpace = nil
+  session[:currentOrganization] = @this_guid
+  session[:currentOrganization_Name] = organizations_Obj.get_name(@this_guid)
+  session[:currentSpace] = nil
 
   organizations_Obj.set_current_org(@this_guid)
   spaces_list = organizations_Obj.read_spaces(@this_guid)
@@ -262,21 +259,21 @@ end
 
 
 get'/space:space_guid' do
+  session!
+
   @timeNow = $this_time
 
-  organizations_Obj = Organizations.new(user_token)
-  spaces_Obj = Spaces.new(user_token)
+  organizations_Obj = Organizations.new(session[:token])
+  spaces_Obj = Spaces.new(session[:token])
   readapps_Obj = TemplateApps.new
 
   @this_guid = params[:space_guid]
 
-  $space_name = spaces_Obj.get_name(@this_guid)
-  $path_2 = $slash + '<a href="/space' + @this_guid + '" class="breadcrumb_element" id="element_space">' + $space_name + '</a>'
-  $path_home = '<a href="/organizations" class="breadcrumb_element_home">ORGANIZATIONS</a>'
+  session[:space_name] = spaces_Obj.get_name(@this_guid)
+  session[:path_2] = $slash + '<a href="/space' + @this_guid + '" class="breadcrumb_element" id="element_space">' + session[:space_name] + '</a>'
 
-#  $currentOrganization = nil
-  $currentSpace = @this_guid
-  $currentSpace_Name = spaces_Obj.get_name(@this_guid)
+  session[:currentSpace] = @this_guid
+  session[:currentSpace_Name] = spaces_Obj.get_name(@this_guid)
 
   spaces_Obj.set_current_space(@this_guid)
   apps_list = spaces_Obj.read_apps(@this_guid)
@@ -288,11 +285,16 @@ get'/space:space_guid' do
 end
 
 
+
+
+
+
+
 post '/createOrganization' do
   @name = params[:orgName]
   @organization_message = "Creating organization... Please wait"
 
-  organizations_Obj = Organizations.new(user_token)
+  organizations_Obj = Organizations.new(session[:token])
   organizations_Obj.create(@name)
   redirect "/organizations"
 end
@@ -300,82 +302,82 @@ end
 post '/createSpace' do
   @name = params[:spaceName]
 
-  organizations_Obj = Organizations.new(user_token)
-  spaces_Obj = Spaces.new(user_token)
+  organizations_Obj = Organizations.new(session[:token])
+  spaces_Obj = Spaces.new(session[:token])
 
-  spaces_Obj.create($currentOrganization, @name)
-  redirect "/organization" + $currentOrganization
+  spaces_Obj.create(session[:currentOrganization], @name)
+  redirect "/organization" + session[:currentOrganization]
 end
 
 post '/updateOrganization' do
   @name = params[:m_organizationName]
-  organizations_Obj = Organizations.new(user_token)
-  organizations_Obj.update(@name, $currentOrganization)
-  redirect "/organization" + $currentOrganization
+  organizations_Obj = Organizations.new(session[:token])
+  organizations_Obj.update(@name, session[:currentOrganization])
+  redirect "/organization" + session[:currentOrganization]
 end
 
 post '/deleteCurrentOrganization' do
-  organizations_Obj = Organizations.new(user_token)
-  organizations_Obj.delete($currentOrganization)
+  organizations_Obj = Organizations.new(session[:token])
+  organizations_Obj.delete(session[:currentOrganization])
   redirect "/organizations"
 end
 
 post '/deleteClickedOrganization' do
   @guid = params[:orgGuid]
 
-  organizations_Obj = Organizations.new(user_token)
+  organizations_Obj = Organizations.new(session[:token])
   organizations_Obj.delete(@guid)
   redirect "/organizations"
 end
 
 post '/updateSpace' do
   @name = params[:m_spaceName]
-  organizations_Obj = Organizations.new(user_token)
-  spaces_Obj = Spaces.new(user_token)
+  organizations_Obj = Organizations.new(session[:token])
+  spaces_Obj = Spaces.new(session[:token])
 
-  spaces_Obj.update(@name, $currentSpace)
-  redirect "/space" + $currentSpace
+  spaces_Obj.update(@name, session[:currentSpace])
+  redirect "/space" + session[:currentSpace]
 end
 
 post '/deleteCurrentSpace' do
-  organizations_Obj = Organizations.new(user_token)
-  spaces_Obj = Spaces.new(user_token)
-  spaces_Obj.delete($currentSpace)
-  redirect "/organization" + $currentOrganization
+  organizations_Obj = Organizations.new(session[:token])
+  spaces_Obj = Spaces.new(session[:token])
+  spaces_Obj.delete(session[:currentSpace])
+  redirect "/organization" + session[:currentOrganization]
 end
 
 post '/deleteClickedSpace' do
   @guid = params[:spaceGuid]
 
-  organizations_Obj = Organizations.new(user_token)
-  spaces_Obj = Spaces.new(user_token)
+  organizations_Obj = Organizations.new(session[:token])
+  spaces_Obj = Spaces.new(session[:token])
 
   spaces_Obj.delete(@guid)
-  redirect "/organization" + $currentOrganization
+  redirect "/organization" + session[:currentOrganization]
 end
 
 post '/deleteClickedApp' do
   @guid = params[:appGuid]
 
-  organizations_Obj = Organizations.new(user_token)
-  spaces_Obj = Spaces.new(user_token)
-  applications_Obj = Applications.new(user_token)
+  organizations_Obj = Organizations.new(session[:token])
+  spaces_Obj = Spaces.new(session[:token])
+  applications_Obj = Applications.new(session[:token])
 
   applications_Obj.delete(@guid)
-  redirect "/space" + $currentSpace
+  redirect "/space" + session[:currentSpace]
 end
 
 post '/deleteClickedService' do
   @guid = params[:serviceGuid]
 
-  organizations_Obj = Organizations.new(user_token)
-  spaces_Obj = Spaces.new(user_token)
-  applications_Obj = Applications.new(user_token)
-  services_Obj = ServiceInstances.new(user_token)
+  organizations_Obj = Organizations.new(session[:token])
+  spaces_Obj = Spaces.new(session[:token])
+  applications_Obj = Applications.new(session[:token])
+  services_Obj = ServiceInstances.new(session[:token])
 
   services_Obj.delete(@guid)
 
-  redirect "/space" + $currentSpace
+  redirect "/space" + session[:currentSpace]
 end
 
 
@@ -389,29 +391,29 @@ post '/createApp' do
   @domain = "ccng-dev.net"
   @path = "/home/ubuntu/Desktop/rubytest"
 
-  organizations_Obj = Organizations.new(user_token)
-  spaces_Obj = Spaces.new(user_token)
-  apps_obj = Applications.new(user_token)
+  organizations_Obj = Organizations.new(session[:token])
+  spaces_Obj = Spaces.new(session[:token])
+  apps_obj = Applications.new(session[:token])
 
 
   @plan = "d85b0ad5-02d3-49e7-8bcb-19057a847bf7"
 
-  apps_obj.create($currentOrganization, $currentSpace, @name, @runtime, @framework, @instance, @memory.to_i, @domain, @path, @plan)
-  redirect "/space" + $currentSpace
+  apps_obj.create(session[:currentOrganization], session[:currentSpace], @name, @runtime, @framework, @instance, @memory.to_i, @domain, @path, @plan)
+  redirect "/space" + session[:currentSpace]
 end
 
 
 post '/createService' do
   @name = params[:serviceName]
 
-  organizations_Obj = Organizations.new(user_token)
-  spaces_Obj = ServiceInstances.new(user_token)
+  organizations_Obj = Organizations.new(session[:token])
+  spaces_Obj = ServiceInstances.new(session[:token])
 
   @plan = "d85b0ad5-02d3-49e7-8bcb-19057a847bf7"
 
-  spaces_Obj.create_service_instance(@name, $currentSpace, @plan)
+  spaces_Obj.create_service_instance(@name, session[:currentSpace], @plan)
 
-  redirect "/space" + $currentSpace
+  redirect "/space" + session[:currentSpace]
 end
 
 
@@ -419,12 +421,12 @@ post '/addUsers' do
   @email =  params[:userEmail]
   @type = params[:userType]
 
-  organizations_Obj = Organizations.new(user_token)
-  users_Obj = Users.new(user_token)
-  users_Obj.add_user_to_org_with_role($currentOrganization, @name, @type)
+  organizations_Obj = Organizations.new(session[:token])
+  users_Obj = Users.new(session[:token])
+  users_Obj.add_user_with_role_to_space(session[:currentOrganization], @name, @type)
 
 
-  redirect "/organization" + $currentOrganization
+  redirect "/organization" + session[:currentOrganization]
 end
 
 
@@ -432,23 +434,23 @@ end
 
 post '/startApp' do
   @name = params[:appName]
-  apps_obj = Applications.new(user_token)
+  apps_obj = Applications.new(session[:token])
 
   apps_obj.start_app(@name)
   puts @name
 
-  redirect "/space" + $currentSpace
+  redirect "/space" + session[:currentSpace]
   erb :space, {:locals => {:apps_names => apps_names, :apps_list => apps_list, :services_list => services_list, :apps_count => apps_list.count, :services_count => services_list.count}, :layout => :layout_user}
 end
 
 post '/stopApp' do
   @name = params[:appName]
-  apps_obj = Applications.new(user_token)
+  apps_obj = Applications.new(session[:token])
 
   apps_obj.stop_app(@name)
   puts @name
 
-  redirect "/space" + $currentSpace
+  redirect "/space" + session[:currentSpace]
 end
 
 
@@ -458,10 +460,10 @@ post '/updateApp' do
   @memory = params[:appMemory]
   @instances = params[:appInstances]
 
-  apps_obj = Applications.new(user_token)
+  apps_obj = Applications.new(session[:token])
   apps_obj.update(@name, @instances, @memory)
 
-  redirect "/spaces" + $currentSpace
+  redirect "/spaces" + session[:currentSpace]
 end
 
 
@@ -470,10 +472,10 @@ post '/bindServices' do
   @app_name = params[:appName]
   @service_name = params[:serviceName]
 
-  apps = Applications.new(user_token)
+  apps = Applications.new(session[:token])
   apps.bind_app_services(@app_name, @service_name)
 
-  redirect "/space" + $currentSpace
+  redirect "/space" + session[:currentSpace]
 end
 
 
@@ -481,10 +483,10 @@ post '/unbindServices' do
   @app_name = params[:appName]
   @service_name = params[:serviceName]
 
-  apps = Applications.new(user_token)
+  apps = Applications.new(session[:token])
   apps.unbind_app_services(@app_name, @service_name)
 
-  redirect "/space" + $currentSpace
+  redirect "/space" + session[:currentSpace]
 end
 
 
@@ -493,10 +495,10 @@ post '/bindUri' do
   @uri_name = params[:uriName]
   @domain_name = "api3.ccng-dev.net"
 
-  apps = Applications.new(user_token)
-  apps.bind_app_url(@app_name, $currentOrganization, @domain_name, @uri_name)
+  apps = Applications.new(session[:token])
+  apps.bind_app_url(@app_name, session[:currentOrganization], @domain_name, @uri_name)
 
-  redirect "/space" + $currentSpace
+  redirect "/space" + session[:currentSpace]
 end
 
 
@@ -505,9 +507,9 @@ post '/unbindUri' do
   @uri_name = params[:uriName]
   @domain_name = "http://api3.ccng-dev.net"
 
-  apps = Applications.new(user_token)
+  apps = Applications.new(session[:token])
   apps.unbind_app_url(@app_name, @domain_name, @uri_name)
 
-  redirect "/space" + $currentSpace
+  redirect "/space" + session[:currentSpace]
 end
 
