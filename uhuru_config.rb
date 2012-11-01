@@ -6,6 +6,7 @@ require 'lib/service_instances'
 require 'lib/users_setup'
 require 'lib/readapps'
 require 'logger'
+require 'credit_cards'
 
 class UhuruConfig
   DEFAULT_CONFIG_PATH = File.expand_path("../config/uhuru-webui.yml", __FILE__)

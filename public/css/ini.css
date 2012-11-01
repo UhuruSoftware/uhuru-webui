@@ -410,7 +410,7 @@ h2
     margin-bottom: 10px;
 }
 
-
+.credit_card_cvv,
 .credit_card_month_combo,
 .credit_card_year_combo,
 .credit_card_labels,
@@ -429,27 +429,25 @@ h2
 .credit_card_month_combo,
 .credit_card_year_combo
 {
-    width: 120px;
+    width: 150px;
 }
 
 .credit_card_icons
 {
     background-image: url("../images/creditcards.png");
     background-repeat: no-repeat;
-    background-position: 40% 60%;
+    background-position: 2% 60%;
 }
 
 .credit_card_left
 {
-    float: left;
-    width: 250px;
+    width: 180px;
     margin: 1px;
     text-align: right;
 }
 .credit_card_right
 {
-    float: right;
-    width: 500px;
+    width: 400px;
     margin: 1px;
     text-align: left;
     line-height: 14px;
@@ -473,12 +471,15 @@ h2
     margin-right: 20px;
     font-style: italic;
     color: gray;
+    margin-top: 3px;
+    margin-bottom: 3px;
 }
 .credit_card_type_box
 {
-    width: 110px;
+    width: 150px;
     color: #ffffff;
     font-style: normal;
+    float: right;
 }
 select
 {
@@ -922,7 +923,7 @@ select
     color: #ffffff;
 }
 
-
+.account_settings_labels,
 #organization_text
 {
     float: left;
@@ -2160,6 +2161,19 @@ p,
     color: #ffffff;
 }
 
+.credit_card_address
+{
+    width: 350px;
+}
+
+.credit_card_cvv
+{
+    float: right;
+}
+.cvv_label
+{
+    line-height: 30px;
+}
 
 #team_tabs li.tile
 {
@@ -2186,4 +2200,31 @@ p,
 #current_user_log_out
 {
     left: 75px;
+}
+
+
+.edit_user_details
+{
+    background-image: url("../images/edit_32px.png");
+    background-repeat: no-repeat;
+    border: 0 solid white;
+    width: 32px;
+    height: 32px;
+    background-color: transparent;
+    cursor: pointer;
+    position: relative;
+}
+
+
+.account_settings_labels
+{
+    padding-top: 25px;
+    padding-bottom: 25px;
+    line-height: 0;
+    margin: auto;
+    margin-left: 20px;
+}
+.account_settings_links
+{
+    margin-left: 30px;
 }
