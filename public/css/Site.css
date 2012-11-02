@@ -1,5 +1,16 @@
+@font-face
+{
+font-family: Sagoe UI;
+src: url('../css/segoe_ui.ttf'); /* IE9+ */
+}
 
-/*LANDING PAGE*/
+@font-face {
+    font-family: 'Open Sans';
+    font-style: normal;
+    font-weight: 300;
+    src: local('Open Sans Light'), local('OpenSans-Light'), url("../css/open_sans.woff") format('woff');
+}
+
 
 
 .splash
@@ -95,8 +106,8 @@
 {
     margin-top: 10px;
     color: #ffffff;
-    font-family: 'Segoe UI', 'Open Sans', Verdana, Arial, Helvetica, sans-serif;
-    font-weight: 400;
+    font-family: 'Segoe UI Light', 'Open Sans', Verdana, Arial, Helvetica, sans-serif;
+    font-weight: 100;
     font-size: 16px;
     letter-spacing: 0.01em;
     background-color: #000000;
@@ -114,8 +125,8 @@
 {
     margin-top: 10px;
     color: #ffffff;
-    font-family: 'Segoe UI', 'Open Sans', Verdana, Arial, Helvetica, sans-serif;
-    font-weight: 400;
+    font-family: 'Segoe UI Light', 'Open Sans', Verdana, Arial, Helvetica, sans-serif;
+    font-weight: 100;
     font-size: 16px;
     letter-spacing: 0.01em;
     background-color: #000000;
