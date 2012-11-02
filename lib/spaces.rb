@@ -49,7 +49,7 @@ class Spaces
     new_space.name = name
     if new_space.create!
       users_obj = Users.new(@client.token)
-      users_obj.add_user_with_role_to_space(new_space.guid, @client.current_user.guid, ['owner'])
+      users_obj.add_user_with_role_to_space(new_space.guid, @client.current_user.guid, ['owner', 'developer'])
 
       new_space.guid
     end

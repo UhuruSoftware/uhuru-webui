@@ -77,7 +77,7 @@ class Users
 
     user = @client.user(user_guid)
 
-    if (user.exists?)
+    if (user != nil)
 
       roles.each do |role|
         case role
