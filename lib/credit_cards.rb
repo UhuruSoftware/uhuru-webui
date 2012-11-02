@@ -1,84 +1,138 @@
 $:.unshift(File.join(File.dirname(__FILE__)))
 
 require 'uhuru_config'
+require 'httparty'
 
 class CreditCards
+  include HTTParty
+
+  attr_accessor :auth_token, :base_path
 
   def initialize(token)
-    @client = CFoundry::Client.new(UhuruConfig.cloud_controller_api, token)
+    UhuruConfig.load
+    @auth_token = token
+    @base_path = UhuruConfig.cloud_controller_api + '/v2/credit_cards'
   end
 
-  def read_all(org_id)
+  def read_all
+    headers = {'Content-Type' => 'text/html;charset=utf-8', 'Authorization' => @auth_token}
+
+    response = get("#{@base_path}", :headers => headers)
     credit_card_list = []
 
-    credit_cards = @client.credit_cards(org_id)
-    credit_cards.each do |cc|
-      credit_card_list << CreditCard.new(cc.first_name, cc.last_name, cc.card_number, cc.card_type)
+    if response.request.last_response.code == '200'
+      JSON.parse(response).each do |item|
+        credit_card = CreditCard.from_json! item.to_json
+        credit_card_list << credit_card
+      end
     end
 
-    credit_card_list
+    return credit_card_list
   rescue Exception => e
     raise "#{e.inspect}"
     #puts "#{e.inspect}, #{e.backtrace}"
   end
 
   def read_card_by_id(card_id)
-    cc_billing = @client.credit_card(card_id)
+    headers = {'Content-Type' => 'text/html;charset=utf-8', 'Authorization' => @auth_token}
+    response = get("#{@base_path}/#{card_id}", :headers => headers)
 
-    credit_card = CreditCard.new(cc_billing.first_name, cc_billing.last_name, cc_billing.card_number, cc_billing.card_type)
-    credit_card
-
-  rescue Exception => e
-    raise "#{e.inspect}"
-    #puts "#{e.inspect}, #{e.backtrace}"
-  end
-
-  def create(org_guid, first_name, last_name, card_number, expiration_year, expiration_month, cvv, address, address2, city, state, zip, country, card_type)
-    org = @client.organization(org_guid)
-
-    credit_card = @client.credit_card
-    credit_card.organization = org
-    credit_card.first_name = first_name
-    credit_card.last_name = last_name
-    credit_card.card_number = card_number
-    credit_card.expiration_year = expiration_year
-    credit_card.expiration_month = expiration_month
-    credit_card.cvv = cvv
-    credit_card.billing_address = address
-    credit_card.billing_address_2 = address2
-    credit_card.billing_city = city
-    credit_card.billing_state = state
-    credit_card.billing_zip = zip
-    credit_card.billing_country = country
-    credit_card.card_type = card_type
-
-    credit_card.create!
-
-  rescue Exception => e
-    raise "#{e.inspect}"
-    #puts "#{e.inspect}, #{e.backtrace}"
-  end
-
-  def delete(card_id)
-
-    credit_card = @client.credit_card
-
-    credit_card.delete!
-
-  rescue Exception => e
-    raise "#{e.inspect}"
-    #puts "#{e.inspect}, #{e.backtrace}"
-  end
-
-  class CreditCard
-    attr_reader :first_name, :last_name, :card_number, :card_type
-
-    def initialize(first_name, last_name, card_number, card_type)
-      @first_name = first_name
-      @last_name = last_name
-      @card_number = card_number
-      @card_type = credit_card_type
+    if response.request.last_response.code == '200'
+      return CreditCard.from_json! response.body
     end
+
+  rescue Exception => e
+    raise "#{e.inspect}"
+    #puts "#{e.inspect}, #{e.backtrace}"
   end
 
+  def create(user_guid, user_email, first_name, last_name, card_number, expiration_year, expiration_month, card_type, cvv, address = nil, address2 = nil, city = nil, state = nil, zip = nil, country = nil)
+    headers = {'Content-Type' => 'application/json', 'Authorization' => @auth_token}
+
+    attributes = {:reference => user_guid, :email => user_email, :first_name => first_name, :last_name => last_name, :full_number => card_number, :expiration_year => expiration_year,
+                  :expiration_month => expiration_month, :card_type => card_type, :cvv => cvv, :billing_address => address, :billing_address_2 => address2, :billing_city => city,
+                  :billing_state => state, :billing_zip => zip, :billing_country => country}
+
+    response = post("#{@base_path}", :headers => headers, :body => attributes)
+    return true if response.request.last_response.code == '200'
+
+  rescue Exception => e
+    raise "#{e.inspect}"
+    #puts "#{e.inspect}, #{e.backtrace}"
+  end
+
+  def delete_by_id(card_id)
+    headers = {'Content-Type' => 'application/json', 'Authorization' => @auth_token}
+    response = delete("#{@base_path}/v2/credit_cards/#{card_id}", :headers => headers)
+    return true if response.request.last_response.code == '200'
+
+  rescue Exception => e
+    raise "#{e.inspect}"
+    #puts "#{e.inspect}, #{e.backtrace}"
+  end
+
+  private
+
+  def post(path, options={})
+    jsonify_body!(options)
+    self.class.post(path, options)
+  end
+
+  def delete(path, options={})
+    jsonify_body!(options)
+    self.class.delete(path, options)
+  end
+
+  def get(path, options={})
+    jsonify_body!(options)
+    self.class.get(path, options)
+  end
+
+  def jsonify_body!(options)
+    options[:body] = options[:body].to_json if options[:body]
+  end
+
+end
+
+class CreditCard
+
+  class << self
+
+  attr_accessor :id, :first_name, :last_name, :masked_card_number, :expiration_month, :expiration_year, :card_type,
+              :billing_address, :billing_address_2, :billing_city, :billing_state, :billing_zip, :billing_country
+
+  end
+
+  attr_accessor :id, :first_name, :last_name, :masked_card_number, :expiration_month, :expiration_year, :card_type,
+              :billing_address, :billing_address_2, :billing_city, :billing_state, :billing_zip, :billing_country
+
+  def initialize(id, first_name, last_name, masked_card_number, expiration_month, expiration_year, card_type,
+      billing_address = nil, billing_address_2 = nil, billing_city = nil, billing_state = nil, billing_zip = nil,
+      billing_country = nil)
+
+    @id = id
+    @first_name = first_name
+    @last_name = last_name
+    @masked_card_number = masked_card_number
+    @expiration_month = expiration_month
+    @expiration_year = expiration_year
+    @billing_address = billing_address
+    @billing_address_2 = billing_address_2
+    @billing_city = billing_city
+    @billing_state = billing_state
+    @billing_zip = billing_zip
+    @billing_country = billing_country
+    @card_type = card_type
+  end
+
+  def self.from_json! string
+    JSON.load(string).each do |var, val|
+      self.instance_variable_get '@'+var
+      self.instance_variable_set '@'+var, val
+    end
+
+  rescue Exception => e
+    raise "#{e.inspect}"
+    #puts "#{e.inspect}, #{e.backtrace}"
+  end
 end
