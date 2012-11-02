@@ -79,10 +79,7 @@ post '/login' do
     session[:fname] = user.first_name
     session[:lname] = user.last_name
     session[:username] = params[:username]
-
-
-
-    #session[:user_guid] = user.user_guid
+    puts session[:user_guid] = user.guid
 
     puts session[:token]
     redirect '/organizations'
@@ -189,7 +186,6 @@ post '/createCard' do
   #@address1 = params[:address1]
   #@address2 = params[:address2]
 
-
   #@city = params[:city]
   #@state = params[:state]
   #@zip = params[:zip]
@@ -197,14 +193,14 @@ post '/createCard' do
 
 
   credit_cards_Obj = CreditCards.new(session[:token])
-  credit_cards_Obj.create(session[:user_guid], session[:username], @firs_name, @last_name, @card_number, @expiration_year, @expiration_month, @card_type, @cvv)
+  #returns true/fals  puts credit_cards_Obj.create(session[:user_guid], session[:username], @firs_name, @last_name, @card_number, @expiration_year, @expiration_month, @card_type, @cvv)
 
 
-  #puts "first name" + @first_name + "\n"
-  #puts "last name" + @last_name + "\n"
-  #puts "card nr" + @card_number + "\n"
-  #puts "year" + @expiration_year + "\n"
-  #puts "month" + @expiration_month + "\n"
+  puts "first name" + @first_name + "\n"
+  puts "last name" + @last_name + "\n"
+  puts "card nr" + @card_number + "\n"
+  puts "year" + @expiration_year + "\n"
+  puts "month" + @expiration_month + "\n"
 
 
   #puts "cvv" + @cvv + "\n"
