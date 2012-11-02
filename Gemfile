@@ -5,3 +5,4 @@ gem "cf-uaa-client", "~> 0.2.0", :git => 'git://github.com/cloudfoundry/uaa', :r
 gem "cfoundry", "~> 0.3.48"
 gem "sinatra"
 gem "sinatra-session"
+gem "httparty", "~> 2.3.0.1"
