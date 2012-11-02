@@ -224,7 +224,7 @@
 
 <div class="modal hide" id="delete_space_modal">
     <div class="modal-header">
-        <button class="close">×</button>
+        <button class="close"></button>
         <h3>Delete Space</h3>
     </div>
     <div class="modal-body">
@@ -241,7 +241,7 @@
     <div class="modal-footer">
         <div class="button_case_delete_organization_and_space">
             <a href="#" class="btn btn_right_delete_organization_and_space" id="cancel_b_d_space">No</a>
-            <form action="/deleteCurrentOrganization" method="post">
+            <form action="/deleteClickedSpace" method="post">
                 <input type="submit" class="btn btn-danger btn_left_delete_organization_and_space white_btn_text" id="b_d_space" />
                 <input type="text" id="pass_guid" name="spaceGuid" style="display: none;" />
                 <p class="hidden_modal_messages" id="p_d_space">Your space is being removed...</p>
@@ -255,7 +255,7 @@
 
 <div class="modal hide" id="delete_this_organization_modal">
     <div class="modal-header">
-        <button class="close">×</button>
+        <button class="close"></button>
         <h3>Delete organization</h3>
     </div>
     <div class="modal-body">

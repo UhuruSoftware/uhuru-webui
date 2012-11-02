@@ -348,7 +348,7 @@ end
 
 post '/deleteClickedSpace' do
   @guid = params[:spaceGuid]
-
+  puts @guid
   organizations_Obj = Organizations.new(session[:token])
   spaces_Obj = Spaces.new(session[:token])
 
@@ -511,5 +511,15 @@ post '/unbindUri' do
   apps.unbind_app_url(@app_name, @domain_name, @uri_name)
 
   redirect "/space" + session[:currentSpace]
+end
+
+
+post '/updateUser' do
+  @first_name = params[:first_name]
+  @last_name = params[:last_name]
+  @password = params[:pass1]
+
+  puts @first_name + "\n" + @last_name + "\n" + @password
+
 end
 

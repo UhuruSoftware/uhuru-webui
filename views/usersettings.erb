@@ -9,23 +9,41 @@
     </div>
 
 
-    <table>
-        <tr>
-            <td><p class="account_settings_labels">username</p></td>
-            <td><a href="#" class="account_settings_links"><input type="button" class="edit_user_details" value=""/></a></td>
-        </tr>
+    <div class="custom_modal_body" id="user_form">
+        <form action="/updateUser" method="post">
+            <table>
+                <tr class="account_settings_rows">
+                    <td class="account_settings_left"><label for="first_name" class="account_settings_labels">First Name: </label></td>
+                    <td class="account_settings_right"><input type="text" id="first_name" name="first_name" class="modal_input_box account_settings_input_box checker" placeholder = "... first name" /></td>
+                </tr>
+
+                <tr class="account_settings_rows">
+                    <td class="account_settings_left"><label for="last_name" class="account_settings_labels">Last Name: </label></td>
+                    <td class="account_settings_right"><input type="text" id="last_name" name="last_name" class="modal_input_box account_settings_input_box checker" placeholder = "... last name" /></td>
+                </tr>
 
 
-        <tr>
-            <td><p class="account_settings_labels">passwrod</p></td>
-            <td><a href="#" class="account_settings_links"><input type="button" class="edit_user_details" value=""/></a></td>
-        </tr>
+                <tr class="account_settings_rows">
+                    <td class="account_settings_left"><label for="pass1" class="account_settings_labels">Password: </label></td>
+                    <td class="account_settings_right"><input type="text" name="pass1" id="pass1" class="modal_input_box account_settings_input_box" placeholder = "... password" /></td>
+                </tr>
+
+                <tr class="account_settings_rows">
+                    <td class="account_settings_left"><label for="pass2" class="account_settings_labels">Confirm Password: </label></td>
+                    <td class="account_settings_right"><input type="text" name="pass2" id="pass2" class="modal_input_box account_settings_input_box" placeholder = "... confirm password" /></td>
+                </tr>
+
+                <tr class="account_settings_rows">
+                    <td></td>
+                    <td class="account_settings_left"><p class="form_errors"></p></td>
+                </tr>
 
 
-        <tr>
-            <td><p class="account_settings_labels">email</p></td>
-            <td><a href="#" class="account_settings_links"><input type="button" class="edit_user_details" value=""/></a></td>
-        </tr>
-    </table>
-
+                <tr class="account_settings_rows">
+                    <td class="account_settings_left"><input type="button" value="Cancel" class="btn btn-success login last_row" /></td>
+                    <td class="account_settings_right"><input type="submit" value="Update" class="btn btn-success login last_row submit_form" style="float: left;" /></td>
+                </tr>
+            </table>
+        </form>
+      </div>
 </div>

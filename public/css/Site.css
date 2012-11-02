@@ -1314,6 +1314,7 @@ a
     bottom: 0;
 }
 
+.form_errors,
 #show_modal_errors
 {
     font-family: 'Segoe UI Light', 'Open Sans', Verdana, Arial, Helvetica, sans-serif;
@@ -1325,4 +1326,10 @@ a
     line-height: 40px;
     color: red;
     margin-left: 20px;
+}
+.form_errors
+{
+    font-size: 14px;
+    font-weight: 100;
+    margin-left: 5px;
 }

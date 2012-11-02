@@ -18,7 +18,7 @@ var signup_modal = function(){
     $('#email').val('');
 	$('#signup_modal').fadeIn(600);
     $('.close').click(function(){$("#signup_modal").css("display", "none");$('#screen').css("display", "none");$('body').css("overflow", "auto");$('#show_modal_errors').text('');});
-    $('.btn').click(function(){$("#signup_modal").css("display", "none");$('#screen').css("display", "none");$('body').css("overflow", "auto");$('#show_modal_errors').text('');});
+    $('.cancel_btn').click(function(){$("#signup_modal").css("display", "none");$('#screen').css("display", "none");$('body').css("overflow", "auto");$('#show_modal_errors').text('');});
 }
 
 
@@ -28,33 +28,56 @@ $('#signup_button').click(signup_modal);
 });
 
 
-  jQuery(function(){
-        $(".sign_up_footer_modal").hover(function(){
-        $("#submit").hide();
-        var hasError = false;
-        var passwordVal = $("#password").val();
-        var checkVal = $("#confirm_password").val();
-        if (passwordVal == '') {
-            $('#show_modal_errors').text("Please enter a password");
-            hasError = true;
-        } else if (checkVal == '') {
-            $('#show_modal_errors').text("Please re-type the password to avoid mistake");
-            hasError = true;
-        } else if (passwordVal != checkVal ) {
-            $('#show_modal_errors').text("Passwords do not match!");
-            hasError = true;
+
+
+
+$('[placeholder]').focus(function() {
+  var input = $(this);
+    input.css("font-style", "normal");
+    input.css("color", "#ffffff");
+  if (input.val() == input.attr('placeholder')) {
+    input.val('');
+    input.removeClass('placeholder');
+  }
+}).blur(function() {
+  var input = $(this);
+    input.css("font-style", "italic");
+    input.css("color", "gray");
+  if (input.val() == '' || input.val() == input.attr('placeholder')) {
+    input.addClass('placeholder');
+    input.val(input.attr('placeholder'));
+  }
+}).blur();
+
+$('[placeholder]').parents('form').submit(function() {
+  $(this).find('[placeholder]').each(function() {
+    var input = $(this);
+    if (input.val() == input.attr('placeholder')) {
+      input.val('');
+    }
+  })
+});
+
+
+
+
+
+$(function() {
+    $('.submit_form').click(function(event){
+
+        data = $('#password').val();
+        var len = data.length;
+
+        if(len < 1) {
+            $('#show_modal_errors').hide().text("Password can not be blank!").fadeIn(200);
+            event.preventDefault();
+            // Prevent form submission
         }
-        if(hasError == true)
-        {
-            return false;
+
+        if($('#password').val() != $('#confirm_password').val()) {
+            event.preventDefault();
+            $('#show_modal_errors').hide().text("Password and Confirm Password don't match!").fadeIn(200);
+            // Prevent form submission
         }
-        else
-        {
-            $("#submit").show();
-            $('#show_modal_errors').text("");
-        }
-    },
-        function(){
-            //$("#submit").show();
-        });
+    });
 });

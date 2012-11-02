@@ -52,9 +52,6 @@ $('[placeholder]').parents('form').submit(function() {
 });
 
 
-
-
-
 $('.tiped').bind({
   focus: function() {
     $('.tooltips').show(200);
@@ -63,3 +60,27 @@ $('.tiped').bind({
     $('.tooltips').hide(300);
   }
 });
+
+
+
+$(function() {
+    $('.submit_form').click(function(event){
+
+        data = $('#pass1').val();
+        var len = data.length;
+
+        if(len < 1) {
+            event.preventDefault();
+            $('.form_errors').hide().text("Password can not be blank!").fadeIn(200);
+            // Prevent form submission
+        }
+
+        if($('#pass1').val() != $('#pass2').val()) {
+            event.preventDefault();
+            $('.form_errors').hide().text("Password and Confirm Password don't match!").fadeIn(200);
+            // Prevent form submission
+        }
+    });
+});
+
+
