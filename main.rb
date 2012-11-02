@@ -76,8 +76,13 @@ post '/login' do
     user = user_login.login(@username, @password)
     session[:token] = user.token
 
-    session[:fname] = user.first_name + ' ' + user.last_name
+    session[:fname] = user.first_name
+    session[:lname] = user.last_name
     session[:username] = params[:username]
+
+
+
+    #session[:user_guid] = user.user_guid
 
     puts session[:token]
     redirect '/organizations'
@@ -179,42 +184,31 @@ post '/createCard' do
   @expiration_month = params[:expiration_month]
 
 
+  @card_type = params[:card_type]
   @cvv = params[:cvv]
-  @address1 = params[:address1]
-  @address2 = params[:address2]
+  #@address1 = params[:address1]
+  #@address2 = params[:address2]
 
 
-  @city = params[:city]
+  #@city = params[:city]
   #@state = params[:state]
   #@zip = params[:zip]
-  @country = params[:country]
+  #@country = params[:country]
 
-  @card_type = params[:card_type]
 
   credit_cards_Obj = CreditCards.new(session[:token])
-  new_credit_card = nil # credit_cards_Obj.create($currentOrganization, firs_name, last_name, card_number, expiration_year, expiration_month,
-                        #cvv, address1, address2, city, state, zip, country, card_type )
+  credit_cards_Obj.create(session[:user_guid], session[:username], @firs_name, @last_name, @card_number, @expiration_year, @expiration_month, @card_type, @cvv)
 
 
-  puts "first name" + @first_name + "\n"
-  puts "last name" + @last_name + "\n"
-  puts "card nr" + @card_number + "\n"
-  puts "year" + @expiration_year + "\n"
-  puts "month" + @expiration_month + "\n"
+  #puts "first name" + @first_name + "\n"
+  #puts "last name" + @last_name + "\n"
+  #puts "card nr" + @card_number + "\n"
+  #puts "year" + @expiration_year + "\n"
+  #puts "month" + @expiration_month + "\n"
 
 
-  puts "cvv" + @cvv + "\n"
-  puts "add1" + @address1 + "\n"
-  puts "add2" + @address2 + "\n"
-
-
-  puts "city" + @city + "\n"
-  #puts "state" + @state + "\n"
-  #puts "zip" + @zip + "\n"
-  puts "country" + @country + "\n"
-
-
-  puts "card type : " + @card_type + "\n"
+  #puts "cvv" + @cvv + "\n"
+  #puts "card type : " + @card_type + "\n"
 
 
 
@@ -250,7 +244,7 @@ get'/organization:org_guid' do
   managers_list = organizations_Obj.read_managers(@this_guid)
 
 
-  credit_cards_list = nil # credit_cards_Obj.read_all($currentOrganization)
+  credit_cards_list = credit_cards_Obj.read_all()
 
 
   erb :organization, {:locals => {:credit_cards_list => credit_cards_list, :spaces_list => spaces_list, :spaces_count => spaces_list.count, :members_count => owners_list.count + developers_list.count + managers_list.count, :owners_list => owners_list, :developers_list => developers_list, :managers_list => managers_list}, :layout => :layout_user}
