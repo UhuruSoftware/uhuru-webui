@@ -49,13 +49,23 @@
                 <div id="current_user">
                     <span id="current_user_name"></span>
                     <a href="/account" title="Account Settings"><input type="button" class="gear_sign_48" value="" id="current_user_edit_btn" /></a>
-                    <a href="/logout" title="LogOut"><input type="button" class="undo_sign_48" value="" id="current_user_log_out" /></a>
+                    <a href="#" title="LogOut" id="logout_key"><input type="button" class="key_sign_48" value="" id="current_user_log_out" /></a>
                 </div>
 
                 <div id="header_links">
                   <a href="http://www.uhurusoftware.com" target="_blank"><span class="head_link">COMPANY</span></a>
                   <a href="http://uhurusoftware.zendesk.com" target="_blank"><span class="head_link">SUPPORT</span></a>
                   <a href="/credit"><span class="head_link credit_link">CREDIT CARDS</span></a>
+                </div>
+
+
+                <div id="logout_small_modal">
+                    <p>Are you sure you want to logout?</p>
+                    <div class="button_case_delete_organization_and_space">
+                        <a href="#" class="btn btn_right_delete_organization_and_space toggle_logout_up">No</a>
+                        <a href="/logout"><input type="button" class="btn btn-danger btn_left_delete_organization_and_space white_btn_text" value="Yes" /></a>
+                    </div>
+            </form>
                 </div>
             </div>
         </header>

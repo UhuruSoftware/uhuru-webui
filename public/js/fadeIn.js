@@ -180,6 +180,20 @@ $('.button_bound_uri').click(bind_uri);
 $('.button_unbound_uri').click(unbind_uri);
 
 
+
+
+$('#logout_key').click(function(){
+    $('#logout_small_modal').slideToggle(200, function(){
+        //
+    });
+});
+    $('.toggle_logout_up').click(function(){
+        $('#logout_small_modal').slideToggle(200, function(){
+            //
+        });
+    });
+
+
 });
 
 

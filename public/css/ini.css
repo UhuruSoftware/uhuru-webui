@@ -786,10 +786,6 @@ select
 
 
 
-
-
-
-
 .start
 {
     background: transparent url('../images/play_24px.png') no-repeat;
@@ -810,39 +806,14 @@ select
 
 
 
-.plus_sign_48
-{
-    background-image: url("../images/plus_32px.png");
-    background-repeat: no-repeat;
-    border: 0 solid white;
-    width: 32px;
-    height: 32px;
-    background-color: transparent;
-    cursor: pointer;
-}
-.edit_sign_48
-{
-    background-image: url("../images/edit_32px.png");
-    background-repeat: no-repeat;
-    border: 0 solid white;
-    width: 32px;
-    height: 32px;
-    background-color: transparent;
-    cursor: pointer;
-}
-.trash_sign_48
-{
-    background-image: url("../images/trash_32px.png");
-    background-repeat: no-repeat;
-    border: 0 solid white;
-    width: 32px;
-    height: 32px;
-    background-color: transparent;
-    cursor: pointer;
-}
 
-
-.undo_sign_48
+.plus_sign_48,
+.edit_sign_48,
+.trash_sign_48,
+.undo_sign_48,
+.gear_sign_48,
+.key_sign_48,
+.money_bag_sign_48
 {
     background-image: url("../images/undo_32px.png");
     background-repeat: no-repeat;
@@ -852,27 +823,29 @@ select
     background-color: transparent;
     cursor: pointer;
 }
-
+.plus_sign_48
+{
+    background-image: url("../images/plus_32px.png");
+}
+.edit_sign_48
+{
+    background-image: url("../images/edit_32px.png");
+}
+.trash_sign_48
+{
+    background-image: url("../images/trash_32px.png");
+}
 .gear_sign_48
 {
     background-image: url("../images/gear_32px.png");
-    background-repeat: no-repeat;
-    border: 0 solid white;
-    width: 32px;
-    height: 32px;
-    background-color: transparent;
-    cursor: pointer;
 }
-
+.key_sign_48
+{
+    background-image: url("../images/key_32px.png");
+}
 .money_bag_sign_48
 {
     background-image: url("../images/money_bag_32px.png");
-    background-repeat: no-repeat;
-    border: 0 solid white;
-    width: 32px;
-    height: 32px;
-    background-color: transparent;
-    cursor: pointer;
 }
 
 
@@ -2104,7 +2077,8 @@ p,
     font-weight: 100;
     font-size: 16px;
     letter-spacing: 0.01em;
-    margin-top: 0;
+    margin-top: 10px;
+    margin-bottom: 10px;
 }
 .app_text_p
 {
@@ -2211,13 +2185,28 @@ p,
     color: #000000;
 }
 
+#logout_small_modal,
 #current_user
 {
     position: absolute;
     right: -105px;
     line-height: 50px;
     width: 120px;
-    height: 32px;
+    height: 50px;
+}
+
+#logout_small_modal
+{
+    border-bottom: 1px solid #187EBC;
+    border-left: 1px solid #187EBC;
+    border-right: 1px solid #187EBC;
+    background-color: #0E4769;
+    z-index: 3;
+    right: -95px;
+    height: 100px;
+    width: 300px;
+    top: 50px;
+    display: none;
 }
 
 
