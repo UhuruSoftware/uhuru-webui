@@ -1,7 +1,7 @@
 <div class="sections" id="organizations_page">
     <div class="manage_content_header">
         <h2 class="section_title">
-            <span id="organization_text">Credit cards: </span><span class="count">(<span>1</span>)</span>
+            <span id="organization_text">Credit cards </span><span class="count">(<span><%= my_credit_cards.count %></span>)</span>
         </h2>
         <div class="icons_options">
             <input type="button" value="" class="plus_sign_48 plus_sign_position_48" id="create_credit_card" style="right: 0;"/>
@@ -10,22 +10,24 @@
 
 
     <ul class="tile_list">
-        <li class="tile_invisible">
-            <ul class="custom_list">
-                <li class="tile_credit_card_name" title="xxxx-xxxx-xxxx-1234">
-                  <span class="credit_card_name">xxxx-xxxx-xxxx-1234</span>
-                </li>
+        <% my_credit_cards.each do |card| %>
+            <li class="tile_invisible">
+                <ul class="custom_list">
+                    <li class="tile_credit_card_name" title="xxxx-xxxx-xxxx-1234">
+                      <span class="credit_card_name"><%= card.first_name + '' + card.last_name %></span>
+                    </li>
 
-                <li class="tile_credit_card_logo">
-                    <span class="link_tiles_app span_credit_card_icon_mastercard"></span>
-                </li>
+                    <li class="tile_credit_card_logo">
+                        <span class="link_tiles_app span_credit_card_icon_mastercard"></span>
+                    </li>
 
-                <li class="tile_credit_card_details">
-                    <span class="credit_card_first_name_span">First Name</span>
-                    <span class="credit_card_last_name_span">Last Name</span>
-                </li>
-            </ul>
-        </li>
+                    <li class="tile_credit_card_details">
+                        <span class="credit_card_first_name_span">First Name</span>
+                        <span class="credit_card_last_name_span">Last Name</span>
+                    </li>
+                </ul>
+            </li>
+        <% end %>
     </ul>
 
 

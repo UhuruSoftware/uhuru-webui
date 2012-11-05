@@ -83,6 +83,16 @@ var delete_service = function(){
     $('.btn').click(function(){$("#delete_service").css("display", "none");$('#screen').css("display", "none");$('body').css({"overflow":"auto"});});
 }
 
+var delete_user = function(){
+	$('#screen').css({	"display": "block", opacity: 0.7, "width": "10000px", "height": "10000px"});
+	$('body').css({"overflow":"hidden"});
+	$('#delete_user_modal').fadeIn(600);
+    $('.close').click(function(){$("#delete_user_modal").css("display", "none");$('#screen').css("display", "none");$('body').css({"overflow":"auto"});});
+    $('.btn').click(function(){$("#delete_user_modal").css("display", "none");$('#screen').css("display", "none");$('body').css({"overflow":"auto"});});
+}
+
+
+
 
 
 var delete_this_space_modal = function(){
@@ -116,6 +126,7 @@ $('.delete-organization-button').click(delete_organization_modal);
 $('.delete-space-button').click(delete_space_modal);
 $('.delete-app-button').click(delete_app);
 $('.delete-service-button').click(delete_service);
+$('.delete-user-button').click(delete_user);
 
 
 $('.delete_this_organization').click(delete_this_organization_modal);

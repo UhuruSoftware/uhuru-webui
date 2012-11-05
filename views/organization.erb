@@ -11,7 +11,6 @@
                     </div>
                     <input type="submit" style="display: none; width: 1px; height: 1px;" />
                 </form>
-
             </h2>
 
             <div class="icons_options">
@@ -32,45 +31,37 @@
                     <li onclick="showBillings();" id="billings_li">Payment</li>
                 </ul>
 
-                 <!--SPACES TAB-->
 
                 <div id="spaces">
                     <ul class="tile_list">
 
-                    <% spaces_list.each do |space| %>
-                            <li class="tile_invisible">
-                              <ul class="custom_list">
-                                    <li class="tile_space_name" title="<%= space.name %>">
-                                        <a href="/space<%= space.guid %>" class="link_tiles_space">
-                                            <span class="space_name_span to_underlined"><%= space.name %></span>
-                                            <a href="#"><span class="small_trash delete-space-button" id="<%= space.name %>" title="<%= space.guid %>" onmousemove="prepareToDeleteSpace(this);"></span></a>
-                                        </a>
-                                    </li>
+                        <% spaces_list.each do |space| %>
+                                <li class="tile_invisible">
+                                  <ul class="custom_list">
+                                        <li class="tile_space_name" title="<%= space.name %>">
+                                            <a href="/space<%= space.guid %>" class="link_tiles_space">
+                                                <span class="space_name_span to_underlined"><%= space.name %></span>
+                                                <a href="#"><span class="small_trash delete-space-button" id="<%= space.name %>" title="<%= space.guid %>" onmousemove="prepareToDeleteSpace(this);"></span></a>
+                                            </a>
+                                        </li>
 
-                                    <li class="tile_space_apps">
-                                        <span class="count-label apps apps_count_span"># of apps: </span><span class="count-value apps apps_count_span_value"><%= space.apps_count %></span>
-                                        <span class="count-label services services_count_span"># of services: </span><span class="count-value services services_count_span_value"><%= space.services_count %></span>
-                                    </li>
+                                        <li class="tile_space_apps">
+                                            <span class="count-label apps apps_count_span"># of apps: </span><span class="count-value apps apps_count_span_value"><%= space.apps_count %></span>
+                                            <span class="count-label services services_count_span"># of services: </span><span class="count-value services services_count_span_value"><%= space.services_count %></span>
+                                        </li>
 
-                                    <li class="tile_space_mothly_cost">
-                                        <span class="costs_span">cost:</span><span class="costs_span_value">33</span>
-                                        <span class="span_cost_icon"></span>
-                                    </li>
-                              </ul>
-                            </li>
-                    <% end %>
+                                        <li class="tile_space_mothly_cost">
+                                            <span class="costs_span">cost:</span><span class="costs_span_value">33</span>
+                                            <span class="span_cost_icon"></span>
+                                        </li>
+                                  </ul>
+                                </li>
+                        <% end %>
 
-                       <!-- <li class="new tile" id="create_space_btn">
-                            <span class="icon"></span>
-                        </li>
-                            -->
                     </ul>
 
                 <div style="height: 250px; width: 100%"></div>
                 </div>
-
-
-                <!--MEMBERS TAB-->
 
 
                 <div id="members">
@@ -82,64 +73,64 @@
                                 <span class="user_type_span">Owner</span>
                                 <span class="small_edit edit-user-button"></span>
                                 <span class="small_trash delete-user-button"></span>
+                                <a href="#"><span class="small_trash delete-user-button" id="<%= owner.email %>" title="<%= owner.guid %>" onmousemove="prepareToDeleteUser(this);"></span></a>
+
                                 <span class="span_bg_icon"></span>
                             </li>
                           <% end %>
 
                           <% developers_list.each do |developer| %>
-
                             <li class="tile_user_developer" title="<%= developer.email %>">
                                 <span class="user_name_span"><%= developer.email %></span>
                                 <span class="user_type_span">Developer</span>
                                 <span class="small_edit edit-user-button"></span>
-                                <span class="small_trash delete-user-button"></span>
+                                <a href="#"><span class="small_trash delete-user-button" id="<%= developer.email %>" title="<%= developer.guid %>" onmousemove="prepareToDeleteUser(this);"></span></a>
+
                                 <span class="span_bg_icon"></span>
                             </li>
                           <% end %>
 
                           <% managers_list.each do |manager| %>
-
                             <li class="tile_user_manager" title="<%= manager.email %>">
                                 <span class="user_name_span"><%= manager.email  %></span>
                                 <span class="user_type_span">Manager</span>
                                 <span class="small_edit edit-user-button"></span>
-                                <span class="small_trash delete-user-button"></span>
+                                <a href="#"><span class="small_trash delete-user-button" id="<%= manager.email %>" title="<%= manager.guid %>" onmousemove="prepareToDeleteUser(this);"></span></a>
+
                                 <span class="span_bg_icon"></span>
                             </li>
-
                           <% end %>
 
                         </ul>
                     <div style="height: 50px; width: 100%"></div>
                 </div>
 
+
+                <div id="billings" class="tab-pane">
+                    <ul class="tile_list" style="border-bottom: 1px solid #0e4769; padding-bottom: 50px;">
+                        <% credit_cards_list.each do |card| %>
+                            <li class="tile_invisible">
+                                <ul class="custom_list">
+                                    <li class="tile_credit_card_name" title="xxxx-xxxx-xxxx-1234">
+                                      <span class="credit_card_name">xxx-xxx-xxx-xxx-132</span>
+                                    </li>
+
+                                    <li class="tile_credit_card_logo">
+                                        <span class="link_tiles_app span_credit_card_icon_visa"></span>
+                                    </li>
+
+                                    <li class="tile_credit_card_details">
+                                        <span class="credit_card_first_name_span">First Name</span>
+                                        <span class="credit_card_last_name_span">Last Name</span>
+                                    </li>
+                                </ul>
+                            </li>
+                        <% end %>
+                    </ul>
+                </div>
+
          </div>
 
-
-
-
-            <div id="billings" class="tab-pane">
-                <ul class="tile_list" style="border-bottom: 1px solid #0e4769; padding-bottom: 50px;">
-                    <% credit_cards_list.each do |card| %>
-                        <li class="tile_invisible">
-                            <ul class="custom_list">
-                                <li class="tile_credit_card_name" title="xxxx-xxxx-xxxx-1234">
-                                  <span class="credit_card_name">xxx-xxx-xxx-xxx-132</span>
-                                </li>
-
-                                <li class="tile_credit_card_logo">
-                                    <span class="link_tiles_app span_credit_card_icon_visa"></span>
-                                </li>
-
-                                <li class="tile_credit_card_details">
-                                    <span class="credit_card_first_name_span">First Name</span>
-                                    <span class="credit_card_last_name_span">Last Name</span>
-                                </li>
-                            </ul>
-                        </li>
-                    <% end %>
-                </ul>
-            </div>
 
 
 
@@ -192,6 +183,30 @@
                 <input type="submit" class="btn btn-danger btn_left_delete_organization_and_space white_btn_text" id="b_d_space" />
                 <input type="text" id="pass_guid" name="spaceGuid" style="display: none;" />
                 <p class="hidden_modal_messages" id="p_d_space">Your space is being removed...</p>
+            </form>
+        </div>
+
+    </div>
+</div>
+
+
+
+<div class="modal hide" id="delete_user_modal">
+    <div class="modal-header">
+        <button class="close"></button>
+        <h3>Delete User</h3>
+    </div>
+    <div class="modal-body">
+        <p>
+            Are you sure you want to delete this user "<span id="this_user_name"></span>"?
+        </p>
+    </div>
+    <div class="modal-footer">
+        <div class="button_case_delete_organization_and_space">
+            <a href="#" class="btn btn_right_delete_organization_and_space">No</a>
+            <form action="/deleteUser" method="post">
+                <input type="text" class="blank_input" id="pass_user_guid" value="" name="thisUser"/>
+                <input type="submit" class="btn btn-danger btn_left_delete_organization_and_space white_btn_text" value="Yes"/>
             </form>
         </div>
 
@@ -269,5 +284,4 @@
     </div>
 </div>
 
-<!--// //-->
 </div>

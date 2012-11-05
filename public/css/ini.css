@@ -66,6 +66,7 @@ h1, h2, h3, h4, h5, h6
 #delete_app,
 #delete_service,
 #delete_space_modal,
+#delete_user_modal,
 #delete_organization_modal,
 #add_ctService_modal,
 #inv_ctUser_modal,
@@ -147,7 +148,6 @@ h1, h2, h3, h4, h5, h6
 .custom_modal_footer
 {
     width: 100%;
-    background-color: red;
     position: relative;
     bottom: 0;
     height: 45px;
@@ -959,10 +959,10 @@ select
 {
     float: left;
     font-size: 24px;
-    font-weight: normal;
+    font-weight: 100;
     color: #ffffff;
     line-height: 40px;
-    padding: 0px;
+    padding: 0;
     margin-left: 5px;
 }
 

@@ -154,7 +154,8 @@ get'/credit' do
   session[:path_2] = ''
   $path_home = '<a href="/organizations" class="breadcrumb_element_home"></a>'
 
-  my_credit_cards = nil
+  credit_cards_Obj = CreditCards.new(session[:token])
+  my_credit_cards = credit_cards_Obj.read_all
 
   erb :creditcard, {:locals => {:my_credit_cards => my_credit_cards}, :layout => :layout_user}
 end
@@ -415,6 +416,15 @@ post '/addUsers' do
   users_Obj = Users.new(session[:token])
   users_Obj.add_user_with_role_to_space(session[:currentOrganization], @name, @type)
 
+  redirect "/organization" + session[:currentOrganization]
+end
+
+post '/deleteUser' do
+  @user_guid =  params[:thisUser]
+
+  organizations_Obj = Organizations.new(session[:token])
+  users_Obj = Users.new(session[:token])
+  users_Obj.delete(@user_guid)
 
   redirect "/organization" + session[:currentOrganization]
 end

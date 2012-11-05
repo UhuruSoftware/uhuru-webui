@@ -16,6 +16,12 @@ function prepareToDeleteSpace(obj)
     document.getElementById('pass_guid').value = obj.title;
 }
 
+function prepareToDeleteUser(obj)
+{
+    document.getElementById('this_user_name').innerHTML = obj.id;
+    document.getElementById('pass_user_guid').value = obj.title;
+}
+
 function prepareToDeleteApp(obj)
 {
     document.getElementById('pass_app').value = obj.title;
