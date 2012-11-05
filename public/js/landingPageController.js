@@ -79,13 +79,11 @@ $(function() {
         if(last_name < 2 || last == '... last name') {
             event.preventDefault();
             $('#show_modal_errors').hide().text("Please enter you're last name name!").fadeIn(200);
-            // Prevent form submission
         }
 
         if(first_name < 2 || first == '... first name') {
             event.preventDefault();
             $('#show_modal_errors').hide().text("Please enter you're first name!").fadeIn(200);
-            // Prevent form submission
         }
 
 
