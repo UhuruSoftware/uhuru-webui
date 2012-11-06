@@ -12,7 +12,7 @@ class UhuruConfig
   DEFAULT_CONFIG_PATH = File.expand_path("../config/uhuru-webui.yml", __FILE__)
 
   def self.load
-    config = YAML.load_file(DEFAULT_CONFIG_PATH)
+    config = YAML.load_file(self.config_file || DEFAULT_CONFIG_PATH)
 
     @cloud_controller_api = config["cloudfoundry"]["cloud-controller-api"]
     @client_id = config["cloudfoundry"]["client-id"]
@@ -22,6 +22,10 @@ class UhuruConfig
     @uhuru_webui_port = config["uhuru"]["webui-port"]
     @dev_mode = config["uhuru"]["dev-mode"]
     @logger = self.set_logger(config["logger"]["path"])
+  end
+
+  def self.config_file
+    ENV['WEBUI_CONFIG']
   end
 
   def self.cloud_controller_api
