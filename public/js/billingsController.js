@@ -29,29 +29,32 @@ $(function() {
 
         var card_number = $('input[name=card_number]').val();
         var cvv = $('input[name=cvv]').val();
-        var card_type = $('input[name=card_type]').val();
-        var exp_year = $('input[name=expiration_year]').val();
-        var exp_month = $('input[name=expiration_month').val();
 
+        var card_t = document.getElementById("credit_card_type");
+        var exp_year = document.getElementById("credit_card_expiration_year");
+        var exp_month = document.getElementById("credit_card_expiration_month");
 
+        var card_type = card_t.options[card_t.selectedIndex];
+        var expiration_year = exp_year.options[exp_year.selectedIndex];
+        var expiration_month = exp_month.options[exp_month.selectedIndex];
 
-        if(exp_month == -1 || exp_month == '-select-') {
+        if(expiration_month.text == '-select-') {
             event.preventDefault();
-            $('#show_modal_errors').hide().text("Please select the expiration month!").fadeIn(200);
+            $('#show_modal_errors').hide().text("Please select a month!").fadeIn(200);
         }
 
-        if(exp_year == -1 || exp_year == '-select-') {
+        if(expiration_year.text == '-select-') {
             event.preventDefault();
-            $('#show_modal_errors').hide().text("Please select the expiration year!").fadeIn(200);
+            $('#show_modal_errors').hide().text("Please select a year").fadeIn(200);
         }
 
-        if(card_type == -1 || card_type == '-select-') {
+        if(card_type.text == '-select-') {
             event.preventDefault();
             $('#show_modal_errors').hide().text("Please select a card type!").fadeIn(200);
         }
 
 
-
+       /*
         if(!cvv.match(/^\d+$/)) {
             event.preventDefault();
             $('#show_modal_errors').hide().text("Please enter you're card cvv code! ( 3/4 digit )").fadeIn(200);
@@ -100,5 +103,6 @@ $(function() {
             event.preventDefault();
             $('#show_modal_errors').hide().text("Please enter you're first name!").fadeIn(200);
         }
+        */
     });
 });
