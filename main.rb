@@ -184,30 +184,17 @@ post '/createCard' do
 
   @card_type = params[:card_type]
   @cvv = params[:cvv]
-  #@address1 = params[:address1]
-  #@address2 = params[:address2]
+  @address1 = params[:address1]
+  @address2 = params[:address2]
 
-  #@city = params[:city]
-  #@state = params[:state]
-  #@zip = params[:zip]
-  #@country = params[:country]
+  @city = params[:city]
+  @state = params[:state]
+  @zip = params[:zip]
+  @country = params[:country]
 
 
   credit_cards_Obj = CreditCards.new(session[:token])
-  #returns true/fals  puts credit_cards_Obj.create(session[:user_guid], session[:username], @firs_name, @last_name, @card_number, @expiration_year, @expiration_month, @card_type, @cvv)
-
-
-  puts "first name" + @first_name + "\n"
-  puts "last name" + @last_name + "\n"
-  puts "card nr" + @card_number + "\n"
-  puts "year" + @expiration_year + "\n"
-  puts "month" + @expiration_month + "\n"
-
-
-  #puts "cvv" + @cvv + "\n"
-  #puts "card type : " + @card_type + "\n"
-
-
+  puts credit_cards_Obj.create(session[:user_guid], session[:username], @firs_name, @last_name, @card_number, @expiration_year, @expiration_month, @card_type, @cvv)
 
   redirect "/credit"
 end
