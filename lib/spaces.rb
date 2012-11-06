@@ -1,12 +1,12 @@
 $:.unshift(File.join(File.dirname(__FILE__)))
 
 require 'cfoundry'
-require 'uhuru_config'
+require 'config'
 
 class Spaces
 
-  def initialize(token)
-    @client = CFoundry::Client.new(UhuruConfig.cloud_controller_api, token)
+  def initialize(token, target)
+    @client = CFoundry::Client.new(target, token)
   end
 
   def get_name(space_guid)

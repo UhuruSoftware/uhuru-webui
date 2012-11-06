@@ -1,6 +1,6 @@
 $:.unshift(File.join(File.dirname(__FILE__)))
 
-require 'uhuru_config'
+require 'config'
 require 'httparty'
 
 class CreditCards
@@ -8,10 +8,9 @@ class CreditCards
 
   attr_accessor :auth_token, :base_path
 
-  def initialize(token)
-    UhuruConfig.load
+  def initialize(token, target)
     @auth_token = token
-    @base_path = UhuruConfig.cloud_controller_api + '/v2/credit_cards'
+    @base_path = target + '/v2/credit_cards'
   end
 
   def read_all

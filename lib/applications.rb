@@ -1,12 +1,12 @@
 $:.unshift(File.join(File.dirname(__FILE__)))
 
 require 'cfoundry'
-require 'uhuru_config'
+require 'config'
 
 class Applications
 
-  def initialize(token)
-    @client = CFoundry::V2::Client.new(UhuruConfig.cloud_controller_api, token)
+  def initialize(token, target)
+    @client = CFoundry::V2::Client.new(target, token)
   end
 
   #track cf to see how domains are managed and what is owning organization for a domain

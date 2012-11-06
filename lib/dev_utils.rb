@@ -1,7 +1,7 @@
 $:.unshift(File.join(File.dirname(__FILE__)))
 
 require 'cfoundry'
-require 'uhuru_config'
+require 'config'
 
 class DevUtils
 
@@ -9,8 +9,8 @@ class DevUtils
     "bearer eyJhbGciOiJIUzI1NiJ9.eyJleHAiOjEzNTE2Njg0OTcsInVzZXJfbmFtZSI6InNyZUB2bXdhcmUuY29tIiwic2NvcGUiOlsiY2xvdWRfY29udHJvbGxlci5yZWFkIiwiY2xvdWRfY29udHJvbGxlci53cml0ZSIsIm9wZW5pZCIsInBhc3N3b3JkLndyaXRlIl0sImVtYWlsIjoic3JlQHZtd2FyZS5jb20iLCJhdWQiOlsib3BlbmlkIiwiY2xvdWRfY29udHJvbGxlciIsInBhc3N3b3JkIl0sImp0aSI6IjE0NjYxNWE3LTc0OGYtNDVkNy05NTFjLTMwZWNhOWJkN2RkOCIsInVzZXJfaWQiOiI3MDI1NWNhOC01ZWE4LTQxOWItOTJlMC0xOGU5ODEwMjc4ZWEiLCJjbGllbnRfaWQiOiJ2bWMifQ.DkUmz6r4fkTXP9r-6QiobDrkByiQi5nzaxg9eCbRFs0"
   end
 
-  def initialize(token)
-    @client = CFoundry::V2::Client.new(UhuruConfig.cloud_controller_api, token)
+  def initialize(token, target)
+    @client = CFoundry::V2::Client.new(target, token)
   end
 
   def auth_service_token(label, provider, token)

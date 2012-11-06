@@ -1,15 +1,15 @@
+pid_filename: /tmp/uhuru_webui.pid
+local_route: 127.0.0.1
+port: 9494
+dev-mode: true
 
 cloudfoundry:
-  cloud-controller-api: "http://api3.ccng-dev.net"
-  client-id: "cloud_controller"
-  client-secret: "cc"
+  cloud_controller_api: "http://api3.ccng-dev.net"
+  client_id: "cloud_controller"
+  client_secret: "cc"
 
 uaa:
-  uaa-api: "http://uaa.ccng-dev.net"
+  uaa_api: "http://uaa.ccng-dev.net"
 
-uhuru:
-  webui-port: 9494
-  dev-mode: true
-
-logger:
-  path: "logs/main.log"
+logging:
+  level: debug

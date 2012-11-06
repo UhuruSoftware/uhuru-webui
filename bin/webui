@@ -1,0 +1,9 @@
+#!/usr/bin/env ruby
+
+$:.unshift(File.expand_path("../../lib", __FILE__))
+home = File.join(File.dirname(__FILE__), '/..')
+ENV['BUNDLE_GEMFILE'] = "#{home}/Gemfile"
+require "rubygems"
+require "bundler/setup"
+require "runner"
+Uhuru::Webui::Runner.new(ARGV).run!

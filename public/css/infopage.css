@@ -1,14 +1,14 @@
 @font-face
 {
 font-family: Sagoe UI;
-src: url('../css/segoe_ui.ttf'); /* IE9+ */
+src: url('segoe_ui.ttf'); /* IE9+ */
 }
 
 @font-face {
     font-family: 'Open Sans';
     font-style: normal;
     font-weight: 300;
-    src: local('Open Sans Light'), local('OpenSans-Light'), url("../css/open_sans.woff") format('woff');
+    src: local('Open Sans Light'), local('OpenSans-Light'), url("open_sans.woff") format('woff');
 }
 
 

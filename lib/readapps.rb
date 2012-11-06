@@ -2,7 +2,7 @@ $:.unshift(File.join(File.dirname(__FILE__)))
 require 'rubygems'
 require 'sinatra'
 require 'yaml'
-require 'uhuru_config'
+require 'config'
 require 'dev_utils'
 
 class TemplateApps

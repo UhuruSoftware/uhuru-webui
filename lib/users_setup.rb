@@ -1,18 +1,22 @@
 $:.unshift(File.join(File.dirname(__FILE__)))
 
 require 'uaa'
-require 'uhuru_config'
+require 'config'
 
 class UsersSetup
 
-  def initialize
-    UhuruConfig.load
+  def initialize(config)
+    @config = config
+    @uaaApi = @config[:uaa][:uaa_api]
+    @client_secret = @config[:cloudfoundry][:client_secret]
+    @client_id = @config[:cloudfoundry][:client_id]
+    @cfTarget = @config[:cloudfoundry][:cloud_controller_api]
   end
 
   def login(email, password)
     user_token = get_user_token(email, password)
 
-    users_obj = Users.new(user_token)
+    users_obj = Users.new(user_token, @cfTarget)
     user_guid = users_obj.get_user_guid
 
     user_detail = get_user_details(user_guid)
@@ -77,14 +81,13 @@ class UsersSetup
     creds['username'] = email
     creds['password'] = password
 
-    token_issuer = CF::UAA::TokenIssuer.new(UhuruConfig.uaa_api, "vmc", "")
+    token_issuer = CF::UAA::TokenIssuer.new(@uaaApi, "vmc", "")
     token_obj = token_issuer.implicit_grant_with_creds(creds)
     token_user = token_obj.info[:token_type] + ' ' + token_obj.info[:access_token]
 
     token_user
   rescue Exception => e
     raise "#{e.inspect}"
-    #puts "#{e.inspect}, #{e.backtrace}"
   end
 
   def get_user_details(user_guid)
@@ -102,10 +105,10 @@ class UsersSetup
   end
 
   def get_uaa_client
-    token_issuer = CF::UAA::TokenIssuer.new(UhuruConfig.uaa_api, UhuruConfig.client_id, UhuruConfig.client_secret)
+    token_issuer = CF::UAA::TokenIssuer.new(@uaaApi, @client_id, @client_secret)
     token = token_issuer.client_credentials_grant()
 
-    uaac = CF::UAA::UserAccount.new(UhuruConfig.uaa_api, token.info[:token_type] + ' ' + token.info[:access_token])
+    uaac = CF::UAA::UserAccount.new(@uaaApi, token.info[:token_type] + ' ' + token.info[:access_token])
 
     uaac
   end

@@ -1,12 +1,12 @@
 $:.unshift(File.join(File.dirname(__FILE__)))
 
 require 'cfoundry'
-require "uhuru_config"
+require "config"
 
 class Users
 
-  def initialize(token)
-    @client = CFoundry::Client.new(UhuruConfig.cloud_controller_api, token)
+  def initialize(token, target)
+    @client = CFoundry::Client.new(target, token)
   end
 
   def create_user_add_to_org(org_guid, user_guid)
