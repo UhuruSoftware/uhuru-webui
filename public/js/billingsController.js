@@ -20,12 +20,10 @@ $(function() {
         var last_name = $('input[name=last_name]').val();
         var address1 = $('input[name=address1]').val();
 
-
         var city = $('input[name=city]').val();
         var state = $('input[name=state]').val();
         var zip = $('input[name=zip]').val();
         var country = $('input[name=country]').val();
-
 
         var card_number = $('input[name=card_number]').val();
         var cvv = $('input[name=cvv]').val();
@@ -53,8 +51,6 @@ $(function() {
             $('#show_modal_errors').hide().text("Please select a card type!").fadeIn(200);
         }
 
-
-       /*
         if(!cvv.match(/^\d+$/)) {
             event.preventDefault();
             $('#show_modal_errors').hide().text("Please enter you're card cvv code! ( 3/4 digit )").fadeIn(200);
@@ -64,8 +60,6 @@ $(function() {
             event.preventDefault();
             $('#show_modal_errors').hide().text("Please enter you're valid card number! ( 16 digits)").fadeIn(200);
         }
-
-
 
         if(country.length < 2 || country == '... country') {
             event.preventDefault();
@@ -87,12 +81,10 @@ $(function() {
             $('#show_modal_errors').hide().text("Please enter you're city!").fadeIn(200);
         }
 
-
         if(address1.length < 2 || address1 == '... address1') {
             event.preventDefault();
             $('#show_modal_errors').hide().text("Please enter you're address! ( 10 characters )").fadeIn(200);
         }
-
 
         if(last_name.length < 2 || last_name == '... last name') {
             event.preventDefault();
@@ -103,6 +95,5 @@ $(function() {
             event.preventDefault();
             $('#show_modal_errors').hide().text("Please enter you're first name!").fadeIn(200);
         }
-        */
     });
 });
