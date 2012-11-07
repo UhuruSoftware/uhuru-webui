@@ -28,10 +28,10 @@ class UsersSetup
   end
 
   def signup(email, password, first_name, last_name)
-    user_guid = add_user(email, password, first_name, last_name)
-    user_token = get_user_token(email, password)
+    new_user = add_user(email, password, first_name, last_name)
+    #user_token = get_user_token(email, password)
 
-    user = UserDetails.new(user_token, user_guid, first_name, last_name)
+    user = UserDetails.new(new_user[:user_token], new_user[:user_id], first_name, last_name)
     user
   rescue Exception => e
     raise "#{e.inspect}"
@@ -65,7 +65,7 @@ class UsersSetup
       users_obj = Users.new(user_token, @cf_target)
       users_obj.add_user_to_org_with_role(org_guid, user_id, ['owner', 'billing'])
 
-      user_id
+       {:user_id => user_id, :user_token => user_token}
     end
 
   rescue Exception => e

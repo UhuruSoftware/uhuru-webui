@@ -4,9 +4,11 @@ port: 9494
 dev-mode: true
 
 cloudfoundry:
-  cloud_controller_api: "http://api3.ccng-dev.net"
+  cloud_controller_api: "http://10.0.0.130:8181"
   client_id: "cloud_controller"
   client_secret: "cc"
+  cloud_controller_admin: "sre@vmware.com"
+  cloud_controller_pass: "a"
 
 uaa:
   uaa_api: "http://uaa.ccng-dev.net"
