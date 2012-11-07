@@ -57,13 +57,13 @@ get '/' do
 end
 
 
-get '/login' do
-  if session?
-    redirect '/organizations'
-  else
-    redirect '/'
-  end
-end
+#get '/login' do
+#  if session?
+#    redirect '/organizations'
+#  else
+#    redirect '/'
+#  end
+#end
 
 post '/login' do
   if params[:username]
