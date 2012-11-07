@@ -44,13 +44,15 @@ module Uhuru::Webui
       erb :index, {:layout => :layout_guest }
     end
 
-    get '/login' do
-      if session?
-        redirect '/organizations'
-      else
-        redirect '/'
-      end
-    end
+    #get '/login' do
+    #  if session?
+    #    puts 'if'
+    #    redirect '/organizations'
+    #  else
+    #    pus 'else'
+    #    redirect '/'
+    #  end
+    #end
 
     post '/login' do
       if params[:username]
@@ -64,9 +66,9 @@ module Uhuru::Webui
         session[:fname] = user.first_name
         session[:lname] = user.last_name
         session[:username] = params[:username]
-        puts session[:user_guid] = user.guid
+        session[:user_guid] = user.guid
+        session[:secret] = session[:session_id]
 
-        puts session[:token]
         redirect '/organizations'
       else
         redirect '/'
@@ -75,6 +77,8 @@ module Uhuru::Webui
 
     get '/logout' do
       session = []
+      puts session
+      puts "\n"
       redirect '/'
     end
 
@@ -100,8 +104,13 @@ module Uhuru::Webui
       erb :infopage, {:layout => :layout_infopage }
     end
 
-    #  --- READ ---  #
     get'/organizations' do
+
+      if session[:secret] != session[:session_id]
+        redirect '/'
+      end
+
+
       @this_user = session[:username]
 
       @usertitle = @this_user
