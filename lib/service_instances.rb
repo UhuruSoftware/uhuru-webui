@@ -1,5 +1,3 @@
-$:.unshift(File.join(File.dirname(__FILE__)))
-
 require 'cfoundry'
 require 'config'
 
@@ -21,7 +19,6 @@ class ServiceInstances
 
   rescue Exception => e
     raise "#{e.inspect}"
-    #puts "#{e.inspect}, #{e.backtrace}"
   end
 
   def read_service_plans()
@@ -39,7 +36,6 @@ class ServiceInstances
 
   rescue Exception => e
     raise "#{e.inspect}"
-    #puts "#{e.inspect}, #{e.backtrace}"
   end
 
   class Service

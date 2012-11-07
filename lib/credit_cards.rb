@@ -1,5 +1,3 @@
-$:.unshift(File.join(File.dirname(__FILE__)))
-
 require 'config'
 require 'httparty'
 
@@ -29,7 +27,6 @@ class CreditCards
     return credit_card_list
   rescue Exception => e
     raise "#{e.inspect}"
-    #puts "#{e.inspect}, #{e.backtrace}"
   end
 
   def read_card_by_id(card_id)
@@ -42,7 +39,6 @@ class CreditCards
 
   rescue Exception => e
     raise "#{e.inspect}"
-    #puts "#{e.inspect}, #{e.backtrace}"
   end
 
   def create(user_guid, user_email, first_name, last_name, card_number, expiration_year, expiration_month, card_type, cvv, address = nil, address2 = nil, city = nil, state = nil, zip = nil, country = nil)
@@ -57,7 +53,6 @@ class CreditCards
 
   rescue Exception => e
     raise "#{e.inspect}"
-    #puts "#{e.inspect}, #{e.backtrace}"
   end
 
   def delete_by_id(card_id)
@@ -67,7 +62,6 @@ class CreditCards
 
   rescue Exception => e
     raise "#{e.inspect}"
-    #puts "#{e.inspect}, #{e.backtrace}"
   end
 
   private
@@ -132,6 +126,5 @@ class CreditCard
 
   rescue Exception => e
     raise "#{e.inspect}"
-    #puts "#{e.inspect}, #{e.backtrace}"
   end
 end

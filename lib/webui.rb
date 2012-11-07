@@ -15,7 +15,7 @@ module Uhuru::Webui
 
     def initialize(config)
       @config = config
-      @cfTarget = @config[:cloudfoundry][:cloud_controller_api]
+      @cf_target = @config[:cloudfoundry][:cloud_controller_api]
       # this is a variable witch holds the / symbol to be rendered afterwards in css, it is used at breadcrumb navigation
       $slash = '<span class="breadcrumb_slash"> / </span>'
 
@@ -84,7 +84,7 @@ module Uhuru::Webui
       @given_name = params[:first_name]
       @family_name = params[:last_name]
 
-      user_sign_up = UsersSetup.new
+      user_sign_up = UsersSetup.new(@config)
       user_sign_up.signup(@email, @password, @given_name, @family_name)
 
       redirect '/'
@@ -111,7 +111,7 @@ module Uhuru::Webui
       session[:path_2] = ''
       $path_home = '<a href="/organizations" class="breadcrumb_element_home"></a>'
 
-      organizations_Obj = Organizations.new(session[:token], @cfTarget)
+      organizations_Obj = Organizations.new(session[:token], @cf_target)
       organizations_list = organizations_Obj.read_all
 
       session[:currentOrganization] = nil
@@ -128,7 +128,7 @@ module Uhuru::Webui
       session[:path_2] = ''
       $path_home = '<a href="/organizations" class="breadcrumb_element_home"></a>'
 
-      credit_cards_Obj = CreditCards.new(session[:token], @cfTarget)
+      credit_cards_Obj = CreditCards.new(session[:token], @cf_target)
       my_credit_cards = credit_cards_Obj.read_all
 
       erb :creditcard, {:locals => {:my_credit_cards => my_credit_cards}, :layout => :layout_user}
@@ -165,7 +165,7 @@ module Uhuru::Webui
       @country = params[:country]
 
 
-      credit_cards_Obj = CreditCards.new(session[:token], @cfTarget)
+      credit_cards_Obj = CreditCards.new(session[:token], @cf_target)
       puts credit_cards_Obj.create(session[:user_guid], session[:username], @firs_name, @last_name, @card_number, @expiration_year, @expiration_month, @card_type, @cvv)
 
       redirect "/credit"
@@ -174,8 +174,8 @@ module Uhuru::Webui
     get'/organization:org_guid' do
       @timeNow = $this_time
 
-      organizations_Obj = Organizations.new(session[:token], @cfTarget)
-      credit_cards_Obj = CreditCards.new(session[:token], @cfTarget)
+      organizations_Obj = Organizations.new(session[:token], @cf_target)
+      credit_cards_Obj = CreditCards.new(session[:token], @cf_target)
 
       @this_guid = params[:org_guid]
       session[:organization_name] = organizations_Obj.get_name(@this_guid)
@@ -203,8 +203,8 @@ module Uhuru::Webui
     get'/space:space_guid' do
       @timeNow = $this_time
 
-      organizations_Obj = Organizations.new(session[:token], @cfTarget)
-      spaces_Obj = Spaces.new(session[:token], @cfTarget)
+      organizations_Obj = Organizations.new(session[:token], @cf_target)
+      spaces_Obj = Spaces.new(session[:token], @cf_target)
       readapps_Obj = TemplateApps.new
 
       @this_guid = params[:space_guid]
@@ -228,7 +228,7 @@ module Uhuru::Webui
       @name = params[:orgName]
       @organization_message = "Creating organization... Please wait"
 
-      organizations_Obj = Organizations.new(session[:token], @cfTarget)
+      organizations_Obj = Organizations.new(session[:token], @cf_target)
       organizations_Obj.create(@name)
       redirect "/organizations"
     end
@@ -236,8 +236,8 @@ module Uhuru::Webui
     post '/createSpace' do
       @name = params[:spaceName]
 
-      organizations_Obj = Organizations.new(session[:token], @cfTarget)
-      spaces_Obj = Spaces.new(session[:token], @cfTarget)
+      organizations_Obj = Organizations.new(session[:token], @cf_target)
+      spaces_Obj = Spaces.new(session[:token], @cf_target)
 
       spaces_Obj.create(session[:currentOrganization], @name)
       redirect "/organization" + session[:currentOrganization]
@@ -245,13 +245,13 @@ module Uhuru::Webui
 
     post '/updateOrganization' do
       @name = params[:m_organizationName]
-      organizations_Obj = Organizations.new(session[:token], @cfTarget)
+      organizations_Obj = Organizations.new(session[:token], @cf_target)
       organizations_Obj.update(@name, session[:currentOrganization])
       redirect "/organization" + session[:currentOrganization]
     end
 
     post '/deleteCurrentOrganization' do
-      organizations_Obj = Organizations.new(session[:token], @cfTarget)
+      organizations_Obj = Organizations.new(session[:token], @cf_target)
       organizations_Obj.delete(session[:currentOrganization])
       redirect "/organizations"
     end
@@ -259,23 +259,23 @@ module Uhuru::Webui
     post '/deleteClickedOrganization' do
       @guid = params[:orgGuid]
 
-      organizations_Obj = Organizations.new(session[:token], @cfTarget)
+      organizations_Obj = Organizations.new(session[:token], @cf_target)
       organizations_Obj.delete(@guid)
       redirect "/organizations"
     end
 
     post '/updateSpace' do
       @name = params[:m_spaceName]
-      organizations_Obj = Organizations.new(session[:token], @cfTarget)
-      spaces_Obj = Spaces.new(session[:token], @cfTarget)
+      organizations_Obj = Organizations.new(session[:token], @cf_target)
+      spaces_Obj = Spaces.new(session[:token], @cf_target)
 
       spaces_Obj.update(@name, session[:currentSpace])
       redirect "/space" + session[:currentSpace]
     end
 
     post '/deleteCurrentSpace' do
-      organizations_Obj = Organizations.new(session[:token], @cfTarget)
-      spaces_Obj = Spaces.new(session[:token], @cfTarget)
+      organizations_Obj = Organizations.new(session[:token], @cf_target)
+      spaces_Obj = Spaces.new(session[:token], @cf_target)
       spaces_Obj.delete(session[:currentSpace])
       redirect "/organization" + session[:currentOrganization]
     end
@@ -283,8 +283,8 @@ module Uhuru::Webui
     post '/deleteClickedSpace' do
       @guid = params[:spaceGuid]
       puts @guid
-      organizations_Obj = Organizations.new(session[:token], @cfTarget)
-      spaces_Obj = Spaces.new(session[:token], @cfTarget)
+      organizations_Obj = Organizations.new(session[:token], @cf_target)
+      spaces_Obj = Spaces.new(session[:token], @cf_target)
 
       spaces_Obj.delete(@guid)
       redirect "/organization" + session[:currentOrganization]
@@ -293,9 +293,9 @@ module Uhuru::Webui
     post '/deleteClickedApp' do
       @guid = params[:appGuid]
 
-      organizations_Obj = Organizations.new(session[:token], @cfTarget)
-      spaces_Obj = Spaces.new(session[:token], @cfTarget)
-      applications_Obj = Applications.new(session[:token], @cfTarget)
+      organizations_Obj = Organizations.new(session[:token], @cf_target)
+      spaces_Obj = Spaces.new(session[:token], @cf_target)
+      applications_Obj = Applications.new(session[:token], @cf_target)
 
       applications_Obj.delete(@guid)
       redirect "/space" + session[:currentSpace]
@@ -304,10 +304,10 @@ module Uhuru::Webui
     post '/deleteClickedService' do
       @guid = params[:serviceGuid]
 
-      organizations_Obj = Organizations.new(session[:token], @cfTarget)
-      spaces_Obj = Spaces.new(session[:token], @cfTarget)
-      applications_Obj = Applications.new(session[:token], @cfTarget)
-      services_Obj = ServiceInstances.new(session[:token], @cfTarget)
+      organizations_Obj = Organizations.new(session[:token], @cf_target)
+      spaces_Obj = Spaces.new(session[:token], @cf_target)
+      applications_Obj = Applications.new(session[:token], @cf_target)
+      services_Obj = ServiceInstances.new(session[:token], @cf_target)
 
       services_Obj.delete(@guid)
 
@@ -324,9 +324,9 @@ module Uhuru::Webui
       @domain = "ccng-dev.net"
       @path = "/home/ubuntu/Desktop/rubytest"
 
-      organizations_Obj = Organizations.new(session[:token], @cfTarget)
-      spaces_Obj = Spaces.new(session[:token], @cfTarget)
-      apps_obj = Applications.new(session[:token], @cfTarget)
+      organizations_Obj = Organizations.new(session[:token], @cf_target)
+      spaces_Obj = Spaces.new(session[:token], @cf_target)
+      apps_obj = Applications.new(session[:token], @cf_target)
 
 
       @plan = "d85b0ad5-02d3-49e7-8bcb-19057a847bf7"
@@ -338,8 +338,8 @@ module Uhuru::Webui
     post '/createService' do
       @name = params[:serviceName]
 
-      organizations_Obj = Organizations.new(session[:token], @cfTarget)
-      spaces_Obj = ServiceInstances.new(session[:token], @cfTarget)
+      organizations_Obj = Organizations.new(session[:token], @cf_target)
+      spaces_Obj = ServiceInstances.new(session[:token], @cf_target)
 
       @plan = "d85b0ad5-02d3-49e7-8bcb-19057a847bf7"
 
@@ -352,8 +352,8 @@ module Uhuru::Webui
       @email =  params[:userEmail]
       @type = params[:userType]
 
-      organizations_Obj = Organizations.new(session[:token], @cfTarget)
-      users_Obj = Users.new(session[:token], @cfTarget)
+      organizations_Obj = Organizations.new(session[:token], @cf_target)
+      users_Obj = Users.new(session[:token], @cf_target)
       users_Obj.add_user_with_role_to_space(session[:currentOrganization], @name, @type)
 
       redirect "/organization" + session[:currentOrganization]
@@ -362,8 +362,8 @@ module Uhuru::Webui
     post '/deleteUser' do
       @user_guid =  params[:thisUser]
 
-      organizations_Obj = Organizations.new(session[:token], @cfTarget)
-      users_Obj = Users.new(session[:token], @cfTarget)
+      organizations_Obj = Organizations.new(session[:token], @cf_target)
+      users_Obj = Users.new(session[:token], @cf_target)
       users_Obj.delete(@user_guid)
 
       redirect "/organization" + session[:currentOrganization]
@@ -371,7 +371,7 @@ module Uhuru::Webui
 
     post '/startApp' do
       @name = params[:appName]
-      apps_obj = Applications.new(session[:token], @cfTarget)
+      apps_obj = Applications.new(session[:token], @cf_target)
 
       apps_obj.start_app(@name)
       puts @name
@@ -382,7 +382,7 @@ module Uhuru::Webui
 
     post '/stopApp' do
       @name = params[:appName]
-      apps_obj = Applications.new(session[:token], @cfTarget)
+      apps_obj = Applications.new(session[:token], @cf_target)
 
       apps_obj.stop_app(@name)
       puts @name
@@ -395,7 +395,7 @@ module Uhuru::Webui
       @memory = params[:appMemory]
       @instances = params[:appInstances]
 
-      apps_obj = Applications.new(session[:token], @cfTarget)
+      apps_obj = Applications.new(session[:token], @cf_target)
       apps_obj.update(@name, @instances, @memory)
 
       redirect "/spaces" + session[:currentSpace]
@@ -405,7 +405,7 @@ module Uhuru::Webui
       @app_name = params[:appName]
       @service_name = params[:serviceName]
 
-      apps = Applications.new(session[:token], @cfTarget)
+      apps = Applications.new(session[:token], @cf_target)
       apps.bind_app_services(@app_name, @service_name)
 
       redirect "/space" + session[:currentSpace]
@@ -415,7 +415,7 @@ module Uhuru::Webui
       @app_name = params[:appName]
       @service_name = params[:serviceName]
 
-      apps = Applications.new(session[:token], @cfTarget)
+      apps = Applications.new(session[:token], @cf_target)
       apps.unbind_app_services(@app_name, @service_name)
 
       redirect "/space" + session[:currentSpace]
@@ -426,7 +426,7 @@ module Uhuru::Webui
       @uri_name = params[:uriName]
       @domain_name = "api3.ccng-dev.net"
 
-      apps = Applications.new(session[:token], @cfTarget)
+      apps = Applications.new(session[:token], @cf_target)
       apps.bind_app_url(@app_name, session[:currentOrganization], @domain_name, @uri_name)
 
       redirect "/space" + session[:currentSpace]
@@ -437,7 +437,7 @@ module Uhuru::Webui
       @uri_name = params[:uriName]
       @domain_name = "http://api3.ccng-dev.net"
 
-      apps = Applications.new(session[:token], @cfTarget)
+      apps = Applications.new(session[:token], @cf_target)
       apps.unbind_app_url(@app_name, @domain_name, @uri_name)
 
       redirect "/space" + session[:currentSpace]

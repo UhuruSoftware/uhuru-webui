@@ -22,7 +22,9 @@ class Uhuru::Webui::Config < VCAP::Config
       :cloudfoundry => {
         :cloud_controller_api   => String,
         :client_id              => String,
-        :client_secret          => String
+        :client_secret          => String,
+        :cloud_controller_admin => String,
+        :cloud_controller_pass  => String
       },
 
       :uaa => {

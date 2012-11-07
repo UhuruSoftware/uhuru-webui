@@ -1,5 +1,3 @@
-$:.unshift(File.join(File.dirname(__FILE__)))
-
 require 'uaa'
 require 'config'
 
@@ -10,13 +8,15 @@ class UsersSetup
     @uaaApi = @config[:uaa][:uaa_api]
     @client_secret = @config[:cloudfoundry][:client_secret]
     @client_id = @config[:cloudfoundry][:client_id]
-    @cfTarget = @config[:cloudfoundry][:cloud_controller_api]
+    @cf_target = @config[:cloudfoundry][:cloud_controller_api]
+    @cf_admin = @config[:cloudfoundry][:cloud_controller_admin]
+    @cf_pass = @config[:cloudfoundry][:cloud_controller_pass]
   end
 
   def login(email, password)
     user_token = get_user_token(email, password)
 
-    users_obj = Users.new(user_token, @cfTarget)
+    users_obj = Users.new(user_token, @cf_target)
     user_guid = users_obj.get_user_guid
 
     user_detail = get_user_details(user_guid)
@@ -25,7 +25,6 @@ class UsersSetup
     user
   rescue Exception => e
     raise "#{e.inspect}"
-    #puts "#{e.inspect}, #{e.backtrace}"
   end
 
   def signup(email, password, first_name, last_name)
@@ -36,7 +35,6 @@ class UsersSetup
     user
   rescue Exception => e
     raise "#{e.inspect}"
-    #puts "#{e.inspect}, #{e.backtrace}"
   end
 
   private
@@ -58,13 +56,13 @@ class UsersSetup
 
       #user_token = get_user_token(email, password)
 
-      user_token = get_user_token('sre@vmware.com', 'a')
+      user_token = get_user_token(@cf_admin, @cf_pass)
 
-      organizations_Obj = Organizations.new(user_token)
+      organizations_Obj = Organizations.new(user_token, @cf_target)
       org_name = email + "'s organization"
       org_guid = organizations_Obj.create(org_name)
 
-      users_obj = Users.new(user_token)
+      users_obj = Users.new(user_token, @cf_target)
       users_obj.add_user_to_org_with_role(org_guid, user_id, ['owner', 'billing'])
 
       user_id
@@ -72,8 +70,6 @@ class UsersSetup
 
   rescue Exception => e
     raise "#{e.inspect}"
-    #puts "#{e.inspect}, #{e.backtrace}"
-
   end
 
   def get_user_token(email, password)
@@ -100,8 +96,6 @@ class UsersSetup
     user_details
   rescue Exception => e
     raise "#{e.inspect}"
-    #puts "#{e.inspect}, #{e.backtrace}"
-
   end
 
   def get_uaa_client

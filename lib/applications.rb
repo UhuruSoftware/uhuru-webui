@@ -1,5 +1,3 @@
-$:.unshift(File.join(File.dirname(__FILE__)))
-
 require 'cfoundry'
 require 'config'
 
@@ -41,7 +39,7 @@ class Applications
     if (new_app.create!)
 
       unless !service_plan_guid
-        service_obj = ServiceInstances.new(@client.base.token)
+        service_obj = ServiceInstances.new(@client.base.token, @client.target)
 
         service_db = service_obj.create_service_instance(name + "DB", space_guid, service_plan_guid)
         new_app.bind(service_db)
@@ -76,7 +74,6 @@ class Applications
 
   rescue Exception => e
     raise "#{e.inspect}"
-    #puts "#{e.inspect}, #{e.backtrace}"
   end
 
   def start_app(app_name)
@@ -86,7 +83,6 @@ class Applications
 
   rescue Exception => e
     raise "#{e.inspect}"
-    #puts "#{e.inspect}, #{e.backtrace}"
   end
 
   def stop_app(app_name)
@@ -96,7 +92,6 @@ class Applications
 
   rescue Exception => e
     raise "#{e.inspect}"
-    #puts "#{e.inspect}, #{e.backtrace}"
   end
 
   def update(app_name, instances, memory)
@@ -109,7 +104,6 @@ class Applications
 
   rescue Exception => e
     raise "#{e.inspect}"
-    #puts "#{e.inspect}, #{e.backtrace}"
   end
 
   def delete(app_name)
@@ -127,7 +121,6 @@ class Applications
 
   rescue Exception => e
     raise "#{e.inspect}"
-    #puts "#{e.inspect}, #{e.backtrace}"
   end
 
   def bind_app_services(app_name, service_instance_name)
@@ -142,7 +135,6 @@ class Applications
 
   rescue Exception => e
     raise "#{e.inspect}"
-    #puts "#{e.inspect}, #{e.backtrace}"
   end
 
   def unbind_app_services(app_name, service_instance_name)
@@ -153,7 +145,6 @@ class Applications
 
   rescue Exception => e
     raise "#{e.inspect}"
-    #puts "#{e.inspect}, #{e.backtrace}"
   end
 
   #track cf to see how app routes are managed and what is owning organization for a domain

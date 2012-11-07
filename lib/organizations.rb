@@ -1,5 +1,3 @@
-$:.unshift(File.join(File.dirname(__FILE__)))
-
 require 'cfoundry'
 require "config"
 
@@ -50,7 +48,6 @@ class Organizations
 
   rescue Exception => e
     raise "#{e.inspect}"
-    #puts "#{e.inspect}, #{e.backtrace}"
   end
 
   def create(name)
@@ -62,7 +59,6 @@ class Organizations
 
   rescue Exception => e
     raise "#{e.inspect}"
-    #", #{e.backtrace}"
   end
 
   def update(name, org_guid)
@@ -72,14 +68,13 @@ class Organizations
 
   rescue Exception => e
     raise "#{e.inspect}"
-    #puts "#{e.inspect}, #{e.backtrace}"
   end
 
   def delete(org_guid)
     org = @client.organization(org_guid)
     unless org.spaces.count == 0
       org.spaces.each do |space|
-        space_gen = Spaces.new(@client.base.token)
+        space_gen = Spaces.new(@client.token, @client.target)
         space_gen.delete(space.guid)
       end
     end
@@ -88,7 +83,6 @@ class Organizations
 
   rescue Exception => e
     raise "#{e.inspect}"
-    #puts "#{e.inspect}, #{e.backtrace}"
   end
 
   def read_spaces(org_guid)

@@ -1,5 +1,3 @@
-$:.unshift(File.join(File.dirname(__FILE__)))
-
 require 'cfoundry'
 require "config"
 
@@ -24,7 +22,6 @@ class Users
     org.update!
   rescue Exception => e
     raise "#{e.inspect}"
-    #puts "#{e.inspect}, #{e.backtrace}"
   end
 
   # roles is an array of roles ex: ['owner', 'manager']
@@ -67,7 +64,6 @@ class Users
 
   rescue Exception => e
     raise "#{e.inspect}"
-    #puts "#{e.inspect}, #{e.backtrace}"
   end
 
   # roles is an array of roles ex: ['owner', 'manager']
@@ -104,7 +100,6 @@ class Users
 
   rescue Exception => e
     raise "#{e.inspect}"
-    #puts "#{e.inspect}, #{e.backtrace}"
   end
 
   def get_user_guid
@@ -118,7 +113,6 @@ class Users
 
   rescue Exception => e
     raise "#{e.inspect}"
-    #puts "#{e.inspect}, #{e.backtrace}"
   end
 
   class User

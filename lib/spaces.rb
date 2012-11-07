@@ -1,5 +1,3 @@
-$:.unshift(File.join(File.dirname(__FILE__)))
-
 require 'cfoundry'
 require 'config'
 
@@ -24,7 +22,7 @@ class Spaces
     billing_managers = @client.space(space_guid).auditors
 
     emails_list = "'#{billing_managers.map { |x| x.email }.join("','")}'"
-
+    emails_list
   end
 
   def set_current_space(space_guid)
@@ -37,7 +35,6 @@ class Spaces
 
   rescue Exception => e
     raise "#{e.inspect}"
-    #puts "#{e.inspect}, #{e.backtrace}"
   end
 
   def create(org_guid, name)
@@ -48,7 +45,7 @@ class Spaces
     new_space.organization = org
     new_space.name = name
     if new_space.create!
-      users_obj = Users.new(@client.token)
+      users_obj = Users.new(@client.token, @client.target)
       users_obj.add_user_with_role_to_space(new_space.guid, @client.current_user.guid, ['owner', 'developer'])
 
       new_space.guid
@@ -56,7 +53,6 @@ class Spaces
 
   rescue Exception => e
     raise "#{e.inspect}"
-    #puts "#{e.inspect}, #{e.backtrace}"
   end
 
   def update(name, space_guid)
@@ -67,7 +63,6 @@ class Spaces
 
   rescue Exception => e
     raise "#{e.inspect}"
-    #puts "#{e.inspect}, #{e.backtrace}"
   end
 
   def delete(space_guid)
@@ -75,14 +70,14 @@ class Spaces
     space = @client.space(space_guid)
     unless space.apps == 0
       space.apps.each do |app|
-        app_gen = Applications.new(@client.base.token)
+        app_gen = Applications.new(@client.token, @client.target)
         app_gen.delete(app.name)
       end
     end
 
     unless space.service_instances.count == 0
       space.service_instances.each do |service|
-        service_gen = ServiceInstances.new(@client.base.token)
+        service_gen = ServiceInstances.new(@client.token, @client.target)
         service_gen.delete(service.guid)
       end
     end
@@ -91,8 +86,6 @@ class Spaces
 
   rescue Exception => e
     raise "#{e.inspect}"
-    #puts "#{e.inspect}, #{e.backtrace}"
-
   end
 
   def read_apps(space_guid)
