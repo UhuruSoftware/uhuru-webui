@@ -6,7 +6,14 @@ require "thin"
 module Uhuru::Webui
   class Runner
     def initialize(argv)
+      @argv = argv
+
+      # default to production. this may be overriden during opts parsing
+      ENV["RACK_ENV"] = "production"
+      # default config path. this may be overriden during opts parsing
       @config_file = File.expand_path("../../config/uhuru-webui.yml", __FILE__)
+
+      parse_options!
 
       @config = Uhuru::Webui::Config.from_file(@config_file)
       @config[:bind_address] = VCAP.local_ip(@config[:local_route])
@@ -16,7 +23,29 @@ module Uhuru::Webui
     end
 
     def logger
-      @logger ||= Steno.logger("cc.runner")
+      @logger ||= Steno.logger("webui.runner")
+    end
+
+    def options_parser
+      @parser ||= OptionParser.new do |opts|
+        opts.on("-c", "--config [ARG]", "Configuration File") do |opt|
+          @config_file = opt
+        end
+
+        opts.on("-d", "--development-mode", "Run in development mode") do
+          # this must happen before requring any modules that use sinatra,
+          # otherwise it will not setup the environment correctly
+          @development = true
+          ENV["RACK_ENV"] = "development"
+        end
+      end
+    end
+
+    def parse_options!
+      options_parser.parse! @argv
+    rescue
+      puts options_parser
+      exit 1
     end
 
     def create_pidfile
