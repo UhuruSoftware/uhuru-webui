@@ -71,19 +71,15 @@ $(function() {
         var first_name = $('input[name=first_name]').val();
         var last_name = $('input[name=last_name]').val();
 
-
         if(len < 1) {
             event.preventDefault();
             $('.form_errors').hide().text("Password can not be blank!").fadeIn(200);
-            // Prevent form submission
         }
 
         if($('#pass1').val() != $('#pass2').val()) {
             event.preventDefault();
             $('.form_errors').hide().text("Password and Confirm Password don't match!").fadeIn(200);
-            // Prevent form submission
         }
-
 
         if(last_name.length < 2 || last_name == '... last name') {
             event.preventDefault();
