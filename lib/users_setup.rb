@@ -29,7 +29,6 @@ class UsersSetup
 
   def signup(email, password, first_name, last_name)
     new_user = add_user(email, password, first_name, last_name)
-    #user_token = get_user_token(email, password)
 
     user = UserDetails.new(new_user[:user_token], new_user[:user_id], first_name, last_name)
     user
@@ -63,12 +62,16 @@ class UsersSetup
       org_guid = organizations_Obj.create(org_name)
 
       users_obj = Users.new(user_token, @cf_target)
-      users_obj.add_user_to_org_with_role(org_guid, user_id, ['owner', 'billing'])
+      cfuser = users_obj.add_user_to_org_with_role(org_guid, user_id, ['owner', 'billing'])
 
        {:user_id => user_id, :user_token => user_token}
     end
 
   rescue Exception => e
+    uaac.delete_by_name(email) if user != nil
+    organizations_Obj.delete(org_guid) if org_guid != nil
+    users_obj.delete(user_id) if cfuser
+
     raise "#{e.inspect}"
   end
 
