@@ -68,6 +68,9 @@ $(function() {
 
         data = $('#pass1').val();
         var len = data.length;
+        var first_name = $('input[name=first_name]').val();
+        var last_name = $('input[name=last_name]').val();
+
 
         if(len < 1) {
             event.preventDefault();
@@ -79,6 +82,17 @@ $(function() {
             event.preventDefault();
             $('.form_errors').hide().text("Password and Confirm Password don't match!").fadeIn(200);
             // Prevent form submission
+        }
+
+
+        if(last_name.length < 2 || last_name == '... last name') {
+            event.preventDefault();
+            $('.form_errors').hide().text("Please enter you're last name name!").fadeIn(200);
+        }
+
+        if(first_name.length < 2 || first_name == '... first name') {
+            event.preventDefault();
+            $('.form_errors').hide().text("Please enter you're first name!").fadeIn(200);
         }
     });
 });
