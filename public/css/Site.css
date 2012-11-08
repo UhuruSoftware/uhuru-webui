@@ -1328,7 +1328,8 @@ a
     bottom: 0;
 }
 
-.form_errors,
+.form_errors1,
+.form_errors2,
 #show_modal_errors
 {
     font-family: 'Segoe UI Light', 'Open Sans', Verdana, Arial, Helvetica, sans-serif;
@@ -1341,9 +1342,11 @@ a
     color: #f5a9f2;
     margin-left: 20px;
 }
-.form_errors
+.form_errors1,
+.form_errors2
 {
     font-size: 14px;
     font-weight: 100;
     margin-left: 5px;
+    height: 20px;
 }

@@ -64,33 +64,60 @@ $('.tiped').bind({
 
 
 $(function() {
-    $('.submit_form').click(function(event){
+    $('.submit_form1').click(function(event){
 
-        data = $('#pass1').val();
-        var len = data.length;
         var first_name = $('input[name=first_name]').val();
         var last_name = $('input[name=last_name]').val();
 
-        if(len < 1) {
-            event.preventDefault();
-            $('.form_errors').hide().text("Password can not be blank!").fadeIn(200);
-        }
-
-        if($('#pass1').val() != $('#pass2').val()) {
-            event.preventDefault();
-            $('.form_errors').hide().text("Password and Confirm Password don't match!").fadeIn(200);
-        }
-
         if(last_name.length < 2 || last_name == '... last name') {
             event.preventDefault();
-            $('.form_errors').hide().text("Please enter you're last name name!").fadeIn(200);
+            $('.form_errors1').hide().text("Please enter you're last name name!").fadeIn(200);
         }
 
         if(first_name.length < 2 || first_name == '... first name') {
             event.preventDefault();
-            $('.form_errors').hide().text("Please enter you're first name!").fadeIn(200);
+            $('.form_errors1').hide().text("Please enter you're first name!").fadeIn(200);
         }
     });
 });
 
+$(function() {
+    $('.submit_form2').click(function(event){
 
+        var new_pass = $('#old_pass').val();
+        var old_pass = $('#new_pass1').val();
+
+        if(old_pass.length < 1) {
+            event.preventDefault();
+            $('.form_errors2').hide().text("Old password can not be blank!").fadeIn(200);
+        }
+
+        if(new_pass.length < 1) {
+            event.preventDefault();
+            $('.form_errors2').hide().text("Password can not be blank!").fadeIn(200);
+        }
+
+        if($('#new_pass1').val() == $('#old_pass').val()) {
+            event.preventDefault();
+            $('.form_errors2').hide().text("New and old password are the same!").fadeIn(200);
+        }
+
+        if($('#new_pass1').val() != $('#new_pass2').val()) {
+            event.preventDefault();
+            $('.form_errors2').hide().text("Password and Confirm Password don't match!").fadeIn(200);
+        }
+    });
+});
+
+$('.clear_form1').click(function(){
+    $('input[name=first_name]').val('');
+    $('input[name=last_name]').val('');
+    $('.form_errors1').hide();
+});
+
+$('.clear_form2').click(function(){
+    $('input[name=old_pass]').val('');
+    $('input[name=new_pass1]').val('');
+    $('input[name=new_pass2]').val('');
+    $('.form_errors2').hide();
+});

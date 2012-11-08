@@ -9,9 +9,13 @@
     </div>
 
 
-    <div class="custom_modal_body" id="user_form">
-        <form action="/updateUser" method="post">
+    <div class="custom_modal_body">
+        <form action="/updateUserName" method="post">
             <table>
+                <tr class="account_settings_rows">
+                    <td class="account_settings_left"><p>Account user name:</p></td>
+                </tr>
+
                 <tr class="account_settings_rows">
                     <td class="account_settings_left"><label for="first_name" class="account_settings_labels">First Name: </label></td>
                     <td class="account_settings_right"><input type="text" id="first_name" name="first_name" class="modal_input_box account_settings_input_box checker" placeholder = "... first name" /></td>
@@ -22,28 +26,54 @@
                     <td class="account_settings_right"><input type="text" id="last_name" name="last_name" class="modal_input_box account_settings_input_box checker" placeholder = "... last name" /></td>
                 </tr>
 
-
-                <tr class="account_settings_rows">
-                    <td class="account_settings_left"><label for="pass1" class="account_settings_labels">Password: </label></td>
-                    <td class="account_settings_right"><input type="text" name="pass1" id="pass1" class="modal_input_box account_settings_input_box" placeholder = "... password" /></td>
-                </tr>
-
-                <tr class="account_settings_rows">
-                    <td class="account_settings_left"><label for="pass2" class="account_settings_labels">Confirm Password: </label></td>
-                    <td class="account_settings_right"><input type="text" name="pass2" id="pass2" class="modal_input_box account_settings_input_box" placeholder = "... confirm password" /></td>
-                </tr>
-
                 <tr class="account_settings_rows">
                     <td></td>
-                    <td class="account_settings_left"><p class="form_errors"></p></td>
+                    <td class="account_settings_left"><p class="form_errors1"></p></td>
                 </tr>
 
 
                 <tr class="account_settings_rows">
-                    <td class="account_settings_left"><input type="button" value="Cancel" class="btn btn-success login last_row" /></td>
-                    <td class="account_settings_right"><input type="submit" value="Update" class="btn btn-success login last_row submit_form" style="float: left;" /></td>
+                    <td class="account_settings_left"><input type="button" value="Clear" class="btn btn-success login last_row clear_form1" /></td>
+                    <td class="account_settings_right"><input type="submit" value="Update" class="btn btn-success login last_row submit_form1" style="float: left;" /></td>
                 </tr>
             </table>
         </form>
       </div>
+
+      <div class="custom_modal_body" style="margin-top: 70px;">
+        <form action="/updateUserPassword" method="post">
+            <table>
+                <tr class="account_settings_rows">
+                    <td class="account_settings_left"><p>Account password:</p></td>
+                </tr>
+
+                <tr class="account_settings_rows">
+                    <td class="account_settings_left"><label for="old_pass" class="account_settings_labels">Old Password: </label></td>
+                    <td class="account_settings_right"><input type="password" id="old_pass" name="old_pass" class="modal_input_box account_settings_input_box checker" /></td>
+                </tr>
+
+                <tr class="account_settings_rows">
+                    <td class="account_settings_left"><label for="new_pass1" class="account_settings_labels">New Password: </label></td>
+                    <td class="account_settings_right"><input type="password" id="new_pass1" name="new_pass1" class="modal_input_box account_settings_input_box checker" /></td>
+                </tr>
+
+                <tr class="account_settings_rows">
+                    <td class="account_settings_left"><label for="new_pass2" class="account_settings_labels">Confirm New Password: </label></td>
+                    <td class="account_settings_right"><input type="password" id="new_pass2" name="new_pass2" class="modal_input_box account_settings_input_box checker" /></td>
+                </tr>
+
+                <tr class="account_settings_rows">
+                    <td></td>
+                    <td class="account_settings_left"><p class="form_errors2"></p></td>
+                </tr>
+
+
+                <tr class="account_settings_rows">
+                    <td class="account_settings_left"><input type="button" value="Clear" class="btn btn-success login last_row clear_form2" /></td>
+                    <td class="account_settings_right"><input type="submit" value="Update" class="btn btn-success login last_row submit_form2" style="float: left;" /></td>
+                </tr>
+            </table>
+        </form>
+      </div>
+
 </div>

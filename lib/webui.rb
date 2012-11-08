@@ -30,9 +30,8 @@ module Uhuru::Webui
     end
 
     def configure_sinatra
+
     end
-
-
 
     set :dump_errors, false
     set :raise_errors, true
@@ -44,13 +43,11 @@ module Uhuru::Webui
     end
 
     error do
-      @timeNow = $this_time
-      @error = request.env['sinatra_error']
+      @error = request.env['sinatra_error'].name
       erb :error404, {:layout => :layout_error }
     end
 
     get '/' do
-
       session[:login_] = false
       session = []
 
@@ -119,7 +116,6 @@ module Uhuru::Webui
       if session[:login_] == false
         redirect '/'
       end
-
 
       @this_user = session[:username]
 
@@ -483,13 +479,25 @@ module Uhuru::Webui
       redirect "/space" + session[:currentSpace]
     end
 
-    post '/updateUser' do
+    post '/updateUserName' do
       @first_name = params[:first_name]
       @last_name = params[:last_name]
-      @password = params[:pass1]
 
-      puts @first_name + "\n" + @last_name + "\n" + @password
+      user_sign_up = UsersSetup.new(@config)
+      user_sign_up.update_user_info(session[:user_guid], @first_name, @last_name)
 
+      redirect '/account'
     end
+
+    post '/updateUserPassword' do
+      @old_pass = params[:old_pass]
+      @new_pass = params[:new_pass1]
+
+      user_sign_up = UsersSetup.new(@config)
+      user_sign_up.change_password(session[:user_guid], @new_pass, @old_pass)
+
+      redirect '/account'
+    end
+
   end
 end
