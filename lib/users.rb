@@ -63,6 +63,7 @@ class Users
     end
 
   rescue Exception => e
+    false
     raise "#{e.inspect}"
   end
 
@@ -99,6 +100,7 @@ class Users
     end
 
   rescue Exception => e
+    false
     raise "#{e.inspect}"
   end
 

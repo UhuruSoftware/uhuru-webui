@@ -1,6 +1,7 @@
 require 'uaa'
 require 'config'
 
+#this class contains all the functionality that deals with uaa users and cf users
 class UsersSetup
 
   def initialize(config)
@@ -29,9 +30,24 @@ class UsersSetup
 
   def signup(email, password, first_name, last_name)
     new_user = add_user(email, password, first_name, last_name)
-
     user = UserDetails.new(new_user[:user_token], new_user[:user_id], first_name, last_name)
     user
+  end
+
+  def update_user_info(user_guid, given_name, family_name)
+    user_attributes = {name: {givenName: given_name, familyName: family_name}}
+    uaac = get_uaa_client
+    uaa_user = uaac.get(user_guid)
+    uaac.update(user_guid, uaa_user.merge(user_attributes))
+
+  rescue Exception => e
+    raise "#{e.inspect}"
+  end
+
+  def change_password(user_id, verified_password, old_password)
+    uaac = get_uaa_client
+    uaac.change_password(user_id, verified_password, old_password)
+
   rescue Exception => e
     raise "#{e.inspect}"
   end
