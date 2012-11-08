@@ -30,10 +30,30 @@ module Uhuru::Webui
     end
 
     def configure_sinatra
+    end
 
+
+
+    set :dump_errors, false
+    set :raise_errors, true
+    set :show_exceptions, false
+
+    error 404 do
+      @timeNow = $this_time
+      erb :error404, {:layout => :layout_error }
+    end
+
+    error do
+      @timeNow = $this_time
+      @error = request.env['sinatra_error']
+      erb :error404, {:layout => :layout_error }
     end
 
     get '/' do
+
+      session[:login_] = false
+      session = []
+
       @timeNow = $this_time
       @title = 'Uhuru App Cloud'
       $path_1 = ''
@@ -44,16 +64,6 @@ module Uhuru::Webui
       erb :index, {:layout => :layout_guest }
     end
 
-    #get '/login' do
-    #  if session?
-    #    puts 'if'
-    #    redirect '/organizations'
-    #  else
-    #    pus 'else'
-    #    redirect '/'
-    #  end
-    #end
-
     post '/login' do
       if params[:username]
         @username = params[:username]
@@ -62,6 +72,7 @@ module Uhuru::Webui
         user_login = UsersSetup.new(@config)
         user = user_login.login(@username, @password)
         session[:token] = user.token
+        session[:login_] = true
 
         session[:fname] = user.first_name
         session[:lname] = user.last_name
@@ -76,9 +87,6 @@ module Uhuru::Webui
     end
 
     get '/logout' do
-      session = []
-      puts session
-      puts "\n"
       redirect '/'
     end
 
@@ -94,6 +102,8 @@ module Uhuru::Webui
       redirect '/'
     end
 
+
+
     get'/infopage' do
       @title = "Uhuru Info"
       @timeNow = $this_time
@@ -106,7 +116,7 @@ module Uhuru::Webui
 
     get'/organizations' do
 
-      if session[:secret] != session[:session_id]
+      if session[:login_] == false
         redirect '/'
       end
 
@@ -129,58 +139,12 @@ module Uhuru::Webui
       erb :organizations, {:locals => {:organizations_list => organizations_list, :organizations_count => organizations_list.count}, :layout => :layout_user}
     end
 
-    get'/credit' do
-      @usertitle = session[:username]
-      @timeNow = $this_time
-
-      session[:path_1] = ''
-      session[:path_2] = ''
-      $path_home = '<a href="/organizations" class="breadcrumb_element_home"></a>'
-
-      credit_cards_Obj = CreditCards.new(session[:token], @cf_target)
-      my_credit_cards = credit_cards_Obj.read_all
-
-      erb :creditcard, {:locals => {:my_credit_cards => my_credit_cards}, :layout => :layout_user}
-    end
-
-    get'/account' do
-      @usertitle = "Account " + session[:username]
-      @timeNow = $this_time
-
-      session[:path_1] = ''
-      session[:path_2] = ''
-      $path_home = '<a href="/organizations" class="breadcrumb_element_home"></a>'
-
-
-      erb :usersettings, {:layout => :layout_user}
-    end
-
-    post '/createCard' do
-      @first_name = params[:first_name]
-      @last_name = params[:last_name]
-      @card_number = params[:card_number]
-      @expiration_year = params[:expiration_year]
-      @expiration_month = params[:expiration_month]
-
-
-      @card_type = params[:card_type]
-      @cvv = params[:cvv]
-      @address1 = params[:address1]
-      @address2 = params[:address2]
-
-      @city = params[:city]
-      @state = params[:state]
-      @zip = params[:zip]
-      @country = params[:country]
-
-
-      credit_cards_Obj = CreditCards.new(session[:token], @cf_target)
-      puts credit_cards_Obj.create(session[:user_guid], session[:username], @firs_name, @last_name, @card_number, @expiration_year, @expiration_month, @card_type, @cvv)
-
-      redirect "/credit"
-    end
-
     get'/organization:org_guid' do
+
+      if session[:login_] == false
+        redirect '/'
+      end
+
       @timeNow = $this_time
 
       organizations_Obj = Organizations.new(session[:token], @cf_target)
@@ -205,11 +169,15 @@ module Uhuru::Webui
 
       credit_cards_list = credit_cards_Obj.read_all()
 
-
       erb :organization, {:locals => {:credit_cards_list => credit_cards_list, :spaces_list => spaces_list, :spaces_count => spaces_list.count, :members_count => owners_list.count + developers_list.count + managers_list.count, :owners_list => owners_list, :developers_list => developers_list, :managers_list => managers_list}, :layout => :layout_user}
     end
 
     get'/space:space_guid' do
+
+      if session[:login_] == false
+        redirect '/'
+      end
+
       @timeNow = $this_time
 
       organizations_Obj = Organizations.new(session[:token], @cf_target)
@@ -231,6 +199,69 @@ module Uhuru::Webui
       apps_names = readapps_Obj.read_apps
 
       erb :space, {:locals => {:apps_names => apps_names, :apps_list => apps_list, :services_list => services_list, :apps_count => apps_list.count, :services_count => services_list.count}, :layout => :layout_user}
+    end
+
+    get'/credit' do
+
+      if session[:login_] == false
+        redirect '/'
+      end
+
+      @usertitle = session[:username]
+      @timeNow = $this_time
+
+      session[:path_1] = ''
+      session[:path_2] = ''
+      $path_home = '<a href="/organizations" class="breadcrumb_element_home"></a>'
+
+      credit_cards_Obj = CreditCards.new(session[:token], @cf_target)
+      my_credit_cards = credit_cards_Obj.read_all
+
+      erb :creditcard, {:locals => {:my_credit_cards => my_credit_cards}, :layout => :layout_user}
+    end
+
+    get'/account' do
+
+      if session[:login_] == false
+        redirect '/'
+      end
+
+      @usertitle = "Account " + session[:username]
+      @timeNow = $this_time
+
+      session[:path_1] = ''
+      session[:path_2] = ''
+      $path_home = '<a href="/organizations" class="breadcrumb_element_home"></a>'
+
+
+      erb :usersettings, {:layout => :layout_user}
+    end
+
+
+
+    post '/createCard' do
+      @first_name = params[:first_name]
+      @last_name = params[:last_name]
+      @card_number = params[:card_number]
+      @expiration_year = params[:expiration_year]
+      @expiration_month = params[:expiration_month]
+
+
+      @card_type = params[:card_type]
+      @cvv = params[:cvv]
+      @address1 = params[:address1]
+      @address2 = params[:address2]
+
+      @city = params[:city]
+      @state = params[:state]
+      @zip = params[:zip]
+      @country = params[:country]
+
+
+      credit_cards_Obj = CreditCards.new(session[:token], @cf_target)
+      puts credit_cards_Obj.create(session[:user_guid], session[:username], @firs_name, @last_name, @card_number, @expiration_year, @expiration_month, @card_type, @cvv)
+
+      redirect "/credit"
     end
 
     post '/createOrganization' do

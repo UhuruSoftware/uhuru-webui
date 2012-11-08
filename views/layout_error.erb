@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+		<title>Error</title>
+            <link rel="stylesheet" type="text/css" href="css/Site.css"/>
+            <link rel="stylesheet" type="text/css" href="css/ini.css"/>
+            <link rel="stylesheet" type="text/css" href="css/jquery.css"/>
+        <meta charset="utf-8" />
+</head>
+
+
+<body class="manage">
+    <div id="container">
+        <header id="site_header">
+            <div class="page-margin">
+                <a href="/organizations"><h1>Uhuru AppCloud</h1></a>
+
+                <div id="header_links">
+                  <a href="/"><span class="head_link">Back to main page</span></a>
+                </div>
+            </div>
+        </header>
+        <div class="page-margin" id="body">
+
+        <%= yield %>
+
+
+        </div>
+        <footer id="site_footer">
+            <div class="bottom">
+                <div class="page-margin" id="footer_container">
+                    <span class="copyright">
+                        &copy; <%= @timeNow %> Uhuru Software. All rights reserved.
+                    </span>
+                    <ul class="footer-menu">
+                        <li><a href="http://uhurusoftware.com/tos/">Terms of Service</a></li>
+                        <li><a href="http://uhurusoftware.com/privacy/">Privacy Policy</a></li>
+                        <li class="last"><a href="http://uhurusoftware.zendesk.com" target="_blank">Support</a></li>
+                    </ul>
+                    <span class="cloud-target" style="display: none;">
+                        Your cloud target: <span class="cloud-target-url">http://services.uhurucloud.com</span>
+                    </span>
+                </div>
+            </div>
+        </footer>
+    </div>
+</body>
+</html>

@@ -56,15 +56,6 @@ get '/' do
   erb :index, {:layout => :layout_guest }
 end
 
-
-#get '/login' do
-#  if session?
-#    redirect '/organizations'
-#  else
-#    redirect '/'
-#  end
-#end
-
 post '/login' do
   if params[:username]
     session_start!
@@ -88,13 +79,10 @@ post '/login' do
   end
 end
 
-
 get '/logout' do
   session_end!(destroy=true)
   redirect '/'
 end
-
-
 
 post '/signup' do
   @email = params[:email]
@@ -121,9 +109,6 @@ get'/infopage' do
   erb :infopage, {:layout => :layout_infopage }
 end
 
-
-                  #  --- READ ---  #
-
 get'/organizations' do
   session!
   @this_user = session[:username]
@@ -143,65 +128,6 @@ get'/organizations' do
 
   erb :organizations, {:locals => {:organizations_list => organizations_list, :organizations_count => organizations_list.count}, :layout => :layout_user}
 end
-
-
-get'/credit' do
-  session!
-  @usertitle = session[:username]
-  @timeNow = $this_time
-
-  session[:path_1] = ''
-  session[:path_2] = ''
-  $path_home = '<a href="/organizations" class="breadcrumb_element_home"></a>'
-
-  credit_cards_Obj = CreditCards.new(session[:token])
-  my_credit_cards = credit_cards_Obj.read_all
-
-  erb :creditcard, {:locals => {:my_credit_cards => my_credit_cards}, :layout => :layout_user}
-end
-
-
-get'/account' do
-  session!
-  @usertitle = "Account " + session[:username]
-  @timeNow = $this_time
-
-  session[:path_1] = ''
-  session[:path_2] = ''
-  $path_home = '<a href="/organizations" class="breadcrumb_element_home"></a>'
-
-
-  erb :usersettings, {:layout => :layout_user}
-end
-
-post '/createCard' do
-  @first_name = params[:first_name]
-  @last_name = params[:last_name]
-  @card_number = params[:card_number]
-  @expiration_year = params[:expiration_year]
-  @expiration_month = params[:expiration_month]
-
-
-  @card_type = params[:card_type]
-  @cvv = params[:cvv]
-  @address1 = params[:address1]
-  @address2 = params[:address2]
-
-  @city = params[:city]
-  @state = params[:state]
-  @zip = params[:zip]
-  @country = params[:country]
-
-
-  credit_cards_Obj = CreditCards.new(session[:token])
-  puts credit_cards_Obj.create(session[:user_guid], session[:username], @firs_name, @last_name, @card_number, @expiration_year, @expiration_month, @card_type, @cvv)
-
-  redirect "/credit"
-end
-
-
-
-
 
 get'/organization:org_guid' do
   session!
@@ -234,8 +160,6 @@ get'/organization:org_guid' do
   erb :organization, {:locals => {:credit_cards_list => credit_cards_list, :spaces_list => spaces_list, :spaces_count => spaces_list.count, :members_count => owners_list.count + developers_list.count + managers_list.count, :owners_list => owners_list, :developers_list => developers_list, :managers_list => managers_list}, :layout => :layout_user}
 end
 
-
-
 get'/space:space_guid' do
   session!
 
@@ -262,11 +186,59 @@ get'/space:space_guid' do
   erb :space, {:locals => {:apps_names => apps_names, :apps_list => apps_list, :services_list => services_list, :apps_count => apps_list.count, :services_count => services_list.count}, :layout => :layout_user}
 end
 
+get'/credit' do
+  session!
+  @usertitle = session[:username]
+  @timeNow = $this_time
+
+  session[:path_1] = ''
+  session[:path_2] = ''
+  $path_home = '<a href="/organizations" class="breadcrumb_element_home"></a>'
+
+  credit_cards_Obj = CreditCards.new(session[:token])
+  my_credit_cards = credit_cards_Obj.read_all
+
+  erb :creditcard, {:locals => {:my_credit_cards => my_credit_cards}, :layout => :layout_user}
+end
+
+get'/account' do
+  session!
+  @usertitle = "Account " + session[:username]
+  @timeNow = $this_time
+
+  session[:path_1] = ''
+  session[:path_2] = ''
+  $path_home = '<a href="/organizations" class="breadcrumb_element_home"></a>'
 
 
+  erb :usersettings, {:layout => :layout_user}
+end
 
 
+post '/createCard' do
+  @first_name = params[:first_name]
+  @last_name = params[:last_name]
+  @card_number = params[:card_number]
+  @expiration_year = params[:expiration_year]
+  @expiration_month = params[:expiration_month]
 
+
+  @card_type = params[:card_type]
+  @cvv = params[:cvv]
+  @address1 = params[:address1]
+  @address2 = params[:address2]
+
+  @city = params[:city]
+  @state = params[:state]
+  @zip = params[:zip]
+  @country = params[:country]
+
+
+  credit_cards_Obj = CreditCards.new(session[:token])
+  puts credit_cards_Obj.create(session[:user_guid], session[:username], @firs_name, @last_name, @card_number, @expiration_year, @expiration_month, @card_type, @cvv)
+
+  redirect "/credit"
+end
 
 post '/createOrganization' do
   @name = params[:orgName]
@@ -358,7 +330,6 @@ post '/deleteClickedService' do
   redirect "/space" + session[:currentSpace]
 end
 
-
 post '/createApp' do
   @name =  params[:appName]
   @runtime = params[:appRuntime]
@@ -380,7 +351,6 @@ post '/createApp' do
   redirect "/space" + session[:currentSpace]
 end
 
-
 post '/createService' do
   @name = params[:serviceName]
 
@@ -393,7 +363,6 @@ post '/createService' do
 
   redirect "/space" + session[:currentSpace]
 end
-
 
 post '/addUsers' do
   @email =  params[:userEmail]
@@ -415,8 +384,6 @@ post '/deleteUser' do
 
   redirect "/organization" + session[:currentOrganization]
 end
-
-
 
 
 post '/startApp' do
@@ -441,7 +408,6 @@ post '/stopApp' do
 end
 
 
-
 post '/updateApp' do
   @name = params[:appName]
   @memory = params[:appMemory]
@@ -453,8 +419,6 @@ post '/updateApp' do
   redirect "/spaces" + session[:currentSpace]
 end
 
-
-
 post '/bindServices' do
   @app_name = params[:appName]
   @service_name = params[:serviceName]
@@ -465,7 +429,6 @@ post '/bindServices' do
   redirect "/space" + session[:currentSpace]
 end
 
-
 post '/unbindServices' do
   @app_name = params[:appName]
   @service_name = params[:serviceName]
@@ -475,7 +438,6 @@ post '/unbindServices' do
 
   redirect "/space" + session[:currentSpace]
 end
-
 
 post '/bindUri' do
   @app_name = params[:appName]
@@ -488,7 +450,6 @@ post '/bindUri' do
   redirect "/space" + session[:currentSpace]
 end
 
-
 post '/unbindUri' do
   @app_name = params[:appName]
   @uri_name = params[:uriName]
@@ -499,7 +460,6 @@ post '/unbindUri' do
 
   redirect "/space" + session[:currentSpace]
 end
-
 
 post '/updateUser' do
   @first_name = params[:first_name]
