@@ -80,17 +80,17 @@ class Users
         case role
           when 'owner'
             existing_managers = space.managers
-            existing_managers << @client.user(user_guid)
+            existing_managers << user
 
             space.managers = existing_managers
           when 'developer'
-            existing_managers = space.developers
-            existing_managers << @client.user(user_guid)
+            existing_developers = space.developers
+            existing_developers << user
 
-            space.developers = existing_managers
+            space.developers = existing_developers
           when 'auditor'
             existing_auditors = space.auditors
-            existing_auditors << @client.user(user_guid)
+            existing_auditors << user
 
             space.auditors = existing_auditors
         end
@@ -101,7 +101,7 @@ class Users
 
   rescue Exception => e
     false
-    raise "#{e.inspect}"
+    raise "#{e.inspect}, #{e.backtrace}"
   end
 
   def get_user_guid
