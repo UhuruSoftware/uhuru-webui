@@ -65,7 +65,7 @@ textarea
 #site_header
 {
     height: 50px;
-    background-color: #09293e;
+    background-color: #187ebc;
 }
 
 #site_header h1
@@ -219,7 +219,7 @@ textarea
 .splash
 {
     background: transparent url('../images/bg_clouds.png') no-repeat scroll center top;
-	background-color:#0071B7;
+	background-color: #0E4769;
     height: 190px;
     color: #e4eef0;
 }
