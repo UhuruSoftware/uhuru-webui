@@ -105,7 +105,10 @@ h1, h2, h3, h4, h5, h6
 }
 
 
-
+#country_drop_down
+{
+    color: #ffffff;
+}
 #create_credit_card_modal
 {
 	width: 600px;
@@ -2270,4 +2273,27 @@ p,
     padding: 1px;
     float: left;
     line-height: 50px;
+}
+
+#404error_div
+{
+    text-align: left;
+}
+
+.error_h3
+{
+    margin-top: 30px;
+    margin-left: 40px;
+}
+.error_p
+{
+    float: left;
+    margin-top: 40px;
+    margin-left: 20px;
+}
+.error_btn
+{
+    float: left;
+    margin-top: 25px;
+    margin-left: 10px;
 }

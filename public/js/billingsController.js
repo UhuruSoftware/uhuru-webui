@@ -23,7 +23,6 @@ $(function() {
         var city = $('input[name=city]').val();
         var state = $('input[name=state]').val();
         var zip = $('input[name=zip]').val();
-        var country = $('input[name=country]').val();
 
         var card_number = $('input[name=card_number]').val();
         var cvv = $('input[name=cvv]').val();
@@ -31,6 +30,7 @@ $(function() {
         var card_t = document.getElementById("credit_card_type");
         var exp_year = document.getElementById("credit_card_expiration_year");
         var exp_month = document.getElementById("credit_card_expiration_month");
+        var country = document.getElementById("country_drop_down"); //$('input[name=country]').val();
 
         var card_type = card_t.options[card_t.selectedIndex];
         var expiration_year = exp_year.options[exp_year.selectedIndex];
@@ -61,7 +61,7 @@ $(function() {
             $('#show_modal_errors').hide().text("Please enter you're valid card number! ( 16 digits)").fadeIn(200);
         }
 
-        if(country.length < 2 || country == '... country') {
+        if(country.text == '-select-') {
             event.preventDefault();
             $('#show_modal_errors').hide().text("Please enter you're country!").fadeIn(200);
         }
