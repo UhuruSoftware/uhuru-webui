@@ -1060,7 +1060,7 @@ textarea
 
 #site_footer .footer-menu li a
 {
-    color: #08c;
+    color: #819ff7;
 }
 
 #site_footer .footer-menu li.last
@@ -1349,4 +1349,9 @@ a
     font-weight: 100;
     margin-left: 5px;
     height: 20px;
+}
+
+.index_links
+{
+    color: #819ff7;
 }

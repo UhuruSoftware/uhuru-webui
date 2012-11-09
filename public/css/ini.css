@@ -2275,7 +2275,8 @@ p,
     line-height: 50px;
 }
 
-#404error_div
+#404error_div,
+#500error_div,
 {
     text-align: left;
 }
@@ -2283,17 +2284,15 @@ p,
 .error_h3
 {
     margin-top: 30px;
-    margin-left: 40px;
+    margin-left: 0;
 }
 .error_p
 {
     float: left;
-    margin-top: 40px;
-    margin-left: 20px;
+    margin-top: 20px;
+    margin-left: 0;
 }
 .error_btn
 {
-    float: left;
-    margin-top: 25px;
-    margin-left: 10px;
+    color: #187EBC;
 }

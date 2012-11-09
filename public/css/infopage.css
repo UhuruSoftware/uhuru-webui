@@ -149,7 +149,11 @@ textarea
 
 #site_footer .footer-menu li a
 {
-    color: #6eb53c;
+    color: #819ff7;
+}
+.index_links
+{
+    color: #819ff7;
 }
 
 #site_footer .footer-menu li.last
@@ -396,17 +400,15 @@ a:hover
 
 }
 
-#site_footer .footer-menu li a
-{
-    color: #08c;
-}
-
 #site_footer .footer-menu li.last
 {
     border: 0;
 }
 
-
+.copyright
+{
+    color: #ffffff;
+}
 a, span, p, h3, h4, h5, h6, li, label
 {
 

@@ -2,28 +2,8 @@
 <html>
 	<head>
 		<title><%= @title %></title>
-
 		<link rel="stylesheet" type="text/css" href="../css/infopage.css" />
-
         <meta charset="utf-8" />
-
-          <script type="text/javascript">
-            window.q = [];
-            window.$ = function (f) {
-                q.push(f);
-            };
-
-            //fix to make html5 sections work in IE8 and other browsers that don't support html5
-            document.createElement('header');
-            document.createElement('hgroup');
-            document.createElement('nav');
-            document.createElement('menu');
-            document.createElement('section');
-            document.createElement('article');
-            document.createElement('aside');
-            document.createElement('footer');
-
-        </script>
 	</head>
 
 
@@ -53,7 +33,7 @@
                             <td style="border-right: 1px dotted #000">
                                 <p>
                                     Give us feedback on your experience with the App Cloud beta and get 1 year free premium hosting when we go commercial.
-                                    Click <a href="http://bit.ly/uhrbloglife">here</a> for more details
+                                    Click <a href="http://bit.ly/uhrbloglife" class="index_links">here</a> for more details
                                 </p>
                             </td>
                             <td>
@@ -80,12 +60,6 @@
             </div>
 
     </footer>
-
-    <script type="text/javascript">
-        $.each(q, function (index, f) {
-            $(f);
-        });
-    </script>
 </body>
 </html>
 
