@@ -8,7 +8,7 @@ module Uhuru::Webui
   class Webui < Sinatra::Base
     set :root, File.expand_path("../../", __FILE__)
     set :views, File.expand_path("../../views", __FILE__)
-    set :public_folder , File.expand_path("../../public", __FILE__)
+    set :public_folder, File.expand_path("../../public", __FILE__)
     set :session_fail, '/login'
     set :session_secret, 'secret!'
     enable :sessions
@@ -39,12 +39,12 @@ module Uhuru::Webui
 
     error 404 do
       @timeNow = $this_time
-      erb :error404, {:layout => :layout_error }
+      erb :error404, {:layout => :layout_error}
     end
 
     error do
       @error = request.env['sinatra_error'].name
-      erb :error404, {:layout => :layout_error }
+      erb :error404, {:layout => :layout_error}
     end
 
     get '/' do
@@ -58,7 +58,7 @@ module Uhuru::Webui
 
       $user = nil
 
-      erb :index, {:layout => :layout_guest }
+      erb :index, {:layout => :layout_guest}
     end
 
     post '/login' do
@@ -94,24 +94,31 @@ module Uhuru::Webui
       @family_name = params[:last_name]
 
       user_sign_up = UsersSetup.new(@config)
-      user_sign_up.signup(@email, @password, @given_name, @family_name)
+      user = user_sign_up.signup(@email, @password, @given_name, @family_name)
 
-      redirect '/'
+      session[:token] = user.token
+      session[:login_] = true
+      session[:fname] = user.first_name
+      session[:lname] = user.last_name
+      session[:username] = params[:username]
+      session[:user_guid] = user.guid
+      session[:secret] = session[:session_id]
+
+      redirect '/organizations'
     end
 
 
-
-    get'/infopage' do
+    get '/infopage' do
       @title = "Uhuru Info"
       @timeNow = $this_time
 
       $path_1 = ''
       $path_2 = ''
 
-      erb :infopage, {:layout => :layout_infopage }
+      erb :infopage, {:layout => :layout_infopage}
     end
 
-    get'/organizations' do
+    get '/organizations' do
 
       if session[:login_] == false
         redirect '/'
@@ -135,7 +142,7 @@ module Uhuru::Webui
       erb :organizations, {:locals => {:organizations_list => organizations_list, :organizations_count => organizations_list.count}, :layout => :layout_user}
     end
 
-    get'/organization:org_guid' do
+    get '/organization:org_guid' do
 
       if session[:login_] == false
         redirect '/'
@@ -168,7 +175,7 @@ module Uhuru::Webui
       erb :organization, {:locals => {:credit_cards_list => credit_cards_list, :spaces_list => spaces_list, :spaces_count => spaces_list.count, :members_count => owners_list.count + developers_list.count + managers_list.count, :owners_list => owners_list, :developers_list => developers_list, :managers_list => managers_list}, :layout => :layout_user}
     end
 
-    get'/space:space_guid' do
+    get '/space:space_guid' do
 
       if session[:login_] == false
         redirect '/'
@@ -197,7 +204,7 @@ module Uhuru::Webui
       erb :space, {:locals => {:apps_names => apps_names, :apps_list => apps_list, :services_list => services_list, :apps_count => apps_list.count, :services_count => services_list.count}, :layout => :layout_user}
     end
 
-    get'/credit' do
+    get '/credit' do
 
       if session[:login_] == false
         redirect '/'
@@ -216,7 +223,7 @@ module Uhuru::Webui
       erb :creditcard, {:locals => {:my_credit_cards => my_credit_cards}, :layout => :layout_user}
     end
 
-    get'/account' do
+    get '/account' do
 
       if session[:login_] == false
         redirect '/'
@@ -232,7 +239,6 @@ module Uhuru::Webui
 
       erb :usersettings, {:layout => :layout_user}
     end
-
 
 
     post '/createCard' do
@@ -351,7 +357,7 @@ module Uhuru::Webui
     end
 
     post '/createApp' do
-      @name =  params[:appName]
+      @name = params[:appName]
       @runtime = params[:appRuntime]
       @framework = params[:appFramework]
       @instance = 1
@@ -385,7 +391,7 @@ module Uhuru::Webui
     end
 
     post '/addUsers' do
-      @email =  params[:userEmail]
+      @email = params[:userEmail]
       @type = params[:userType]
 
       organizations_Obj = Organizations.new(session[:token], @cf_target)
@@ -396,7 +402,7 @@ module Uhuru::Webui
     end
 
     post '/deleteUser' do
-      @user_guid =  params[:thisUser]
+      @user_guid = params[:thisUser]
 
       organizations_Obj = Organizations.new(session[:token], @cf_target)
       users_Obj = Users.new(session[:token], @cf_target)
