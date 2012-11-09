@@ -33,9 +33,9 @@ module Uhuru::Webui
 
     end
 
-    set :dump_errors, false
+    set :dump_errors, true
     set :raise_errors, true
-    set :show_exceptions, false
+    set :show_exceptions, true
 
     error 404 do
       @timeNow = $this_time
@@ -261,7 +261,7 @@ module Uhuru::Webui
 
 
       credit_cards_Obj = CreditCards.new(session[:token], @cf_target)
-      puts credit_cards_Obj.create(session[:user_guid], session[:username], @firs_name, @last_name, @card_number, @expiration_year, @expiration_month, @card_type, @cvv)
+      puts credit_cards_Obj.create(session[:user_guid], session[:username], @first_name, @last_name, @card_number, @expiration_year, @expiration_month, @card_type, @cvv)
 
       redirect "/credit"
     end

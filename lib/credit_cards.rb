@@ -18,9 +18,12 @@ class CreditCards
     credit_card_list = []
 
     if response.request.last_response.code == '200'
-      JSON.parse(response).each do |item|
-        credit_card = CreditCard.from_json! item.to_json
-        credit_card_list << credit_card
+      if CreditCard.valid_json?(response.body)
+        JSON.parse(response.body).each do |item|
+          card = item.to_hash
+          credit_card = CreditCard.from_json! card["credit_card"].to_json
+          credit_card_list << credit_card
+        end
       end
     end
 
@@ -34,7 +37,10 @@ class CreditCards
     response = get("#{@base_path}/#{card_id}", :headers => headers)
 
     if response.request.last_response.code == '200'
-      return CreditCard.from_json! response.body
+      if CreditCard.valid_json?(response.body)
+        card = item.to_hash
+        return CreditCard.from_json! card["credit_card"].to_json
+      end
     end
 
   rescue Exception => e
@@ -91,13 +97,13 @@ class CreditCard
 
   class << self
 
-  attr_accessor :id, :first_name, :last_name, :masked_card_number, :expiration_month, :expiration_year, :card_type,
-              :billing_address, :billing_address_2, :billing_city, :billing_state, :billing_zip, :billing_country
+    attr_accessor :id, :first_name, :last_name, :masked_card_number, :expiration_month, :expiration_year, :card_type,
+                  :billing_address, :billing_address_2, :billing_city, :billing_state, :billing_zip, :billing_country
 
   end
 
   attr_accessor :id, :first_name, :last_name, :masked_card_number, :expiration_month, :expiration_year, :card_type,
-              :billing_address, :billing_address_2, :billing_city, :billing_state, :billing_zip, :billing_country
+                :billing_address, :billing_address_2, :billing_city, :billing_state, :billing_zip, :billing_country
 
   def initialize(id, first_name, last_name, masked_card_number, expiration_month, expiration_year, card_type,
       billing_address = nil, billing_address_2 = nil, billing_city = nil, billing_state = nil, billing_zip = nil,
@@ -124,7 +130,16 @@ class CreditCard
       self.instance_variable_set '@'+var, val
     end
 
-  rescue Exception => e
-    raise "#{e.inspect}"
+    return self
   end
+
+  def self.valid_json? json
+    begin
+      JSON.parse(json)
+      return true
+    rescue Exception => e
+      return false
+    end
+  end
+
 end
