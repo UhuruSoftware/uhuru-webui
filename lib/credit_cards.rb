@@ -1,20 +1,20 @@
 require 'config'
-require 'httparty'
+require 'http_direct_client'
 
 class CreditCards
-  include HTTParty
 
   attr_accessor :auth_token, :base_path
 
   def initialize(token, target)
     @auth_token = token
     @base_path = target + '/v2/credit_cards'
+    @http_client = HttpDirectClient.new
   end
 
   def read_all
     headers = {'Content-Type' => 'text/html;charset=utf-8', 'Authorization' => @auth_token}
 
-    response = get("#{@base_path}", :headers => headers)
+    response = @http_client.get("#{@base_path}", :headers => headers)
     credit_card_list = []
 
     if response.request.last_response.code == '200'
@@ -34,7 +34,7 @@ class CreditCards
 
   def read_card_by_id(card_id)
     headers = {'Content-Type' => 'text/html;charset=utf-8', 'Authorization' => @auth_token}
-    response = get("#{@base_path}/#{card_id}", :headers => headers)
+    response = HttpDirectClient.get("#{@base_path}/#{card_id}", :headers => headers)
 
     if response.request.last_response.code == '200'
       if CreditCard.valid_json?(response.body)
@@ -50,11 +50,11 @@ class CreditCards
   def create(user_guid, user_email, first_name, last_name, card_number, expiration_year, expiration_month, card_type, cvv, address = nil, address2 = nil, city = nil, state = nil, zip = nil, country = nil)
     headers = {'Content-Type' => 'application/json', 'Authorization' => @auth_token}
 
-    attributes = {:reference => user_guid, :email => user_email, :first_name => first_name, :last_name => last_name, :full_number => card_number, :expiration_year => expiration_year,
+    attributes = {:reference => user_guid, :email => user_email, :first_name => first_name, :last_name => last_name, :full_number => '1', :expiration_year => expiration_year,
                   :expiration_month => expiration_month, :card_type => card_type, :cvv => cvv, :billing_address => address, :billing_address_2 => address2, :billing_city => city,
                   :billing_state => state, :billing_zip => zip, :billing_country => country}
 
-    response = post("#{@base_path}", :headers => headers, :body => attributes)
+    response = HttpDirectClient.post("#{@base_path}", :headers => headers, :body => attributes.to_json)
     return true if response.request.last_response.code == '200'
 
   rescue Exception => e
@@ -63,32 +63,11 @@ class CreditCards
 
   def delete_by_id(card_id)
     headers = {'Content-Type' => 'application/json', 'Authorization' => @auth_token}
-    response = delete("#{@base_path}/v2/credit_cards/#{card_id}", :headers => headers)
+    response = HttpDirectClient.delete("#{@base_path}/v2/credit_cards/#{card_id}", :headers => headers)
     return true if response.request.last_response.code == '200'
 
   rescue Exception => e
     raise "#{e.inspect}"
-  end
-
-  private
-
-  def post(path, options={})
-    jsonify_body!(options)
-    self.class.post(path, options)
-  end
-
-  def delete(path, options={})
-    jsonify_body!(options)
-    self.class.delete(path, options)
-  end
-
-  def get(path, options={})
-    jsonify_body!(options)
-    self.class.get(path, options)
-  end
-
-  def jsonify_body!(options)
-    options[:body] = options[:body].to_json if options[:body]
   end
 
 end

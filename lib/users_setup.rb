@@ -69,18 +69,17 @@ class UsersSetup
     if (user != nil)
       user_id = user[:id]
 
-      #user_token = get_user_token(email, password)
+      admin_token = get_user_token(@cf_admin, @cf_pass)
 
-      user_token = get_user_token(@cf_admin, @cf_pass)
-
-      organizations_Obj = Organizations.new(user_token, @cf_target)
+      organizations_Obj = Organizations.new(admin_token, @cf_target)
       org_name = email + "'s organization"
       org_guid = organizations_Obj.create(org_name)
 
-      users_obj = Users.new(user_token, @cf_target)
+      users_obj = Users.new(admin_token, @cf_target)
       cfuser = users_obj.add_user_to_org_with_role(org_guid, user_id, ['owner', 'billing'])
+      user_token = get_user_token(email, password)
 
-       {:user_id => user_id, :user_token => user_token}
+      {:user_id => user_id, :user_token => user_token}
     end
 
   rescue Exception => e

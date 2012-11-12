@@ -1,5 +1,6 @@
 require 'cfoundry'
 require "config"
+require 'http_direct_client'
 
 class Users
 
@@ -29,10 +30,12 @@ class Users
 
     org = @client.organization(org_guid)
 
-    user = @client.user
-    user.guid = user_guid
+    #user = @client.user
+    #user.guid = user_guid
 
-    if (user.create!)
+    created = create_user(user_guid)
+
+    if (created)
 
       existing_users = org.users
       existing_users << @client.user(user_guid)
@@ -115,6 +118,21 @@ class Users
 
   rescue Exception => e
     raise "#{e.inspect}"
+  end
+
+  private
+
+  def create_user(user_guid)
+    base_path = @client.target + '/v2/users'
+    headers = {'Content-Type' => 'application/json', 'Authorization' => @client.token}
+    attributes = {:guid => user_guid}
+
+    response = HttpDirectClient.post("#{base_path}", :headers => headers, :body => attributes.to_json)
+    return true if response.request.last_response.code == '201'
+
+  rescue Exception => e
+    false
+    #raise "#{e.inspect}"
   end
 
   class User
