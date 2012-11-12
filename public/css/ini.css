@@ -61,6 +61,8 @@ h1, h2, h3, h4, h5, h6
 }
 
 
+#add_credit_card_to_organization_modal,
+#delete_credit_card_modal,
 #delete_this_organization_modal,
 #delete_this_space_modal,
 #delete_app,
@@ -69,7 +71,6 @@ h1, h2, h3, h4, h5, h6
 #delete_user_modal,
 #delete_organization_modal,
 #add_ctService_modal,
-#inv_ctUser_modal,
 #create_organization,
 #create_space,
 #bind_service_modal,
@@ -83,11 +84,30 @@ h1, h2, h3, h4, h5, h6
 	position: absolute;
 	margin-left: -300px;
 	left: 50%;
-	top: 200px;
+	top: 130px;
 	z-index: 20;
 	display: none;
-    background-color: #e0dfdd;
     overflow: auto;
+}
+
+#inv_ctUser_modal,
+#create_credit_card_modal
+{
+	width: 600px;
+	position: absolute;
+	margin-left: -300px;
+	left: 50%;
+	top: 50px;
+	z-index: 20;
+	display: none;
+    background-color: #09293e;
+    overflow: hidden;
+    padding: 0;
+}
+
+#inv_ctUser_modal
+{
+    top: 0;
 }
 
 #create_tempcta_modal
@@ -102,20 +122,6 @@ h1, h2, h3, h4, h5, h6
 	display: none;
     background-color: #e0dfdd;
     overflow: auto;
-}
-
-#create_credit_card_modal
-{
-	width: 600px;
-	position: absolute;
-	margin-left: -300px;
-	left: 50%;
-	top: 50px;
-	z-index: 20;
-	display: none;
-    background-color: #09293e;
-    overflow: hidden;
-    padding: 0;
 }
 
 .custom_modal_body
@@ -461,13 +467,6 @@ h2
     font-size: 16px;
 }
 
-.credit_card_icons
-{
-    background-image: url("../images/creditcards.png");
-    background-repeat: no-repeat;
-    background-position: 2% 60%;
-}
-
 .account_settings_left,
 .credit_card_left
 {
@@ -512,7 +511,7 @@ h2
     width: 150px;
     color: #ffffff;
     font-style: normal;
-    float: right;
+    float: left;
 }
 #country_drop_down
 {
@@ -1195,12 +1194,6 @@ h2 .count
     background-image: url("../images/tile_big_brown.png");
     border: 1px solid #4e334a;
 }
-.tile_credit_card_name_unused
-{
-    background-image: none;
-    background-color: #b6bfb6;
-    border: 1px solid #7452c6;
-}
 
 .tile_user_owner,
 .tile_user_developer,
@@ -1300,6 +1293,7 @@ h2 .count
     list-style: none;
 }
 
+.tile_credit_card_logo_unused,
 .tile_credit_card_logo,
 .tile_service_logo,
 .tile_app_logo
@@ -1318,7 +1312,12 @@ h2 .count
     list-style: none;
 }
 
+.tile_credit_card_logo
+{
 
+}
+
+.tile_credit_card_details_unused,
 .tile_credit_card_details,
 .tile_service_details
 {
@@ -1334,6 +1333,15 @@ h2 .count
     display: list-item;
     float: left;
     list-style: none;
+}
+
+.tile_credit_card_name_unused,
+.tile_credit_card_logo_unused,
+.tile_credit_card_details_unused
+{
+    background-image: none;
+    background-color: #b6bfb6;
+    border: 1px solid #ffffff;
 }
 
 .tile_organization_cost,
@@ -2180,7 +2188,7 @@ p,
 
 .credit_card_address
 {
-    width: 350px;
+    width: 90%;
 }
 
 .credit_card_cvv

@@ -266,6 +266,25 @@ module Uhuru::Webui
       redirect "/credit"
     end
 
+    post '/addCreditCardToOrganization' do
+      puts @credit_card_id = params[:cardId]
+
+      redirect '/organization' + session[:currentOrganization]
+    end
+
+    post '/deleteClickedCreditCard' do
+      @credit_card_id = params[:credit_card_id]
+      puts @credit_card_id
+
+
+      credit_cards_Obj = CreditCards.new(session[:token], @cf_target)
+      #credit_cards_Obj.delete_by_id(@credit_card_id)
+
+      redirect '/credit'
+    end
+
+
+
     post '/createOrganization' do
       @name = params[:orgName]
       @organization_message = "Creating organization... Please wait"

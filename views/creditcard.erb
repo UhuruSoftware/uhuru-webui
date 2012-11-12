@@ -15,6 +15,7 @@
                 <ul class="custom_list">
                     <li class="tile_credit_card_name" title="xxxx-xxxx-xxxx-1234">
                       <span class="credit_card_name"><%= card.first_name + '' + card.last_name %></span>
+                      <a href="#"><input type="button" class="small_trash btn_delete_credit_card" title="<%= card.name %>" id="<%= card.guid %>" onmousemove="prepareToDeleteOrganization(this)" /></a>
                     </li>
 
                     <li class="tile_credit_card_logo">
@@ -28,7 +29,54 @@
                 </ul>
             </li>
         <% end %>
+
+            <li class="tile_invisible">
+                <ul class="custom_list">
+                    <li class="tile_credit_card_name" title="xxxx-xxxx-xxxx-1234">
+                      <span class="credit_card_name"></span>
+                      <a href="#"><input type="button" class="small_trash btn_delete_credit_card" title="test" onmousemove="prepareToDeleteCreditCard(this)" /></a>
+                    </li>
+
+                    <li class="tile_credit_card_logo">
+                        <span class="link_tiles_app span_credit_card_icon_mastercard"></span>
+                    </li>
+
+                    <li class="tile_credit_card_details">
+                        <span class="credit_card_first_name_span">First Name</span>
+                        <span class="credit_card_last_name_span">Last Name</span>
+                    </li>
+                </ul>
+            </li>
     </ul>
+
+
+<div class="modal hide" id="delete_credit_card_modal">
+    <div class="modal-header">
+        <button class="close"></button>
+        <h3>Delete credit card</h3>
+    </div>
+    <div class="modal-body">
+        <br />
+            <p>
+                Are you sure you want to delete this credit card ?
+            </p>
+        <br />
+    </div>
+    <div class="modal-footer">
+        <div class="button_case_delete_organization_and_space">
+            <a href="#" class="btn btn_right_delete_organization_and_space btn_cancel" id="cancel_b_d_organization">No</a>
+            <form action="/deleteClickedCreditCard" method="post">
+                <input type="submit" value="Yes" class="btn btn-danger btn_left_delete_organization_and_space white_btn_text" />
+                <input type="text" id="pass_credit_card_id" name="credit_card_id" class="blank_input" />
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+
+
 
 
 

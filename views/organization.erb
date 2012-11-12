@@ -107,12 +107,29 @@
 
 
                 <div id="billings" class="tab-pane">
-                    <ul class="tile_list" style="border-bottom: 1px solid #0e4769; padding-bottom: 50px;">
-                        <% credit_cards_list.each do |card| %>
+                    <ul class="tile_list" style="border-bottom: 1px solid #0e4769; padding-bottom: 50px; margin-top: 30px;">
+
+                        <% if credit_cards_list.count == 1 %>
                             <li class="tile_invisible">
                                 <ul class="custom_list">
-                                    <li class="tile_credit_card_name" title="xxxx-xxxx-xxxx-1234">
-                                       <span class="credit_card_name">xxx-xxx-xxx-xxx-132</span>
+                                    <li class="tile_credit_card_name_unused" title="xxxx-xxxx-xxxx-1234">
+                                       <span class="credit_card_name">None</span>
+                                    </li>
+
+                                    <li class="tile_credit_card_logo_unused">
+                                    </li>
+
+                                    <li class="tile_credit_card_details_unused">
+                                        <span class="credit_card_first_name_span">None</span>
+                                        <span class="credit_card_last_name_span">None</span>
+                                    </li>
+                                </ul>
+                            </li>
+                        <% else %>
+                            <li class="tile_invisible">
+                                <ul class="custom_list">
+                                    <li class="tile_credit_card_name">
+                                       <a href="#" class="link_tiles_org add_credit_card_btn" title="test"><span class="credit_card_name">xxx-xxx-xxx-xxx-132</span></a>
                                     </li>
 
                                     <li class="tile_credit_card_logo">
@@ -127,10 +144,91 @@
                             </li>
                         <% end %>
                     </ul>
+
+                    <ul class="tile_list">
+                        <% credit_cards_list.each do |card| %>
+                            <li class="tile_invisible">
+                                <ul class="custom_list">
+                                    <li class="tile_credit_card_name">
+                                       <a href="#" class="link_tiles_org add_credit_card_btn" title="test" onclick="prepareToAddCreditCard(this);"><span class="credit_card_name">xxx-xxx-xxx-xxx-132</span></a>
+                                    </li>
+
+                                    <li class="tile_credit_card_logo">
+                                        <span class="link_tiles_app span_credit_card_icon_visa"></span>
+                                    </li>
+
+                                    <li class="tile_credit_card_details">
+                                        <span class="credit_card_first_name_span">First Name</span>
+                                        <span class="credit_card_last_name_span">Last Name</span>
+                                    </li>
+                                </ul>
+                            </li>
+                        <% end %>
+
+                            <li class="tile_invisible">
+                                <ul class="custom_list">
+                                    <li class="tile_credit_card_name">
+                                       <a href="#" class="link_tiles_org add_credit_card_btn" title="test" onclick="prepareToAddCreditCard(this);"><span class="credit_card_name">xxx-xxx-xxx-xxx-132</span></a>
+                                    </li>
+
+                                    <li class="tile_credit_card_logo">
+                                        <span class="link_tiles_app span_credit_card_icon_mastercard"></span>
+                                    </li>
+
+                                    <li class="tile_credit_card_details">
+                                        <span class="credit_card_first_name_span">First Name</span>
+                                        <span class="credit_card_last_name_span">Last Name</span>
+                                    </li>
+                                </ul>
+                            </li>
+
+                            <li class="tile_invisible">
+                                <ul class="custom_list">
+                                    <li class="tile_credit_card_name">
+                                       <a href="#" class="link_tiles_org add_credit_card_btn" title="test" onclick="prepareToAddCreditCard(this);"><span class="credit_card_name">xxx-xxx-xxx-xxx-132</span></a>
+                                    </li>
+
+                                    <li class="tile_credit_card_logo">
+                                        <span class="link_tiles_app span_credit_card_icon_discover"></span>
+                                    </li>
+
+                                    <li class="tile_credit_card_details">
+                                        <span class="credit_card_first_name_span">First Name</span>
+                                        <span class="credit_card_last_name_span">Last Name</span>
+                                    </li>
+                                </ul>
+                            </li>
+                    </ul>
                 </div>
 
          </div>
 
+
+
+<div class="modal hide" id="add_credit_card_to_organization_modal">
+    <div class="modal-header">
+        <button class="close"></button>
+        <h3>Add credit card</h3>
+    </div>
+
+    <div class="modal-body">
+        <br />
+            <p>
+                Are you sure you want to add this credit card to the organization ?
+            </p>
+        <br />
+    </div>
+
+    <div class="modal-footer">
+        <div class="button_case_delete_organization_and_space">
+            <a href="#" class="btn btn_right_delete_organization_and_space btn_cancel">No</a>
+            <form action="/addCreditCardToOrganization" method="post">
+                <input type="submit" value="Yes" class="btn btn-danger btn_left_delete_organization_and_space white_btn_text"/>
+                <input type="text" name="cardId" id="pass_credit_card_add_id" class="blank_input" />
+            </form>
+        </div>
+    </div>
+</div>
 
 
 

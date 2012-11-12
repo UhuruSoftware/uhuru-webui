@@ -3,14 +3,31 @@ var create_credit_card = function(){
 	$('#screen').css({	"display": "block", opacity: 0.7, "width": "10000px", "height": "10000px"});
 	$('body').css({"overflow":"hidden"});
 	$('#create_credit_card_modal').fadeIn(600);
-    $('.close').click(function(){$("#create_credit_card_modal").css("display", "none");$('#screen').css("display", "none");$('#show_modal_errors').hide();});
-    $('.btn_cancel').click(function(){$("#create_credit_card_modal").css("display", "none");$('#screen').css("display", "none");$('#show_modal_errors').hide();});
+    $('.close').click(function(){$("#create_credit_card_modal").css("display", "none");$('#screen').css("display", "none");$('#show_modal_errors').hide();$('body').css({"overflow":"auto"});});
+    $('.btn_cancel').click(function(){$("#create_credit_card_modal").css("display", "none");$('#screen').css("display", "none");$('#show_modal_errors').hide();$('body').css({"overflow":"auto"});});
+}
+
+var delete_credit_card = function(){
+	$('#screen').css({	"display": "block", opacity: 0.7, "width": "10000px", "height": "10000px"});
+	$('body').css({"overflow":"hidden"});
+	$('#delete_credit_card_modal').fadeIn(600);
+    $('.close').click(function(){$("#delete_credit_card_modal").css("display", "none");$('#screen').css("display", "none");$('body').css({"overflow":"auto"});});
+    $('.btn_cancel').click(function(){$("#delete_credit_card_modal").css("display", "none");$('#screen').css("display", "none");$('body').css({"overflow":"auto"});});
+}
+
+var add_credit_card = function(){
+	$('#screen').css({	"display": "block", opacity: 0.7, "width": "10000px", "height": "10000px"});
+	$('body').css({"overflow":"hidden"});
+	$('#add_credit_card_to_organization_modal').fadeIn(600);
+    $('.close').click(function(){$("#add_credit_card_to_organization_modal").css("display", "none");$('#screen').css("display", "none");$('body').css({"overflow":"auto"});});
+    $('.btn_cancel').click(function(){$("#add_credit_card_to_organization_modal").css("display", "none");$('#screen').css("display", "none");$('body').css({"overflow":"auto"});});
 }
 
 
 
 $('#create_credit_card').click(create_credit_card);
-
+$('.btn_delete_credit_card').click(delete_credit_card);
+$('.add_credit_card_btn').click(add_credit_card);
 
 
 
@@ -22,10 +39,8 @@ $(function() {
 
         var city = $('input[name=city]').val();
         var state = $('input[name=state]').val();
-        var zip = $('input[name=zip]').val();
 
         var card_number = $('input[name=card_number]').val();
-        var cvv = $('input[name=cvv]').val();
 
         var card_t = document.getElementById("credit_card_type");
         var exp_year = document.getElementById("credit_card_expiration_year");
@@ -51,11 +66,6 @@ $(function() {
             $('#show_modal_errors').hide().text("Please select a card type!").fadeIn(200);
         }
 
-        if(!cvv.match(/^\d+$/)) {
-            event.preventDefault();
-            $('#show_modal_errors').hide().text("Please enter you're card cvv code! ( 3/4 digit )").fadeIn(200);
-        }
-
         if(!card_number.match(/^\d{16}$/)) {
             event.preventDefault();
             $('#show_modal_errors').hide().text("Please enter you're valid card number! ( 16 digits)").fadeIn(200);
@@ -64,11 +74,6 @@ $(function() {
         if(country.text == '-select-') {
             event.preventDefault();
             $('#show_modal_errors').hide().text("Please enter you're country!").fadeIn(200);
-        }
-
-        if(!zip.match(/^\d{5}$/)) {
-            event.preventDefault();
-            $('#show_modal_errors').hide().text("Please enter you're zip code! ( 5 digit )").fadeIn(200);
         }
 
         if(state.length < 2 || state == '... state') {

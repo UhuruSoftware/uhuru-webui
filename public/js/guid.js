@@ -35,6 +35,14 @@ function prepareToDeleteService(obj)
     document.getElementById('this_service_name').innerHTML = obj.id;
 }
 
+function prepareToDeleteCreditCard(obj)
+{
+    document.getElementById('pass_credit_card_id').value = obj.title;
+}
+function prepareToAddCreditCard(obj)
+{
+    document.getElementById('pass_credit_card_add_id').value = obj.title;
+}
 
 
 
