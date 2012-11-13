@@ -171,8 +171,9 @@ module Uhuru::Webui
 
 
       credit_cards_list = credit_cards_Obj.read_all()
+      org_credit_card = credit_cards_Obj.get_organization_credit_card(session[:currentOrganization])
 
-      erb :organization, {:locals => {:credit_cards_list => credit_cards_list, :spaces_list => spaces_list, :spaces_count => spaces_list.count, :members_count => owners_list.count + developers_list.count + managers_list.count, :owners_list => owners_list, :developers_list => developers_list, :managers_list => managers_list}, :layout => :layout_user}
+      erb :organization, {:locals => {:credit_cards_list => credit_cards_list, :org_credit_card => org_credit_card, :spaces_list => spaces_list, :spaces_count => spaces_list.count, :members_count => owners_list.count + developers_list.count + managers_list.count, :owners_list => owners_list, :developers_list => developers_list, :managers_list => managers_list}, :layout => :layout_user}
     end
 
     get '/space:space_guid' do
@@ -261,24 +262,26 @@ module Uhuru::Webui
 
 
       credit_cards_Obj = CreditCards.new(session[:token], @cf_target)
-      puts credit_cards_Obj.create(session[:user_guid], session[:username], @first_name, @last_name, @card_number, @expiration_year, @expiration_month, @card_type, @cvv)
+      credit_cards_Obj.create(session[:user_guid], session[:username], @first_name, @last_name, @card_number, @expiration_year, @expiration_month, @card_type, @cvv)
 
       redirect "/credit"
     end
 
     post '/addCreditCardToOrganization' do
-      puts @credit_card_id = params[:cardId]
+       @credit_card_id = params[:cardId]
+       credit_cards_Obj = CreditCards.new(session[:token], @cf_target)
+       credit_cards_Obj.add_organization_credit_card(session[:currentOrganization], @credit_card_id)
+       puts @credit_card_id
 
       redirect '/organization' + session[:currentOrganization]
     end
 
     post '/deleteClickedCreditCard' do
       @credit_card_id = params[:credit_card_id]
-      puts @credit_card_id
-
 
       credit_cards_Obj = CreditCards.new(session[:token], @cf_target)
-      #credit_cards_Obj.delete_by_id(@credit_card_id)
+      credit_cards_Obj.delete_by_id(@credit_card_id)
+      puts @credit_card_id
 
       redirect '/credit'
     end
