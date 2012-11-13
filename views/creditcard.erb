@@ -13,7 +13,7 @@
         <% my_credit_cards.each do |card| %>
             <li class="tile_invisible">
                 <ul class="custom_list">
-                    <li class="tile_credit_card_name" title="xxxx-xxxx-xxxx-1234">
+                    <li class="tile_credit_card_name credit_card_cursor" title="xxxx-xxxx-xxxx-1234">
                       <span class="credit_card_name"><%= card.first_name + '' + card.last_name %></span>
                       <a href="#"><input type="button" class="small_trash btn_delete_credit_card" title="<%= card.name %>" id="<%= card.guid %>" onmousemove="prepareToDeleteOrganization(this)" /></a>
                     </li>
@@ -32,7 +32,7 @@
 
             <li class="tile_invisible">
                 <ul class="custom_list">
-                    <li class="tile_credit_card_name" title="xxxx-xxxx-xxxx-1234">
+                    <li class="tile_credit_card_name credit_card_cursor" title="xxxx-xxxx-xxxx-1234">
                       <span class="credit_card_name"></span>
                       <a href="#"><input type="button" class="small_trash btn_delete_credit_card" title="test" onmousemove="prepareToDeleteCreditCard(this)" /></a>
                     </li>

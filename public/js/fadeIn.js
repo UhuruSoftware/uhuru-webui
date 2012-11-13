@@ -204,7 +204,7 @@ $('.create_app_header_tab_left').click(function(){
     $('#create_app_templates').hide();
     $('#create_app_templates_list').hide();
 
-    $(this).css('border-bottom', '2px solid #ffffff');
+    $(this).css('border-bottom', '1px solid #ffffff');
     $('.create_app_header_tab_right').css('border-bottom', '0 solid #ffffff');
 
     $('#create_app_samples_list').fadeIn(600);
@@ -215,7 +215,7 @@ $('.create_app_header_tab_right').click(function(){
     $('#create_app_samples').hide();
     $('#create_app_samples_list').hide();
 
-    $(this).css('border-bottom', '2px solid #ffffff');
+    $(this).css('border-bottom', '1px solid #ffffff');
     $('.create_app_header_tab_left').css('border-bottom', '0 solid #ffffff');
 
     $('#create_app_templates_list').fadeIn(600);

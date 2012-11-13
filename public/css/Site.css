@@ -111,7 +111,7 @@ src: url('segoe_ui.ttf'); /* IE9+ */
     font-size: 16px;
     letter-spacing: 0.01em;
     background-color: #000000;
-    height: 30px;
+    height: 26px;
     border: 0;
     float: right;
     text-align: center;
@@ -130,7 +130,7 @@ src: url('segoe_ui.ttf'); /* IE9+ */
     letter-spacing: 0.01em;
     background-color: #000000;
     border: 0;
-    height: 30px;
+    height: 26px;
     float: right;
     cursor: pointer;
     text-align: center;
@@ -1130,38 +1130,45 @@ textarea
 
 #app_Magento
 {
-    background-image:url("../images/app_magento.png");
+    background-image:url("../images/magento_logo.png");
     background-repeat: no-repeat;
+    background-position: center center;
 }
 #app_Wordpress
 {
-    background-image:url("../images/app_wordpress.png");
+    background-image:url("../images/wordpress_logo.png");
     background-repeat: no-repeat;
+    background-position: center center;
 }
 #app_SugarCRM
 {
-    background-image:url("../images/app_sugarcrm.png");
+    background-image:url("../images/sugarcrm_logo.png");
     background-repeat: no-repeat;
+    background-position: center center;
 }
 #app_Orchard
 {
-    background-image:url("../images/app_orchard.png");
+    background-image:url("../images/orchard_logo.png");
     background-repeat: no-repeat;
+    background-position: center center;
 }
 #app_Umbraco
 {
-    background-image:url("../images/app_umbraco.png");
+    background-image:url("../images/umbraco_logo.png");
     background-repeat: no-repeat;
+    background-position: center center;
 }
 #app_Joomla
 {
-    background-image:url("../images/app_joomla.png");
+    background-image:url("../images/joomla_logo.png");
     background-repeat: no-repeat;
+    background-position: center center;
 }
 #app_Drupal
 {
-    background-image:url("../images/app_drupal.png");
+    background-image:url("../images/drupal_logo.png");
     background-repeat: no-repeat;
+    background-position: center center;
 }
 .app_name_span
 {

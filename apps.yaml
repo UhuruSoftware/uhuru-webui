@@ -77,5 +77,65 @@ umbraco:
   download-location: "/path/umbraco"
 
 
+wordpress:
+  id: app_wordpress
+  name: Wordpress
+  framework:
+    info:
+      description: a .net cms
+      mem: 128
+      exec: java
+    name: .net
+  runtime: php
+  memory: 128
+  url: ${name}.${target-base}
+  instances: 5
+  services:
+      type: mssql
+  description: this is the umbraco CMS
+  git-hub-link: "git hub path for umbraco"
+  download-location: "/path/umbraco"
+
+
+magento:
+  id: app_magento
+  name: Magento
+  framework:
+    info:
+      description: a .net cms
+      mem: 128
+      exec: node08
+    name: .net
+  runtime: iis
+  memory: 128
+  url: ${name}.${target-base}
+  instances: 5
+  services:
+      type: mssql
+  description: this is the umbraco CMS
+  git-hub-link: "git hub path for umbraco"
+  download-location: "/path/umbraco"
+
+
+sugarcrm:
+  id: app_sugarCRM
+  name: SugarCRM
+  framework:
+    info:
+      description: a .net cms
+      mem: 128
+      exec: ruby08
+    name: .net
+  runtime: iis
+  memory: 128
+  url: ${name}.${target-base}
+  instances: 5
+  services:
+      type: mssql
+  description: this is the umbraco CMS
+  git-hub-link: "git hub path for umbraco"
+  download-location: "/path/umbraco"
+
+
 
 

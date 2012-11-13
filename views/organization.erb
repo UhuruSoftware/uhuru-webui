@@ -109,10 +109,10 @@
                 <div id="billings" class="tab-pane">
                     <ul class="tile_list" style="border-bottom: 1px solid #0e4769; padding-bottom: 50px; margin-top: 30px;">
 
-                        <% if credit_cards_list.count == 1 %>
+                        <% if credit_cards_list.count == 0 %>
                             <li class="tile_invisible">
                                 <ul class="custom_list">
-                                    <li class="tile_credit_card_name_unused" title="xxxx-xxxx-xxxx-1234">
+                                    <li class="tile_credit_card_name_unused credit_card_cursor" title="xxxx-xxxx-xxxx-1234">
                                        <span class="credit_card_name">None</span>
                                     </li>
 
@@ -128,8 +128,8 @@
                         <% else %>
                             <li class="tile_invisible">
                                 <ul class="custom_list">
-                                    <li class="tile_credit_card_name">
-                                       <a href="#" class="link_tiles_org add_credit_card_btn" title="test"><span class="credit_card_name">xxx-xxx-xxx-xxx-132</span></a>
+                                    <li class="tile_credit_card_name credit_card_cursor">
+                                       <a href="#" class="link_tiles_org" title="test"><span class="credit_card_name">xxx-xxx-xxx-xxx-132</span></a>
                                     </li>
 
                                     <li class="tile_credit_card_logo">

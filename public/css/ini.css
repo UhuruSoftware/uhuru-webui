@@ -39,13 +39,14 @@ h1, h2, h3, h4, h5, h6
 {
     width: 500px;
     height: 50px;
+    margin-right: 100px;
     float: right;
     text-align: right;
 }
 .head_link
 {
     float: right;
-    margin-right: 10px;
+    margin-right: 30px;
     font-family: 'Segoe UI Light', 'Open Sans', Verdana, Arial, Helvetica, sans-serif;
     font-weight: 200;
     font-size: 14pt;
@@ -55,7 +56,7 @@ h1, h2, h3, h4, h5, h6
 }
 .credit_link
 {
-    margin-right: 50px;
+    margin-right: 30px;
 }
 
 
@@ -696,6 +697,7 @@ select option
     border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
     border-bottom-color: #B3B3B3;
     float: right;
+    height: 18px;
 }
 
 
@@ -1146,8 +1148,8 @@ h2 .count
     cursor: pointer;
     padding: 0;
     margin-top: 0;
-    margin-right: 20px;
-    margin-left: 20px;
+    margin-right: 10px;
+    margin-left: 10px;
 }
 
 .create_app_header_tab_left
@@ -1196,8 +1198,10 @@ h2 .count
 {
     padding: 0;
     color: white;
-    margin-bottom: 20px;
+    margin-bottom: 5px;
+    padding-left: 5px;
     cursor: pointer;
+    text-align: left;
 }
 
 .create_app_side_list_templates_li:hover,
@@ -1212,7 +1216,6 @@ h2 .count
     width: 488px;
     height: 250px;
     display: none;
-    border-bottom: 1px solid #ffffff;
 }
 #create_app_templates
 {
@@ -1227,9 +1230,9 @@ h2 .count
     margin-top: 10px;
     width: 90px;
     height: 70px;
-    background-image: url("../images/tile_small_purple.png");
+    background-image: url("../images/tile_small_blue.png");
     background-repeat: repeat-y;
-    border: 1px solid #7452c6;
+    border: 1px solid #4399f1;
     position: relative;
     overflow: hidden;
     line-height: 18px;
@@ -1240,7 +1243,6 @@ h2 .count
 {
     position: relative;
     display: block;
-    border-top: 1px solid #ffffff;
     height: 100px;
     margin-top: 30px;
 }
@@ -1248,23 +1250,29 @@ h2 .count
 .create_app_download_btn,
 .create_app_push_btn
 {
-    padding-top: 1px;
-    padding-bottom: 1px;
-    padding-left: 3px;
-    padding-right: 3px;
     background-color: #000000;
     border: 0 solid #ffffff;
     cursor: pointer;
     float: right;
 
-
     font-family: 'Segoe UI Light', 'Open Sans', Verdana, Arial, Helvetica, sans-serif;
     font-weight: 100;
-    font-size: 8px;
     letter-spacing: 0.01em;
     color: #ffffff;
-    line-height: 20px;
     margin: 0;
+
+    background-image: url("../images/disk_16px.png");
+    background-position: 5% center;
+    background-repeat: no-repeat;
+    display: block;
+    padding: 4px 10px 4px;
+    margin-bottom: 0;
+    font-size: 13px;
+    line-height: 18px;
+    text-align: left;
+    vertical-align: middle;
+    height: 26px;
+    padding-left: 40px;
 }
 
 .create_app_tip_paragraph
@@ -1274,8 +1282,10 @@ h2 .count
 
 .create_app_push_btn
 {
+    background-image: url("../images/upload_24px.png");
+    background-position: 5% center;
+    background-repeat: no-repeat;
     float: left;
-    line-height: 25px;
     margin: 0 0 0 10px;
 }
 
@@ -1283,7 +1293,6 @@ h2 .count
 {
     line-height: 25px;
     float: left;
-    margin-left: 5px;
     margin-top: 0;
     margin-left: 0;
     width: 200px;
@@ -2318,7 +2327,7 @@ h4
     letter-spacing: 0.01em;
     color: #ffffff;
     height: 50px;
-    margin: 0;
+    margin: 0 0 0 5px;
     float: left;
     line-height: 50px;
 }
@@ -2371,7 +2380,7 @@ h4
 #current_user
 {
     position: absolute;
-    right: -105px;
+    right: -10px;
     line-height: 50px;
     width: 120px;
     height: 50px;
@@ -2384,7 +2393,7 @@ h4
     border-right: 1px solid #187EBC;
     background-color: #0E4769;
     z-index: 3;
-    right: -95px;
+    right: 0;
     height: 100px;
     width: 300px;
     top: 50px;
@@ -2452,6 +2461,11 @@ h4
     padding: 1px;
     float: left;
     line-height: 50px;
+}
+
+.credit_card_cursor
+{
+    cursor: auto !important;
 }
 
 #404error_div,
