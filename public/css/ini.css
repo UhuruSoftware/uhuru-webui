@@ -681,16 +681,18 @@ select option
 .btn {
 
     border: 0;
-    border-radius: 0;
-    box-shadow: 0 0 0;
-    background-image: none;
     background-color: #ccc;
+    background-image: url("../images/btn_x.png");
+    background-repeat: no-repeat;
+    background-position: 5% center;
     display: block;
-    padding: 4px 10px 4px;
+    padding: 4px 10px 4px 30px;
     margin-bottom: 0;
+    margin-right: 25px;
     font-size: 13px;
     line-height: 18px;
     color: #333;
+    font-weight: 800;
     text-align: center;
     vertical-align: middle;
     cursor: pointer;
@@ -709,8 +711,12 @@ select option
 .btn-success
 {
     background-color: #000000;
+    background-image: url("../images/btn_checkmark.png");
+    background-repeat: no-repeat;
+    background-position: 5% center;
     color: #ffffff;
     height: 26px;
+    padding-left: 35px;
 }
 
 .btn-success:hover
@@ -721,6 +727,9 @@ select option
 .btn-danger
 {
     background-color: #000000;
+    background-image: url("../images/btn_exclamation.png");
+    background-repeat: no-repeat;
+    background-position: 5% center;
     color: #ffffff;
     float: right;
     margin-left: 3px;
@@ -1272,7 +1281,7 @@ h2 .count
     text-align: left;
     vertical-align: middle;
     height: 26px;
-    padding-left: 40px;
+    padding-left: 35px;
 }
 
 .create_app_tip_paragraph
@@ -1941,7 +1950,7 @@ h2 .count
     position: absolute;
     margin: 0px;
     bottom: 10px;
-    right: 65px;
+    right: 90px;
 }
 
 
@@ -1959,7 +1968,7 @@ h2 .count
     position: absolute;
     margin: 0px;
     bottom: 10px;
-    right: 45px;
+    right: 70px;
 }
 
 .btn_right_bind /*THIS ALSO CONTAINS CREATE AND DELETE APP MODAL*/
@@ -1975,7 +1984,7 @@ h2 .count
     position: absolute;
     margin: 0px;
     bottom: 10px;
-    right: 65px;
+    right: 90px;
 }
 
 .btn_right_unbind /*THIS ALSO CONTAINS CREATE AND DELETE APP MODAL*/
@@ -1991,7 +2000,7 @@ h2 .count
     position: absolute;
     margin: 0px;
     bottom: 10px;
-    right: 65px;
+    right: 90px;
 }
 
 

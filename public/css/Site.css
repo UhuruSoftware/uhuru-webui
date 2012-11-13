@@ -111,13 +111,16 @@ src: url('segoe_ui.ttf'); /* IE9+ */
     font-size: 16px;
     letter-spacing: 0.01em;
     background-color: #000000;
+    background-image: url("../images/btn_checkmark.png");
+    background-repeat: no-repeat;
+    background-position: 5% center;
     height: 26px;
     border: 0;
     float: right;
-    text-align: center;
+    text-align: right;
     cursor: pointer;
-    padding-left: 20px;
-    padding-right: 20px;
+    padding-left: 35px;
+    padding-right: 10px;
 }
 
 #login_btn
@@ -1101,7 +1104,6 @@ textarea
 .btn.login, .btn.logout
 {
     text-align: left;
-    width: 80px;
 }
 
 .validationMessage

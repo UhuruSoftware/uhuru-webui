@@ -287,7 +287,7 @@
         <br />
         <p>
             <strong>
-                WARNING!!! All applications and services in this space will be DELETED!!! This action cannot be reversed.
+                WARNING! All applications and services in this space will be deleted! This action cannot be reversed.
             </strong>
         </p>
     </div>
@@ -295,7 +295,7 @@
         <div class="button_case_delete_organization_and_space">
             <a href="#" class="btn btn_right_delete_organization_and_space" id="cancel_b_d_space">No</a>
             <form action="/deleteClickedSpace" method="post">
-                <input type="submit" class="btn btn-danger btn_left_delete_organization_and_space white_btn_text" id="b_d_space" />
+                <input type="submit" value="Delete" class="btn btn-danger btn_left_delete_organization_and_space white_btn_text" id="b_d_space" />
                 <input type="text" id="pass_guid" name="spaceGuid" style="display: none;" />
                 <p class="hidden_modal_messages" id="p_d_space">Your space is being removed...</p>
             </form>
@@ -321,7 +321,7 @@
             <a href="#" class="btn btn_right_delete_organization_and_space">No</a>
             <form action="/deleteUser" method="post">
                 <input type="text" class="blank_input" id="pass_user_guid" value="" name="thisUser"/>
-                <input type="submit" class="btn btn-danger btn_left_delete_organization_and_space white_btn_text" value="Yes"/>
+                <input type="submit" class="btn btn-danger btn_left_delete_organization_and_space white_btn_text" value="Delete"/>
             </form>
         </div>
 
@@ -342,7 +342,7 @@
         <br />
         <p>
             <strong>
-                WARNING!!! All Spaces, applications and services in this organization will be DELETED!!! This action cannot be reversed.
+                WARNING! All Spaces, applications and services in this organization will be deleted! This action cannot be reversed.
             </strong>
         </p>
     </div>
@@ -350,7 +350,7 @@
             <div class="button_case_delete_organization_and_space">
                 <a href="#" class="btn btn_right_delete_organization_and_space" id="cancel_b_d_organization">No</a>
                 <form action="/deleteCurrentOrganization" method="post">
-                    <input type="submit" class="btn btn-danger btn_left_delete_organization_and_space white_btn_text" id="b_d_organization" />
+                    <input type="submit" value="Delete" class="btn btn-danger btn_left_delete_organization_and_space white_btn_text" id="b_d_organization" />
                     <p class="hidden_modal_messages" id="p_d_organization">Your organization is being removed...</p>
                 </form>
             </div>

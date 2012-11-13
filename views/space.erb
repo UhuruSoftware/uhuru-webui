@@ -237,7 +237,7 @@
         <br />
         <p>
             <strong>
-                WARNING!!! All applications and services in this space will be DELETED!!! This action cannot be reversed.
+                WARNING! All applications and services in this space will be deleted! This action cannot be reversed.
             </strong>
         </p>
     </div>
@@ -245,7 +245,7 @@
         <div class="button_case_delete_organization_and_space">
             <a href="#" class="btn btn_right_delete_organization_and_space" id="cancel_b_d_space">No</a>
             <form action="/deleteCurrentSpace" method="post">
-                <input type="submit" class="btn btn-danger btn_left_delete_organization_and_space white_btn_text" />
+                <input type="submit" value="Delete" class="btn btn-danger btn_left_delete_organization_and_space white_btn_text" />
                 <p class="hidden_modal_messages" id="p_d_space">Your space is being removed...</p>
             </form>
         </div>
@@ -359,7 +359,7 @@
         <div class="button_case_delete_organization_and_space">
             <a href="#" class="btn btn_right_delete_organization_and_space">No</a>
             <form action="/deleteClickedApp" method="post">
-                <input type="submit" value="Yes" class="btn btn-danger btn_left_delete_organization_and_space white_btn_text" />
+                <input type="submit" value="Delete" class="btn btn-danger btn_left_delete_organization_and_space white_btn_text" />
                 <input type="text" id="pass_app" name="appGuid" class="blank_input" />
             </form>
         </div>
@@ -395,7 +395,7 @@
 
           <form action="/createService" method="post">
                 <input type="text" id="new_service_name" name="serviceName" class="blank_input"/>
-                <input type="submit" value="Create Service" class="btn btn-success btn_left_create_organization_and_space white_btn_text" />
+                <input type="submit" value="Create" class="btn btn-success btn_left_create_organization_and_space white_btn_text" />
           </form>
 
         </div>
@@ -417,7 +417,7 @@
         <div class="button_case_delete_organization_and_space">
             <a href="#" class="btn btn_right_delete_organization_and_space">No</a>
             <form action="/deleteClickedService" method="post">
-                <input type="submit" value="Yes" class="btn btn-danger btn_left_delete_organization_and_space white_btn_text" />
+                <input type="submit" value="Delete" class="btn btn-danger btn_left_delete_organization_and_space white_btn_text" />
                 <input type="text" id="pass_service" name="serviceGuid" class="blank_input" />
             </form>
         </div>
@@ -478,7 +478,7 @@
             <input type="text" id="unbind_service_app_name" name="appName" class="blank_input" />
             <div class="button_case_create_organization_and_space">
                 <a href="#" class="btn btn_right_unbind">Cancel</a>
-                <input type="submit" value="Unbind services" class="btn btn-danger btn_left_unbind" />
+                <input type="submit" value="Unbind Service" class="btn btn-danger btn_left_unbind" />
             </div>
         </form>
     </div>
@@ -512,7 +512,7 @@
             <input type="text" id="bind_uri_app_name" name="appName" class="blank_input" />
             <div class="button_case_create_organization_and_space">
                 <a href="#" class="btn btn_right_bind">Cancel</a>
-                <input type="submit" value="Bind URI" class="btn btn-success btn_left_bind" />
+                <input type="submit" value="Bind URL" class="btn btn-success btn_left_bind" />
             </div>
         </form>
     </div>
@@ -535,7 +535,7 @@
             <input type="text" id="unbind_uri_app_name" name="appName" class="blank_input" />
             <div class="button_case_create_organization_and_space">
                 <a href="#" class="btn btn_right_unbind">Cancel</a>
-                <input type="submit" value="Unbind URI" class="btn btn-success btn_left_unbind" />
+                <input type="submit" value="Unbind URL" class="btn btn-success btn_left_unbind" />
             </div>
         </form>
     </div>
