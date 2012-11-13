@@ -52,6 +52,10 @@ class UsersSetup
     raise "#{e.inspect}"
   end
 
+  def get_admin_token
+    get_user_token(@cf_admin, @cf_pass)
+  end
+
   private
 
   def add_user(email, password, given_name, family_name)
@@ -73,7 +77,7 @@ class UsersSetup
 
       organizations_Obj = Organizations.new(admin_token, @cf_target)
       org_name = email + "'s organization"
-      org_guid = organizations_Obj.create(org_name)
+      org_guid = organizations_Obj.create(@config, org_name, user_id)
 
       users_obj = Users.new(admin_token, @cf_target)
       cfuser = users_obj.add_user_to_org_with_role(org_guid, user_id, ['owner', 'billing'])

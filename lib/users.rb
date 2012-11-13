@@ -30,12 +30,13 @@ class Users
 
     org = @client.organization(org_guid)
 
-    #user = @client.user
-    #user.guid = user_guid
+    user_exist = true
+    user = @client.users.find {|u| u.guid == user_guid}
+    unless user
+      user_exist = create_user(user_guid)
+    end
 
-    created = create_user(user_guid)
-
-    if (created)
+    if (user_exist)
 
       existing_users = org.users
       existing_users << @client.user(user_guid)

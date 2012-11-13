@@ -7,21 +7,30 @@ class CreditCards
 
   def initialize(token, target)
     @auth_token = token
-    @base_path = target + '/v2/credit_cards'
+    @base_path = target + '/v2'
     @http_client = HttpDirectClient.new
   end
 
   def read_all
     headers = {'Content-Type' => 'text/html;charset=utf-8', 'Authorization' => @auth_token}
 
-    response = @http_client.get("#{@base_path}", :headers => headers)
+    response = @http_client.get("#{@base_path}/credit_cards", :headers => headers)
     credit_card_list = []
 
     if response.request.last_response.code == '200'
       if CreditCard.valid_json?(response.body)
         JSON.parse(response.body).each do |item|
           card = item.to_hash
-          credit_card = CreditCard.from_json! card["credit_card"].to_json
+
+          #for some reason the response from ccng/chargify sometimes has credit_card key and under all the other keys,
+          #and sometimes it doesn't. next lines should work for both cases
+          if card.has_key?("credit_card")
+            card = card["credit_card"].to_json
+          else
+            card = card.to_json
+          end
+
+          credit_card = CreditCard.from_json! card
           credit_card_list << credit_card
         end
       end
@@ -34,12 +43,13 @@ class CreditCards
 
   def read_card_by_id(card_id)
     headers = {'Content-Type' => 'text/html;charset=utf-8', 'Authorization' => @auth_token}
-    response = HttpDirectClient.get("#{@base_path}/#{card_id}", :headers => headers)
+    response = HttpDirectClient.get("#{@base_path}/credit_cards/#{card_id}", :headers => headers)
 
     if response.request.last_response.code == '200'
       if CreditCard.valid_json?(response.body)
-        card = item.to_hash
-        return CreditCard.from_json! card["credit_card"].to_json
+        return CreditCard.from_json! response.body
+      else
+        return response.body
       end
     end
 
@@ -50,11 +60,14 @@ class CreditCards
   def create(user_guid, user_email, first_name, last_name, card_number, expiration_year, expiration_month, card_type, cvv, address = nil, address2 = nil, city = nil, state = nil, zip = nil, country = nil)
     headers = {'Content-Type' => 'application/json', 'Authorization' => @auth_token}
 
-    attributes = {:reference => user_guid, :email => user_email, :first_name => first_name, :last_name => last_name, :full_number => '1', :expiration_year => expiration_year,
+    # for testing purpose take only last character, to be removed when working with real credit cards
+    card_number = card_number[-1, 1]
+
+    attributes = {:reference => user_guid, :email => user_email, :first_name => first_name, :last_name => last_name, :full_number => card_number, :expiration_year => expiration_year,
                   :expiration_month => expiration_month, :card_type => card_type, :cvv => cvv, :billing_address => address, :billing_address_2 => address2, :billing_city => city,
                   :billing_state => state, :billing_zip => zip, :billing_country => country}
 
-    response = HttpDirectClient.post("#{@base_path}", :headers => headers, :body => attributes.to_json)
+    response = HttpDirectClient.post("#{@base_path}/credit_cards", :headers => headers, :body => attributes.to_json)
     return true if response.request.last_response.code == '200'
 
   rescue Exception => e
@@ -63,8 +76,39 @@ class CreditCards
 
   def delete_by_id(card_id)
     headers = {'Content-Type' => 'application/json', 'Authorization' => @auth_token}
-    response = HttpDirectClient.delete("#{@base_path}/v2/credit_cards/#{card_id}", :headers => headers)
+    response = HttpDirectClient.delete("#{@base_path}/credit_cards/#{card_id}", :headers => headers)
     return true if response.request.last_response.code == '200'
+
+  rescue Exception => e
+    raise "#{e.inspect}"
+  end
+
+  def get_organization_credit_card(org_guid)
+    headers = {'Content-Type' => 'text/html;charset=utf-8', 'Authorization' => @auth_token}
+
+    response = HttpDirectClient.get("#{@base_path}/organization_credit_cards", :headers => headers, :query => {:organization_guid => org_guid})
+
+    if response.request.last_response.code == '200'
+      body = response.body
+
+      if JSON.parse(response.body)["total_results"] > 0
+        credit_card_id = JSON.parse(response.body)["resources"][0]["entity"]["credit_card_token"]
+        puts credit_card_id
+        read_card_by_id(credit_card_id)
+      else
+        return nil
+      end
+    end
+
+  end
+
+  def add_organization_credit_card(org_guid, card_id)
+    headers = {'Content-Type' => 'application/json', 'Authorization' => @auth_token}
+
+    attributes = {:credit_card_token => card_id, :organization_guid => org_guid}
+
+    response = HttpDirectClient.post("#{@base_path}/organization_credit_cards", :headers => headers, :body => attributes.to_json)
+    return true if response.request.last_response.code == '201'
 
   rescue Exception => e
     raise "#{e.inspect}"

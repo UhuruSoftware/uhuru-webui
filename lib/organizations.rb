@@ -50,10 +50,24 @@ class Organizations
     raise "#{e.inspect}"
   end
 
-  def create(name)
+  def create(config, name, user_guid)
+
+    token = @client.token
+
+    user_setup_obj = UsersSetup.new(config)
+    admin_token = user_setup_obj.get_admin_token
+
+    # elevate user just to create organization
+    @client.token = admin_token
+
     new_org = @client.organization
     new_org.name = name
     if new_org.create!
+      users_obj = Users.new(@client.token, @client.target)
+      users_obj.add_user_to_org_with_role(new_org.guid, user_guid, ['owner', 'billing'])
+
+      # then put token back to the initial one
+      @client.token = token
       new_org.guid
     end
 

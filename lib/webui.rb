@@ -290,7 +290,7 @@ module Uhuru::Webui
       @organization_message = "Creating organization... Please wait"
 
       organizations_Obj = Organizations.new(session[:token], @cf_target)
-      organizations_Obj.create(@name)
+      organizations_Obj.create(@config, @name, session[:user_guid])
       redirect "/organizations"
     end
 
