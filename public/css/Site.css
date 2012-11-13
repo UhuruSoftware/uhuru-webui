@@ -11,8 +11,6 @@ src: url('segoe_ui.ttf'); /* IE9+ */
     src: local('Open Sans Light'), local('OpenSans-Light'), url("open_sans.woff") format('woff');
 }
 
-
-
 .splash
 {
     background-image: url("../images/clouds.png");
@@ -1124,75 +1122,46 @@ textarea
 {
     width:160px;
     height:45px;
-    background-color:#2d2d2d;
-    background-position:120px 10px;
+    background-color:#09293e;
+    background-position:0px 0px;
 	background-repeat:no-repeat;
 	margin:1px;
 }
 
-.app_tiles_download
-{
-    width:100px;
-    height:45px;
-    background-color:#2d2d2d;
-    background-image:url("../images/disk_16px.png");
-    background-position: 90% 90%;
-	background-repeat:no-repeat;
-	margin:1px;
-    cursor: pointer;
-
-    border: 0px solid white;
-    color: #ffffff;
-    text-align: left;
-    font-weight: normal;
-    padding-bottom: 10px;
-}
-
-.app_tiles_cloudpush
-{
-    width:100px;
-    height:45px;
-    background-color:#2d2d2d;
-    background-image:url("../images/upload_32.png");
-    background-position: 90% 90%;
-	background-repeat:no-repeat;
-	margin:1px;
-    cursor: pointer;
-
-    border: 0px solid white;
-    color: #ffffff;
-    text-align: left;
-    font-weight: normal;
-    padding-bottom: 10px;
-}
-
-#app_magento
+#app_Magento
 {
     background-image:url("../images/app_magento.png");
+    background-repeat: no-repeat;
 }
-#app_wordpress
+#app_Wordpress
 {
     background-image:url("../images/app_wordpress.png");
+    background-repeat: no-repeat;
 }
-#app_sugarCRM
+#app_SugarCRM
 {
     background-image:url("../images/app_sugarcrm.png");
+    background-repeat: no-repeat;
 }
-#app_orchard
+#app_Orchard
 {
     background-image:url("../images/app_orchard.png");
+    background-repeat: no-repeat;
 }
-#app_umbraco
+#app_Umbraco
 {
     background-image:url("../images/app_umbraco.png");
+    background-repeat: no-repeat;
 }
-#app_joomla
+#app_Joomla
 {
     background-image:url("../images/app_joomla.png");
+    background-repeat: no-repeat;
 }
-#app_drupal
+#app_Drupal
 {
     background-image:url("../images/app_drupal.png");
+    background-repeat: no-repeat;
 }
 .app_name_span
 {

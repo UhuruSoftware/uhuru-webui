@@ -33,8 +33,6 @@ h1, h2, h3, h4, h5, h6
     padding-left: 10px;
     padding-top: 6px;
     padding-right: 6px;
-    background-color: #187ebc;
-    /*  #187ebc-top */
 }
 
 #header_links
@@ -593,13 +591,6 @@ select option
 
 }
 
-.modal-header
-{
-    padding: 0px;
-    border-bottom: 0;
-    background-color: #e0dfdd;
-}
-
 .modal-header h3
 {
     font-weight: normal;
@@ -1132,11 +1123,45 @@ h2 .count
 
 
 
+#create_app_samples_div,
+#create_app_templates_div
+{
+}
 
+#new_app_name_table
+{
+    float: left;
+    padding: 0;
+    margin: 0;
+    width: 488px;
+    padding-bottom: 5px;
+    border-bottom: 1px solid #ffffff;
+}
 
- /*  ORGANIZATION PAGE + INNER ORGANIZATION PAGE WITH SPACES AND MEMBERS ->SPANS AND TILES<-  */                              /*  ORGANIZATION PAGE + INNER ORGANIZATION PAGE WITH SPACES AND MEMBERS ->SPANS AND TILES<-  */
+.create_app_header_tab_left,
+.create_app_header_tab_right,
+.create_app_header_tab_middle
+{
+    float: left;
+    cursor: pointer;
+    padding: 0;
+    margin-top: 0;
+    margin-right: 20px;
+    margin-left: 20px;
+}
 
+.create_app_header_tab_left
+{
+    border-bottom: 2px solid #ffffff;
+}
 
+.create_app_header_tab_left:hover,
+.create_app_header_tab_right:hover
+{
+    text-decoration: underline;
+}
+
+.create_app_side_list,
 .custom_list
 {
     list-style: none;
@@ -1149,6 +1174,125 @@ h2 .count
     display: block;
     padding: 0;
 }
+.create_app_side_list
+{
+    padding-top: 40px;
+    margin-top: 0;
+    margin-right: 5px;
+    float: left;
+    border-right: 1px solid #ffffff;
+    width: 95px;
+    height: 250px;
+    display: none;
+}
+
+#create_app_samples_list
+{
+    display: block;
+}
+
+.create_app_side_list_templates_li,
+.create_app_side_list_samples_li
+{
+    padding: 0;
+    color: white;
+    margin-bottom: 20px;
+    cursor: pointer;
+}
+
+.create_app_side_list_templates_li:hover,
+.create_app_side_list_samples_li:hover
+{
+    text-decoration: underline;
+}
+
+.create_app_side_container
+{
+    float: left;
+    width: 488px;
+    height: 250px;
+    display: none;
+    border-bottom: 1px solid #ffffff;
+}
+#create_app_templates
+{
+    display: none;
+}
+
+
+.create_app_descriptions_icon
+{
+    float: right;
+    margin-right: 1px;
+    margin-top: 10px;
+    width: 90px;
+    height: 70px;
+    background-image: url("../images/tile_small_purple.png");
+    background-repeat: repeat-y;
+    border: 1px solid #7452c6;
+    position: relative;
+    overflow: hidden;
+    line-height: 18px;
+}
+
+
+.create_app_form
+{
+    position: relative;
+    display: block;
+    border-top: 1px solid #ffffff;
+    height: 100px;
+    margin-top: 30px;
+}
+
+.create_app_download_btn,
+.create_app_push_btn
+{
+    padding-top: 1px;
+    padding-bottom: 1px;
+    padding-left: 3px;
+    padding-right: 3px;
+    background-color: #000000;
+    border: 0 solid #ffffff;
+    cursor: pointer;
+    float: right;
+
+
+    font-family: 'Segoe UI Light', 'Open Sans', Verdana, Arial, Helvetica, sans-serif;
+    font-weight: 100;
+    font-size: 8px;
+    letter-spacing: 0.01em;
+    color: #ffffff;
+    line-height: 20px;
+    margin: 0;
+}
+
+.create_app_tip_paragraph
+{
+    text-align: left;
+}
+
+.create_app_push_btn
+{
+    float: left;
+    line-height: 25px;
+    margin: 0 0 0 10px;
+}
+
+.create_app_input_box
+{
+    line-height: 25px;
+    float: left;
+    margin-left: 5px;
+    margin-top: 0;
+    margin-left: 0;
+    width: 200px;
+}
+
+
+
+
+
 
 .tile_invisible
 {
@@ -1166,6 +1310,12 @@ h2 .count
     display: list-item;
     float: left;
     list-style: none;
+}
+.create_app_tile_invisible
+{
+    float: right;
+    margin-right: 20px;
+    margin-top: 20px;
 }
 
 .tile_credit_card_name_unused,
@@ -1273,6 +1423,12 @@ h2 .count
 {
     background-image: url("../images/tile_big_red.png");
     border: 1px solid #b43051;
+}
+
+.tile_create_app_name
+{
+    background-image: url("../images/tile_big_blue.png");
+    border: 1px solid #4399f1;
 }
 
 .tile_organization_members,
@@ -2090,6 +2246,7 @@ h3
     border-bottom: 1px solid white;
 }
 
+h4,
 p,
 .app_text_p
 {
@@ -2105,6 +2262,10 @@ p,
     color: #ffffff;
 }
 
+h4
+{
+    margin-left: 5px;
+}
 
 .footer-menu li
 {
@@ -2166,13 +2327,13 @@ p,
 #add_user,
 #create_tempcta_modal
 {
-    background-color: #09293e;
+    background-color: #0e4769;
 }
 
 #create_tempcta_modal,
 #create_tempcta_modal .modal-body
 {
-    background-color: #187ebc;
+    background-color: #0e4769;
 }
 #create_tempcta_modal .modal-footer
 {
@@ -2194,6 +2355,7 @@ p,
 .credit_card_cvv
 {
     float: right;
+    margin-bottom: 5px;
 }
 .cvv_label
 {

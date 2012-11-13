@@ -4,9 +4,9 @@ joomla:
   name: Joomla
   framework:
     info:
-      description: Php Web
+      description: This is joomla cms
       mem: 512
-      exec: grails
+      exec: ruby19
     name: php
   runtime: java
   memory: 512
@@ -23,9 +23,9 @@ drupal:
   name: Drupal
   framework:
     info:
-      description: Php Web
+      description: This is drupal cms
       mem: 256
-      exec: lift
+      exec: node08
     name: php
   runtime: node08
   memory: 256
@@ -42,9 +42,9 @@ orchard:
   name: Orchard
   framework:
     info:
-      description: a .Net framework
+      description: This is orchard cms for .net
       mem: 512
-      exec: "sinatra"
+      exec: java
     name: .net
   runtime: ruby19
   memory: 128
@@ -62,9 +62,9 @@ umbraco:
   name: Umbraco
   framework:
     info:
-      description: a .Net framework
+      description: a .net cms
       mem: 128
-      exec: "/framework"
+      exec: node08
     name: .net
   runtime: iis
   memory: 128

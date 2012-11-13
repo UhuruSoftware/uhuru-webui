@@ -225,7 +225,6 @@
 </div>
 
 
-
 <div class="modal hide" id="delete_this_space_modal">
     <div class="modal-header">
         <button class="close"></button>
@@ -250,14 +249,8 @@
                 <p class="hidden_modal_messages" id="p_d_space">Your space is being removed...</p>
             </form>
         </div>
-
     </div>
 </div>
-
-
-
-
-
 
 
 <div class="modal fade hide" id="create_tempcta_modal">
@@ -266,49 +259,79 @@
         <h3>Add a new app template</h3>
     </div>
 
-    <table id="new_app_name_tablet">
-        <tbody>
-            <tr>
-                <td>
-                    <input name="user_app" type="text" id="app_name" class="modal_input_box"/>
-                </td>
-                <td style="text-align: left; color: #ffffff;">
-                    .uhurucloud.com
-                </td>
-            </tr>
-        </tbody>
-    </table>
-
     <div class="modal-body">
-            <div id="app_smallcontainer">
-                <table id="app_table">
+        <div id="app_small_container">
+            <ul class="create_app_side_list" id="create_app_templates_list">
+                <li class="create_app_side_list_templates_li">Joomla</li>
+                <li class="create_app_side_list_templates_li">Drupal</li>
+                <li class="create_app_side_list_templates_li">Orchard</li>
+                <li class="create_app_side_list_templates_li">Umbraco</li>
+            </ul>
 
-                    <% apps_names.each do |name| %>
-                      <form action="/createApp" method="post">
-                          <tr>
-                                <td>
-                                    <div class="app_tiles" id = "<%= name['id'] %>">
-                                        <span class="app_name_span"><%= name['name'] %></span>
-                                        <input type="text" value="<%= name['framework']['info']['exec'] %>" name="appFramework" class="blank_input" />
-                                        <input type="text" value="<%= name['runtime'] %>" name="appRuntime"  class="blank_input" />
-                                        <input type="text" value="<%= name['memory'] %>" name="appMemory" class="blank_input" />
-                                        <input type="text" name="appName" class="send_app_name blank_input"/>
-                                    </div>
-                                </td>
-                                <td>
-                                    <a href="<%= name['download-location'] %>">
-                                        <input type="button" value="Download" class="app_tiles_download" />
-                                    </a>
-                                </td>
-                                <td>
-                                    <input type="submit" value="Push" class="app_tiles_cloudpush" />
-                                </td>
-                           </tr>
-                      </form>
-                    <% end %>
+            <ul class="create_app_side_list" id="create_app_samples_list">
+                <li class="create_app_side_list_samples_li">Sample1</li>
+                <li class="create_app_side_list_samples_li">Sample2</li>
+                <li class="create_app_side_list_samples_li">Sample3</li>
+            </ul>
 
-                </table>
+            <table id="new_app_name_table">
+                <tbody>
+                    <tr>
+                        <td class="create_app_header_tab_left">
+                            Samples
+                            <!--<input name="user_app" type="text" id="app_name" class="modal_input_box"/>  -->
+                        </td>
+                        <td class="create_app_header_tab_middle">|</td>
+                        <td class="create_app_header_tab_right">
+                            Templates
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div id="create_app_templates">
+                <% apps_names.each do |name| %>
+                    <div class="create_app_side_container" id="<%= name['name'] %>">
+
+                          <div class="create_app_descriptions_icon">
+                              <span href="#" class="link_tiles_app" id="app_<%= name['name'] %>"></span>
+                          </div>
+
+                          <h1><%= name['name'] %></h1>
+                          <h4><%= name['framework']['info']['description'] %></h4>
+                          <br />
+
+                          <a href="<%= name['download-location'] %>">
+                              <input type="button" value="Download" class="create_app_download_btn"/>
+                          </a>
+
+
+                          <form action="/createApp" method="post" class="create_app_form">
+
+                              <p class="create_app_tip_paragraph">Deploy this app now</p>
+                              <p class="create_app_tip_paragraph">The app's URL:</p>
+
+                              <input name="user_app" type="text" id="app_name" class="modal_input_box create_app_input_box"/>
+
+                              <div id = "<%= name['id'] %>">
+                                  <span class="app_name_span blank_input"><%= name['name'] %></span>
+                                  <input type="text" value="<%= name['framework']['info']['exec'] %>" name="appFramework" class="blank_input" />
+                                  <input type="text" value="<%= name['runtime'] %>" name="appRuntime"  class="blank_input" />
+                                  <input type="text" value="<%= name['memory'] %>" name="appMemory" class="blank_input" />
+                                  <input type="text" name="appName" class="send_app_name blank_input"/>
+                              </div>
+
+                              <input type="submit" value="Push" class="create_app_push_btn"/>
+                          </form>
+                    </div>
+                <% end %>
             </div>
+
+            <div id="create_app_samples">
+                <h1 id="create_app_sample_1" style="display: none;">this is the templates div</h1>
+            </div>
+
+        </div>
     </div>
 
     <div class="modal-footer">
@@ -466,7 +489,7 @@
     </div>
     <div class="modal-body">
         <p>
-            <table id="new_app_name_table">
+            <table>
                 <tbody>
                     <tr>
                         <td>
