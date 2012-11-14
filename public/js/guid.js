@@ -37,11 +37,11 @@ function prepareToDeleteService(obj)
 
 function prepareToDeleteCreditCard(obj)
 {
-    document.getElementById('pass_credit_card_id').value = obj.title;
+    document.getElementById('pass_credit_card_id').value = obj.id;
 }
 function prepareToAddCreditCard(obj)
 {
-    document.getElementById('pass_credit_card_add_id').value = obj.title;
+    document.getElementById('pass_credit_card_add_id').value = obj.id;
 }
 
 

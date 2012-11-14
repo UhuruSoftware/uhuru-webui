@@ -169,7 +169,6 @@ module Uhuru::Webui
       developers_list = organizations_Obj.read_developers(@this_guid)
       managers_list = organizations_Obj.read_managers(@this_guid)
 
-
       credit_cards_list = credit_cards_Obj.read_all()
       org_credit_card = credit_cards_Obj.get_organization_credit_card(session[:currentOrganization])
 
