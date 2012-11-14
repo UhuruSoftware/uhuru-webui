@@ -270,8 +270,7 @@ module Uhuru::Webui
     post '/addCreditCardToOrganization' do
        @credit_card_id = params[:cardId]
        credit_cards_Obj = CreditCards.new(session[:token], @cf_target)
-       credit_cards_Obj.add_organization_credit_card(session[:currentOrganization], @credit_card_id)
-       puts @credit_card_id
+       @credit_card_org = credit_cards_Obj.add_organization_credit_card(session[:currentOrganization], @credit_card_id)
 
       redirect '/organization' + session[:currentOrganization]
     end
@@ -281,7 +280,6 @@ module Uhuru::Webui
 
       credit_cards_Obj = CreditCards.new(session[:token], @cf_target)
       credit_cards_Obj.delete_by_id(@credit_card_id)
-      puts @credit_card_id
 
       redirect '/credit'
     end

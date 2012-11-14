@@ -4,14 +4,14 @@ port: 9494
 dev-mode: true
 
 cloudfoundry:
-  cloud_controller_api: "http://api3.ccng-dev.net"
+  cloud_controller_api: "http://api.uhurusoft.org"
   client_id: "cloud_controller"
   client_secret: "cc"
   cloud_controller_admin: "sre@vmware.com"
   cloud_controller_pass: "a"
 
 uaa:
-  uaa_api: "http://uaa.ccng-dev.net"
+  uaa_api: "http://uaa.uhurusoft.org"
 
 logging:
   level: debug

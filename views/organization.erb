@@ -111,9 +111,8 @@
 
                         <% if org_credit_card == nil or org_credit_card == "You are not authorized to access this information" %>
                             <li class="tile_invisible">
-                                <%= org_credit_card %>
                                 <ul class="custom_list">
-                                    <li class="tile_credit_card_name_unused credit_card_cursor" title="xxxx-xxxx-xxxx-1234">
+                                    <li class="tile_credit_card_name_unused credit_card_cursor" title="none">
                                        <span class="credit_card_name">None</span>
                                     </li>
 
@@ -130,7 +129,7 @@
                             <li class="tile_invisible">
                                 <ul class="custom_list">
                                     <li class="tile_credit_card_name credit_card_cursor">
-                                       <a href="#" class="link_tiles_org" title="test"><span class="credit_card_name">xxx-xxx-xxx-xxx-132</span></a>
+                                       <a href="#" class="link_tiles_org" title="<%= org_credit_card %>"><span class="credit_card_name"><%= org_credit_card %></span></a>
                                     </li>
 
                                     <li class="tile_credit_card_logo">
@@ -138,8 +137,8 @@
                                     </li>
 
                                     <li class="tile_credit_card_details">
-                                        <span class="credit_card_first_name_span">First Name</span>
-                                        <span class="credit_card_last_name_span">Last Name</span>
+                                        <span class="credit_card_first_name_span"><%= org_credit_card %></span>
+                                        <span class="credit_card_last_name_span"><%= org_credit_card %></span>
                                     </li>
                                 </ul>
                             </li>
@@ -151,16 +150,16 @@
                             <li class="tile_invisible">
                                 <ul class="custom_list">
                                     <li class="tile_credit_card_name">
-                                       <a href="#" class="link_tiles_org add_credit_card_btn" title="<%= card.id %>" onclick="prepareToAddCreditCard(this);"><span class="credit_card_name">xxx-xxx-xxx-xxx-132</span></a>
+                                       <a href="#" class="link_tiles_org add_credit_card_btn" title="<%= card.id %>" onclick="prepareToAddCreditCard(this);"><span class="credit_card_name"><%= card.first_name + ' ' + card.last_name %></span></a>
                                     </li>
 
                                     <li class="tile_credit_card_logo">
-                                        <span class="link_tiles_app span_credit_card_icon_visa"></span>
+                                        <span class="link_tiles_app span_credit_card_icon_<%= card.card_type %>"></span>
                                     </li>
 
                                     <li class="tile_credit_card_details">
-                                        <span class="credit_card_first_name_span">First Name</span>
-                                        <span class="credit_card_last_name_span">Last Name</span>
+                                        <span class="credit_card_first_name_span"><%= card.first_name %></span>
+                                        <span class="credit_card_last_name_span"><%= card.last_name %></span>
                                     </li>
                                 </ul>
                             </li>
