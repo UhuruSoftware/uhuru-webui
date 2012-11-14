@@ -18,11 +18,6 @@
 
 //THIS LOADS THE NEW TEMP AP NAME TO BE SENT ON POST "/"
 
-$('#create_tempcta_modal').mousemove(function(){
-    var txt=$('input:text[name=user_app]').val();
-    $('input:text[name=appName]').val(txt);
-});
-
 
 $('[placeholder]').focus(function() {
   var input = $(this);

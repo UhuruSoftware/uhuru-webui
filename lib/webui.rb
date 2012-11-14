@@ -382,17 +382,13 @@ module Uhuru::Webui
       @framework = params[:appFramework]
       @instance = 1
       @memory = params[:appMemory]
-
-      @domain = "ccng-dev.net"
-      @path = "/home/ubuntu/Desktop/rubytest"
+      @path = params[:appPath]
+      @domain = params[:appDomain]
+      @plan = params[:appPlan]
 
       organizations_Obj = Organizations.new(session[:token], @cf_target)
       spaces_Obj = Spaces.new(session[:token], @cf_target)
       apps_obj = Applications.new(session[:token], @cf_target)
-
-
-      @plan = "d85b0ad5-02d3-49e7-8bcb-19057a847bf7"
-
       apps_obj.create(session[:currentOrganization], session[:currentSpace], @name, @runtime, @framework, @instance, @memory.to_i, @domain, @path, @plan)
       redirect "/space" + session[:currentSpace]
     end

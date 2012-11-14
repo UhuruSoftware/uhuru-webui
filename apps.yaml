@@ -6,17 +6,19 @@ joomla:
     info:
       description: This is joomla cms
       mem: 512
-      exec: ruby19
+      exec: sinatra
     name: php
-  runtime: java
+  runtime: ruby19
   memory: 512
   url: ${name}.${target-base}
   instances: 5
   services:
       type: mssql
+      plan: d85b0ad5-02d3-49e7-8bcb-19057a847bf7
   description: Joomla CMS
   git-hub-link: "git hub path for joomla"
-  download-location: "/path/joomla"
+  path: "/home/ubuntu/Desktop/rubytest"
+  domain: "uhurusoft.org"
 
 drupal:
   id: app_drupal
@@ -25,17 +27,19 @@ drupal:
     info:
       description: This is drupal cms
       mem: 256
-      exec: node08
+      exec: sinatra
     name: php
-  runtime: node08
+  runtime: ruby19
   memory: 256
   url: ${name}.${target-base}
   instances: 5
   services:
       type: mssql
+      plan: d85b0ad5-02d3-49e7-8bcb-19057a847bf7
   description: drupal CMS
   git-hub-link: "git hub path for drupal"
-  download-location: "/path/drupal"
+  path: "/home/ubuntu/Desktop/rubytest"
+  domain: "uhurusoft.org"
 
 orchard:
   id: app_orchard
@@ -52,9 +56,11 @@ orchard:
   instances: 5
   services:
       type: mssql
+      plan: d85b0ad5-02d3-49e7-8bcb-19057a847bf7
   description: this is orchard CMS
   git-hub-link: "git hub path for orchard"
-  download-location: "/path/orchard"
+  path: "/home/ubuntu/Desktop/rubytest"
+  domain: "uhurusoft.org"
 
 
 umbraco:
@@ -72,9 +78,11 @@ umbraco:
   instances: 5
   services:
       type: mssql
+      plan: d85b0ad5-02d3-49e7-8bcb-19057a847bf7
   description: this is the umbraco CMS
   git-hub-link: "git hub path for umbraco"
-  download-location: "/path/umbraco"
+  path: "/home/ubuntu/Desktop/rubytest"
+  domain: "uhurusoft.org"
 
 
 wordpress:
@@ -92,9 +100,11 @@ wordpress:
   instances: 5
   services:
       type: mssql
+      plan: d85b0ad5-02d3-49e7-8bcb-19057a847bf7
   description: this is the umbraco CMS
   git-hub-link: "git hub path for umbraco"
-  download-location: "/path/umbraco"
+  path: "/home/ubuntu/Desktop/rubytest"
+  domain: "uhurusoft.org"
 
 
 magento:
@@ -112,9 +122,11 @@ magento:
   instances: 5
   services:
       type: mssql
+      plan: d85b0ad5-02d3-49e7-8bcb-19057a847bf7
   description: this is the umbraco CMS
   git-hub-link: "git hub path for umbraco"
-  download-location: "/path/umbraco"
+  path: "/home/ubuntu/Desktop/rubytest"
+  domain: "uhurusoft.org"
 
 
 sugarcrm:
@@ -132,9 +144,11 @@ sugarcrm:
   instances: 5
   services:
       type: mssql
+      plan: d85b0ad5-02d3-49e7-8bcb-19057a847bf7
   description: this is the umbraco CMS
   git-hub-link: "git hub path for umbraco"
-  download-location: "/path/umbraco"
+  path: "/home/ubuntu/Desktop/rubytest"
+  domain: "uhurusoft.org"
 
 
 

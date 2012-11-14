@@ -304,7 +304,7 @@
                           <h4><%= name['framework']['info']['description'] %></h4>
                           <br />
 
-                          <a href="<%= name['download-location'] %>">
+                          <a href="<%= name['path'] %>">
                               <input type="button" value="Download" class="create_app_download_btn"/>
                           </a>
 
@@ -314,14 +314,17 @@
                               <p class="create_app_tip_paragraph">Deploy this app now</p>
                               <p class="create_app_tip_paragraph">The app's URL:</p>
 
-                              <input name="user_app" type="text" id="app_name" class="modal_input_box create_app_input_box"/>
 
                               <div id = "<%= name['id'] %>">
                                   <span class="app_name_span blank_input"><%= name['name'] %></span>
                                   <input type="text" value="<%= name['framework']['info']['exec'] %>" name="appFramework" class="blank_input" />
                                   <input type="text" value="<%= name['runtime'] %>" name="appRuntime"  class="blank_input" />
                                   <input type="text" value="<%= name['memory'] %>" name="appMemory" class="blank_input" />
-                                  <input type="text" name="appName" class="send_app_name blank_input"/>
+                                  <input type="text" value="<%= name['path'] %>" name="appPath" class="blank_input" />
+                                  <input type="text" value="<%= name['domain'] %>" name="appDomain" class="blank_input" />
+                                  <input type="text" value="<%= name['services']['plan'] %>" name="appPlan" class="blank_input" />
+
+                                  <input type="text" name="appName" id="app_name" class="modal_input_box create_app_input_box"/>
                               </div>
 
                               <input type="submit" value="Push" class="create_app_push_btn"/>
@@ -331,7 +334,7 @@
             </div>
 
             <div id="create_app_samples">
-                <h1 id="create_app_sample_1" style="display: none;">this is the templates div</h1>
+                <h1 id="create_app_sample_1" style="display: none;">This is the templates tab, and it is not ready yet!</h1>
             </div>
 
         </div>
