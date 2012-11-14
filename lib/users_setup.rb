@@ -87,9 +87,9 @@ class UsersSetup
     end
 
   rescue Exception => e
-    uaac.delete_by_name(email) if user != nil
-    organizations_Obj.delete(org_guid) if org_guid != nil
-    users_obj.delete(user_id) if cfuser
+    #uaac.delete_by_name(email) if user != nil
+    #organizations_Obj.delete(org_guid) if org_guid != nil
+    #users_obj.delete(user_id) if cfuser
 
     raise "#{e.inspect}"
   end

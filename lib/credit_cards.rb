@@ -15,6 +15,7 @@ class CreditCards
     headers = {'Content-Type' => 'text/html;charset=utf-8', 'Authorization' => @auth_token}
 
     response = @http_client.get("#{@base_path}/credit_cards", :headers => headers)
+
     credit_card_list = []
 
     if response.request.last_response.code == '200'
@@ -25,13 +26,25 @@ class CreditCards
           #for some reason the response from ccng/chargify sometimes has credit_card key and under all the other keys,
           #and sometimes it doesn't. next lines should work for both cases
           if card.has_key?("credit_card")
-            card = card["credit_card"].to_json
+            credit_card = JSON.parse(card["credit_card"].to_json)
           else
-            card = card.to_json
+            credit_card = JSON.parse(card.to_json)
           end
 
-          credit_card = CreditCard.from_json! card
-          credit_card_list << credit_card
+          if card.has_key?("id")
+            subscription_id = card["id"]
+          else
+            raise NotFound + "Credit card with no valid subscription"
+          end
+
+          card = CreditCard.new(subscription_id, credit_card["first_name"], credit_card["last_name"], credit_card["masked_card_number"],
+          credit_card["expiration_month"], credit_card["expiration_year"], credit_card["billing_address"], credit_card["billing_address_2"],
+          credit_card["billing_city"], credit_card["billing_state"], credit_card["billing_zip"], credit_card["billing_country"],
+          credit_card["card_type"])
+          #card = CreditCard.from_json!(credit_card, subscription_id)
+          credit_card_list << card
+
+          puts card.inspect
         end
       end
     end
@@ -47,7 +60,13 @@ class CreditCards
 
     if response.request.last_response.code == '200'
       if CreditCard.valid_json?(response.body)
-        return CreditCard.from_json! response.body
+        credit_card = JSON.parse(response.body)
+        card = CreditCard.new(credit_card["id"], credit_card["first_name"], credit_card["last_name"], credit_card["masked_card_number"],
+          credit_card["expiration_month"], credit_card["expiration_year"], credit_card["billing_address"], credit_card["billing_address_2"],
+          credit_card["billing_city"], credit_card["billing_state"], credit_card["billing_zip"], credit_card["billing_country"],
+          credit_card["card_type"])
+        return card
+        #return CreditCard.from_json!(response.body, nil)
       else
         return response.body
       end
@@ -86,15 +105,14 @@ class CreditCards
   def get_organization_credit_card(org_guid)
     headers = {'Content-Type' => 'text/html;charset=utf-8', 'Authorization' => @auth_token}
 
-    response = HttpDirectClient.get("#{@base_path}/organization_credit_cards", :headers => headers, :query => {:organization_guid => org_guid})
+    url_param ={:q=>"organization_guid:#{org_guid}"}
+    response = HttpDirectClient.get("#{@base_path}/organization_credit_cards", :headers => headers, :query => url_param)
 
     if response.request.last_response.code == '200'
-      body = response.body
 
       if JSON.parse(response.body)["total_results"] > 0
         credit_card_id = JSON.parse(response.body)["resources"][0]["entity"]["credit_card_token"]
-        puts credit_card_id
-        read_card_by_id(credit_card_id)
+        return read_card_by_id(credit_card_id)
       else
         return nil
       end
@@ -104,7 +122,6 @@ class CreditCards
 
   def add_organization_credit_card(org_guid, card_id)
     headers = {'Content-Type' => 'application/json', 'Authorization' => @auth_token}
-
     attributes = {:credit_card_token => card_id, :organization_guid => org_guid}
 
     response = HttpDirectClient.post("#{@base_path}/organization_credit_cards", :headers => headers, :body => attributes.to_json)
@@ -118,12 +135,12 @@ end
 
 class CreditCard
 
-  class << self
-
-    attr_accessor :id, :first_name, :last_name, :masked_card_number, :expiration_month, :expiration_year, :card_type,
-                  :billing_address, :billing_address_2, :billing_city, :billing_state, :billing_zip, :billing_country
-
-  end
+  #class << self
+  #
+  #  attr_accessor :id, :first_name, :last_name, :masked_card_number, :expiration_month, :expiration_year, :card_type,
+  #                :billing_address, :billing_address_2, :billing_city, :billing_state, :billing_zip, :billing_country
+  #
+  #end
 
   attr_accessor :id, :first_name, :last_name, :masked_card_number, :expiration_month, :expiration_year, :card_type,
                 :billing_address, :billing_address_2, :billing_city, :billing_state, :billing_zip, :billing_country
@@ -147,14 +164,19 @@ class CreditCard
     @card_type = card_type
   end
 
-  def self.from_json! string
-    JSON.load(string).each do |var, val|
-      self.instance_variable_get '@'+var
-      self.instance_variable_set '@'+var, val
-    end
-
-    return self
-  end
+  #def self.from_json!(string, subscription_id)
+  #  JSON.load(string).each do |var, val|
+  #    if(var == "id")
+  #      self.instance_variable_get '@'+var
+  #      self.instance_variable_set '@'+var, subscription_id
+  #    else
+  #      self.instance_variable_get '@'+var
+  #      self.instance_variable_set '@'+var, val
+  #    end
+  #  end
+  #
+  #  return self
+  #end
 
   def self.valid_json? json
     begin
