@@ -521,5 +521,12 @@ module Uhuru::Webui
       redirect '/account'
     end
 
+    get '/tapps/zip/:file' do |file|
+
+      file = File.join('../tapps/zip/wordpress.zip', file)
+      send_file(file, :disposition => 'attachment', :filename => File.basename(file))
+
+    end
+
   end
 end

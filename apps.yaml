@@ -17,7 +17,7 @@ joomla:
       plan: d85b0ad5-02d3-49e7-8bcb-19057a847bf7
   description: Joomla CMS
   git-hub-link: "git hub path for joomla"
-  path: "/home/ubuntu/Desktop/rubytest"
+  download: "/tapps/zip/joomla.zip"
   domain: "uhurusoft.org"
 
 drupal:
@@ -38,7 +38,7 @@ drupal:
       plan: d85b0ad5-02d3-49e7-8bcb-19057a847bf7
   description: drupal CMS
   git-hub-link: "git hub path for drupal"
-  path: "/home/ubuntu/Desktop/rubytest"
+  download: "/tapps/zip/drupal.zip"
   domain: "uhurusoft.org"
 
 orchard:
@@ -59,7 +59,7 @@ orchard:
       plan: d85b0ad5-02d3-49e7-8bcb-19057a847bf7
   description: this is orchard CMS
   git-hub-link: "git hub path for orchard"
-  path: "/home/ubuntu/Desktop/rubytest"
+  download: "/tapps/zip/orchard.zip"
   domain: "uhurusoft.org"
 
 
@@ -81,7 +81,7 @@ umbraco:
       plan: d85b0ad5-02d3-49e7-8bcb-19057a847bf7
   description: this is the umbraco CMS
   git-hub-link: "git hub path for umbraco"
-  path: "/home/ubuntu/Desktop/rubytest"
+  download: "/tapps/zip/umbraco.zip"
   domain: "uhurusoft.org"
 
 
@@ -103,7 +103,7 @@ wordpress:
       plan: d85b0ad5-02d3-49e7-8bcb-19057a847bf7
   description: this is the umbraco CMS
   git-hub-link: "git hub path for umbraco"
-  path: "/home/ubuntu/Desktop/rubytest"
+  download: "/tapps/zip/wordpress.zip"
   domain: "uhurusoft.org"
 
 
@@ -125,7 +125,7 @@ magento:
       plan: d85b0ad5-02d3-49e7-8bcb-19057a847bf7
   description: this is the umbraco CMS
   git-hub-link: "git hub path for umbraco"
-  path: "/home/ubuntu/Desktop/rubytest"
+  download: "/tapps/zip/magento.zip"
   domain: "uhurusoft.org"
 
 
@@ -147,7 +147,7 @@ sugarcrm:
       plan: d85b0ad5-02d3-49e7-8bcb-19057a847bf7
   description: this is the umbraco CMS
   git-hub-link: "git hub path for umbraco"
-  path: "/home/ubuntu/Desktop/rubytest"
+  download: "/tapps/zip/sugarCRM.zip"
   domain: "uhurusoft.org"
 
 
