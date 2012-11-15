@@ -61,7 +61,7 @@ class CreditCards
     if response.request.last_response.code == '200'
       if CreditCard.valid_json?(response.body)
         credit_card = JSON.parse(response.body)
-        card = CreditCard.new(credit_card["id"], credit_card["first_name"], credit_card["last_name"], credit_card["masked_card_number"],
+        card = CreditCard.new(card_id, credit_card["first_name"], credit_card["last_name"], credit_card["masked_card_number"],
           credit_card["expiration_month"], credit_card["expiration_year"], credit_card["billing_address"], credit_card["billing_address_2"],
           credit_card["billing_city"], credit_card["billing_state"], credit_card["billing_zip"], credit_card["billing_country"],
           credit_card["card_type"])
