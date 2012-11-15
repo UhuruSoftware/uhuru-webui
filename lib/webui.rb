@@ -100,6 +100,22 @@ module Uhuru::Webui
             redirect '/resetOrganization'
         end
 
+        if session[:error] == "create user error"
+            session[:e_create_user] = "You are not authorized to create a user!"
+            redirect '/resetOrganization'
+        end
+
+        if session[:error] == "delete user error"
+            session[:e_delete_user] = "You are not authorized to delete this user!"
+            redirect '/resetOrganization'
+        end
+
+    # /space(guid) - current space - page errors
+        if session[:error] == "create app failed"
+            session[:e_create_app] = "Internal server error!"
+            redirect '/resetOrganization'
+        end
+
       erb :error500, {:layout => :layout_error}
     end
 
@@ -221,6 +237,8 @@ module Uhuru::Webui
       if session[:e_reset_organizations] == true
         puts session[:e_reset_organizations]
       else
+        session[:e_login] = ""
+        session[:e_sign_up] = ""
         session[:e_create_organization] = ""
         session[:e_delete_organization] = ""
       end
@@ -255,8 +273,12 @@ module Uhuru::Webui
       if session[:e_reset_organization] == true
         puts session[:e_reset_organization]
       else
+        session[:e_create_organization] = ""
+        session[:e_delete_organization] = ""
         session[:e_create_space] = ""
         session[:e_delete_space] = ""
+        session[:e_create_user] = ""
+        session[:e_delete_user] = ""
       end
       session[:e_reset_organization] = false
       # <<
@@ -294,6 +316,20 @@ module Uhuru::Webui
       if session[:login_] == false
         redirect '/'
       end
+
+      #this code resets the error handling  #>>
+      if session[:e_reset_space] == true
+        puts session[:e_reset_space]
+      else
+        session[:e_create_space] = ""
+        session[:e_delete_space] = ""
+        session[:e_create_user] = ""
+        session[:e_delete_user] = ""
+      end
+      session[:e_reset_space] = false
+      # <<
+
+
 
       @timeNow = $this_time
 

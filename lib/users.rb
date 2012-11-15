@@ -105,7 +105,7 @@ class Users
 
   rescue Exception => e
     false
-    raise "#{e.inspect}, #{e.backtrace}"
+    raise "create user error" #"#{e.inspect}, #{e.backtrace}"
   end
 
   def get_user_guid
@@ -118,7 +118,7 @@ class Users
     user.delete!
 
   rescue Exception => e
-    raise "#{e.inspect}"
+    raise "delete user error" #"#{e.inspect}"
   end
 
   def user_exists(user_guid)

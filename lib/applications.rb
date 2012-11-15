@@ -73,7 +73,7 @@ class Applications
     end
 
   rescue Exception => e
-    raise "#{e.inspect}"
+    raise "create app error" #"#{e.inspect}"
   end
 
   def start_app(app_name)
@@ -82,7 +82,7 @@ class Applications
     app.start!
 
   rescue Exception => e
-    raise "#{e.inspect}"
+    raise "start app error" #"#{e.inspect}"
   end
 
   def stop_app(app_name)
@@ -91,7 +91,7 @@ class Applications
     app.stop!
 
   rescue Exception => e
-    raise "#{e.inspect}"
+    raise "stop app error" #"#{e.inspect}"
   end
 
   def update(app_name, instances, memory)
@@ -103,7 +103,7 @@ class Applications
     app.update!
 
   rescue Exception => e
-    raise "#{e.inspect}"
+    raise "update app error" #"#{e.inspect}"
   end
 
   def delete(app_name)
@@ -120,7 +120,7 @@ class Applications
     end
 
   rescue Exception => e
-    raise "#{e.inspect}"
+    raise "delete app error" #"#{e.inspect}"
   end
 
   def bind_app_services(app_name, service_instance_name)
@@ -134,7 +134,7 @@ class Applications
     app.bind(service_instance)
 
   rescue Exception => e
-    raise "#{e.inspect}"
+    raise "bind service error" #"#{e.inspect}"
   end
 
   def unbind_app_services(app_name, service_instance_name)
@@ -144,7 +144,7 @@ class Applications
     app.bind(service_instance)
 
   rescue Exception => e
-    raise "#{e.inspect}"
+    raise "unbind service error" "#{e.inspect}"
   end
 
   #track cf to see how app routes are managed and what is owning organization for a domain
@@ -165,6 +165,9 @@ class Applications
     end
 
     app.add_route(route)
+
+  rescue Exception => e
+    raise "bind url error" "#{e.inspect}"
   end
 
   def unbind_app_url(app_name, domain_name, old_url)
@@ -173,6 +176,9 @@ class Applications
     route = @client.routes.find { |r| r.host == old_url && r.domain == domain }
 
     app.remove_route(route)
+
+  rescue Exception => e
+    raise "unbind url error" "#{e.inspect}"
   end
 
   class Application

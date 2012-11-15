@@ -268,8 +268,9 @@
         </p>
     </div>
     <div class="modal-footer">
+        <span class="server_errors" id="delete_user_failed"><%= session[:e_delete_user] %></span>
         <div class="button_case_delete_organization_and_space">
-            <a href="#" class="btn btn_right_delete_organization_and_space">No</a>
+            <a href="#" class="btn btn_right_delete_organization_and_space close">No</a>
             <form action="/deleteUser" method="post">
                 <input type="text" class="blank_input" id="pass_user_guid" value="" name="thisUser"/>
                 <input type="submit" class="btn btn-danger btn_left_delete_organization_and_space white_btn_text" value="Delete"/>
@@ -298,13 +299,14 @@
         </p>
     </div>
     <div class="modal-footer">
-            <div class="button_case_delete_organization_and_space">
-                <a href="#" class="btn btn_right_delete_organization_and_space" id="cancel_b_d_organization">No</a>
-                <form action="/deleteCurrentOrganization" method="post">
-                    <input type="submit" value="Delete" class="btn btn-danger btn_left_delete_organization_and_space white_btn_text" id="b_d_organization" />
-                    <p class="hidden_modal_messages" id="p_d_organization">Your organization is being removed...</p>
-                </form>
-            </div>
+        <div class="button_case_delete_organization_and_space">
+            <span class="server_errors" id="delete_this_organization_failed"><%= session[:e_delete_organization] %></span>
+            <a href="#" class="btn btn_right_delete_organization_and_space" id="cancel_b_d_organization">No</a>
+            <form action="/deleteCurrentOrganization" method="post">
+                <input type="submit" value="Delete" class="btn btn-danger btn_left_delete_organization_and_space white_btn_text" id="b_d_organization" />
+                <p class="hidden_modal_messages" id="p_d_organization">Your organization is being removed...</p>
+            </form>
+        </div>
     </div>
 </div>
 
@@ -338,13 +340,12 @@
             </ul>
     </div>
     <div class="modal-footer">
+        <span class="server_errors" id="create_user_failed"><%= session[:e_create_user] %></span>
         <div class="button_case_create_organization_and_space">
             <form action="/addUsers" method="post">
                 <input type="text" id="new_user_type" name="userType" class="blank_input" />
                 <input type="text" id="new_user_email" name="userEmail" class="blank_input" />
-
                 <input type="submit" value="Invite User" class="btn btn-success btn_right_create_organization_and_space white_btn_text" />
-
             </form>
         </div>
     </div>

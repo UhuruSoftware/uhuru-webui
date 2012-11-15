@@ -42,7 +42,6 @@ var add_user = function(){
 	$('body').css({"overflow":"hidden"});
 	$('#add_user').fadeIn(600);
     $('.close').click(function(){$("#add_user").css("display", "none");$('#screen').css("display", "none");$('body').css({"overflow":"auto"});});
-    $('.btn').click(function(){$("#add_user").css("display", "none");$('#screen').css("display", "none");$('body').css({"overflow":"auto"});});
 }
 
 
@@ -84,7 +83,6 @@ var delete_user = function(){
 	$('body').css({"overflow":"hidden"});
 	$('#delete_user_modal').fadeIn(600);
     $('.close').click(function(){$("#delete_user_modal").css("display", "none");$('#screen').css("display", "none");$('body').css({"overflow":"auto"});});
-    $('.btn').click(function(){$("#delete_user_modal").css("display", "none");$('#screen').css("display", "none");$('body').css({"overflow":"auto"});});
 }
 
 

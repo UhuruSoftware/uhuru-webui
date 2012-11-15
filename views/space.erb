@@ -243,6 +243,7 @@
     </div>
     <div class="modal-footer">
         <div class="button_case_delete_organization_and_space">
+            <span class="server_errors" id="delete_this_space_failed"><%= session[:e_delete_space] %></span>
             <a href="#" class="btn btn_right_delete_organization_and_space" id="cancel_b_d_space">No</a>
             <form action="/deleteCurrentSpace" method="post">
                 <input type="submit" value="Delete" class="btn btn-danger btn_left_delete_organization_and_space white_btn_text" />
