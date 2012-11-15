@@ -18,12 +18,25 @@ class Organizations
     organizations_list.sort! { |a, b| a.name.downcase <=> b.name.downcase }
   end
 
+  def read_orgs_by_user(user_guid)
+    orgs_list = @client.organizations.find { |o|
+      users = o.users
+      users.find { |u|
+        u.guid == user_guid
+      }
+    }
+
+    orgs_list
+  end
+
   def get_organization_by_name(org_name)
     org = @client.organizations.find { |o|
       o.name == org_name
     }
 
     org
+  rescue Exception => e
+    raise "#{e.inspect}, #{e.backtrace}"
   end
 
   def get_name(org_guid)

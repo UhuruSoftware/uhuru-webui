@@ -25,7 +25,7 @@ class UsersSetup
     user = UserDetails.new(user_token, user_guid, user_detail[:first_name], user_detail[:last_name])
     user
   rescue Exception => e
-    raise "#{e.inspect}"
+    raise "Something went wrong when trying to login, please try again later."
   end
 
   def signup(email, password, first_name, last_name)
@@ -62,36 +62,49 @@ class UsersSetup
 
     uaac = get_uaa_client
 
-    emails = [email]
+    # if user already exist in uaa continue with next steps without creating it
+    begin
+      user = uaac.get_by_name(email)
+    rescue
+      #  do nothing user doesn't exist in uaa so it will be created next
+    end
 
-    info = {userName: email, password: password, name: {givenName: given_name, familyName: family_name}}
-    info[:emails] = emails.respond_to?(:each) ?
-        emails.each_with_object([]) { |email, o| o.unshift({:value => email}) } :
-        [{:value => (emails || name)}]
+    unless user
+      emails = [email]
 
-    user = uaac.add(info)
+      info = {userName: email, password: password, name: {givenName: given_name, familyName: family_name}}
+      info[:emails] = emails.respond_to?(:each) ?
+          emails.each_with_object([]) { |email, o| o.unshift({:value => email}) } :
+          [{:value => (emails || name)}]
+
+      user = uaac.add(info)
+    end
+
     if (user != nil)
       user_id = user[:id]
-
       admin_token = get_user_token(@cf_admin, @cf_pass)
-
-      organizations_Obj = Organizations.new(admin_token, @cf_target)
-      org_name = email + "'s organization"
-      org_guid = organizations_Obj.create(@config, org_name, user_id)
-
       users_obj = Users.new(admin_token, @cf_target)
-      cfuser = users_obj.add_user_to_org_with_role(org_guid, user_id, ['owner', 'billing'])
-      user_token = get_user_token(email, password)
 
+      unless users_obj.user_exists(user_id)
+        organizations_Obj = Organizations.new(admin_token, @cf_target)
+        orgs = organizations_Obj.read_orgs_by_user(user_id)
+
+        org_name = email + "'s organization"
+        org = organizations_Obj.get_organization_by_name(org_name)
+
+        if orgs == nil || org == nil
+          org_guid = organizations_Obj.create(@config, org_name, user_id)
+        end
+      else
+        raise "User account already exists, please go to login."
+      end
+
+      user_token = get_user_token(email, password)
       {:user_id => user_id, :user_token => user_token}
     end
 
   rescue Exception => e
-    #uaac.delete_by_name(email) if user != nil
-    #organizations_Obj.delete(org_guid) if org_guid != nil
-    #users_obj.delete(user_id) if cfuser
-
-    raise "#{e.inspect}"
+    raise "Something went wrong when trying to sign up, please try again later."
   end
 
   def get_user_token(email, password)

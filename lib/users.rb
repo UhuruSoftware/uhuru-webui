@@ -121,6 +121,17 @@ class Users
     raise "#{e.inspect}"
   end
 
+  def user_exists(user_guid)
+    user = @client.users.find { |u|
+      u.guid == user_guid
+    }
+    if user == nil
+      return false
+    else
+      return true
+    end
+  end
+
   private
 
   def create_user(user_guid)
