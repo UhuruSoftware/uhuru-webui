@@ -45,16 +45,28 @@ module Uhuru::Webui
     error do
       session[:error] = "#{request.env['sinatra.error'].to_s}"
 
+    # / page errors
         if session[:error] == "Login failed!"
           session[:e_login] = "Wrong email and/or password!"
           redirect '/reset'
         end
 
-        if session[:error] == "Sign up failed!"
+        if session[:error] == "user exists"
           session[:e_sign_up] = "Email already exists try another one!"
           redirect '/reset'
         end
 
+        if session[:error] == "org create error"
+          session[:e_sign_up] = "Server couldn't create the default organization!"
+          redirect '/reset'
+        end
+
+        if session[:error] == "signup error"
+          session[:e_sign_up] = "Server did not respond!"
+          redirect '/reset'
+        end
+
+    # /account page errors
         if session[:error] == "Update user failed!"
             session[:e_update_user] = "Something went wrong please try again"
             redirect '/resetAccount'
@@ -63,6 +75,29 @@ module Uhuru::Webui
         if session[:error] == "Change password failed!"
             session[:e_update_password] = "Something went wrong please try again"
             redirect '/resetAccount'
+        end
+
+    # /organizations page errors
+        if session[:error] == "create organization failed!"
+            session[:e_create_organization] = "You are not authorized to create organizations!"
+            redirect '/resetOrganizations'
+        end
+
+        if session[:error] == "delete organization failed!"
+            session[:e_delete_organization] = "You are not authorized to delete this organization!"
+            redirect '/resetOrganizations'
+        end
+
+
+    # /organization(guid) - spaces - page errors
+        if session[:error] == "create space failed!"
+            session[:e_create_space] = "You are not authorized to create spaces!"
+            redirect '/resetOrganization'
+        end
+
+        if session[:error] == "delete space failed!"
+            session[:e_delete_space] = "You are not authorized to delete this space!"
+            redirect '/resetOrganization'
         end
 
       erb :error500, {:layout => :layout_error}
@@ -77,6 +112,19 @@ module Uhuru::Webui
       session[:e_reset_account] = true
       redirect '/account'
     end
+
+    get '/resetOrganizations' do
+      session[:e_reset_organizations] = true
+      redirect '/organizations'
+    end
+
+    get '/resetOrganization' do
+      session[:e_reset_organization] = true
+      redirect '/organization' + session[:currentOrganization]
+    end
+
+
+
 
     get '/' do
       session[:login_] = false
@@ -168,6 +216,16 @@ module Uhuru::Webui
         redirect '/'
       end
 
+      #this code resets the error handling  #>>
+      if session[:e_reset_organizations] == true
+        puts session[:e_reset_organizations]
+      else
+        session[:e_create_organization] = ""
+        session[:e_delete_organization] = ""
+      end
+      session[:e_reset_organizations] = false
+      # <<
+
       @this_user = session[:username]
 
       @usertitle = @this_user
@@ -191,6 +249,17 @@ module Uhuru::Webui
       if session[:login_] == false
         redirect '/'
       end
+
+      #this code resets the error handling  #>>
+      if session[:e_reset_organization] == true
+        puts session[:e_reset_organization]
+      else
+        session[:e_create_space] = ""
+        session[:e_delete_space] = ""
+      end
+      session[:e_reset_organization] = false
+      # <<
+
 
       @timeNow = $this_time
 

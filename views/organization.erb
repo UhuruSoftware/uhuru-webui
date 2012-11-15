@@ -213,6 +213,7 @@
             </p>
         </div>
         <div class="modal-footer">
+            <span class="server_errors" id="create_space_failed"><%= session[:e_create_space] %></span>
             <div class="button_case_create_organization_and_space">
                 <a href="#" class="btn btn_right_create_organization_and_space" id="cancel_b_c_space">Cancel</a>
                 <input type="submit" value="Create" class="btn btn-success btn_left_create_organization_and_space white_btn_text" id="b_c_space" />
@@ -241,6 +242,7 @@
         </p>
     </div>
     <div class="modal-footer">
+        <span class="server_errors" id="delete_space_failed"><%= session[:e_delete_space] %></span>
         <div class="button_case_delete_organization_and_space">
             <a href="#" class="btn btn_right_delete_organization_and_space" id="cancel_b_d_space">No</a>
             <form action="/deleteClickedSpace" method="post">
