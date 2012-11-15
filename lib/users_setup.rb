@@ -15,23 +15,84 @@ class UsersSetup
   end
 
   def login(email, password)
-    user_token = get_user_token(email, password)
+    begin
+      user_token = get_user_token(email, password)
 
-    users_obj = Users.new(user_token, @cf_target)
-    user_guid = users_obj.get_user_guid
+      users_obj = Users.new(user_token, @cf_target)
+      user_guid = users_obj.get_user_guid
 
-    user_detail = get_user_details(user_guid)
+      user_detail = get_user_details(user_guid)
 
-    user = UserDetails.new(user_token, user_guid, user_detail[:first_name], user_detail[:last_name])
-    user
-  rescue Exception => e
-    raise "login error"
+      user = UserDetails.new(user_token, user_guid, user_detail[:first_name], user_detail[:last_name])
+      user
+    rescue
+      raise "login error"
+    end
   end
 
   def signup(email, password, first_name, last_name)
-    new_user = add_user(email, password, first_name, last_name)
-    user = UserDetails.new(new_user[:user_token], new_user[:user_id], first_name, last_name)
-    user
+
+    begin
+      uaac = get_uaa_client
+    rescue
+      raise "signup error"
+    end
+
+    # if user already exist in uaa continue with next steps without creating it
+    begin
+      user = uaac.get_by_name(email)
+    rescue
+      #  do nothing user doesn't exist in uaa so it will be created next
+    end
+
+    unless user
+      begin
+        emails = [email]
+
+        info = {userName: email, password: password, name: {givenName: given_name, familyName: family_name}}
+        info[:emails] = emails.respond_to?(:each) ?
+            emails.each_with_object([]) { |email, o| o.unshift({:value => email}) } :
+            [{:value => (emails || name)}]
+
+        user = uaac.add(info)
+      rescue
+        raise "signup error"
+      end
+    end
+
+    if (user != nil)
+      begin
+        user_id = user[:id]
+        admin_token = get_user_token(@cf_admin, @cf_pass)
+        users_obj = Users.new(admin_token, @cf_target)
+      rescue
+        raise "signup error"
+      end
+
+      unless users_obj.user_exists(user_id)
+        begin
+          organizations_Obj = Organizations.new(admin_token, @cf_target)
+          orgs = organizations_Obj.read_orgs_by_user(user_id)
+
+          org_name = email + "'s organization"
+          org = organizations_Obj.get_organization_by_name(org_name)
+
+          if orgs == nil || org == nil
+            org_guid = organizations_Obj.create(config, org_name, user_id)
+          end
+        rescue
+          raise Error "org create error"
+        end
+      else
+        raise "user exists"
+      end
+
+      user_token = get_user_token(email, password)
+
+      user = UserDetails.new(user_token, user_id, first_name, last_name)
+      user
+
+    end
   end
 
   def update_user_info(user_guid, given_name, family_name)
@@ -57,60 +118,6 @@ class UsersSetup
   end
 
   private
-
-  def add_user(email, password, given_name, family_name)
-
-    uaac = get_uaa_client
-
-    # if user already exist in uaa continue with next steps without creating it
-    begin
-      user = uaac.get_by_name(email)
-    rescue
-      #  do nothing user doesn't exist in uaa so it will be created next
-    end
-
-    unless user
-      emails = [email]
-
-      info = {userName: email, password: password, name: {givenName: given_name, familyName: family_name}}
-      info[:emails] = emails.respond_to?(:each) ?
-          emails.each_with_object([]) { |email, o| o.unshift({:value => email}) } :
-          [{:value => (emails || name)}]
-
-      user = uaac.add(info)
-    end
-
-    if (user != nil)
-      user_id = user[:id]
-      admin_token = get_user_token(@cf_admin, @cf_pass)
-      users_obj = Users.new(admin_token, @cf_target)
-
-      unless users_obj.user_exists(user_id)
-        organizations_Obj = Organizations.new(admin_token, @cf_target)
-        orgs = organizations_Obj.read_orgs_by_user(user_id)
-
-        org_name = email + "'s organization"
-        org = organizations_Obj.get_organization_by_name(org_name)
-
-        if orgs == nil || org == nil
-
-          begin
-            org_guid = organizations_Obj.create(@config, org_name, user_id)
-          rescue
-            raise "org create error"
-          end
-        end
-      else
-        raise "user exists"
-      end
-
-      user_token = get_user_token(email, password)
-      {:user_id => user_id, :user_token => user_token}
-    end
-
-  rescue Exception => e
-    raise "signup error"
-  end
 
   def get_user_token(email, password)
     creds = {}
