@@ -25,7 +25,7 @@ class UsersSetup
     user = UserDetails.new(user_token, user_guid, user_detail[:first_name], user_detail[:last_name])
     user
   rescue Exception => e
-    raise "Something went wrong when trying to login, please try again later."
+    raise "login error"
   end
 
   def signup(email, password, first_name, last_name)
@@ -93,10 +93,15 @@ class UsersSetup
         org = organizations_Obj.get_organization_by_name(org_name)
 
         if orgs == nil || org == nil
-          org_guid = organizations_Obj.create(@config, org_name, user_id)
+
+          begin
+            org_guid = organizations_Obj.create(@config, org_name, user_id)
+          rescue
+            raise "org create error"
+          end
         end
       else
-        raise "User account already exists, please go to login."
+        raise "user exists"
       end
 
       user_token = get_user_token(email, password)
@@ -104,7 +109,7 @@ class UsersSetup
     end
 
   rescue Exception => e
-    raise "Something went wrong when trying to sign up, please try again later."
+    raise "signup error"
   end
 
   def get_user_token(email, password)
