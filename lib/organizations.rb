@@ -97,7 +97,15 @@ class Organizations
     raise "#{e.inspect}"
   end
 
-  def delete(org_guid)
+  def delete(config, org_guid)
+    token = @client.token
+
+    user_setup_obj = UsersSetup.new(config)
+    admin_token = user_setup_obj.get_admin_token
+
+    # elevate user just to create organization
+    @client.token = admin_token
+
     org = @client.organization(org_guid)
     unless org.spaces.count == 0
       org.spaces.each do |space|
@@ -106,8 +114,12 @@ class Organizations
       end
     end
 
-    org.delete!
+    deleted = org.delete!
 
+    # then put token back to the initial one
+    @client.token = token
+
+    deleted
   rescue Exception => e
     raise "#{e.inspect}"
   end
