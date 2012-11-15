@@ -75,7 +75,7 @@
         <div class="modal-body" id="login_modal_content">
             <p>
                 <label for="id">username: </label>
-                <input type="text" id="id" name="username" class="modal_input_box"/>
+                <input type="text" id="id" name="username" class="modal_input_box" autofocus="autofocus" />
             </p>
 
             <p>
@@ -88,6 +88,7 @@
 
 
     <div class="modal-footer">
+        <span class="server_errors" id="login_failed"><%= session[:e_login] %></span>
         <div class="button_case_create_organization_and_space">
             <a href="#" class="btn btn_right_create_organization_and_space">Cancel</a>
             <input type="submit" value="Log In" class="btn btn-success btn_left_create_organization_and_space white_btn_text" />
@@ -134,6 +135,7 @@
 
         <div class="modal-footer sign_up_footer_modal">
             <p><span id="show_modal_errors"></span></p>
+            <span class="server_errors" id="sign_up_failed"><%= session[:e_sign_up] %></span>
             <div class="button_case_create_organization_and_space">
                 <a href="#" class="btn btn_right_create_organization_and_space cancel_btn">Cancel</a>
                 <input type="submit" value="Sign Up" class="btn btn-success btn_left_create_organization_and_space white_btn_text submit_form" />

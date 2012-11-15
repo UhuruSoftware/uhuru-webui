@@ -33,9 +33,9 @@ module Uhuru::Webui
 
     end
 
-    set :dump_errors, true
-    set :raise_errors, true
-    set :show_exceptions, true
+    #set :dump_errors, true
+    set :raise_errors, Proc.new { false }
+    set :show_exceptions, false
 
     error 404 do
       @timeNow = $this_time
@@ -43,14 +43,58 @@ module Uhuru::Webui
     end
 
     error do
-      @error = request.env['sinatra_error'].name
-      erb :error404, {:layout => :layout_error}
+      session[:error] = "#{request.env['sinatra.error'].to_s}"
+
+        if session[:error] == "Login failed!"
+          session[:e_login] = "Wrong email and/or password!"
+          redirect '/reset'
+        end
+
+        if session[:error] == "Sign up failed!"
+          session[:e_sign_up] = "Email already exists try another one!"
+          redirect '/reset'
+        end
+
+        if session[:error] == "Update user failed!"
+            session[:e_update_user] = "Something went wrong please try again"
+            redirect '/resetAccount'
+        end
+
+        if session[:error] == "Change password failed!"
+            session[:e_update_password] = "Something went wrong please try again"
+            redirect '/resetAccount'
+        end
+
+      erb :error500, {:layout => :layout_error}
+    end
+
+    get '/reset' do
+      session[:e_reset] = true
+      redirect '/'
+    end
+
+    get '/resetAccount' do
+      session[:e_reset_account] = true
+      redirect '/account'
     end
 
     get '/' do
       session[:login_] = false
-      session = []
+      session[:error] = nil
 
+
+      #this code resets the error handling  #>>
+      if session[:e_reset] == true
+        puts session[:e_reset]
+      else
+        session[:e_login] = ""
+        session[:e_sign_up] = ""
+      end
+      session[:e_reset] = false
+      # <<
+
+
+      session = []
       @timeNow = $this_time
       @title = 'Uhuru App Cloud'
       $path_1 = ''
@@ -228,6 +272,19 @@ module Uhuru::Webui
       if session[:login_] == false
         redirect '/'
       end
+
+
+      #this code resets the error handling  #>>
+      if session[:e_reset_account] == true
+        puts session[:e_reset_account]
+      else
+        session[:e_update_user] = ""
+        session[:e_update_password] = ""
+      end
+      session[:e_reset_account] = false
+      # <<
+
+
 
       @usertitle = "Account " + session[:username]
       @timeNow = $this_time

@@ -1309,7 +1309,8 @@ a
 
 .form_errors1,
 .form_errors2,
-#show_modal_errors
+#show_modal_errors,
+.server_errors
 {
     font-family: 'Segoe UI Light', 'Open Sans', Verdana, Arial, Helvetica, sans-serif;
     font-weight: 200;
@@ -1320,6 +1321,11 @@ a
     line-height: 40px;
     color: #f5a9f2;
     margin-left: 20px;
+}
+.server_errors
+{
+    font-weight: 700;
+    color: #ff0022;
 }
 .form_errors1,
 .form_errors2

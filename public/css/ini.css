@@ -302,38 +302,6 @@ h2
     color: black;
 }
 
-.subscription_push
-{
-    float: left;
-    background-color: #232323;
-    color: white;
-    cursor: pointer;
-    width: 150px;
-    height: 24px;
-    font-size: 16px;
-    font-family: 'Segoe UI Semilight', 'Open Sans', Verdana, Arial, Helvetica, sans-serif;
-}
-
-.subscription_push_btn
-{
-    margin: auto;
-    height: 24px;
-    width: 34px;
-    float: right;
-    background: transparent url("../images/push_sub_small.png") no-repeat;
-    background-color: #007003;
-    background-position: 0 0;
-    font-family: 'Segoe UI Semilight', 'Open Sans', Verdana, Arial, Helvetica, sans-serif;
-}
-
-
-
-
-
-
-
-
-
 
 #add_user
 {

@@ -116,3 +116,4 @@ $('.clear_form2').click(function(){
     $('input[name=new_pass2]').val('');
     $('.form_errors2').hide();
 });
+
