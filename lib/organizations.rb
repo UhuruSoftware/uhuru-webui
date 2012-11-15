@@ -85,7 +85,7 @@ class Organizations
     end
 
   rescue Exception => e
-    raise "#{e.inspect}"
+    raise "create organization failed" #"#{e.inspect}"
   end
 
   def update(name, org_guid)
@@ -121,7 +121,7 @@ class Organizations
 
     deleted
   rescue Exception => e
-    raise "#{e.inspect}"
+    raise "delete organization failed" #"#{e.inspect}"
   end
 
   def read_spaces(org_guid)

@@ -1324,8 +1324,9 @@ a
 }
 .server_errors
 {
-    font-weight: 700;
+    font-weight: 300;
     color: #ff0022;
+    font-size: 16px;
 }
 .form_errors1,
 .form_errors2

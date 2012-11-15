@@ -46,7 +46,7 @@ module Uhuru::Webui
       session[:error] = "#{request.env['sinatra.error'].to_s}"
 
     # / page errors
-        if session[:error] == "Login failed!"
+        if session[:error] == "login error"
           session[:e_login] = "Wrong email and/or password!"
           redirect '/reset'
         end
@@ -78,24 +78,24 @@ module Uhuru::Webui
         end
 
     # /organizations page errors
-        if session[:error] == "create organization failed!"
+        if session[:error] == "create organization failed"
             session[:e_create_organization] = "You are not authorized to create organizations!"
             redirect '/resetOrganizations'
         end
 
-        if session[:error] == "delete organization failed!"
+        if session[:error] == "delete organization failed"
             session[:e_delete_organization] = "You are not authorized to delete this organization!"
             redirect '/resetOrganizations'
         end
 
 
     # /organization(guid) - spaces - page errors
-        if session[:error] == "create space failed!"
+        if session[:error] == "create space failed"
             session[:e_create_space] = "You are not authorized to create spaces!"
             redirect '/resetOrganization'
         end
 
-        if session[:error] == "delete space failed!"
+        if session[:error] == "delete space failed"
             session[:e_delete_space] = "You are not authorized to delete this space!"
             redirect '/resetOrganization'
         end
@@ -115,6 +115,7 @@ module Uhuru::Webui
 
     get '/resetOrganizations' do
       session[:e_reset_organizations] = true
+      puts "ds"
       redirect '/organizations'
     end
 
@@ -439,7 +440,7 @@ module Uhuru::Webui
 
     post '/deleteCurrentOrganization' do
       organizations_Obj = Organizations.new(session[:token], @cf_target)
-      organizations_Obj.delete(session[:currentOrganization])
+      organizations_Obj.delete(@config, session[:currentOrganization])
       redirect "/organizations"
     end
 
@@ -447,7 +448,7 @@ module Uhuru::Webui
       @guid = params[:orgGuid]
 
       organizations_Obj = Organizations.new(session[:token], @cf_target)
-      organizations_Obj.delete(@guid)
+      organizations_Obj.delete(@config, @guid)
       redirect "/organizations"
     end
 

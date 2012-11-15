@@ -190,18 +190,3 @@ function showServices()
      document.getElementById('edit_space_btn').style.right = '100px';
 }
 
-
-
-
-
-
-function editUsernameDiv()
-{
-    document.getElementById('welcome').style.display = 'block';
-}
-
-function editUser()
-{
-    document.getElementById('the_user_name').innerHTML = document.getElementById('user_name_input').value;
-    document.getElementById('the_user_name').style.display = 'block';
-}

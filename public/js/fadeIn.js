@@ -9,7 +9,6 @@ var create_organization = function(){
 	$('body').css({"overflow":"hidden"});
 	$('#create_organization').fadeIn(600);
     $('.close').click(function(){$("#create_organization").css("display", "none");$('#screen').css("display", "none");$('body').css({"overflow":"auto"});});
-    $('.btn').click(function(){$("#create_organization").css("display", "none");$('#screen').css("display", "none");$('body').css({"overflow":"auto"});});
     $('#org_name').focus();
 }
 
@@ -18,7 +17,6 @@ var create_space = function(){
 	$('body').css({"overflow":"hidden"});
 	$('#create_space').fadeIn(600);
     $('.close').click(function(){$("#create_space").css("display", "none");$('#screen').css("display", "none");$('body').css({"overflow":"auto"});});
-    $('.btn').click(function(){$("#create_space").css("display", "none");$('#screen').css("display", "none");$('body').css({"overflow":"auto"});});
     $('#space_name').focus();
 }
 
@@ -56,7 +54,6 @@ var delete_space_modal = function(){
 	$('body').css({"overflow":"hidden"});
 	$('#delete_space_modal').fadeIn(600);
     $('.close').click(function(){$("#delete_space_modal").css("display", "none");$('#screen').css("display", "none");$('body').css({"overflow":"auto"});});
-    $('.btn').click(function(){$("#delete_space_modal").css("display", "none");$('#screen').css("display", "none");$('body').css({"overflow":"auto"});});
 }
 
 var delete_organization_modal = function(){
@@ -64,7 +61,6 @@ var delete_organization_modal = function(){
 	$('body').css({"overflow":"hidden"});
 	$('#delete_organization_modal').fadeIn(600);
     $('.close').click(function(){$("#delete_organization_modal").css("display", "none");$('#screen').css("display", "none");$('body').css({"overflow":"auto"});});
-    $('.btn').click(function(){$("#delete_organization_modal").css("display", "none");$('#screen').css("display", "none");$('body').css({"overflow":"auto"});});
 }
 
 var delete_app = function(){

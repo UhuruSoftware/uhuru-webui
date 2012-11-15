@@ -209,13 +209,13 @@
         <div class="modal-body">
              <p>
                 <label for="team_name">Space Name:</label>
-                <input type="text" id="org_name" name="spaceName" class="modal_input_box" />
+                <input type="text" id="org_name" name="spaceName" class="modal_input_box space_name_i" />
             </p>
         </div>
         <div class="modal-footer">
             <span class="server_errors" id="create_space_failed"><%= session[:e_create_space] %></span>
             <div class="button_case_create_organization_and_space">
-                <a href="#" class="btn btn_right_create_organization_and_space" id="cancel_b_c_space">Cancel</a>
+                <a href="#" class="btn btn_right_create_organization_and_space close" id="cancel_b_c_space">Cancel</a>
                 <input type="submit" value="Create" class="btn btn-success btn_left_create_organization_and_space white_btn_text" id="b_c_space" />
                 <p class="hidden_modal_messages" id="p_c_space">Your space is being created...</p>
             </div>
@@ -244,7 +244,7 @@
     <div class="modal-footer">
         <span class="server_errors" id="delete_space_failed"><%= session[:e_delete_space] %></span>
         <div class="button_case_delete_organization_and_space">
-            <a href="#" class="btn btn_right_delete_organization_and_space" id="cancel_b_d_space">No</a>
+            <a href="#" class="btn btn_right_delete_organization_and_space close" id="cancel_b_d_space">No</a>
             <form action="/deleteClickedSpace" method="post">
                 <input type="submit" value="Delete" class="btn btn-danger btn_left_delete_organization_and_space white_btn_text" id="b_d_space" />
                 <input type="text" id="pass_guid" name="spaceGuid" style="display: none;" />

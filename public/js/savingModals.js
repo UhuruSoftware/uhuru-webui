@@ -31,23 +31,11 @@ var add_template_app_modal = function()
 
 
 
-var create_organization_message = function()
-{
-	$('#cancel_b_c_organization').fadeOut(200);
-	$('#b_c_organization').fadeOut(200);
-    $('#p_c_organization').fadeIn(200);
-}
 var delete_organization_message = function()
 {
 	$('#cancel_b_d_organization').fadeOut(200);
 	$('#b_d_organization').fadeOut(200);
     $('#p_d_organization').fadeIn(200);
-}
-var create_space_message = function()
-{
-	$('#cancel_b_c_space').fadeOut(200);
-	$('#b_c_space').fadeOut(200);
-    $('#p_c_space').fadeIn(200);
 }
 var delete_space_message = function()
 {

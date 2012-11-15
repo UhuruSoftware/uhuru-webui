@@ -104,6 +104,39 @@ $(function() {
     });
 });
 
+
+$(function() {
+    $('#b_c_organization').click(function(event){
+        var org = $('#org_name').val();
+
+        if(org.length < 3) {
+            event.preventDefault();
+            $('.server_errors').hide().text("Please enter a name(4 letters)!").fadeIn(200);
+        }
+        else
+        {
+            $('#cancel_b_c_organization').fadeOut(200);
+            $('#b_c_organization').fadeOut(200);
+            $('#p_c_organization').fadeIn(200);
+        }
+    });
+
+    $('#b_c_space').click(function(event){
+        var space = $('.space_name_i').val();
+
+        if(space.length < 3) {
+            event.preventDefault();
+            $('.server_errors').hide().text("Please enter a name(4 letters)!").fadeIn(200);
+        }
+        else
+        {
+            $('#cancel_b_c_space').fadeOut(200);
+            $('#b_c_space').fadeOut(200);
+            $('#p_c_space').fadeIn(200);
+        }
+    });
+});
+
 $('.clear_form1').click(function(){
     $('input[name=first_name]').val('');
     $('input[name=last_name]').val('');

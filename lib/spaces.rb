@@ -52,7 +52,7 @@ class Spaces
     end
 
   rescue Exception => e
-    raise "#{e.inspect}"
+    raise "create space failed" #"#{e.inspect}"
   end
 
   def update(name, space_guid)
@@ -85,7 +85,7 @@ class Spaces
     space.delete!
 
   rescue Exception => e
-    raise "#{e.inspect}"
+    raise "delete space failed" #"#{e.inspect}"
   end
 
   def read_apps(space_guid)
