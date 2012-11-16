@@ -120,11 +120,41 @@ class CreditCards
 
   end
 
-  def add_organization_credit_card(org_guid, card_id)
-    headers = {'Content-Type' => 'application/json', 'Authorization' => @auth_token}
-    attributes = {:credit_card_token => card_id, :organization_guid => org_guid}
+  def get_org_credit_card_guid(org_guid)
+    headers = {'Content-Type' => 'text/html;charset=utf-8', 'Authorization' => @auth_token}
 
-    response = HttpDirectClient.post("#{@base_path}/organization_credit_cards", :headers => headers, :body => attributes.to_json)
+    url_param ={:q=>"organization_guid:#{org_guid}"}
+    response = HttpDirectClient.get("#{@base_path}/organization_credit_cards", :headers => headers, :query => url_param)
+
+    if response.request.last_response.code == '200'
+      if JSON.parse(response.body)["total_results"] > 0
+        relation_id = JSON.parse(response.body)["resources"][0]["metadata"]["guid"]
+        return relation_id
+      else
+        return nil
+      end
+    end
+
+  end
+
+  #added param if card already exist make update, else create org credit card
+  def add_organization_credit_card(org_guid, new_card_id, card_exists)
+    headers = {'Content-Type' => 'application/json', 'Authorization' => @auth_token}
+
+    if (card_exists)
+      relation_id = get_org_credit_card_guid(org_guid)
+
+      puts relation_id
+
+      if relation_id
+        attributes = {:credit_card_token => new_card_id}
+        response = HttpDirectClient.put("#{@base_path}/organization_credit_cards/#{relation_id}", :headers => headers, :body => attributes.to_json)
+      end
+    else
+      attributes = {:credit_card_token => new_card_id, :organization_guid => org_guid}
+      response = HttpDirectClient.post("#{@base_path}/organization_credit_cards", :headers => headers, :body => attributes.to_json)
+    end
+
     return true if response.request.last_response.code == '201'
 
   rescue Exception => e

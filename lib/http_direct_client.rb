@@ -8,6 +8,11 @@ class HttpDirectClient
     self.class.post(path, options)
   end
 
+  def put(path, options={})
+    jsonify_body!(options)
+    self.class.put(path, options)
+  end
+
   def delete(path, options={})
     jsonify_body!(options)
     self.class.delete(path, options)
