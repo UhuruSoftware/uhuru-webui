@@ -150,3 +150,22 @@ $('.clear_form2').click(function(){
     $('.form_errors2').hide();
 });
 
+
+$(function(){
+    $('#organization_input').keypress(function(event){
+        var org = $(this).val();
+        if(event.which == 13 && org.length < 2)
+        {
+            event.preventDefault();
+        }
+    });
+
+    $('#space_input').keypress(function(event){
+        var space = $(this).val();
+        if(event.which == 13 && space.length < 2)
+        {
+            event.preventDefault();
+        }
+    });
+});
+

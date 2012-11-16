@@ -18,7 +18,7 @@ class ServiceInstances
     service
 
   rescue Exception => e
-    raise "#{e.inspect}"
+    raise "create service error" #"#{e.inspect}"
   end
 
   def read_service_plans()
@@ -35,7 +35,7 @@ class ServiceInstances
     service_instance.delete!
 
   rescue Exception => e
-    raise "#{e.inspect}"
+    raise "delete service error" #"#{e.inspect}"
   end
 
   class Service

@@ -74,7 +74,7 @@
                                                 <div class="tile_app_name">
                                                     <span class="app_name_big"><%= app.name %></span>
                                                     <span class="app_status" style="font-weight: bold">Status: <span style="font-weight: normal" class="pass_app_status"><%= app.state %></span></span>
-                                                    <a href="#"><span class="small_trash delete-app-button"></span></a>
+                                                    <a href="#"><span class="small_trash delete-app-button" id="<%= app.name %>" title="<%= app.name %>" onmousemove="prepareToDeleteApp(this);"></span></a>
                                                 </div>
 
                                                 <form action="/startApp" method="post">
@@ -364,7 +364,7 @@
     <div class="modal-footer">
         <span class="server_errors" id="delete_app_failed"><%= session[:e_delete_app] %></span>
         <div class="button_case_delete_organization_and_space">
-            <a href="#" class="btn btn_right_delete_organization_and_space close">No</a>
+            <a href="#" class="btn btn_right_delete_organization_and_space close">Cancel</a>
             <form action="/deleteClickedApp" method="post">
                 <input type="submit" value="Delete" class="btn btn-danger btn_left_delete_organization_and_space white_btn_text" />
                 <input type="text" id="pass_app" name="appGuid" class="blank_input" />
@@ -396,9 +396,9 @@
     </div>
 
     <div class="modal-footer">
-
+        <span class="server_errors" id="create_service_failed"><%= session[:e_create_service] %></span>
         <div class="button_case_create_organization_and_space">
-          <a href="#" class="btn btn_right_create_organization_and_space">Close</a>
+          <a href="#" class="btn btn_right_create_organization_and_space close">Close</a>
 
           <form action="/createService" method="post">
                 <input type="text" id="new_service_name" name="serviceName" class="blank_input"/>
@@ -421,8 +421,9 @@
         </p>
     </div>
     <div class="modal-footer">
+        <span class="server_errors" id="delete_service_failed"><%= session[:e_delete_service] %></span>
         <div class="button_case_delete_organization_and_space">
-            <a href="#" class="btn btn_right_delete_organization_and_space">No</a>
+            <a href="#" class="btn btn_right_delete_organization_and_space close">Cancel</a>
             <form action="/deleteClickedService" method="post">
                 <input type="submit" value="Delete" class="btn btn-danger btn_left_delete_organization_and_space white_btn_text" />
                 <input type="text" id="pass_service" name="serviceGuid" class="blank_input" />

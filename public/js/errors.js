@@ -18,6 +18,9 @@ var error_delete_user = $('#delete_user_failed').html();
 
 var error_create_app = $('#create_app_failed').html();
 var error_delete_app = $('#delete_app_failed').html();
+var error_create_service = $('#create_service_failed').html();
+var error_delete_service = $('#delete_service_failed').html();
+
 var error_start_app = $('#start_app_failed').html();
 var error_stop_app = $('#stop_app_failed').html();
 
@@ -25,6 +28,7 @@ var error_bind_service = $('#bind_service_failed').html();
 var error_unbind_service = $('#unbind_service_failed').html();
 var error_bind_url = $('#bind_url_failed').html();
 var error_unbind_url = $('#unbind_url_failed').html();
+
 
     if(login == "Wrong email and/or password!")
     {
@@ -69,6 +73,9 @@ var error_unbind_url = $('#unbind_url_failed').html();
         $('#screen').css({	"display": "block", opacity: 0.7, "width": "10000px", "height": "10000px"});
         $('body').css({"overflow":"hidden"});
         $('#delete_organization_modal').fadeIn(600);
+        $('.btn-danger').hide();
+        $('.modal-body').html('');
+        $('.modal-body').html('<p>Error!</p>');
         $('.close').click(function(){$("#delete_organization_modal").css("display", "none");$('#screen').css("display", "none");$('body').css({"overflow":"auto"}); $('#delete_organization_failed').html('');});
     }
 
@@ -77,6 +84,9 @@ var error_unbind_url = $('#unbind_url_failed').html();
         $('#screen').css({	"display": "block", opacity: 0.7, "width": "10000px", "height": "10000px"});
         $('body').css({"overflow":"hidden"});
         $('#delete_space_modal').fadeIn(600);
+        $('.btn-danger').hide();
+        $('.modal-body').html('');
+        $('.modal-body').html('<p>Error!</p>');
         $('.close').click(function(){$("#delete_space_modal").css("display", "none");$('#screen').css("display", "none");$('body').css({"overflow":"auto"}); $('#delete_space_failed').html('');});
     }
 
@@ -85,7 +95,7 @@ var error_unbind_url = $('#unbind_url_failed').html();
         $('#screen').css({	"display": "block", opacity: 0.7, "width": "10000px", "height": "10000px"});
         $('body').css({"overflow":"hidden"});
         $('#add_user').fadeIn(600);
-        $('.close').click(function(){$("#add_user").css("display", "none");$('#screen').css("display", "none");$('body').css({"overflow":"auto"}); $('#create_user_failed').html('');});
+        $('.close').click(function(){$("#add_user").css("display", "none");$('#screen').css("display", "none");$('body').css({"overflow":"auto"}); $('#create_user_failed').html(''); location.reload();});
     }
 
     if(error_delete_user == "You are not authorized to delete this user!")
@@ -93,7 +103,10 @@ var error_unbind_url = $('#unbind_url_failed').html();
         $('#screen').css({	"display": "block", opacity: 0.7, "width": "10000px", "height": "10000px"});
         $('body').css({"overflow":"hidden"});
         $('#delete_user_modal').fadeIn(600);
-        $('.close').click(function(){$("#delete_user_modal").css("display", "none");$('#screen').css("display", "none");$('body').css({"overflow":"auto"}); $('#delete_user_failed').html('');});
+        $('.btn-danger').hide();
+        $('.modal-body').html('');
+        $('.modal-body').html('<p>Error!</p>');
+        $('.close').click(function(){$("#delete_user_modal").css("display", "none");$('#screen').css("display", "none");$('body').css({"overflow":"auto"}); $('#delete_user_failed').html(''); location.reload();});
     }
 
     if(error_create_app == "App was not created: server error!")
@@ -101,7 +114,7 @@ var error_unbind_url = $('#unbind_url_failed').html();
         $('#screen').css({	"display": "block", opacity: 0.7, "width": "10000px", "height": "10000px"});
         $('body').css({"overflow":"hidden"});
         $('#create_tempcta_modal').fadeIn(600);
-        $('.close').click(function(){$("#create_tempcta_modal").css("display", "none");$('#screen').css("display", "none");$('body').css({"overflow":"auto"}); $('#create_app_failed').html('');});
+        $('.close').click(function(){$("#create_tempcta_modal").css("display", "none");$('#screen').css("display", "none");$('body').css({"overflow":"auto"}); $('#create_app_failed').html(''); location.reload();});
     }
 
     if(error_delete_app == "App was not deleted: server error!")
@@ -109,7 +122,29 @@ var error_unbind_url = $('#unbind_url_failed').html();
         $('#screen').css({	"display": "block", opacity: 0.7, "width": "10000px", "height": "10000px"});
         $('body').css({"overflow":"hidden"});
         $('#delete_app').fadeIn(600);
-        $('.close').click(function(){$("#delete_app").css("display", "none");$('#screen').css("display", "none");$('body').css({"overflow":"auto"}); $('#delete_app_failed').html('');});
+        $('.btn-danger').hide();
+        $('.modal-body').html('');
+        $('.modal-body').html('<p>Error!</p>');
+        $('.close').click(function(){$("#delete_app").css("display", "none");$('#screen').css("display", "none");$('body').css({"overflow":"auto"}); $('#delete_app_failed').html(''); location.reload();});
+    }
+
+    if(error_create_service == "Service was not created: server error!")
+    {
+        $('#screen').css({	"display": "block", opacity: 0.7, "width": "10000px", "height": "10000px"});
+        $('body').css({"overflow":"hidden"});
+        $('#add_ctService_modal').fadeIn(600);
+        $('.close').click(function(){$("#add_ctService_modal").css("display", "none");$('#screen').css("display", "none"); $('#unbind_url_failed').html(''); location.reload();});
+    }
+
+    if(error_delete_service == "Service was not deleted: server error!")
+    {
+        $('#screen').css({	"display": "block", opacity: 0.7, "width": "10000px", "height": "10000px"});
+        $('body').css({"overflow":"hidden"});
+        $('#delete_service').fadeIn(600);
+        $('.btn-danger').hide();
+        $('.modal-body').html('');
+        $('.modal-body').html('<p>Error!</p>');
+        $('.close').click(function(){$("#delete_service").css("display", "none");$('#screen').css("display", "none"); $('#unbind_url_failed').html(''); location.reload();});
     }
 
 
@@ -119,7 +154,7 @@ var error_unbind_url = $('#unbind_url_failed').html();
         $('#screen').css({	"display": "block", opacity: 0.7, "width": "10000px", "height": "10000px"});
         $('body').css({"overflow":"hidden"});
         $('#bind_service_modal').fadeIn(600);
-        $('.close').click(function(){$("#bind_service_modal").css("display", "none");$('#screen').css("display", "none"); $('#bind_service_failed').html('');});
+        $('.close').click(function(){$("#bind_service_modal").css("display", "none");$('#screen').css("display", "none"); $('#bind_service_failed').html(''); location.reload();});
     }
 
     if(error_unbind_service == "Can't unbind this service from app!")
@@ -127,7 +162,7 @@ var error_unbind_url = $('#unbind_url_failed').html();
         $('#screen').css({	"display": "block", opacity: 0.7, "width": "10000px", "height": "10000px"});
         $('body').css({"overflow":"hidden"});
         $('#unbind_service_modal').fadeIn(600);
-        $('.close').click(function(){$("#unbind_service_modal").css("display", "none");$('#screen').css("display", "none"); $('#unbind_service_failed').html('');});
+        $('.close').click(function(){$("#unbind_service_modal").css("display", "none");$('#screen').css("display", "none"); $('#unbind_service_failed').html(''); location.reload();});
     }
 
     if(error_bind_url == "Can't bind this url to app!")
@@ -135,7 +170,7 @@ var error_unbind_url = $('#unbind_url_failed').html();
         $('#screen').css({	"display": "block", opacity: 0.7, "width": "10000px", "height": "10000px"});
         $('body').css({"overflow":"hidden"});
         $('#bind_uri_modal').fadeIn(600);
-        $('.close').click(function(){$("#bind_uri_modal").css("display", "none");$('#screen').css("display", "none"); $('#bind_url_failed').html('');});
+        $('.close').click(function(){$("#bind_uri_modal").css("display", "none");$('#screen').css("display", "none"); $('#bind_url_failed').html(''); location.reload();});
     }
 
     if(error_unbind_url == "Can't unbind this url from app!")
@@ -143,7 +178,7 @@ var error_unbind_url = $('#unbind_url_failed').html();
         $('#screen').css({	"display": "block", opacity: 0.7, "width": "10000px", "height": "10000px"});
         $('body').css({"overflow":"hidden"});
         $('#unbind_uri_modal').fadeIn(600);
-        $('.close').click(function(){$("#unbind_uri_modal").css("display", "none");$('#screen').css("display", "none"); $('#unbind_url_failed').html('');});
+        $('.close').click(function(){$("#unbind_uri_modal").css("display", "none");$('#screen').css("display", "none"); $('#unbind_url_failed').html(''); location.reload();});
     }
 
 

@@ -113,7 +113,6 @@ module Uhuru::Webui
     # /space(guid) - current space - page errors
         if session[:error] == "create app error"
             session[:e_create_app] = "App was not created: server error!"
-          puts 'bb'
             redirect '/resetSpace'
         end
 
@@ -121,6 +120,18 @@ module Uhuru::Webui
             session[:e_delete_app] = "App was not deleted: server error!"
             redirect '/resetSpace'
         end
+
+        if session[:error] == "create service error"
+            session[:e_create_service] = "Service was not created: server error!"
+            redirect '/resetSpace'
+        end
+
+        if session[:error] == "delete service error"
+            session[:e_delete_service] = "Service was not deleted: server error!"
+            redirect '/resetSpace'
+        end
+
+
 
         if session[:error] == "start app error"
             session[:e_start_app] = "Can't start app!"
@@ -375,6 +386,8 @@ module Uhuru::Webui
         session[:e_unbind_service] = ""
         session[:e_bind_url] = ""
         session[:e_unbind_url] = ""
+        session[:e_create_service] = ""
+        session[:e_delete_service] = ""
       end
       session[:e_reset_space] = false
       # <<
