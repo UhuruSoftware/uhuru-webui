@@ -49,7 +49,7 @@ class UsersSetup
       begin
         emails = [email]
 
-        info = {userName: email, password: password, name: {givenName: given_name, familyName: family_name}}
+        info = {userName: email, password: password, name: {givenName: first_name, familyName: last_name}}
         info[:emails] = emails.respond_to?(:each) ?
             emails.each_with_object([]) { |email, o| o.unshift({:value => email}) } :
             [{:value => (emails || name)}]
@@ -78,10 +78,10 @@ class UsersSetup
           org = organizations_Obj.get_organization_by_name(org_name)
 
           if orgs == nil || org == nil
-            org_guid = organizations_Obj.create(config, org_name, user_id)
+            org_guid = organizations_Obj.create(@config, org_name, user_id)
           end
         rescue
-          raise Error "org create error"
+          raise "org create error"
         end
       else
         raise "user exists"
