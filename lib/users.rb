@@ -26,40 +26,55 @@ class Users
   end
 
   # roles is an array of roles ex: ['owner', 'manager']
+
   def add_user_to_org_with_role(org_guid, user_guid, roles) # to use from invite user
 
     org = @client.organization(org_guid)
 
     user_exist = true
-    user = @client.users.find {|u| u.guid == user_guid}
+    user = @client.users.find { |u| u.guid == user_guid }
     unless user
       user_exist = create_user(user_guid)
     end
 
     if (user_exist)
+      user_find = org.users.find { |u| u.guid == user_guid}
 
-      existing_users = org.users
-      existing_users << @client.user(user_guid)
-
-      org.users = existing_users
+      unless user_find
+        existing_users = org.users
+        existing_users << @client.user(user_guid)
+        org.users = existing_users
+      end
 
       roles.each do |role|
         case role
           when 'owner'
-            existing_managers = org.managers
-            existing_managers << @client.user(user_guid)
+            user_find = org.managers.find { |u| u.guid == user_guid }
 
-            org.managers = existing_managers
+            unless user_find
+              existing_managers = org.managers
+              existing_managers << @client.user(user_guid)
+
+              org.managers = existing_managers
+            end
           when 'billing'
-            existing_billing_managers = org.billing_managers
-            existing_billing_managers << @client.user(user_guid)
+            user_find = org.billing_managers.find { |u| u.guid == user_guid }
 
-            org.billing_managers = existing_billing_managers
+            unless user_find
+              existing_billing_managers = org.billing_managers
+              existing_billing_managers << @client.user(user_guid)
+
+              org.billing_managers = existing_billing_managers
+            end
           when 'auditor'
-            existing_auditors = org.auditors
-            existing_auditors << @client.user(user_guid)
+            user_find = org.auditors.find { |u| u.guid == user_guid }
 
-            org.auditors = existing_auditors
+            unless user_find
+              existing_auditors = org.auditors
+              existing_auditors << @client.user(user_guid)
+
+              org.auditors = existing_auditors
+            end
         end
       end
 
@@ -106,6 +121,40 @@ class Users
   rescue Exception => e
     false
     raise "create user error" #"#{e.inspect}, #{e.backtrace}"
+  end
+
+  def check_user_org_roles(org_guid, user_guid, roles)
+    org = @client.organization(org_guid)
+    correct_roles = true
+
+    roles.each do |role|
+      case role
+        when 'owner'
+          user = org.managers.find { |u| u.guid == user_guid }
+          if user != nil
+            correct_roles = correct_roles && true if user != nil
+          else
+            return false
+          end
+
+        when 'billing'
+          user = org.billing_managers.find { |u| u.guid == user_guid }
+          if user != nil
+            correct_roles = correct_roles && true if user != nil
+          else
+            return false
+          end
+        when 'auditor'
+          user = org.auditors.find { |u| u.guid == user_guid }
+          if user != nil
+            correct_roles = correct_roles && true if user != nil
+          else
+            return false
+          end
+      end
+    end
+
+    correct_roles
   end
 
   def get_user_guid

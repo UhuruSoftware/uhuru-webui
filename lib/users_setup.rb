@@ -65,25 +65,49 @@ class UsersSetup
         user_id = user[:id]
         admin_token = get_user_token(@cf_admin, @cf_pass)
         users_obj = Users.new(admin_token, @cf_target)
+        organizations_Obj = Organizations.new(admin_token, @cf_target)
+        org_name = email + "'s organization"
+        org = organizations_Obj.get_organization_by_name(org_name)
       rescue
         raise "signup error"
       end
 
       unless users_obj.user_exists(user_id)
         begin
-          organizations_Obj = Organizations.new(admin_token, @cf_target)
           orgs = organizations_Obj.read_orgs_by_user(user_id)
 
-          org_name = email + "'s organization"
-          org = organizations_Obj.get_organization_by_name(org_name)
-
-          if orgs == nil || org == nil
+          if orgs == nil && org == nil
+            # when user has no default org and no other org, create default org
             org_guid = organizations_Obj.create(@config, org_name, user_id)
+          elsif orgs != nil
+            # this should check if for any of the orgs, the user is owner and billing, if not should create the default org
+            correct_roles = true
+
+            orgs.foreach do |org|
+              correct_roles = correct_roles && users_obj.check_user_org_roles(org.guid, user_id, ['owner', 'billing'])
+            end
+
+            if correct_roles == false
+              organizations_Obj.create(@config, org_name, user_id)
+            end
+
+          elsif org != nil
+            # when user has default org, but user and roles are not in db
+
+            users_obj.add_user_to_org_with_role(org.guid, user_id, ['owner', 'billing'])
           end
         rescue
           raise "org create error"
         end
       else
+        begin
+          #this part checks if the default org has the right roles - when user is added to default org, but could not add roles
+          if org != nil
+            users_obj.add_user_to_org_with_role(org.guid, user_id, ['owner', 'billing'])
+          end
+        rescue
+          raise "org create error"
+        end
         raise "user exists"
       end
 
@@ -117,6 +141,15 @@ class UsersSetup
     get_user_token(@cf_admin, @cf_pass)
   end
 
+  def get_uaa_client
+    token_issuer = CF::UAA::TokenIssuer.new(@uaaApi, @client_id, @client_secret)
+    token = token_issuer.client_credentials_grant()
+
+    uaac = CF::UAA::UserAccount.new(@uaaApi, token.info[:token_type] + ' ' + token.info[:access_token])
+
+    uaac
+  end
+
   private
 
   def get_user_token(email, password)
@@ -143,15 +176,6 @@ class UsersSetup
     user_details
   rescue Exception => e
     raise "#{e.inspect}"
-  end
-
-  def get_uaa_client
-    token_issuer = CF::UAA::TokenIssuer.new(@uaaApi, @client_id, @client_secret)
-    token = token_issuer.client_credentials_grant()
-
-    uaac = CF::UAA::UserAccount.new(@uaaApi, token.info[:token_type] + ' ' + token.info[:access_token])
-
-    uaac
   end
 
   class UserDetails
