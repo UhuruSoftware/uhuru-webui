@@ -102,43 +102,6 @@ src: url('segoe_ui.ttf'); /* IE9+ */
     border: 1px solid #000;
 }
 
-#signup_button
-{
-    margin-top: 10px;
-    color: #ffffff;
-    font-family: 'Segoe UI Light', 'Open Sans', Verdana, Arial, Helvetica, sans-serif;
-    font-weight: 100;
-    font-size: 16px;
-    letter-spacing: 0.01em;
-    background-color: #000000;
-    background-image: url("../images/btn_checkmark.png");
-    background-repeat: no-repeat;
-    background-position: 5% center;
-    height: 26px;
-    border: 0;
-    float: right;
-    text-align: right;
-    cursor: pointer;
-    padding-left: 35px;
-    padding-right: 10px;
-}
-
-#login_btn
-{
-    margin-top: 10px;
-    color: #ffffff;
-    font-family: 'Segoe UI Light', 'Open Sans', Verdana, Arial, Helvetica, sans-serif;
-    font-weight: 100;
-    font-size: 16px;
-    letter-spacing: 0.01em;
-    background-color: #000000;
-    border: 0;
-    height: 26px;
-    float: right;
-    cursor: pointer;
-    text-align: center;
-}
-
 .icon-quote
 {
     height: 25px;
@@ -1101,11 +1064,6 @@ textarea
     position: relative;
 }
 
-.btn.login, .btn.logout
-{
-    text-align: left;
-}
-
 .validationMessage
 {
     color: #a00;
@@ -1240,7 +1198,7 @@ a
 	position: absolute;
 	margin-left: -300px;
 	left: 50%;
-	top: 200px;
+	top: 80px;
 	z-index: 20;
 	display: none;
 }

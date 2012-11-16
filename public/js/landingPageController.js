@@ -6,7 +6,7 @@ var login_modal = function(){
 	$('body').css({"overflow":"hidden"});
 	$('#login_modal').fadeIn(600);
     $('.close').click(function(){$("#login_modal").css("display", "none");$('#screen').css("display", "none");$('body').css("overflow", "auto");$('#video_placeholder').css('display', 'block');});
-    $('.btn').click(function(){$("#login_modal").css("display", "none");$('#screen').css("display", "none");$('body').css("overflow", "auto");$('#video_placeholder').css('display', 'block');});
+    $('.cancel').click(function(){$("#login_modal").css("display", "none");$('#screen').css("display", "none");$('body').css("overflow", "auto");$('#video_placeholder').css('display', 'block');});
 }
 
 
@@ -20,7 +20,7 @@ var signup_modal = function(){
     $('#email').val('');
 	$('#signup_modal').fadeIn(600);
     $('.close').click(function(){$("#signup_modal").css("display", "none");$('#screen').css("display", "none");$('body').css("overflow", "auto");$('#show_modal_errors').text('');$('#video_placeholder').css('display', 'block');});
-    $('.cancel_btn').click(function(){$("#signup_modal").css("display", "none");$('#screen').css("display", "none");$('body').css("overflow", "auto");$('#show_modal_errors').text('');$('#video_placeholder').css('display', 'block');});
+    $('.cancel').click(function(){$("#signup_modal").css("display", "none");$('#screen').css("display", "none");$('body').css("overflow", "auto");$('#show_modal_errors').text('');$('#video_placeholder').css('display', 'block');});
 
 }
 

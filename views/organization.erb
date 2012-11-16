@@ -188,9 +188,9 @@
     <div class="modal-footer">
     <span class="server_errors" id="add_credit_failed"><%= session[:e_add_credit] %></span>
         <div class="button_case_delete_organization_and_space">
-            <a href="#" class="btn btn_right_delete_organization_and_space btn_cancel">No</a>
+            <button type="button" class="btn btn_right_delete_organization_and_space cancel"><span class="line">| </span>No </button>
             <form action="/addCreditCardToOrganization" method="post">
-                <input type="submit" value="Yes" class="btn btn-danger btn_left_delete_organization_and_space white_btn_text"/>
+                <button type="submit" class="btn btn_left_delete_organization_and_space ok"><span class="line">| </span>Yes </button>
                 <input type="text" name="cardId" id="pass_credit_card_add_id" class="blank_input" />
             </form>
         </div>
@@ -216,8 +216,8 @@
         <div class="modal-footer">
             <span class="server_errors" id="create_space_failed"><%= session[:e_create_space] %></span>
             <div class="button_case_create_organization_and_space">
-                <a href="#" class="btn btn_right_create_organization_and_space close" id="cancel_b_c_space">Cancel</a>
-                <input type="submit" value="Create" class="btn btn-success btn_left_create_organization_and_space white_btn_text" id="b_c_space" />
+                <button type="button" class="btn btn_right_create_organization_and_space cancel" id="cancel_b_c_space"><span class="line">| </span>Cancel </button>
+                <button type="submit" value="Create" class="btn btn_left_create_organization_and_space ok" id="b_c_space"><span class="line">| </span>Create </button>
                 <p class="hidden_modal_messages" id="p_c_space">Your space is being created...</p>
             </div>
         </div>
@@ -245,9 +245,9 @@
     <div class="modal-footer">
         <span class="server_errors" id="delete_space_failed"><%= session[:e_delete_space] %></span>
         <div class="button_case_delete_organization_and_space">
-            <a href="#" class="btn btn_right_delete_organization_and_space close" id="cancel_b_d_space">Cancel</a>
+            <button type="button" class="btn btn_right_delete_organization_and_space cancel" id="cancel_b_d_space"><span class="line">| </span>Cancel </button>
             <form action="/deleteClickedSpace" method="post">
-                <input type="submit" value="Delete" class="btn btn-danger btn_left_delete_organization_and_space white_btn_text" id="b_d_space" />
+                <button type="submit" class="btn btn_left_delete_organization_and_space danger" id="b_d_space"><span class="line">| </span>Delete </button>
                 <input type="text" id="pass_guid" name="spaceGuid" style="display: none;" />
                 <p class="hidden_modal_messages" id="p_d_space">Your space is being removed...</p>
             </form>
@@ -271,10 +271,10 @@
     <div class="modal-footer">
         <span class="server_errors" id="delete_user_failed"><%= session[:e_delete_user] %></span>
         <div class="button_case_delete_organization_and_space">
-            <a href="#" class="btn btn_right_delete_organization_and_space close">Cancel</a>
+            <button type="button" class="btn btn_right_delete_organization_and_space cancel"><span class="line">| </span>Cancel </button>
             <form action="/deleteUser" method="post">
                 <input type="text" class="blank_input" id="pass_user_guid" value="" name="thisUser"/>
-                <input type="submit" class="btn btn-danger btn_left_delete_organization_and_space white_btn_text" value="Delete"/>
+                <button type="submit" class="btn btn_left_delete_organization_and_space danger danger"><span class="line">| </span>Delete </button>
             </form>
         </div>
 
@@ -302,9 +302,9 @@
     <div class="modal-footer">
         <div class="button_case_delete_organization_and_space">
             <span class="server_errors" id="delete_this_organization_failed"><%= session[:e_delete_organization] %></span>
-            <a href="#" class="btn btn_right_delete_organization_and_space" id="cancel_b_d_organization">No</a>
+            <button class="btn btn_right_delete_organization_and_space cancel" id="cancel_b_d_organization"><span class="line">| </span>Cancel </button>
             <form action="/deleteCurrentOrganization" method="post">
-                <input type="submit" value="Delete" class="btn btn-danger btn_left_delete_organization_and_space white_btn_text" id="b_d_organization" />
+                <button type="submit" class="btn btn_left_delete_organization_and_space danger" id="b_d_organization"><span class="line">| </span>Delete </button>
                 <p class="hidden_modal_messages" id="p_d_organization">Your organization is being removed...</p>
             </form>
         </div>
@@ -346,7 +346,7 @@
             <form action="/addUsers" method="post">
                 <input type="text" id="new_user_type" name="userType" class="blank_input" />
                 <input type="text" id="new_user_email" name="userEmail" class="blank_input" />
-                <input type="submit" value="Invite User" class="btn btn-success btn_right_create_organization_and_space white_btn_text" />
+                <button type="submit" class="btn btn_right_create_organization_and_space ok"><span class="line">| </span>Invite User </button>
             </form>
         </div>
     </div>

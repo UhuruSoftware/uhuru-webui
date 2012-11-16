@@ -55,8 +55,8 @@
             <span class="server_errors" id="create_organization_failed"><%= session[:e_create_organization] %></span>
             <p class="hidden_modal_messages" id="p_c_organization">Your organization is being created...</p>
             <div class="button_case_create_organization_and_space">
-                <a href="#" class="btn btn_right_create_organization_and_space close" id="cancel_b_c_organization">Cancel</a>
-                <input type="submit" value="Create" class="btn btn-success btn_left_create_organization_and_space white_btn_text" id="b_c_organization"/>
+                <button type="button" class="btn btn_right_create_organization_and_space cancel" id="cancel_b_c_organization"><span class="line">| </span>Cancel </button>
+                <button type="submit" class="btn btn_left_create_organization_and_space ok" id="b_c_organization"><span class="line">| </span>Create </button>
             </div>
         </div>
     </form>
@@ -83,9 +83,9 @@
         <span class="server_errors" id="delete_organization_failed"><%= session[:e_delete_organization] %></span>
         <p class="hidden_modal_messages" id="p_d_organization">Your organization is being removed...</p>
         <div class="button_case_delete_organization_and_space">
-            <a href="#" class="btn btn_right_delete_organization_and_space close" id="cancel_b_d_organization">Cancel</a>
+            <button type="button" class="btn btn_right_delete_organization_and_space cancel" id="cancel_b_d_organization"><span class="line">| </span>Cancel</button>
             <form action="/deleteClickedOrganization" method="post">
-                <input type="submit" value="Delete" class="btn btn-danger btn_left_delete_organization_and_space white_btn_text" id="b_d_organization" />
+                <button type="submit" value="Delete" class="btn btn_left_delete_organization_and_space ok" id="b_d_organization"><span class="line">| </span>Delete </button>
                 <input type="text" id="pass_guid" name="orgGuid" class="blank_input" />
             </form>
         </div>

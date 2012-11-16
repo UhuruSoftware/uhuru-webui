@@ -47,9 +47,9 @@
     <div class="modal-footer">
     <span class="server_errors" id="delete_credit_failed"><%= session[:e_delete_credit] %></span>
         <div class="button_case_delete_organization_and_space">
-            <a href="#" class="btn btn_right_delete_organization_and_space btn_cancel close" id="cancel_b_d_organization">Cancel</a>
+            <button class="btn btn_right_delete_organization_and_space btn_cancel cancel" id="cancel_b_d_organization"><span class="line">| </span>Cancel </button>
             <form action="/deleteClickedCreditCard" method="post">
-                <input type="submit" value="Delete" class="btn btn-danger btn_left_delete_organization_and_space white_btn_text" />
+                <button type="submit" value="Delete" class="btn btn_left_delete_organization_and_space danger"><span class="line">| </span>Delete </button>
                 <input type="text" id="pass_credit_card_id" name="credit_card_id" class="blank_input" />
             </form>
         </div>
@@ -436,8 +436,8 @@
         <span class="server_errors" id="create_credit_failed"><%= session[:e_create_credit] %></span>
         <p><span id="show_modal_errors"></span></p>
             <div class="button_case_create_organization_and_space">
-                <a href="#" class="btn btn_right_create_organization_and_space btn_cancel close" id="cancel_b_c_organization">Cancel</a>
-                <input type="submit" value="Create" class="btn btn-success btn_left_create_organization_and_space white_btn_text submit_credit_card"/>
+                <button type="button" class="btn btn_right_create_organization_and_space cancel"><span class="line">| </span>Cancel </button>
+                <button type="submit" class="btn btn_left_create_organization_and_space white_btn_text submit_credit_card ok"><span class="line">| </span>Create </button>
             </div>
         </div>
 

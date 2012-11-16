@@ -187,9 +187,9 @@
                                     <input type="text" class="send_app_instances blank_input" name="appInstances" value="<%= app.instances %>"/>
                                     <input type="text" class="send_app_memory blank_input" name="appMemory" value="<%= app.memory %>" />
 
-                                    <div class="button_case_app_details">
-                                        <a href="#" class="btn btn_left_app_details black_button_text close_app_details">Close</a>
-                                        <input type="submit" value="Save Changes" class="btn btn-success btn_right_app_details white_btn_text blank_input hidden_app_details_submit_button"/>
+                                    <div class="button_case_create_organization_and_space">
+                                        <button type="button" class="btn btn_right_create_organization_and_space close_app_details cancel"><span class="line">| </span>Cancel </button>
+                                        <button type="submit" class="btn btn_left_create_organization_and_space blank_input hidden_app_details_submit_button ok"><span class="line">| </span>Update </button>
                                     </div>
                                 </form>
                             </div>
@@ -247,9 +247,9 @@
     <div class="modal-footer">
         <div class="button_case_delete_organization_and_space">
             <span class="server_errors" id="delete_this_space_failed"><%= session[:e_delete_space] %></span>
-            <a href="#" class="btn btn_right_delete_organization_and_space" id="cancel_b_d_space">No</a>
+            <button type="button" class="btn btn_right_delete_organization_and_space cancel" id="cancel_b_d_space"><span class="line">| </span>Cancel </button>
             <form action="/deleteCurrentSpace" method="post">
-                <input type="submit" value="Delete" class="btn btn-danger btn_left_delete_organization_and_space white_btn_text" />
+                <button type="submit" class="btn btn_left_delete_organization_and_space danger"><span class="line">| </span>Delete </button>
                 <p class="hidden_modal_messages" id="p_d_space">Your space is being removed...</p>
             </form>
         </div>
@@ -346,7 +346,7 @@
     <div class="modal-footer">
         <span class="server_errors" id="create_app_failed"><%= session[:e_create_app] %></span>
         <div class="button_case_create_organization_and_space">
-            <a href="#" class="btn btn_right_create_organization_and_space close">Cancel</a>
+            <button type="button" class="btn btn_right_create_organization_and_space cancel"><span class="line">| </span>Cancel </button>
         </div>
     </div>
 </div>
@@ -365,9 +365,9 @@
     <div class="modal-footer">
         <span class="server_errors" id="delete_app_failed"><%= session[:e_delete_app] %></span>
         <div class="button_case_delete_organization_and_space">
-            <a href="#" class="btn btn_right_delete_organization_and_space close">Cancel</a>
+            <button class="btn btn_right_delete_organization_and_space cancel"><span class="line">| </span>Cancel </button>
             <form action="/deleteClickedApp" method="post">
-                <input type="submit" value="Delete" class="btn btn-danger btn_left_delete_organization_and_space white_btn_text" />
+                <button type="submit" class="btn btn_left_delete_organization_and_space danger"><span class="line">| </span>Delete </button>
                 <input type="text" id="pass_app" name="appGuid" class="blank_input" />
             </form>
         </div>
@@ -399,11 +399,11 @@
     <div class="modal-footer">
         <span class="server_errors" id="create_service_failed"><%= session[:e_create_service] %></span>
         <div class="button_case_create_organization_and_space">
-          <a href="#" class="btn btn_right_create_organization_and_space close">Close</a>
+          <button type="button" class="btn btn_right_create_organization_and_space cancel"><span class="line">| </span>Close </button>
 
           <form action="/createService" method="post">
                 <input type="text" id="new_service_name" name="serviceName" class="blank_input"/>
-                <input type="submit" value="Create" class="btn btn-success btn_left_create_organization_and_space white_btn_text" />
+                <button type="submit" class="btn btn_left_create_organization_and_space ok"><span class="line">| </span>Create </button>
           </form>
 
         </div>
@@ -424,9 +424,9 @@
     <div class="modal-footer">
         <span class="server_errors" id="delete_service_failed"><%= session[:e_delete_service] %></span>
         <div class="button_case_delete_organization_and_space">
-            <a href="#" class="btn btn_right_delete_organization_and_space close">Cancel</a>
+            <button class="btn btn_right_delete_organization_and_space cancel"><span class="line">| </span>Cancel </button>
             <form action="/deleteClickedService" method="post">
-                <input type="submit" value="Delete" class="btn btn-danger btn_left_delete_organization_and_space white_btn_text" />
+                <button type="submit" class="btn btn_left_delete_organization_and_space danger"><span class="line">| </span>Delete </button>
                 <input type="text" id="pass_service" name="serviceGuid" class="blank_input" />
             </form>
         </div>
@@ -459,8 +459,8 @@
         <span class="server_errors" id="bind_service_failed"><%= session[:e_bind_service] %></span>
             <input type="text" id="bind_service_app_name" name="appName" class="blank_input"/>
             <div class="button_case_create_organization_and_space">
-                <a href="#" class="btn btn_right_bind close">Cancel</a>
-                <input type="submit" value="Bind Service" class="btn btn-danger btn_left_bind" />
+                <button type="button" class="btn btn_right_bind cancel"><span class="line">| </span>Cancel </button>
+                <button type="submit" class="btn btn_left_bind ok"><span class="line">| </span>Bind </button>
             </div>
         </div>
     </form>
@@ -488,8 +488,8 @@
             <input type="text" name="serviceName" id="unbind_serviceName" class="blank_input"/>
             <input type="text" id="unbind_service_app_name" name="appName" class="blank_input" />
             <div class="button_case_create_organization_and_space">
-                <a href="#" class="btn btn_right_unbind close">Cancel</a>
-                <input type="submit" value="Unbind Service" class="btn btn-danger btn_left_unbind" />
+                <button type="button" class="btn btn_right_unbind cancel"><span class="line">| </span>Cancel </button>
+                <button type="submit" class="btn btn_left_unbind danger"><span class="line">| </span>Unbind </button>
             </div>
         </form>
     </div>
@@ -523,8 +523,8 @@
             <input type="text" name="uriName" id="uriName" class="blank_input"/>
             <input type="text" id="bind_uri_app_name" name="appName" class="blank_input" />
             <div class="button_case_create_organization_and_space">
-                <a href="#" class="btn btn_right_bind close">Cancel</a>
-                <input type="submit" value="Bind URL" class="btn btn-success btn_left_bind" />
+                <button type="button" class="btn btn_right_bind cancel"><span class="line">| </span>Cancel </button>
+                <button type="submit" class="btn btn_left_bind ok"><span class="line">| </span>Bind </button>
             </div>
         </form>
     </div>
@@ -547,8 +547,8 @@
             <input type="text" name="uriName" id="unbind_uriName" class="blank_input" />
             <input type="text" id="unbind_uri_app_name" name="appName" class="blank_input" />
             <div class="button_case_create_organization_and_space">
-                <a href="#" class="btn btn_right_unbind close">Cancel</a>
-                <input type="submit" value="Unbind URL" class="btn btn-success btn_left_unbind" />
+                <button type="button" class="btn btn_right_unbind cancel"><span class="line">| </span>Cancel </button>
+                <button type="submit" class="btn btn_left_unbind danger"><span class="line">| </span>Unbind </button>
             </div>
         </form>
     </div>

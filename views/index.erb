@@ -26,7 +26,7 @@
                     <input type="text" id="promo_code_input" name="promoCode" />
                 </div>
 
-                <button id="signup_button">Sign Up</i></button>
+                <button class="btn ok" id="signup_button" style="float: right;"><span class="line">| </span>Sign Up </button>
             <div id="signup_container_text">
                 <br />
                 By using our service you agree to the  <a href="http://uhurusoftware.com/tos" target="_blank" class="index_links">Terms of Service</a>
@@ -90,8 +90,8 @@
     <div class="modal-footer">
         <span class="server_errors" id="login_failed"><%= session[:e_login] %></span>
         <div class="button_case_create_organization_and_space">
-            <a href="#" class="btn btn_right_create_organization_and_space">Cancel</a>
-            <input type="submit" value="Log In" class="btn btn-success btn_left_create_organization_and_space white_btn_text" />
+            <button type="button" class="btn btn_right_create_organization_and_space cancel"><span class="line">| </span>Cancel</button>
+            <button type="submit" class="btn btn_left_create_organization_and_space ok"><span class="line">| </span>Login </button>
         </div>
     </div>
     </form>
@@ -137,8 +137,8 @@
             <p><span id="show_modal_errors"></span></p>
             <span class="server_errors" id="sign_up_failed"><%= session[:e_sign_up] %></span>
             <div class="button_case_create_organization_and_space">
-                <a href="#" class="btn btn_right_create_organization_and_space cancel_btn">Cancel</a>
-                <input type="submit" value="Sign Up" class="btn btn-success btn_left_create_organization_and_space white_btn_text submit_form" />
+                <a href="#" class="btn btn_right_create_organization_and_space cancel"><span class="line">| </span>Cancel</a>
+                <button type="submit" class="btn btn-success btn_left_create_organization_and_space ok"><span class="line">| </span>Sign up </button>
             </div>
         </div>
     </form>

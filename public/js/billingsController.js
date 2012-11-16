@@ -4,6 +4,7 @@ var create_credit_card = function(){
 	$('body').css({"overflow":"hidden"});
 	$('#create_credit_card_modal').fadeIn(600);
     $('.close').click(function(){$("#create_credit_card_modal").css("display", "none");$('#screen').css("display", "none");$('#show_modal_errors').hide();$('body').css({"overflow":"auto"});});
+    $('.cancel').click(function(){$("#create_credit_card_modal").css("display", "none");$('#screen').css("display", "none");$('#show_modal_errors').hide();$('body').css({"overflow":"auto"});});
 }
 
 var delete_credit_card = function(){
@@ -11,6 +12,7 @@ var delete_credit_card = function(){
 	$('body').css({"overflow":"hidden"});
 	$('#delete_credit_card_modal').fadeIn(600);
     $('.close').click(function(){$("#delete_credit_card_modal").css("display", "none");$('#screen').css("display", "none");$('body').css({"overflow":"auto"});});
+    $('.cancel').click(function(){$("#delete_credit_card_modal").css("display", "none");$('#screen').css("display", "none");$('body').css({"overflow":"auto"});});
 }
 
 var add_credit_card = function(){
@@ -18,7 +20,7 @@ var add_credit_card = function(){
 	$('body').css({"overflow":"hidden"});
 	$('#add_credit_card_to_organization_modal').fadeIn(600);
     $('.close').click(function(){$("#add_credit_card_to_organization_modal").css("display", "none");$('#screen').css("display", "none");$('body').css({"overflow":"auto"});});
-    $('.btn_cancel').click(function(){$("#add_credit_card_to_organization_modal").css("display", "none");$('#screen').css("display", "none");$('body').css({"overflow":"auto"});});
+    $('.cancel').click(function(){$("#add_credit_card_to_organization_modal").css("display", "none");$('#screen').css("display", "none");$('body').css({"overflow":"auto"});});
 }
 
 
