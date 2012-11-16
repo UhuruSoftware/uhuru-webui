@@ -144,7 +144,7 @@ class Applications
     app.bind(service_instance)
 
   rescue Exception => e
-    raise "unbind service error" "#{e.inspect}"
+    raise "unbind service error" #"#{e.inspect}"
   end
 
   #track cf to see how app routes are managed and what is owning organization for a domain
@@ -167,7 +167,7 @@ class Applications
     app.add_route(route)
 
   rescue Exception => e
-    raise "bind url error" "#{e.inspect}"
+    raise "bind url error" #"#{e.inspect}"
   end
 
   def unbind_app_url(app_name, domain_name, old_url)
@@ -178,7 +178,7 @@ class Applications
     app.remove_route(route)
 
   rescue Exception => e
-    raise "unbind url error" "#{e.inspect}"
+    raise "unbind url error" #"#{e.inspect}"
   end
 
   class Application

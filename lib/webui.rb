@@ -111,9 +111,47 @@ module Uhuru::Webui
         end
 
     # /space(guid) - current space - page errors
-        if session[:error] == "create app failed"
-            session[:e_create_app] = "Internal server error!"
-            redirect '/resetOrganization'
+        if session[:error] == "create app error"
+            session[:e_create_app] = "App was not created: server error!"
+          puts 'bb'
+            redirect '/resetSpace'
+        end
+
+        if session[:error] == "delete app error"
+            session[:e_delete_app] = "App was not deleted: server error!"
+            redirect '/resetSpace'
+        end
+
+        if session[:error] == "start app error"
+            session[:e_start_app] = "Can't start app!"
+            redirect '/resetSpace'
+        end
+
+        if session[:error] == "stop app error"
+            session[:e_stop_app] = "Can't stop app!"
+            redirect '/resetSpace'
+        end
+
+
+
+        if session[:error] == "bind service error"
+            session[:e_bind_service] = "Can't bind this service to app!"
+            redirect '/resetSpace'
+        end
+
+        if session[:error] == "unbind service error"
+            session[:e_unbind_service] = "Can't unbind this service from app!"
+            redirect '/resetSpace'
+        end
+
+        if session[:error] == "bind url error"
+            session[:e_bind_url] = "Can't bind this url to app!"
+            redirect '/resetSpace'
+        end
+
+        if session[:error] == "unbind url error"
+            session[:e_unbind_url] = "Can't unbind this url from app!"
+            redirect '/resetSpace'
         end
 
       erb :error500, {:layout => :layout_error}
@@ -131,13 +169,17 @@ module Uhuru::Webui
 
     get '/resetOrganizations' do
       session[:e_reset_organizations] = true
-      puts "ds"
       redirect '/organizations'
     end
 
     get '/resetOrganization' do
       session[:e_reset_organization] = true
       redirect '/organization' + session[:currentOrganization]
+    end
+
+    get '/resetSpace' do
+      session[:e_reset_space] = true
+      redirect '/space' + session[:currentSpace]
     end
 
 
@@ -325,10 +367,17 @@ module Uhuru::Webui
         session[:e_delete_space] = ""
         session[:e_create_user] = ""
         session[:e_delete_user] = ""
+        session[:e_create_app] = ""
+        session[:e_delete_app] = ""
+        session[:e_start_app] = ""
+        session[:e_stop_app] = ""
+        session[:e_bind_service] = ""
+        session[:e_unbind_service] = ""
+        session[:e_bind_url] = ""
+        session[:e_unbind_url] = ""
       end
       session[:e_reset_space] = false
       # <<
-
 
 
       @timeNow = $this_time

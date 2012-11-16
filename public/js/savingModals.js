@@ -54,10 +54,7 @@ $('.startApp_btn').click(saving_modal_start);
 $('.stopApp_btn').click(saving_modal_stop);
 $('.app_tiles_cloudpush').click(add_template_app_modal);
 
-$('#b_c_organization').click(create_organization_message);
 $('#b_d_organization').click(delete_organization_message);
-
-$('#b_c_space').click(create_space_message);
 $('#b_d_space').click(delete_space_message);
 
 

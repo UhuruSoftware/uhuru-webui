@@ -25,7 +25,6 @@ var create_tempcta_modal = function(){
 	$('body').css({"overflow":"hidden"});
 	$('#create_tempcta_modal').fadeIn(600);
     $('.close').click(function(){$("#create_tempcta_modal").css("display", "none");$('#screen').css("display", "none");$('body').css({"overflow":"auto"});});
-    $('.btn').click(function(){$("#create_tempcta_modal").css("display", "none");$('#screen').css("display", "none");$('body').css({"overflow":"auto"});});
 }
 
 
@@ -67,7 +66,6 @@ var delete_app = function(){
 	$('body').css({"overflow":"hidden"});
 	$('#delete_app').fadeIn(600);
     $('.close').click(function(){$("#delete_app").css("display", "none");$('#screen').css("display", "none");$('body').css({"overflow":"auto"});});
-    $('.btn').click(function(){$("#delete_app").css("display", "none");$('#screen').css("display", "none");$('body').css({"overflow":"auto"});});
 }
 
 var delete_service = function(){
@@ -135,7 +133,6 @@ var bind_service = function(){
 	$('body').css({"overflow":"hidden"});
 	$('#bind_service_modal').fadeIn(600);
     $('.close').click(function(){$("#bind_service_modal").css("display", "none");$('#screen').css("display", "none")});
-    $('.btn').click(function(){$("#bind_service_modal").css("display", "none");$('#screen').css("display", "none")});
 }
 
 var unbind_service = function(){
@@ -143,7 +140,6 @@ var unbind_service = function(){
 	$('body').css({"overflow":"hidden"});
 	$('#unbind_service_modal').fadeIn(600);
     $('.close').click(function(){$("#unbind_service_modal").css("display", "none");$('#screen').css("display", "none")});
-    $('.btn').click(function(){$("#unbind_service_modal").css("display", "none");$('#screen').css("display", "none")});
 }
 
 
@@ -152,7 +148,6 @@ var bind_uri = function(){
 	$('body').css({"overflow":"hidden"});
 	$('#bind_uri_modal').fadeIn(600);
     $('.close').click(function(){$("#bind_uri_modal").css("display", "none");$('#screen').css("display", "none")});
-    $('.btn').click(function(){$("#bind_uri_modal").css("display", "none");$('#screen').css("display", "none")});
 }
 
 var unbind_uri = function(){
@@ -160,7 +155,6 @@ var unbind_uri = function(){
 	$('body').css({"overflow":"hidden"});
 	$('#unbind_uri_modal').fadeIn(600);
     $('.close').click(function(){$("#unbind_uri_modal").css("display", "none");$('#screen').css("display", "none")});
-    $('.btn').click(function(){$("#unbind_uri_modal").css("display", "none");$('#screen').css("display", "none")});
 }
 
 

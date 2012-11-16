@@ -179,6 +179,8 @@
                             </div>
 
                             <div class="modal-footer app_details_footer">
+                                <span class="server_errors" id="start_app_failed"><%= session[:e_start_app] %></span>
+                                <span class="server_errors" id="stop_app_failed"><%= session[:e_stop_app] %></span>
                                 <form action="/updateApp" method="post">
                                     <input type="text" class="send_app_name blank_input" name="appName" value="<%= app.name %>" />
                                     <input type="text" class="send_app_instances blank_input" name="appInstances" value="<%= app.instances %>"/>
@@ -341,8 +343,9 @@
     </div>
 
     <div class="modal-footer">
+        <span class="server_errors" id="create_app_failed"><%= session[:e_create_app] %></span>
         <div class="button_case_create_organization_and_space">
-            <a href="#" class="btn btn_right_create_organization_and_space">Cancel</a>
+            <a href="#" class="btn btn_right_create_organization_and_space close">Cancel</a>
         </div>
     </div>
 </div>
@@ -359,8 +362,9 @@
         </p>
     </div>
     <div class="modal-footer">
+        <span class="server_errors" id="delete_app_failed"><%= session[:e_delete_app] %></span>
         <div class="button_case_delete_organization_and_space">
-            <a href="#" class="btn btn_right_delete_organization_and_space">No</a>
+            <a href="#" class="btn btn_right_delete_organization_and_space close">No</a>
             <form action="/deleteClickedApp" method="post">
                 <input type="submit" value="Delete" class="btn btn-danger btn_left_delete_organization_and_space white_btn_text" />
                 <input type="text" id="pass_app" name="appGuid" class="blank_input" />
@@ -450,9 +454,10 @@
             </p>
         </div>
         <div class="modal-footer">
+        <span class="server_errors" id="bind_service_failed"><%= session[:e_bind_service] %></span>
             <input type="text" id="bind_service_app_name" name="appName" class="blank_input"/>
             <div class="button_case_create_organization_and_space">
-                <a href="#" class="btn btn_right_bind">Cancel</a>
+                <a href="#" class="btn btn_right_bind close">Cancel</a>
                 <input type="submit" value="Bind Service" class="btn btn-danger btn_left_bind" />
             </div>
         </div>
@@ -476,11 +481,12 @@
         </p>
     </div>
     <div class="modal-footer">
+        <span class="server_errors" id="unbind_service_failed"><%= session[:e_unbind_service] %></span>
         <form action="/unbindServices" method="post">
             <input type="text" name="serviceName" id="unbind_serviceName" class="blank_input"/>
             <input type="text" id="unbind_service_app_name" name="appName" class="blank_input" />
             <div class="button_case_create_organization_and_space">
-                <a href="#" class="btn btn_right_unbind">Cancel</a>
+                <a href="#" class="btn btn_right_unbind close">Cancel</a>
                 <input type="submit" value="Unbind Service" class="btn btn-danger btn_left_unbind" />
             </div>
         </form>
@@ -510,11 +516,12 @@
         </p>
     </div>
     <div class="modal-footer bind_uri_footer">
+        <span class="server_errors" id="bind_url_failed"><%= session[:e_bind_url] %></span>
         <form action="/bindUri" method="post">
             <input type="text" name="uriName" id="uriName" class="blank_input"/>
             <input type="text" id="bind_uri_app_name" name="appName" class="blank_input" />
             <div class="button_case_create_organization_and_space">
-                <a href="#" class="btn btn_right_bind">Cancel</a>
+                <a href="#" class="btn btn_right_bind close">Cancel</a>
                 <input type="submit" value="Bind URL" class="btn btn-success btn_left_bind" />
             </div>
         </form>
@@ -533,11 +540,12 @@
         </p>
     </div>
     <div class="modal-footer">
+        <span class="server_errors" id="unbind_url_failed"><%= session[:e_unbind_url] %></span>
         <form action="/unbindUri" method="post">
             <input type="text" name="uriName" id="unbind_uriName" class="blank_input" />
             <input type="text" id="unbind_uri_app_name" name="appName" class="blank_input" />
             <div class="button_case_create_organization_and_space">
-                <a href="#" class="btn btn_right_unbind">Cancel</a>
+                <a href="#" class="btn btn_right_unbind close">Cancel</a>
                 <input type="submit" value="Unbind URL" class="btn btn-success btn_left_unbind" />
             </div>
         </form>
@@ -555,7 +563,7 @@
 
 
 <div class="modal fade hide" id="saving_modal">
-    <div class="modal-header">
+    <div class="modal-header" style="background-color: #187ebc;">
         <h3>Saving changes</h3>
     </div>
 
@@ -571,7 +579,7 @@
 </div>
 
 <div class="modal fade hide" id="add_new_template_app_modal">
-    <div class="modal-header">
+    <div class="modal-header" style="background-color: #187ebc;">
         <h3>Add a new template app</h3>
     </div>
 
