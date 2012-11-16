@@ -692,44 +692,6 @@ select option
     font-weight: 100;
 }
 
-
- /*
-.btn-success
-{
-    background-color: #000000;
-    background-image: url("../images/btn_checkmark.png");
-    background-repeat: no-repeat;
-    background-position: 5% center;
-    color: #ffffff;
-    height: 26px;
-    padding-left: 35px;
-}
-
-.btn-success:hover
-{
-    background-color: #187ebc;
-}
-
-.btn-danger
-{
-    background-color: #000000;
-    background-image: url("../images/btn_exclamation.png");
-    background-repeat: no-repeat;
-    background-position: 5% center;
-    color: #ffffff;
-    float: right;
-    margin-left: 3px;
-    margin-right: 3px;
-    height: 26px;
-}
-
-.btn-danger:hover
-{
-    background-color: #187ebc;
-    color: #ffffff;
-}
-*/
-
 #organization_input
 {
     font-size: inherit;
@@ -1120,11 +1082,6 @@ h2 .count
 
 
 
-#create_app_samples_div,
-#create_app_templates_div
-{
-}
-
 #new_app_name_table
 {
     float: left;
@@ -1140,22 +1097,10 @@ h2 .count
 .create_app_header_tab_middle
 {
     float: left;
-    cursor: pointer;
     padding: 0;
     margin-top: 0;
     margin-right: 10px;
     margin-left: 10px;
-}
-
-.create_app_header_tab_left
-{
-    border-bottom: 2px solid #ffffff;
-}
-
-.create_app_header_tab_left:hover,
-.create_app_header_tab_right:hover
-{
-    text-decoration: underline;
 }
 
 .create_app_side_list,
@@ -1180,12 +1125,6 @@ h2 .count
     border-right: 1px solid #ffffff;
     width: 95px;
     height: 250px;
-    display: none;
-}
-
-#create_app_samples_list
-{
-    display: block;
 }
 
 .create_app_side_list_templates_li,
@@ -1210,10 +1149,6 @@ h2 .count
     float: left;
     width: 488px;
     height: 250px;
-    display: none;
-}
-#create_app_templates
-{
     display: none;
 }
 
