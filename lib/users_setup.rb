@@ -102,7 +102,7 @@ class UsersSetup
     uaac.update(user_guid, uaa_user.merge(user_attributes))
 
   rescue Exception => e
-    raise "#{e.inspect}"
+    raise "Update user failed!" #"#{e.inspect}"
   end
 
   def change_password(user_id, verified_password, old_password)
@@ -110,7 +110,7 @@ class UsersSetup
     uaac.change_password(user_id, verified_password, old_password)
 
   rescue Exception => e
-    raise "#{e.inspect}"
+    raise "Change password failed!" #"#{e.inspect}"
   end
 
   def get_admin_token

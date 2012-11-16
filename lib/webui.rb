@@ -134,6 +134,11 @@ module Uhuru::Webui
             redirect '/resetSpace'
         end
 
+        if session[:error] == "create app error"
+            session[:e_update_app] = "App was not updated: server error!"
+            redirect '/resetSpace'
+        end
+
         if session[:error] == "delete app error"
             session[:e_delete_app] = "App was not deleted: server error!"
             redirect '/resetSpace'
@@ -403,6 +408,7 @@ module Uhuru::Webui
         session[:e_create_user] = ""
         session[:e_delete_user] = ""
         session[:e_create_app] = ""
+        session[:e_update_app] = ""
         session[:e_delete_app] = ""
         session[:e_start_app] = ""
         session[:e_stop_app] = ""

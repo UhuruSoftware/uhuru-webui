@@ -265,13 +265,13 @@
     </div>
     <div class="modal-body">
         <p>
-            Are you sure you want to delete this user "<span id="this_user_name"></span>"?
+            Are you sure you want to delete this user <span id="this_user_name"></span>?
         </p>
     </div>
     <div class="modal-footer">
         <span class="server_errors" id="delete_user_failed"><%= session[:e_delete_user] %></span>
         <div class="button_case_delete_organization_and_space">
-            <a href="#" class="btn btn_right_delete_organization_and_space close">No</a>
+            <a href="#" class="btn btn_right_delete_organization_and_space close">Cancel</a>
             <form action="/deleteUser" method="post">
                 <input type="text" class="blank_input" id="pass_user_guid" value="" name="thisUser"/>
                 <input type="submit" class="btn btn-danger btn_left_delete_organization_and_space white_btn_text" value="Delete"/>

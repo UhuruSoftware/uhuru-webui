@@ -181,6 +181,7 @@
                             <div class="modal-footer app_details_footer">
                                 <span class="server_errors" id="start_app_failed"><%= session[:e_start_app] %></span>
                                 <span class="server_errors" id="stop_app_failed"><%= session[:e_stop_app] %></span>
+                                <span class="server_errors" id="update_app_failed"><%= session[:e_update_app] %></span>
                                 <form action="/updateApp" method="post">
                                     <input type="text" class="send_app_name blank_input" name="appName" value="<%= app.name %>" />
                                     <input type="text" class="send_app_instances blank_input" name="appInstances" value="<%= app.instances %>"/>

@@ -21,6 +21,7 @@ var error_delete_user = $('#delete_user_failed').html();
 
 
 var error_create_app = $('#create_app_failed').html();
+var error_update_app = $('#update_app_failed').html();
 var error_delete_app = $('#delete_app_failed').html();
 var error_create_service = $('#create_service_failed').html();
 var error_delete_service = $('#delete_service_failed').html();
@@ -54,6 +55,8 @@ var error_unbind_url = $('#unbind_url_failed').html();
         $('.btn').click(function(){$("#signup_modal").css("display", "none");$('#screen').css("display", "none");$('body').css("overflow", "auto");$('#video_placeholder').css('display', 'block'); $('#sign_up_failed').html('');});
    }
 
+
+
     if(error_create_organization == "You are not authorized to create organizations!")
     {
         $('#screen').css({"display": "block", opacity: 0.7, "width": "10000px", "height": "10000px"});
@@ -80,7 +83,7 @@ var error_unbind_url = $('#unbind_url_failed').html();
         $('.btn-danger').hide();
         $('.modal-body').html('');
         $('.modal-body').html('<p>Error!</p>');
-        $('.close').click(function(){$("#delete_organization_modal").css("display", "none");$('#screen').css("display", "none");$('body').css({"overflow":"auto"}); $('#delete_organization_failed').html('');});
+        $('.close').click(function(){$("#delete_organization_modal").css("display", "none");$('#screen').css("display", "none");$('body').css({"overflow":"auto"}); $('#delete_organization_failed').html(''); location.reload();});
     }
 
     if(error_delete_space == "You are not authorized to delete this space!" || error_delete_this_space == "You are not authorized to delete this space!")
@@ -91,7 +94,7 @@ var error_unbind_url = $('#unbind_url_failed').html();
         $('.btn-danger').hide();
         $('.modal-body').html('');
         $('.modal-body').html('<p>Error!</p>');
-        $('.close').click(function(){$("#delete_space_modal").css("display", "none");$('#screen').css("display", "none");$('body').css({"overflow":"auto"}); $('#delete_space_failed').html('');});
+        $('.close').click(function(){$("#delete_space_modal").css("display", "none");$('#screen').css("display", "none");$('body').css({"overflow":"auto"}); $('#delete_space_failed').html(''); location.reload();});
     }
 
     if(error_create_user == "You are not authorized to create a user!")
@@ -227,7 +230,12 @@ var error_unbind_url = $('#unbind_url_failed').html();
 
 
 
-    if(error_start_app == "Can't start app!" || error_stop_app == "Can't stop app!")
+    if(error_update_app == "App was not updated: server error!")
+    {
+        //
+    }
+
+    if(error_start_app == "Can't start app!")
     {
 
             //$('#opac_screen').css({	"display": "block", opacity: 0.7, "width": "10000px", "height": "10000px"});
@@ -235,6 +243,10 @@ var error_unbind_url = $('#unbind_url_failed').html();
             //element.fadeIn(800);
             $('.close_app_details').click(function(){$('.app_details_modal').css("display", "none");$('#opac_screen').css("display", "none");$('body').css({"overflow":"auto"}); $('#start_app_failed').html(''); $('#stop_app_failed').html('');});
             $('.close').click(function(){$('.app_details_modal').css("display", "none");$('#opac_screen').css("display", "none");$('body').css({"overflow":"auto"}); $('#start_app_failed').html(''); $('#stop_app_failed').html('');});
+    }
+    if(error_stop_app == "Can't stop app!")
+    {
+        //
     }
 
 });
