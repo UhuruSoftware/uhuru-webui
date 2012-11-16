@@ -76,6 +76,24 @@ module Uhuru::Webui
             session[:e_update_password] = "Something went wrong please try again"
             redirect '/resetAccount'
         end
+    # /creditcards page errors
+        if session[:error] == "create credit failed"
+            session[:e_create_credit] = "Create credit card failed, try again!"
+            redirect '/resetCredit'
+        end
+
+        if session[:error] == "delete credit failed"
+            session[:e_delete_credit] = "Delete credit card failed, try again!"
+            redirect '/resetCredit'
+        end
+
+        if session[:error] == "delete credit failed"
+            session[:e_add_credit] = "Add credit card failed, try again!"
+            redirect '/resetOrganization'
+        end
+
+
+
 
     # /organizations page errors
         if session[:error] == "create organization failed"
@@ -176,6 +194,11 @@ module Uhuru::Webui
     get '/resetAccount' do
       session[:e_reset_account] = true
       redirect '/account'
+    end
+
+    get '/resetCredit' do
+      session[:e_reset_credit] = true
+      redirect '/credit'
     end
 
     get '/resetOrganizations' do
@@ -332,6 +355,7 @@ module Uhuru::Webui
         session[:e_delete_space] = ""
         session[:e_create_user] = ""
         session[:e_delete_user] = ""
+        session[:e_add_credit] = ""
       end
       session[:e_reset_organization] = false
       # <<
@@ -421,6 +445,17 @@ module Uhuru::Webui
       if session[:login_] == false
         redirect '/'
       end
+
+      #this code resets the error handling  #>>
+      if session[:e_reset_credit] == true
+        puts session[:e_reset_credit]
+      else
+        session[:e_create_credit] = ""
+        session[:e_delete_credit] = ""
+      end
+      session[:e_reset_credit] = false
+      # <<
+
 
       @usertitle = session[:username]
       @timeNow = $this_time

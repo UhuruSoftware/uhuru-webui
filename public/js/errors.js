@@ -3,6 +3,10 @@ $(window).load(function () {
 var login = $('#login_failed').html();
 var signup = $('#sign_up_failed').html();
 
+var error_create_credit = $('#create_credit_failed');
+var error_delete_credit = $('#delete_credit_failed');
+var error_add_credit = $('#add_credit_failed');
+
 var error_create_organization = $('#create_organization_failed').html();
 var error_delete_organization = $('#delete_organization_failed').html();
 var error_delete_this_organization = $('#delete_this_organization_failed').html();
@@ -162,6 +166,9 @@ var error_unbind_url = $('#unbind_url_failed').html();
         $('#screen').css({	"display": "block", opacity: 0.7, "width": "10000px", "height": "10000px"});
         $('body').css({"overflow":"hidden"});
         $('#unbind_service_modal').fadeIn(600);
+        $('.btn-danger').hide();
+        $('.modal-body').html('');
+        $('.modal-body').html('<p>Error!</p>');
         $('.close').click(function(){$("#unbind_service_modal").css("display", "none");$('#screen').css("display", "none"); $('#unbind_service_failed').html(''); location.reload();});
     }
 
@@ -178,7 +185,38 @@ var error_unbind_url = $('#unbind_url_failed').html();
         $('#screen').css({	"display": "block", opacity: 0.7, "width": "10000px", "height": "10000px"});
         $('body').css({"overflow":"hidden"});
         $('#unbind_uri_modal').fadeIn(600);
+        $('.btn-danger').hide();
+        $('.modal-body').html('');
+        $('.modal-body').html('<p>Error!</p>');
         $('.close').click(function(){$("#unbind_uri_modal").css("display", "none");$('#screen').css("display", "none"); $('#unbind_url_failed').html(''); location.reload();});
+    }
+
+
+    if(error_create_credit == "Create credit card failed, try again!")
+    {
+        $('#screen').css({	"display": "block", opacity: 0.7, "width": "10000px", "height": "10000px"});
+        $('body').css({"overflow":"hidden"});
+        $('#create_credit_card_modal').fadeIn(600);
+        $('.close').click(function(){$("#create_credit_card_modal").css("display", "none");$('#screen').css("display", "none");$('#show_modal_errors').hide();$('body').css({"overflow":"auto"}); location.reload();});
+    }
+
+    if(error_add_credit == "Add credit card failed, try again!")
+    {
+        $('#screen').css({	"display": "block", opacity: 0.7, "width": "10000px", "height": "10000px"});
+        $('body').css({"overflow":"hidden"});
+        $('#add_credit_card_to_organization_modal').fadeIn(600);
+        $('.close').click(function(){$("#add_credit_card_to_organization_modal").css("display", "none");$('#screen').css("display", "none");$('#show_modal_errors').hide();$('body').css({"overflow":"auto"}); location.reload();});
+    }
+
+    if(error_delete_credit == "Delete credit card failed, try again!")
+    {
+        $('#screen').css({	"display": "block", opacity: 0.7, "width": "10000px", "height": "10000px"});
+        $('body').css({"overflow":"hidden"});
+        $('#delete_credit_card_modal').fadeIn(600);
+        $('.btn-danger').hide();
+        $('.modal-body').html('');
+        $('.modal-body').html('<p>Error!</p>');
+        $('.close').click(function(){$("#delete_credit_card_modal").css("display", "none");$('#screen').css("display", "none");$('#show_modal_errors').hide();$('body').css({"overflow":"auto"}); location.reload();});
     }
 
 

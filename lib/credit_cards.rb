@@ -90,7 +90,7 @@ class CreditCards
     return true if response.request.last_response.code == '200'
 
   rescue Exception => e
-    raise "#{e.inspect}"
+    raise "create credit failed" #"#{e.inspect}"
   end
 
   def delete_by_id(card_id)
@@ -99,7 +99,7 @@ class CreditCards
     return true if response.request.last_response.code == '200'
 
   rescue Exception => e
-    raise "#{e.inspect}"
+    raise "delete credit failed" #"#{e.inspect}"
   end
 
   def get_organization_credit_card(org_guid)
@@ -128,7 +128,7 @@ class CreditCards
     return true if response.request.last_response.code == '201'
 
   rescue Exception => e
-    raise "#{e.inspect}"
+    raise "add credit failed" #"#{e.inspect}"
   end
 
 end
