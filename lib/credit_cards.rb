@@ -43,8 +43,6 @@ class CreditCards
           credit_card["card_type"])
           #card = CreditCard.from_json!(credit_card, subscription_id)
           credit_card_list << card
-
-          puts card.inspect
         end
       end
     end
@@ -138,18 +136,14 @@ class CreditCards
   end
 
   #added param if card already exist make update, else create org credit card
-  def add_organization_credit_card(org_guid, new_card_id, card_exists)
+  def add_organization_credit_card(org_guid, new_card_id)
     headers = {'Content-Type' => 'application/json', 'Authorization' => @auth_token}
 
-    if (card_exists)
-      relation_id = get_org_credit_card_guid(org_guid)
+    relation_id = get_org_credit_card_guid(org_guid)
 
-      puts relation_id
-
-      if relation_id
-        attributes = {:credit_card_token => new_card_id}
-        response = HttpDirectClient.put("#{@base_path}/organization_credit_cards/#{relation_id}", :headers => headers, :body => attributes.to_json)
-      end
+    if relation_id
+      attributes = {:credit_card_token => new_card_id}
+      response = HttpDirectClient.put("#{@base_path}/organization_credit_cards/#{relation_id}", :headers => headers, :body => attributes.to_json)
     else
       attributes = {:credit_card_token => new_card_id, :organization_guid => org_guid}
       response = HttpDirectClient.post("#{@base_path}/organization_credit_cards", :headers => headers, :body => attributes.to_json)
