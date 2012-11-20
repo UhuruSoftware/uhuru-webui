@@ -1,24 +1,3 @@
-
-
-//$('.link_tiles_org').hover(function(){
-//   $(this).find('span').css("padding-bottom", "5px");
-//   $(this).find('span').css("border-bottom", "1px solid #ffffff");
-//}, function(){
-//   $('.to_be_underlined').css("border-bottom", "0px solid #0071b7");
-//});
-
-//$('.link_tiles_space').hover(function(){
-//   $(this).find('.space_name').css("padding-bottom", "5px");
-//   $(this).find('.space_name').css("border-bottom", "1px solid #ffffff");
-//}, function(){
-//   $('.to_underlined').css("border-bottom", "0px solid #0071b7");
-//});
-
-
-
-//THIS LOADS THE NEW TEMP AP NAME TO BE SENT ON POST "/"
-
-
 $('[placeholder]').focus(function() {
   var input = $(this);
     input.css("font-style", "normal");
@@ -46,7 +25,6 @@ $('[placeholder]').parents('form').submit(function() {
   })
 });
 
-
 $('.tiped').bind({
   focus: function() {
     $('.tooltips').show(200);
@@ -55,8 +33,6 @@ $('.tiped').bind({
     $('.tooltips').hide(300);
   }
 });
-
-
 
 $(function() {
     $('.submit_form1').click(function(event){
@@ -149,7 +125,6 @@ $('.clear_form2').click(function(){
     $('input[name=new_pass2]').val('');
     $('.form_errors2').hide();
 });
-
 
 $(function(){
     $('#organization_input').keypress(function(event){

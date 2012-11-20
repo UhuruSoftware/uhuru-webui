@@ -1,6 +1,3 @@
-
-//THIS FUNCTION SETS THE VARIABLES TO THE APP DETAILS ON THE CURRENT HOVERED APP TILE
-
 var element = "";
 
 $('.tile_app_name').hover(function(){
@@ -15,11 +12,8 @@ $('.tile_app_name').hover(function(){
             $('.close_app_details').click(function(){$('.app_details_modal').css("display", "none");$('#opac_screen').css("display", "none");$('body').css({"overflow":"auto"});});
             $('.close').click(function(){$('.app_details_modal').css("display", "none");$('#opac_screen').css("display", "none");$('body').css({"overflow":"auto"});});
         }
-
     $('.show_this_app_details').click(displayAppDetails);
 });
-
-
 
 $(function(){
 
@@ -40,16 +34,12 @@ $('.read_app_details').hover(function(){
     });
 });
 
-//THIS GETS ALL THE VALUES TO EACH MODAL
-
 $(function(){
 
 $('.bind_uri_footer').hover(function(){
     var name = $('#newUri').val();
     $('#uriName').val(name);
 });
-
-
 
 $('.get_uri_name').hover(function(){
     var name = $(this).attr("id");
@@ -69,7 +59,6 @@ $('.get_service_name').hover(function(){
     $('#bind_service_app_name').val(app);
     $('#unbind_service_app_name').val(app);
 });
-
 
 });
 

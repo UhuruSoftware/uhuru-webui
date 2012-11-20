@@ -199,12 +199,6 @@ html, body
     padding: 0;
 }
 
-/*LANDING PAGE*/
-
-
-
-/*MANAGE LAYOUT*/
-
 #manage_menu {
   color: #2d2d2d;
   font-size: 12px;
@@ -238,20 +232,16 @@ html, body
     color: inherit;
 }
 
-
 #welcome {
     color: #fff;
     float: right;
     height: 110px;
     padding: 10px 20px 20px;
     position: absolute;
-    /*right: 135px; */
     top: 50px;
     width: 340px;
     z-index: 5;
 }
-
-
 
 #welcome h2, #cloud_target h2
 {
@@ -331,7 +321,6 @@ input.user-name
     height: 130px;
 }
 
-
 .tile
 {
     float: left;
@@ -371,7 +360,6 @@ input.user-name
     border: 0px solid white;
 }
 
-
 .start_button_apps,
 .stop_button_apps
 {
@@ -381,7 +369,6 @@ input.user-name
     left: 220px;
 }
 
-
 .edit-user-button
 {
     position: absolute;
@@ -390,7 +377,6 @@ input.user-name
     width: 20px;
     height: 20px;
 }
-
 
 li.new
 {
@@ -408,13 +394,11 @@ li.new .icon
     left: 50%;
     margin-top: -24px;
     margin-left: -24px;
-
 }
 
 #downloads li
 {
     float: left;
-
 }
 
 #downloads li .icon
@@ -428,7 +412,6 @@ li.new .icon
     left: 50%;
     margin-top: -32px;
     margin-left: -32px;
-
 }
 
 #downloads li .icon.visual-studio
@@ -586,7 +569,7 @@ li.new .icon
 }
 
 #body {
-    padding-bottom: 120px;   /* Height of the footer */
+    padding-bottom: 120px;
     position: relative;
 }
 
@@ -597,10 +580,7 @@ li.new .icon
    width:100%;
    height:80px;
    buttom: 0;
-    /* Height of the footer */
 }
-
-
 
 .app-default
 {
@@ -634,7 +614,6 @@ li.new .icon
     background: transparent url("../images/java_icon.png") no-repeat scroll center center;
 }
 
-
 .span_credit_card_icon_visa
 {
     background-image: url("../images/visa.png");
@@ -659,7 +638,6 @@ li.new .icon
     background-repeat: no-repeat;
     background-position: center center;
 }
-
 
 .service-icon-mysql
 {
@@ -791,19 +769,6 @@ li.new .icon
 
 }
 
-/* --- MANAGE LAYOUT --- */
-
-
-
-
-
- /*
-
-
-
-
-/*                            SITE                           */
-
 html, body
 {
     height: 100%;
@@ -836,9 +801,6 @@ section {
     display: block;
 }
 
-/* Styles for basic forms
------------------------------------------------------------*/
-
 fieldset
 {
     border:1px solid #ddd;
@@ -867,9 +829,6 @@ textarea
     margin:0.5em 0 0 0;
 }
 
-
-/* Styles for validation helpers
------------------------------------------------------------*/
 .field-validation-error
 {
     color: #ff0000;
@@ -1007,7 +966,6 @@ textarea
     color: #706e6e;
 }
 
-
 #site_footer .footer-menu
 {
     list-style: none;
@@ -1048,7 +1006,6 @@ textarea
     overflow: hidden;
 }
 
-
 .header-shading
 {
     height: 22px;
@@ -1071,8 +1028,6 @@ textarea
     margin-left: 20px;
 }
 
-
-/*Tile structure*/
 #app_smallcontainer
 {
     margin:0px auto 15px;
@@ -1168,9 +1123,6 @@ a
     font-weight: bold;
 }
 
-
-
-
 .layout_page_paragraph,
 .layout_page_header
 {
@@ -1188,7 +1140,6 @@ a
 {
     font-size: 18px;
 }
-
 
 #login_modal,
 #signup_modal
@@ -1254,7 +1205,6 @@ a
     margin-right: 10px;
     line-height: 40px;
 }
-
 
 #site_footer
 {

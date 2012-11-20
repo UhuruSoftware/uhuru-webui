@@ -1,4 +1,3 @@
-
 var create_credit_card = function(){
 	$('#screen').css({	"display": "block", opacity: 0.7, "width": "10000px", "height": "10000px"});
 	$('body').css({"overflow":"hidden"});
@@ -23,13 +22,9 @@ var add_credit_card = function(){
     $('.cancel').click(function(){$("#add_credit_card_to_organization_modal").css("display", "none");$('#screen').css("display", "none");$('body').css({"overflow":"auto"});});
 }
 
-
-
 $('#create_credit_card').click(create_credit_card);
 $('.btn_delete_credit_card').click(delete_credit_card);
 $('.add_credit_card_btn').click(add_credit_card);
-
-
 
 $(function() {
     $('.submit_credit_card').click(function(event){

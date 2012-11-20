@@ -222,14 +222,6 @@ var error_unbind_url = $('#unbind_url_failed').html();
         $('.close').click(function(){$("#delete_credit_card_modal").css("display", "none");$('#screen').css("display", "none");$('#show_modal_errors').hide();$('body').css({"overflow":"auto"}); location.reload();});
     }
 
-
-
-
-
-
-
-
-
     if(error_update_app == "App was not updated: server error!")
     {
         //
