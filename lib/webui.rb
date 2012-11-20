@@ -92,9 +92,6 @@ module Uhuru::Webui
             redirect '/resetOrganization'
         end
 
-
-
-
     # /organizations page errors
         if session[:error] == "create organization failed"
             session[:e_create_organization] = "You are not authorized to create organizations!"
@@ -105,7 +102,6 @@ module Uhuru::Webui
             session[:e_delete_organization] = "You are not authorized to delete this organization!"
             redirect '/resetOrganizations'
         end
-
 
     # /organization(guid) - spaces - page errors
         if session[:error] == "create space failed"
@@ -154,8 +150,6 @@ module Uhuru::Webui
             redirect '/resetSpace'
         end
 
-
-
         if session[:error] == "start app error"
             session[:e_start_app] = "Can't start app!"
             redirect '/resetSpace'
@@ -165,8 +159,6 @@ module Uhuru::Webui
             session[:e_stop_app] = "Can't stop app!"
             redirect '/resetSpace'
         end
-
-
 
         if session[:error] == "bind service error"
             session[:e_bind_service] = "Can't bind this service to app!"
@@ -381,14 +373,14 @@ module Uhuru::Webui
 
       organizations_Obj.set_current_org(@this_guid)
       spaces_list = organizations_Obj.read_spaces(@this_guid)
-      owners_list = organizations_Obj.read_owners(@this_guid)
-      developers_list = organizations_Obj.read_developers(@this_guid)
-      managers_list = organizations_Obj.read_managers(@this_guid)
+      owners_list = organizations_Obj.read_owners(@config, @this_guid)
+      billings_list = organizations_Obj.read_billings(@config, @this_guid)
+      auditors_list = organizations_Obj.read_auditors(@config, @this_guid)
 
       credit_cards_list = credit_cards_Obj.read_all()
       org_credit_card = credit_cards_Obj.get_organization_credit_card(session[:currentOrganization])
 
-      erb :organization, {:locals => {:credit_cards_list => credit_cards_list, :org_credit_card => org_credit_card, :spaces_list => spaces_list, :spaces_count => spaces_list.count, :members_count => owners_list.count + developers_list.count + managers_list.count, :owners_list => owners_list, :developers_list => developers_list, :managers_list => managers_list}, :layout => :layout_user}
+      erb :organization, {:locals => {:credit_cards_list => credit_cards_list, :org_credit_card => org_credit_card, :spaces_list => spaces_list, :spaces_count => spaces_list.count, :members_count => owners_list.count + billings_list.count + auditors_list.count, :owners_list => owners_list, :billings_list => billings_list, :auditors_list => auditors_list}, :layout => :layout_user}
     end
 
     get '/space:space_guid' do

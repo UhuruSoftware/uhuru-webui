@@ -932,6 +932,7 @@ h2 .count
     padding-right: 20px;
     margin-bottom: 0;
 }
+#users_li,
 #apps_li,
 #services_li,
 #billings_li
@@ -962,6 +963,7 @@ h2 .count
     letter-spacing: 0.01em;
 }
 
+#users_li,
 #services_li,
 #billings_li
 {

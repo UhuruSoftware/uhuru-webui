@@ -34,7 +34,6 @@ var error_unbind_service = $('#unbind_service_failed').html();
 var error_bind_url = $('#bind_url_failed').html();
 var error_unbind_url = $('#unbind_url_failed').html();
 
-
     if(login == "Wrong email and/or password!")
     {
         $('input[name=username]').trigger('focus');
