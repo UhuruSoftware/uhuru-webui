@@ -9,7 +9,6 @@ var login_modal = function(){
     $('.cancel').click(function(){$("#login_modal").css("display", "none");$('#screen').css("display", "none");$('body').css("overflow", "auto");$('#video_placeholder').css('display', 'block');});
 }
 
-
 var signup_modal = function(){
 	$('#screen').css({	"display": "block", opacity: 0.7, "width": "10000px", "height": "10000px"});
     $('#video_placeholder').css("display", "none");
@@ -24,15 +23,10 @@ var signup_modal = function(){
 
 }
 
-
 $('#login_button').click(login_modal);
 $('#signup_button').click(signup_modal);
 
 });
-
-
-
-
 
 $('[placeholder]').focus(function() {
   var input = $(this);
@@ -61,10 +55,6 @@ $('[placeholder]').parents('form').submit(function() {
   })
 });
 
-
-
-
-
 $(function() {
     $('.submit_form').click(function(event){
         var email = $('input[name=email]').val();
@@ -74,7 +64,6 @@ $(function() {
         var last = $('input[name=last_name]').val();
         var first_name = first.length;
         var last_name = last.length;
-
 
         if(last_name < 2 || last == '... last name') {
             event.preventDefault();
@@ -86,7 +75,6 @@ $(function() {
             $('#show_modal_errors').hide().text("Please enter you're first name!").fadeIn(200);
         }
 
-
         if(len < 1) {
             $('#show_modal_errors').hide().text("Password can not be blank!").fadeIn(200);
             event.preventDefault();
@@ -97,13 +85,11 @@ $(function() {
             $('#show_modal_errors').hide().text("Password and Confirm Password don't match!").fadeIn(200);
         }
 
-
         if( /(.+)@(.+){2,}\.(.+){2,}/.test(email) ){
             //
         } else {
             event.preventDefault();
             $('#show_modal_errors').hide().text("Please type a valid email address!").fadeIn(200);
         }
-
     });
 });

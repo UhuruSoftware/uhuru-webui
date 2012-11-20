@@ -1,9 +1,3 @@
-
-//JAVASCRIPT CAN'T SHOW GUID'S
-
-//these functions pass the parameters needed to the "Are you sure?" modals, so they can be posted
-
-
 function prepareToDeleteOrganization(obj)
 {
     document.getElementById('this_organization_name').innerHTML = obj.title;
@@ -28,7 +22,6 @@ function prepareToDeleteApp(obj)
     document.getElementById('this_app_name').innerHTML = obj.title;
 }
 
-
 function prepareToDeleteService(obj)
 {
     document.getElementById('pass_service').value = obj.title;
@@ -39,12 +32,11 @@ function prepareToDeleteCreditCard(obj)
 {
     document.getElementById('pass_credit_card_id').value = obj.id;
 }
+
 function prepareToAddCreditCard(obj)
 {
     document.getElementById('pass_credit_card_add_id').value = obj.id;
 }
-
-
 
 function selectUserType(userType)
 {
@@ -54,13 +46,6 @@ function prepareToAddNewUserEmail()
 {
     document.getElementById('new_user_email').value = document.getElementById('user_email').value;
 }
-
-
-
-
-
-
-
 
 function newServiceType() //this is the combo box
 {

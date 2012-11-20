@@ -1,5 +1,3 @@
-//Show hide Members and Spaces from Organization page
-
 function showSpaces()
 {
         document.getElementById('spaces').style.display = 'block';
@@ -10,25 +8,17 @@ function showSpaces()
         document.getElementById('spaces_btn_link').style.backgroundColor = '#09293e';
         document.getElementById('spaces_btn_link').style.color = "#ffffff";
 
-
-
-
-
         document.getElementById('members_btn_link').style.paddingBottom = '0px';
         document.getElementById('members_btn_link').style.borderTop = '0px solid #0e4769';
         document.getElementById('members_btn_link').style.borderLeft = '0px solid #0e4769';
         document.getElementById('members_btn_link').style.borderRight = '0px solid #0e4769';
         document.getElementById('members_btn_link').style.color = "#ffffff";
 
-
         document.getElementById('billings_li').style.paddingBottom = '0px';
         document.getElementById('billings_li').style.borderTop = '0px solid #0e4769';
         document.getElementById('billings_li').style.borderLeft = '0px solid #0e4769';
         document.getElementById('billings_li').style.borderRight = '0px solid #0e4769';
         document.getElementById('billings_li').style.color = "#ffffff";
-
-
-
 
      document.getElementById('tabs').style.borderBottom = '1px solid #0e4769';
      document.getElementById('spaces').style.display = 'block';
@@ -50,23 +40,17 @@ function showMembers()
         document.getElementById('members_btn_link').style.backgroundColor = '#09293e';
         document.getElementById('members_btn_link').style.color = "#ffffff";
 
-
-
         document.getElementById('spaces_btn_link').style.paddingBottom = '0px';
         document.getElementById('spaces_btn_link').style.borderTop = '0px solid #0e4769';
         document.getElementById('spaces_btn_link').style.borderLeft = '0px solid #0e4769';
         document.getElementById('spaces_btn_link').style.borderRight = '0px solid #0e4769';
         document.getElementById('spaces_btn_link').style.color = "#ffffff";
 
-
         document.getElementById('billings_li').style.paddingBottom = '0px';
         document.getElementById('billings_li').style.borderTop = '0px solid #0e4769';
         document.getElementById('billings_li').style.borderLeft = '0px solid #0e4769';
         document.getElementById('billings_li').style.borderRight = '0px solid #0e4769';
         document.getElementById('billings_li').style.color = "#ffffff";
-
-
-
 
      document.getElementById('tabs').style.borderBottom = '1px solid #0e4769';
      document.getElementById('spaces').style.display = 'none';
@@ -88,25 +72,17 @@ function showBillings()
         document.getElementById('billings_li').style.backgroundColor = '#09293e';
         document.getElementById('billings_li').style.color = "#ffffff";
 
-
-
-
-
         document.getElementById('spaces_btn_link').style.paddingBottom = '0px';
         document.getElementById('spaces_btn_link').style.borderTop = '0px solid #0e4769';
         document.getElementById('spaces_btn_link').style.borderLeft = '0px solid #0e4769';
         document.getElementById('spaces_btn_link').style.borderRight = '0px solid #0e4769';
         document.getElementById('spaces_btn_link').style.color = "#ffffff";
 
-
         document.getElementById('members_btn_link').style.paddingBottom = '0px';
         document.getElementById('members_btn_link').style.borderTop = '0px solid #0e4769';
         document.getElementById('members_btn_link').style.borderLeft = '0px solid #0e4769';
         document.getElementById('members_btn_link').style.borderRight = '0px solid #0e4769';
         document.getElementById('members_btn_link').style.color = "#ffffff";
-
-
-
 
      document.getElementById('tabs').style.borderBottom = '1px solid #0e4769';
      document.getElementById('spaces').style.display = 'none';

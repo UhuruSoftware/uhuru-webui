@@ -43,6 +43,7 @@ h1, h2, h3, h4, h5, h6
     float: right;
     text-align: right;
 }
+
 .head_link
 {
     float: right;
@@ -54,11 +55,11 @@ h1, h2, h3, h4, h5, h6
     line-height: 50px;
     color: #ffffff;
 }
+
 .credit_link
 {
     margin-right: 30px;
 }
-
 
 #add_credit_card_to_organization_modal,
 #delete_credit_card_modal,
@@ -131,9 +132,6 @@ h1, h2, h3, h4, h5, h6
     bottom: 0;
 }
 
-
-
-
 .custom_modal_header
 {
     position: relative;
@@ -147,7 +145,6 @@ h1, h2, h3, h4, h5, h6
     background-color: #187ebc;
 }
 
-
 .custom_modal_footer
 {
     width: 100%;
@@ -157,9 +154,6 @@ h1, h2, h3, h4, h5, h6
     margin-top: 5px;
     background-color: #0e4769;
 }
-
-
-
 
 .app_details_modal
 {
@@ -254,11 +248,6 @@ h1, h2, h3, h4, h5, h6
     margin-bottom: 30px;
 }
 
-.sub_descriptions
-{
-
-}
-
 .sub_descriptions_title
 {
     font-family: 'Segoe UI Light', 'Open Sans', Verdana, Arial, Helvetica, sans-serif;;
@@ -302,7 +291,6 @@ h2
     color: black;
 }
 
-
 #add_user
 {
     width: 600px;
@@ -332,11 +320,6 @@ h2
     background-color: #e0dfdd;
     overflow: auto;
 }
-
-
-
-
-
 
 #organizations_page,
 #organization_page,
@@ -501,7 +484,6 @@ select option
     color: gray;
 }
 
-
 .breadcrumb
 {
     padding-left: 5px;
@@ -527,6 +509,7 @@ select option
     text-decoration: none;
     color: #ffffff;
 }
+
 .breadcrumb_element:hover
 {
     padding: 0px;
@@ -555,11 +538,6 @@ select option
     width: 100%;
 }
 
-.yes_button
-{
-
-}
-
 .modal-header h3
 {
     font-weight: normal;
@@ -575,7 +553,6 @@ select option
     max-height: 400px;
     padding: 5px;
     overflow-y: auto;
-/*  #09293e-middle */
 }
 
 .modal-body label
@@ -596,7 +573,6 @@ select option
     border-top: 1px solid #187ebc;
     padding: 0;
     height: 48px;
-    /*   #0e4769-bottom  */
 }
 
 .close_small_modal {
@@ -700,7 +676,6 @@ select option
     margin-left: 90px;
 }
 
-
 .small_trash
 {
     background: transparent url('../images/trash_24px.png') no-repeat;
@@ -713,7 +688,6 @@ select option
     cursor: pointer;
     z-index: 5;
 }
-
 
 .small_edit
 {
@@ -745,8 +719,6 @@ select option
     cursor: pointer;
 }
 
-
-
 .start
 {
     background: transparent url('../images/play_24px.png') no-repeat;
@@ -764,9 +736,6 @@ select option
     height: 30px;
     cursor: pointer;
 }
-
-
-
 
 .plus_sign_48,
 .edit_sign_48,
@@ -809,16 +778,12 @@ select option
     background-image: url("../images/money_bag_32px.png");
 }
 
-
-
-
 .plus_sign_organization
 {
     float: right;
     margin-right: 0;
     line-height: 40px;
 }
-
 
 .icons_options
 {
@@ -845,10 +810,6 @@ select option
     right: 0;
 }
 
-
-
-
-
 .manage_content_header
 {
     margin: auto;
@@ -865,7 +826,6 @@ select option
     margin-top: 0;
     margin-bottom: 0;
 }
-
 
 #organization_input,
 #space_input
@@ -913,8 +873,6 @@ h2 .count
     margin-left: 5px;
 }
 
-
- /*--> THE FOOTER OF PAGES*/                                                                                                                    /*--> THE FOOTER OF PAGES*/
 .title_icon
 {
     background: transparent url("../images/gears_48px.png") no-repeat scroll left top;
@@ -956,12 +914,6 @@ h2 .count
     letter-spacing: 0.01em;
     font-size: 13pt;
 }
-
-
-
-
-/*    TABS   */                                                                                                                                      /*    TABS    */
-
 
 #members,
 #services,
@@ -1026,8 +978,6 @@ h2 .count
     letter-spacing: 0.01em;
 }
 
-
-
 #tabs
 {
     list-style: none;
@@ -1078,9 +1028,6 @@ h2 .count
     font-size: 16px;
     letter-spacing: 0.01em;
 }
-
-
-
 
 #new_app_name_table
 {
@@ -1151,7 +1098,6 @@ h2 .count
     height: 250px;
     display: none;
 }
-
 
 .create_app_descriptions_icon
 {
@@ -1227,11 +1173,6 @@ h2 .count
     margin-left: 0;
     width: 200px;
 }
-
-
-
-
-
 
 .tile_invisible
 {
@@ -1325,8 +1266,6 @@ h2 .count
     background-position: 50% 40%;
 }
 
-
-
 .tile_user_owner
 {
     background-image: url("../images/tile_big_purple.png");
@@ -1346,7 +1285,6 @@ h2 .count
     background-repeat: repeat-y;
     border: 1px solid #b43051;
 }
-
 
 .tile_space_name
 {
@@ -1405,11 +1343,6 @@ h2 .count
     display: list-item;
     float: left;
     list-style: none;
-}
-
-.tile_credit_card_logo
-{
-
 }
 
 .tile_credit_card_details_unused,
@@ -1510,26 +1443,6 @@ h2 .count
     background-repeat: no-repeat;
 }
 
- /*
-.tilegreen
-{
-    margin: 0 7px 7px 0;
-    width: 175px;
-    height: 175px;
-    padding: 5px;
-    background-image: url("../images/dark_green_tile.png");
-    background-repeat: repeat-y;
-    border: 1px solid #1a962f;
-    position: relative;
-    cursor: pointer;
-    overflow: hidden;
-    line-height: 18px;
-    display: list-item;
-    float: left;
-    list-style: none;
-}
-   */
-
 .tile_blue_small
 {
     margin: 0 7px 7px 0;
@@ -1565,7 +1478,6 @@ h2 .count
     float: left;
     list-style: none;
 }
-
 
 .tile_app_details_instances,
 .tile_app_details_memory
@@ -1754,7 +1666,6 @@ h2 .count
     border: 1px solid red;
 }
 
-
 .blank_input
 {
     display: none;
@@ -1764,8 +1675,6 @@ h2 .count
     display: none;
     float: right;
 }
-
-
 
 #app_details_header
 {
@@ -1814,11 +1723,7 @@ h2 .count
     left: 5px;
 }
 
-
-
-
-/*some buttons*/
-.button_case_delete_organization_and_space,  /*THIS ALSO CONTAINS CREATE AND DELETE APP MODAL*/
+.button_case_delete_organization_and_space,
 .button_case_create_organization_and_space
 {
     position: absolute;
@@ -1874,7 +1779,7 @@ h2 .count
 
 
 
-.btn_right_delete_organization_and_space /*THIS ALSO CONTAINS CREATE AND DELETE APP MODAL*/
+.btn_right_delete_organization_and_space
 {
     position: absolute;
     margin: 0px;
@@ -1882,7 +1787,7 @@ h2 .count
     right: 0px;
 }
 
-.btn_left_delete_organization_and_space /*THIS ALSO CONTAINS CREATE AND DELETE APP MODAL*/
+.btn_left_delete_organization_and_space
 {
     position: absolute;
     margin: 0px;
@@ -1890,7 +1795,7 @@ h2 .count
     right: 90px;
 }
 
-.btn_right_bind /*THIS ALSO CONTAINS CREATE AND DELETE APP MODAL*/
+.btn_right_bind
 {
     position: absolute;
     margin: 0px;
@@ -1898,7 +1803,7 @@ h2 .count
     right: 0px;
 }
 
-.btn_left_bind /*THIS ALSO CONTAINS CREATE AND DELETE APP MODAL*/
+.btn_left_bind
 {
     position: absolute;
     margin: 0px;
@@ -1906,7 +1811,7 @@ h2 .count
     right: 110px;
 }
 
-.btn_right_unbind /*THIS ALSO CONTAINS CREATE AND DELETE APP MODAL*/
+.btn_right_unbind
 {
     position: absolute;
     margin: 0px;
@@ -1914,15 +1819,13 @@ h2 .count
     right: 0px;
 }
 
-.btn_left_unbind /*THIS ALSO CONTAINS CREATE AND DELETE APP MODAL*/
+.btn_left_unbind
 {
     position: absolute;
     margin: 0px;
     bottom: 10px;
     right: 110px;
 }
-
-
 
 .white_btn_text
 {
@@ -1932,9 +1835,6 @@ h2 .count
 {
     color: #000000;
 }
-
-
-/* CREATE USER MODAL */
 
 .create_user_modal_ul
 {
@@ -1987,18 +1887,6 @@ h2 .count
     width: 400px;
     height: 30px;
 }
-
-
-
-
-
-
-
-
-
-
-
-/* REW TO ALL THE FONTS AND TEXT STYLES, THESE OVERLAP THE PREVIOUS DESIGN */
 
 h3
 {
@@ -2054,7 +1942,6 @@ h3
     font-weight: bold;
 }
 
-
 .service_cost_span,
 .service_plan_span,
 .credit_card_first_name_span,
@@ -2078,7 +1965,6 @@ h3
     bottom: 23px;
 }
 
-
 .costs_span_value,
 .organization_members_span_value,
 .organization_cost_span_value
@@ -2093,8 +1979,6 @@ h3
     color: #ffffff;
 }
 
-
-
 .apps_count_span_value,
 .services_count_span_value
 {
@@ -2105,7 +1989,6 @@ h3
     color: #ffffff;
 }
 
-
 .apps_count_span,
 .services_count_span
 {
@@ -2115,8 +1998,6 @@ h3
     letter-spacing: 0.01em;
     color: #ffffff;
 }
-
-
 
 #space_name,
 #organization_name
@@ -2137,7 +2018,6 @@ h3
     text-overflow: ellipsis;
     padding: 0;
 }
-
 
 .space_name_span,
 .organization_name_span,
@@ -2231,7 +2111,6 @@ h4
     letter-spacing: 0.01em;
     color: #ffffff;
 }
-
 
 .cloud-target-url
 {
@@ -2328,7 +2207,6 @@ h4
     display: none;
 }
 
-
 #current_user_edit_btn,
 #current_user_log_out
 {
@@ -2341,7 +2219,6 @@ h4
     left: 75px;
 }
 
-
 .edit_user_details
 {
     background-image: url("../images/edit_32px.png");
@@ -2353,7 +2230,6 @@ h4
     cursor: pointer;
     position: relative;
 }
-
 
 .account_settings_labels
 {
