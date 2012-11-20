@@ -4,7 +4,6 @@
 
 <head>
 		<title><%= @usertitle %></title>
-
         <script type="text/javascript" src="js/jquery-1.5.js"></script>
         <script type="text/javascript" src="js/jquery_ui.js"></script>
         <script type="text/javascript" src="js/showHide.js"></script>
@@ -23,7 +22,6 @@
 <div id="screen"> </div>
 <div id="opac_screen"> </div>
 
-
     <div id="container">
         <header id="site_header">
             <div class="page-margin">
@@ -41,28 +39,22 @@
                   <a href="/credit"><span class="head_link credit_link">CREDIT CARDS</span></a>
                 </div>
 
-
                 <div id="logout_small_modal">
                     <p>Are you sure you want to logout?</p>
                     <div class="button_case_delete_organization_and_space">
                         <button type="button" class="btn btn_right_delete_organization_and_space toggle_logout_up cancel"><span class="line">| </span>No </button>
                         <a href="/logout"><button type="button" class="btn btn_left_delete_organization_and_space danger" value="Yes"><span class="line">| </span>Yes </button></a>
                     </div>
-            </form>
                 </div>
             </div>
         </header>
         <div class="page-margin" id="body">
 
-
-
         <div class="breadcrumb">
             <%= $path_home %><%= session[:path_1] %><%= session[:path_2] %>
         </div>
 
-
         <%= yield %>
-
 
         </div>
         <footer id="site_footer">

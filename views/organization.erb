@@ -23,14 +23,11 @@
         </div>
 
          <div id="organization_div">
-
-
                 <ul id="tabs" class="nav nav-tabs">
                     <li onclick="showSpaces();" id="spaces_btn_link">Spaces (<span><%= spaces_count %></span>)</li>
                     <li onclick="showMembers();" id="members_btn_link">Members (<span><%= members_count %></span>)</li>
                     <li onclick="showBillings();" id="billings_li">Payment</li>
                 </ul>
-
 
                 <div id="spaces">
                     <ul class="tile_list">
@@ -62,7 +59,6 @@
 
                 <div style="height: 250px; width: 100%"></div>
                 </div>
-
 
                 <div id="members">
                         <ul class="tile_list">
@@ -104,7 +100,6 @@
                         </ul>
                     <div style="height: 50px; width: 100%"></div>
                 </div>
-
 
                 <div id="billings" class="tab-pane">
                     <ul class="tile_list" style="border-bottom: 1px solid #0e4769; padding-bottom: 50px; margin-top: 30px;">
@@ -166,10 +161,7 @@
                         <% end %>
                     </ul>
                 </div>
-
          </div>
-
-
 
 <div class="modal hide" id="add_credit_card_to_organization_modal">
     <div class="modal-header">
@@ -197,9 +189,6 @@
     </div>
 </div>
 
-
-
-
 <div class="modal hide" id="create_space">
     <div class="modal-header">
         <button type="button" class="close"></button>
@@ -224,7 +213,6 @@
 
     </form>
 </div>
-
 
 <div class="modal hide" id="delete_space_modal">
     <div class="modal-header">
@@ -252,11 +240,8 @@
                 <p class="hidden_modal_messages" id="p_d_space">Your space is being removed...</p>
             </form>
         </div>
-
     </div>
 </div>
-
-
 
 <div class="modal hide" id="delete_user_modal">
     <div class="modal-header">
@@ -277,11 +262,8 @@
                 <button type="submit" class="btn btn_left_delete_organization_and_space danger danger"><span class="line">| </span>Delete </button>
             </form>
         </div>
-
     </div>
 </div>
-
-
 
 <div class="modal hide" id="delete_this_organization_modal">
     <div class="modal-header">
@@ -310,7 +292,6 @@
         </div>
     </div>
 </div>
-
 
 <div class="modal fade" id="add_user">
     <div class="modal-header">
