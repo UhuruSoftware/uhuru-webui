@@ -297,7 +297,6 @@ module Uhuru::Webui
       redirect '/organizations'
     end
 
-
     get '/infopage' do
       @title = "Uhuru Info"
       @timeNow = $this_time
@@ -365,7 +364,6 @@ module Uhuru::Webui
       session[:e_reset_organization] = false
       # <<
 
-
       @timeNow = $this_time
 
       organizations_Obj = Organizations.new(session[:token], @cf_target)
@@ -422,7 +420,6 @@ module Uhuru::Webui
       session[:e_reset_space] = false
       # <<
 
-
       @timeNow = $this_time
 
       organizations_Obj = Organizations.new(session[:token], @cf_target)
@@ -462,7 +459,6 @@ module Uhuru::Webui
       session[:e_reset_credit] = false
       # <<
 
-
       @usertitle = session[:username]
       @timeNow = $this_time
 
@@ -482,7 +478,6 @@ module Uhuru::Webui
         redirect '/'
       end
 
-
       #this code resets the error handling  #>>
       if session[:e_reset_account] == true
         puts session[:e_reset_account]
@@ -492,8 +487,6 @@ module Uhuru::Webui
       end
       session[:e_reset_account] = false
       # <<
-
-
 
       @usertitle = "Account " + session[:username]
       @timeNow = $this_time
@@ -506,14 +499,12 @@ module Uhuru::Webui
       erb :usersettings, {:layout => :layout_user}
     end
 
-
     post '/createCard' do
       @first_name = params[:first_name]
       @last_name = params[:last_name]
       @card_number = params[:card_number]
       @expiration_year = params[:expiration_year]
       @expiration_month = params[:expiration_month]
-
 
       @card_type = params[:card_type]
       @cvv = params[:cvv]
@@ -524,7 +515,6 @@ module Uhuru::Webui
       @state = params[:state]
       @zip = params[:zip]
       @country = params[:country]
-
 
       credit_cards_Obj = CreditCards.new(session[:token], @cf_target)
       credit_cards_Obj.create(session[:user_guid], session[:username], @first_name, @last_name, @card_number, @expiration_year, @expiration_month, @card_type, @cvv)
@@ -548,8 +538,6 @@ module Uhuru::Webui
 
       redirect '/credit'
     end
-
-
 
     post '/createOrganization' do
       @name = params[:orgName]
