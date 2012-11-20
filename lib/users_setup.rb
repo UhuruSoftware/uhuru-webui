@@ -150,6 +150,32 @@ class UsersSetup
     uaac
   end
 
+  def get_username_from_guid(user_guid)
+    uaac = get_uaa_client
+    uaa_user = uaac.get(user_guid)
+
+    uaa_user[:userName]
+  end
+
+  # returns an array with all usernames in uaa
+  def uaa_get_usernames
+    uaac = get_uaa_client
+    query = {:attributes => "userName"}
+    users = uaac.query_users(query)
+
+    users[:resources].map { |u| u[:userName]}.join("','")
+  end
+
+  def uaa_get_user_by_name(username)
+    uaac = get_uaa_client
+    begin
+      user = uaac.get_by_name(username)
+      return user[:id]
+    rescue
+      return nil
+    end
+  end
+
   private
 
   def get_user_token(email, password)

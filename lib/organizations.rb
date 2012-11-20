@@ -135,34 +135,43 @@ class Organizations
     spaces_list
   end
 
-  def read_owners(org_guid)
-    users_list = []
-    users = @client.organization(org_guid).billing_managers
+  def read_owners(config, org_guid)
+    user_setup_obj = UsersSetup.new(config)
 
-    users.each do |user|
-      users_list << Users::User.new(user.email, '', false, user.guid)
-    end
-
-    users_list
-  end
-
-  def read_developers(org_guid)
     users_list = []
     users = @client.organization(org_guid).managers
 
     users.each do |user|
-      users_list << Users::User.new(user.email, '', false, user.guid)
+      username = user_setup_obj.get_username_from_guid(user.guid)
+      users_list << Users::User.new(username, 'owner', false, user.guid)
     end
 
     users_list
   end
 
-  def read_managers(org_guid)
+  def read_billings(config, org_guid)
+    user_setup_obj = UsersSetup.new(config)
+
+    users_list = []
+    users = @client.organization(org_guid).billing_managers
+
+    users.each do |user|
+      username = user_setup_obj.get_username_from_guid(user.guid)
+      users_list << Users::User.new(username, 'billing', false, user.guid)
+    end
+
+    users_list
+  end
+
+  def read_auditors(config, org_guid)
+    user_setup_obj = UsersSetup.new(config)
+
     users_list = []
     users = @client.organization(org_guid).auditors
 
     users.each do |user|
-      users_list << Users::User.new(user.email, '', false, user.guid)
+      username = user_setup_obj.get_username_from_guid(user.guid)
+      users_list << Users::User.new(username, 'auditor', false, user.guid)
     end
 
     users_list

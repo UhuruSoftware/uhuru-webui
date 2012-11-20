@@ -73,29 +73,29 @@
                                 <span class="user_type_span">Owner</span>
                                 <span class="small_edit edit-user-button"></span>
                                 <span class="small_trash delete-user-button"></span>
-                                <a href="#"><span class="small_trash delete-user-button" id="<%= owner.email %>" title="<%= owner.guid %>" onmousemove="prepareToDeleteUser(this);"></span></a>
+                                <a href="#"><span class="small_trash delete-user-button" id="<%= owner.guid %>" title="<%= owner.email %>" onmousemove="prepareToDeleteUser(this);"></span></a>
 
                                 <span class="span_bg_icon"></span>
                             </li>
                           <% end %>
 
-                          <% developers_list.each do |developer| %>
-                            <li class="tile_user_developer" title="<%= developer.email %>">
-                                <span class="user_name_span"><%= developer.email %></span>
-                                <span class="user_type_span">Developer</span>
+                          <% billings_list.each do |billing| %>
+                            <li class="tile_user_developer" title="<%= billing.email %>">
+                                <span class="user_name_span"><%= billing.email %></span>
+                                <span class="user_type_span">Billing Manager</span>
                                 <span class="small_edit edit-user-button"></span>
-                                <a href="#"><span class="small_trash delete-user-button" id="<%= developer.email %>" title="<%= developer.guid %>" onmousemove="prepareToDeleteUser(this);"></span></a>
+                                <a href="#"><span class="small_trash delete-user-button" id="<%= billing.guid %>" title="<%= billing.email %>" onmousemove="prepareToDeleteUser(this);"></span></a>
 
                                 <span class="span_bg_icon"></span>
                             </li>
                           <% end %>
 
-                          <% managers_list.each do |manager| %>
-                            <li class="tile_user_manager" title="<%= manager.email %>">
-                                <span class="user_name_span"><%= manager.email  %></span>
-                                <span class="user_type_span">Manager</span>
+                          <% auditors_list.each do |auditor| %>
+                            <li class="tile_user_manager" title="<%= auditor.email %>">
+                                <span class="user_name_span"><%= auditor.email  %></span>
+                                <span class="user_type_span">Auditor</span>
                                 <span class="small_edit edit-user-button"></span>
-                                <a href="#"><span class="small_trash delete-user-button" id="<%= manager.email %>" title="<%= manager.guid %>" onmousemove="prepareToDeleteUser(this);"></span></a>
+                                <a href="#"><span class="small_trash delete-user-button" id="<%= auditor.guid %>" title="<%= auditor.email %>" onmousemove="prepareToDeleteUser(this);"></span></a>
 
                                 <span class="span_bg_icon"></span>
                             </li>

@@ -665,7 +665,7 @@ module Uhuru::Webui
 
       organizations_Obj = Organizations.new(session[:token], @cf_target)
       users_Obj = Users.new(session[:token], @cf_target)
-      users_Obj.add_user_with_role_to_space(session[:currentOrganization], @name, @type)
+      users_Obj.invite_user_with_role_to_org(@config, @email, session[:currentOrganization], @type)
 
       redirect "/organization" + session[:currentOrganization]
     end
@@ -675,7 +675,7 @@ module Uhuru::Webui
 
       organizations_Obj = Organizations.new(session[:token], @cf_target)
       users_Obj = Users.new(session[:token], @cf_target)
-      users_Obj.delete(@user_guid)
+      users_Obj.remove_user_with_role_from_org(session[:currentOrganization], @user_guid, "")
 
       redirect "/organization" + session[:currentOrganization]
     end
