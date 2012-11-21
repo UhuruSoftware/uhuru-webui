@@ -329,7 +329,6 @@ module Uhuru::Webui
 
       @this_user = session[:username]
 
-      @usertitle = @this_user
       @timeNow = $this_time
 
       session[:path_1] = ''
@@ -465,7 +464,6 @@ module Uhuru::Webui
       session[:e_reset_credit] = false
       # <<
 
-      @usertitle = session[:username]
       @timeNow = $this_time
 
       session[:path_1] = ''
@@ -494,7 +492,6 @@ module Uhuru::Webui
       session[:e_reset_account] = false
       # <<
 
-      @usertitle = session[:username]
       @timeNow = $this_time
 
       session[:path_1] = ''

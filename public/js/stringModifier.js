@@ -111,6 +111,31 @@ $(function() {
             $('#p_c_space').fadeIn(200);
         }
     });
+
+    $('#b_add_user').click(function(event){
+        var user = $('#user_email').val();
+
+        if( /(.+)@(.+){2,}\.(.+){2,}/.test(user) ){
+            $('#b_add_user').fadeOut(200);
+            $('#p_add_user').fadeIn(200);
+        } else {
+            event.preventDefault();
+            $('.server_errors').hide().text("Please type a valid email address!").fadeIn(200);
+        }
+    });
+
+    $('#b_delete_user').click(function(){
+        $('#b_delete_user').fadeOut(200);
+        $('#cancel_b_delete_user').fadeOut(200);
+        $('#p_delete_user').fadeIn(200);
+    });
+
+    $('#b_add_credit').click(function(){
+        $('#b_add_credit').fadeOut(200);
+        $('#cancel_b_add_credit').fadeOut(200);
+        $('#p_add_credit').fadeIn(200);
+    });
+
 });
 
 $('.clear_form1').click(function(){

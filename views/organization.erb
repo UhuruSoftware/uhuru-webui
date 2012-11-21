@@ -189,10 +189,11 @@
 
     <div class="modal-footer">
     <span class="server_errors" id="add_credit_failed"><%= session[:e_add_credit] %></span>
+    <p class="hidden_modal_messages" id="p_add_credit">Adding credit card...</p>
         <div class="button_case_delete_organization_and_space">
-            <button type="button" class="btn btn_right_delete_organization_and_space cancel"><span class="line">| </span>No </button>
+            <button type="button" class="btn btn_right_delete_organization_and_space cancel" id="cancel_b_add_credit"><span class="line">| </span>Cancel </button>
             <form action="/addCreditCardToOrganization" method="post">
-                <button type="submit" class="btn btn_left_delete_organization_and_space ok"><span class="line">| </span>Yes </button>
+                <button type="submit" class="btn btn_left_delete_organization_and_space danger" id="b_add_credit"><span class="line">| </span>Add </button>
                 <input type="text" name="cardId" id="pass_credit_card_add_id" class="blank_input" />
             </form>
         </div>
@@ -265,12 +266,13 @@
     </div>
     <div class="modal-footer">
         <span class="server_errors" id="delete_user_failed"><%= session[:e_delete_user] %></span>
+        <p class="hidden_modal_messages" id="p_delete_user">Deleting...</p>
         <div class="button_case_delete_organization_and_space">
-            <button type="button" class="btn btn_right_delete_organization_and_space cancel"><span class="line">| </span>Cancel </button>
+            <button type="button" class="btn btn_right_delete_organization_and_space cancel" id="cancel_b_delete_user"><span class="line">| </span>Cancel </button>
             <form action="/deleteUser" method="post">
                 <input type="text" class="blank_input" id="pass_user_guid" value="" name="thisUser"/>
                 <input type="text" class="blank_input" id="pass_user_role" value="" name="thisUserRole"/>
-                <button type="submit" class="btn btn_left_delete_organization_and_space danger danger"><span class="line">| </span>Delete </button>
+                <button type="submit" class="btn btn_left_delete_organization_and_space danger" id="b_delete_user"><span class="line">| </span>Delete </button>
             </form>
         </div>
     </div>
@@ -293,12 +295,12 @@
         </p>
     </div>
     <div class="modal-footer">
+    <span class="server_errors" id="delete_this_organization_failed"><%= session[:e_delete_organization] %></span>
+    <p class="hidden_modal_messages" id="p_d_organization">Deleting...</p>
         <div class="button_case_delete_organization_and_space">
-            <span class="server_errors" id="delete_this_organization_failed"><%= session[:e_delete_organization] %></span>
             <button class="btn btn_right_delete_organization_and_space cancel" id="cancel_b_d_organization"><span class="line">| </span>Cancel </button>
             <form action="/deleteCurrentOrganization" method="post">
                 <button type="submit" class="btn btn_left_delete_organization_and_space danger" id="b_d_organization"><span class="line">| </span>Delete </button>
-                <p class="hidden_modal_messages" id="p_d_organization">Your organization is being removed...</p>
             </form>
         </div>
     </div>
@@ -333,12 +335,13 @@
             </ul>
     </div>
     <div class="modal-footer">
+        <p class="hidden_modal_messages" id="p_add_user">Please wait...</p>
         <span class="server_errors" id="create_user_failed"><%= session[:e_create_user] %></span>
         <div class="button_case_create_organization_and_space">
             <form action="/addUsers" method="post">
                 <input type="text" id="new_user_type" name="userType" class="blank_input" />
                 <input type="text" id="new_user_email" name="userEmail" class="blank_input" />
-                <button type="submit" class="btn btn_right_create_organization_and_space ok"><span class="line">| </span>Invite User </button>
+                <button type="submit" class="btn btn_right_create_organization_and_space ok" id="b_add_user"><span class="line">| </span>Invite User </button>
             </form>
         </div>
     </div>
