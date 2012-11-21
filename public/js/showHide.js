@@ -111,11 +111,19 @@ function showApps()
         document.getElementById('services_li').style.borderRight = '0px solid #0e4769';
         document.getElementById('services_li').style.color = "#ffffff";
 
+        document.getElementById('users_li').style.paddingBottom = '0px';
+        document.getElementById('users_li').style.borderTop = '0px solid #0e4769';
+        document.getElementById('users_li').style.borderLeft = '0px solid #0e4769';
+        document.getElementById('users_li').style.borderRight = '0px solid #0e4769';
+        document.getElementById('users_li').style.color = "#ffffff";
+
      document.getElementById('spaces_tabs').style.borderBottom = '1px solid #0e4769';
      document.getElementById('apps').style.display = 'block';
      document.getElementById('services').style.display = 'none';
      document.getElementById('create_app').style.display = 'block';
      document.getElementById('create_service').style.display = 'none';
+     document.getElementById('users').style.display = 'none';
+     document.getElementById('create_user').style.display = 'none';
 
      document.getElementById('edit_space_btn').style.right = '100px';
 }
@@ -135,17 +143,52 @@ function showServices()
         document.getElementById('apps_li').style.borderRight = '0px solid #0e4769';
         document.getElementById('apps_li').style.color = "#ffffff";
 
+        document.getElementById('users_li').style.paddingBottom = '0px';
+        document.getElementById('users_li').style.borderTop = '0px solid #0e4769';
+        document.getElementById('users_li').style.borderLeft = '0px solid #0e4769';
+        document.getElementById('users_li').style.borderRight = '0px solid #0e4769';
+        document.getElementById('users_li').style.color = "#ffffff";
+
      document.getElementById('spaces_tabs').style.borderBottom = '1px solid #0e4769';
      document.getElementById('apps').style.display = 'none';
      document.getElementById('services').style.display = 'block';
      document.getElementById('create_app').style.display = 'none';
      document.getElementById('create_service').style.display = 'block';
+     document.getElementById('users').style.display = 'none';
+     document.getElementById('create_user').style.display = 'none';
 
      document.getElementById('edit_space_btn').style.right = '100px';
 }
 
 function showUsers()
 {
+        document.getElementById('users_li').style.paddingBottom = '1px';
+        document.getElementById('users_li').style.borderTop = '1px solid #0e4769';
+        document.getElementById('users_li').style.borderLeft = '1px solid #0e4769';
+        document.getElementById('users_li').style.borderRight = '1px solid #0e4769';
+        document.getElementById('users_li').style.backgroundColor = '#09293e';
+        document.getElementById('users_li').style.color = "#ffffff";
+
+        document.getElementById('apps_li').style.paddingBottom = '0px';
+        document.getElementById('apps_li').style.borderTop = '0px solid #0e4769';
+        document.getElementById('apps_li').style.borderLeft = '0px solid #0e4769';
+        document.getElementById('apps_li').style.borderRight = '0px solid #0e4769';
+        document.getElementById('apps_li').style.color = "#ffffff";
+
+        document.getElementById('services_li').style.paddingBottom = '0px';
+        document.getElementById('services_li').style.borderTop = '0px solid #0e4769';
+        document.getElementById('services_li').style.borderLeft = '0px solid #0e4769';
+        document.getElementById('services_li').style.borderRight = '0px solid #0e4769';
+        document.getElementById('services_li').style.color = "#ffffff";
+
+     document.getElementById('spaces_tabs').style.borderBottom = '1px solid #0e4769';
+     document.getElementById('apps').style.display = 'none';
+     document.getElementById('services').style.display = 'none';
+     document.getElementById('create_app').style.display = 'none';
+     document.getElementById('create_service').style.display = 'none';
+     document.getElementById('users').style.display = 'block';
+     document.getElementById('create_user').style.display = 'block';
+
      document.getElementById('edit_space_btn').style.right = '100px';
 }
 
