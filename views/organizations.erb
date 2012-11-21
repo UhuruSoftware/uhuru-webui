@@ -49,7 +49,7 @@
         </div>
         <div class="modal-footer">
             <span class="server_errors" id="create_organization_failed"><%= session[:e_create_organization] %></span>
-            <p class="hidden_modal_messages" id="p_c_organization">Your organization is being created...</p>
+            <p class="hidden_modal_messages" id="p_c_organization">Please wait...</p>
             <div class="button_case_create_organization_and_space">
                 <button type="button" class="btn btn_right_create_organization_and_space cancel" id="cancel_b_c_organization"><span class="line">| </span>Cancel </button>
                 <button type="submit" class="btn btn_left_create_organization_and_space ok" id="b_c_organization"><span class="line">| </span>Create </button>
@@ -76,7 +76,7 @@
     </div>
     <div class="modal-footer">
         <span class="server_errors" id="delete_organization_failed"><%= session[:e_delete_organization] %></span>
-        <p class="hidden_modal_messages" id="p_d_organization">Your organization is being removed...</p>
+        <p class="hidden_modal_messages" id="p_d_organization">Deleting...</p>
         <div class="button_case_delete_organization_and_space">
             <button type="button" class="btn btn_right_delete_organization_and_space cancel" id="cancel_b_d_organization"><span class="line">| </span>Cancel</button>
             <form action="/deleteClickedOrganization" method="post">

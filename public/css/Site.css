@@ -1221,20 +1221,18 @@ a
 .server_errors
 {
     font-family: 'Segoe UI Light', 'Open Sans', Verdana, Arial, Helvetica, sans-serif;
-    font-weight: 200;
+    font-weight: 400;
     font-size: 18px;
-    letter-spacing: 0.01em;
+    letter-spacing: 0.03em;
     float: left;
     height: 40px;
     line-height: 40px;
-    color: #f5a9f2;
-    margin-left: 20px;
+    color: #ff0022;
+    margin-left: 10px;
 }
 .server_errors
 {
-    font-weight: 300;
     color: #ff0022;
-    font-size: 16px;
 }
 .form_errors1,
 .form_errors2

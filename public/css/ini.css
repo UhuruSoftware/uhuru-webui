@@ -1615,6 +1615,11 @@ h2 .count
     position: absolute;
     bottom: 30px;
     left: 5px;
+    width: 100%;
+    overflow: hidden;
+    white-space: nowrap;
+    text-align: left;
+    text-overflow: ellipsis;
 }
 .user_type_span
 {
@@ -1677,6 +1682,7 @@ h2 .count
 {
     display: none;
     float: right;
+    margin-right: 10px;
 }
 
 #app_details_header

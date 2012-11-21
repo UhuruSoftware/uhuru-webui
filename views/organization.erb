@@ -217,7 +217,7 @@
             <div class="button_case_create_organization_and_space">
                 <button type="button" class="btn btn_right_create_organization_and_space cancel" id="cancel_b_c_space"><span class="line">| </span>Cancel </button>
                 <button type="submit" value="Create" class="btn btn_left_create_organization_and_space ok" id="b_c_space"><span class="line">| </span>Create </button>
-                <p class="hidden_modal_messages" id="p_c_space">Your space is being created...</p>
+                <p class="hidden_modal_messages" id="p_c_space">Please wait...</p>
             </div>
         </div>
 
@@ -242,7 +242,7 @@
     </div>
     <div class="modal-footer">
         <span class="server_errors" id="delete_space_failed"><%= session[:e_delete_space] %></span>
-        <p class="hidden_modal_messages" id="p_d_space">Your space is being removed...</p>
+        <p class="hidden_modal_messages" id="p_d_space">Deleting...</p>
         <div class="button_case_delete_organization_and_space">
             <button type="button" class="btn btn_right_delete_organization_and_space cancel" id="cancel_b_d_space"><span class="line">| </span>Cancel </button>
             <form action="/deleteClickedSpace" method="post">

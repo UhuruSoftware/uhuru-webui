@@ -494,7 +494,7 @@ module Uhuru::Webui
       session[:e_reset_account] = false
       # <<
 
-      @usertitle = "Account " + session[:username]
+      @usertitle = session[:username]
       @timeNow = $this_time
 
       session[:path_1] = ''

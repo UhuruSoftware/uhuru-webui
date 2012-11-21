@@ -85,7 +85,7 @@ $(function() {
     $('#b_c_organization').click(function(event){
         var org = $('#org_name').val();
 
-        if(org.length < 3) {
+        if(org.length < 4) {
             event.preventDefault();
             $('.server_errors').hide().text("Please enter a name(4 letters)!").fadeIn(200);
         }
@@ -100,7 +100,7 @@ $(function() {
     $('#b_c_space').click(function(event){
         var space = $('.space_name_i').val();
 
-        if(space.length < 3) {
+        if(space.length < 4) {
             event.preventDefault();
             $('.server_errors').hide().text("Please enter a name(4 letters)!").fadeIn(200);
         }
