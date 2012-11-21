@@ -123,6 +123,48 @@ class Spaces
     services_list
   end
 
+  def read_owners(config, space_guid)
+    user_setup_obj = UsersSetup.new(config)
+
+    users_list = []
+    users = @client.space(space_guid).managers
+
+    users.each do |user|
+      username = user_setup_obj.get_username_from_guid(user.guid)
+      users_list << Users::User.new(username, 'owner', false, user.guid)
+    end
+
+    users_list
+  end
+
+  def read_developers(config, space_guid)
+    user_setup_obj = UsersSetup.new(config)
+
+    users_list = []
+    users = @client.space(space_guid).developers
+
+    users.each do |user|
+      username = user_setup_obj.get_username_from_guid(user.guid)
+      users_list << Users::User.new(username, 'developer', false, user.guid)
+    end
+
+    users_list
+  end
+
+  def read_auditors(config, space_guid)
+    user_setup_obj = UsersSetup.new(config)
+
+    users_list = []
+    users = @client.space(space_guid).auditors
+
+    users.each do |user|
+      username = user_setup_obj.get_username_from_guid(user.guid)
+      users_list << Users::User.new(username, 'auditor', false, user.guid)
+    end
+
+    users_list
+  end
+
   class Space
     attr_reader :name, :cost, :apps_count, :services_count, :guid
 
