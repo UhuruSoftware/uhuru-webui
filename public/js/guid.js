@@ -10,11 +10,35 @@ function prepareToDeleteSpace(obj)
     document.getElementById('pass_guid').value = obj.title;
 }
 
-function prepareToDeleteUser(obj)
+
+function prepareToDeleteOwner(obj)
 {
-    document.getElementById('this_user_name').innerHTML = obj.id;
-    document.getElementById('pass_user_guid').value = obj.title;
+    document.getElementById('this_user_name').innerHTML = obj.title;
+    document.getElementById('pass_user_guid').value = obj.id;
+    document.getElementById('pass_user_role').value = "owner";
 }
+
+function prepareToDeleteBillingManager(obj)
+{
+    document.getElementById('this_user_name').innerHTML = obj.title;
+    document.getElementById('pass_user_guid').value = obj.id;
+    document.getElementById('pass_user_role').value = "billing";
+}
+
+function prepareToDeleteDeveloper(obj)
+{
+    document.getElementById('this_user_name').innerHTML = obj.title;
+    document.getElementById('pass_user_guid').value = obj.id;
+    document.getElementById('pass_user_role').value = "developer";
+}
+
+function prepareToDeleteAuditor(obj)
+{
+    document.getElementById('this_user_name').innerHTML = obj.title;
+    document.getElementById('pass_user_guid').value = obj.id;
+    document.getElementById('pass_user_role').value = "auditor";
+}
+
 
 function prepareToDeleteApp(obj)
 {

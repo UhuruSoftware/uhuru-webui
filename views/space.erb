@@ -226,16 +226,40 @@
             </div>
 
             <div id="users" class="tab-pane">
-                 <ul class="tile_list">
-                        <li class="tile_user_owner" title="fd">
-                            <span class="user_name_span">test></span>
-                            <span class="user_type_span">Owner</span>
-                            <span class="small_edit edit-user-button"></span>
-                            <span class="small_trash delete-user-button"></span>
-                            <a href="#"><span class="small_trash delete-user-button" title="ss"></span></a>
+                <ul class="tile_list">
+                  <% owners_list.each do |owner| %>
+                    <li class="tile_user_owner" title="<%= owner.email %>">
+                        <span class="user_name_span"><%= owner.email %></span>
+                        <span class="user_type_span">Owner</span>
+                        <span class="small_edit edit-user-button"></span>
+                        <span class="small_trash delete-user-button"></span>
+                        <a href="#"><span class="small_trash delete-user-button" id="<%= owner.guid %>" title="<%= owner.email %>" onmousemove="prepareToDeleteOwner(this);"></span></a>
 
-                            <span class="span_bg_icon"></span>
-                        </li>
+                        <span class="span_bg_icon"></span>
+                    </li>
+                  <% end %>
+
+                  <% developers_list.each do |dev| %>
+                    <li class="tile_user_developer" title="<%= dev.email %>">
+                        <span class="user_name_span"><%= dev.email %></span>
+                        <span class="user_type_span">Developer</span>
+                        <span class="small_edit edit-user-button"></span>
+                        <a href="#"><span class="small_trash delete-user-button" id="<%= dev.guid %>" title="<%= dev.email %>" onmousemove="prepareToDeleteDeveloper(this);"></span></a>
+
+                        <span class="span_bg_icon"></span>
+                    </li>
+                  <% end %>
+
+                  <% auditors_list.each do |auditor| %>
+                    <li class="tile_user_manager" title="<%= auditor.email %>">
+                        <span class="user_name_span"><%= auditor.email  %></span>
+                        <span class="user_type_span">Auditor</span>
+                        <span class="small_edit edit-user-button"></span>
+                        <a href="#"><span class="small_trash delete-user-button" id="<%= auditor.guid %>" title="<%= auditor.email %>" onmousemove="prepareToDeleteAuditor(this);"></span></a>
+
+                        <span class="span_bg_icon"></span>
+                    </li>
+                  <% end %>
                 </ul>
             </div>
 </div>
@@ -589,16 +613,39 @@
             <ul class="create_user_modal_ul" id="radio_buttons">
                 <li><input type="radio" name="type" value="owner" id="owner" onclick="selectUserType(this);">Owner</li>
                 <li><input type="radio" name="type" value="developer" id="developer" onclick="selectUserType(this);">Developer</li>
-                <li><input type="radio" name="type" value="manager" id="manager" onclick="selectUserType(this);">Manager</li>
+                <li><input type="radio" name="type" value="manager" id="auditor" onclick="selectUserType(this);">Auditor</li>
             </ul>
     </div>
     <div class="modal-footer">
         <span class="server_errors" id="create_user_failed"></span>
         <div class="button_case_create_organization_and_space">
-            <form action="/addUsers" method="post">
+            <form action="/addUsersToSpace" method="post">
                 <input type="text" id="new_user_type" name="userType" class="blank_input" />
                 <input type="text" id="new_user_email" name="userEmail" class="blank_input" />
                 <button type="submit" class="btn btn_right_create_organization_and_space ok"><span class="line">| </span>Invite User </button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal hide" id="delete_user_modal">
+    <div class="modal-header">
+        <button class="close"></button>
+        <h3>Delete User</h3>
+    </div>
+    <div class="modal-body">
+        <p>
+            Are you sure you want to delete this user <span id="this_user_name"></span>?
+        </p>
+    </div>
+    <div class="modal-footer">
+        <span class="server_errors" id="delete_user_failed"></span>
+        <div class="button_case_delete_organization_and_space">
+            <button type="button" class="btn btn_right_delete_organization_and_space cancel"><span class="line">| </span>Cancel </button>
+            <form action="/deleteSpaceUser" method="post">
+                <input type="text" class="blank_input" id="pass_user_guid" value="" name="thisUser"/>
+                <input type="text" class="blank_input" id="pass_user_role" value="" name="thisUserRole"/>
+                <button type="submit" class="btn btn_left_delete_organization_and_space danger danger"><span class="line">| </span>Delete </button>
             </form>
         </div>
     </div>

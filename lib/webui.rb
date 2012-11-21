@@ -114,7 +114,7 @@ module Uhuru::Webui
             redirect '/resetOrganization'
         end
 
-        if session[:error] == "create user error"
+        if session[:error] == "User account doesn't exist"
             session[:e_create_user] = "You are not authorized to create a user!"
             redirect '/resetOrganization'
         end
@@ -432,7 +432,11 @@ module Uhuru::Webui
 
       apps_names = readapps_Obj.read_apps
 
-      erb :space, {:locals => {:apps_names => apps_names, :apps_list => apps_list, :services_list => services_list, :apps_count => apps_list.count, :services_count => services_list.count}, :layout => :layout_user}
+      owners_list = spaces_Obj.read_owners(@config, session[:currentSpace])
+      developers_list = spaces_Obj.read_developers(@config, session[:currentSpace])
+      auditors_list = spaces_Obj.read_auditors(@config, session[:currentSpace])
+
+      erb :space, {:locals => {:owners_list => owners_list, :auditors_list => auditors_list, :developers_list => developers_list, :apps_names => apps_names, :apps_list => apps_list, :services_list => services_list, :apps_count => apps_list.count, :services_count => services_list.count}, :layout => :layout_user}
     end
 
     get '/credit' do
@@ -662,14 +666,37 @@ module Uhuru::Webui
       redirect "/organization" + session[:currentOrganization]
     end
 
-    post '/deleteUser' do
-      @user_guid = params[:thisUser]
+    post '/addUsersToSpace' do
+      @email = params[:userEmail]
+      @type = params[:userType]
 
       organizations_Obj = Organizations.new(session[:token], @cf_target)
       users_Obj = Users.new(session[:token], @cf_target)
-      users_Obj.remove_user_with_role_from_org(session[:currentOrganization], @user_guid, "")
+      users_Obj.invite_user_with_role_to_space(@config, @email, session[:currentSpace], @type)
+
+      redirect "/space" + session[:currentSpace]
+    end
+
+    post '/deleteUser' do
+      @user_guid = params[:thisUser]
+      @role = params[:thisUserRole]
+
+      organizations_Obj = Organizations.new(session[:token], @cf_target)
+      users_Obj = Users.new(session[:token], @cf_target)
+      users_Obj.remove_user_with_role_from_org(session[:currentOrganization], @user_guid, @role)
 
       redirect "/organization" + session[:currentOrganization]
+    end
+
+    post '/deleteSpaceUser' do
+      @user_guid = params[:thisUser]
+      @role = params[:thisUserRole]
+
+      organizations_Obj = Organizations.new(session[:token], @cf_target)
+      users_Obj = Users.new(session[:token], @cf_target)
+      users_Obj.remove_user_with_role_from_space(session[:currentSpace], @user_guid, @role)
+
+      redirect "/space" + session[:currentSpace]
     end
 
     post '/startApp' do

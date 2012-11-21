@@ -66,9 +66,7 @@
                             <li class="tile_user_owner" title="<%= owner.email %>">
                                 <span class="user_name_span"><%= owner.email %></span>
                                 <span class="user_type_span">Owner</span>
-                                <span class="small_edit edit-user-button"></span>
-                                <span class="small_trash delete-user-button"></span>
-                                <a href="#"><span class="small_trash delete-user-button" id="<%= owner.guid %>" title="<%= owner.email %>" onmousemove="prepareToDeleteUser(this);"></span></a>
+                                <a href="#"><span class="small_trash delete-user-button" id="<%= owner.guid %>" title="<%= owner.email %>" onmousemove="prepareToDeleteOwner(this);"></span></a>
 
                                 <span class="span_bg_icon"></span>
                             </li>
@@ -78,8 +76,7 @@
                             <li class="tile_user_developer" title="<%= billing.email %>">
                                 <span class="user_name_span"><%= billing.email %></span>
                                 <span class="user_type_span">Billing Manager</span>
-                                <span class="small_edit edit-user-button"></span>
-                                <a href="#"><span class="small_trash delete-user-button" id="<%= billing.guid %>" title="<%= billing.email %>" onmousemove="prepareToDeleteUser(this);"></span></a>
+                                <a href="#"><span class="small_trash delete-user-button" id="<%= billing.guid %>" title="<%= billing.email %>" onmousemove="prepareToDeleteBillingManager(this);"></span></a>
 
                                 <span class="span_bg_icon"></span>
                             </li>
@@ -89,8 +86,7 @@
                             <li class="tile_user_manager" title="<%= auditor.email %>">
                                 <span class="user_name_span"><%= auditor.email  %></span>
                                 <span class="user_type_span">Auditor</span>
-                                <span class="small_edit edit-user-button"></span>
-                                <a href="#"><span class="small_trash delete-user-button" id="<%= auditor.guid %>" title="<%= auditor.email %>" onmousemove="prepareToDeleteUser(this);"></span></a>
+                                <a href="#"><span class="small_trash delete-user-button" id="<%= auditor.guid %>" title="<%= auditor.email %>" onmousemove="prepareToDeleteAuditor(this);"></span></a>
 
                                 <span class="span_bg_icon"></span>
                             </li>
@@ -257,6 +253,7 @@
             <button type="button" class="btn btn_right_delete_organization_and_space cancel"><span class="line">| </span>Cancel </button>
             <form action="/deleteUser" method="post">
                 <input type="text" class="blank_input" id="pass_user_guid" value="" name="thisUser"/>
+                <input type="text" class="blank_input" id="pass_user_role" value="" name="thisUserRole"/>
                 <button type="submit" class="btn btn_left_delete_organization_and_space danger danger"><span class="line">| </span>Delete </button>
             </form>
         </div>
@@ -315,8 +312,8 @@
 
             <ul class="create_user_modal_ul" id="radio_buttons">
                 <li><input type="radio" name="type" value="owner" id="owner" onclick="selectUserType(this);">Owner</li>
-                <li><input type="radio" name="type" value="developer" id="developer" onclick="selectUserType(this);">Developer</li>
-                <li><input type="radio" name="type" value="manager" id="manager" onclick="selectUserType(this);">Manager</li>
+                <li><input type="radio" name="type" value="developer" id="billing" onclick="selectUserType(this);">Billing Manager</li>
+                <li><input type="radio" name="type" value="manager" id="auditor" onclick="selectUserType(this);">Auditor</li>
             </ul>
     </div>
     <div class="modal-footer">
