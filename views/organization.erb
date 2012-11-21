@@ -98,7 +98,23 @@
                 <div id="billings" class="tab-pane">
                     <ul class="tile_list" style="border-bottom: 1px solid #0e4769; padding-bottom: 50px; margin-top: 30px;">
 
-                        <% if org_credit_card == nil or org_credit_card == "You are not authorized to access this information" %>
+                        <% if org_credit_card == "You are not authorized to access this information." %>
+                            <li class="tile_invisible">
+                                <ul class="custom_list">
+                                    <li class="tile_credit_card_name_unused credit_card_cursor" title="none">
+                                       <span class="credit_card_name">Unauthorized</span>
+                                    </li>
+
+                                    <li class="tile_credit_card_logo_unused">
+                                    </li>
+
+                                    <li class="tile_credit_card_details_unused">
+                                        <span class="credit_card_first_name_span">Unauthorized</span>
+                                        <span class="credit_card_last_name_span">Unauthorized</span>
+                                    </li>
+                                </ul>
+                            </li>
+                        <% elsif org_credit_card == nil %>
                             <li class="tile_invisible">
                                 <ul class="custom_list">
                                     <li class="tile_credit_card_name_unused credit_card_cursor" title="none">
