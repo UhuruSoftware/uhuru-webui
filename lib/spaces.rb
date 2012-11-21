@@ -171,8 +171,8 @@ class Spaces
     def initialize(name, cost, apps_count, services_count, guid)
       @name = name
       @cost = cost
-      @apps = apps_count
-      @services = services_count
+      @apps_count = apps_count
+      @services_count = services_count
       @guid = guid
     end
   end
