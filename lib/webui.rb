@@ -114,14 +114,24 @@ module Uhuru::Webui
             redirect '/resetOrganization'
         end
 
-        if session[:error] == "User account doesn't exist"
-            session[:e_create_user] = "You are not authorized to create a user!"
+        if session[:error] == "User account doesn't exist-org"
+            session[:e_create_user] = "Can't add user to organization: user doesn't exist!"
             redirect '/resetOrganization'
         end
 
-        if session[:error] == "delete user error"
+        if session[:error] == "User account doesn't exist-space"
+            session[:e_create_user] = "Can't add user to space: user doesn't exist!"
+            redirect '/resetSpace'
+        end
+
+        if session[:error] == "delete user error-org"
             session[:e_delete_user] = "You are not authorized to delete this user!"
             redirect '/resetOrganization'
+        end
+
+        if session[:error] == "delete user error-space"
+            session[:e_delete_user] = "You are not authorized to delete this user!"
+            redirect '/resetSpace'
         end
 
     # /space(guid) - current space - page errors
@@ -436,7 +446,7 @@ module Uhuru::Webui
       developers_list = spaces_Obj.read_developers(@config, session[:currentSpace])
       auditors_list = spaces_Obj.read_auditors(@config, session[:currentSpace])
 
-      erb :space, {:locals => {:owners_list => owners_list, :auditors_list => auditors_list, :developers_list => developers_list, :apps_names => apps_names, :apps_list => apps_list, :services_list => services_list, :apps_count => apps_list.count, :services_count => services_list.count}, :layout => :layout_user}
+      erb :space, {:locals => {:owners_list => owners_list, :auditors_list => auditors_list, :users_count => owners_list.count + developers_list.count + auditors_list.count, :developers_list => developers_list, :apps_names => apps_names, :apps_list => apps_list, :services_list => services_list, :apps_count => apps_list.count, :services_count => services_list.count}, :layout => :layout_user}
     end
 
     get '/credit' do

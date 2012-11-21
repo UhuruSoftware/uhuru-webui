@@ -96,7 +96,7 @@ var error_unbind_url = $('#unbind_url_failed').html();
         $('.close').click(function(){$("#delete_space_modal").css("display", "none");$('#screen').css("display", "none");$('body').css({"overflow":"auto"}); $('#delete_space_failed').html(''); location.reload();});
     }
 
-    if(error_create_user == "You are not authorized to create a user!")
+    if(error_create_user == "Can't add user to space: user doesn't exist!" || error_create_user == "Can't add user to organization: user doesn't exist!")
     {
         $('#screen').css({	"display": "block", opacity: 0.7, "width": "10000px", "height": "10000px"});
         $('body').css({"overflow":"hidden"});

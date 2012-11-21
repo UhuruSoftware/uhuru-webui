@@ -28,7 +28,7 @@
            <ul id="spaces_tabs" class="nav nav-tabs">
                 <li onclick="showApps();" id="apps_li">Apps (<span><%= apps_count %></span>)</li>
                 <li onclick="showServices();" id="services_li">Services (<span><%= services_count %></span>)</li>
-                <li onclick="showUsers();" id="users_li">Users (<span>count</span>)</li>
+                <li onclick="showUsers();" id="users_li">Users (<span><%= users_count %></span>)</li>
             </ul>
                 <div id="apps" class="tab_pane">
                     <ul class="tile_list">
@@ -231,8 +231,6 @@
                     <li class="tile_user_owner" title="<%= owner.email %>">
                         <span class="user_name_span"><%= owner.email %></span>
                         <span class="user_type_span">Owner</span>
-                        <span class="small_edit edit-user-button"></span>
-                        <span class="small_trash delete-user-button"></span>
                         <a href="#"><span class="small_trash delete-user-button" id="<%= owner.guid %>" title="<%= owner.email %>" onmousemove="prepareToDeleteOwner(this);"></span></a>
 
                         <span class="span_bg_icon"></span>
@@ -243,7 +241,6 @@
                     <li class="tile_user_developer" title="<%= dev.email %>">
                         <span class="user_name_span"><%= dev.email %></span>
                         <span class="user_type_span">Developer</span>
-                        <span class="small_edit edit-user-button"></span>
                         <a href="#"><span class="small_trash delete-user-button" id="<%= dev.guid %>" title="<%= dev.email %>" onmousemove="prepareToDeleteDeveloper(this);"></span></a>
 
                         <span class="span_bg_icon"></span>
@@ -254,7 +251,6 @@
                     <li class="tile_user_manager" title="<%= auditor.email %>">
                         <span class="user_name_span"><%= auditor.email  %></span>
                         <span class="user_type_span">Auditor</span>
-                        <span class="small_edit edit-user-button"></span>
                         <a href="#"><span class="small_trash delete-user-button" id="<%= auditor.guid %>" title="<%= auditor.email %>" onmousemove="prepareToDeleteAuditor(this);"></span></a>
 
                         <span class="span_bg_icon"></span>
@@ -617,7 +613,7 @@
             </ul>
     </div>
     <div class="modal-footer">
-        <span class="server_errors" id="create_user_failed"></span>
+        <span class="server_errors" id="create_user_failed"><%= session[:e_create_user] %></span>
         <div class="button_case_create_organization_and_space">
             <form action="/addUsersToSpace" method="post">
                 <input type="text" id="new_user_type" name="userType" class="blank_input" />
@@ -639,7 +635,7 @@
         </p>
     </div>
     <div class="modal-footer">
-        <span class="server_errors" id="delete_user_failed"></span>
+        <span class="server_errors" id="delete_user_failed"><%= session[:e_delete_user] %></span>
         <div class="button_case_delete_organization_and_space">
             <button type="button" class="btn btn_right_delete_organization_and_space cancel"><span class="line">| </span>Cancel </button>
             <form action="/deleteSpaceUser" method="post">

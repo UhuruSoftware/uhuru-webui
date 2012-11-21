@@ -113,7 +113,7 @@ class Users
     unless !user_guid
       add_user_to_org_with_role(org_guid, user_guid, [role])
     else
-      raise "User account doesn't exist"
+      raise "User account doesn't exist-org"
     end
   end
 
@@ -125,7 +125,7 @@ class Users
     unless !user_guid
       add_user_with_role_to_space(space_guid, user_guid, [role])
     else
-      raise "User account doesn't exist"
+      raise "User account doesn't exist-space"
     end
   end
 
@@ -209,7 +209,7 @@ class Users
     org.update!
 
   rescue Exception => e
-    raise "delete user error" #"#{e.inspect}"
+    raise "delete user error-org" #"#{e.inspect}"
   end
 
    # role is a string ex: 'owner', 'developer', 'auditor'
@@ -235,7 +235,7 @@ class Users
     space.update!
 
   rescue Exception => e
-    raise "delete user error" #"#{e.inspect}"
+    raise "delete user error-space" #"#{e.inspect}"
   end
 
   def user_exists(user_guid)
