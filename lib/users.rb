@@ -214,7 +214,7 @@ class Users
 
    # role is a string ex: 'owner', 'developer', 'auditor'
   def remove_user_with_role_from_space(space_guid, user_guid, role)
-    space = @client.organization(space_guid)
+    space = @client.space(space_guid)
     user = @client.user(user_guid)
 
     case role

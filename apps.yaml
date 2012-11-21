@@ -7,7 +7,7 @@ joomla:
       description: This is joomla cms
       mem: 512
       exec: sinatra
-    name: php
+    name: sinatra
   runtime: ruby19
   memory: 512
   url: ${name}.${target-base}
