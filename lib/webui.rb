@@ -786,6 +786,7 @@ module Uhuru::Webui
 
       user_sign_up = UsersSetup.new(@config)
       user_sign_up.update_user_info(session[:user_guid], @first_name, @last_name)
+      session[:fname] = @first_name
 
       redirect '/account'
     end

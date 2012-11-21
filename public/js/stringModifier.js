@@ -136,6 +136,12 @@ $(function() {
         $('#p_add_credit').fadeIn(200);
     });
 
+    $('#b_delete_space').click(function(){
+        $('#b_delete_space').fadeOut(200);
+        $('#cancel_b_d_space').fadeOut(200);
+        $('#p_delete_space').fadeIn(200);
+    });
+
 });
 
 $('.clear_form1').click(function(){
