@@ -16,6 +16,7 @@
             <div class="icons_options">
                 <input type="button" value="" class="plus_sign_48 plus_sign_position_48" id="create_app" />
                 <input type="button" value="" class="plus_sign_48 plus_sign_position_48" id="create_service" style="display: none;" />
+                <input type="button" value="" class="plus_sign_48 plus_sign_position_48" id="create_user" style="display: none;" />
 
                 <input type="button" value="" class="edit_sign_48 edit_sign_position_48" id="edit_space_btn" onclick="showSpacesInput();" />
                 <input type="button" class="trash_sign_48 trash_sign_position_48 delete_this_space" value="" />
@@ -221,6 +222,20 @@
                           </ul>
                         </li>
                     <% end %>
+                </ul>
+            </div>
+
+            <div id="users" class="tab-pane">
+                 <ul class="tile_list">
+                        <li class="tile_user_owner" title="fd">
+                            <span class="user_name_span">test></span>
+                            <span class="user_type_span">Owner</span>
+                            <span class="small_edit edit-user-button"></span>
+                            <span class="small_trash delete-user-button"></span>
+                            <a href="#"><span class="small_trash delete-user-button" title="ss"></span></a>
+
+                            <span class="span_bg_icon"></span>
+                        </li>
                 </ul>
             </div>
 </div>
@@ -546,6 +561,46 @@
         <p>
             Your app is being created. This could take a minute or two.
         </p>
+    </div>
+</div>
+
+<div class="modal fade" id="add_user">
+    <div class="modal-header">
+        <button class="close"></button>
+        <h3>Invite user</h3>
+            <br />
+            <p>
+                <strong>Note:</strong> Invitation only works with email addresses that are registered with Windows LiveID, GoogleID or Facebook.
+                Please confirm this with the invitee before sending the invitation
+            </p>
+    </div>
+    <div class="modal-body">
+            <ul class="user_email_ul">
+                <label for="inviteEmail">Email address</label>
+                <input id="user_email" type="text" class="modal_input_box" onmousemove="prepareToAddNewUserEmail();" />
+            </ul>
+
+            <ul class="create_user_modal_ul" id="user_logos">
+                <li class="user_modal_li"><img width="32" height="32"  src="../images/Gmail_logo.png" alt=""/>&nbsp;GoogleID</li>
+                <li class="user_modal_li"><img width="32" height="32"  src="../images/msn_logo.png" alt=""/>&nbsp;Microsoft LiveID</li>
+                <li class="user_modal_li"><img  width="32" height="32"  src="../images/facebook_logo.png" alt=""/>&nbsp;Facebook</li>
+            </ul>
+
+            <ul class="create_user_modal_ul" id="radio_buttons">
+                <li><input type="radio" name="type" value="owner" id="owner" onclick="selectUserType(this);">Owner</li>
+                <li><input type="radio" name="type" value="developer" id="developer" onclick="selectUserType(this);">Developer</li>
+                <li><input type="radio" name="type" value="manager" id="manager" onclick="selectUserType(this);">Manager</li>
+            </ul>
+    </div>
+    <div class="modal-footer">
+        <span class="server_errors" id="create_user_failed"></span>
+        <div class="button_case_create_organization_and_space">
+            <form action="/addUsers" method="post">
+                <input type="text" id="new_user_type" name="userType" class="blank_input" />
+                <input type="text" id="new_user_email" name="userEmail" class="blank_input" />
+                <button type="submit" class="btn btn_right_create_organization_and_space ok"><span class="line">| </span>Invite User </button>
+            </form>
+        </div>
     </div>
 </div>
 

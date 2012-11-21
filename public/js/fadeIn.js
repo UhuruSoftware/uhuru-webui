@@ -106,6 +106,7 @@ $('#create_organization_btn').click(create_organization);
 $('#create_space_btn').click(create_space);
 $('#create_app').click(create_tempcta_modal);
 $('#create_service').click(add_ctService_modal);
+$('#create_user').click(add_user);
 $('#add_user_btn_owner').click(add_user);
 $('#add_user_btn_developer').click(add_user);
 $('#add_user_btn_manager').click(add_user);
