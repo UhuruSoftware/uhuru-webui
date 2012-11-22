@@ -369,6 +369,8 @@ module Uhuru::Webui
 
       organizations_Obj = Organizations.new(session[:token], @cf_target)
       credit_cards_Obj = CreditCards.new(session[:token], @cf_target)
+      users_setup_Obj = UsersSetup.new(@config)
+      all_users = users_setup_Obj.uaa_get_usernames
 
       @this_guid = params[:org_guid]
       session[:organization_name] = organizations_Obj.get_name(@this_guid)
@@ -389,7 +391,7 @@ module Uhuru::Webui
       credit_cards_list = credit_cards_Obj.read_all()
       org_credit_card = credit_cards_Obj.get_organization_credit_card(session[:currentOrganization])
 
-      erb :organization, {:locals => {:credit_cards_list => credit_cards_list, :org_credit_card => org_credit_card, :spaces_list => spaces_list, :spaces_count => spaces_list.count, :members_count => owners_list.count + billings_list.count + auditors_list.count, :owners_list => owners_list, :billings_list => billings_list, :auditors_list => auditors_list}, :layout => :layout_user}
+      erb :organization, {:locals => {:all_users => all_users, :credit_cards_list => credit_cards_list, :org_credit_card => org_credit_card, :spaces_list => spaces_list, :spaces_count => spaces_list.count, :members_count => owners_list.count + billings_list.count + auditors_list.count, :owners_list => owners_list, :billings_list => billings_list, :auditors_list => auditors_list}, :layout => :layout_user}
     end
 
     get '/space:space_guid' do
@@ -426,6 +428,8 @@ module Uhuru::Webui
       organizations_Obj = Organizations.new(session[:token], @cf_target)
       spaces_Obj = Spaces.new(session[:token], @cf_target)
       readapps_Obj = TemplateApps.new
+      users_setup_Obj = UsersSetup.new(@config)
+      all_space_users = users_setup_Obj.uaa_get_usernames
 
       @this_guid = params[:space_guid]
 
@@ -445,7 +449,7 @@ module Uhuru::Webui
       developers_list = spaces_Obj.read_developers(@config, session[:currentSpace])
       auditors_list = spaces_Obj.read_auditors(@config, session[:currentSpace])
 
-      erb :space, {:locals => {:owners_list => owners_list, :auditors_list => auditors_list, :users_count => owners_list.count + developers_list.count + auditors_list.count, :developers_list => developers_list, :apps_names => apps_names, :apps_list => apps_list, :services_list => services_list, :apps_count => apps_list.count, :services_count => services_list.count}, :layout => :layout_user}
+      erb :space, {:locals => {:all_space_users => all_space_users, :owners_list => owners_list, :auditors_list => auditors_list, :users_count => owners_list.count + developers_list.count + auditors_list.count, :developers_list => developers_list, :apps_names => apps_names, :apps_list => apps_list, :services_list => services_list, :apps_count => apps_list.count, :services_count => services_list.count}, :layout => :layout_user}
     end
 
     get '/credit' do

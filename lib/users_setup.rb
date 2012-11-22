@@ -163,7 +163,7 @@ class UsersSetup
     query = {:attributes => "userName"}
     users = uaac.query_users(query)
 
-    users[:resources].map { |u| u[:userName]}.join("','")
+    users[:resources].collect { |u| u[:userName]}
   end
 
   def uaa_get_user_by_name(username)

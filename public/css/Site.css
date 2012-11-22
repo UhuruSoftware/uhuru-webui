@@ -450,14 +450,14 @@ li.new .icon
 {
     position: absolute;
     bottom: 30px;
-    left: 110px;
+    right: 5px;
 }
 
 .count-value.services
 {
     position: absolute;
     bottom: 5px;
-    left: 110px;
+    right: 5px;
 }
 
 .count-label.apps

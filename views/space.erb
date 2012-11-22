@@ -600,6 +600,12 @@
                 <input id="user_email" type="text" class="modal_input_box" onmousemove="prepareToAddNewUserEmail();" />
             </ul>
 
+            <script type="text/javascript">
+                $("[id$='user_email']").autocomplete({
+                            source: <%= all_space_users %>
+                        });
+            </script>
+
             <ul class="create_user_modal_ul" id="user_logos">
                 <li class="user_modal_li"><img width="32" height="32"  src="../images/Gmail_logo.png" alt=""/>&nbsp;GoogleID</li>
                 <li class="user_modal_li"><img width="32" height="32"  src="../images/msn_logo.png" alt=""/>&nbsp;Microsoft LiveID</li>

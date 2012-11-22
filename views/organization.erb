@@ -43,8 +43,8 @@
                                         </li>
 
                                         <li class="tile_space_apps">
-                                            <span class="count-label apps apps_count_span"># of apps: </span><span class="count-value apps apps_count_span_value"><%= space.apps_count %></span>
-                                            <span class="count-label services services_count_span"># of services: </span><span class="count-value services services_count_span_value"><%= space.services_count %></span>
+                                            <span class="count-label apps apps_count_span">#apps: </span><span class="count-value apps apps_count_span_value"><%= space.apps_count %></span>
+                                            <span class="count-label services services_count_span">#services: </span><span class="count-value services services_count_span_value"><%= space.services_count %></span>
                                         </li>
 
                                         <li class="tile_space_mothly_cost">
@@ -321,6 +321,12 @@
                 <label for="inviteEmail">Email address</label>
                 <input id="user_email" type="text" class="modal_input_box" onmousemove="prepareToAddNewUserEmail();" />
             </ul>
+
+            <script type="text/javascript">
+                $("[id$='user_email']").autocomplete({
+                            source: <%= all_users %>
+                        });
+            </script>
 
             <ul class="create_user_modal_ul" id="user_logos">
                 <li class="user_modal_li"><img width="32" height="32"  src="../images/Gmail_logo.png" alt=""/>&nbsp;GoogleID</li>
