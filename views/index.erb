@@ -62,14 +62,18 @@
 
 <div class="modal hide" id="login_modal">
     <div class="modal-header">
-        <button type="button" class="close"></button>
+      <% if defined? user_login_failed %>
+        <a href="/" class="close"></a>
+      <% else %>
+          <button type="button" class="close"></button>
+      <% end %>
         <h3>Login</h3>
     </div>
     <form action="/login" method="post" autocomplete="off">
         <div class="modal-body" id="login_modal_content">
             <p>
                 <label for="id">username: </label>
-                <input type="text" id="id" name="username" class="modal_input_box" autofocus="autofocus" />
+                <input type="text" id="id" name="username" class="modal_input_box" autofocus="autofocus" value = "<%= if defined? user_login_failed then user_login_failed end %>" autofocus = "autofocus" />
             </p>
 
             <p>
@@ -83,7 +87,11 @@
     <div class="modal-footer">
         <span class="server_errors" id="login_failed"><%= session[:e_login] %></span>
         <div class="button_case_create_organization_and_space">
-            <button type="button" class="btn btn_right_create_organization_and_space cancel"><span class="line">| </span>Cancel</button>
+          <% if defined? user_login_failed %>
+              <a href="/" class="btn btn_right_create_organization_and_space cancel"><span class="line">| </span>Cancel</a>
+          <% else %>
+              <button type="button" class="btn btn_right_create_organization_and_space cancel"><span class="line">| </span>Cancel</button>
+          <% end %>
             <button type="submit" class="btn btn_left_create_organization_and_space ok"><span class="line">| </span>Login </button>
         </div>
     </div>

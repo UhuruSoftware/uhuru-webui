@@ -48,7 +48,7 @@ module Uhuru::Webui
     # / page errors
         if session[:error] == "login error"
           session[:e_login] = "Wrong email and/or password!"
-          redirect '/reset'
+          redirect '/userLogin'
         end
 
         if session[:error] == "user exists"
@@ -194,14 +194,12 @@ module Uhuru::Webui
     end
 
 
-    get '/reset' do
-      session[:e_reset] = true
-      redirect '/'
+    get '/userLogin' do
+      erb :index, {:locals => {:user_login_failed => session[:temp_user_login]}, :layout => :layout_guest}
     end
 
     get '/userSignUp' do
-      session[:e_reset] = true
-      erb :index, {:locals => {:user_failed => session[:username], :first_name_failed => session[:fname], :last_name_failed => session[:lname]}, :layout => :layout_guest}
+      erb :index, {:locals => {:user_failed => session[:temp_username], :first_name_failed => session[:temp_first_name], :last_name_failed => session[:temp_last_name]}, :layout => :layout_guest}
     end
 
     get '/resetAccount' do
@@ -235,25 +233,20 @@ module Uhuru::Webui
     get '/' do
       session[:login_] = false
       session[:error] = nil
+
+      session[:username] = ""
       session[:e_sign_up] = ""
+      session[:e_login] = ""
 
-
-      #this code resets the error handling  #>>
-      if session[:e_reset] == true
-        puts session[:e_reset]
-      else
-        session[:e_login] = ""
-      end
-      session[:e_reset] = false
-      # <<
-
+      session[:temp_username] = ""
+      session[:temp_first_name] = ""
+      session[:temp_last_name] = ""
 
       session = []
       @timeNow = $this_time
       @title = 'Uhuru App Cloud'
       $path_1 = ''
       $path_2 = ''
-
       $user = nil
 
       erb :index, {:layout => :layout_guest}
@@ -263,6 +256,8 @@ module Uhuru::Webui
       if params[:username]
         @username = params[:username]
         @password = params[:password]
+
+        session[:temp_user_login] = params[:username]
 
         user_login = UsersSetup.new(@config)
         user = user_login.login(@username, @password)
@@ -290,6 +285,10 @@ module Uhuru::Webui
       @password = params[:password]
       @given_name = params[:first_name]
       @family_name = params[:last_name]
+
+      session[:temp_username] = params[:email]
+      session[:temp_first_name] = params[:first_name]
+      session[:temp_last_name] = params[:last_name]
 
       user_sign_up = UsersSetup.new(@config)
       user = user_sign_up.signup(@email, @password, @given_name, @family_name)
