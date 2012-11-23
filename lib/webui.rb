@@ -140,7 +140,7 @@ module Uhuru::Webui
             redirect '/resetSpace'
         end
 
-        if session[:error] == "create app error"
+        if session[:error] == "update app error"
             session[:e_update_app] = "App was not updated: server error!"
             redirect '/resetSpace'
         end

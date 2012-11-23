@@ -83,9 +83,11 @@ var error_unbind_url = $('#unbind_url_failed').html();
         $('#delete_organization_modal').fadeIn(600);
         $('.btn-danger').hide();
         $('.modal-body').html('');
-        $('.modal-body').html('<p>Error!</p>');
-        $('.close').click(function(){$("#delete_organization_modal").css("display", "none");$('#screen').css("display", "none");$('body').css({"overflow":"auto"}); $('#delete_organization_failed').html(''); location.reload();});
+        $('.modal-body').html('<p>You are not authorized to delete this organization!</p>');
+        $('.cancel').html('OK');
         $('.cancel').click(function(){$("#delete_organization_modal").css("display", "none");$('#screen').css("display", "none");$('body').css({"overflow":"auto"}); $('#delete_organization_failed').html(''); location.reload();});
+        $('#b_d_organization').hide();
+        $('.close').hide();
     }
 
     if(error_delete_space == "You are not authorized to delete this space!" || error_delete_this_space == "You are not authorized to delete this space!")
@@ -95,9 +97,11 @@ var error_unbind_url = $('#unbind_url_failed').html();
         $('#delete_space_modal').fadeIn(600);
         $('.btn-danger').hide();
         $('.modal-body').html('');
-        $('.modal-body').html('<p>Error!</p>');
-        $('.close').click(function(){$("#delete_space_modal").css("display", "none");$('#screen').css("display", "none");$('body').css({"overflow":"auto"}); $('#delete_space_failed').html(''); location.reload();});
+        $('.modal-body').html('<p>You are not authorized to delete this space!</p>');
+        $('.cancel').html('OK');
         $('.cancel').click(function(){$("#delete_space_modal").css("display", "none");$('#screen').css("display", "none");$('body').css({"overflow":"auto"}); $('#delete_space_failed').html(''); location.reload();});
+        $('#b_d_space').hide();
+        $('.close').hide();
     }
 
     if(error_create_user == "Can't add user to space: user doesn't exist!" || error_create_user == "Can't add user to organization: user doesn't exist!")
@@ -116,9 +120,11 @@ var error_unbind_url = $('#unbind_url_failed').html();
         $('#delete_user_modal').fadeIn(600);
         $('.btn-danger').hide();
         $('.modal-body').html('');
-        $('.modal-body').html('<p>Error!</p>');
-        $('.close').click(function(){$("#delete_user_modal").css("display", "none");$('#screen').css("display", "none");$('body').css({"overflow":"auto"}); $('#delete_user_failed').html(''); location.reload();});
+        $('.modal-body').html('<p>You are not authorized to delete this user!</p>');
+        $('.cancel').html('OK');
         $('.cancel').click(function(){$("#delete_user_modal").css("display", "none");$('#screen').css("display", "none");$('body').css({"overflow":"auto"}); $('#delete_user_failed').html(''); location.reload();});
+        $('#b_delete_user').hide();
+        $('.close').hide();
     }
 
     if(error_create_app == "App was not created: server error!")
@@ -137,9 +143,11 @@ var error_unbind_url = $('#unbind_url_failed').html();
         $('#delete_app').fadeIn(600);
         $('.btn-danger').hide();
         $('.modal-body').html('');
-        $('.modal-body').html('<p>Error!</p>');
-        $('.close').click(function(){$("#delete_app").css("display", "none");$('#screen').css("display", "none");$('body').css({"overflow":"auto"}); $('#delete_app_failed').html(''); location.reload();});
+        $('.modal-body').html('<p>App was not deleted: server error!</p>');
+        $('.cancel').html('OK');
         $('.cancel').click(function(){$("#delete_app").css("display", "none");$('#screen').css("display", "none");$('body').css({"overflow":"auto"}); $('#delete_app_failed').html(''); location.reload();});
+        $('.danger').hide();
+        $('.close').hide();
     }
 
     if(error_create_service == "Service was not created: server error!")
@@ -158,9 +166,11 @@ var error_unbind_url = $('#unbind_url_failed').html();
         $('#delete_service').fadeIn(600);
         $('.btn-danger').hide();
         $('.modal-body').html('');
-        $('.modal-body').html('<p>Error!</p>');
-        $('.close').click(function(){$("#delete_service").css("display", "none");$('#screen').css("display", "none"); $('#unbind_url_failed').html(''); location.reload();});
+        $('.modal-body').html('<p>Service was not deleted: server error!</p>');
+        $('.cancel').html('OK');
         $('.cancel').click(function(){$("#delete_service").css("display", "none");$('#screen').css("display", "none"); $('#unbind_url_failed').html(''); location.reload();});
+        $('.danger').hide();
+        $('.close').hide();
     }
 
 
@@ -181,9 +191,11 @@ var error_unbind_url = $('#unbind_url_failed').html();
         $('#unbind_service_modal').fadeIn(600);
         $('.btn-danger').hide();
         $('.modal-body').html('');
-        $('.modal-body').html('<p>Error!</p>');
-        $('.close').click(function(){$("#unbind_service_modal").css("display", "none");$('#screen').css("display", "none"); $('#unbind_service_failed').html(''); location.reload();});
+        $('.modal-body').html('<p>Can not unbind this service from app!</p>');
+        $('.cancel').html('OK');
         $('.cancel').click(function(){$("#unbind_service_modal").css("display", "none");$('#screen').css("display", "none"); $('#unbind_service_failed').html(''); location.reload();});
+        $('.danger').hide();
+        $('.close').hide();
     }
 
     if(error_bind_url == "Can't bind this url to app!")
@@ -202,9 +214,11 @@ var error_unbind_url = $('#unbind_url_failed').html();
         $('#unbind_uri_modal').fadeIn(600);
         $('.btn-danger').hide();
         $('.modal-body').html('');
-        $('.modal-body').html('<p>Error!</p>');
-        $('.close').click(function(){$("#unbind_uri_modal").css("display", "none");$('#screen').css("display", "none"); $('#unbind_url_failed').html(''); location.reload();});
+        $('.modal-body').html('<p>Can not unbind this url from app!</p>');
+        $('.cancel').html('OK');
         $('.cancel').click(function(){$("#unbind_uri_modal").css("display", "none");$('#screen').css("display", "none"); $('#unbind_url_failed').html(''); location.reload();});
+        $('.danger').hide();
+        $('.close').hide();
     }
 
 
@@ -231,30 +245,53 @@ var error_unbind_url = $('#unbind_url_failed').html();
         $('#screen').css({	"display": "block", opacity: 0.7, "width": "10000px", "height": "10000px"});
         $('body').css({"overflow":"hidden"});
         $('#delete_credit_card_modal').fadeIn(600);
-        $('.btn-danger').hide();
         $('.modal-body').html('');
-        $('.modal-body').html('<p>Error!</p>');
-        $('.close').click(function(){$("#delete_credit_card_modal").css("display", "none");$('#screen').css("display", "none");$('#show_modal_errors').hide();$('body').css({"overflow":"auto"}); location.reload();});
+        $('.modal-body').html('<p>Delete credit card failed, try again!</p>');
+        $('.cancel').html('OK');
         $('.cancel').click(function(){$("#delete_credit_card_modal").css("display", "none");$('#screen').css("display", "none");$('#show_modal_errors').hide();$('body').css({"overflow":"auto"}); location.reload();});
+        $('.close').hide();
+        $('.danger').hide();
     }
 
     if(error_update_app == "App was not updated: server error!")
     {
-        //
+        $('#screen').css({	"display": "block", opacity: 0.7, "width": "10000px", "height": "10000px"});
+        $('body').css({"overflow":"hidden"});
+        $('#error_modal_start_stop_app').fadeIn(600);
+        $('.modal-body').html('');
+        $('.modal-header').html('');
+        $('.modal-header').html('<h3>Update app failed!</h3>');
+        $('.modal-body').html('<p>Server could not update this app details, please try again!</p>');
+        $('.cancel').html('OK');
+        $('.cancel').click(function(){$("#error_modal_start_stop_app").css("display", "none");$('#screen').css("display", "none"); $('#unbind_url_failed').html(''); location.reload();});
+        $('.close').hide();
     }
 
     if(error_start_app == "Can't start app!")
     {
-
-            //$('#opac_screen').css({	"display": "block", opacity: 0.7, "width": "10000px", "height": "10000px"});
-            //$('body').css({"overflow":"hidden"});
-            //element.fadeIn(800);
-            $('.close_app_details').click(function(){$('.app_details_modal').css("display", "none");$('#opac_screen').css("display", "none");$('body').css({"overflow":"auto"}); $('#start_app_failed').html(''); $('#stop_app_failed').html('');});
-            $('.close').click(function(){$('.app_details_modal').css("display", "none");$('#opac_screen').css("display", "none");$('body').css({"overflow":"auto"}); $('#start_app_failed').html(''); $('#stop_app_failed').html('');});
+        $('#screen').css({	"display": "block", opacity: 0.7, "width": "10000px", "height": "10000px"});
+        $('body').css({"overflow":"hidden"});
+        $('#error_modal_start_stop_app').fadeIn(600);
+        $('.modal-body').html('');
+        $('.modal-header').html('');
+        $('.modal-header').html('<h3>Start app failed!</h3>');
+        $('.modal-body').html('<p>Server could not start app!</p>');
+        $('.cancel').html('OK');
+        $('.cancel').click(function(){$("#error_modal_start_stop_app").css("display", "none");$('#screen').css("display", "none"); $('#unbind_url_failed').html(''); location.reload();});
+        $('.close').hide();
     }
     if(error_stop_app == "Can't stop app!")
     {
-        //
+        $('#screen').css({	"display": "block", opacity: 0.7, "width": "10000px", "height": "10000px"});
+        $('body').css({"overflow":"hidden"});
+        $('#error_modal_start_stop_app').fadeIn(600);
+        $('.modal-body').html('');
+        $('.modal-header').html('');
+        $('.modal-header').html('<h3>Stop app failed!</h3>');
+        $('.modal-body').html('<p>Server could not stop app!</p>');
+        $('.cancel').html('OK');
+        $('.cancel').click(function(){$("#error_modal_start_stop_app").css("display", "none");$('#screen').css("display", "none"); $('#unbind_url_failed').html(''); location.reload();});
+        $('.close').hide();
     }
 
 });

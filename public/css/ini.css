@@ -76,7 +76,8 @@ h1, h2, h3, h4, h5, h6
 #bind_service_modal,
 #unbind_service_modal,
 #bind_uri_modal,
-#unbind_uri_modal
+#unbind_uri_modal,
+#error_modal_start_stop_app
 {
 
 	width: 600px;

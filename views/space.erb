@@ -377,7 +377,7 @@
         </p>
     </div>
     <div class="modal-footer">
-        <span class="server_errors" id="delete_app_failed"><%= session[:e_delete_app] %></span>
+        <span class="server_errors blank_input" id="delete_app_failed"><%= session[:e_delete_app] %></span>
         <div class="button_case_delete_organization_and_space">
             <button class="btn btn_right_delete_organization_and_space cancel"><span class="line">| </span>Cancel </button>
             <form action="/deleteClickedApp" method="post">
@@ -434,7 +434,7 @@
         </p>
     </div>
     <div class="modal-footer">
-        <span class="server_errors" id="delete_service_failed"><%= session[:e_delete_service] %></span>
+        <span class="server_errors blank_input" id="delete_service_failed"><%= session[:e_delete_service] %></span>
         <div class="button_case_delete_organization_and_space">
             <button class="btn btn_right_delete_organization_and_space cancel"><span class="line">| </span>Cancel </button>
             <form action="/deleteClickedService" method="post">
@@ -488,7 +488,7 @@
         </p>
     </div>
     <div class="modal-footer">
-        <span class="server_errors" id="unbind_service_failed"><%= session[:e_unbind_service] %></span>
+        <span class="server_errors blank_input" id="unbind_service_failed"><%= session[:e_unbind_service] %></span>
         <form action="/unbindServices" method="post">
             <input type="text" name="serviceName" id="unbind_serviceName" class="blank_input"/>
             <input type="text" id="unbind_service_app_name" name="appName" class="blank_input" />
@@ -543,7 +543,7 @@
         </p>
     </div>
     <div class="modal-footer">
-        <span class="server_errors" id="unbind_url_failed"><%= session[:e_unbind_url] %></span>
+        <span class="server_errors blank_input" id="unbind_url_failed"><%= session[:e_unbind_url] %></span>
         <form action="/unbindUri" method="post">
             <input type="text" name="uriName" id="unbind_uriName" class="blank_input" />
             <input type="text" id="unbind_uri_app_name" name="appName" class="blank_input" />
@@ -652,5 +652,24 @@
         </div>
     </div>
 </div>
+
+
+<div class="modal fade hide" id="error_modal_start_stop_app">
+           <div class="modal-header">
+               <h3></h3>
+           </div>
+           <div class="modal-body">
+               <p>
+                   Are you sure you want to unbind this app? Your app will no longer be able to use this URI.<br />
+               </p>
+           </div>
+           <div class="modal-footer">
+               <form action="/unbindUri" method="post">
+                   <div class="button_case_create_organization_and_space">
+                       <button type="button" class="btn btn_right_unbind cancel"><span class="line">| </span>Cancel </button>
+                   </div>
+               </form>
+           </div>
+       </div>
 
 </div>
