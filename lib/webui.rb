@@ -94,18 +94,18 @@ module Uhuru::Webui
 
     # /organizations page errors
         if session[:error] == "create organization failed"
-            session[:e_create_organization] = "You are not authorized to create organizations!"
-            redirect '/resetOrganizations'
+            session[:e_create_organization] = "Create organization failed(try other names)!"
+            redirect '/organizationsError'
         end
 
         if session[:error] == "delete organization failed"
             session[:e_delete_organization] = "You are not authorized to delete this organization!"
-            redirect '/resetOrganizations'
+            redirect '/organizationsError'
         end
 
     # /organization(guid) - spaces - page errors
         if session[:error] == "create space failed"
-            session[:e_create_space] = "You are not authorized to create spaces!"
+            session[:e_create_space] = "Create space failed(try other names)!"
             redirect '/resetOrganization'
         end
 
@@ -202,6 +202,7 @@ module Uhuru::Webui
       erb :index, {:locals => {:user_failed => session[:temp_username], :first_name_failed => session[:temp_first_name], :last_name_failed => session[:temp_last_name]}, :layout => :layout_guest}
     end
 
+
     get '/resetAccount' do
       session[:e_reset_account] = true
       redirect '/account'
@@ -212,9 +213,10 @@ module Uhuru::Webui
       redirect '/credit'
     end
 
-    get '/resetOrganizations' do
+
+    get '/organizationsError' do
       session[:e_reset_organizations] = true
-      redirect '/organizations'
+      erb :organizations, {:layout => :layout_user}
     end
 
     get '/resetOrganization' do
@@ -228,8 +230,6 @@ module Uhuru::Webui
     end
 
 
-
-
     get '/' do
       session[:login_] = false
       session[:error] = nil
@@ -241,6 +241,7 @@ module Uhuru::Webui
       session[:temp_username] = ""
       session[:temp_first_name] = ""
       session[:temp_last_name] = ""
+      session[:temp_user_login] = ""
 
       session = []
       @timeNow = $this_time
@@ -320,15 +321,11 @@ module Uhuru::Webui
         redirect '/'
       end
 
-      #this code resets the error handling  #>>
-      if session[:e_reset_organizations] == true
-        puts session[:e_reset_organizations]
-      else
-        session[:e_login] = ""
-        session[:e_sign_up] = ""
-        session[:e_create_organization] = ""
-        session[:e_delete_organization] = ""
-      end
+      #this code resets the errors in organizations page # >>
+      session[:e_login] = ""
+      session[:e_sign_up] = ""
+      session[:e_create_organization] = ""
+      session[:e_delete_organization] = ""
       session[:e_reset_organizations] = false
       # <<
 
