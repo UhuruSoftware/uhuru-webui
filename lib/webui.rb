@@ -53,17 +53,17 @@ module Uhuru::Webui
 
         if session[:error] == "user exists"
           session[:e_sign_up] = "Email already exists try another one!"
-          redirect '/reset'
+          redirect '/userSignUp'
         end
 
         if session[:error] == "org create error"
           session[:e_sign_up] = "Server couldn't create the default organization!"
-          redirect '/reset'
+          redirect '/userSignUp'
         end
 
         if session[:error] == "signup error"
           session[:e_sign_up] = "Server did not respond!"
-          redirect '/reset'
+          redirect '/userSignUp'
         end
 
     # /account page errors
@@ -193,9 +193,15 @@ module Uhuru::Webui
       erb :error500, {:layout => :layout_error}
     end
 
+
     get '/reset' do
       session[:e_reset] = true
       redirect '/'
+    end
+
+    get '/userSignUp' do
+      session[:e_reset] = true
+      erb :index, {:locals => {:user_failed => session[:username], :first_name_failed => session[:fname], :last_name_failed => session[:lname]}, :layout => :layout_guest}
     end
 
     get '/resetAccount' do
@@ -229,6 +235,7 @@ module Uhuru::Webui
     get '/' do
       session[:login_] = false
       session[:error] = nil
+      session[:e_sign_up] = ""
 
 
       #this code resets the error handling  #>>
@@ -236,7 +243,6 @@ module Uhuru::Webui
         puts session[:e_reset]
       else
         session[:e_login] = ""
-        session[:e_sign_up] = ""
       end
       session[:e_reset] = false
       # <<

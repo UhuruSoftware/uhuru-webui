@@ -11,8 +11,8 @@
         </p>
 
         <div id="try_it">
-            <span class="title">Give It a <span style="font-weight: bold">Try</span></span>
-            <span class="byline" class="layout_page_paragraph">It takes <br />30 seconds</span>
+            <span class="title">Give It a <span style="font-weight: bold">Try</span></span><br /><br />
+            <span class="byline layout_page_paragraph">It takes <br />30 seconds</span>
         </div>
 
         <div id="signup_container">
@@ -39,7 +39,7 @@
     <tbody>
         <tr>
             <td id="video_placeholder">
-                <iframe id="video" width="340" height="240" src="http://www.youtube.com/embed/Iv4VpPjz7y0" frameborder="0" allowfullscreen></iframe>
+                <iframe id="video" width="340" height="240" src="http://www.youtube.com/embed/Iv4VpPjz7y0" style="border: 0;"></iframe>
             </td>
             <td id="video_description">
                 <h3 class="layout_page_header">Getting Started</h3>
@@ -93,42 +93,50 @@
 <div class="modal hide" id="signup_modal">
     <form action="/signup" method="post" autocomplete="off" id="sign_up">
         <div class="modal-header">
-            <button type="button" class="close"></button>
+          <% if defined? user_failed %>
+            <a href="/" class="close"></a>
+          <% else %>
+              <button type="button" class="close"></button>
+          <% end %>
             <h3>Sign Up</h3>
         </div>
             <div class="modal-body" id="signup_modal_content">
                 <p>
                     <label for="email">e-mail: </label>
-                    <input type="text" id="email" name="email" class="modal_input_box" placeholder="... email" />
+                    <input type="text" id="email" name="email" class="modal_input_box" placeholder="... email" value = "<%= if defined? user_failed then user_failed end %>" autofocus = "autofocus" />
                 </p>
 
                 <p>
                     <label for="password">Password: </label>
-                    <input type="password" id="password" name="password" class="modal_input_box" placeholder="... password" />
+                    <input type="password" id="password" name="password" class="modal_input_box" />
                 </p>
 
                 <p>
                     <label for="confirm_password">Confirm Password: </label>
-                    <input type="password" id="confirm_password" name="confirm_password" class="modal_input_box" placeholder="... confirm password" />
+                    <input type="password" id="confirm_password" name="confirm_password" class="modal_input_box" />
                 </p>
 
                 <p>
                     <label for="first_name">First Name: </label>
-                    <input type="text" id="first_name" name="first_name" class="modal_input_box" placeholder="... first name" />
+                    <input type="text" id="first_name" name="first_name" class="modal_input_box" placeholder="... first name" value = "<%= if defined? first_name_failed then first_name_failed end %>" />
                 </p>
 
                 <p>
                     <label for="last_name">Last Name: </label>
-                    <input type="text" id="last_name" name="last_name" class="modal_input_box" placeholder="... last name" />
+                    <input type="text" id="last_name" name="last_name" class="modal_input_box" placeholder="... last name" value = "<%= if defined? last_name_failed then last_name_failed end %>" />
                 </p>
             </div>
 
         <div class="modal-footer sign_up_footer_modal">
-            <p><span id="show_modal_errors"></span></p>
             <span class="server_errors" id="sign_up_failed"><%= session[:e_sign_up] %></span>
+            <span id="show_modal_errors"></span>
             <div class="button_case_create_organization_and_space">
-                <a href="#" class="btn btn_right_create_organization_and_space cancel"><span class="line">| </span>Cancel</a>
-                <button type="submit" class="btn btn-success btn_left_create_organization_and_space ok"><span class="line">| </span>Sign up </button>
+              <% if defined? user_failed %>
+                  <a href="/" class="btn btn_right_create_organization_and_space cancel"><span class="line">| </span>Cancel</a>
+              <% else %>
+                  <a href="#" class="btn btn_right_create_organization_and_space cancel"><span class="line">| </span>Cancel</a>
+              <% end %>
+                <button type="submit" class="btn btn-success btn_left_create_organization_and_space ok submit_form"><span class="line">| </span>Sign up </button>
             </div>
         </div>
     </form>

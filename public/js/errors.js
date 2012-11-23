@@ -50,8 +50,8 @@ var error_unbind_url = $('#unbind_url_failed').html();
         $('#screen').css({	"display": "block", opacity: 0.7, "width": "10000px", "height": "10000px"});
         $('body').css({"overflow":"hidden"});
         $('#signup_modal').fadeIn(60);
-        $('.close').click(function(){$("#signup_modal").css("display", "none");$('#screen').css("display", "none");$('body').css("overflow", "auto");$('#video_placeholder').css('display', 'block'); $('#sign_up_failed').html(''); location.reload();});
-        $('.cancel').click(function(){$("#signup_modal").css("display", "none");$('#screen').css("display", "none");$('body').css("overflow", "auto");$('#video_placeholder').css('display', 'block'); $('#sign_up_failed').html(''); location.reload();});
+        $('.close').click(function(){$("#signup_modal").css("display", "none");$('#screen').css("display", "none");$('body').css("overflow", "auto");$('#video_placeholder').css('display', 'block'); $('#sign_up_failed').html('');});
+        $('.cancel').click(function(){$("#signup_modal").css("display", "none");$('#screen').css("display", "none");$('body').css("overflow", "auto");$('#video_placeholder').css('display', 'block'); $('#sign_up_failed').html('');});
    }
 
 

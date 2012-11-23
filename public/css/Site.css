@@ -67,8 +67,7 @@ src: url('segoe_ui.ttf'); /* IE9+ */
     font-size: 14px;
     position: absolute;
     width: 100%;
-    bottom: 10px;
-    height: auto;
+    bottom: -15px;
     display: block;
 }
 #signup_container
@@ -1159,6 +1158,8 @@ a
 {
     padding-top: 20px;
     padding-bottom: 20px;
+    padding-left: 40px;
+    padding-right: 40px;
 }
 
 #login_modal_content p,
@@ -1226,13 +1227,13 @@ a
     letter-spacing: 0.03em;
     float: left;
     height: 40px;
-    line-height: 40px;
-    color: #ff0022;
+    line-height: 48px;
+    color: #CEF6F5;
     margin-left: 10px;
 }
 .server_errors
 {
-    color: #ff0022;
+    color: #CEF6F5;
 }
 .form_errors1,
 .form_errors2
