@@ -3,6 +3,7 @@ require 'config'
 require 'dev_utils'
 require 'date'
 require 'sinatra/session'
+require 'pony'
 
 module Uhuru::Webui
   class Webui < Sinatra::Base
@@ -290,6 +291,22 @@ module Uhuru::Webui
       session[:temp_username] = params[:email]
       session[:temp_first_name] = params[:first_name]
       session[:temp_last_name] = params[:last_name]
+
+        Pony.mail({
+            :to => 'marius.ivan.calin@gmail.com',
+            :via => :smtp,
+            :html_body => erb(:email),
+            :via_options => {
+                :address              => 'smtp.gmail.com',
+                :port                 => '587',
+                :enable_starttls_auto => true,
+                :user_name            => 'uhurusoft001@gmail.com',
+                :password             => 'uhurusoft001',
+                :authentication       => :plain,
+                :domain               => "localhost.localdomain"
+            }
+        })
+
 
       user_sign_up = UsersSetup.new(@config)
       user = user_sign_up.signup(@email, @password, @given_name, @family_name)
