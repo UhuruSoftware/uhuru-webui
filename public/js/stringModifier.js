@@ -144,19 +144,6 @@ $(function() {
 
 });
 
-$('.clear_form1').click(function(){
-    $('input[name=first_name]').val('');
-    $('input[name=last_name]').val('');
-    $('.form_errors1').hide();
-});
-
-$('.clear_form2').click(function(){
-    $('input[name=old_pass]').val('');
-    $('input[name=new_pass1]').val('');
-    $('input[name=new_pass2]').val('');
-    $('.form_errors2').hide();
-});
-
 $(function(){
     $('#organization_input').keypress(function(event){
         var org = $(this).val();
