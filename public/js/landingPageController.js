@@ -69,21 +69,21 @@ $(function() {
 
         if(last_name < 2 || last == '... last name') {
             event.preventDefault();
+            $('.server_errors').hide();
             $('#show_modal_errors').hide().text("Please enter you're last name name!").fadeIn(200);
         }
 
+        passwordStrength(data);
+
         if(first_name < 2 || first == '... first name') {
             event.preventDefault();
+            $('.server_errors').hide();
             $('#show_modal_errors').hide().text("Please enter you're first name!").fadeIn(200);
-        }
-
-        if(len < 1) {
-            $('#show_modal_errors').hide().text("Password can not be blank!").fadeIn(200);
-            event.preventDefault();
         }
 
         if($('#password').val() != $('#confirm_password').val()) {
             event.preventDefault();
+            $('.server_errors').hide();
             $('#show_modal_errors').hide().text("Password and Confirm Password don't match!").fadeIn(200);
         }
 
@@ -91,7 +91,22 @@ $(function() {
             //
         } else {
             event.preventDefault();
+            $('.server_errors').hide();
             $('#show_modal_errors').hide().text("Please type a valid email address!").fadeIn(200);
         }
     });
 });
+
+function passwordStrength(password)
+{
+    if(password.length < 4) {
+        $('.server_errors').hide();
+        $('#show_modal_errors').hide().text("Password is to weak!").fadeIn(200);
+        event.preventDefault();
+    }
+    if(password.length > 20) {
+        $('.server_errors').hide();
+        $('#show_modal_errors').hide().text("Password is to long!").fadeIn(200);
+        event.preventDefault();
+    }
+}

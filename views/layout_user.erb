@@ -29,6 +29,7 @@
 
                 <div id="current_user">
                     <span id="current_user_name"></span>
+                    <a href="/organizations" title="Home"><input type="button" class="home_sign_32" value="" id="home_icon" /></a>
                     <a href="/account" title="Account Settings"><input type="button" class="gear_sign_48" value="" id="current_user_edit_btn" /></a>
                     <a href="#" title="LogOut" id="logout_key"><input type="button" class="key_sign_48" value="" id="current_user_log_out" /></a>
                 </div>
@@ -40,10 +41,10 @@
                 </div>
 
                 <div id="logout_small_modal">
-                    <p>Are you sure you want to logout?</p>
+                    <p style="line-height: 20px; padding-top: 10px;">Are you sure you want to logout?</p> <br />
                     <div class="button_case_delete_organization_and_space">
                         <button type="button" class="btn btn_right_delete_organization_and_space toggle_logout_up cancel"><span class="line">| </span>No </button>
-                        <a href="/logout"><button type="button" class="btn btn_left_delete_organization_and_space danger" value="Yes"><span class="line">| </span>Yes </button></a>
+                        <a href="/logout"><button type="button" style="margin-right: -16px;" class="btn btn_left_delete_organization_and_space logout_locked" value="Yes"><span class="line">| </span>Yes </button></a>
                     </div>
                 </div>
             </div>

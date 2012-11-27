@@ -39,7 +39,7 @@ h1, h2, h3, h4, h5, h6
 {
     width: 500px;
     height: 50px;
-    margin-right: 100px;
+    margin-right: 130px;
     float: right;
     text-align: right;
 }
@@ -673,6 +673,25 @@ select option
     background-repeat: no-repeat;
     background-position: 4px center;
 }
+.login_unlocked
+{
+    background-image: url("../images/login_unlocked.png");
+    background-repeat: no-repeat;
+    background-position: 4px center;
+}
+.logout_locked
+{
+    background-image: url("../images/logout_locked.png");
+    background-repeat: no-repeat;
+    background-position: 4px center;
+}
+
+.signup_preferences
+{
+    background-image: url("../images/signup_preferences.png");
+    background-repeat: no-repeat;
+    background-position: 4px center;
+}
 
 .line
 {
@@ -750,6 +769,7 @@ select option
     cursor: pointer;
 }
 
+.home_sign_32,
 .plus_sign_48,
 .edit_sign_48,
 .trash_sign_48,
@@ -785,6 +805,10 @@ select option
 .key_sign_48
 {
     background-image: url("../images/key_32px.png");
+}
+.home_sign_32
+{
+    background-image: url("../images/house.png");
 }
 .money_bag_sign_48
 {
@@ -2228,7 +2252,7 @@ h4
     top: 50px;
     display: none;
 }
-
+#home_icon,
 #current_user_edit_btn,
 #current_user_log_out
 {
@@ -2239,6 +2263,10 @@ h4
 #current_user_log_out
 {
     left: 75px;
+}
+#home_icon
+{
+    left: -25px;
 }
 
 .edit_user_details
