@@ -2,24 +2,26 @@ $(function() {
 
 var login_modal = function(){
 	$('#screen').css({	"display": "block", opacity: 0.7, "width": "10000px", "height": "10000px"});
-    $('#video_placeholder').css("display", "none");
+    $('#video_placeholder').css("position", "absolute");
+    $('#video_placeholder').css("top", "-2000px");
 	$('body').css({"overflow":"hidden"});
 	$('#login_modal').fadeIn(600);
-    $('.close').click(function(){$("#login_modal").css("display", "none");$('#screen').css("display", "none");$('body').css("overflow", "auto");$('#video_placeholder').css('display', 'block');});
-    $('.cancel').click(function(){$("#login_modal").css("display", "none");$('#screen').css("display", "none");$('body').css("overflow", "auto");$('#video_placeholder').css('display', 'block');});
+    $('.close').click(function(){$("#login_modal").css("display", "none");$('#screen').css("display", "none");$('body').css("overflow", "auto");$('#video_placeholder').css('position', 'relative'); $('#video_placeholder').css('top', '0');});
+    $('.cancel').click(function(){$("#login_modal").css("display", "none");$('#screen').css("display", "none");$('body').css("overflow", "auto");$('#video_placeholder').css('position', 'relative'); $('#video_placeholder').css('top', '0');});
 }
 
 var signup_modal = function(){
 	$('#screen').css({	"display": "block", opacity: 0.7, "width": "10000px", "height": "10000px"});
-    $('#video_placeholder').css("display", "none");
+    $('#video_placeholder').css("position", "absolute");
+    $('#video_placeholder').css("top", "-2000px");
 	$('body').css({"overflow":"hidden"});
     $('#password').val('');
     $('#confirm_password').val('');
     $('#username').val('');
     $('#email').val('');
 	$('#signup_modal').fadeIn(600);
-    $('.close').click(function(){$("#signup_modal").css("display", "none");$('#screen').css("display", "none");$('body').css("overflow", "auto");$('#show_modal_errors').text('');$('#video_placeholder').css('display', 'block');});
-    $('.cancel').click(function(){$("#signup_modal").css("display", "none");$('#screen').css("display", "none");$('body').css("overflow", "auto");$('#show_modal_errors').text('');$('#video_placeholder').css('display', 'block');});
+    $('.close').click(function(){$("#signup_modal").css("display", "none");$('#screen').css("display", "none");$('body').css("overflow", "auto");$('#show_modal_errors').text('');$('#video_placeholder').css('position', 'relative'); $('#video_placeholder').css('top', '0');});
+    $('.cancel').click(function(){$("#signup_modal").css("display", "none");$('#screen').css("display", "none");$('body').css("overflow", "auto");$('#show_modal_errors').text('');$('#video_placeholder').css('position', 'relative'); $('#video_placeholder').css('top', '0');});
 
 }
 

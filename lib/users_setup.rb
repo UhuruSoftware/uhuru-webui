@@ -56,7 +56,7 @@ class UsersSetup
 
         user = uaac.add(info)
       rescue
-        raise "signup error"
+        raise "user exists"
       end
     end
 
@@ -69,7 +69,7 @@ class UsersSetup
         org_name = email + "'s organization"
         org = organizations_Obj.get_organization_by_name(org_name)
       rescue
-        raise "signup error"
+        raise "org create error"
       end
 
       unless users_obj.user_exists(user_id)

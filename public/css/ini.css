@@ -661,6 +661,18 @@ select option
     background-repeat: no-repeat;
     background-position: 4px center;
 }
+.login_key
+{
+    background-image: url("../images/login_key.png");
+    background-repeat: no-repeat;
+    background-position: 4px center;
+}
+.signup_clipboard
+{
+    background-image: url("../images/signup_clipboard.png");
+    background-repeat: no-repeat;
+    background-position: 4px center;
+}
 
 .line
 {
