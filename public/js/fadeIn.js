@@ -1,3 +1,9 @@
+/*
+    Here are all the modals that will fade in
+*/
+
+
+
 $('#organizations_page').fadeIn(400);
 $('#organization_page').fadeIn(400);
 $('#space_page').fadeIn(400);

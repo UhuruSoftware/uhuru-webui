@@ -1,3 +1,9 @@
+/*
+
+    This file contains the functionality of tabs, the organization tabs and space tabs
+
+*/
+
 function showSpaces()
 {
         document.getElementById('spaces').style.display = 'block';

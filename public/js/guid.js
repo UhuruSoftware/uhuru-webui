@@ -1,3 +1,7 @@
+/*
+    This is a set of functions that pass guids from tiles to froms (when you click delete a guid is passed to the delete modal, and after that the user will be asked if he is sure)
+*/
+
 function prepareToDeleteOrganization(obj)
 {
     document.getElementById('this_organization_name').innerHTML = obj.title;

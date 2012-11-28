@@ -1,3 +1,8 @@
+/*
+
+    This function is called on all server errors and then shows a specific modal
+
+*/
 
 $(window).load(function () {
 var login = $('#login_failed').html();

@@ -1,3 +1,7 @@
+/*
+    This is a file were the saving modals are places, the modals without buttons
+*/
+
 $(function(){
 var saving_modal_start = function()
 {

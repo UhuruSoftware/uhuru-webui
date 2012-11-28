@@ -1,3 +1,9 @@
+/*
+
+    These are a set of functions for the landing page "/" the login and sign up modal, and all the input box checkers
+
+*/
+
 $(function() {
 
 var login_modal = function(){

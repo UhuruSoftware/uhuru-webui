@@ -1,3 +1,9 @@
+/*
+
+    These functions are for credit card modals and all the front-end of "/creditcards"
+
+*/
+
 var create_credit_card = function(){
 	$('#screen').css({	"display": "block", opacity: 0.7, "width": "10000px", "height": "10000px"});
 	$('body').css({"overflow":"hidden"});

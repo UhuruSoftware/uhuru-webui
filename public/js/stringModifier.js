@@ -1,3 +1,9 @@
+/*
+
+    This file contains string functions for checking passwords or removing placeholders
+
+*/
+
 $('[placeholder]').focus(function() {
   var input = $(this);
     input.css("font-style", "normal");

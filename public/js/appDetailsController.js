@@ -1,3 +1,9 @@
+/*
+
+    These functions control the big app modal and all its functionality
+
+*/
+
 var element = "";
 
 $('.tile_app_name').hover(function(){

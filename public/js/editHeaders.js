@@ -1,3 +1,7 @@
+/*
+    These 2 functions are for updating the Organization and Space names
+*/
+
 function showSpacesInput()
 {
     document.getElementById('space_input').style.display = 'block';
