@@ -3,7 +3,6 @@ require 'config'
 require 'dev_utils'
 require 'date'
 require 'sinatra/session'
-require 'pony'
 
 module Uhuru::Webui
   class Webui < Sinatra::Base
@@ -12,13 +11,18 @@ module Uhuru::Webui
     set :public_folder, File.expand_path("../../public", __FILE__)
     set :session_fail, '/login'
     set :session_secret, 'secret!'
+    use Rack::Recaptcha, :public_key => "6LcrstkSAAAAAIaBF-lyD5tpCQkqk8Z0uxgfsnRv", :private_key => "6LcrstkSAAAAANnW08PSKQSOiC3r5PfHb02t-0OV-"
+    helpers Rack::Recaptcha::Helpers
     enable :sessions
 
     def initialize(config)
       @config = config
+      $config = config
       @cf_target = @config[:cloudfoundry][:cloud_controller_api]
       # this is a variable witch holds the / symbol to be rendered afterwards in css, it is used at breadcrumb navigation
       $slash = '<span class="breadcrumb_slash"> / </span>'
+
+        #use Rack::Recaptcha, :public_key => $config[:recaptcha][:recaptcha_public_key], :private_key => $config[:recaptcha][:recaptcha_private_key]
 
       # this is the time variable witch will be passed at every page at the bottom
       @time = Time.now
@@ -291,24 +295,11 @@ module Uhuru::Webui
       session[:temp_first_name] = params[:first_name]
       session[:temp_last_name] = params[:last_name]
 
-        Pony.mail({
-            :to => 'marius.ivan.calin@gmail.com',
-            :via => :smtp,
-            :html_body => erb(:email),
-            :via_options => {
-                :address              => 'smtp.gmail.com',
-                :port                 => '587',
-                :enable_starttls_auto => true,
-                :user_name            => 'uhurusoft001@gmail.com',
-                :password             => 'uhurusoft001',
-                :authentication       => :plain,
-                :domain               => "localhost.localdomain"
-            }
-        })
-
-
+      Email::send_email(@email, 'Hello', erb(:email))
+      #if recaptcha_valid? then
       user_sign_up = UsersSetup.new(@config)
       user = user_sign_up.signup(@email, @password, @given_name, @family_name)
+      #end
 
       session[:token] = user.token
       session[:login_] = true

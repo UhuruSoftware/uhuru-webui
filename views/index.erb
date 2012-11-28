@@ -133,6 +133,8 @@
                     <label for="last_name">Last Name: </label>
                     <input type="text" id="last_name" name="last_name" class="modal_input_box" placeholder="... last name" value = "<%= if defined? last_name_failed then last_name_failed end %>" />
                 </p>
+
+                <%= recaptcha_tag :challenge %>
             </div>
 
         <div class="modal-footer sign_up_footer_modal">

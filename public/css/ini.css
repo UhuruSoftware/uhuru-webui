@@ -551,7 +551,7 @@ select option
 {
     border-bottom: 1px solid #187ebc;
     background-color: #09293e;
-    max-height: 400px;
+    max-height: 650px;
     padding: 5px;
     overflow-y: auto;
 }
@@ -2342,4 +2342,22 @@ h4
 .error_btn
 {
     color: #187EBC;
+}
+
+
+
+
+#recaptcha_widget_div
+{
+    float: right;
+}
+
+#recaptcha_response_field
+{
+    display: block;
+    left: 0;
+    top: 0;
+    background-color: #09293E;
+    border: 1px solid #0E4769 !important;
+    color: #ffffff;
 }

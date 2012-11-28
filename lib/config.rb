@@ -8,6 +8,11 @@ require 'readapps'
 require 'logger'
 require 'credit_cards'
 require 'vcap/config'
+require 'regex'
+require 'net/smtp'
+require 'openssl'
+require "email"
+require 'rack/recaptcha'
 
 module Uhuru
   module Webui
@@ -30,6 +35,23 @@ class Uhuru::Webui::Config < VCAP::Config
       :uaa => {
         :uaa_api                => String,
       },
+
+      :email => {
+        :from => String,
+        :from_alias => String,
+        :server => String,
+        :port => Integer,
+        optional(:user) => String,
+        optional(:secret) => String,
+        optional(:auth_method) => Symbol,
+        :enable_tls => bool
+      },
+
+    :recaptcha => {
+      :recaptcha_private_key => String,
+      :recaptcha_public_key => String,
+      :activation_link_secret => String
+      }
     }
   end
 
