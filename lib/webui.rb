@@ -116,12 +116,12 @@ module Uhuru::Webui
         end
 
         if session[:error] == "User account doesn't exist-org"
-            session[:e_create_user] = "Can't add user to organization: user doesn't exist!"
+            session[:e_create_user] = "You are not authorized or the user doesn't exist!"
             redirect '/resetOrganization'
         end
 
         if session[:error] == "User account doesn't exist-space"
-            session[:e_create_user] = "Can't add user to space: user doesn't exist!"
+            session[:e_create_user] = "You are not authorized or the user doesn't exist!"
             redirect '/resetSpace'
         end
 
@@ -193,7 +193,6 @@ module Uhuru::Webui
 
       erb :error500, {:layout => :layout_error}
     end
-
 
     get '/userLogin' do
       erb :index, {:locals => {:user_login_failed => session[:temp_user_login]}, :layout => :layout_guest}
