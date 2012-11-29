@@ -12,7 +12,10 @@ require 'regex'
 require 'net/smtp'
 require 'openssl'
 require "email"
+require "enc"
 require 'rack/recaptcha'
+require 'uri'
+require 'base32'
 
 module Uhuru
   module Webui
@@ -24,6 +27,11 @@ class Uhuru::Webui::Config < VCAP::Config
 
   define_schema do
     {
+
+      :webui =>{
+          :domain => String
+      },
+
       :cloudfoundry => {
         :cloud_controller_api   => String,
         :client_id              => String,
@@ -49,8 +57,7 @@ class Uhuru::Webui::Config < VCAP::Config
 
     :recaptcha => {
       :recaptcha_private_key => String,
-      :recaptcha_public_key => String,
-      :activation_link_secret => String
+      :recaptcha_public_key => String\
       }
     }
   end

@@ -3,6 +3,9 @@ local_route: 10.0.0.90
 port: 9494
 dev-mode: true
 
+webui:
+  domain: "10.0.0.90:9494"
+
 cloudfoundry:
   cloud_controller_api: "http://api.uhurusoft.org"
   client_id: "cloud_controller"

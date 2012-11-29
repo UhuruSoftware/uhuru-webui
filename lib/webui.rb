@@ -11,6 +11,8 @@ module Uhuru::Webui
     set :public_folder, File.expand_path("../../public", __FILE__)
     set :session_fail, '/login'
     set :session_secret, 'secret!'
+    set :sessions, true
+    use Rack::Logger
     use Rack::Recaptcha, :public_key => "6LcrstkSAAAAAIaBF-lyD5tpCQkqk8Z0uxgfsnRv", :private_key => "6LcrstkSAAAAANnW08PSKQSOiC3r5PfHb02t-0OV-"
     helpers Rack::Recaptcha::Helpers
     enable :sessions
@@ -295,21 +297,41 @@ module Uhuru::Webui
       session[:temp_first_name] = params[:first_name]
       session[:temp_last_name] = params[:last_name]
 
-      Email::send_email(@email, 'Hello', erb(:email))
-      #if recaptcha_valid? then
+      email = Encryption.encrypt_text(@email, "littlesecret!")
+      pass = Encryption.encrypt_text(@password, "littlesecret!")
+      link = "http://#{$config[:webui][:domain]}/activate/#{URI.encode(Base32.encode(pass))}/#{URI.encode(Base32.encode(email))}"
+
+      Email::send_email(@email, 'Hello', link, erb(:email, {:locals =>{:link => link}}))
+
+      ##if recaptcha_valid? then
       user_sign_up = UsersSetup.new(@config)
       user = user_sign_up.signup(@email, @password, @given_name, @family_name)
-      #end
+      ##end
 
-      session[:token] = user.token
-      session[:login_] = true
+      session[:token] = user.token                                                    l
       session[:fname] = user.first_name
       session[:lname] = user.last_name
       session[:username] = params[:username]
       session[:user_guid] = user.guid
       session[:secret] = session[:session_id]
+      session[:login_] = true
 
       redirect '/organizations'
+    end
+
+    get '/activate/:password/:email' do
+        @password_b32 = Base32.decode(params[:password])
+        @email_b32 = Base32.decode(params[:email])
+
+        name = Encryption.decrypt_text(@email_b32, "littlesecret!")
+        password = Encryption.decrypt_text(@password_b32, "littlesecret!")
+
+        redirect "/active"
+    end
+
+    get '/active' do
+      message = params[:message]
+      erb :activation, { :locals => {:message => message}, :layout => :layout_error }
     end
 
     get '/infopage' do

@@ -9,3 +9,9 @@ gem "httparty"
 gem "vcap_common",  "~> 2.0.8", :git => 'git://github.com/cloudfoundry/vcap-common.git', :ref => '7b7dd74d'
 gem "steno", "~> 1.0.0"
 gem "thin", "~> 1.5.0"
+gem "encryptor"
+gem "rack-recaptcha", :require => 'rack/recaptcha'
+
+gem "sinatra-captcha"
+gem "rest-client"
+gem "base32"
