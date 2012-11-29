@@ -5,6 +5,8 @@ dev-mode: true
 
 webui:
   domain: "10.0.0.90:9494"
+  activation_link_secret: "casnuugycasuygc12tddbhcb7"
+  signup_user_password: "tHis1sth3def4ultuserpa55w0rd!!!"
 
 cloudfoundry:
   cloud_controller_api: "http://api.uhurusoft.org"
@@ -18,7 +20,7 @@ uaa:
 
 email:
   from: "postmaster@uhurusoftware.mailgun.org"
-  from_alias: "PeakColo Cloud"
+  from_alias: "Uhuru AppCloud"
   server: "smtp.gmail.com"
   port: 587
   user: "uhurusoft001@gmail.com"
@@ -29,7 +31,6 @@ email:
 recaptcha:
   recaptcha_public_key: "6LcrstkSAAAAAIaBF-lyD5tpCQkqk8Z0uxgfsnRv"
   recaptcha_private_key: "6LcrstkSAAAAANnW08PSKQSOiC3r5PfHb02t-0OV-"
-  activation_link_secret: "casnuugycasuygc12tddbhcb7"
 
 
 logging:

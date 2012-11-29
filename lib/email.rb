@@ -1,5 +1,5 @@
 module Email
-  def self.send_email(email, subject, link, body)
+  def self.send_email(email, subject, body)
 
       if REGEX::EmailFormat.match(email)
         msg = <<END_OF_MESSAGE
@@ -10,7 +10,6 @@ MIME-Version: 1.0
 Content-type: text/html
 
 #{body}
-#{link}
 END_OF_MESSAGE
       client = Net::SMTP.new(
           $config[:email][:server],

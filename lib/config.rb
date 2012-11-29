@@ -29,7 +29,9 @@ class Uhuru::Webui::Config < VCAP::Config
     {
 
       :webui =>{
-          :domain => String
+          :domain => String,
+          :activation_link_secret => String,
+          :signup_user_password => String
       },
 
       :cloudfoundry => {

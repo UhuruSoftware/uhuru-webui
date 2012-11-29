@@ -297,18 +297,18 @@ module Uhuru::Webui
       session[:temp_first_name] = params[:first_name]
       session[:temp_last_name] = params[:last_name]
 
-      email = Encryption.encrypt_text(@email, "littlesecret!")
-      pass = Encryption.encrypt_text(@password, "littlesecret!")
+      email = Encryption.encrypt_text(@email, $config[:webui][:activation_link_secret])
+      pass = Encryption.encrypt_text(@password, $config[:webui][:activation_link_secret])
       link = "http://#{$config[:webui][:domain]}/activate/#{URI.encode(Base32.encode(pass))}/#{URI.encode(Base32.encode(email))}"
 
-      Email::send_email(@email, 'Hello', link, erb(:email, {:locals =>{:link => link}}))
+      Email::send_email(@email, 'Hello', erb(:email, {:locals =>{:link => link}}))
 
       ##if recaptcha_valid? then
       user_sign_up = UsersSetup.new(@config)
-      user = user_sign_up.signup(@email, @password, @given_name, @family_name)
+      user = user_sign_up.signup(@email, $config[:webui][:signup_user_password], @given_name, @family_name)
       ##end
 
-      session[:token] = user.token                                                    l
+      session[:token] = user.token
       session[:fname] = user.first_name
       session[:lname] = user.last_name
       session[:username] = params[:username]
@@ -316,22 +316,29 @@ module Uhuru::Webui
       session[:secret] = session[:session_id]
       session[:login_] = true
 
-      redirect '/organizations'
+      redirect '/pleaseConfirm'
+    end
+
+    get '/pleaseConfirm' do
+      erb :pleaseConfirm, { :layout => :layout_error }
     end
 
     get '/activate/:password/:email' do
         @password_b32 = Base32.decode(params[:password])
         @email_b32 = Base32.decode(params[:email])
 
-        name = Encryption.decrypt_text(@email_b32, "littlesecret!")
-        password = Encryption.decrypt_text(@password_b32, "littlesecret!")
+        name = Encryption.decrypt_text(@email_b32, $config[:webui][:activation_link_secret])
+        password = Encryption.decrypt_text(@password_b32, $config[:webui][:activation_link_secret])
+
+        #get user guid and id
+        #reset password
+        #create organization
 
         redirect "/active"
     end
 
     get '/active' do
-      message = params[:message]
-      erb :activation, { :locals => {:message => message}, :layout => :layout_error }
+      erb :activation, { :layout => :layout_error }
     end
 
     get '/infopage' do
