@@ -235,8 +235,12 @@ module Uhuru::Webui
       redirect '/space' + session[:currentSpace]
     end
 
-
     get '/' do
+
+      if session[:welcome_message] == nil
+        redirect '/getDomain'
+      end
+
       session[:login_] = false
       session[:error] = nil
 
@@ -259,8 +263,24 @@ module Uhuru::Webui
       erb :index, {:layout => :layout_guest}
     end
 
+    get '/getDomain' do
+      $config[:domains].each do |domain|
+        if request.env["HTTP_HOST"].to_s == domain["url"]
+          session[:welcome_message] = domain["welcome_message"]
+          session[:page_title] = domain["page_title"]
+          redirect '/'
+        end
+      end
+      redirect '/'
+    end
+
     post '/login' do
+      session[:welcome_message] = nil
+      session[:page_title] = nil
       if params[:username]
+        session[:welcome_message] = nil   # Clears out the page title and the welcome message to avoid server errors
+        session[:page_title] = nil        #
+
         @username = params[:username]
         @password = params[:password]
 

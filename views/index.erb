@@ -3,11 +3,10 @@
     <div id="cloud_photo"></div>
 
     <div id="splash_content_area">
-        <h2  class="layout_page_header">Uhuru AppCloud - Ready To Go</h2>
+        <h2  class="layout_page_header"><%= session[:page_title] %></h2>
         <p class="layout_page_paragraph">
-            Host your web applications in minutes. We support apps written in PHP, Node.js, Ruby, Java and .NET.
-            Sign up for your free beta account now. Find more details about the Uhuru App Cloud features on our
-            <a href="http://www.uhurusoftware.com" class="index_links">web site</a>.
+            <%= session[:welcome_message] %>
+            <!--<a href="http://www.uhurusoftware.com" class="index_links">web site</a>.      The link may be put in the .yaml file      -->
         </p>
 
         <div id="try_it">

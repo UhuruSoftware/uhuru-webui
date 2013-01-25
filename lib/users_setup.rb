@@ -25,7 +25,8 @@ class UsersSetup
 
       user = UserDetails.new(user_token, user_guid, user_detail[:first_name], user_detail[:last_name])
       user
-    rescue
+    rescue Exception => e
+      puts e
       raise "login error"
     end
   end
@@ -40,7 +41,8 @@ class UsersSetup
 
     # if user already exist in uaa continue with next steps without creating it
     begin
-      user = uaac.get_by_name(email)
+      user_id = uaac.id(:user, email)
+      user = uaac.get(:user, user_id)
     rescue
       #  do nothing user doesn't exist in uaa so it will be created next
     end
@@ -62,7 +64,7 @@ class UsersSetup
 
     if (user != nil)
       begin
-        user_id = user[:id]
+        user_id = user['id']
         admin_token = get_user_token(@cf_admin, @cf_pass)
         users_obj = Users.new(admin_token, @cf_target)
         organizations_Obj = Organizations.new(admin_token, @cf_target)
@@ -122,7 +124,7 @@ class UsersSetup
   def update_user_info(user_guid, given_name, family_name)
     user_attributes = {name: {givenName: given_name, familyName: family_name}}
     uaac = get_uaa_client
-    uaa_user = uaac.get(user_guid)
+    uaa_user = uaac.get(:user, user_guid)
     uaac.update(user_guid, uaa_user.merge(user_attributes))
 
   rescue Exception => e
@@ -145,32 +147,34 @@ class UsersSetup
     token_issuer = CF::UAA::TokenIssuer.new(@uaaApi, @client_id, @client_secret)
     token = token_issuer.client_credentials_grant()
 
-    uaac = CF::UAA::UserAccount.new(@uaaApi, token.info[:token_type] + ' ' + token.info[:access_token])
+    uaac = CF::UAA::Scim.new(@uaaApi, token.info['token_type'] + ' ' + token.info['access_token'])
 
     uaac
   end
 
   def get_username_from_guid(user_guid)
     uaac = get_uaa_client
-    uaa_user = uaac.get(user_guid)
+    uaa_user = uaac.get(:user, user_guid)
 
-    uaa_user[:userName]
+    uaa_user['userName']
   end
 
+  # todo: stefi: consider not using this method or at least once per server instance. may have scalability problems
   # returns an array with all usernames in uaa
   def uaa_get_usernames
+    puts 'delet me'
     uaac = get_uaa_client
     query = {:attributes => "userName"}
-    users = uaac.query_users(query)
+    users = uaac.query(:user, query)
 
-    users[:resources].collect { |u| u[:userName]}
+    users['resources'].collect { |u| u['userName']}
   end
 
   def uaa_get_user_by_name(username)
     uaac = get_uaa_client
     begin
-      user = uaac.get_by_name(username)
-      return user[:id]
+      user_id = uaac.id(:user, username)
+      return user_id
     rescue
       return nil
     end
@@ -179,13 +183,10 @@ class UsersSetup
   private
 
   def get_user_token(email, password)
-    creds = {}
-    creds['username'] = email
-    creds['password'] = password
 
     token_issuer = CF::UAA::TokenIssuer.new(@uaaApi, "vmc", "")
-    token_obj = token_issuer.implicit_grant_with_creds(creds)
-    token_user = token_obj.info[:token_type] + ' ' + token_obj.info[:access_token]
+    token_obj = token_issuer.implicit_grant_with_creds(username: email, password: password)
+    token_user = token_obj.info['token_type'] + ' ' + token_obj.info['access_token']
 
     token_user
   rescue Exception => e
@@ -195,9 +196,9 @@ class UsersSetup
   def get_user_details(user_guid)
     uaac = get_uaa_client
 
-    uaa_user = uaac.get(user_guid)
+    uaa_user = uaac.get(:user, user_guid)
 
-    user_details = {:first_name => uaa_user[:name][:givenName], :last_name => uaa_user[:name][:familyName]}
+    user_details = {:first_name => uaa_user['name']['givenName'], :last_name => uaa_user['name']['familyName']}
 
     user_details
   rescue Exception => e
