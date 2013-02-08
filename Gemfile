@@ -15,3 +15,5 @@ gem "rack-recaptcha"#, :require => 'rack/recaptcha'
 gem "sinatra-captcha"
 gem "rest-client"
 gem "base32"
+
+gem "chargify_api_ares"

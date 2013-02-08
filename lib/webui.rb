@@ -31,6 +31,8 @@ module Uhuru::Webui
       $this_time = @time.strftime("%m/%d/%Y")
       $path_home = ""
 
+      ChargifyWrapper.configure(config)
+
       super()
 
       configure_sinatra
@@ -868,6 +870,32 @@ module Uhuru::Webui
       file = File.join('../tapps/zip/wordpress.zip', file)
       send_file(file, :disposition => 'attachment', :filename => File.basename(file))
 
+    end
+
+    get '/create_subscription' do
+
+      #product_id = "3283746"
+      first_name = "test"
+      last_name = "web ui"
+      email = "webui@test.te"
+      billing_manager_guid = "58f6e4e9-e4f2-47bb-b8b5-a1629457992d"
+      org_guid = "e394bee4-b256-4bbb-b379-531979463a24"
+      reference = "#{billing_manager_guid}&#{org_guid}"
+      org_name = "stefi"
+      product_id = ChargifyWrapper.get_product_by_handle
+
+      product_hosted_page = "https://#{@config[:quota_settings][:billing_provider_domain]}.#{@config[:quota_settings][:billing_provider]}.com/h/#{product_id}/subscriptions/new?first_name=#{first_name}&last_name=#{last_name}&email=#{email}&reference=#{reference}&organization=#{org_name}"
+
+      erb :create_subscription, {:locals => {:product_hosted_page => product_hosted_page}}
+    end
+
+    get '/subscribe_result' do
+      #content_type :json
+      #{"params" => CGI::parse(request.query_string)}.to_json
+      #"subscribe_result?id=2937547"
+      customer_reference = params[:ref]
+      #exist = ChargifyWrapper.subscription_exists?(customer_reference)
+      erb :subscribe_result, {:locals => {:exist => true}}
     end
 
   end

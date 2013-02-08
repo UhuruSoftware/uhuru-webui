@@ -16,6 +16,7 @@ require "enc"
 require 'rack/recaptcha'
 require 'uri'
 require 'base32'
+require 'chargify_wrapper'
 
 module Uhuru
   module Webui
@@ -57,9 +58,15 @@ class Uhuru::Webui::Config < VCAP::Config
         :enable_tls => bool
       },
 
-    :recaptcha => {
-      :recaptcha_private_key => String,
-      :recaptcha_public_key => String\
+      :recaptcha => {
+        :recaptcha_private_key => String,
+        :recaptcha_public_key => String\
+      },
+
+      :quota_settings => {
+        :billing_provider => String,
+        :billing_provider_domain => String,
+        :auth_token => String
       }
     }
   end
