@@ -26,7 +26,7 @@ class ChargifyWrapper
   end
 
   def self.get_subscription_card_type_and_number(org_guid, billing_manager_guid)
-    reference = "#{billing_manager_guid}#{org_guid}"
+    reference = "#{billing_manager_guid} #{org_guid}"
     subscription = Chargify::Subscription.find_by_customer_reference(reference)
 
     return subscription.credit_card.card_type, subscription.credit_card.masked_card_number if subscription != nil

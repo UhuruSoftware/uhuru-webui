@@ -2345,7 +2345,15 @@ h4
     color: #187EBC;
 }
 
-
+#credit_card_info_div
+{
+    position: relative;
+    width: 230px;
+    height: 30px;
+    margin-top: 50px;
+    float: right;
+    text-align: right;
+}
 
 
 #recaptcha_widget_div

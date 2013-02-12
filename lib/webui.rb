@@ -426,7 +426,11 @@ module Uhuru::Webui
       billings_list = organizations_Obj.read_billings(@config, @this_guid)
       auditors_list = organizations_Obj.read_auditors(@config, @this_guid)
 
-      erb :organization, {:locals => {:all_users => all_users, :spaces_list => spaces_list, :spaces_count => spaces_list.count, :members_count => owners_list.count + billings_list.count + auditors_list.count, :owners_list => owners_list, :billings_list => billings_list, :auditors_list => auditors_list}, :layout => :layout_user}
+
+      billing_manager_guid = "58f6e4e9-e4f2-47bb-b8b5-a1629457992d"  # will be billings_list[0].guid
+      credit_card_type , credit_card_masked_number = ChargifyWrapper.get_subscription_card_type_and_number(@this_guid, billing_manager_guid)
+
+      erb :organization, {:locals => {:card_type => credit_card_type, :card_masked_number => credit_card_masked_number, :all_users => all_users, :spaces_list => spaces_list, :spaces_count => spaces_list.count, :members_count => owners_list.count + billings_list.count + auditors_list.count, :owners_list => owners_list, :billings_list => billings_list, :auditors_list => auditors_list}, :layout => :layout_user}
     end
 
     get '/space:space_guid' do
