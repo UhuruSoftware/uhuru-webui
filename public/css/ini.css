@@ -769,14 +769,15 @@ select option
     cursor: pointer;
 }
 
+.money_sign_32,
 .home_sign_32,
-.plus_sign_48,
-.edit_sign_48,
-.trash_sign_48,
-.undo_sign_48,
-.gear_sign_48,
-.key_sign_48,
-.money_bag_sign_48
+.plus_sign_32,
+.edit_sign_32,
+.trash_sign_32,
+.undo_sign_32,
+.gear_sign_32,
+.key_sign_32,
+.money_bag_sign_32
 {
     background-image: url("../images/undo_32px.png");
     background-repeat: no-repeat;
@@ -786,23 +787,28 @@ select option
     background-color: transparent;
     cursor: pointer;
 }
-.plus_sign_48
+
+.money_sign_32
+{
+    background-image: url("../images/money_32px.png");
+}
+.plus_sign_32
 {
     background-image: url("../images/plus_32px.png");
 }
-.edit_sign_48
+.edit_sign_32
 {
     background-image: url("../images/edit_32px.png");
 }
-.trash_sign_48
+.trash_sign_32
 {
     background-image: url("../images/trash_32px.png");
 }
-.gear_sign_48
+.gear_sign_32
 {
     background-image: url("../images/gear_32px.png");
 }
-.key_sign_48
+.key_sign_32
 {
     background-image: url("../images/key_32px.png");
 }
@@ -810,7 +816,7 @@ select option
 {
     background-image: url("../images/house.png");
 }
-.money_bag_sign_48
+.money_bag_sign_32
 {
     background-image: url("../images/money_bag_32px.png");
 }
@@ -831,21 +837,28 @@ select option
     right: 0;
 }
 
-.plus_sign_position_48
+.plus_sign_position_32
 {
     position: absolute;
     right: 50px;
 }
-.edit_sign_position_48
+.edit_sign_position_32
 {
     position: absolute;
     right: 100px;
 }
-.trash_sign_position_48
+.trash_sign_position_32
 {
     position: absolute;
     right: 0;
 }
+
+.money_sign_position_32
+{
+    position: absolute;
+    right: 150px;
+}
+
 
 .manage_content_header
 {
@@ -972,8 +985,7 @@ h2 .count
 }
 #users_li,
 #apps_li,
-#services_li,
-#billings_li
+#services_li
 {
     display: inline;
     margin-right: 5px;
@@ -1002,8 +1014,7 @@ h2 .count
 }
 
 #users_li,
-#services_li,
-#billings_li
+#services_li
 {
     font-size: 16px;
     cursor: pointer;
@@ -1366,7 +1377,6 @@ h2 .count
     list-style: none;
 }
 
-.tile_credit_card_logo_unused,
 .tile_credit_card_logo,
 .tile_service_logo,
 .tile_app_logo
@@ -1385,7 +1395,7 @@ h2 .count
     list-style: none;
 }
 
-.tile_credit_card_details_unused,
+
 .tile_credit_card_details,
 .tile_service_details
 {
@@ -1401,15 +1411,6 @@ h2 .count
     display: list-item;
     float: left;
     list-style: none;
-}
-
-.tile_credit_card_name_unused,
-.tile_credit_card_logo_unused,
-.tile_credit_card_details_unused
-{
-    background-image: none;
-    background-color: #b6bfb6;
-    border: 1px solid #ffffff;
 }
 
 .tile_organization_cost,

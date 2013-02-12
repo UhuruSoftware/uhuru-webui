@@ -426,10 +426,7 @@ module Uhuru::Webui
       billings_list = organizations_Obj.read_billings(@config, @this_guid)
       auditors_list = organizations_Obj.read_auditors(@config, @this_guid)
 
-      credit_cards_list = credit_cards_Obj.read_all()
-      org_credit_card = credit_cards_Obj.get_organization_credit_card(session[:currentOrganization])
-
-      erb :organization, {:locals => {:all_users => all_users, :credit_cards_list => credit_cards_list, :org_credit_card => org_credit_card, :spaces_list => spaces_list, :spaces_count => spaces_list.count, :members_count => owners_list.count + billings_list.count + auditors_list.count, :owners_list => owners_list, :billings_list => billings_list, :auditors_list => auditors_list}, :layout => :layout_user}
+      erb :organization, {:locals => {:all_users => all_users, :spaces_list => spaces_list, :spaces_count => spaces_list.count, :members_count => owners_list.count + billings_list.count + auditors_list.count, :owners_list => owners_list, :billings_list => billings_list, :auditors_list => auditors_list}, :layout => :layout_user}
     end
 
     get '/space:space_guid' do
