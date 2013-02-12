@@ -828,12 +828,10 @@ module Uhuru::Webui
     end
 
     get '/subscribe_result' do
-      #content_type :json
-      #{"params" => CGI::parse(request.query_string)}.to_json
-      #"subscribe_result?id=2937547"
       customer_reference = params[:ref]
-      #exist = ChargifyWrapper.subscription_exists?(customer_reference)
-      erb :subscribe_result, {:locals => {:exist => true}}
+
+      exist = ChargifyWrapper.subscription_exists?(customer_reference)
+      erb :subscribe_result, {:locals => {:exist => exist}}
     end
 
   end

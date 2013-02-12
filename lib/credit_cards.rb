@@ -19,7 +19,7 @@ class CreditCards
     credit_card_list = []
 
     if response.request.last_response.code == '200'
-      if CreditCard.valid_json?(response.body)
+      if CreditCardObj.valid_json?(response.body)
         JSON.parse(response.body).each do |item|
           card = item.to_hash
 
@@ -37,11 +37,11 @@ class CreditCards
             raise NotFound + "Credit card with no valid subscription"
           end
 
-          card = CreditCard.new(subscription_id, credit_card["first_name"], credit_card["last_name"], credit_card["masked_card_number"],
+          card = CreditCardObj.new(subscription_id, credit_card["first_name"], credit_card["last_name"], credit_card["masked_card_number"],
           credit_card["expiration_month"], credit_card["expiration_year"], credit_card["billing_address"], credit_card["billing_address_2"],
           credit_card["billing_city"], credit_card["billing_state"], credit_card["billing_zip"], credit_card["billing_country"],
           credit_card["card_type"])
-          #card = CreditCard.from_json!(credit_card, subscription_id)
+          #card = CreditCardObj.from_json!(credit_card, subscription_id)
           credit_card_list << card
         end
       end
@@ -57,14 +57,14 @@ class CreditCards
     response = HttpDirectClient.get("#{@base_path}/credit_cards/#{card_id}", :headers => headers)
 
     if response.request.last_response.code == '200'
-      if CreditCard.valid_json?(response.body)
+      if CreditCardObj.valid_json?(response.body)
         credit_card = JSON.parse(response.body)
-        card = CreditCard.new(card_id, credit_card["first_name"], credit_card["last_name"], credit_card["masked_card_number"],
+        card = CreditCardObj.new(card_id, credit_card["first_name"], credit_card["last_name"], credit_card["masked_card_number"],
           credit_card["expiration_month"], credit_card["expiration_year"], credit_card["billing_address"], credit_card["billing_address_2"],
           credit_card["billing_city"], credit_card["billing_state"], credit_card["billing_zip"], credit_card["billing_country"],
           credit_card["card_type"])
         return card
-        #return CreditCard.from_json!(response.body, nil)
+        #return CreditCardObj.from_json!(response.body, nil)
       else
         return response.body
       end
@@ -157,7 +157,7 @@ class CreditCards
 
 end
 
-class CreditCard
+class CreditCardObj
 
   #class << self
   #
