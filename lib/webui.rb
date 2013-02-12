@@ -85,21 +85,6 @@ module Uhuru::Webui
             session[:e_update_password] = "Something went wrong please try again"
             redirect '/resetAccount'
         end
-    # /creditcards page errors
-        if session[:error] == "create credit failed"
-            session[:e_create_credit] = "Create credit card failed, try again!"
-            redirect '/resetCredit'
-        end
-
-        if session[:error] == "delete credit failed"
-            session[:e_delete_credit] = "Delete credit card failed, try again!"
-            redirect '/resetCredit'
-        end
-
-        if session[:error] == "delete credit failed"
-            session[:e_add_credit] = "Add credit card failed, try again!"
-            redirect '/resetOrganization'
-        end
 
     # /organizations page errors
         if session[:error] == "create organization failed"
@@ -215,12 +200,6 @@ module Uhuru::Webui
       session[:e_reset_account] = true
       redirect '/account'
     end
-
-    get '/resetCredit' do
-      session[:e_reset_credit] = true
-      redirect '/credit'
-    end
-
 
     get '/organizationsError' do
       session[:e_reset_organizations] = true
@@ -420,7 +399,6 @@ module Uhuru::Webui
         session[:e_delete_space] = ""
         session[:e_create_user] = ""
         session[:e_delete_user] = ""
-        session[:e_add_credit] = ""
       end
       session[:e_reset_organization] = false
       # <<
@@ -512,34 +490,6 @@ module Uhuru::Webui
       erb :space, {:locals => {:all_space_users => all_space_users, :owners_list => owners_list, :auditors_list => auditors_list, :users_count => owners_list.count + developers_list.count + auditors_list.count, :developers_list => developers_list, :apps_names => apps_names, :apps_list => apps_list, :services_list => services_list, :apps_count => apps_list.count, :services_count => services_list.count}, :layout => :layout_user}
     end
 
-    get '/credit' do
-
-      if session[:login_] == false
-        redirect '/'
-      end
-
-      #this code resets the error handling  #>>
-      if session[:e_reset_credit] == true
-        puts session[:e_reset_credit]
-      else
-        session[:e_create_credit] = ""
-        session[:e_delete_credit] = ""
-      end
-      session[:e_reset_credit] = false
-      # <<
-
-      @timeNow = $this_time
-
-      session[:path_1] = ''
-      session[:path_2] = ''
-      $path_home = '<a href="/organizations" class="breadcrumb_element_home"></a>'
-
-      credit_cards_Obj = CreditCards.new(session[:token], @cf_target)
-      my_credit_cards = credit_cards_Obj.read_all
-
-      erb :creditcard, {:locals => {:my_credit_cards => my_credit_cards}, :layout => :layout_user}
-    end
-
     get '/account' do
 
       if session[:login_] == false
@@ -564,29 +514,6 @@ module Uhuru::Webui
 
 
       erb :usersettings, {:layout => :layout_user}
-    end
-
-    post '/createCard' do
-      @first_name = params[:first_name]
-      @last_name = params[:last_name]
-      @card_number = params[:card_number]
-      @expiration_year = params[:expiration_year]
-      @expiration_month = params[:expiration_month]
-
-      @card_type = params[:card_type]
-      @cvv = params[:cvv]
-      @address1 = params[:address1]
-      @address2 = params[:address2]
-
-      @city = params[:city]
-      @state = params[:state]
-      @zip = params[:zip]
-      @country = params[:country]
-
-      credit_cards_Obj = CreditCards.new(session[:token], @cf_target)
-      credit_cards_Obj.create(session[:user_guid], session[:username], @first_name, @last_name, @card_number, @expiration_year, @expiration_month, @card_type, @cvv)
-
-      redirect "/credit"
     end
 
     post '/addCreditCardToOrganization' do
@@ -872,21 +799,32 @@ module Uhuru::Webui
 
     end
 
+
+
     get '/create_subscription' do
 
-      #product_id = "3283746"
-      first_name = "test"
-      last_name = "web ui"
-      email = "webui@test.te"
+      product_id = "3283746"
       billing_manager_guid = "58f6e4e9-e4f2-47bb-b8b5-a1629457992d"
-      org_guid = "e394bee4-b256-4bbb-b379-531979463a24"
-      reference = "#{billing_manager_guid}&#{org_guid}"
-      org_name = "stefi"
-      product_id = ChargifyWrapper.get_product_by_handle
 
+      users = UsersSetup.new(@config)
+      name = users.get_details(session[:user_guid])
+      #puts "first name: " + name[:first_name].to_s
+      #puts "last name: " + name[:last_name].to_s
+
+      first_name = "Marius"
+      last_name = "Test"
+      email = session[:username]
+
+
+      org_guid = session[:currentOrganization]
+      reference = "#{billing_manager_guid}&#{org_guid}"
+      org_name = session[:currentOrganization_Name]
+
+      product_id = "3288276"
+      #session[:fname] = @first_name
       product_hosted_page = "https://#{@config[:quota_settings][:billing_provider_domain]}.#{@config[:quota_settings][:billing_provider]}.com/h/#{product_id}/subscriptions/new?first_name=#{first_name}&last_name=#{last_name}&email=#{email}&reference=#{reference}&organization=#{org_name}"
 
-      erb :create_subscription, {:locals => {:product_hosted_page => product_hosted_page}}
+      redirect product_hosted_page
     end
 
     get '/subscribe_result' do
@@ -900,3 +838,4 @@ module Uhuru::Webui
 
   end
 end
+

@@ -15,6 +15,7 @@ cloudfoundry:
   cloud_controller_admin: "sre@vmware.com"
   cloud_controller_pass: "password1234!"
 
+# todo: remove this and get the uaa endpoint from api.../info
 uaa:
   uaa_api: "http://uaa.ccng-dev.net"
 

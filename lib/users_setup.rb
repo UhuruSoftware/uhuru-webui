@@ -26,7 +26,6 @@ class UsersSetup
       user = UserDetails.new(user_token, user_guid, user_detail[:first_name], user_detail[:last_name])
       user
     rescue Exception => e
-      puts e
       raise "login error"
     end
   end
@@ -56,8 +55,9 @@ class UsersSetup
             emails.each_with_object([]) { |email, o| o.unshift({:value => email}) } :
             [{:value => (emails || name)}]
 
-        user = uaac.add(info)
-      rescue
+        user = uaac.add(:user, info)
+      rescue Exception => e
+        puts e.inspect
         raise "user exists"
       end
     end
@@ -162,7 +162,6 @@ class UsersSetup
   # todo: stefi: consider not using this method or at least once per server instance. may have scalability problems
   # returns an array with all usernames in uaa
   def uaa_get_usernames
-    puts 'delet me'
     uaac = get_uaa_client
     query = {:attributes => "userName"}
     users = uaac.query(:user, query)
@@ -178,6 +177,18 @@ class UsersSetup
     rescue
       return nil
     end
+  end
+
+  def get_details(user_guid)
+    uaac = get_uaa_client
+
+    uaa_user = uaac.get(:user, user_guid)
+
+    user_details = {:first_name => uaa_user['name']['givenName'], :last_name => uaa_user['name']['familyName']}
+
+    user_details
+  rescue Exception => e
+    raise "#{e.inspect}"
   end
 
   private
