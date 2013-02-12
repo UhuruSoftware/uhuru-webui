@@ -817,7 +817,7 @@ module Uhuru::Webui
 
 
       org_guid = session[:currentOrganization]
-      reference = "#{billing_manager_guid}&#{org_guid}"
+      reference = "#{billing_manager_guid} #{org_guid}"
       org_name = session[:currentOrganization_Name]
 
       product_id = "3288276"
@@ -829,6 +829,15 @@ module Uhuru::Webui
 
     get '/subscribe_result' do
       customer_reference = params[:ref]
+
+      # credit_card_masked_number = "XXXX-XXXX-XXXX-1" and credit_card_type = "bogus" while chargify account is in test
+      # is not known what the other credit card types are. For credit card masked number suppose the group after last -
+      # which now is 1 will represent last four number from a real credit card.
+
+      # this is only an example how to read credit card info for an organizations, having organization guid and billing manager guid
+      # first parameter is organization guid and the second parameter is the billing manager guid which can be only one
+
+      #credit_card_type , credit_card_masked_number = ChargifyWrapper.get_subscription_card_type_and_number(org_gui, billing_manager_guid)
 
       exist = ChargifyWrapper.subscription_exists?(customer_reference)
       erb :subscribe_result, {:locals => {:exist => exist}}

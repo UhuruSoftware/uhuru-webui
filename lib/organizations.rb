@@ -12,7 +12,8 @@ class Organizations
     orgs_list = @client.organizations
 
     orgs_list.each do |org|
-      organizations_list << Organization.new(org.name, 0, org.users.count, [], org.guid)
+      organizations_list << Organization.new(org.name, 0, org.users.count, [], org.guid, true)
+      # true should be replaced with org.billing_enabled when/if cfoundry gem will expose this attribute
     end
 
     organizations_list.sort! { |a, b| a.name.downcase <=> b.name.downcase }
@@ -178,14 +179,15 @@ class Organizations
   end
 
   class Organization
-    attr_reader :name, :cost, :members_count, :roles, :guid
+    attr_reader :name, :cost, :members_count, :roles, :guid, :is_paid
 
-    def initialize(name, cost, members, roles, guid)
+    def initialize(name, cost, members, roles, guid, is_paid = false)
       @name = name
       @cost = cost
       @members_count = members
       @roles = roles
       @guid = guid
+      @is_paid = is_paid
     end
   end
 
