@@ -2355,6 +2355,38 @@ h4
     text-align: right;
 }
 
+.americanexpress,
+.mastercard,
+.visa
+{
+    display: block;
+    float: right;
+    width: 42px;
+    height: 30px;
+    background-image: url("../images/visa.png");
+    background-repeat: no-repeat;
+    margin-left: 10px;
+}
+
+.americanexpress
+{
+    width: 30px;
+    height: 30px;
+    background-image: url("../images/americanexpress.png");
+}
+.mastercard
+{
+    width: 42px;
+    height: 25px;
+    background-image: url("../images/mastercard.png");
+}
+.visa
+{
+    width: 42px;
+    height: 30px;
+    background-image: url("../images/visa.png");
+}
+
 
 #recaptcha_widget_div
 {
