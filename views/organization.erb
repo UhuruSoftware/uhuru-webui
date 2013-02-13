@@ -1,4 +1,4 @@
-<div class="sections" id="organization_page">
+<div class="sections" id="organization_page" xmlns="http://www.w3.org/1999/html">
 
         <div class="manage_content_header">
             <h2 class="section_title">
@@ -27,7 +27,7 @@
             </div>
             <div id="credit_card_info_div">
               <% if card_type != nil && card_masked_number != nil %>
-                  <%= card_type %>(type) &nbsp;&nbsp;&nbsp;&nbsp; <%= card_masked_number %>
+                  <%= card_masked_number %><span class="<%= card_type %>"></span>
               <% end %>
             </div>
         </div>
