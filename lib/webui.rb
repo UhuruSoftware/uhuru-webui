@@ -846,6 +846,13 @@ module Uhuru::Webui
 
       #credit_card_type , credit_card_masked_number = ChargifyWrapper.get_subscription_card_type_and_number(org_gui, billing_manager_guid)
 
+
+      # this is only to see how make_organization_billable works, to be moved in the right place
+      #org = Organizations.new(session[:token], @cf_target)
+      #org_guid = "2cfeb438-e804-4303-8637-476d7cdd6889"
+      #org.make_organization_billable(org_guid)
+
+
       exist = ChargifyWrapper.subscription_exists?(customer_reference)
       erb :subscribe_result, {:locals => {:exist => exist}}
     end

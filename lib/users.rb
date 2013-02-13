@@ -1,6 +1,5 @@
 require 'cfoundry'
 require "config"
-require 'http_direct_client'
 
 class Users
 

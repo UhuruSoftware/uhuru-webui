@@ -178,6 +178,18 @@ class Organizations
     users_list
   end
 
+  def make_organization_billable(org_guid)
+    base_path = "#{@client.target}/v2/organizations/#{org_guid}"
+    headers = {'Content-Type' => 'application/json', 'Authorization' => @client.token}
+    attributes = {:billing_enabled => true}
+
+    response = HttpDirectClient.put("#{base_path}", :headers => headers, :body => attributes.to_json)
+    return true if response.request.last_response.code == '201'
+
+  rescue Exception => e
+    false
+  end
+
   class Organization
     attr_reader :name, :cost, :members_count, :roles, :guid, :is_paid
 

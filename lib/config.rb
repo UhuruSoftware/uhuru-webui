@@ -17,6 +17,7 @@ require 'rack/recaptcha'
 require 'uri'
 require 'base32'
 require 'chargify_wrapper'
+require 'http_direct_client'
 
 module Uhuru
   module Webui
