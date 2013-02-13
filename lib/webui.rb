@@ -298,24 +298,24 @@ module Uhuru::Webui
       session[:temp_first_name] = params[:first_name]
       session[:temp_last_name] = params[:last_name]
 
-      email = Encryption.encrypt_text(@email, $config[:webui][:activation_link_secret])
-      pass = Encryption.encrypt_text(@password, $config[:webui][:activation_link_secret])
-      link = "http://#{$config[:webui][:domain]}/activate/#{URI.encode(Base32.encode(pass))}/#{URI.encode(Base32.encode(email))}"
+
+      key = $config[:webui][:activation_link_secret]
+      email = Encryption.encrypt_text(@email, key)
+      pass = Encryption.encrypt_text(@password, key)
+      family_name = Encryption.encrypt_text(@family_name, key)
+      given_name = Encryption.encrypt_text(@given_name, key)
+
+      link = "http://#{request.env["HTTP_HOST"].to_s}/activate/#{URI.encode(Base32.encode(pass))}/#{URI.encode(Base32.encode(email))}/#{URI.encode(Base32.encode(family_name))}/#{URI.encode(Base32.encode(given_name))}"
 
       Email::send_email(@email, 'Hello', erb(:email, {:locals =>{:link => link}}))
 
-      ##if recaptcha_valid? then
-      user_sign_up = UsersSetup.new(@config)
-      user = user_sign_up.signup(@email, $config[:webui][:signup_user_password], @given_name, @family_name)
-      ##end
 
-      session[:token] = user.token
-      session[:fname] = user.first_name
-      session[:lname] = user.last_name
-      session[:username] = params[:username]
-      session[:user_guid] = user.guid
-      session[:secret] = session[:session_id]
-      session[:login_] = true
+
+      ##if recaptcha_valid? then
+
+      #TODO:   --   MAKE RECAPTCH ERRORS
+
+      ##end
 
       redirect '/pleaseConfirm'
     end
@@ -324,16 +324,28 @@ module Uhuru::Webui
       erb :pleaseConfirm, { :layout => :layout_error }
     end
 
-    get '/activate/:password/:email' do
+    get '/activate/:password/:email/:family_name/:given_name' do
         @password_b32 = Base32.decode(params[:password])
         @email_b32 = Base32.decode(params[:email])
+        @family_name_b32 = Base32.decode(params[:family_name])
+        @given_name_b32 = Base32.decode(params[:given_name])
 
-        name = Encryption.decrypt_text(@email_b32, $config[:webui][:activation_link_secret])
-        password = Encryption.decrypt_text(@password_b32, $config[:webui][:activation_link_secret])
+        key = $config[:webui][:activation_link_secret]
+        name = Encryption.decrypt_text(@email_b32, key)
+        password = Encryption.decrypt_text(@password_b32, key)
+        family_name = Encryption.decrypt_text(@password_b32, key)
+        given_name = Encryption.decrypt_text(@password_b32, key)
 
-        #get user guid and id
-        #reset password
-        #create organization
+        user_sign_up = UsersSetup.new(@config)
+        user = user_sign_up.signup(name, password, given_name, family_name)
+
+        session[:token] = user.token
+        session[:fname] = user.first_name
+        session[:lname] = user.last_name
+        session[:username] = params[:username]
+        session[:user_guid] = user.guid
+        session[:secret] = session[:session_id]
+        session[:login_] = true
 
         redirect "/active"
     end
@@ -598,7 +610,6 @@ module Uhuru::Webui
 
     post '/deleteClickedSpace' do
       @guid = params[:spaceGuid]
-      puts @guid
       organizations_Obj = Organizations.new(session[:token], @cf_target)
       spaces_Obj = Spaces.new(session[:token], @cf_target)
 
@@ -720,7 +731,6 @@ module Uhuru::Webui
       apps_obj = Applications.new(session[:token], @cf_target)
 
       apps_obj.stop_app(@name)
-      puts @name
 
       redirect "/space" + session[:currentSpace]
     end

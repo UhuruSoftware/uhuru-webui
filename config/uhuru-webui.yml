@@ -3,11 +3,6 @@ local_route: 127.0.0.1
 port: 4567
 dev-mode: true
 
-webui:
-  domain: "localhost"
-  activation_link_secret: "casnuugycasuygc12tddbhcb7"
-  signup_user_password: "tHis1sth3def4ultuserpa55w0rd!!!"
-
 cloudfoundry:
   cloud_controller_api: "http://api.ccng-dev.net"
   client_id: "cloud_controller"
@@ -36,21 +31,24 @@ recaptcha:
 
 logging:
   level: debug
-#
-#default_domain:
-#  url: "localhost"
-#  page_title: "Local Host Title"
-#  welcome_message: "Local host welcome message"
 
 domains:
   - domain:
-    url: "localhost:4567"
+    url: "192.168.1.9:4567"
     page_title: "Uhuru WebUi"
     welcome_message: "PeakColo PaaS - powered by Uhuru"
   - domain:
     url: "127.0.0.1:4567"
     page_title: "Uhuru WebUi"
-    welcome_message: "PeakColo PaaS - powered by Uhuru 2222222222222"
+    welcome_message: "PeakColo PaaS - powered by Uhuru"
+  - domain:
+    url: "127.0.0.1:4567"
+    page_title: "Uhuru WebUi"
+    welcome_message: "PeakColo PaaS - powered by Uhuru Localhost"
+
+webui:
+  activation_link_secret: "terceseht"
+  signup_user_password: "tHis1sth3def4ultuserpa55w0rd!!!"
 
 quota_settings:
   billing_provider: chargify

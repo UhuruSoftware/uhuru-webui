@@ -31,7 +31,6 @@ class Uhuru::Webui::Config < VCAP::Config
     {
 
       :webui =>{
-          :domain => String,
           :activation_link_secret => String,
           :signup_user_password => String
       },
