@@ -12,7 +12,8 @@ class Organizations
     orgs_list = @client.organizations
 
     orgs_list.each do |org|
-      organizations_list << Organization.new(org.name, 0, org.users.count, [], org.guid, true)
+      cost = BillingHelper.compute_org_estimated_cost(org)
+      organizations_list << Organization.new(org.name, cost, org.users.count, [], org.guid, true)
       # true should be replaced with org.billing_enabled when/if cfoundry gem will expose this attribute
     end
 
@@ -130,7 +131,8 @@ class Organizations
     spaces = @client.organization(org_guid).spaces
 
     spaces.each do |space|
-      spaces_list << Spaces::Space.new(space.name, 0, space.apps.count, space.service_instances.count, space.guid)
+      cost = BillingHelper.compute_space_estimated_cost(space)
+      spaces_list << Spaces::Space.new(space.name, cost, space.apps.count, space.service_instances.count, space.guid)
     end
 
     spaces_list

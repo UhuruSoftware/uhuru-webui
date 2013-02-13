@@ -54,3 +54,4 @@ quota_settings:
   billing_provider: chargify
   billing_provider_domain: uhurutestcloud
   auth_token: kQbDEn5os7NTX-TVv9GT
+  division_factor: 256

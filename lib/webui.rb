@@ -32,6 +32,7 @@ module Uhuru::Webui
       $path_home = ""
 
       ChargifyWrapper.configure(config)
+      BillingHelper.initialize(config)
 
       super()
 

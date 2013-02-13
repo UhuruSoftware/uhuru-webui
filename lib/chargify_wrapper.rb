@@ -32,4 +32,19 @@ class ChargifyWrapper
     return subscription.credit_card.card_type, subscription.credit_card.masked_card_number if subscription != nil
   end
 
+  #returns an array of hashes containing component name and corresponding price
+  def self.get_components_with_price
+    product = Chargify::Product.find_by_handle("paid")
+    product_family_id = product.product_family.id
+    components = Chargify::Component.find(:all, :params => { :product_family_id => product_family_id})
+
+    components_price = []
+    components.each do |comp|
+      components_price << {:name => comp.name, :price => comp.unit_price}
+    end
+
+    return components_price
+
+  end
+
 end

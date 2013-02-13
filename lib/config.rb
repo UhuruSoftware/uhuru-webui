@@ -17,6 +17,7 @@ require 'rack/recaptcha'
 require 'uri'
 require 'base32'
 require 'chargify_wrapper'
+require 'billing_helper'
 require 'http_direct_client'
 
 module Uhuru
@@ -66,7 +67,8 @@ class Uhuru::Webui::Config < VCAP::Config
       :quota_settings => {
         :billing_provider => String,
         :billing_provider_domain => String,
-        :auth_token => String
+        :auth_token => String,
+        :division_factor => Integer
       }
     }
   end
