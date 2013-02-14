@@ -295,66 +295,66 @@
         <h3>Add a new app template</h3>
     </div>
 
-    <div class="modal-body">
+    <div class="modal-body" id="template_apps_container">
         <div id="app_small_container">
-            <ul class="create_app_side_list" id="create_app_templates_list">
-                <li class="create_app_side_list_templates_li">Joomla</li>
-                <li class="create_app_side_list_templates_li">Drupal</li>
-                <li class="create_app_side_list_templates_li">Orchard</li>
-                <li class="create_app_side_list_templates_li">Umbraco</li>
-                <li class="create_app_side_list_templates_li">Magento</li>
-                <li class="create_app_side_list_templates_li">Wordpress</li>
-                <li class="create_app_side_list_templates_li">SugarCRM</li>
-            </ul>
-
-            <table id="new_app_name_table">
-                <tbody>
-                    <tr>
-                        <td class="create_app_header_tab_right">
-                            Templates
-                        </td>
-                    </tr>
-                </tbody>
+            <table style="width: 100%; border: 1px solid red;">
+                <tr>
+                    <% collections["collections"].each do |collection| %><% readapps_Obj = TemplateApps.new %>
+                        <% collection_details = readapps_Obj.read_collection(collection["collection"]["folder"]) %>
+                        <% if collection_details != nil %>
+                            <td id="<%= collection_details["id"] == nil ? 'none' : collection_details["id"] %>" class="collection_tab_btn"><%= collection_details["tab_name"] %></td>
+                        <% end %>
+                    <% end %>
+                </tr>
             </table>
 
-            <div id="create_app_templates">
-                <% apps_names.each do |name| %>
-                    <div class="create_app_side_container" id="<%= name['name'] %>">
+            <div>
 
-                          <div class="create_app_descriptions_icon">
-                              <span href="#" class="link_tiles_app" id="app_<%= name['name'] %>"></span>
-                          </div>
+              <!-- READ THE COLLECTIONS FILE TO GET EACH FOLDERS CONTETS -->
+              <!--  -->
+              <!-- Objects and Methods should not have an = sign after % -->
+              <!--  -->
 
-                          <h1><%= name['name'] %></h1>
-                          <h4><%= name['framework']['info']['description'] %></h4>
-                          <br />
+                <% collections["collections"].each do |collection| %>
+                    <% readapps_Obj = TemplateApps.new %>
+                    <% collection_details = readapps_Obj.read_collection(collection["collection"]["folder"]) %>
+                    <% if collection_details != nil %>
+                        <div class="template_apps_collection_div hide_all_collections" id="<%= collection_details["id"] + "_div" %>">
+                            <span class="template_apps_collection_logo"></span>
+                            <h1><%= collection_details["name"] == nil ? 'No name given' : collection_details["name"] %></h1>
+                            <p><%= collection_details["description"] == nil ? 'No description given' : collection_details["description"] %></p>
+                        </div>
 
-                          <a href="<%= name['download'] %>">
-                              <input type="button" value="Download" class="create_app_download_btn"/>
-                          </a>
+                        <% app_folders = Array.new %>
+                        <% read_folders = Dir.foreach("../template_apps/" + collection["collection"]["folder"]) %>
+                        <% read_folders.each do |this_folder| %>
+                            <% if this_folder != "." && this_folder != ".." && this_folder != "template_collection_manifest.yml" && this_folder != "template_collection_logo.png" %>
+                                <% app_folders.push this_folder %>
+                            <% end %>
+                        <% end %>
 
-                          <form action="/createApp" method="post" class="create_app_form">
+                        <% if app_folders != nil %>
+                            <% app_folders.each do |app_folder| %>
 
-                              <p class="create_app_tip_paragraph">Deploy this app now</p>
-                              <p class="create_app_tip_paragraph">The app's URL:</p>
+                                  <% app_details = readapps_Obj.read_apps(collection["collection"]["folder"], app_folder) %>
+                                  <div class="template_apps_application_div hide_all_apps <%= collection_details["id"] + "_div_apps" %>">
+                                    <% if app_details != nil %>
+                                        <h1><%= app_details["name"] == nil ? 'No name given' : app_details["name"] %></h1>
+                                        <p><%= app_details["description"] == nil ? 'No description given' : app_details["description"] %></p>
+                                        <% if app_details["logo"] != nil %>
+                                            <image src ="<%= "../images/" + app_details["logo"] + ".png" %>" />
+                                        <% else %>
+                                        <% end %>
+                                    <% end %>
+                                  </div>
 
-                              <div id = "<%= name['id'] %>">
-                                  <span class="app_name_span blank_input"><%= name['name'] %></span>
-                                  <input type="text" value="<%= name['framework']['info']['exec'] %>" name="appFramework" class="blank_input" />
-                                  <input type="text" value="<%= name['runtime'] %>" name="appRuntime"  class="blank_input" />
-                                  <input type="text" value="<%= name['memory'] %>" name="appMemory" class="blank_input" />
-                                  <input type="text" value="<%= name['path'] %>" name="appPath" class="blank_input" />
-                                  <input type="text" value="<%= name['domain'] %>" name="appDomain" class="blank_input" />
-                                  <input type="text" value="<%= name['services']['plan'] %>" name="appPlan" class="blank_input" />
-
-                                  <input type="text" name="appName" id="app_name" class="modal_input_box create_app_input_box"/>
-                              </div>
-
-                              <input type="submit" value="Push" class="create_app_push_btn"/>
-                          </form>
-                    </div>
+                            <% end %>
+                        <% end %>
+                    <% end %>
                 <% end %>
+
             </div>
+
         </div>
     </div>
 
