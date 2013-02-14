@@ -1,0 +1,10 @@
+#
+#   we do not need each collections data here we can read each manifest in each collection, we just need the folder and the name to form the Tabs
+#
+
+collections:
+  - collection:
+        folder: mag_developers
+
+  - collection:
+        folder: sample_apps

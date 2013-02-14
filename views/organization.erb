@@ -36,6 +36,7 @@
                 <ul id="tabs" class="nav nav-tabs">
                     <li onclick="showSpaces();" id="spaces_btn_link">Spaces (<span><%= spaces_count %></span>)</li>
                     <li onclick="showMembers();" id="members_btn_link">Members (<span><%= members_count %></span>)</li>
+                    <li onclick="showDomains();" id="domains_btn_link">Domains </li>
                 </ul>
 
                 <div id="spaces">
@@ -102,6 +103,10 @@
                           <% end %>
                         </ul>
                     <div style="height: 50px; width: 100%"></div>
+                </div>
+                <div id="domains">
+                    Domains
+                    <div style="height: 250px; width: 100%"></div>
                 </div>
 
          </div>
