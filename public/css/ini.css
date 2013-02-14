@@ -31,7 +31,7 @@ h1, h2, h3, h4, h5, h6
 .left_simple_paragraphs
 {
     text-align: left;
-    margin-left: 10px;
+    margin-left: 5px;
 }
 
 .modal .modal-header
@@ -1086,16 +1086,6 @@ h2 .count
     letter-spacing: 0.01em;
 }
 
-#new_app_name_table
-{
-    float: left;
-    padding: 0;
-    margin: 0;
-    width: 488px;
-    padding-bottom: 5px;
-    border-bottom: 1px solid #ffffff;
-}
-
 .create_app_header_tab_left,
 .create_app_header_tab_right,
 .create_app_header_tab_middle
@@ -1107,7 +1097,6 @@ h2 .count
     margin-left: 10px;
 }
 
-.create_app_side_list,
 .custom_list
 {
     list-style: none;
@@ -1120,18 +1109,7 @@ h2 .count
     display: block;
     padding: 0;
 }
-.create_app_side_list
-{
-    padding-top: 40px;
-    margin-top: 0;
-    margin-right: 5px;
-    float: left;
-    border-right: 1px solid #ffffff;
-    width: 95px;
-    height: 250px;
-}
 
-.create_app_side_list_templates_li,
 .create_app_side_list_samples_li
 {
     padding: 0;
@@ -1142,45 +1120,11 @@ h2 .count
     text-align: left;
 }
 
-.create_app_side_list_templates_li:hover,
 .create_app_side_list_samples_li:hover
 {
     text-decoration: underline;
 }
 
-.create_app_side_container
-{
-    float: left;
-    width: 488px;
-    height: 250px;
-    display: none;
-}
-
-.create_app_descriptions_icon
-{
-    float: right;
-    margin-right: 1px;
-    margin-top: 10px;
-    width: 90px;
-    height: 70px;
-    background-image: url("../images/tile_small_blue.png");
-    background-repeat: repeat-y;
-    border: 1px solid #4399f1;
-    position: relative;
-    overflow: hidden;
-    line-height: 18px;
-}
-
-
-.create_app_form
-{
-    position: relative;
-    display: block;
-    height: 100px;
-    margin-top: 30px;
-}
-
-.create_app_download_btn,
 .create_app_push_btn
 {
     background-color: #000000;
@@ -2208,6 +2152,11 @@ h4
 {
     background-color: #09293e;
 }
+#create_tempcta_modal
+{
+    top: 50px;
+
+}
 
 .modal-body p,
 .modal-body li,
@@ -2407,4 +2356,86 @@ h4
     background-color: #09293E;
     border: 1px solid #0E4769 !important;
     color: #ffffff;
+}
+
+.collection_tab_btn
+{
+    cursor: pointer;
+}
+
+.collection_tab_btn:focus
+{
+    background-color: #0071b7;
+    text-decoration: underline;
+}
+
+
+.template_apps_collection_div
+{
+    background-image: url("../images/template_apps_lightblue_tile.png");
+    background-repeat: repeat-x;
+    width: 99%;
+    margin-top: 10px;
+    text-align: left;
+    height: 100px;
+    border-top: 5px solid #3C81EE;
+}
+
+.template_apps_application_div
+{
+    background-image: url("../images/template_app_darkblue_tile.png");
+    background-repeat: repeat-x;
+    width: 99%;
+    margin-top: 10px;
+    text-align: left;
+    height: 80px;
+    border-top: 5px solid #1B6877;
+}
+
+.template_apps_banner_div
+{
+    background-image: url("../images/template_apps_red_tile.png");
+    background-repeat: repeat-x;
+    width: 99%;
+    margin-top: 30px;
+    text-align: left;
+    height: 60px;
+    border-top: 5px solid #B43051;
+}
+.template_apps_banner_div > h3
+{
+    line-height: 58px;
+    margin-left: 15px;
+}
+
+.template_apps_overflow_div
+{
+    overflow: auto;
+    height: 400px;
+}
+#template_apps_container
+{
+    overflow: hidden;
+}
+
+
+.template_apps_application_logos
+{
+    width: 40px;
+    height: 40px;
+    float: left;
+    margin-left: 20px;
+    margin-top: 5px;
+    margin-right: 10px;
+    margin-bottom: 5px;
+}
+.template_apps_collection_logos
+{
+    /*width: 120px;*/
+    /*height: 120px;*/
+    float: left;
+    margin-left: 20px;
+    margin-top: 5px;
+    margin-right: 10px;
+    margin-bottom: 5px;
 }

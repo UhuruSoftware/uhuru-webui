@@ -290,10 +290,10 @@ module Uhuru::Webui
     end
 
     post '/signup' do
-      @email = params[:email]
-      @password = params[:password]
-      @given_name = params[:first_name]
-      @family_name = params[:last_name]
+      email = params[:email]
+      password = params[:password]
+      given_name = params[:first_name]
+      family_name = params[:last_name]
 
       session[:temp_username] = params[:email]
       session[:temp_first_name] = params[:first_name]
@@ -301,15 +301,16 @@ module Uhuru::Webui
 
 
       key = $config[:webui][:activation_link_secret]
-      email = Encryption.encrypt_text(@email, key)
-      pass = Encryption.encrypt_text(@password, key)
-      family_name = Encryption.encrypt_text(@family_name, key)
-      given_name = Encryption.encrypt_text(@given_name, key)
+      email = Encryption.encrypt_text(email, key)
+      pass = Encryption.encrypt_text(password, key)
+      family_name = Encryption.encrypt_text(family_name, key)
+      given_name = Encryption.encrypt_text(given_name, key)
 
-      link = "http://#{request.env["HTTP_HOST"].to_s}/activate/#{URI.encode(Base32.encode(pass))}/#{URI.encode(Base32.encode(email))}/#{URI.encode(Base32.encode(family_name))}/#{URI.encode(Base32.encode(given_name))}"
+      user_sign_up = UsersSetup.new(@config)
+      user = user_sign_up.signup(email, $config[:webui][:signup_user_password], given_name, family_name)
 
+      link = "http://#{request.env["HTTP_HOST"].to_s}/activate/#{URI.encode(Base32.encode(pass))}/#{URI.encode(Base32.encode(user.guid))}"
       Email::send_email(@email, 'Hello', erb(:email, {:locals =>{:link => link}}))
-
 
 
       ##if recaptcha_valid? then
@@ -318,6 +319,14 @@ module Uhuru::Webui
 
       ##end
 
+      session[:token] = user.token
+      session[:fname] = user.first_name
+      session[:lname] = user.last_name
+      session[:username] = params[:username]
+      session[:user_guid] = user.guid
+      session[:secret] = session[:session_id]
+      session[:login_] = true
+
       redirect '/pleaseConfirm'
     end
 
@@ -325,28 +334,16 @@ module Uhuru::Webui
       erb :pleaseConfirm, { :layout => :layout_error }
     end
 
-    get '/activate/:password/:email/:family_name/:given_name' do
-        @password_b32 = Base32.decode(params[:password])
-        @email_b32 = Base32.decode(params[:email])
-        @family_name_b32 = Base32.decode(params[:family_name])
-        @given_name_b32 = Base32.decode(params[:given_name])
+    get '/activate/:password/:email' do
+        password_b32 = Base32.decode(params[:password])
+        user_guid_b32 = Base32.decode(params[:email])
 
         key = $config[:webui][:activation_link_secret]
-        name = Encryption.decrypt_text(@email_b32, key)
-        password = Encryption.decrypt_text(@password_b32, key)
-        family_name = Encryption.decrypt_text(@password_b32, key)
-        given_name = Encryption.decrypt_text(@password_b32, key)
+        user_guid = Encryption.decrypt_text(user_guid_b32, key)
+        password = Encryption.decrypt_text(password_b32, key)
 
-        user_sign_up = UsersSetup.new(@config)
-        user = user_sign_up.signup(name, password, given_name, family_name)
-
-        session[:token] = user.token
-        session[:fname] = user.first_name
-        session[:lname] = user.last_name
-        session[:username] = params[:username]
-        session[:user_guid] = user.guid
-        session[:secret] = session[:session_id]
-        session[:login_] = true
+        change_password = UsersSetup.new(@config)
+        change_password.change_password(user_guid, password, $config[:webui][:signup_user_password])
 
         redirect "/active"
     end
@@ -501,13 +498,13 @@ module Uhuru::Webui
       apps_list = spaces_Obj.read_apps(@this_guid)
       services_list = spaces_Obj.read_service_instances(@this_guid)
 
-      apps_names = readapps_Obj.read_apps
-
       owners_list = spaces_Obj.read_owners(@config, session[:currentSpace])
       developers_list = spaces_Obj.read_developers(@config, session[:currentSpace])
       auditors_list = spaces_Obj.read_auditors(@config, session[:currentSpace])
 
-      erb :space, {:locals => {:all_space_users => all_space_users, :owners_list => owners_list, :auditors_list => auditors_list, :users_count => owners_list.count + developers_list.count + auditors_list.count, :developers_list => developers_list, :apps_names => apps_names, :apps_list => apps_list, :services_list => services_list, :apps_count => apps_list.count, :services_count => services_list.count}, :layout => :layout_user}
+      collections = readapps_Obj.read_collections
+
+      erb :space, {:locals => {:collections => collections, :all_space_users => all_space_users, :owners_list => owners_list, :auditors_list => auditors_list, :users_count => owners_list.count + developers_list.count + auditors_list.count, :developers_list => developers_list, :apps_list => apps_list, :services_list => services_list, :apps_count => apps_list.count, :services_count => services_list.count}, :layout => :layout_user}
     end
 
     get '/account' do
@@ -724,7 +721,7 @@ module Uhuru::Webui
       puts @name
 
       redirect "/space" + session[:currentSpace]
-      erb :space, {:locals => {:apps_names => apps_names, :apps_list => apps_list, :services_list => services_list, :apps_count => apps_list.count, :services_count => services_list.count}, :layout => :layout_user}
+      #erb :space, {:locals => {:apps_names => apps_names, :apps_list => apps_list, :services_list => services_list, :apps_count => apps_list.count, :services_count => services_list.count}, :layout => :layout_user}
     end
 
     post '/stopApp' do
@@ -878,4 +875,39 @@ module Uhuru::Webui
 
   end
 end
+
+#     THIS IS THE SAMPLE CODE FOR ITERATE THE FILES AND FOLDERS FROM TEMPLATE _ APPS
+
+
+#collections["collections"].each do |collection|
+#  collection_details = readapps_Obj.read_collection(collection["collection"]["folder"])
+#
+#  if collection_details != nil
+#    app_folders = Array.new
+#    read_folders = Dir.foreach("../template_apps/" + collection["collection"]["folder"])
+#
+#
+#    read_folders.each do |this_folder|
+#      if this_folder != "." && this_folder != ".." && this_folder != "template_collection_manifest.yml" && this_folder != "template_collection_logo.png"
+#          app_folders.push this_folder
+#      end
+#    end
+#
+#    puts "APP FOLDERS " + app_folders.to_s
+#
+#    if app_folders != nil
+#      app_folders.each do |app_folder|
+#
+#        puts "collection folder " + collection["collection"]["folder"]
+#        puts "app folder " + app_folder
+#
+#        app_details = readapps_Obj.read_apps(collection["collection"]["folder"], app_folder)
+#
+#        if app_details != nil
+#          puts app_details["name"]
+#        end
+#      end
+#    end
+#  end
+#end
 
