@@ -6,4 +6,27 @@ ENV['BUNDLE_GEMFILE'] = "#{home}/Gemfile"
 require "rubygems"
 require "bundler/setup"
 require "runner"
+require "fileutils"
+
+template_apps_dir = Pathname.new("../template_apps").children.select { |c| c.directory? }
+curent_image_files = Pathname.new("../public/images/apps_logos")
+
+Dir.glob(curent_image_files.to_s + '/*.png').each do |file|
+  FileUtils.remove file
+end
+
+template_apps_dir.each do |directory|
+  subdirectoryes = Pathname.new(directory).children.select { |c| c.directory? }
+  subdirectoryes.each do |sub|
+    Dir.glob(sub.to_s + '/*.png').each do |file|
+      FileUtils.cp file, "../public/images/apps_logos"
+    end
+  end
+  Dir.glob(directory.to_s + '/*.png').each do |collection_logo|
+    FileUtils.cp collection_logo, "../public/images/apps_logos"
+  end
+end
+
+
 Uhuru::Webui::Runner.new(ARGV).run!
+

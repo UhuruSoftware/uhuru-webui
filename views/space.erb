@@ -29,6 +29,7 @@
                 <li onclick="showApps();" id="apps_li">Apps (<span><%= apps_count %></span>)</li>
                 <li onclick="showServices();" id="services_li">Services (<span><%= services_count %></span>)</li>
                 <li onclick="showUsers();" id="users_li">Users (<span><%= users_count %></span>)</li>
+                 <li onclick="showRoutes();" id="routes_li">Routes </li>
             </ul>
                 <div id="apps" class="tab_pane">
                     <ul class="tile_list">
@@ -258,6 +259,9 @@
                   <% end %>
                 </ul>
             </div>
+            <div id="routes">
+                Routes
+            </div>
 </div>
 
 
@@ -295,66 +299,90 @@
         <h3>Add a new app template</h3>
     </div>
 
-    <div class="modal-body">
+    <div class="modal-body" id="template_apps_container">
         <div id="app_small_container">
-            <ul class="create_app_side_list" id="create_app_templates_list">
-                <li class="create_app_side_list_templates_li">Joomla</li>
-                <li class="create_app_side_list_templates_li">Drupal</li>
-                <li class="create_app_side_list_templates_li">Orchard</li>
-                <li class="create_app_side_list_templates_li">Umbraco</li>
-                <li class="create_app_side_list_templates_li">Magento</li>
-                <li class="create_app_side_list_templates_li">Wordpress</li>
-                <li class="create_app_side_list_templates_li">SugarCRM</li>
-            </ul>
+            <div class="template_apps_overflow_div">
 
-            <table id="new_app_name_table">
-                <tbody>
-                    <tr>
-                        <td class="create_app_header_tab_right">
-                            Templates
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+              <!-- READ THE COLLECTIONS FILE TO GET EACH FOLDERS CONTETS -->
+              <!--  -->
+              <!-- Objects and Methods should not have an = sign after % -->
+              <!--  -->
 
-            <div id="create_app_templates">
-                <% apps_names.each do |name| %>
-                    <div class="create_app_side_container" id="<%= name['name'] %>">
+                <% collections["collections"].each do |collection| %>
+                    <% readapps_Obj = TemplateApps.new %>
+                    <% collection_details = readapps_Obj.read_collection(collection["collection"]["folder"]) %>
+                    <% if collection_details != nil %>
+                        <div class="template_apps_collection_div" id="<%= collection_details["id"] + "_div" %>">
+                            <% if collection_details["logo"] != nil %>
+                                <image src ="<%= "../images/apps_logos/" + collection_details["logo"] + ".png" %>" class="template_apps_collection_logos" />
+                            <% else %>
+                            <% end %>
+                            <p class="template_apps_collection_header_paragraph"><%= collection_details["name"] == nil ? 'No name given' : collection_details["name"] %></p>
+                        </div>
 
-                          <div class="create_app_descriptions_icon">
-                              <span href="#" class="link_tiles_app" id="app_<%= name['name'] %>"></span>
-                          </div>
+                        <% app_folders = Array.new %>
+                        <% read_folders = Dir.foreach("../template_apps/" + collection["collection"]["folder"]) %>
+                        <% read_folders.each do |this_folder| %>
+                            <!-- THE REVERSE METHOD IS USED TO TAKE OUT THE COLLECTION LOGO FROM THE FOLDER ARRAY ALONG WITH THE .YML FILE -->
+                            <% if this_folder != "." && this_folder != ".." && this_folder != "template_collection_manifest.yml" && this_folder.to_s.reverse[0...4].reverse != ".png" %>
+                                <% app_folders.push this_folder %>
+                            <% end %>
+                        <% end %>
 
-                          <h1><%= name['name'] %></h1>
-                          <h4><%= name['framework']['info']['description'] %></h4>
-                          <br />
+                        <% if app_folders != nil %>
+                            <% app_folders.each do |app_folder| %>
 
-                          <a href="<%= name['download'] %>">
-                              <input type="button" value="Download" class="create_app_download_btn"/>
-                          </a>
+                                  <% app_details = readapps_Obj.read_apps(collection["collection"]["folder"], app_folder) %>
+                                  <% app_vmc_manifest = readapps_Obj.read_app_vmc(collection["collection"]["folder"], app_folder) %>
 
-                          <form action="/createApp" method="post" class="create_app_form">
+                                  <!-- THE SUBCLASS COLLECTION_DETAILS IS GIVEN FOR THE PURPOSE OF JAVASCRIPT CODE -->
+                                  <div class="template_apps_application_div <%= collection_details["id"] + "_div_apps" %>">
+                                    <% if app_details != nil %>
+                                        <% if app_details["logo"] != nil %>
+                                            <image src ="<%= "../images/apps_logos/" + app_details["logo"] + ".png" %>" class="template_apps_application_logos" />
+                                        <% else %>
+                                        <% end %>
+                                        <p class="template_apps_application_header_paragraph"><%= app_details["name"] == nil ? 'No name given' : app_details["name"] %></p>
 
-                              <p class="create_app_tip_paragraph">Deploy this app now</p>
-                              <p class="create_app_tip_paragraph">The app's URL:</p>
+                                            <% if app_details["description"] != nil %>
+                                                <p class="template_apps_application_paragraph"><%= app_details["description"].length <= 210 ? app_details["description"] : app_details["description"][0, 210] %></p>
+                                            <% end %>
 
-                              <div id = "<%= name['id'] %>">
-                                  <span class="app_name_span blank_input"><%= name['name'] %></span>
-                                  <input type="text" value="<%= name['framework']['info']['exec'] %>" name="appFramework" class="blank_input" />
-                                  <input type="text" value="<%= name['runtime'] %>" name="appRuntime"  class="blank_input" />
-                                  <input type="text" value="<%= name['memory'] %>" name="appMemory" class="blank_input" />
-                                  <input type="text" value="<%= name['path'] %>" name="appPath" class="blank_input" />
-                                  <input type="text" value="<%= name['domain'] %>" name="appDomain" class="blank_input" />
-                                  <input type="text" value="<%= name['services']['plan'] %>" name="appPlan" class="blank_input" />
+                                        <span class="template_apps_application_tags">Tags:&nbsp;
+                                          <% if app_details["tags"] != nil %>
+                                           <% app_details["tags"].each do |tag| %>
+                                              <%= tag %>,&nbsp;
+                                           <% end %>
+                                          <% else %>
+                                            No Tag
+                                          <% end %>
+                                        </span>
 
-                                  <input type="text" name="appName" id="app_name" class="modal_input_box create_app_input_box"/>
-                              </div>
+                                        <input type="button" value="Push" class=" btn template_apps_buttons app_push_btn" />
+                                        <% if app_details["can_download"] != nil %>
+                                            <% if app_details["can_download"] == true %>
+                                                <input type="button" value="Download" class="btn template_apps_buttons app_download_btn" />
+                                            <% end %>
+                                        <% end %>
 
-                              <input type="submit" value="Push" class="create_app_push_btn"/>
-                          </form>
-                    </div>
+                                        <% if app_vmc_manifest != nil && app_vmc_manifest != false %>
+                                            <% if app_vmc_manifest["applications"] != nil && app_vmc_manifest["applications"]["."] != nil %>
+                                                <span class="template_apps_service_icons <%=app_vmc_manifest["applications"]["."]["services"]["type"] %>"></span>
+                                            <% end %>
+                                            <% if app_vmc_manifest["applications"] != nil && app_vmc_manifest["applications"]["."] != nil %>
+                                                <span class="template_apps_runtime_icons <%= app_vmc_manifest["applications"]["."]["framework"]["name"] %>"></span>
+                                            <% end %>
+                                        <% end %>
+                                    <% end %>
+                                  </div>
+
+                            <% end %>
+                        <% end %>
+                    <% end %>
                 <% end %>
+
             </div>
+
         </div>
     </div>
 

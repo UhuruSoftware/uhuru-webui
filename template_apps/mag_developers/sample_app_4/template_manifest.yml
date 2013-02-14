@@ -1,0 +1,7 @@
+name: TestApp
+id: testapp1
+logo: ruby_icon
+description: Lorem ipsum text ipsum text ipsum text ipsum text ipsum text ipsum text  ipsum text ipsum text ipsum text ipsum text ipsum text ipsum text ipsum text ipsum text ipsum text ipsum text ipsum text
+tags: ['CMS', 'Large Project', 'Complex']
+can_download: true
+uuid: 550e84ee-e29b-k1d4-a716-446655432701
