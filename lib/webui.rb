@@ -501,13 +501,13 @@ module Uhuru::Webui
       apps_list = spaces_Obj.read_apps(@this_guid)
       services_list = spaces_Obj.read_service_instances(@this_guid)
 
-      apps_names = readapps_Obj.read_apps
-
       owners_list = spaces_Obj.read_owners(@config, session[:currentSpace])
       developers_list = spaces_Obj.read_developers(@config, session[:currentSpace])
       auditors_list = spaces_Obj.read_auditors(@config, session[:currentSpace])
 
-      erb :space, {:locals => {:all_space_users => all_space_users, :owners_list => owners_list, :auditors_list => auditors_list, :users_count => owners_list.count + developers_list.count + auditors_list.count, :developers_list => developers_list, :apps_names => apps_names, :apps_list => apps_list, :services_list => services_list, :apps_count => apps_list.count, :services_count => services_list.count}, :layout => :layout_user}
+      collections = readapps_Obj.read_collections
+
+      erb :space, {:locals => {:collections => collections, :all_space_users => all_space_users, :owners_list => owners_list, :auditors_list => auditors_list, :users_count => owners_list.count + developers_list.count + auditors_list.count, :developers_list => developers_list, :apps_list => apps_list, :services_list => services_list, :apps_count => apps_list.count, :services_count => services_list.count}, :layout => :layout_user}
     end
 
     get '/account' do
@@ -724,7 +724,7 @@ module Uhuru::Webui
       puts @name
 
       redirect "/space" + session[:currentSpace]
-      erb :space, {:locals => {:apps_names => apps_names, :apps_list => apps_list, :services_list => services_list, :apps_count => apps_list.count, :services_count => services_list.count}, :layout => :layout_user}
+      #erb :space, {:locals => {:apps_names => apps_names, :apps_list => apps_list, :services_list => services_list, :apps_count => apps_list.count, :services_count => services_list.count}, :layout => :layout_user}
     end
 
     post '/stopApp' do
@@ -878,4 +878,39 @@ module Uhuru::Webui
 
   end
 end
+
+#     THIS IS THE SAMPLE CODE FOR ITERATE THE FILES AND FOLDERS FROM TEMPLATE _ APPS
+
+
+#collections["collections"].each do |collection|
+#  collection_details = readapps_Obj.read_collection(collection["collection"]["folder"])
+#
+#  if collection_details != nil
+#    app_folders = Array.new
+#    read_folders = Dir.foreach("../template_apps/" + collection["collection"]["folder"])
+#
+#
+#    read_folders.each do |this_folder|
+#      if this_folder != "." && this_folder != ".." && this_folder != "template_collection_manifest.yml" && this_folder != "template_collection_logo.png"
+#          app_folders.push this_folder
+#      end
+#    end
+#
+#    puts "APP FOLDERS " + app_folders.to_s
+#
+#    if app_folders != nil
+#      app_folders.each do |app_folder|
+#
+#        puts "collection folder " + collection["collection"]["folder"]
+#        puts "app folder " + app_folder
+#
+#        app_details = readapps_Obj.read_apps(collection["collection"]["folder"], app_folder)
+#
+#        if app_details != nil
+#          puts app_details["name"]
+#        end
+#      end
+#    end
+#  end
+#end
 
