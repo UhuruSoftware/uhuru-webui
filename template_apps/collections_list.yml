@@ -1,0 +1,14 @@
+collections:
+  - collection:
+        name: mag_developers
+        id: template_apps_mag_developers
+        label: Mag Developers
+        folder: mag_developers
+        description: no details
+
+  - collection:
+        name: sample_apps
+        id: template_apps_sample_apps
+        label: Sample Apps
+        folder: sample_apps
+        description: no details

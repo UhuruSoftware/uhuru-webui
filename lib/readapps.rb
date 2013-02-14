@@ -1,26 +1,42 @@
-$:.unshift(File.join(File.dirname(__FILE__)))
-require 'rubygems'
-require 'sinatra'
 require 'yaml'
-require 'config'
-require 'dev_utils'
 
 class TemplateApps
-  def read_apps
 
-    @apps = Array.new
-    @i = 0
-
-    app_file = File.join(File.dirname(__FILE__), "../apps.yaml")
-
-    file = YAML.load_file app_file
-    file.each_key { |key|
-      @apps[@i] = file[key]
-      @i = @i + 1
-    }
-    @apps
+  def read_collections
+    collections = YAML.load_file("../template_apps/collections_list.yml")
+    return collections
   end
+
+  def read_collection(folder)
+    puts folder
+    collection = YAML.load_file("../template_apps/" + folder + "/template_collection_manifest.yml")
+    return collection
+  end
+
+  def read_samples
+
+  end
+
 end
+
+
+
+#def read_apps
+#
+#  @apps = Array.new
+#  @i = 0
+#
+#  app_file = File.join(File.dirname(__FILE__), "../apps.yaml")
+#
+#  file = YAML.load_file app_file
+#  file.each_key { |key|
+#    @apps[@i] = file[key]
+#    @i = @i + 1
+#  }
+#  @apps
+#end
+
+
 
 
 <<-Doc

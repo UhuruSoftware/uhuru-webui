@@ -297,64 +297,38 @@
 
     <div class="modal-body">
         <div id="app_small_container">
-            <ul class="create_app_side_list" id="create_app_templates_list">
-                <li class="create_app_side_list_templates_li">Joomla</li>
-                <li class="create_app_side_list_templates_li">Drupal</li>
-                <li class="create_app_side_list_templates_li">Orchard</li>
-                <li class="create_app_side_list_templates_li">Umbraco</li>
-                <li class="create_app_side_list_templates_li">Magento</li>
-                <li class="create_app_side_list_templates_li">Wordpress</li>
-                <li class="create_app_side_list_templates_li">SugarCRM</li>
-            </ul>
-
-            <table id="new_app_name_table">
-                <tbody>
-                    <tr>
-                        <td class="create_app_header_tab_right">
-                            Templates
-                        </td>
-                    </tr>
-                </tbody>
+            <table style="width: 100%; border: 1px solid red;">
+                <tr>
+                    <% collections["collections"].each do |collection| %>
+                        <td id="<%= collection["collection"]["id"] %>" class="template_apps_collections_list_btn"><%= collection["collection"]["label"] %></td>
+                    <% end %>
+                </tr>
             </table>
-
-            <div id="create_app_templates">
-                <% apps_names.each do |name| %>
-                    <div class="create_app_side_container" id="<%= name['name'] %>">
-
-                          <div class="create_app_descriptions_icon">
-                              <span href="#" class="link_tiles_app" id="app_<%= name['name'] %>"></span>
-                          </div>
-
-                          <h1><%= name['name'] %></h1>
-                          <h4><%= name['framework']['info']['description'] %></h4>
-                          <br />
-
-                          <a href="<%= name['download'] %>">
-                              <input type="button" value="Download" class="create_app_download_btn"/>
-                          </a>
-
-                          <form action="/createApp" method="post" class="create_app_form">
-
-                              <p class="create_app_tip_paragraph">Deploy this app now</p>
-                              <p class="create_app_tip_paragraph">The app's URL:</p>
-
-                              <div id = "<%= name['id'] %>">
-                                  <span class="app_name_span blank_input"><%= name['name'] %></span>
-                                  <input type="text" value="<%= name['framework']['info']['exec'] %>" name="appFramework" class="blank_input" />
-                                  <input type="text" value="<%= name['runtime'] %>" name="appRuntime"  class="blank_input" />
-                                  <input type="text" value="<%= name['memory'] %>" name="appMemory" class="blank_input" />
-                                  <input type="text" value="<%= name['path'] %>" name="appPath" class="blank_input" />
-                                  <input type="text" value="<%= name['domain'] %>" name="appDomain" class="blank_input" />
-                                  <input type="text" value="<%= name['services']['plan'] %>" name="appPlan" class="blank_input" />
-
-                                  <input type="text" name="appName" id="app_name" class="modal_input_box create_app_input_box"/>
-                              </div>
-
-                              <input type="submit" value="Push" class="create_app_push_btn"/>
-                          </form>
-                    </div>
-                <% end %>
+            <div class="template_apps_collection_div">
+              <span class="template_apps_collection_logo"></span>
+              <h1> collection_details["name"] %></h1><br />
+              <p> collection_details["description"] %></p>
             </div>
+
+            <div>
+
+              <!-- READ THE COLLECTIONS FILE TO GET EACH FOLDERS CONTETS -->
+              <!--  -->
+              <!-- Objects and Methods should not have an = sign after % -->
+              <!--  -->
+
+                <% collections["collections"].each do |collection| %>
+                    <% readapps_Obj = TemplateApps.new %>
+                    <% collection_details = readapps_Obj.read_collection(collection["collection"]["folder"]) %>
+                    <% collection_details["sample_apps"].each do |details| %>
+                        <div class="template_apps_application_div">
+                            <h1><%= details["app"]["name"] %></h1>
+                        </div>
+                    <% end %>
+                <% end %>
+
+            </div>
+
         </div>
     </div>
 

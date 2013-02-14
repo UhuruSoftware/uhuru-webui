@@ -3,6 +3,7 @@ require 'config'
 require 'dev_utils'
 require 'date'
 require 'sinatra/session'
+require 'fileutils'
 
 module Uhuru::Webui
   class Webui < Sinatra::Base
@@ -30,6 +31,19 @@ module Uhuru::Webui
       @time = Time.now
       $this_time = @time.strftime("%m/%d/%Y")
       $path_home = ""
+
+      template_apps_dir = Pathname.new("../template_apps").children.select { |c| c.directory? }
+
+      template_apps_dir.each do |directory|
+        subdirectoryes = Pathname.new(directory).children.select { |c| c.directory? }
+
+        subdirectoryes.each do |sub|
+          Dir.glob(sub.to_s + '/*.png').each do |f|
+            #File.copy_stream(f, "../public")
+          end
+        end
+
+      end
 
       ChargifyWrapper.configure(config)
       BillingHelper.initialize(config)
@@ -501,13 +515,23 @@ module Uhuru::Webui
       apps_list = spaces_Obj.read_apps(@this_guid)
       services_list = spaces_Obj.read_service_instances(@this_guid)
 
-      apps_names = readapps_Obj.read_apps
-
       owners_list = spaces_Obj.read_owners(@config, session[:currentSpace])
       developers_list = spaces_Obj.read_developers(@config, session[:currentSpace])
       auditors_list = spaces_Obj.read_auditors(@config, session[:currentSpace])
 
-      erb :space, {:locals => {:all_space_users => all_space_users, :owners_list => owners_list, :auditors_list => auditors_list, :users_count => owners_list.count + developers_list.count + auditors_list.count, :developers_list => developers_list, :apps_names => apps_names, :apps_list => apps_list, :services_list => services_list, :apps_count => apps_list.count, :services_count => services_list.count}, :layout => :layout_user}
+      collections = readapps_Obj.read_collections
+
+
+      #new = Array.new
+      #arr = Dir.foreach("../template_apps/sample_apps")
+      #arr.each do |x|
+      #  if x != "." && x != ".."
+      #    new.push x
+      #  end
+      #end
+      #puts new
+
+      erb :space, {:locals => {:collections => collections, :all_space_users => all_space_users, :owners_list => owners_list, :auditors_list => auditors_list, :users_count => owners_list.count + developers_list.count + auditors_list.count, :developers_list => developers_list, :apps_list => apps_list, :services_list => services_list, :apps_count => apps_list.count, :services_count => services_list.count}, :layout => :layout_user}
     end
 
     get '/account' do
@@ -724,7 +748,7 @@ module Uhuru::Webui
       puts @name
 
       redirect "/space" + session[:currentSpace]
-      erb :space, {:locals => {:apps_names => apps_names, :apps_list => apps_list, :services_list => services_list, :apps_count => apps_list.count, :services_count => services_list.count}, :layout => :layout_user}
+      #erb :space, {:locals => {:apps_names => apps_names, :apps_list => apps_list, :services_list => services_list, :apps_count => apps_list.count, :services_count => services_list.count}, :layout => :layout_user}
     end
 
     post '/stopApp' do
