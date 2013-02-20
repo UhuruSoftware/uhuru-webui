@@ -62,10 +62,11 @@ class Uhuru::Webui::Config < VCAP::Config
       },
 
       :quota_settings => {
-        :billing_provider => String,
-        :billing_provider_domain => String,
-        :auth_token => String,
-        :division_factor => Integer
+          :billing_provider => String,
+          :billing_provider_domain => String,
+          :auth_token => String,
+          :product_handle => String,
+          :division_factor => Integer
       }
     }
   end

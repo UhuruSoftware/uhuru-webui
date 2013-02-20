@@ -12,8 +12,14 @@ class Organizations
     orgs_list = @client.organizations
 
     orgs_list.each do |org|
-      cost = BillingHelper.compute_org_estimated_cost(org)
-      organizations_list << Organization.new(org.name, cost, org.users.count, [], org.guid, true)
+
+      cost = 0
+      org_billable = is_organization_billable?(org.guid)
+      if org_billable
+        cost = BillingHelper.compute_org_estimated_cost(org)
+      end
+
+      organizations_list << Organization.new(org.name, cost, org.users.count, [], org.guid, org_billable)
       # true should be replaced with org.billing_enabled when/if cfoundry gem will expose this attribute
     end
 
@@ -131,7 +137,10 @@ class Organizations
     spaces = @client.organization(org_guid).spaces
 
     spaces.each do |space|
-      cost = BillingHelper.compute_space_estimated_cost(space)
+      cost = 0
+      if is_organization_billable?(org_guid)
+        cost = BillingHelper.compute_space_estimated_cost(space)
+      end
       spaces_list << Spaces::Space.new(space.name, cost, space.apps.count, space.service_instances.count, space.guid)
     end
 
@@ -178,6 +187,20 @@ class Organizations
     end
 
     users_list
+  end
+
+  def is_organization_billable?(org_guid)
+    base_path = "#{@client.target}/v2/organizations/#{org_guid}"
+    headers = {'Content-Type' => 'application/json', 'Authorization' => @client.token}
+
+    response = HttpDirectClient.get("#{base_path}", :headers => headers)
+    if response.request.last_response.code == '200'
+      if JSON.parse(response.body)
+        return JSON.parse(response.body)['entity']['billing_enabled']
+      end
+    end
+  rescue Exception => e
+    false
   end
 
   def make_organization_billable(org_guid)

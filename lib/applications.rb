@@ -182,9 +182,9 @@ class Applications
   end
 
   class Application
-    attr_reader :name, :runtime, :guid, :state, :services, :uris, :instances, :memory
+    attr_reader :name, :runtime, :guid, :state, :services, :uris, :instances, :memory, :production
 
-    def initialize(name, runtime, guid, state, services, uris, instances, memory)
+    def initialize(name, runtime, guid, state, services, uris, instances, memory, production)
       @name = name
       @runtime = runtime
       @guid = guid
@@ -193,6 +193,7 @@ class Applications
       @uris = uris
       @instances = instances
       @memory = memory
+      @production = production
     end
   end
 

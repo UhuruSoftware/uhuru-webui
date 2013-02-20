@@ -1,5 +1,5 @@
 pid_filename: /tmp/uhuru_webui.pid
-local_route: 10.0.0.9
+local_route: 127.0.0.1
 port: 4567
 dev-mode: true
 
@@ -31,7 +31,7 @@ logging:
 
 domains:
   - domain:
-    url: "192.168.1.9:4567"
+    url: "192.168.1.195:4567"
     page_title: "Uhuru WebUi"
     welcome_message: "PeakColo PaaS - powered by Uhuru"
   - domain:
@@ -51,4 +51,5 @@ quota_settings:
   billing_provider: chargify
   billing_provider_domain: uhurutestcloud
   auth_token: kQbDEn5os7NTX-TVv9GT
+  product_handle: paid
   division_factor: 256

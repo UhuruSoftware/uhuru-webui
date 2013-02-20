@@ -15,13 +15,15 @@ class BillingHelper
 
     apps.each do |app|
       usage = app.total_instances * app.memory * 720
-      price_app_component = (@component_prices.select { |x| x[:name] == "free"}).map { |x| x[:price]}
+      app_plan_name = app.production ? "paid" : "free"
+      price_app_component = (@component_prices.select { |x| x[:name] == app_plan_name}).map { |x| x[:price]}
 
       space_cost += (((usage / @division_factor).to_i + 1) * price_app_component[0]).to_i + 1
     end
 
     service_instances.each do |service|
-      price_service = (@component_prices.select { |x| x[:name] == service.service_plan.service.label}).map { |x| x[:price]}
+      service_plan_name = "#{service.service_plan.service.label} #{service.service_plan.name}"
+      price_service = (@component_prices.select { |x| x[:name] == service_plan_name}).map { |x| x[:price]}
       space_cost += (1 * 720 * price_service[0]).to_i + 1
     end
 
