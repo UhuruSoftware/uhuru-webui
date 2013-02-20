@@ -4,7 +4,7 @@ require "config"
 class Users
 
   def initialize(token, target)
-    @client = CFoundry::Client.new(target, token)
+    @client = CFoundry::V2::Client.new(target, token)
   end
 
   # roles is an array of roles ex: ['owner', 'billing', 'auditor']

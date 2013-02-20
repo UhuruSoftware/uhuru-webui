@@ -856,19 +856,15 @@ module Uhuru::Webui
 
 
       # this is only to see how make_organization_billable works, to be moved in the right place
-      org = Organizations.new(session[:token], @cf_target)
-      org_guid = "2cfeb438-e804-4303-8637-476d7cdd6889"
-      org.make_organization_billable(org_guid)
-      exist = ChargifyWrapper.subscription_exists?(customer_reference)
+      org_guid = customer_reference.last(36).to_s
+      if (ChargifyWrapper.subscription_exists?(customer_reference))
+        org = Organizations.new(session[:token], @cf_target)
+        org.make_organization_billable(org_guid)
+      end
 
 
-      org_guid = "2cfeb438-e804-4303-8637-476d7cdd6889" #session[:currentOrganization]
+      #org_guid = "2cfeb438-e804-4303-8637-476d7cdd6889" #session[:currentOrganization]
       org_name = org.get_name(org_guid)
-
-      #puts params[:ref]
-      #
-      #ORG GUID WILL BE TAKEN FROM THE params[:ref]
-      #
 
       erb :subscribe_result, {:locals => {:org_name => org_name, :org_guid => org_guid}, :layout => :layout_user}
     end
