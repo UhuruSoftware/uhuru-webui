@@ -290,27 +290,22 @@ module Uhuru::Webui
     end
 
     post '/signup' do
-      paramete_email = params[:email]
-      paramete_password = params[:password]
-      paramete_given_name = params[:first_name]
-      paramete_family_name = params[:last_name]
 
       session[:temp_username] = params[:email]
       session[:temp_first_name] = params[:first_name]
       session[:temp_last_name] = params[:last_name]
 
-
       key = $config[:webui][:activation_link_secret]
-      email = Encryption.encrypt_text(paramete_email, key)
-      pass = Encryption.encrypt_text(paramete_password, key)
-      family_name = Encryption.encrypt_text(paramete_family_name, key)
-      given_name = Encryption.encrypt_text(paramete_given_name, key)
+      email = Encryption.encrypt_text(params[:email], key)
+      pass = Encryption.encrypt_text(params[:password], key)
+      family_name = Encryption.encrypt_text(params[:first_name], key)
+      given_name = Encryption.encrypt_text(params[:last_name], key)
 
       user_sign_up = UsersSetup.new(@config)
-      user = user_sign_up.signup(paramete_email, $config[:webui][:signup_user_password], paramete_given_name, paramete_family_name)
+      user = user_sign_up.signup(params[:email], $config[:webui][:signup_user_password], params[:last_name], params[:first_name])
 
       link = "http://#{request.env["HTTP_HOST"].to_s}/activate/#{URI.encode(Base32.encode(pass))}/#{URI.encode(Base32.encode(user.guid))}"
-      Email::send_email(@email, 'Hello', erb(:email, {:locals =>{:link => link}}))
+      Email::send_email(params[:email], erb(:email, {:locals =>{:link => link}}))
 
 
       ##if recaptcha_valid? then

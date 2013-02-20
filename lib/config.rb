@@ -49,14 +49,11 @@ class Uhuru::Webui::Config < VCAP::Config
       },
 
       :email => {
+        :smtp_link_1 => String,
+        :smtp_link_2 => String,
+        :from_title => String,
         :from => String,
-        :from_alias => String,
-        :server => String,
-        :port => Integer,
-        optional(:user) => String,
-        optional(:secret) => String,
-        optional(:auth_method) => Symbol,
-        :enable_tls => bool
+        :subject => String
       },
 
       :recaptcha => {

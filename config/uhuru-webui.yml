@@ -1,5 +1,5 @@
 pid_filename: /tmp/uhuru_webui.pid
-local_route: 127.0.0.1
+local_route: 10.0.0.9
 port: 4567
 dev-mode: true
 
@@ -15,14 +15,11 @@ uaa:
   uaa_api: "http://uaa.ccng-dev.net"
 
 email:
-  from: "postmaster@uhurusoftware.mailgun.org"
-  from_alias: "Uhuru AppCloud"
-  server: "smtp.gmail.com"
-  port: 587
-  user: "uhurusoft001@gmail.com"
-  secret: "uhurusoft001"
-  auth_method: :plain
-  enable_tls: true
+  smtp_link_1: "https://api:key-3ax6xnjp29jd6fds4gc373sgvjxteol0"
+  smtp_link_2: "@api.mailgun.net/v2/samples.mailgun.org/messages"
+  from_title: Uhuru Cloud
+  from: "marius.ivan@uhurusoftware.mailgun.org" #"postmaster@uhurusoftware.mailgun.org"
+  subject: "Uhuru Cloud E-mail Validation"
 
 recaptcha:
   recaptcha_public_key: "6LcrstkSAAAAAIaBF-lyD5tpCQkqk8Z0uxgfsnRv"
