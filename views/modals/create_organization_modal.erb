@@ -1,0 +1,23 @@
+<div class="modal hide" id="create_organization">
+  <div class="modal-header">
+        <a href="/organizations" class="close"></a>
+    <h3>Create Organization</h3>
+  </div>
+
+  <form action="/createOrganization" method="post" autocomplete="off">
+    <div class="modal-body">
+      <p>
+        <label for="org_name">Organization Name: </label>
+        <input type="text" id="org_name" name="orgName" class="modal_input_box" />
+      </p>
+    </div>
+    <div class="modal-footer">
+      <span class="server_errors" id="create_organization_failed"><%= session[:e_create_organization] %></span>
+      <p class="hidden_modal_messages" id="p_c_organization">Please wait...</p>
+      <div class="button_case_create_organization_and_space">
+            <a href="/organizations" class="btn btn_right_create_organization_and_space cancel" id="cancel_b_c_organization"><span class="line">| </span>Cancel </a>
+        <button type="submit" class="btn btn_left_create_organization_and_space ok" id="b_c_organization"><span class="line">| </span>Create </button>
+      </div>
+    </div>
+  </form>
+</div>

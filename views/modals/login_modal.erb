@@ -1,0 +1,29 @@
+<div class="modal hide" id="login_modal">
+  <div class="modal-header">
+        <a href="/" class="close"></a>
+    <h3>Login</h3>
+  </div>
+  <form action="/login" method="post" autocomplete="off">
+    <div class="modal-body" id="login_modal_content">
+      <p>
+        <label for="id">username: </label>
+        <input type="text" id="id" name="username" class="modal_input_box" autofocus="autofocus" value = "<%= if defined? user_login_failed then user_login_failed end %>" autofocus = "autofocus" />
+      </p>
+
+      <p>
+        <label for="pass">password: </label>
+        <input type="password" id="pass" name="password" class="modal_input_box"/>
+      </p>
+
+      <p>Forgot your password? Click <a href="#" class="index_links">here</a></p>
+    </div>
+
+    <div class="modal-footer">
+      <span class="server_errors" id="login_failed"><%= session[:e_login] %></span>
+      <div class="button_case_create_organization_and_space">
+            <a href="/" class="btn btn_right_create_organization_and_space cancel"><span class="line">| </span>Cancel</a>
+        <button type="submit" class="btn btn_left_create_organization_and_space login_unlocked"><span class="line">| </span>Login </button>
+      </div>
+    </div>
+  </form>
+</div>

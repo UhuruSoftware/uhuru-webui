@@ -1,0 +1,27 @@
+<div class="modal hide" id="delete_this_organization_modal">
+  <div class="modal-header">
+    <button class="close"></button>
+    <h3>Delete organization</h3>
+  </div>
+  <div class="modal-body">
+    <p>
+      Are you sure you want to delete this organization?
+    </p>
+    <br />
+    <p>
+      <strong>
+        WARNING! All Spaces, applications and services in this organization will be deleted! This action cannot be reversed.
+      </strong>
+    </p>
+  </div>
+  <div class="modal-footer">
+    <span class="server_errors" id="delete_this_organization_failed"><%= session[:e_delete_organization] %></span>
+    <p class="hidden_modal_messages" id="p_d_organization">Deleting...</p>
+    <div class="button_case_delete_organization_and_space">
+      <button class="btn btn_right_delete_organization_and_space cancel" id="cancel_b_d_organization"><span class="line">| </span>Cancel </button>
+      <form action="/deleteCurrentOrganization" method="post">
+        <button type="submit" class="btn btn_left_delete_organization_and_space danger" id="b_d_organization"><span class="line">| </span>Delete </button>
+      </form>
+    </div>
+  </div>
+</div>

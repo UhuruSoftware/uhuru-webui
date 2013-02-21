@@ -1,5 +1,5 @@
 pid_filename: /tmp/uhuru_webui.pid
-local_route: 127.0.0.1
+local_route: 192.168.1.112
 port: 4567
 dev-mode: true
 
@@ -39,9 +39,9 @@ domains:
     page_title: "Uhuru WebUi"
     welcome_message: "PeakColo PaaS - powered by Uhuru"
   - domain:
-    url: "127.0.0.1:4567"
-    page_title: "Uhuru WebUi"
-    welcome_message: "PeakColo PaaS - powered by Uhuru Localhost"
+    url: "192.168.1.112:4567"
+    page_title: "Uhuru WebUi LINUX BOX"
+    welcome_message: "PeakColo PaaS - powered by Uhuru LINUX BOX"
 
 webui:
   activation_link_secret: "terceseht"

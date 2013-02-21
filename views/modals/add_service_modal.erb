@@ -1,0 +1,34 @@
+<div class="modal fade hide" id="add_ctService_modal" onmousemove="newServiceName();">
+  <div class="modal-header">
+    <button class="close"></button>
+    <h3>New Service</h3>
+  </div>
+
+  <div class="modal-body">
+    <p>
+      <label for="team_services_list">Service Type</label>
+      <select id="team_services_list" class="modal_input_box">
+        <option value="test1">1</option>
+        <option value="test2">2</option>
+        <option value="test3">3</option>
+      </select>
+    </p>
+    <p>
+      <label for="service_name">Name</label>
+      <input type="text" id="service_name" class="modal_input_box"/>
+    </p>
+  </div>
+
+  <div class="modal-footer">
+    <span class="server_errors" id="create_service_failed"><%= session[:e_create_service] %></span>
+    <div class="button_case_create_organization_and_space">
+      <button type="button" class="btn btn_right_create_organization_and_space cancel"><span class="line">| </span>Close </button>
+
+      <form action="/createService" method="post">
+        <input type="text" id="new_service_name" name="serviceName" class="blank_input"/>
+        <button type="submit" class="btn btn_left_create_organization_and_space ok"><span class="line">| </span>Create </button>
+      </form>
+
+    </div>
+  </div>
+</div>

@@ -3,6 +3,7 @@ require 'config'
 require 'dev_utils'
 require 'date'
 require 'sinatra/session'
+require 'profiler'
 
 module Uhuru::Webui
   class Webui < Sinatra::Base
@@ -54,206 +55,40 @@ module Uhuru::Webui
 
     error do
       session[:error] = "#{request.env['sinatra.error'].to_s}"
-
-    # / page errors
-        if session[:error] == "login error"
-          session[:e_login] = "Wrong email and/or password!"
-          redirect '/userLogin'
-        end
-
-        if session[:error] == "user exists"
-          session[:e_sign_up] = "Email already exists try another one!"
-          redirect '/userSignUp'
-        end
-
-        if session[:error] == "org create error"
-          session[:e_sign_up] = "Server couldn't create the default organization!"
-          redirect '/userSignUp'
-        end
-
-        if session[:error] == "signup error"
-          session[:e_sign_up] = "Server did not respond!"
-          redirect '/userSignUp'
-        end
-
-    # /account page errors
-        if session[:error] == "Update user failed!"
-            session[:e_update_user] = "Something went wrong please try again"
-            redirect '/resetAccount'
-        end
-
-        if session[:error] == "Change password failed!"
-            session[:e_update_password] = "Something went wrong please try again"
-            redirect '/resetAccount'
-        end
-
-    # /organizations page errors
-        if session[:error] == "create organization failed"
-            session[:e_create_organization] = "Create organization failed(try other names)!"
-            redirect '/organizationsError'
-        end
-
-        if session[:error] == "delete organization failed"
-            session[:e_delete_organization] = "You are not authorized to delete this organization!"
-            redirect '/organizationsError'
-        end
-
-    # /organization(guid) - spaces - page errors
-        if session[:error] == "create space failed"
-            session[:e_create_space] = "Create space failed(try other names)!"
-            redirect '/resetOrganization'
-        end
-
-        if session[:error] == "delete space failed"
-            session[:e_delete_space] = "You are not authorized to delete this space!"
-            redirect '/resetOrganization'
-        end
-
-        if session[:error] == "User account doesn't exist-org"
-            session[:e_create_user] = "You are not authorized or the user doesn't exist!"
-            redirect '/resetOrganization'
-        end
-
-        if session[:error] == "User account doesn't exist-space"
-            session[:e_create_user] = "You are not authorized or the user doesn't exist!"
-            redirect '/resetSpace'
-        end
-
-        if session[:error] == "delete user error-org"
-            session[:e_delete_user] = "You are not authorized to delete this user!"
-            redirect '/resetOrganization'
-        end
-
-        if session[:error] == "delete user error-space"
-            session[:e_delete_user] = "You are not authorized to delete this user!"
-            redirect '/resetSpace'
-        end
-
-    # /space(guid) - current space - page errors
-        if session[:error] == "create app error"
-            session[:e_create_app] = "App was not created: server error!"
-            redirect '/resetSpace'
-        end
-
-        if session[:error] == "update app error"
-            session[:e_update_app] = "App was not updated: server error!"
-            redirect '/resetSpace'
-        end
-
-        if session[:error] == "delete app error"
-            session[:e_delete_app] = "App was not deleted: server error!"
-            redirect '/resetSpace'
-        end
-
-        if session[:error] == "create service error"
-            session[:e_create_service] = "Service was not created: server error!"
-            redirect '/resetSpace'
-        end
-
-        if session[:error] == "delete service error"
-            session[:e_delete_service] = "Service was not deleted: server error!"
-            redirect '/resetSpace'
-        end
-
-        if session[:error] == "start app error"
-            session[:e_start_app] = "Can't start app!"
-            redirect '/resetSpace'
-        end
-
-        if session[:error] == "stop app error"
-            session[:e_stop_app] = "Can't stop app!"
-            redirect '/resetSpace'
-        end
-
-        if session[:error] == "bind service error"
-            session[:e_bind_service] = "Can't bind this service to app!"
-            redirect '/resetSpace'
-        end
-
-        if session[:error] == "unbind service error"
-            session[:e_unbind_service] = "Can't unbind this service from app!"
-            redirect '/resetSpace'
-        end
-
-        if session[:error] == "bind url error"
-            session[:e_bind_url] = "Can't bind this url to app!"
-            redirect '/resetSpace'
-        end
-
-        if session[:error] == "unbind url error"
-            session[:e_unbind_url] = "Can't unbind this url from app!"
-            redirect '/resetSpace'
-        end
-
       erb :error500, {:layout => :layout_error}
     end
 
-    get '/userLogin' do
-      erb :index, {:locals => {:user_login_failed => session[:temp_user_login]}, :layout => :layout_guest}
-    end
-
-    get '/userSignUp' do
-      erb :index, {:locals => {:user_failed => session[:temp_username], :first_name_failed => session[:temp_first_name], :last_name_failed => session[:temp_last_name]}, :layout => :layout_guest}
-    end
-
-
-    get '/resetAccount' do
-      session[:e_reset_account] = true
-      redirect '/account'
-    end
-
-    get '/organizationsError' do
-      session[:e_reset_organizations] = true
-      erb :organizations, {:layout => :layout_user}
-    end
-
-    get '/resetOrganization' do
-      session[:e_reset_organization] = true
-      redirect '/organization' + session[:currentOrganization]
-    end
-
-    get '/resetSpace' do
-      session[:e_reset_space] = true
-      redirect '/space' + session[:currentSpace]
-    end
-
     get '/' do
+      Profiler__.start_profile
+      Profiler__.stop_profile
 
       if session[:welcome_message] == nil
-        redirect '/getDomain'
+        $config[:domains].each do |domain|
+          if request.env["HTTP_HOST"].to_s == domain["url"]
+            session[:welcome_message] = domain["welcome_message"]
+            session[:page_title] = domain["page_title"]
+          end
+        end
       end
 
-      session[:login_] = false
-      session[:error] = nil
-
-      session[:username] = ""
-      session[:e_sign_up] = ""
-      session[:e_login] = ""
-
-      session[:temp_username] = ""
-      session[:temp_first_name] = ""
-      session[:temp_last_name] = ""
-      session[:temp_user_login] = ""
-
-      session = []
       @timeNow = $this_time
       @title = 'Uhuru App Cloud'
       $path_1 = ''
       $path_2 = ''
       $user = nil
 
+      Profiler__.print_profile(STDOUT)
       erb :index, {:layout => :layout_guest}
     end
 
-    get '/getDomain' do
-      $config[:domains].each do |domain|
-        if request.env["HTTP_HOST"].to_s == domain["url"]
-          session[:welcome_message] = domain["welcome_message"]
-          session[:page_title] = domain["page_title"]
-          redirect '/'
-        end
-      end
-      redirect '/'
+    get '/login' do
+      erb :index, {:layout => :layout_guest,
+                   :locals => {:login_dialog => true}}
+    end
+
+    get '/signup' do
+      erb :index, {:layout => :layout_guest,
+                   :locals => {:signup_dialog => true}}
     end
 
     post '/login' do
@@ -363,16 +198,7 @@ module Uhuru::Webui
         redirect '/'
       end
 
-      #this code resets the errors in organizations page # >>
-      session[:e_login] = ""
-      session[:e_sign_up] = ""
-      session[:e_create_organization] = ""
-      session[:e_delete_organization] = ""
-      session[:e_reset_organizations] = false
-      # <<
-
       @this_user = session[:username]
-
       @timeNow = $this_time
 
       session[:path_1] = ''
@@ -388,25 +214,53 @@ module Uhuru::Webui
       erb :organizations, {:locals => {:organizations_list => organizations_list, :organizations_count => organizations_list.count}, :layout => :layout_user}
     end
 
+
+    get '/create_organization' do
+      organizations_Obj = Organizations.new(session[:token], @cf_target)
+      organizations_list = organizations_Obj.read_all
+      erb :organizations, {:layout => :layout_user,
+                   :locals => {:organizations_list => organizations_list, :organizations_count => organizations_list.count, :create_organization_dialog => true}}
+    end
+
+    get '/delete_organization' do
+      organizations_Obj = Organizations.new(session[:token], @cf_target)
+      organizations_list = organizations_Obj.read_all
+      erb :organizations, {:layout => :layout_user,
+                           :locals => {:organizations_list => organizations_list, :organizations_count => organizations_list.count, :org_guid => params[:guid], :delete_organization_dialog => true}}
+    end
+
+    get '/create_space' do
+      organizations_Obj = Organizations.new(session[:token], @cf_target)
+      organizations_list = organizations_Obj.read_all
+      erb :organizations, {:layout => :layout_user,
+                           :locals => {:organizations_list => organizations_list, :organizations_count => organizations_list.count, :org_guid => params[:guid], :delete_organization_dialog => true}}
+    end
+
+    get '/delete_space' do
+      organizations_Obj = Organizations.new(session[:token], @cf_target)
+      organizations_list = organizations_Obj.read_all
+      erb :organizations, {:layout => :layout_user,
+                           :locals => {:organizations_list => organizations_list, :organizations_count => organizations_list.count, :org_guid => params[:guid], :delete_organization_dialog => true}}
+    end
+
+    get '/delete_current_organization' do
+      organizations_Obj = Organizations.new(session[:token], @cf_target)
+      organizations_list = organizations_Obj.read_all
+      erb :organizations, {:layout => :layout_user,
+                           :locals => {:organizations_list => organizations_list, :organizations_count => organizations_list.count, :org_guid => params[:guid], :delete_organization_dialog => true}}
+    end
+
+
+
+
+
+
+
     get '/organization:org_guid' do
 
       if session[:login_] == false
         redirect '/'
       end
-
-      #this code resets the error handling  #>>
-      if session[:e_reset_organization] == true
-        puts session[:e_reset_organization]
-      else
-        session[:e_create_organization] = ""
-        session[:e_delete_organization] = ""
-        session[:e_create_space] = ""
-        session[:e_delete_space] = ""
-        session[:e_create_user] = ""
-        session[:e_delete_user] = ""
-      end
-      session[:e_reset_organization] = false
-      # <<
 
       @timeNow = $this_time
 

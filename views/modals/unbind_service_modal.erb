@@ -1,0 +1,26 @@
+<div class="modal fade hide" id="unbind_service_modal">
+  <div class="modal-header">
+    <h3>Unbind service</h3>
+  </div>
+  <div class="modal-body">
+    <p>
+      Are you sure you want to unbind <span style="font-weight: bold">
+            </span> from <span style="font-weight: bold"></span>? Your
+      app will no longer be able to connect to this service.
+    </p>
+    <p>
+      Unbinding does not delete the service. Please delete service from service page to permanently delete it.
+    </p>
+  </div>
+  <div class="modal-footer">
+    <span class="server_errors blank_input" id="unbind_service_failed"><%= session[:e_unbind_service] %></span>
+    <form action="/unbindServices" method="post">
+      <input type="text" name="serviceName" id="unbind_serviceName" class="blank_input"/>
+      <input type="text" id="unbind_service_app_name" name="appName" class="blank_input" />
+      <div class="button_case_create_organization_and_space">
+        <button type="button" class="btn btn_right_unbind cancel"><span class="line">| </span>Cancel </button>
+        <button type="submit" class="btn btn_left_unbind danger"><span class="line">| </span>Unbind </button>
+      </div>
+    </form>
+  </div>
+</div>
