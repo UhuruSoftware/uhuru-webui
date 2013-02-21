@@ -1,0 +1,45 @@
+<div class="modal hide" id="signup_modal">
+  <form action="/signup" method="post" autocomplete="off" id="sign_up">
+    <div class="modal-header">
+          <a href="/" class="close"></a>
+      <h3>Sign Up</h3>
+    </div>
+    <div class="modal-body" id="signup_modal_content">
+      <p>
+        <label for="email">e-mail: </label>
+        <input type="text" id="email" name="email" class="modal_input_box" placeholder="... email" value = "<%= if defined? user_failed then user_failed end %>" autofocus = "autofocus" />
+      </p>
+
+      <p>
+        <label for="password">Password: </label>
+        <input type="password" id="password" name="password" class="modal_input_box" />
+      </p>
+
+      <p>
+        <label for="confirm_password">Confirm Password: </label>
+        <input type="password" id="confirm_password" name="confirm_password" class="modal_input_box" />
+      </p>
+
+      <p>
+        <label for="first_name">First Name: </label>
+        <input type="text" id="first_name" name="first_name" class="modal_input_box" placeholder="... first name" value = "<%= if defined? first_name_failed then first_name_failed end %>" />
+      </p>
+
+      <p>
+        <label for="last_name">Last Name: </label>
+        <input type="text" id="last_name" name="last_name" class="modal_input_box" placeholder="... last name" value = "<%= if defined? last_name_failed then last_name_failed end %>" />
+      </p>
+
+      <%= recaptcha_tag :challenge %>
+    </div>
+
+    <div class="modal-footer sign_up_footer_modal">
+      <span class="server_errors" id="sign_up_failed"><%= session[:e_sign_up] %></span>
+      <span id="show_modal_errors"></span>
+      <div class="button_case_create_organization_and_space">
+            <a href="/" class="btn btn_right_create_organization_and_space cancel"><span class="line">| </span>Cancel</a>
+        <button type="submit" class="btn btn-success btn_left_create_organization_and_space signup_preferences submit_form"><span class="line">| </span>Sign up </button>
+      </div>
+    </div>
+  </form>
+</div>

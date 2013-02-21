@@ -2,19 +2,6 @@
     This is a set of functions that pass guids from tiles to froms (when you click delete a guid is passed to the delete modal, and after that the user will be asked if he is sure)
 */
 
-function prepareToDeleteOrganization(obj)
-{
-    document.getElementById('this_organization_name').innerHTML = obj.title;
-    document.getElementById('pass_guid').value = obj.id;
-}
-
-function prepareToDeleteSpace(obj)
-{
-    document.getElementById('this_space_name').innerHTML = obj.id;
-    document.getElementById('pass_guid').value = obj.title;
-}
-
-
 function prepareToDeleteOwner(obj)
 {
     document.getElementById('this_user_name').innerHTML = obj.title;
@@ -56,15 +43,6 @@ function prepareToDeleteService(obj)
     document.getElementById('this_service_name').innerHTML = obj.id;
 }
 
-function prepareToDeleteCreditCard(obj)
-{
-    document.getElementById('pass_credit_card_id').value = obj.id;
-}
-
-function prepareToAddCreditCard(obj)
-{
-    document.getElementById('pass_credit_card_add_id').value = obj.id;
-}
 
 function selectUserType(userType)
 {
@@ -73,11 +51,6 @@ function selectUserType(userType)
 function prepareToAddNewUserEmail()
 {
     document.getElementById('new_user_email').value = document.getElementById('user_email').value;
-}
-
-function newServiceType() //this is the combo box
-{
-    document.getElementById('new_user_type').value = userType;
 }
 
 function newServiceName()

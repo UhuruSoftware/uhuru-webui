@@ -93,8 +93,8 @@ h1, h2, h3, h4, h5, h6
 	left: 50%;
 	top: 130px;
 	z-index: 20;
-	display: none;
     overflow: auto;
+    display: none;
 }
 
 #inv_ctUser_modal,
@@ -974,6 +974,7 @@ h2 .count
 #members,
 #services,
 #users,
+#domains,
 #routes,
 #billings
 {

@@ -22,7 +22,7 @@
                     <input type="text" id="promo_code_input" name="promoCode" />
                 </div>
 
-                <button class="btn signup_clipboard" id="signup_button" style="float: right;"><span class="line">| </span>Sign Up </button>
+                <a href="/signup"><button class="btn signup_clipboard" id="signup_button" style="float: right;"><span class="line">| </span>Sign Up </button></a>
             <div id="signup_container_text">
                 <br />
                 By using our service you agree to the  <a href="http://uhurusoftware.com/tos" target="_blank" class="index_links">Terms of Service</a>
@@ -59,94 +59,14 @@
 </table>
 </div>
 
-<div class="modal hide" id="login_modal">
-    <div class="modal-header">
-      <% if defined? user_login_failed %>
-        <a href="/" class="close"></a>
-      <% else %>
-          <button type="button" class="close"></button>
-      <% end %>
-        <h3>Login</h3>
-    </div>
-    <form action="/login" method="post" autocomplete="off">
-        <div class="modal-body" id="login_modal_content">
-            <p>
-                <label for="id">username: </label>
-                <input type="text" id="id" name="username" class="modal_input_box" autofocus="autofocus" value = "<%= if defined? user_login_failed then user_login_failed end %>" autofocus = "autofocus" />
-            </p>
 
-            <p>
-                <label for="pass">password: </label>
-                <input type="password" id="pass" name="password" class="modal_input_box"/>
-            </p>
+<% if defined?(login_dialog) && (login_dialog == true) %>
+    <%= erb(:"modals/login_modal", :layout => false) %>
+<% end %>
 
-            <p>Forgot your password? Click <a href="#" class="index_links">here</a></p>
-        </div>
+<% if defined?(signup_dialog) && (signup_dialog == true) %>
+    <%= erb(:"modals/signup_modal", :layout => false) %>
+<% end %>
 
-    <div class="modal-footer">
-        <span class="server_errors" id="login_failed"><%= session[:e_login] %></span>
-        <div class="button_case_create_organization_and_space">
-          <% if defined? user_login_failed %>
-              <a href="/" class="btn btn_right_create_organization_and_space cancel"><span class="line">| </span>Cancel</a>
-          <% else %>
-              <button type="button" class="btn btn_right_create_organization_and_space cancel"><span class="line">| </span>Cancel</button>
-          <% end %>
-            <button type="submit" class="btn btn_left_create_organization_and_space login_unlocked"><span class="line">| </span>Login </button>
-        </div>
-    </div>
-    </form>
-</div>
 
-<div class="modal hide" id="signup_modal">
-    <form action="/signup" method="post" autocomplete="off" id="sign_up">
-        <div class="modal-header">
-          <% if defined? user_failed %>
-            <a href="/" class="close"></a>
-          <% else %>
-              <button type="button" class="close"></button>
-          <% end %>
-            <h3>Sign Up</h3>
-        </div>
-            <div class="modal-body" id="signup_modal_content">
-                <p>
-                    <label for="email">e-mail: </label>
-                    <input type="text" id="email" name="email" class="modal_input_box" placeholder="... email" value = "<%= if defined? user_failed then user_failed end %>" autofocus = "autofocus" />
-                </p>
 
-                <p>
-                    <label for="password">Password: </label>
-                    <input type="password" id="password" name="password" class="modal_input_box" />
-                </p>
-
-                <p>
-                    <label for="confirm_password">Confirm Password: </label>
-                    <input type="password" id="confirm_password" name="confirm_password" class="modal_input_box" />
-                </p>
-
-                <p>
-                    <label for="first_name">First Name: </label>
-                    <input type="text" id="first_name" name="first_name" class="modal_input_box" placeholder="... first name" value = "<%= if defined? first_name_failed then first_name_failed end %>" />
-                </p>
-
-                <p>
-                    <label for="last_name">Last Name: </label>
-                    <input type="text" id="last_name" name="last_name" class="modal_input_box" placeholder="... last name" value = "<%= if defined? last_name_failed then last_name_failed end %>" />
-                </p>
-
-                <%= recaptcha_tag :challenge %>
-            </div>
-
-        <div class="modal-footer sign_up_footer_modal">
-            <span class="server_errors" id="sign_up_failed"><%= session[:e_sign_up] %></span>
-            <span id="show_modal_errors"></span>
-            <div class="button_case_create_organization_and_space">
-              <% if defined? user_failed %>
-                  <a href="/" class="btn btn_right_create_organization_and_space cancel"><span class="line">| </span>Cancel</a>
-              <% else %>
-                  <a href="#" class="btn btn_right_create_organization_and_space cancel"><span class="line">| </span>Cancel</a>
-              <% end %>
-                <button type="submit" class="btn btn-success btn_left_create_organization_and_space signup_preferences submit_form"><span class="line">| </span>Sign up </button>
-            </div>
-        </div>
-    </form>
-</div>
