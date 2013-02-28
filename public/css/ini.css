@@ -66,7 +66,6 @@ h1, h2, h3, h4, h5, h6
 {
     margin-right: 30px;
 }
-
 #add_credit_card_to_organization_modal,
 #delete_credit_card_modal,
 #delete_this_organization_modal,
@@ -75,9 +74,9 @@ h1, h2, h3, h4, h5, h6
 #delete_service,
 #delete_space_modal,
 #delete_user_modal,
+#create_organization,
 #delete_organization_modal,
 #add_ctService_modal,
-#create_organization,
 #create_space,
 #bind_service_modal,
 #unbind_service_modal,
@@ -96,6 +95,20 @@ h1, h2, h3, h4, h5, h6
     overflow: auto;
     display: none;
 }
+
+
+#create_organization,
+#create_space,
+#add_ctService_modal
+{
+    display: block;
+}
+
+
+
+
+
+
 
 #inv_ctUser_modal,
 #create_credit_card_modal
@@ -126,7 +139,7 @@ h1, h2, h3, h4, h5, h6
 	left: 50%;
 	top: 100px;
 	z-index: 20;
-	display: none;
+	display: block;
     background-color: #e0dfdd;
     overflow: auto;
 }
@@ -307,7 +320,7 @@ h2
 	left: 50%;
 	top: 120px;
 	z-index: 20;
-	display: none;
+	display: block;
     background-color: #e0dfdd;
     overflow: auto;
 }
@@ -618,7 +631,8 @@ select option
 
 .nav-tabs > li > a
 {
-    color: #404040;
+    /*color: #404040;*/
+    color: #ffffff;
     font-size: 16px;
 }
 
@@ -971,16 +985,6 @@ h2 .count
     font-size: 13pt;
 }
 
-#members,
-#services,
-#users,
-#domains,
-#routes,
-#billings
-{
-    display: none;
-}
-
 
 #spaces_tabs
 {
@@ -991,17 +995,15 @@ h2 .count
     padding-right: 20px;
     margin-bottom: 0;
 }
-#users_li,
-#apps_li,
-#services_li,
-#routes_li
+
+.space_selected_tab,
+.space_unselected_tabs
 {
     display: inline;
-    margin-right: 5px;
 }
 
 
-#apps_li
+.space_selected_tab
 {
     font-size: 16px;
     padding-bottom: 1px;
@@ -1016,15 +1018,12 @@ h2 .count
     -webkit-border-top-right-radius: 3px;
     color: #ffffff;
     background-color: #09293e;
-    margin-left: 30px;
     cursor: pointer; font-family: 'Segoe UI', 'Open Sans', Verdana, Arial, Helvetica, sans-serif;
     font-weight: 400;
     letter-spacing: 0.01em;
 }
 
-#users_li,
-#services_li,
-#routes_li
+.space_unselected_tabs
 {
     font-size: 16px;
     cursor: pointer;
@@ -1054,7 +1053,7 @@ h2 .count
     margin-right: 5px;
 }
 
-#spaces_btn_link
+.organization_selected_tab
 {
     padding-bottom: 1px;
     border-top: 1px solid #0e4769;
@@ -1068,15 +1067,13 @@ h2 .count
     -webkit-border-top-right-radius: 3px;
     color: #ffffff;
     cursor: pointer;
-    margin-left: 30px;
     font-family: 'Segoe UI', 'Open Sans', Verdana, Arial, Helvetica, sans-serif;
     font-weight: 400;
     font-size: 16px;
     letter-spacing: 0.01em;
 }
 
-#domains_btn_link,
-#members_btn_link
+.organization_unselected_tabs
 {
     padding-bottom: 0px;
     padding-left: 7px;
@@ -1665,11 +1662,6 @@ h2 .count
     padding:  0px;
     margin-left: 10px;
     border: 1px solid red;
-}
-
-.blank_input
-{
-    display: none;
 }
 .hidden_modal_messages
 {
