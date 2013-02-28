@@ -33,7 +33,7 @@ module Uhuru::Webui
         end
 
         opts.on("-d", "--development-mode", "Run in development mode") do
-          # this must happen before requring any modules that use sinatra,
+          # this must happen before requring any modules that use sinatra_routes,
           # otherwise it will not setup the environment correctly
           @development = true
           ENV["RACK_ENV"] = "development"

@@ -1,0 +1,67 @@
+<div class="sections" id="organizations_page">
+    <div class="manage_content_header">
+        <h2 class="section_title">
+            <span id="organization_text">Organizations </span><span class="count">(<span><%= organizations_count %></span>)</span>
+        </h2>
+        <a href="<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS_CREATE %>" class="plus_sign_32 plus_sign_organization" id="create_organization_btn" value=""></a>
+    </div>
+
+    <ul class="tile_list">
+        <% organizations_list.each do |org| %>
+            <li class="tile_invisible">
+                <ul class="custom_list">
+                    <li class="tile_organization_name" title="<%= org.name %>">
+                        <a href="<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{org.guid}/spaces" %>" class="link_tiles_org" title="<%= org.name %>"><span class="to_be_underlined organization_name_span" title="<%= org.name %>"><%= org.name %></span></a>
+                        <a href="#"><input type="button" class="small_trash delete-organization-button" title="<%= org.name %>" id="<%= org.guid %>" onmousemove="prepareToDeleteOrganization(this)" /></a>
+                    </li>
+
+                    <li class="tile_organization_members">
+                        <span class="organization_members_span">members</span><span class="organization_members_span_value"><%= org.members_count %></span>
+                        <span class="span_members_icon"></span>
+                    </li>
+
+                    <li class="tile_organization_cost">
+                        <span class="organization_cost_span">cost</span><span class="organization_cost_span_value"><%= org.cost %></span>
+                        <span class="span_cost_icon"></span>
+                    </li>
+                </ul>
+            </li>
+        <% end %>
+    </ul>
+</div>
+
+<div class="modal hide" id="delete_organization_modal">
+    <div class="modal-header">
+        <a href="#" class="close"></a>
+        <h3>Delete organization</h3>
+    </div>
+
+    <div class="modal-body">
+        <p>
+            Are you sure you want to delete the organization "<span id="this_organization_name"></span>"?
+        </p>
+        <br />
+        <p>
+            <strong>
+                WARNING! All Spaces, applications and services in this organization will be deleted! This action cannot be reversed.
+            </strong>
+        </p>
+    </div>
+
+    <div class="modal-footer">
+        <span class="server_errors blank_input" id="delete_organization_failed"><%= session[:e_delete_organization] %></span>
+        <p class="hidden_modal_messages" id="p_d_organization">Deleting...</p>
+
+        <div class="button_case_delete_organization_and_space">
+            <a href="#" class="btn btn_right_delete_organization_and_space cancel" id="cancel_b_d_organization"><span class="line">| </span>Cancel</a>
+            <form action="<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS %>" method="post">
+                <button type="submit" value="Delete" class="btn btn_left_delete_organization_and_space ok" id="b_d_organization"><span class="line">| </span>Delete </button>
+                <!--<input type="text" value= name="orgGuid" class="" />-->
+            </form>
+        </div>
+    </div>
+</div>
+
+<% if defined?(include_erb) && include_erb != nil %>
+    <%= erb(include_erb, :layout => false) %>
+<% end %>

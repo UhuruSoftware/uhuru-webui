@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+  <link rel="stylesheet" type="text/css" href="<%= request.base_url %>/css/Site.css"/>
+  <link rel="stylesheet" type="text/css" href="<%= request.base_url %>/css/ini.css"/>
+  <link rel="stylesheet" type="text/css" href="<%= request.base_url %>/css/jquery.css"/>
+
+  <meta charset="utf-8" />
+</head>
+
+
+<body class="manage">
+<div id="screen"> </div>
+<div id="opac_screen"> </div>
+
+<div id="container">
+  <header id="site_header">
+    <div class="page-margin">
+      <a href="/organizations" title="Home"><h1>Uhuru AppCloud</h1></a>
+
+      <div id="current_user">
+        <span id="current_user_name"></span>
+        <a href="/organizations" title="Home"><input type="button" class="home_sign_32" value="" id="home_icon" /></a>
+        <a href="/account" title="Account Settings"><input type="button" class="gear_sign_32" value="" id="current_user_edit_btn" /></a>
+        <a href="#" title="LogOut" id="logout_key"><input type="button" class="key_sign_32" value="" id="current_user_log_out" /></a>
+      </div>
+
+      <div id="header_links">
+        <a href="http://www.uhurusoftware.com" target="_blank"><span class="head_link">COMPANY</span></a>
+        <a href="http://uhurusoftware.zendesk.com" target="_blank"><span class="head_link">SUPPORT</span></a>
+      </div>
+
+      <div id="logout_small_modal">
+        <p style="line-height: 20px; padding-top: 10px;">Are you sure you want to logout?</p> <br />
+        <div class="button_case_delete_organization_and_space">
+          <button type="button" class="btn btn_right_delete_organization_and_space toggle_logout_up cancel"><span class="line">| </span>No </button>
+          <a href="<%= Uhuru::Webui::SinatraRoutes::LOGOUT %>"><button type="button" style="margin-right: -16px;" class="btn btn_left_delete_organization_and_space logout_locked" value="Yes"><span class="line">| </span>Yes </button></a>
+        </div>
+      </div>
+    </div>
+  </header>
+  <div class="page-margin" id="body">
+
+    <div class="breadcrumb">
+      <!-- request.env["HTTP_HOST"].to_s  #$path_home %%= #session[:path_1] %%= #session[:path_2] %-->
+    </div>
+
+    <%= yield %>
+
+  </div>
+  <footer id="site_footer">
+    <div class="page-margin">
+      <div class="ez-box" style="height: 50px; margin-bottom: 20px;">
+                    <span style="line-height: 48px; display: inline-block; float: left">
+                        <span class="title_icon"></span>  <span id="tools_">Tools:</span>
+                    </span>
+
+        <div style="height: 50px; margin-left: 45px; float: left">
+          <strong>
+            <a href="#" class="footer_links">Visual Studio Plugin</a><span style="color: #ffffff;"> | </span>
+            <a href="#" class="footer_links">AppCloud Admin</a><span style="color: #ffffff;"> | </span>
+            <a href="http://support.uhurusoftware.com/entries/21454287-deploying-and-managing-apps-with-command-line" target="_blank" class="footer_links">Command Line</a>
+          </strong>
+        </div>
+      </div>
+    </div>
+    <div class="bottom">
+      <div class="page-margin" id="footer_container">
+                    <span class="copyright">
+                        &copy; <%= @timeNow %> Uhuru Software. All rights reserved.
+                    </span>
+        <ul class="footer-menu">
+          <li><a href="http://uhurusoftware.com/tos/">Terms of Service</a></li>
+          <li><a href="http://uhurusoftware.com/privacy/">Privacy Policy</a></li>
+          <li class="last"><a href="http://uhurusoftware.zendesk.com" target="_blank">Support</a></li>
+        </ul>
+                    <span class="cloud-target">
+                        Your cloud target: <span class="cloud-target-url">http://services.uhurucloud.com</span>
+                    </span>
+      </div>
+    </div>
+  </footer>
+</div>
+
+<script type="text/javascript" src="<%= request.base_url %>/js/jquery-1.5.js"></script>
+<script type="text/javascript" src="<%= request.base_url %>/js/jquery_ui.js"></script>
+<script type="text/javascript" src="<%= request.base_url %>/js/fadeIn.js"></script>
+<script type="text/javascript" src="<%= request.base_url %>/js/stringModifier.js"></script>
+<script type="text/javascript" src="<%= request.base_url %>/js/savingModals.js"></script>
+<script type="text/javascript" src="<%= request.base_url %>/js/appDetailsController.js"></script>
+<script type="text/javascript" src="<%= request.base_url %>/js/billingsController.js"></script>
+<script type="text/javascript" src="<%= request.base_url %>/js/errors.js"></script>
+<script type="text/javascript" src="<%= request.base_url %>/js/editHeaders.js"></script>
+<script type="text/javascript" src="<%= request.base_url %>/js/guid.js"></script>
+
+</body>
+</html>

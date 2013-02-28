@@ -44,8 +44,13 @@ class Uhuru::Webui::Config < VCAP::Config
         :cloud_controller_pass  => String
       },
 
+      :default_domain => {
+        :page_title => String,
+        :welcome_message => String
+      },
+
       :uaa => {
-        :uaa_api                => String,
+        :uaa_api                => String
       },
 
       :email => {
@@ -58,7 +63,7 @@ class Uhuru::Webui::Config < VCAP::Config
 
       :recaptcha => {
         :recaptcha_private_key => String,
-        :recaptcha_public_key => String\
+        :recaptcha_public_key => String
       },
 
       :quota_settings => {

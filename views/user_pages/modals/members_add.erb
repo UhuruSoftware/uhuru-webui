@@ -1,6 +1,10 @@
 <div class="modal fade" id="add_user">
   <div class="modal-header">
-    <button class="close"></button>
+    <% if defined?(current_space) && current_space != nil %>
+        <a href="<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/#{current_space}/members" %>" class="close"></a>
+    <% else %>
+        <a href="<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/members" %>" class="close"></a>
+    <% end %>
     <h3>Invite user</h3>
     <br />
     <p>
@@ -13,12 +17,6 @@
       <label for="inviteEmail">Email address</label>
       <input id="user_email" type="text" class="modal_input_box" onmousemove="prepareToAddNewUserEmail();" />
     </ul>
-
-    <script type="text/javascript">
-        $("[id$='user_email']").autocomplete({
-            source: <%= all_space_users %>
-        });
-    </script>
 
     <ul class="create_user_modal_ul" id="user_logos">
       <li class="user_modal_li"><img width="32" height="32"  src="../images/Gmail_logo.png" alt=""/>&nbsp;GoogleID</li>
@@ -33,7 +31,7 @@
     </ul>
   </div>
   <div class="modal-footer">
-    <span class="server_errors" id="create_user_failed"><%= session[:e_create_user] %></span>
+    <span class="server_errors" id="create_user_failed"></span>
     <div class="button_case_create_organization_and_space">
       <form action="/addUsersToSpace" method="post">
         <input type="text" id="new_user_type" name="userType" class="blank_input" />
