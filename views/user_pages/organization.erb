@@ -1,0 +1,250 @@
+<div class="sections" id="organization_page" xmlns="http://www.w3.org/1999/html">
+
+        <div class="manage_content_header">
+            <h2 class="section_title">
+                <span id="organization_name"><%= organization_name %></span>
+
+                <form action="/updateOrganization" method="post">
+                    <input type="text" value="" id="organization_input" name="modified_name" class="modal_input_box tiped" />
+                    <input type="hidden" value="<%= current_organization %>" name="current_organization" />
+                    <input type="hidden" value="<%= current_tab %>" name="current_tab" />
+                    <div class="tooltips">
+                        <p>Press enter to update the new name!</p>
+                    </div>
+                </form>
+            </h2>
+
+            <div class="icons_options">
+                <% if current_tab == "spaces" %>
+                    <a href="<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/#{current_tab}/create_space" %>" class="plus_sign_32 plus_sign_position_32" id="create_space_btn"></a>
+                <% end %>
+
+                <% if current_tab == "members" %>
+                    <a href="<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/#{current_tab}/add_members" %>" class="plus_sign_32 plus_sign_position_32" id="add_user_btn_owner" onclick="prepareToAddNewUser(this.title);" title="owner"></a>
+                <% end %>
+
+                <input type="button" class="edit_sign_32 edit_sign_position_32" id="edit_space_btn" onclick="showOrganizationsInput();" />
+                <input type="submit" class="trash_sign_32 trash_sign_position_32 delete_this_organization" value="" />
+
+                <% if card_type == nil && card_masked_number == nil %>
+                      <a href="/create_subscription" id="add_credit_card"><input type="button" class="money_sign_32 money_sign_position_32" id="" value="" /></a>
+                <% end %>
+
+            </div>
+            <div id="credit_card_info_div">
+              <% if card_type != nil && card_masked_number != nil %>
+                  <%= card_masked_number %><span class="<%= card_type %>"></span>
+              <% end %>
+            </div>
+        </div>
+
+         <div id="organization_div">
+                <ul id="tabs" class="nav nav-tabs">
+                    <% if current_tab == "spaces" %>
+                        <li class="organization_selected_tab"><a href="<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/spaces" %>">Spaces (<span><%= spaces_count %></span>)</a></li>
+                    <% else %>
+                      <li class="organization_unselected_tabs"><a href="<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/spaces" %>">Spaces (<span><%= spaces_count %></span>)</a></li>
+                    <% end %>
+
+                    <% if current_tab == "members" %>
+                        <li class="organization_selected_tab"><a href="<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/members" %>">Members (<span><%= members_count %></span>)</a></li>
+                    <% else %>
+                      <li class="organization_unselected_tabs"><a href="<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/members" %>">Members (<span><%= members_count %></span>)</a></li>
+                    <% end %>
+
+                    <% if current_tab == "domains" %>
+                        <li class="organization_selected_tab"><a href="<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/domains" %>">Domains </a></li>
+                    <% else %>
+                        <li class="organization_unselected_tabs"><a href="<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/domains" %>">Domains </a></li>
+                    <% end %>
+                </ul>
+
+
+                <% if defined?(current_tab) && current_tab != nil && current_tab == "spaces" %>
+                    <div id="spaces">
+                        <ul class="tile_list">
+
+                            <% spaces_list.each do |space| %>
+                                    <li class="tile_invisible">
+                                      <ul class="custom_list">
+                                            <li class="tile_space_name" title="<%= space.name %>">
+                                                <a href="<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/#{space.guid}/apps" %>" class="link_tiles_space">
+                                                    <span class="space_name_span to_underlined"><%= space.name %></span>
+                                                    <a href="#"><span class="small_trash delete-space-button" id="<%= space.name %>" title="<%= space.guid %>" onmousemove="deleteSpace(this);"></span></a>
+                                                </a>
+                                            </li>
+
+                                            <li class="tile_space_apps">
+                                                <span class="count-label apps apps_count_span">#apps: </span><span class="count-value apps apps_count_span_value"><%= space.apps_count %></span>
+                                                <span class="count-label services services_count_span">#services: </span><span class="count-value services services_count_span_value"><%= space.services_count %></span>
+                                            </li>
+
+                                            <li class="tile_space_mothly_cost">
+                                                <span class="costs_span">cost:</span><span class="costs_span_value"><%= space.cost %></span>
+                                                <span class="span_cost_icon"></span>
+                                            </li>
+                                      </ul>
+                                    </li>
+                            <% end %>
+
+                        </ul>
+
+                    <div style="height: 250px; width: 100%"></div>
+                    </div>
+                <% end %>
+
+
+                <% if defined?(current_tab) && current_tab != nil && current_tab == "members" %>
+                    <div id="members">
+                            <ul class="tile_list">
+                              <% owners_list.each do |owner| %>
+                                <li class="tile_user_owner" title="<%= owner.email %>">
+                                    <span class="user_name_span"><%= owner.email %></span>
+                                    <span class="user_type_span">Owner</span>
+                                    <a href="#"><span class="small_trash delete-user-button" id="<%= owner.guid %>" title="<%= owner.email %>" onmousemove="prepareToDeleteOwner(this);"></span></a>
+
+                                    <span class="span_bg_icon"></span>
+                                </li>
+                              <% end %>
+
+                              <% billings_list.each do |billing| %>
+                                <li class="tile_user_developer" title="<%= billing.email %>">
+                                    <span class="user_name_span"><%= billing.email %></span>
+                                    <span class="user_type_span">Billing Manager</span>
+                                    <a href="#"><span class="small_trash delete-user-button" id="<%= billing.guid %>" title="<%= billing.email %>" onmousemove="prepareToDeleteBillingManager(this);"></span></a>
+
+                                    <span class="span_bg_icon"></span>
+                                </li>
+                              <% end %>
+
+                              <% auditors_list.each do |auditor| %>
+                                <li class="tile_user_manager" title="<%= auditor.email %>">
+                                    <span class="user_name_span"><%= auditor.email  %></span>
+                                    <span class="user_type_span">Auditor</span>
+                                    <a href="#"><span class="small_trash delete-user-button" id="<%= auditor.guid %>" title="<%= auditor.email %>" onmousemove="prepareToDeleteAuditor(this);"></span></a>
+
+                                    <span class="span_bg_icon"></span>
+                                </li>
+                              <% end %>
+                            </ul>
+                        <div style="height: 50px; width: 100%"></div>
+                    </div>
+                <% end %>
+
+
+
+                <% if defined?(current_tab) && current_tab != nil && current_tab == "domains" %>
+                    <div id="domains">
+                        Domains
+                        <div style="height: 250px; width: 100%"></div>
+                    </div>
+                <% end %>
+
+         </div>
+
+
+
+
+        <div class="modal hide" id="delete_organization_modal">
+          <div class="modal-header">
+            <a href="#" class="close"></a>
+            <h3>Delete organization</h3>
+          </div>
+
+          <div class="modal-body">
+            <p>
+              Are you sure you want to delete the organization "<span id="this_organization_name"></span>"?
+            </p>
+            <br />
+            <p>
+              <strong>
+                WARNING! All Spaces, applications and services in this organization will be deleted! This action cannot be reversed.
+              </strong>
+            </p>
+          </div>
+
+          <div class="modal-footer">
+            <span class="server_errors blank_input" id="delete_organization_failed"></span>
+            <p class="hidden_modal_messages" id="p_d_organization">Deleting...</p>
+
+            <div class="button_case_delete_organization_and_space">
+              <a href="#" class="btn btn_right_delete_organization_and_space cancel" id="cancel_b_d_organization"><span class="line">| </span>Cancel</a>
+              <form action="/deleteOrganization" method="post">
+                <button type="submit" value="Delete" class="btn btn_left_delete_organization_and_space ok" id="b_d_organization"><span class="line">| </span>Delete </button>
+                <input type="hidden" name="orgGuid" value="<%= current_organization %>" />
+              </form>
+            </div>
+          </div>
+        </div>
+
+
+        <div class="modal hide" id="delete_space_modal">
+        <div class="modal-header">
+            <button class="close"></button>
+            <h3>Delete Space</h3>
+        </div>
+        <div class="modal-body">
+            <p>
+                Are you sure you want to delete the space "<span id="this_space_name"></span>"?
+            </p>
+            <br />
+            <p>
+                <strong>
+                    WARNING! All applications and services in this space will be deleted! This action cannot be reversed.
+                </strong>
+            </p>
+        </div>
+        <div class="modal-footer">
+            <span class="server_errors blank_input" id="delete_space_failed"></span>
+            <p class="hidden_modal_messages" id="p_d_space">Deleting...</p>
+            <div class="button_case_delete_organization_and_space">
+                <button type="button" class="btn btn_right_delete_organization_and_space cancel" id="cancel_b_d_space"><span class="line">| </span>Cancel </button>
+                <form action="/deleteSpace" method="post">
+                    <button type="submit" class="btn btn_left_delete_organization_and_space danger" id="b_d_space"><span class="line">| </span>Delete </button>
+                    <input type="hidden" id="space_guid" name="spaceGuid" />
+                    <input type="hidden" name="org_guid" value="<%= current_organization %>" />
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="modal hide" id="delete_user_modal">
+        <div class="modal-header">
+            <button class="close"></button>
+            <h3>Delete User</h3>
+        </div>
+        <div class="modal-body">
+            <p>
+                Are you sure you want to delete this user <span id="this_user_name"></span>?
+            </p>
+        </div>
+        <div class="modal-footer">
+            <span class="server_errors" id="delete_user_failed"></span>
+            <div class="button_case_delete_organization_and_space">
+            <button type="button" class="btn btn_right_delete_organization_and_space cancel"><span class="line">| </span>Cancel </button>
+                <form action="/deleteUser" method="post">
+                    <input type="hidden" id="pass_user_guid" value="" name="thisUser"/>
+                    <input type="hidden" id="pass_user_role" value="" name="thisUserRole"/>
+                    <input type="hidden" name="current_organization" value="<%= current_organization %>" />
+                    <input type="hidden" name="current_tab" value="<%= current_tab %>" />
+                    <button type="submit" class="btn btn_left_delete_organization_and_space danger danger"><span class="line">| </span>Delete </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+<% if defined?(include_erb) && include_erb != nil %>
+  <%= erb(include_erb, :layout => false, :locals => { :current_organization => current_organization, :current_space => nil }) %>
+<% end %>
+
+
+
+
+
+</div>

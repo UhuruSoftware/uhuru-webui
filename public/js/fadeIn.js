@@ -2,8 +2,6 @@
     Here are all the modals that will fade in
 */
 
-
-
 $('#organizations_page').fadeIn(400);
 $('#organization_page').fadeIn(400);
 $('#space_page').fadeIn(400);
@@ -92,21 +90,6 @@ var delete_user = function(){
     $('.close').click(function(){$("#delete_user_modal").css("display", "none");$('#screen').css("display", "none");$('body').css({"overflow":"auto"});});
 }
 
-var delete_this_space_modal = function(){
-	$('#screen').css({	"display": "block", opacity: 0.7, "width": "10000px", "height": "10000px"});
-	$('body').css({"overflow":"hidden"});
-	$('#delete_this_space_modal').fadeIn(600);
-    $('.close').click(function(){$("#delete_this_space_modal").css("display", "none");$('#screen').css("display", "none");$('body').css({"overflow":"auto"});});
-    $('.cancel').click(function(){$("#delete_this_space_modal").css("display", "none");$('#screen').css("display", "none");$('body').css({"overflow":"auto"});});
-}
-
-var delete_this_organization_modal = function(){
-	$('#screen').css({	"display": "block", opacity: 0.7, "width": "10000px", "height": "10000px"});
-	$('body').css({"overflow":"hidden"});
-	$('#delete_this_organization_modal').fadeIn(600);
-    $('.close').click(function(){$("#delete_this_organization_modal").css("display", "none");$('#screen').css("display", "none");$('body').css({"overflow":"auto"});});
-    $('.cancel').click(function(){$("#delete_this_organization_modal").css("display", "none");$('#screen').css("display", "none");$('body').css({"overflow":"auto"});});
-}
 
 $('#create_organization_btn').click(create_organization);
 $('#create_space_btn').click(create_space);
@@ -123,8 +106,10 @@ $('.delete-app-button').click(delete_app);
 $('.delete-service-button').click(delete_service);
 $('.delete-user-button').click(delete_user);
 
-$('.delete_this_organization').click(delete_this_organization_modal);
-$('.delete_this_space').click(delete_this_space_modal);
+
+
+$('.delete_this_organization').click(delete_organization_modal);
+$('.delete_this_space').click(delete_space_modal);
 
 var bind_service = function(){
 	$('#screen').css({	"display": "block", opacity: 0.7, "width": "10000px", "height": "10000px"});

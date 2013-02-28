@@ -1,6 +1,6 @@
 <div class="modal fade hide" id="add_ctService_modal" onmousemove="newServiceName();">
   <div class="modal-header">
-    <button class="close"></button>
+    <a href="<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/#{current_space}/services" %>" class="close"></a>
     <h3>New Service</h3>
   </div>
 
@@ -15,17 +15,20 @@
     </p>
     <p>
       <label for="service_name">Name</label>
-      <input type="text" id="service_name" class="modal_input_box"/>
+      <input type="text" id="service_name" class="modal_input_box" autofocus />
     </p>
   </div>
 
   <div class="modal-footer">
-    <span class="server_errors" id="create_service_failed"><%= session[:e_create_service] %></span>
+    <span class="server_errors" id="create_service_failed"></span>
     <div class="button_case_create_organization_and_space">
-      <button type="button" class="btn btn_right_create_organization_and_space cancel"><span class="line">| </span>Close </button>
+      <a href="<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/#{current_space}/services" %>" class="btn btn_right_create_organization_and_space cancel"><span class="line">| </span>Close </a>
 
       <form action="/createService" method="post">
         <input type="text" id="new_service_name" name="serviceName" class="blank_input"/>
+        <input type="hidden" name="current_organization" value="<%= current_organization %>" />
+        <input type="hidden" name="current_space" value="<%= current_space %>" />
+        <input type="hidden" name="current_tab" value="<%= current_tab %>" />
         <button type="submit" class="btn btn_left_create_organization_and_space ok"><span class="line">| </span>Create </button>
       </form>
 
