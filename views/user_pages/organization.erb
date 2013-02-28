@@ -2,7 +2,7 @@
 
         <div class="manage_content_header">
             <h2 class="section_title">
-                <span id="organization_name"><%= session[:currentOrganization_Name] %></span>
+                <span id="organization_name">Test!</span>
 
                 <form action="/updateOrganization" method="post">
                     <input type="text" value="" id="organization_input" name="m_organizationName" class="modal_input_box tiped" />
@@ -14,7 +14,7 @@
             </h2>
 
             <div class="icons_options">
-                <input type="button" value="" class="plus_sign_32 plus_sign_position_32" id="create_space_btn" />
+                <a href="/create_space" class="plus_sign_32 plus_sign_position_32" id="create_space_btn"></a>
                 <input type="button" value="" class="plus_sign_32 plus_sign_position_32" id="add_user_btn_owner" onclick="prepareToAddNewUser(this.title)" title="owner" style="display: none;" />
 
                 <input type="button" class="edit_sign_32 edit_sign_position_32" id="edit_space_btn" onclick="showOrganizationsInput();" />
@@ -142,6 +142,15 @@
 
 
 
+
+<% if defined?(create_space_dialog) && (create_space_dialog == true) %>
+  <%= erb(:"modals/create_space_modal", :layout => false) %>
+<% end %>
+
+
+<% if defined?(include_erb) %>
+  <%= erb(include_erb, :layout => false) %>
+<% end %>
 
 
 

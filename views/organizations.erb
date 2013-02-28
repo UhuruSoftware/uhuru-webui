@@ -37,5 +37,5 @@
 <% end %>
 
 <% if defined?(delete_organization_dialog) && (delete_organization_dialog == true) %>
-    <%= erb(:"modals/delete_organization_modal", :layout => false) %>
+    <%= erb(:"modals/delete_organization_modal", :layout => false, :locals => {:org_guid => org_guid}) %>
 <% end %>
