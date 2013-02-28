@@ -42,6 +42,9 @@ domains:
     url: "192.168.1.112:4567"
     page_title: "Uhuru WebUi LINUX BOX"
     welcome_message: "PeakColo PaaS - powered by Uhuru LINUX BOX"
+default_domain:
+  page_title: Uhuru Software .Inc
+  welcome_message: Welcome to Uhuru Cloud
 
 webui:
   activation_link_secret: "terceseht"

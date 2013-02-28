@@ -3,9 +3,9 @@
     <div id="cloud_photo"></div>
 
     <div id="splash_content_area">
-        <h2  class="layout_page_header"><%= session[:page_title] %></h2>
+        <h2  class="layout_page_header"><%= page_title %></h2>
         <p class="layout_page_paragraph left_simple_paragraphs">
-            <%= session[:welcome_message] %>
+            <%= welcome_message %>
             <!--<a href="http://www.uhurusoftware.com" class="index_links">web site</a>.      The link may be put in the .yaml file      -->
         </p>
 
@@ -22,7 +22,7 @@
                     <input type="text" id="promo_code_input" name="promoCode" />
                 </div>
 
-                <a href="/signup"><button class="btn signup_clipboard" id="signup_button" style="float: right;"><span class="line">| </span>Sign Up </button></a>
+                <a href="<%= Uhuru::Webui::SinatraRoutes::SIGNUP %>"><button class="btn signup_clipboard" id="signup_button" style="float: right;"><span class="line">| </span>Sign Up </button></a>
             <div id="signup_container_text">
                 <br />
                 By using our service you agree to the  <a href="http://uhurusoftware.com/tos" target="_blank" class="index_links">Terms of Service</a>
@@ -59,14 +59,8 @@
 </table>
 </div>
 
-
-<% if defined?(login_dialog) && (login_dialog == true) %>
-    <%= erb(:"modals/login_modal", :layout => false) %>
+<% if defined?(include_erb) %>
+    <%= erb(include_erb, :layout => false) %>
 <% end %>
-
-<% if defined?(signup_dialog) && (signup_dialog == true) %>
-    <%= erb(:"modals/signup_modal", :layout => false) %>
-<% end %>
-
 
 

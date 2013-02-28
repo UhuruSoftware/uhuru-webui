@@ -75,9 +75,9 @@ h1, h2, h3, h4, h5, h6
 #delete_service,
 #delete_space_modal,
 #delete_user_modal,
+#create_organization,
 #delete_organization_modal,
 #add_ctService_modal,
-#create_organization,
 #create_space,
 #bind_service_modal,
 #unbind_service_modal,
@@ -96,6 +96,18 @@ h1, h2, h3, h4, h5, h6
     overflow: auto;
     display: none;
 }
+
+
+#create_organization
+{
+    display: block;
+}
+
+
+
+
+
+
 
 #inv_ctUser_modal,
 #create_credit_card_modal
