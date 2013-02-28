@@ -18,7 +18,7 @@ class UsersSetup
     begin
       user_token = get_user_token(email, password)
 
-      users_obj = Users.new(user_token, @cf_target)
+      users_obj = Library::Users.new(user_token, @cf_target)
       user_guid = users_obj.get_user_guid
 
       user_detail = get_user_details(user_guid)

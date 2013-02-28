@@ -1,0 +1,101 @@
+<div class="modal fade hide" id="create_tempcta_modal">
+  <div class="modal-header" style="background-color: #09293e">
+    <a href="<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/#{current_space}/apps" %>" class="close"></a>
+    <h3>Add a new app template</h3>
+  </div>
+
+  <div class="modal-body" id="template_apps_container">
+    <div id="app_small_container">
+      <div class="template_apps_overflow_div">
+
+        <!-- READ THE COLLECTIONS FILE TO GET EACH FOLDERS CONTETS -->
+        <!--  -->
+        <!-- Objects and Methods should not have an = sign after % -->
+        <!--  -->
+        <%= base_url = request.base_url %>
+        <% collections["collections"].each do |collection| %>
+            <% readapps_Obj = TemplateApps.new %>
+            <% collection_details = readapps_Obj.read_collection(collection["collection"]["folder"]) %>
+            <% if collection_details != nil %>
+                <div class="template_apps_collection_div" id="<%= collection_details["id"] + "_div" %>">
+                  <% if collection_details["logo"] != nil %>
+                      <image src ="<%= "#{base_url}/images/apps_logos/" + collection_details["logo"] + ".png" %>" class="template_apps_collection_logos" />
+                  <% else %>
+                  <% end %>
+                  <p class="template_apps_collection_header_paragraph"><%= collection_details["name"] == nil ? 'No name given' : collection_details["name"] %></p>
+                </div>
+
+                <% app_folders = Array.new %>
+                <% read_folders = Dir.foreach("../template_apps/" + collection["collection"]["folder"]) %>
+                <% read_folders.each do |this_folder| %>
+                    <!-- THE REVERSE METHOD IS USED TO TAKE OUT THE COLLECTION LOGO FROM THE FOLDER ARRAY ALONG WITH THE .YML FILE -->
+                    <% if this_folder != "." && this_folder != ".." && this_folder != "template_collection_manifest.yml" && this_folder.to_s.reverse[0...4].reverse != ".png" %>
+                        <% app_folders.push this_folder %>
+                    <% end %>
+                <% end %>
+
+                <% if app_folders != nil %>
+                    <% app_folders.each do |app_folder| %>
+
+                        <% app_details = readapps_Obj.read_apps(collection["collection"]["folder"], app_folder) %>
+                        <% app_vmc_manifest = readapps_Obj.read_app_vmc(collection["collection"]["folder"], app_folder) %>
+
+                        <!-- THE SUBCLASS COLLECTION_DETAILS IS GIVEN FOR THE PURPOSE OF JAVASCRIPT CODE -->
+                        <div class="template_apps_application_div <%= collection_details["id"] + "_div_apps" %>">
+                          <% if app_details != nil %>
+                              <% if app_details["logo"] != nil %>
+                                  <image src ="<%= "#{base_url}/images/apps_logos/" + app_details["logo"] + ".png" %>" class="template_apps_application_logos" />
+                              <% else %>
+                              <% end %>
+                              <p class="template_apps_application_header_paragraph"><%= app_details["name"] == nil ? 'No name given' : app_details["name"] %></p>
+
+                              <% if app_details["description"] != nil %>
+                                  <p class="template_apps_application_paragraph"><%= app_details["description"].length <= 210 ? app_details["description"] : app_details["description"][0, 210] %></p>
+                              <% end %>
+
+                              <span class="template_apps_application_tags">Tags:&nbsp;
+                                <% if app_details["tags"] != nil %>
+                                           <% app_details["tags"].each do |tag| %>
+                                              <%= tag %>,&nbsp;
+                                           <% end %>
+                                          <% else %>
+                                            No Tag
+                                          <% end %>
+                                        </span>
+
+                              <input type="button" value="Push" class=" btn template_apps_buttons app_push_btn" />
+                              <% if app_details["can_download"] != nil %>
+                                  <% if app_details["can_download"] == true %>
+                                      <input type="button" value="Download" class="btn template_apps_buttons app_download_btn" />
+                                  <% end %>
+                              <% end %>
+
+                              <% if app_vmc_manifest != nil && app_vmc_manifest != false %>
+                                  <% if app_vmc_manifest["applications"] != nil && app_vmc_manifest["applications"]["."] != nil %>
+                                      <span class="template_apps_service_icons <%=app_vmc_manifest["applications"]["."]["services"]["type"] %>"></span>
+                                  <% end %>
+                                  <% if app_vmc_manifest["applications"] != nil && app_vmc_manifest["applications"]["."] != nil %>
+                                      <span class="template_apps_runtime_icons <%= app_vmc_manifest["applications"]["."]["framework"]["name"] %>"></span>
+                                  <% end %>
+                              <% end %>
+                          <% end %>
+                        </div>
+
+                    <% end %>
+                <% end %>
+            <% end %>
+        <% end %>
+
+      </div>
+
+    </div>
+  </div>
+
+  <div class="modal-footer">
+    <span class="server_errors" id="create_app_failed"></span>
+    <div class="button_case_create_organization_and_space">
+      <a href="<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/#{current_space}/apps" %>" class="btn btn_right_create_organization_and_space cancel"><span class="line">| </span>Cancel </a>
+    </div>
+  </div>
+</div>
+
