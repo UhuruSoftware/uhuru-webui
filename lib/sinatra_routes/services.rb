@@ -36,6 +36,7 @@ module Uhuru::Webui
               {
                   :layout => :'layouts/user',
                   :locals => {
+                      :organization_name => organizations_Obj.get_name(params[:org_guid]),
                       :space_name => spaces_Obj.get_name(params[:space_guid]),
                       :current_organization => params[:org_guid],
                       :current_space => params[:space_guid],

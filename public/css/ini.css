@@ -177,7 +177,7 @@ h1, h2, h3, h4, h5, h6
 
 .app_details_modal
 {
-    display: none;
+    display: block;
     width: 960px;
     padding: 0px;
     z-index: 15;
@@ -521,32 +521,19 @@ select option
     color: #ffffff;
 }
 
-.breadcrumb_element_home
+.breadcrumb_element,
+.breadcrumb_link
 {
     padding: 0px;
     text-decoration: none;
     color: #ffffff;
 }
 
-.breadcrumb_element
-{
-    padding: 0px;
-    text-decoration: none;
-    color: #ffffff;
-}
-
-.breadcrumb_element:hover
+.breadcrumb_link:hover
 {
     padding: 0px;
     text-decoration: none;
     color: #f5deb3;
-}
-
-.breadcrumb_slash
-{
-    padding: 0px;
-    text-decoration: none;
-    color: #ffffff;
 }
 
 .tab_pane
@@ -1900,12 +1887,11 @@ h3
 }
 
 .breadcrumb_element,
-.breadcrumb_element_home,
-.breadcrumb_slash
+.breadcrumb_link
 {
     font-family: 'Segoe UI Light', 'Open Sans', Verdana, Arial, Helvetica, sans-serif;
     font-weight: 300;
-    font-size: 12px;
+    font-size: 14px;
     letter-spacing: 0.01em;
 }
 
@@ -2210,6 +2196,12 @@ h4
     top: 50px;
     display: none;
 }
+#logout_small_modal_paragraph
+{
+    line-height: 20px;
+    padding-top: 10px;
+}
+
 #home_icon,
 #current_user_edit_btn,
 #current_user_log_out

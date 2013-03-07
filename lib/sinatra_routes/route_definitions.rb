@@ -8,7 +8,7 @@ module Uhuru::Webui
     LOGIN                     = "#{INDEX}login"
     SIGNUP                    = "#{INDEX}signup"
     PLEASE_CONFIRM            = "#{INDEX}confirm"
-    ACTIVATE_ACCOUNT          = "#{INDEX}activate/:password/:email"
+    ACTIVATE_ACCOUNT          = "#{INDEX}activate/:password/:guid"
     ACTIVE                    = "#{INDEX}active"
     LOGOUT                    = "#{INDEX}logout"
 
@@ -28,10 +28,10 @@ module Uhuru::Webui
 
     SPACE                     = "#{ORGANIZATIONS}/:org_guid/:space_guid/:tab"
     APPS_CREATE               = "#{SPACE}/create_app"
+    APP_DETAILS               = "#{SPACE}/app_details"
     APPS_CREATE_CONFIGURE     = "#{APPS_CREATE}/configure_app"
 
     APP                       = "#{SPACE}/app_id"
-    APP_DETAILS               = "#{APP}/app_details"
 
 
     SERVICES_CREATE           = "#{SPACE}/create_service"

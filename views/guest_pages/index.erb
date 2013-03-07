@@ -6,7 +6,6 @@
         <h2  class="layout_page_header"><%= page_title %></h2>
         <p class="layout_page_paragraph left_simple_paragraphs">
             <%= welcome_message %>
-            <!--<a href="http://www.uhurusoftware.com" class="index_links">web site</a>.      The link may be put in the .yaml file      -->
         </p>
 
         <div id="try_it">
@@ -25,8 +24,8 @@
                 <a href="<%= Uhuru::Webui::SinatraRoutes::SIGNUP %>"><button class="btn signup_clipboard" id="signup_button" style="float: right;"><span class="line">| </span>Sign Up </button></a>
             <div id="signup_container_text">
                 <br />
-                By using our service you agree to the  <a href="http://uhurusoftware.com/tos" target="_blank" class="index_links">Terms of Service</a>
-                and <a href="http://uhurusoftware.com/privacy/" target="_blank" class="index_links">Privacy Policy</a>
+                By using our service you agree to the  <a href="<%= $config[:webui][:terms_of_services_link] %>" target="_blank" class="index_links">Terms of Service</a>
+                and <a href="<%= $config[:webui][:privacy_policy_link] %>" target="_blank" class="index_links">Privacy Policy</a>
             </div>
         </div>
     </div>
@@ -51,7 +50,7 @@
                     <br />
                     <p class="layout_page_paragraph">
                         We have more how-to videos and documentation in our support forum knowledge base
-                        <a href="http://support.uhurusoftware.com/forums/20507726-uhuru-knowledge-bases" class="index_links">..more videos</a>
+                        <a href="<%= $config[:webui][:more_videos_link] %>" class="index_links">..more videos</a>
                     </p>
                 </td>
             </tr>

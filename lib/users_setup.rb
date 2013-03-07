@@ -66,8 +66,8 @@ class UsersSetup
       begin
         user_id = user['id']
         admin_token = get_user_token(@cf_admin, @cf_pass)
-        users_obj = Users.new(admin_token, @cf_target)
-        organizations_Obj = Organizations.new(admin_token, @cf_target)
+        users_obj = Library::Users.new(admin_token, @cf_target)
+        organizations_Obj = Library::Organizations.new(admin_token, @cf_target)
         org_name = email + "'s organization"
         org = organizations_Obj.get_organization_by_name(org_name)
       rescue

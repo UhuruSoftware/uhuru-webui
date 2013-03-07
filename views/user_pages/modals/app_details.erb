@@ -1,0 +1,137 @@
+<div class="dark_background"> </div>
+
+
+
+<div class="modal fade hide app_details_modal" id="details_<%= app.name %>">
+  <div class="modal_header" id="app_details_header">
+    <button type="button" class="close_app_details close"></button>
+  </div>
+
+  <div class="modal-body app_body">
+    <table>
+      <tr>
+        <td>
+          <div class="app-control">
+            <div class="tile_app_name">
+              <span class="app_name_big"><%= app.name %></span>
+              <span class="app_status" style="font-weight: bold">Status: <span style="font-weight: normal" class="pass_app_status"><%= app.state %></span></span>
+              <a href="#"><span class="small_trash delete-app-button" id="<%= app.name %>" title="<%= app.name %>" onmousemove="prepareToDeleteApp(this);"></span></a>
+            </div>
+
+            <form action="/startApp" method="post">
+              <input type="text" name="appName" value="<%= app.name %>" class="blank_input" />
+              <input type="submit" name="startApp" class="start start_button_apps startApp_btn" value="" />
+            </form>
+
+            <form action="/stopApp" method="post">
+              <input type="text" name="appName" value="<%= app.name %>" class="blank_input" />
+              <input type="submit" name="stopApp" class="stop stop_button_apps stopApp_btn" value="" />
+            </form>
+          </div>
+        </td>
+        <td></td>
+      </tr>
+
+      <tr>
+        <td>
+          <h4 class="app_details_titles">Services Bound
+            <input type="button" class="plus button_bound_services get_service_name" style="float: right;" title="<%= app.name %>" /></h4>
+          <div id="hidden_app_div" style="display: none;">
+            <span class="hidden_span"></span>
+          </div>
+          <ul class="app_details_ul">
+            <% app.services.each do |service| %>
+                <li class="tile_service_name get_service_name" id="<%= service.name %>" title="<%= app.name %>">
+                  <span class="service_name" title="<%= service.name %>"><%= service.name %></span>
+                  <input type="button" class="small_trash button_unbound_services" value="" />
+                </li>
+            <% end %>
+          </ul>
+        </td>
+        <td>
+          <h4 class="app_details_titles">URIs Bound <input type="button" class="plus button_bound_uri get_uri_name" style="float: right;" title="<%= app.name %>" /></h4>
+          <ul class="app_details_ul">
+            <% app.uris.each do |uri| %>
+                <li class="tile_space_name get_uri_name" id="<%= uri.url %>" title="<%= app.name %>">
+                  <span class="uri_name" title="<%= uri.url %>"><%= uri.url %></span>
+                  <input type="button" class="small_trash button_unbound_uri" value="" />
+                </li>
+            <% end %>
+          </ul>
+        </td>
+      </tr>
+
+      <tr>
+        <td>
+          <h4 class="app_details_titles">App Instances
+                                                    <span style="float: right">
+                                                        <input type="button" class="minus app_minus_instance" />
+                                                        <input type="button" class="plus app_plus_instance"  />
+                                                    </span>
+          </h4>
+
+          <ul class="app_details_ul">
+            <li class="tile_app_details_instances">
+                                                            <span class="instance-info">
+                                                                <span class="instance-count pass_app_instances app_instances_count"><%= app.instances %></span>
+                                                                <span class="instance-type">Provisioned</span>
+                                                            </span>
+                                                            <span class="instance-info">
+                                                                <span class="instance-count pass_app_instances"><%= app.instances %></span>
+                                                                <span class="instance-type">Running</span>
+                                                            </span>
+            </li>
+          </ul>
+          <p class="app_text_p" style="text-align: left;">
+            Max memory: 1024MB
+          </p>
+        </td>
+        <td>
+          <h4 class="app_details_titles">Memory Provisioned
+                                                    <span style="float: right">
+                                                        <input type="button" class="minus app_minus_memory" />
+                                                        <input type="button" class="plus app_plus_memory" />
+                                                    </span>
+          </h4>
+          <ul class="app_details_ul">
+            <li class="tile_app_details_memory" style="color: #fff;">
+                                                        <span class="instance-count pass_app_memory">
+                                                              <div class="app_memory_count">
+                                                                <%= app.memory %>
+                                                              </div>
+                                                        </span>
+              <span class="instance-type">MB</span>
+            </li>
+          </ul>
+          <div class="slider_case">
+            <div class="slider_div_app" id="slider_case_<%= app.name %>" style="height: 12px;">
+
+              <div id="slider_<%= app.name %>"></div>
+
+            </div>
+
+            <p class="app_text_p" style="text-align: left;">
+              Max memory: 1024MB
+            </p>
+          </div>
+        </td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="modal-footer app_details_footer">
+    <span class="server_errors" id="start_app_failed"><%= session[:e_start_app] %></span>
+    <span class="server_errors" id="stop_app_failed"><%= session[:e_stop_app] %></span>
+    <span class="server_errors" id="update_app_failed"><%= session[:e_update_app] %></span>
+    <form action="/updateApp" method="post">
+      <input type="text" class="send_app_name blank_input" name="appName" value="<%= app.name %>" />
+      <input type="text" class="send_app_instances blank_input" name="appInstances" value="<%= app.instances %>"/>
+      <input type="text" class="send_app_memory blank_input" name="appMemory" value="<%= app.memory %>" />
+
+      <div class="button_case_create_organization_and_space">
+        <button type="button" class="btn btn_right_create_organization_and_space close_app_details cancel"><span class="line">| </span>Cancel </button>
+        <button type="submit" class="btn btn_left_create_organization_and_space blank_input hidden_app_details_submit_button ok"><span class="line">| </span>Update </button>
+      </div>
+    </form>
+  </div>
+</div>

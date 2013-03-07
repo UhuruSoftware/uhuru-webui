@@ -886,6 +886,15 @@ textarea
     text-decoration: underline;
 }
 
+#site_footer_container
+{
+    position: relative;
+    padding-bottom: 140px;
+}
+#site_footer_border_td
+{
+    border-right: 1px dotted #000;
+}
 #site_footer
 {
     margin-top: 100px;
@@ -1248,4 +1257,23 @@ a
     color: #ffffff;
     text-decoration: underline;
     font-weight: 400;
+}
+
+#site_footer_ezbox
+{
+    height: 50px;
+    margin-bottom: 20px;
+}
+#footer_span_ezbox
+{
+    line-height: 48px;
+    display: inline-block;
+    float: left;
+}
+
+#site_footer_subdiv
+{
+    height: 50px;
+    margin-left: 45px;
+    float: left
 }

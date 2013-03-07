@@ -1,71 +1,72 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <title><%= page_title %></title>
-  <script type="text/javascript" src="js/jquery-1.5.js"></script>
-  <link rel="stylesheet" type="text/css" href="../css/ini.css"/>
-  <link rel="stylesheet" type="text/css" href="../css/Site.css"/>
-  <meta charset="utf-8" />
-</head>
-<body class="main">
+    <head>
+        <title><%= page_title %></title>
+        <link rel="stylesheet" type="text/css" href="<%= request.base_url %>/css/ini.css"/>
+        <link rel="stylesheet" type="text/css" href="<%= request.base_url %>/css/Site.css"/>
+        <meta charset="utf-8" />
+    </head>
 
-<div id="screen"> </div>
-<div id="opac_screen"> </div>
+    <body class="main">
+        <div id="screen"> </div>
 
-<header id="site_header">
-  <div class="page-margin">
-    <h1>Uhuru AppCloud</h1>
+        <header id="site_header">
+            <div class="page-margin">
+                <h1>Uhuru AppCloud</h1>
 
+                <div id="login_control">
+                    <a href="<%= Uhuru::Webui::SinatraRoutes::LOGIN %>"><button id="login_button" class="btn login_key" ><span class="line">| </span>Login </button></a>
+                </div>
+            </div>
+        </header>
 
-    <div id="login_control">
-      <a href="<%= Uhuru::Webui::SinatraRoutes::LOGIN %>"><button id="login_button" class="btn login_key" ><span class="line">| </span>Login </button></a>
-    </div>
-  </div>
-</header>
+        <%= yield %>
 
-<%= yield %>
+        <div id="site_footer_container">
+            <footer id="site_footer">
+                <div class="top">
+                    <div class="page-margin">
 
-<div style="position: relative; padding-bottom: 140px;">
-  <footer id="site_footer">
-    <div class="top">
-      <div class="page-margin">
+                        <table id="footer_top_content">
+                            <tbody>
+                                <tr>
+                                    <td id="site_footer_border_td">
+                                        <p>
+                                            Give us feedback on your experience with the App Cloud beta and get 1 year free premium hosting when we go commercial.
+                                            Click <a href="<%= $config[:webui][:guest_feedback_link] %>" class="index_links">here</a> for more details
+                                        </p>
+                                    </td>
+                                    <td>
+                                        <a href="<%= $config[:webui][:twitter_link] %>" class="icon-social twitter">Twitter</a>
+                                        <br />
+                                        <a href="<%= $config[:webui][:facebook_link] %>" class="icon-social facebook">Facebook</a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
 
-        <table id="footer_top_content">
-          <tbody>
-          <tr>
-            <td style="border-right: 1px dotted #000">
-              <p>
-                Give us feedback on your experience with the App Cloud beta and get 1 year free premium hosting when we go commercial.
-                Click <a href="http://bit.ly/uhrbloglife" class="index_links">here</a> for more details
-              </p>
-            </td>
-            <td>
-              <a href="https://www.twitter.com/uhurusoftware" class="icon-social twitter">Twitter</a>
-              <br />
-              <a href="https://www.facebook.com/uhurusoftware" class="icon-social facebook">Facebook</a>
-            </td>
-          </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-    <div class="bottom">
-      <div class="page-margin">
+                <div class="bottom">
+                    <div class="page-margin">
                         <span class="copyright">
                             &copy; 2012 Uhuru Software. All rights reserved.
                         </span>
-        <ul class="footer-menu">
-          <li><a href="#tos">Terms of Service</a></li>
-          <li><a href="#privacy">Privacy Policy</a></li>
-          <li class="last"><a href="http://uhurusoftware.zendesk.com">Support</a></li>
-        </ul>
-      </div>
-    </div>
-  </footer>
-</div>
-<script type="text/javascript" src="js/jquery-1.5.js"></script>
-<script type="text/javascript" src="js/landingPageController.js"></script>
-<script type="text/javascript" src="js/errors.js"></script>
-</body>
+
+                        <ul class="footer-menu">
+                            <li><a href="<%= $config[:webui][:terms_of_services_link] %>">Terms of Service</a></li>
+                            <li><a href="<%= $config[:webui][:privacy_policy_link] %>">Privacy Policy</a></li>
+                            <li class="last"><a href="<%= $config[:webui][:support_link] %>">Support</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </footer>
+        </div>
+
+
+        <script type="text/javascript" src="<%= request.base_url %>js/jquery-1.5.js"></script>
+        <script type="text/javascript" src="<%= request.base_url %>js/landingPageController.js"></script>
+        <script type="text/javascript" src="<%= request.base_url %>js/errors.js"></script>
+    </body>
 </html>
 

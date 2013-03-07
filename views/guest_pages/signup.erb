@@ -1,3 +1,10 @@
+<div class="dark_background"> </div>
+
+<%= erb(:'guest_pages/index', :layout => false, :locals => {:page_title => page_title, :welcome_message => welcome_message}) %>
+
+
+
+
 <div class="modal hide" id="signup_modal">
     <form action="/signup" method="post" autocomplete="off" id="sign_up">
         <div class="modal-header">
@@ -35,7 +42,7 @@
         </div>
 
         <div class="modal-footer sign_up_footer_modal">
-            <span class="server_errors" id="sign_up_failed"><%= session[:e_sign_up] %></span>
+            <span class="server_errors" id="sign_up_failed"></span>
             <span id="show_modal_errors"></span>
 
             <div class="button_case_create_organization_and_space">

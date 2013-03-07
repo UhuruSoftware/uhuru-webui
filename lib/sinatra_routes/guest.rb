@@ -138,31 +138,63 @@ module Uhuru::Webui
 
         app.get PLEASE_CONFIRM do
 
+          welcome_message = nil
+          page_title = nil
+          $config[:domains].each do |domain|
+            if request.env["HTTP_HOST"].to_s == domain["url"]
+              welcome_message = domain["welcome_message"]
+              page_title = domain["page_title"]
+            else
+              page_title = $config[:default_domain][:page_title]
+              welcome_message = $config[:default_domain][:welcome_message]
+            end
+          end
+
           erb :'guest_pages/pleaseConfirm',
               {
-                  :layout => :'layouts/guest'
+                  :layout => :'layouts/guest',
+                  :locals => {
+                      :page_title => page_title,
+                      :welcome_message => welcome_message
+                  }
               }
         end
 
         app.get ACTIVATE_ACCOUNT do
           password_b32 = Base32.decode(params[:password])
-          user_guid_b32 = Base32.decode(params[:email])
+          user_guid_b32 = Base32.decode(params[:guid])
 
           key = $config[:webui][:activation_link_secret]
           user_guid = Encryption.decrypt_text(user_guid_b32, key)
           password = Encryption.decrypt_text(password_b32, key)
 
-          change_password = UsersSetup.new(@config)
-          change_password.change_password(user_guid, password, $config[:webui][:signup_user_password])
+          change_password = UsersSetup.new($config)
+          change_password.change_password(user_guid_b32, password, $config[:webui][:signup_user_password])
 
           redirect ACTIVE
         end
 
         app.get ACTIVE do
 
-          erb :'guest_pages/activate',
+          welcome_message = nil
+          page_title = nil
+          $config[:domains].each do |domain|
+            if request.env["HTTP_HOST"].to_s == domain["url"]
+              welcome_message = domain["welcome_message"]
+              page_title = domain["page_title"]
+            else
+              page_title = $config[:default_domain][:page_title]
+              welcome_message = $config[:default_domain][:welcome_message]
+            end
+          end
+
+          erb :'guest_pages/activated',
               {
-                  :layout => :'layouts/guest'
+                  :layout => :'layouts/guest',
+                  :locals => {
+                      :page_title => page_title,
+                      :welcome_message => welcome_message
+                  }
               }
         end
 

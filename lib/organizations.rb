@@ -21,7 +21,8 @@ require 'sinatra/base'
             cost = BillingHelper.compute_org_estimated_cost(org)
           end
 
-          organizations_list << Organization.new(org.name, cost, org.users.count, [], org.guid, true)
+          organizations_list << Organization.new(org.name, cost, org.users.count, [], org.guid, org_billable)
+
           # true should be replaced with org.billing_enabled when/if cfoundry gem will expose this attribute
         end
 
