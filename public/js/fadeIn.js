@@ -7,48 +7,6 @@ $('#organization_page').fadeIn(400);
 $('#space_page').fadeIn(400);
 
 $(function(){
-//
-//var create_organization = function(){
-//	$('#screen').css({	"display": "block", opacity: 0.7, "width": "10000px", "height": "10000px"});
-//	$('body').css({"overflow":"hidden"});
-//	$('#create_organization').fadeIn(600);
-//    $('.close').click(function(){$("#create_organization").css("display", "none");$('#screen').css("display", "none");$('body').css({"overflow":"auto"}); $('.server_errors').html('');});
-//    $('.cancel').click(function(){$("#create_organization").css("display", "none");$('#screen').css("display", "none");$('body').css({"overflow":"auto"}); $('.server_errors').html('');});
-//    $('#org_name').focus();
-//}
-//
-//var create_space = function(){
-//	$('#screen').css({	"display": "block", opacity: 0.7, "width": "10000px", "height": "10000px"});
-//	$('body').css({"overflow":"hidden"});
-//	$('#create_space').fadeIn(600);
-//    $('.close').click(function(){$("#create_space").css("display", "none");$('#screen').css("display", "none");$('body').css({"overflow":"auto"}); $('.server_errors').html('');});
-//    $('.cancel').click(function(){$("#create_space").css("display", "none");$('#screen').css("display", "none");$('body').css({"overflow":"auto"}); $('.server_errors').html('');});
-//    $('#space_name').focus();
-//}
-//
-//var create_tempcta_modal = function(){
-//	$('#screen').css({	"display": "block", opacity: 0.7, "width": "10000px", "height": "10000px"});
-//	$('body').css({"overflow":"hidden"});
-//	$('#create_tempcta_modal').fadeIn(600);
-//    $('.close').click(function(){$("#create_tempcta_modal").css("display", "none");$('#screen').css("display", "none");$('body').css({"overflow":"auto"});});
-//    $('.cancel').click(function(){$("#create_tempcta_modal").css("display", "none");$('#screen').css("display", "none");$('body').css({"overflow":"auto"});});
-//}
-//
-//var add_ctService_modal = function(){
-//	$('#screen').css({	"display": "block", opacity: 0.7, "width": "10000px", "height": "10000px"});
-//	$('body').css({"overflow":"hidden"});
-//	$('#add_ctService_modal').fadeIn(600);
-//    $('.close').click(function(){$("#add_ctService_modal").css("display", "none");$('#screen').css("display", "none");$('body').css({"overflow":"auto"});});
-//    $('.cancel').click(function(){$("#add_ctService_modal").css("display", "none");$('#screen').css("display", "none");$('body').css({"overflow":"auto"});});
-//}
-//
-//var add_user = function(){
-//	$('#screen').css({	"display": "block", opacity: 0.7, "width": "10000px", "height": "10000px"});
-//	$('body').css({"overflow":"hidden"});
-//	$('#add_user').fadeIn(600);
-//    $('.close').click(function(){$("#add_user").css("display", "none");$('#screen').css("display", "none");$('body').css({"overflow":"auto"});});
-//    $('.cancel').click(function(){$("#add_user").css("display", "none");$('#screen').css("display", "none");$('body').css({"overflow":"auto"});});
-//}
 
 var delete_space_modal = function(){
 	$('#screen').css({	"display": "block", opacity: 0.7, "width": "10000px", "height": "10000px"});
@@ -90,15 +48,6 @@ var delete_user = function(){
     $('.close').click(function(){$("#delete_user_modal").css("display", "none");$('#screen').css("display", "none");$('body').css({"overflow":"auto"});});
 }
 
-
-//$('#create_organization_btn').click(create_organization);
-//$('#create_space_btn').click(create_space);
-//$('#create_app').click(create_tempcta_modal);
-//$('#create_service').click(add_ctService_modal);
-//$('#create_user').click(add_user);
-//$('#add_user_btn_owner').click(add_user);
-//$('#add_user_btn_developer').click(add_user);
-//$('#add_user_btn_manager').click(add_user);
 
 $('.delete-organization-button').click(delete_organization_modal);
 $('.delete-space-button').click(delete_space_modal);

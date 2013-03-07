@@ -97,7 +97,6 @@ module Uhuru::Webui
         end
 
         app.get ORGANIZATION_MEMBERS_ADD do
-          puts "here org members add"
 
           organizations_Obj = Library::Organizations.new(session[:token], $cf_target)
           credit_cards_Obj = CreditCards.new(session[:token], $cf_target)

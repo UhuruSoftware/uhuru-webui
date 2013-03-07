@@ -6,7 +6,6 @@ module Uhuru::Webui
       def self.registered(app)
 
         app.get SPACE_MEMBERS_ADD do
-          puts "here space members add"
 
           if session[:login_] == false || session[:login_] == nil
             redirect INDEX

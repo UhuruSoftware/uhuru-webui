@@ -356,15 +356,20 @@ h2
 	background: #000;
     z-index: 10;
 }
-
-#opac_screen
+.dark_background
 {
-    position: absolute;
-	left: 0;
-	top: 0;
-	background: #000;
+    left: 0;
+    top: 0;
+    background: #000;
     z-index: 10;
+    position: fixed;
+    width: 10000px;
+    height: 10000px;
+    top: 0;
+    left: 0;
+    opacity: 0.7;
 }
+
 
 .modal_input_box
 {
