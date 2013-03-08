@@ -34,7 +34,7 @@
                 <% end %>
 
                 <% if current_tab == "members" %>
-                    <a href="<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/#{current_tab}/add_members" %>" class="plus_sign_32 plus_sign_position_32" id="add_user_btn_owner" onclick="prepareToAddNewUser(this.title);" title="owner"></a>
+                    <a href="<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/#{current_tab}/add_user" %>" class="plus_sign_32 plus_sign_position_32" id="add_user_btn_owner" onclick="prepareToAddNewUser(this.title);" title="owner"></a>
                 <% end %>
 
                 <input type="button" class="edit_sign_32 edit_sign_position_32" id="edit_space_btn" onclick="showOrganizationsInput();" />
@@ -254,7 +254,7 @@
 
 
 <% if defined?(include_erb) && include_erb != nil %>
-  <%= erb(include_erb, :layout => false, :locals => { :current_organization => current_organization, :current_space => nil, :error_message => error_message }) %>
+  <%= erb(include_erb, :layout => false, :locals => { :current_organization => current_organization, :current_tab => current_tab, :current_space => nil, :error_message => error_message }) %>
 <% end %>
 
 

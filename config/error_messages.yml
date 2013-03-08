@@ -3,6 +3,31 @@ signup_server_error: Something went wrong on the server!
 signup_user_exists_error: The username already exists!
 signup_create_organization_error: Could not create organization! (user was not created)
 
+
 create_organization_error: Failed to create Organization!
 delete_organization_error: Failed to delete Organization!
 update_organization_error: Failed to update the current Organization!
+
+create_space_error: Failed to create Space!
+delete_space_error: Failed to delete Space!
+update_space_error: Failed to update the current Space!
+
+create_domain_error: Failed to create this domain!
+delete_domain_error: Failed to delete this doamin!
+
+
+
+
+
+
+create_app_error: Failed to create this app!
+delete_app_error: Failed to delete this app!
+
+create_service_error: Failed to create Service!
+delete_service_error: Failed to delete this service!
+
+add_user_error: Failed to add this User!
+delete_user_error: Failed to delete this user!
+
+create_route_error: Failed to create this Route!
+delete_route_error: Failed to delete this Route!

@@ -29,6 +29,12 @@ module Uhuru::Webui
 
           collections = readapps_Obj.read_collections
 
+          if params[:error] != '' && params[:error] != nil
+            error_message = $errors['add_user_error']
+          else
+            error_message = ''
+          end
+
           erb :'user_pages/space',
               {
                   :layout => :'layouts/user',
@@ -48,6 +54,7 @@ module Uhuru::Webui
                       :services_list => services_list,
                       :apps_count => apps_list.count,
                       :services_count => services_list.count,
+                      :error_message => error_message,
                       :include_erb => :'user_pages/modals/members_add'
                   }
               }
@@ -56,15 +63,49 @@ module Uhuru::Webui
 
 
 
+        app.post '/addUser' do
+          organizations_Obj = Library::Organizations.new(session[:token], $cf_target)
+          users_Obj = Library::Users.new(session[:token], $cf_target)
+
+          if params[:current_space] == nil && params[:current_space] == ''
+            add_user = users_Obj.invite_user_with_role_to_org($config, params[:userEmail], params[:current_organization], params[:userType])
+
+            if add_user == 'error'
+              redirect ORGANIZATIONS + "/#{params[:current_organization]}/#{params[:current_tab]}/add_user" + '?error=add_user'
+            else
+              redirect ORGANIZATIONS + "/#{params[:current_organization]}/#{params[:current_tab]}"
+            end
+          else
+            add_user = users_Obj.invite_user_with_role_to_space($config, params[:userEmail], params[:current_space], params[:userType])
+
+            if add_user == 'error'
+              redirect ORGANIZATIONS + "/#{params[:current_organization]}/#{params[:current_space]}/#{params[:current_tab]}/add_user" + '?error=add_user'
+            else
+              redirect ORGANIZATIONS + "/#{params[:current_organization]}/#{params[:current_space]}/#{params[:current_tab]}"
+            end
+          end
+        end
+
         app.post '/deleteUser' do
           organizations_Obj = Library::Organizations.new(session[:token], $cf_target)
           users_Obj = Library::Users.new(session[:token], $cf_target)
-          users_Obj.remove_user_with_role_from_org(params[:current_organization], params[:thisUser], params[:thisUserRole])
 
-          if params[:current_space] != nil && params[:current_space] != ""
-            redirect ORGANIZATIONS + "/#{params[:current_organization]}/#{params[:current_space]}/#{params[:current_tab]}"
+          if params[:current_space] == nil && params[:current_space] == ''
+            delete_user = users_Obj.remove_user_with_role_from_org(params[:current_organization], params[:thisUser], params[:thisUserRole])
+
+            if delete_user == 'error'
+              redirect ORGANIZATIONS + "/#{params[:current_organization]}/#{params[:current_tab]}" + '?error=delete_user'
+            else
+              redirect ORGANIZATIONS + "/#{params[:current_organization]}/#{params[:current_tab]}"
+            end
           else
-            redirect ORGANIZATIONS + "/#{params[:current_organization]}/#{params[:current_tab]}"
+            delete_user = users_Obj.remove_user_with_role_from_space(params[:current_organization], params[:thisUser], params[:thisUserRole])
+
+            if delete_user == 'error'
+              redirect ORGANIZATIONS + "/#{params[:current_organization]}/#{params[:current_space]}/#{params[:current_tab]}" + '?error=delete_user'
+            else
+              redirect ORGANIZATIONS + "/#{params[:current_organization]}/#{params[:current_space]}/#{params[:current_tab]}"
+            end
           end
         end
 

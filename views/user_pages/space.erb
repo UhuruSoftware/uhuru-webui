@@ -19,6 +19,11 @@
                     <input type="hidden" name="current_organization" value="<%= current_organization %>" />
                     <input type="hidden" name="current_space" value="<%= current_space %>" />
                     <input type="hidden" name="current_tab" value="<%= current_tab %>" />
+                    <% if params[:error] == 'update_space' %>
+                        <div class="error_tooltips">
+                          <p><%= error_message %></p>
+                        </div>
+                    <% end %>
                     <div class="tooltips">
                         <p>Press enter to update the new name!</p>
                     </div>
@@ -298,7 +303,7 @@
 
 
     <% if defined?(include_erb) && include_erb != nil %>
-        <%= erb(include_erb, :layout => false, :locals => { :current_organization => current_organization, :current_space => current_space, :collections => collections, :current_tab => current_tab }) %>
+        <%= erb(include_erb, :layout => false, :locals => { :current_organization => current_organization, :current_space => current_space, :collections => collections, :current_tab => current_tab, :error_message => error_message }) %>
     <% end %>
 
 

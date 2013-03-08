@@ -22,7 +22,7 @@ module Uhuru::Webui
 
     ORGANIZATION              = "#{ORGANIZATIONS}/:org_guid/:tab"
     SPACES_CREATE             = "#{ORGANIZATION}/create_space"
-    ORGANIZATION_MEMBERS_ADD  = "#{ORGANIZATION}/add_members"
+    ORGANIZATION_MEMBERS_ADD  = "#{ORGANIZATION}/add_user"
     DOMAINS_CREATE            = "#{ORGANIZATION}/add_domains"
 
 

@@ -28,16 +28,19 @@
 
     <ul class="create_user_modal_ul" id="radio_buttons">
       <li><input type="radio" name="type" value="owner" id="owner" onclick="selectUserType(this);">Owner</li>
-      <li><input type="radio" name="type" value="developer" id="developer" onclick="selectUserType(this);">Developer</li>
+      <li><input type="radio" name="type" value="developer" id="developer" onclick="selectUserType(this);" checked>Developer</li>
       <li><input type="radio" name="type" value="manager" id="auditor" onclick="selectUserType(this);">Auditor</li>
     </ul>
   </div>
   <div class="modal-footer">
-    <span class="server_errors" id="create_user_failed"></span>
+    <span class="server_errors" id="create_user_failed"><%= error_message %></span>
     <div class="button_case_create_organization_and_space">
-      <form action="/addUsersToSpace" method="post">
+      <form action="/addUser" method="post">
         <input type="hidden" id="new_user_type" name="userType" />
         <input type="hidden" id="new_user_email" name="userEmail" />
+        <input type="hidden" name="current_organization" value="<%= current_organization %>" />
+        <input type="hidden" name="current_space" value="<%= current_space %>" />
+        <input type="hidden" name="current_tab" value="<%= current_tab %>" />
         <button type="submit" class="btn btn_right_create_organization_and_space ok"><span class="line">| </span>Invite User </button>
       </form>
     </div>

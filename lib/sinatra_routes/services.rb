@@ -32,6 +32,13 @@ module Uhuru::Webui
 
           collections = readapps_Obj.read_collections
 
+          if params[:error] == 'create_service'
+            error_message = $errors['create_service_error']
+            puts error_message
+          else
+            error_message = ''
+          end
+
           erb :'user_pages/space',
               {
                   :layout => :'layouts/user',
@@ -51,6 +58,7 @@ module Uhuru::Webui
                       :services_list => services_list,
                       :apps_count => apps_list.count,
                       :services_count => services_list.count,
+                      :error_message => error_message,
                       :include_erb => :'user_pages/modals/services_create'
                   }
               }
@@ -62,11 +70,13 @@ module Uhuru::Webui
 
           organizations_Obj = Library::Organizations.new(session[:token], $cf_target)
           spaces_Obj = ServiceInstances.new(session[:token], $cf_target)
+          create = spaces_Obj.create_service_instance(params[:serviceName], params[:current_space], @plan)
 
-
-          spaces_Obj.create_service_instance(params[:serviceName], session[:currentSpace], @plan)
-
-          redirect ORGANIZATIONS + "/#{params[:current_organization]}/#{params[:current_space]}/#{params[:current_tab]}"
+          if create == 'error'
+            redirect ORGANIZATIONS + "/#{params[:current_organization]}/#{params[:current_space]}/#{params[:current_tab]}/create_service" + '?error=create_service'
+          else
+            redirect ORGANIZATIONS + "/#{params[:current_organization]}/#{params[:current_space]}/#{params[:current_tab]}"
+          end
         end
 
         app.post '/deleteService' do
@@ -74,10 +84,13 @@ module Uhuru::Webui
           spaces_Obj = Library::Spaces.new(session[:token], $cf_target)
           applications_Obj = Applications.new(session[:token], $cf_target)
           services_Obj = ServiceInstances.new(session[:token], $cf_target)
+          delete = services_Obj.delete(params[:serviceGuid])
 
-          services_Obj.delete(params[:serviceGuid])
-
-          redirect ORGANIZATIONS + "/#{params[:current_organization]}/#{params[:current_space]}/#{params[:current_tab]}"
+          if delete == 'error'
+            redirect ORGANIZATIONS + "/#{params[:current_organization]}/#{params[:current_space]}/#{params[:current_tab]}" + '?error=delete_service'
+          else
+            redirect ORGANIZATIONS + "/#{params[:current_organization]}/#{params[:current_space]}/#{params[:current_tab]}"
+          end
         end
 
       end

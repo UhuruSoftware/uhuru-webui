@@ -64,8 +64,9 @@ module Library
       end
 
     rescue Exception => e
-      false
-      raise "#{e.inspect}"
+      puts e
+      puts 'add user method error (2nd method)(org)'
+      return 'error'
     end
 
     # roles is an array of roles ex: ['owner', 'developer', 'auditor']
@@ -100,8 +101,9 @@ module Library
       end
 
     rescue Exception => e
-      false
-      raise "create user error" #"#{e.inspect}, #{e.backtrace}"
+      puts e
+      puts 'add user method error (2nd method)(space)'
+      return 'error'
     end
 
     #to be modified to search through uaa user names list
@@ -113,7 +115,8 @@ module Library
       unless !user_guid
         add_user_to_org_with_role(org_guid, user_guid, [role])
       else
-        raise "User account doesn't exist-org"
+        puts 'add user method error (organization)'
+        return 'error'
       end
     end
 
@@ -125,7 +128,8 @@ module Library
       unless !user_guid
         add_user_with_role_to_space(space_guid, user_guid, [role])
       else
-        raise "User account doesn't exist-space"
+        puts 'add user method error (space)'
+        return 'error'
       end
     end
 

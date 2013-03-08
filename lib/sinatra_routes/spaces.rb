@@ -34,8 +34,12 @@ module Uhuru::Webui
             puts ex
           end
 
-          if params[:error] != '' && params[:error] != nil
+          if params[:error] == 'update_organization'
             error_message = $errors['update_organization_error']
+          elsif params[:error] == 'delete_space'
+            error_message = $errors['delete_space_error']
+          elsif params[:error] == 'delete_user'
+            error_message = $errors['delete_user_error']
           else
             error_message = ''
           end
@@ -78,6 +82,13 @@ module Uhuru::Webui
           billings_list = organizations_Obj.read_billings($config, params[:org_guid])
           auditors_list = organizations_Obj.read_auditors($config, params[:org_guid])
 
+          if params[:error] != '' && params[:error] != nil
+            error_message = $errors['create_space_error']
+            puts error_message
+          else
+            error_message = ''
+          end
+
           begin
             if (organizations_Obj.is_organization_billable?(@this_guid))
               billing_manager_guid = billings_list[0].guid
@@ -106,6 +117,7 @@ module Uhuru::Webui
                       :owners_list => owners_list,
                       :billings_list => billings_list,
                       :auditors_list => auditors_list,
+                      :error_message => error_message,
                       :include_erb => :'user_pages/modals/spaces_create'
                   }
               }
@@ -140,6 +152,12 @@ module Uhuru::Webui
             puts ex
           end
 
+          if params[:error] != '' && params[:error] != nil
+            error_message = $errors['add_user_error']
+          else
+            error_message = ''
+          end
+
           erb :'user_pages/organization',
               {
                   :layout => :'layouts/user',
@@ -156,7 +174,8 @@ module Uhuru::Webui
                       :owners_list => owners_list,
                       :billings_list => billings_list,
                       :auditors_list => auditors_list,
-                      :include_erb => :'user_pages/modals/members_add'
+                      :include_erb => :'user_pages/modals/members_add',
+                      :error_message => error_message
                   }
               }
         end
@@ -185,6 +204,21 @@ module Uhuru::Webui
 
           collections = readapps_Obj.read_collections
 
+          if params[:error] == 'update_space'
+            error_message = $errors['update_space_error']
+
+          elsif params[:error] == 'delete_app'
+            error_message = $errors['delete_app_error']
+
+          elsif params[:error] == 'delete_service'
+            error_message = $errors['delete_service_error']
+
+          elsif params[:error] == 'delete_user'
+            error_message = $errors['delete_user_error']
+          else
+            error_message = ''
+          end
+
           erb :'user_pages/space',
               {
                   :layout => :'layouts/user',
@@ -203,7 +237,8 @@ module Uhuru::Webui
                       :apps_list => apps_list,
                       :services_list => services_list,
                       :apps_count => apps_list.count,
-                      :services_count => services_list.count
+                      :services_count => services_list.count,
+                      :error_message => error_message
                   }
               }
         end
@@ -214,7 +249,7 @@ module Uhuru::Webui
           create = spaces_Obj.create(params[:org_guid], params[:spaceName])
 
           if create == 'error'
-            redirect ORGANIZATIONS + "/#{params[:org_guid]}/spaces" + '?error=create_space'
+            redirect ORGANIZATIONS + "/#{params[:org_guid]}/spaces/create_space" + '?error=create_space'
           else
             redirect ORGANIZATIONS + "/#{params[:org_guid]}/spaces"
           end

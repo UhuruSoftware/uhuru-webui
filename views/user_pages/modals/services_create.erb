@@ -22,7 +22,7 @@
   </div>
 
   <div class="modal-footer">
-    <span class="server_errors" id="create_service_failed"></span>
+    <span class="server_errors" id="create_service_failed"><%= error_message %></span>
     <div class="button_case_create_organization_and_space">
       <a href="<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/#{current_space}/services" %>" class="btn btn_right_create_organization_and_space cancel"><span class="line">| </span>Close </a>
 
