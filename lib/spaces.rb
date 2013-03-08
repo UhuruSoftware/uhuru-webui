@@ -53,7 +53,9 @@ module Library
       end
 
     rescue Exception => e
-      raise "create space failed" #"#{e.inspect}"
+      puts e
+      puts 'create space method error'
+      return 'error'
     end
 
     def update(name, space_guid)
@@ -63,7 +65,9 @@ module Library
       space.update!
 
     rescue Exception => e
-      raise "#{e.inspect}"
+      puts e
+      puts 'update space method error'
+      return 'error'
     end
 
     def delete(space_guid)
@@ -86,7 +90,9 @@ module Library
       space.delete!
 
     rescue Exception => e
-      raise "delete space failed" #"#{e.inspect}"
+      puts e
+      puts 'delete space method error'
+      return 'error'
     end
 
     def read_apps(space_guid)

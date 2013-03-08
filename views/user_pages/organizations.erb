@@ -56,7 +56,7 @@
     </div>
 
     <div class="modal-footer">
-        <span class="server_errors blank_input" id="delete_organization_failed"></span>
+        <span class="server_errors blank_input" id="delete_organization_failed"><%= error_message %></span>
         <p class="hidden_modal_messages" id="p_d_organization">Deleting...</p>
 
         <div class="button_case_delete_organization_and_space">
@@ -70,5 +70,5 @@
 </div>
 
 <% if defined?(include_erb) && include_erb != nil %>
-    <%= erb(include_erb, :layout => false) %>
+    <%= erb(include_erb, :layout => false, :locals => { :error_message => error_message }) %>
 <% end %>

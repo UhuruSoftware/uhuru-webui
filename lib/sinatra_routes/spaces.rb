@@ -30,8 +30,14 @@ module Uhuru::Webui
           rescue Exception => ex
             credit_card_type = nil
             credit_card_masked_number = nil
-            puts "Exception raised for credit card type and masked number!"
+            puts 'Exception raised for credit card type and masked number!'
             puts ex
+          end
+
+          if params[:error] != '' && params[:error] != nil
+            error_message = $errors['update_organization_error']
+          else
+            error_message = ''
           end
 
           erb :'user_pages/organization',
@@ -49,12 +55,17 @@ module Uhuru::Webui
                       :members_count => owners_list.count + billings_list.count + auditors_list.count,
                       :owners_list => owners_list,
                       :billings_list => billings_list,
-                      :auditors_list => auditors_list
+                      :auditors_list => auditors_list,
+                      :error_message => error_message
                   }
               }
         end
 
         app.get SPACES_CREATE do
+
+          if session[:login_] == false || session[:login_] == nil
+            redirect INDEX
+          end
 
           organizations_Obj = Library::Organizations.new(session[:token], $cf_target)
           credit_cards_Obj = CreditCards.new(session[:token], $cf_target)
@@ -75,7 +86,7 @@ module Uhuru::Webui
           rescue Exception => ex
             credit_card_type = nil
             credit_card_masked_number = nil
-            puts "Exception raised for credit card type and masked number!"
+            puts 'Exception raised for credit card type and masked number!'
             puts ex
           end
 
@@ -102,6 +113,10 @@ module Uhuru::Webui
 
         app.get ORGANIZATION_MEMBERS_ADD do
 
+          if session[:login_] == false || session[:login_] == nil
+            redirect INDEX
+          end
+
           organizations_Obj = Library::Organizations.new(session[:token], $cf_target)
           credit_cards_Obj = CreditCards.new(session[:token], $cf_target)
           users_setup_Obj = UsersSetup.new($config)
@@ -121,7 +136,7 @@ module Uhuru::Webui
           rescue Exception => ex
             credit_card_type = nil
             credit_card_masked_number = nil
-            puts "Exception raised for credit card type and masked number!"
+            puts 'Exception raised for credit card type and masked number!'
             puts ex
           end
 
@@ -196,24 +211,37 @@ module Uhuru::Webui
         app.post '/createSpace' do
           organizations_Obj = Library::Organizations.new(session[:token], $cf_target)
           spaces_Obj = Library::Spaces.new(session[:token], $cf_target)
+          create = spaces_Obj.create(params[:org_guid], params[:spaceName])
 
-          spaces_Obj.create(params[:org_guid], params[:spaceName])
-          redirect ORGANIZATIONS + "/#{params[:org_guid]}/spaces"
+          if create == 'error'
+            redirect ORGANIZATIONS + "/#{params[:org_guid]}/spaces" + '?error=create_space'
+          else
+            redirect ORGANIZATIONS + "/#{params[:org_guid]}/spaces"
+          end
         end
 
         app.post '/deleteSpace' do
           organizations_Obj = Library::Organizations.new(session[:token], $cf_target)
           spaces_Obj = Library::Spaces.new(session[:token], $cf_target)
-          spaces_Obj.delete(params[:spaceGuid])
-          redirect ORGANIZATIONS + "/#{params[:org_guid]}/spaces"
+          delete = spaces_Obj.delete(params[:spaceGuid])
+
+          if delete == 'error'
+            redirect ORGANIZATIONS + "/#{params[:org_guid]}/spaces" + '?error=delete_space'
+          else
+            redirect ORGANIZATIONS + "/#{params[:org_guid]}/spaces"
+          end
         end
 
         app.post '/updateSpace' do
           organizations_Obj = Library::Organizations.new(session[:token], $cf_target)
           spaces_Obj = Library::Spaces.new(session[:token], $cf_target)
+          update = spaces_Obj.update(params[:modified_name], params[:current_space])
 
-          spaces_Obj.update(params[:modified_name], params[:current_space])
-          redirect ORGANIZATIONS + "/#{params[:current_organization]}/#{params[:current_space]}/#{params[:current_tab]}"
+          if update == 'error'
+            redirect ORGANIZATIONS + "/#{params[:current_organization]}/#{params[:current_space]}/#{params[:current_tab]}" + '?error=update_space'
+          else
+            redirect ORGANIZATIONS + "/#{params[:current_organization]}/#{params[:current_space]}/#{params[:current_tab]}"
+          end
         end
 
       end

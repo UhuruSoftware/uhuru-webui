@@ -12,7 +12,7 @@ module Uhuru::Webui
       def self.registered(app)
 
         app.get APPS_CREATE do
-          puts "here"
+
           if session[:login_] == false || session[:login_] == nil
             redirect INDEX
           end

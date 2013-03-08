@@ -96,7 +96,9 @@ require 'sinatra/base'
         end
 
       rescue Exception => e
-        raise "create organization failed" #"#{e.inspect}"
+        puts e
+        puts 'create org method error'
+        return 'error'
       end
 
       def update(name, org_guid)
@@ -105,7 +107,9 @@ require 'sinatra/base'
         org.update!
 
       rescue Exception => e
-        raise "#{e.inspect}"
+        puts e
+        puts 'update org method error'
+        return 'error'
       end
 
       def delete(config, org_guid)
@@ -132,7 +136,9 @@ require 'sinatra/base'
 
         deleted
       rescue Exception => e
-        raise "delete organization failed" #"#{e.inspect}"
+        puts e
+        puts 'delete org method error'
+        return 'error'
       end
 
       def read_spaces(org_guid)

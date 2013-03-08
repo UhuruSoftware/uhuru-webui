@@ -14,7 +14,7 @@
         <div class="modal-body" id="login_modal_content">
             <p>
                 <label for="id">username: </label>
-                <input type="text" id="id" name="username" class="modal_input_box" autofocus="autofocus" value = "<%= if defined? user_login_failed then user_login_failed end %>" autofocus />
+                <input type="text" id="id" name="username" class="modal_input_box" autofocus="autofocus" value = "<%= error_username %>" autofocus />
             </p>
             <p>
                 <label for="pass">password: </label>
@@ -25,7 +25,7 @@
         </div>
 
         <div class="modal-footer">
-            <span class="server_errors" id="login_failed"></span>
+            <span class="server_errors" id="login_failed"><%= error %></span>
 
             <div class="button_case_create_organization_and_space">
                 <a href="<%= Uhuru::Webui::SinatraRoutes::INDEX %>" class="btn btn_right_create_organization_and_space cancel"><span class="line">| </span>Cancel</a>

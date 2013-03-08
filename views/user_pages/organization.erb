@@ -17,6 +17,11 @@
                     <input type="text" value="" id="organization_input" name="modified_name" class="modal_input_box tiped" />
                     <input type="hidden" value="<%= current_organization %>" name="current_organization" />
                     <input type="hidden" value="<%= current_tab %>" name="current_tab" />
+                    <% if params[:error] == 'update_organization' %>
+                        <div class="error_tooltips">
+                            <p><%= error_message %></p>
+                        </div>
+                    <% end %>
                     <div class="tooltips">
                         <p>Press enter to update the new name!</p>
                     </div>
@@ -249,7 +254,7 @@
 
 
 <% if defined?(include_erb) && include_erb != nil %>
-  <%= erb(include_erb, :layout => false, :locals => { :current_organization => current_organization, :current_space => nil }) %>
+  <%= erb(include_erb, :layout => false, :locals => { :current_organization => current_organization, :current_space => nil, :error_message => error_message }) %>
 <% end %>
 
 

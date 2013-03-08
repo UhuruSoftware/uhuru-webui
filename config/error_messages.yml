@@ -1,0 +1,8 @@
+login_error: Your username or password is incorrect!
+signup_server_error: Something went wrong on the server!
+signup_user_exists_error: The username already exists!
+signup_create_organization_error: Could not create organization! (user was not created)
+
+create_organization_error: Failed to create Organization!
+delete_organization_error: Failed to delete Organization!
+update_organization_error: Failed to update the current Organization!

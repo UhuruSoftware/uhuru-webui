@@ -17,6 +17,9 @@ class UsersSetup
   def login(email, password)
     begin
       user_token = get_user_token(email, password)
+      if user_token == 'user_token_error'
+        return 'error'
+      end
 
       users_obj = Library::Users.new(user_token, @cf_target)
       user_guid = users_obj.get_user_guid
@@ -26,7 +29,8 @@ class UsersSetup
       user = UserDetails.new(user_token, user_guid, user_detail[:first_name], user_detail[:last_name])
       user
     rescue Exception => e
-      raise "login error"
+      puts e
+      return 'error'
     end
   end
 
@@ -34,8 +38,9 @@ class UsersSetup
 
     begin
       uaac = get_uaa_client
-    rescue
-      raise "signup error"
+    rescue Exception => e
+      puts e
+      return 'error'
     end
 
     # if user already exist in uaa continue with next steps without creating it
@@ -57,21 +62,22 @@ class UsersSetup
 
         user = uaac.add(:user, info)
       rescue Exception => e
-        puts e.inspect
-        raise "user exists"
+        puts e
+        return 'user exists'
       end
     end
 
     if (user != nil)
-      begin
-        user_id = user['id']
-        admin_token = get_user_token(@cf_admin, @cf_pass)
+      user_id = user['id']
+      admin_token = get_user_token(@cf_admin, @cf_pass)
+
+      if admin_token != 'user_token_error'
         users_obj = Library::Users.new(admin_token, @cf_target)
         organizations_Obj = Library::Organizations.new(admin_token, @cf_target)
         org_name = email + "'s organization"
         org = organizations_Obj.get_organization_by_name(org_name)
-      rescue
-        raise "org create error"
+      else
+        return 'org create error'
       end
 
       unless users_obj.user_exists(user_id)
@@ -98,8 +104,9 @@ class UsersSetup
 
             users_obj.add_user_to_org_with_role(org.guid, user_id, ['owner', 'billing'])
           end
-        rescue
-          raise "org create error"
+        rescue Exception => e
+          puts e
+          return 'org create error'
         end
       else
         begin
@@ -107,13 +114,17 @@ class UsersSetup
           if org != nil
             users_obj.add_user_to_org_with_role(org.guid, user_id, ['owner', 'billing'])
           end
-        rescue
-          raise "org create error"
+        rescue Exception => e
+          puts e
+          return 'org create error'
         end
-        raise "user exists"
       end
 
       user_token = get_user_token(email, password)
+
+      if user_token == 'user_token_error'
+        return 'user exists'
+      end
 
       user = UserDetails.new(user_token, user_id, first_name, last_name)
       user
@@ -128,7 +139,7 @@ class UsersSetup
     uaac.update(user_guid, uaa_user.merge(user_attributes))
 
   rescue Exception => e
-    raise "Update user failed!" #"#{e.inspect}"
+    raise 'Update user failed!'
   end
 
   def change_password(user_id, verified_password, old_password)
@@ -136,7 +147,7 @@ class UsersSetup
     uaac.change_password(user_id, verified_password, old_password)
 
   rescue Exception => e
-    raise "Change password failed!" #"#{e.inspect}"
+    raise 'Change password failed!'
   end
 
   def get_admin_token
@@ -163,7 +174,7 @@ class UsersSetup
   # returns an array with all usernames in uaa
   def uaa_get_usernames
     uaac = get_uaa_client
-    query = {:attributes => "userName"}
+    query = {:attributes => 'userName'}
     users = uaac.query(:user, query)
 
     users['resources'].collect { |u| u['userName']}
@@ -195,13 +206,18 @@ class UsersSetup
 
   def get_user_token(email, password)
 
-    token_issuer = CF::UAA::TokenIssuer.new(@uaaApi, "vmc", "")
+    begin
+    token_issuer = CF::UAA::TokenIssuer.new(@uaaApi, 'vmc', '')
     token_obj = token_issuer.implicit_grant_with_creds(username: email, password: password)
     token_user = token_obj.info['token_type'] + ' ' + token_obj.info['access_token']
 
     token_user
-  rescue Exception => e
-    raise "#{e.inspect}"
+
+    rescue Exception => e
+      puts e
+      puts 'get_user_token method error'
+      return 'user_token_error'
+    end
   end
 
   def get_user_details(user_guid)
