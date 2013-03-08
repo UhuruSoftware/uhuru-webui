@@ -68,8 +68,10 @@ module Uhuru::Webui
           auditors_list = organizations_Obj.read_auditors($config, params[:org_guid])
 
           begin
-            billing_manager_guid = "58f6e4e9-e4f2-47bb-b8b5-a1629457992d"
-            credit_card_type , credit_card_masked_number = ChargifyWrapper.get_subscription_card_type_and_number(params[:org_guid], billing_manager_guid)
+            if (organizations_Obj.is_organization_billable?(@this_guid))
+              billing_manager_guid = billings_list[0].guid
+              credit_card_type , credit_card_masked_number = ChargifyWrapper.get_subscription_card_type_and_number(@this_guid, billing_manager_guid)
+            end
           rescue Exception => ex
             credit_card_type = nil
             credit_card_masked_number = nil
@@ -112,8 +114,10 @@ module Uhuru::Webui
           auditors_list = organizations_Obj.read_auditors($config, params[:org_guid])
 
           begin
-            billing_manager_guid = "58f6e4e9-e4f2-47bb-b8b5-a1629457992d"
-            credit_card_type , credit_card_masked_number = ChargifyWrapper.get_subscription_card_type_and_number(params[:org_guid], billing_manager_guid)
+            if (organizations_Obj.is_organization_billable?(@this_guid))
+              billing_manager_guid = billings_list[0].guid
+              credit_card_type , credit_card_masked_number = ChargifyWrapper.get_subscription_card_type_and_number(@this_guid, billing_manager_guid)
+            end
           rescue Exception => ex
             credit_card_type = nil
             credit_card_masked_number = nil
