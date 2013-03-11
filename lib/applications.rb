@@ -73,7 +73,9 @@ class Applications
     end
 
   rescue Exception => e
-    raise "create app error" #"#{e.inspect}"
+    puts e
+    puts 'create app method error'
+    return 'error'
   end
 
   def start_app(app_name)
@@ -82,7 +84,9 @@ class Applications
     app.start!
 
   rescue Exception => e
-    raise "start app error" #"#{e.inspect}"
+    puts e
+    puts 'start app method error'
+    return 'error'
   end
 
   def stop_app(app_name)
@@ -91,7 +95,9 @@ class Applications
     app.stop!
 
   rescue Exception => e
-    raise "stop app error" #"#{e.inspect}"
+    puts e
+    puts 'stop app method error'
+    return 'error'
   end
 
   def update(app_name, instances, memory)
@@ -103,7 +109,9 @@ class Applications
     app.update!
 
   rescue Exception => e
-    raise "update app error" #"#{e.inspect}"
+    puts e
+    puts 'update app method error'
+    return 'error'
   end
 
   def delete(app_name)
@@ -120,7 +128,9 @@ class Applications
     end
 
   rescue Exception => e
-    raise "delete app error" #"#{e.inspect}"
+    puts e
+    puts 'delete app method error'
+    return 'error'
   end
 
   def bind_app_services(app_name, service_instance_name)
@@ -134,7 +144,9 @@ class Applications
     app.bind(service_instance)
 
   rescue Exception => e
-    raise "bind service error" #"#{e.inspect}"
+    puts e
+    puts 'bind service method error'
+    return 'error'
   end
 
   def unbind_app_services(app_name, service_instance_name)
@@ -144,7 +156,9 @@ class Applications
     app.bind(service_instance)
 
   rescue Exception => e
-    raise "unbind service error" #"#{e.inspect}"
+    puts e
+    puts 'unbind service method error'
+    return 'error'
   end
 
   #track cf to see how app routes are managed and what is owning organization for a domain
@@ -167,7 +181,9 @@ class Applications
     app.add_route(route)
 
   rescue Exception => e
-    raise "bind url error" #"#{e.inspect}"
+    puts e
+    puts 'bind uri method error'
+    return 'error'
   end
 
   def unbind_app_url(app_name, domain_name, old_url)
@@ -178,7 +194,9 @@ class Applications
     app.remove_route(route)
 
   rescue Exception => e
-    raise "unbind url error" #"#{e.inspect}"
+    puts e
+    puts 'unbind uri method error'
+    return 'error'
   end
 
   class Application

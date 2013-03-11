@@ -88,11 +88,11 @@
                                 <li class="tile_invisible read_app_details">
                                     <ul class="custom_list">
                                         <li class="tile_app_name" title="<%= app.name %>">
-                                                <a href="<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/#{current_space}/app_details" %>" class="link_tiles_app show_this_app_details" id="<%= app.name %>">
+                                                <a href="<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/#{current_space}/apps/#{app.name}" %>" class="link_tiles_app show_this_app_details" id="<%= app.name %>">
                                                     <span class="app_name" id="<%= app.name %>" title="<%= app.name %>"><%= app.name %></span>
-                                                    <span class="app_state blank_input" id="<%= app.state %>"></span>
-                                                    <span class="app_instances blank_input" id="<%= app.instances %>"></span>
-                                                    <span class="app_memory blank_input" id="<%= app.memory %>"></span>
+                                                    <span class="app_state" id="<%= app.state %>"></span>
+                                                    <span class="app_instances" id="<%= app.instances %>"></span>
+                                                    <span class="app_memory" id="<%= app.memory %>"></span>
                                                 </a>
 
                                                 <span class="app_instances" id="<%= app.instances %>">instances: <%= app.instances %></span>
@@ -111,6 +111,11 @@
                                         </li>
                                     </ul>
                                 </li>
+
+                                <% if params[:app_name] == app.name %>
+                                    <%= erb(:'user_pages/modals/app_details', :layout => false, :locals => { :current_organization => current_organization, :current_space => current_space, :collections => collections, :current_tab => current_tab, :app => app, :services_list => services_list, :error_message => error_message }) %>
+                                <% end %>
+
                             <% end %>
                         </ul>
                     </div>
@@ -208,7 +213,7 @@
             </p>
         </div>
         <div class="modal-footer">
-            <span class="server_errors blank_input" id="delete_space_failed"></span>
+            <span class="server_errors" id="delete_space_failed"></span>
             <p class="hidden_modal_messages" id="p_d_space">Deleting...</p>
             <div class="button_case_delete_organization_and_space">
                 <button type="button" class="btn btn_right_delete_organization_and_space cancel" id="cancel_b_d_space"><span class="line">| </span>Cancel </button>
@@ -233,12 +238,12 @@
         </p>
       </div>
       <div class="modal-footer">
-        <span class="server_errors blank_input" id="delete_app_failed"><%= session[:e_delete_app] %></span>
+        <span class="server_errors" id="delete_app_failed"><%= error_message %></span>
         <div class="button_case_delete_organization_and_space">
           <button class="btn btn_right_delete_organization_and_space cancel"><span class="line">| </span>Cancel </button>
           <form action="/deleteApp" method="post">
             <button type="submit" class="btn btn_left_delete_organization_and_space danger"><span class="line">| </span>Delete </button>
-            <input type="hidden" id="pass_app" name="appGuid" class="blank_input" />
+            <input type="hidden" id="pass_app" name="appGuid" />
             <input type="hidden" name="current_organization" value="<%= current_organization %>" />
             <input type="hidden" name="current_space" value="<%= current_space %>" />
             <input type="hidden" name="current_tab" value="<%= current_tab %>" />
@@ -259,12 +264,12 @@
             </p>
         </div>
         <div class="modal-footer">
-            <span class="server_errors blank_input" id="delete_service_failed"><%= session[:e_delete_service] %></span>
+            <span class="server_errors" id="delete_service_failed"><%= session[:e_delete_service] %></span>
             <div class="button_case_delete_organization_and_space">
             <button class="btn btn_right_delete_organization_and_space cancel"><span class="line">| </span>Cancel </button>
                 <form action="/deleteService" method="post">
                     <button type="submit" class="btn btn_left_delete_organization_and_space danger"><span class="line">| </span>Delete </button>
-                    <input type="hidden" id="pass_service" name="serviceGuid" class="blank_input" />
+                    <input type="hidden" id="pass_service" name="serviceGuid" />
                     <input type="hidden" name="current_organization" value="<%= current_organization %>" />
                     <input type="hidden" name="current_space" value="<%= current_space %>" />
                     <input type="hidden" name="current_tab" value="<%= current_tab %>" />
@@ -314,26 +319,6 @@
 
 
 
-
-
-
-
-<div class="modal fade hide" id="saving_modal">
-    <div class="modal-header" style="background-color: #187ebc;">
-        <h3>Saving changes</h3>
-    </div>
-
-
-    <div class="modal-body">
-        <p>
-            Please wait while your changes are saved.
-        </p>
-        <p style="font-size: 0.8em">
-            This dialog will be dismissed automatically after the changes are made.
-        </p>
-    </div>
-</div>
-
 <div class="modal fade hide" id="add_new_template_app_modal">
     <div class="modal-header" style="background-color: #187ebc;">
         <h3>Add a new template app</h3>
@@ -348,23 +333,5 @@
 </div>
 
 
-
-<div class="modal fade hide" id="error_modal_start_stop_app">
-           <div class="modal-header">
-               <h3></h3>
-           </div>
-           <div class="modal-body">
-               <p>
-                   Are you sure you want to unbind this app? Your app will no longer be able to use this URI.<br />
-               </p>
-           </div>
-           <div class="modal-footer">
-               <form action="/unbindUri" method="post">
-                   <div class="button_case_create_organization_and_space">
-                       <button type="button" class="btn btn_right_unbind cancel"><span class="line">| </span>Cancel </button>
-                   </div>
-               </form>
-           </div>
-       </div>
 
 </div>

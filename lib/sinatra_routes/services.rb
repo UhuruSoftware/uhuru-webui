@@ -34,7 +34,6 @@ module Uhuru::Webui
 
           if params[:error] == 'create_service'
             error_message = $errors['create_service_error']
-            puts error_message
           else
             error_message = ''
           end

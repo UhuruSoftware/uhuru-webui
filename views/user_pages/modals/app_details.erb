@@ -4,7 +4,7 @@
 
 <div class="modal fade hide app_details_modal" id="details_<%= app.name %>">
   <div class="modal_header" id="app_details_header">
-    <button type="button" class="close_app_details close"></button>
+    <a href="<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/#{current_space}/apps" %>" class="close"></a>
   </div>
 
   <div class="modal-body app_body">
@@ -14,19 +14,29 @@
           <div class="app-control">
             <div class="tile_app_name">
               <span class="app_name_big"><%= app.name %></span>
-              <span class="app_status" style="font-weight: bold">Status: <span style="font-weight: normal" class="pass_app_status"><%= app.state %></span></span>
+              <span class="app_status">Status: <span class="pass_app_status"><%= app.state %></span></span>
               <a href="#"><span class="small_trash delete-app-button" id="<%= app.name %>" title="<%= app.name %>" onmousemove="prepareToDeleteApp(this);"></span></a>
             </div>
 
-            <form action="/startApp" method="post">
-              <input type="text" name="appName" value="<%= app.name %>" class="blank_input" />
-              <input type="submit" name="startApp" class="start start_button_apps startApp_btn" value="" />
-            </form>
+            <% if app.state == "STOPPED" %>
+                <form action="/startApp" method="post">
+                  <input type="hidden" name="appName" value="<%= app.name %>" />
+                  <input type="hidden" name="current_organization" value="<%= current_organization %>" />
+                  <input type="hidden" name="current_space" value="<%= current_space %>" />
+                  <input type="hidden" name="current_tab" value="<%= current_tab %>" />
+                  <input type="submit" name="startApp" class="start start_button_apps startApp_btn" value="" />
+                </form>
+            <% end %>
 
-            <form action="/stopApp" method="post">
-              <input type="text" name="appName" value="<%= app.name %>" class="blank_input" />
-              <input type="submit" name="stopApp" class="stop stop_button_apps stopApp_btn" value="" />
-            </form>
+            <% if app.state == "RUNNING" || app.state == "STARTED" %>
+                <form action="/stopApp" method="post">
+                  <input type="hidden" name="appName" value="<%= app.name %>" />
+                  <input type="hidden" name="current_organization" value="<%= current_organization %>" />
+                  <input type="hidden" name="current_space" value="<%= current_space %>" />
+                  <input type="hidden" name="current_tab" value="<%= current_tab %>" />
+                  <input type="submit" name="stopApp" class="stop stop_button_apps stopApp_btn" value="" />
+                </form>
+            <% end %>
           </div>
         </td>
         <td></td>
@@ -64,22 +74,22 @@
       <tr>
         <td>
           <h4 class="app_details_titles">App Instances
-                                                    <span style="float: right">
-                                                        <input type="button" class="minus app_minus_instance" />
-                                                        <input type="button" class="plus app_plus_instance"  />
-                                                    </span>
+            <span style="float: right">
+                <input type="button" class="minus app_minus_instance" />
+                <input type="button" class="plus app_plus_instance"  />
+            </span>
           </h4>
 
           <ul class="app_details_ul">
             <li class="tile_app_details_instances">
-                                                            <span class="instance-info">
-                                                                <span class="instance-count pass_app_instances app_instances_count"><%= app.instances %></span>
-                                                                <span class="instance-type">Provisioned</span>
-                                                            </span>
-                                                            <span class="instance-info">
-                                                                <span class="instance-count pass_app_instances"><%= app.instances %></span>
-                                                                <span class="instance-type">Running</span>
-                                                            </span>
+                <span class="instance-info">
+                    <span class="instance-count pass_app_instances app_instances_count"><%= app.instances %></span>
+                    <span class="instance-type">Provisioned</span>
+                </span>
+                <span class="instance-info">
+                    <span class="instance-count pass_app_instances"><%= app.instances %></span>
+                    <span class="instance-type">Running</span>
+                </span>
             </li>
           </ul>
           <p class="app_text_p" style="text-align: left;">
@@ -88,18 +98,18 @@
         </td>
         <td>
           <h4 class="app_details_titles">Memory Provisioned
-                                                    <span style="float: right">
-                                                        <input type="button" class="minus app_minus_memory" />
-                                                        <input type="button" class="plus app_plus_memory" />
-                                                    </span>
+            <span style="float: right">
+                <input type="button" class="minus app_minus_memory" />
+                <input type="button" class="plus app_plus_memory" />
+            </span>
           </h4>
           <ul class="app_details_ul">
             <li class="tile_app_details_memory" style="color: #fff;">
-                                                        <span class="instance-count pass_app_memory">
-                                                              <div class="app_memory_count">
-                                                                <%= app.memory %>
-                                                              </div>
-                                                        </span>
+                <span class="instance-count pass_app_memory">
+                      <div class="app_memory_count">
+                        <%= app.memory %>
+                      </div>
+                </span>
               <span class="instance-type">MB</span>
             </li>
           </ul>
@@ -120,17 +130,166 @@
   </div>
 
   <div class="modal-footer app_details_footer">
-    <span class="server_errors" id="start_app_failed"><%= session[:e_start_app] %></span>
-    <span class="server_errors" id="stop_app_failed"><%= session[:e_stop_app] %></span>
-    <span class="server_errors" id="update_app_failed"><%= session[:e_update_app] %></span>
+    <span class="server_errors"><%= error_message %></span>
     <form action="/updateApp" method="post">
-      <input type="text" class="send_app_name blank_input" name="appName" value="<%= app.name %>" />
-      <input type="text" class="send_app_instances blank_input" name="appInstances" value="<%= app.instances %>"/>
-      <input type="text" class="send_app_memory blank_input" name="appMemory" value="<%= app.memory %>" />
+      <input type="hidden" class="send_app_name" name="appName" value="<%= app.name %>" />
+      <input type="hidden" class="send_app_instances" name="appInstances" value="<%= app.instances %>"/>
+      <input type="hidden" class="send_app_memory" name="appMemory" value="<%= app.memory %>" />
+      <input type="hidden" name="current_organization" value="<%= current_organization %>" />
+      <input type="hidden" name="current_space" value="<%= current_space %>" />
+      <input type="hidden" name="current_tab" value="<%= current_tab %>" />
 
       <div class="button_case_create_organization_and_space">
-        <button type="button" class="btn btn_right_create_organization_and_space close_app_details cancel"><span class="line">| </span>Cancel </button>
-        <button type="submit" class="btn btn_left_create_organization_and_space blank_input hidden_app_details_submit_button ok"><span class="line">| </span>Update </button>
+        <a href="<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/#{current_space}/apps" %>" class="btn btn_right_create_organization_and_space close_app_details cancel"><span class="line">| </span>Cancel </a>
+        <button type="submit" class="btn btn_left_create_organization_and_space hidden_app_details_submit_button ok"><span class="line">| </span>Update </button>
+      </div>
+    </form>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+<div class="modal fade hide" id="saving_modal">
+  <div class="modal-header" style="background-color: #187ebc;">
+    <h3>Saving changes</h3>
+  </div>
+
+
+  <div class="modal-body">
+    <p>
+      Please wait while your changes are saved.
+    </p>
+    <p style="font-size: 0.8em">
+      This dialog will be dismissed automatically after the changes are made.
+    </p>
+  </div>
+</div>
+
+
+
+
+
+<div class="modal fade hide" id="bind_service_modal">
+  <form action="/bindServices" method="post">
+
+    <div class="modal-header">
+      <h3>Add service</h3>
+    </div>
+    <div class="modal-body">
+      <p>Add a new service to <span></span></p>
+      <p>
+        <label for="bind_services_list">Available services</label>
+        <select id="bind_services_list" name="serviceName" class="modal_input_box">
+          <% services_list.each do |service| %>
+              <option value="<%= service.name %>" id="<%= service.name %>"> <%= service.name %> </option>
+          <% end %>
+        </select>
+      </p>
+    </div>
+    <div class="modal-footer">
+      <input type="hidden" id="bind_service_app_name" name="appName" />
+      <input type="hidden" name="current_organization" value="<%= current_organization %>" />
+      <input type="hidden" name="current_space" value="<%= current_space %>" />
+      <input type="hidden" name="current_tab" value="<%= current_tab %>" />
+      <div class="button_case_create_organization_and_space">
+        <button type="button" class="btn btn_right_bind cancel"><span class="line">| </span>Cancel </button>
+        <button type="submit" class="btn btn_left_bind ok"><span class="line">| </span>Bind </button>
+      </div>
+    </div>
+  </form>
+</div>
+
+<div class="modal fade hide" id="unbind_service_modal">
+  <div class="modal-header">
+    <h3>Unbind service</h3>
+  </div>
+  <div class="modal-body">
+    <p>
+      Are you sure you want to unbind <span style="font-weight: bold">
+            </span> from <span style="font-weight: bold"></span>? Your
+      app will no longer be able to connect to this service.
+    </p>
+    <p>
+      Unbinding does not delete the service. Please delete service from service page to permanently delete it.
+    </p>
+  </div>
+  <div class="modal-footer">
+    <form action="/unbindServices" method="post">
+      <input type="hidden" name="serviceName" id="unbind_serviceName" />
+      <input type="hidden" id="unbind_service_app_name" name="appName" />
+      <input type="hidden" name="current_organization" value="<%= current_organization %>" />
+      <input type="hidden" name="current_space" value="<%= current_space %>" />
+      <input type="hidden" name="current_tab" value="<%= current_tab %>" />
+      <div class="button_case_create_organization_and_space">
+        <button type="button" class="btn btn_right_unbind cancel"><span class="line">| </span>Cancel </button>
+        <button type="submit" class="btn btn_left_unbind danger"><span class="line">| </span>Unbind </button>
+      </div>
+    </form>
+  </div>
+</div>
+
+
+
+<div class="modal fade hide" id="bind_uri_modal">
+  <div class="modal-header">
+    <h3>Add new URI</h3>
+  </div>
+  <div class="modal-body">
+    <p>
+    <table>
+      <tbody>
+      <tr>
+        <td>
+          <input id="newUri" class="modal_input_box"/>
+        </td>
+        <td style="vertical-align: top; color: #ffffff;">
+          .uhurucloud.com
+        </td>
+      </tr>
+      </tbody>
+    </table>
+    </p>
+  </div>
+  <div class="modal-footer bind_uri_footer">
+    <form action="/bindUri" method="post">
+      <input type="hidden" name="uriName" id="uriName" />
+      <input type="hidden" id="bind_uri_app_name" name="appName" />
+      <input type="hidden" name="current_organization" value="<%= current_organization %>" />
+      <input type="hidden" name="current_space" value="<%= current_space %>" />
+      <input type="hidden" name="current_tab" value="<%= current_tab %>" />
+      <div class="button_case_create_organization_and_space">
+        <button type="button" class="btn btn_right_bind cancel"><span class="line">| </span>Cancel </button>
+        <button type="submit" class="btn btn_left_bind ok"><span class="line">| </span>Bind </button>
+      </div>
+    </form>
+  </div>
+</div>
+
+
+<div class="modal fade hide" id="unbind_uri_modal">
+  <div class="modal-header">
+    <h3>Unbind URI</h3>
+  </div>
+  <div class="modal-body">
+    <p>
+      Are you sure you want to unbind this app? Your app will no longer be able to use this URI.<br />
+    </p>
+  </div>
+  <div class="modal-footer">
+    <form action="/unbindUri" method="post">
+      <input type="hidden" name="uriName" id="unbind_uriName" />
+      <input type="hidden" id="unbind_uri_app_name" name="appName" />
+      <input type="hidden" name="current_organization" value="<%= current_organization %>" />
+      <input type="hidden" name="current_space" value="<%= current_space %>" />
+      <input type="hidden" name="current_tab" value="<%= current_tab %>" />
+      <div class="button_case_create_organization_and_space">
+        <button type="button" class="btn btn_right_unbind cancel"><span class="line">| </span>Cancel </button>
+        <button type="submit" class="btn btn_left_unbind danger"><span class="line">| </span>Unbind </button>
       </div>
     </form>
   </div>

@@ -23,25 +23,6 @@ $('.tile_app_name').hover(function(){
 
 $(function(){
 
-$('.read_app_details').hover(function(){
-
-    var state = $(this).contents().find("span:nth-child(2)").attr("id");
-
-    if(state == "stopped" || state == "STOPPED" || state == "running" || state == "RUNNING")
-    {
-        $('.stopApp_btn').css("display", "none");
-        $('.startApp_btn').css("display", "block");
-    }
-    else
-    {
-        $('.stopApp_btn').css("display", "block");
-        $('.startApp_btn').css("display", "none");
-    }
-    });
-});
-
-$(function(){
-
 $('.bind_uri_footer').hover(function(){
     var name = $('#newUri').val();
     $('#uriName').val(name);

@@ -27,11 +27,10 @@ module Uhuru::Webui
 
 
     SPACE                     = "#{ORGANIZATIONS}/:org_guid/:space_guid/:tab"
-    APPS_CREATE               = "#{SPACE}/create_app"
-    APP_DETAILS               = "#{SPACE}/app_details"
-    APPS_CREATE_CONFIGURE     = "#{APPS_CREATE}/configure_app"
+    APP                       = "#{ORGANIZATIONS}/:org_guid/:space_guid/:tab/:app_name"
+    APP_CREATE                = "#{ORGANIZATIONS}/:org_guid/:space_guid/:tab/create_app"
+    #APPS_CREATE_CONFIGURE     = "#{APPS_CREATE}/configure_app"
 
-    APP                       = "#{SPACE}/app_id"
 
 
     SERVICES_CREATE           = "#{SPACE}/create_service"

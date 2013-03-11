@@ -139,7 +139,9 @@ class UsersSetup
     uaac.update(user_guid, uaa_user.merge(user_attributes))
 
   rescue Exception => e
-    raise 'Update user failed!'
+    puts e
+    puts 'update user method error'
+    return 'error'
   end
 
   def change_password(user_id, verified_password, old_password)
@@ -147,7 +149,9 @@ class UsersSetup
     uaac.change_password(user_id, verified_password, old_password)
 
   rescue Exception => e
-    raise 'Change password failed!'
+    puts e
+    puts 'update password method error'
+    return 'error'
   end
 
   def get_admin_token

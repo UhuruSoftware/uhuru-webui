@@ -11,22 +11,47 @@ module Uhuru::Webui
             redirect INDEX
           end
 
-          erb :'user_pages/usersettings', {:layout => :'layouts/user'}
+          if params[:error] == 'change_username'
+            error_message_username = $errors['change_username_error']
+            error_message_password = ''
+          elsif params[:error] == 'change_password'
+            error_message_password = $errors['change_password_error']
+            error_message_username = ''
+          else
+            error_message_username = ''
+            error_message_password = ''
+          end
+
+          erb :'user_pages/usersettings', {
+              :layout => :'layouts/user',
+              :locals => {
+                  :error_message_username => error_message_username,
+                  :error_message_password => error_message_password
+              }
+          }
         end
 
         app.post '/updateUserName' do
           user_sign_up = UsersSetup.new($config)
-          user_sign_up.update_user_info(session[:user_guid], params[:first_name], params[:last_name])
+          user = user_sign_up.update_user_info(session[:user_guid], params[:first_name], params[:last_name])
           session[:fname] = params[:first_name]
 
-          redirect ACCOUNT
+          if user == 'error'
+            redirect ACCOUNT + '?error=change_username'
+          else
+            redirect ACCOUNT
+          end
         end
 
         app.post '/updateUserPassword' do
           user_sign_up = UsersSetup.new($config)
-          user_sign_up.change_password(session[:user_guid], params[:new_pass1], params[:old_pass])
+          password = user_sign_up.change_password(session[:user_guid], params[:new_pass1], params[:old_pass])
 
-          redirect ACCOUNT
+          if password == 'error'
+            redirect ACCOUNT + '?error=change_password'
+          else
+            redirect ACCOUNT
+          end
         end
 
 

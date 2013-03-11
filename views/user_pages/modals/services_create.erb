@@ -27,7 +27,7 @@
       <a href="<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/#{current_space}/services" %>" class="btn btn_right_create_organization_and_space cancel"><span class="line">| </span>Close </a>
 
       <form action="/createService" method="post">
-        <input type="hidden" id="new_service_name" name="serviceName" class="blank_input"/>
+        <input type="hidden" id="new_service_name" name="serviceName" />
         <input type="hidden" name="current_organization" value="<%= current_organization %>" />
         <input type="hidden" name="current_space" value="<%= current_space %>" />
         <input type="hidden" name="current_tab" value="<%= current_tab %>" />

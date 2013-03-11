@@ -4,6 +4,11 @@ signup_user_exists_error: The username already exists!
 signup_create_organization_error: Could not create organization! (user was not created)
 
 
+change_username_error: Failed to update user data!
+change_password_error: Failed to update user password!
+
+
+
 create_organization_error: Failed to create Organization!
 delete_organization_error: Failed to delete Organization!
 update_organization_error: Failed to update the current Organization!
@@ -20,8 +25,17 @@ delete_domain_error: Failed to delete this doamin!
 
 
 
+
 create_app_error: Failed to create this app!
 delete_app_error: Failed to delete this app!
+update_app_error: Failed to update this app properly!
+start_app_error: App not started properly!
+stop_app_error: App not stopped properly!
+bind_service_error: Failed to bind this service to this app!
+bind_uri_error: Failed to bind this uri to this app!
+unbind_service_error: Failed to unbind this service from this app!
+unbind_uri_error: Failed to unbind this uri from this app!
+
 
 create_service_error: Failed to create Service!
 delete_service_error: Failed to delete this service!
