@@ -5,10 +5,6 @@ module Uhuru::Webui
     module Domains
       def self.registered(app)
 
-        app.get DOMAINS do
-
-        end
-
         app.get DOMAINS_CREATE do
 
         end

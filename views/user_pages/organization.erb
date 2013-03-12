@@ -55,21 +55,21 @@
          <div id="organization_div">
                 <ul id="tabs" class="nav nav-tabs">
                     <% if current_tab == "spaces" %>
-                        <li class="organization_selected_tab"><a href="<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/spaces" %>">Spaces (<span><%= spaces_count %></span>)</a></li>
+                        <li class="organization_selected_tab"><a href="<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/spaces" %>">Spaces (<span><%= spaces_list.count %></span>)</a></li>
                     <% else %>
-                      <li class="organization_unselected_tabs"><a href="<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/spaces" %>">Spaces (<span><%= spaces_count %></span>)</a></li>
+                      <li class="organization_unselected_tabs"><a href="<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/spaces" %>">Spaces (<span><%= spaces_list.count %></span>)</a></li>
                     <% end %>
 
                     <% if current_tab == "members" %>
-                        <li class="organization_selected_tab"><a href="<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/members" %>">Members (<span><%= members_count %></span>)</a></li>
+                        <li class="organization_selected_tab"><a href="<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/members" %>">Members (<span><%= owners_list.count + billings_list.count + auditors_list.count %></span>)</a></li>
                     <% else %>
-                      <li class="organization_unselected_tabs"><a href="<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/members" %>">Members (<span><%= members_count %></span>)</a></li>
+                      <li class="organization_unselected_tabs"><a href="<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/members" %>">Members (<span><%= owners_list.count + billings_list.count + auditors_list.count %></span>)</a></li>
                     <% end %>
 
                     <% if current_tab == "domains" %>
-                        <li class="organization_selected_tab"><a href="<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/domains" %>">Domains </a></li>
+                        <li class="organization_selected_tab"><a href="<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/domains" %>">Domains (<span><%= domains_list.count %></span>)</a></li>
                     <% else %>
-                        <li class="organization_unselected_tabs"><a href="<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/domains" %>">Domains </a></li>
+                        <li class="organization_unselected_tabs"><a href="<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/domains" %>">Domains (<span><%= domains_list.count %></span>)</a></li>
                     <% end %>
                 </ul>
 
@@ -149,9 +149,31 @@
 
                 <% if defined?(current_tab) && current_tab != nil && current_tab == "domains" %>
                     <div id="domains">
-                        Domains
-                        <div style="height: 250px; width: 100%"></div>
-                    </div>
+                         <ul class="tile_list">
+                           <% domains_list.each do |domain| %>
+                               <li class="tile_invisible">
+                                 <ul class="custom_list">
+                                   <li class="tile_domain_name" title="<%= domain.name %>">
+                                     <a href="#" class="link_tiles_space">
+                                       <span class="space_name_span to_underlined"><%= domain.name %></span>
+                                       <a href="#"><span class="small_trash delete-space-button" id="<%= domain.name %>" title="<%= domain.guid %>" onmousemove="deleteSpace(this);"></span></a>
+                                     </a>
+                                   </li>
+
+                                   <li class="tile_domain_wildcard">
+                                     <span class="count-label wildcard domain_wildcard_span">wildcard: </span>
+                                   </li>
+
+                                   <li class="tile_domain_wildcard_value">
+                                     <span class="count-value wildcard domain_wildcard_span_value <%= domain.wildcard %>"></span>
+                                   </li>
+                                 </ul>
+                               </li>
+                           <% end %>
+                         </ul>
+
+                         <div style="height: 250px; width: 100%"></div>
+                   </div>
                 <% end %>
 
          </div>

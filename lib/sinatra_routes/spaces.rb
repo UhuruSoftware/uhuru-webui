@@ -14,6 +14,7 @@ module Uhuru::Webui
           organizations_Obj = Library::Organizations.new(session[:token], $cf_target)
           credit_cards_Obj = CreditCards.new(session[:token], $cf_target)
           users_setup_Obj = UsersSetup.new($config)
+          domains_Obj = Library::DomainsApi.new(session[:token], $cf_target)
           all_users = users_setup_Obj.uaa_get_usernames
 
           organizations_Obj.set_current_org(params[:org_guid])
@@ -21,6 +22,7 @@ module Uhuru::Webui
           owners_list = organizations_Obj.read_owners($config, params[:org_guid])
           billings_list = organizations_Obj.read_billings($config, params[:org_guid])
           auditors_list = organizations_Obj.read_auditors($config, params[:org_guid])
+          domains_list = domains_Obj.read_domains()
 
           begin
             if (organizations_Obj.is_organization_billable?(@this_guid))
@@ -55,11 +57,10 @@ module Uhuru::Webui
                       :card_masked_number => credit_card_masked_number,
                       :all_users => all_users,
                       :spaces_list => spaces_list,
-                      :spaces_count => spaces_list.count,
-                      :members_count => owners_list.count + billings_list.count + auditors_list.count,
                       :owners_list => owners_list,
                       :billings_list => billings_list,
                       :auditors_list => auditors_list,
+                      :domains_list => domains_list,
                       :error_message => error_message
                   }
               }
@@ -74,6 +75,7 @@ module Uhuru::Webui
           organizations_Obj = Library::Organizations.new(session[:token], $cf_target)
           credit_cards_Obj = CreditCards.new(session[:token], $cf_target)
           users_setup_Obj = UsersSetup.new($config)
+          domains_Obj = Library::DomainsApi.new(session[:token], $cf_target)
           all_users = users_setup_Obj.uaa_get_usernames
 
           organizations_Obj.set_current_org(params[:org_guid])
@@ -81,6 +83,7 @@ module Uhuru::Webui
           owners_list = organizations_Obj.read_owners($config, params[:org_guid])
           billings_list = organizations_Obj.read_billings($config, params[:org_guid])
           auditors_list = organizations_Obj.read_auditors($config, params[:org_guid])
+          domains_list = domains_Obj.read_domains()
 
           if params[:error] != '' && params[:error] != nil
             error_message = $errors['create_space_error']
@@ -112,11 +115,10 @@ module Uhuru::Webui
                       :card_masked_number => credit_card_masked_number,
                       :all_users => all_users,
                       :spaces_list => spaces_list,
-                      :spaces_count => spaces_list.count,
-                      :members_count => owners_list.count + billings_list.count + auditors_list.count,
                       :owners_list => owners_list,
                       :billings_list => billings_list,
                       :auditors_list => auditors_list,
+                      :domains_list => domains_list,
                       :error_message => error_message,
                       :include_erb => :'user_pages/modals/spaces_create'
                   }
@@ -132,6 +134,7 @@ module Uhuru::Webui
           organizations_Obj = Library::Organizations.new(session[:token], $cf_target)
           credit_cards_Obj = CreditCards.new(session[:token], $cf_target)
           users_setup_Obj = UsersSetup.new($config)
+          domains_Obj = Library::DomainsApi.new(session[:token], $cf_target)
           all_users = users_setup_Obj.uaa_get_usernames
 
           organizations_Obj.set_current_org(params[:org_guid])
@@ -139,6 +142,7 @@ module Uhuru::Webui
           owners_list = organizations_Obj.read_owners($config, params[:org_guid])
           billings_list = organizations_Obj.read_billings($config, params[:org_guid])
           auditors_list = organizations_Obj.read_auditors($config, params[:org_guid])
+          domains_list = domains_Obj.read_domains()
 
           begin
             if (organizations_Obj.is_organization_billable?(@this_guid))
@@ -169,13 +173,12 @@ module Uhuru::Webui
                       :card_masked_number => credit_card_masked_number,
                       :all_users => all_users,
                       :spaces_list => spaces_list,
-                      :spaces_count => spaces_list.count,
-                      :members_count => owners_list.count + billings_list.count + auditors_list.count,
                       :owners_list => owners_list,
                       :billings_list => billings_list,
                       :auditors_list => auditors_list,
-                      :include_erb => :'user_pages/modals/members_add',
-                      :error_message => error_message
+                      :domains_list => domains_list,
+                      :error_message => error_message,
+                      :include_erb => :'user_pages/modals/members_add'
                   }
               }
         end

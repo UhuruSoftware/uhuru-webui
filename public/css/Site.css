@@ -452,6 +452,13 @@ li.new .icon
     right: 5px;
 }
 
+.count-value.wildcard
+{
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
+}
+
 .count-value.services
 {
     position: absolute;
@@ -463,6 +470,12 @@ li.new .icon
 {
     position: absolute;
     bottom: 30px;
+    left: 5px;
+}
+.count-label.wildcard
+{
+    position: absolute;
+    bottom: 5px;
     left: 5px;
 }
 

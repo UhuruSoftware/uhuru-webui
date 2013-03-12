@@ -1192,12 +1192,12 @@ h2 .count
     margin-top: 20px;
 }
 
-.tile_credit_card_name_unused,
-.tile_credit_card_name,
 .tile_organization_name,
 .tile_space_name,
+.tile_domain_name,
 .tile_app_name,
-.tile_service_name
+.tile_service_name,
+.tile_route_name
 {
     margin: 4px;
     width: 190px;
@@ -1285,6 +1285,11 @@ h2 .count
     background-image: url("../images/tile_big_dark_green.png");
     border: 1px solid #1a972f;
 }
+.tile_domain_name
+{
+    background-image: url("../images/tile_big_orange.png");
+    border: 1px solid #d75a3c;
+}
 .tile_app_name
 {
     background-image: url("../images/tile_big_blue.png");
@@ -1304,6 +1309,7 @@ h2 .count
 
 .tile_organization_members,
 .tile_space_apps,
+.tile_domain_wildcard,
 .tile_space_services
 {
     margin: 4px;
@@ -1318,6 +1324,12 @@ h2 .count
     display: list-item;
     float: left;
     list-style: none;
+}
+.tile_domain_wildcard
+{
+    background-image: url("../images/tile_small_red.png");
+    background-repeat: repeat-y;
+    border: 1px solid #b43051;
 }
 
 .tile_credit_card_logo,
@@ -1357,7 +1369,8 @@ h2 .count
 }
 
 .tile_organization_cost,
-.tile_space_mothly_cost
+.tile_space_mothly_cost,
+.tile_domain_wildcard_value
 {
     margin: 4px;
     width: 90px;
@@ -1964,6 +1977,7 @@ h3
 }
 
 .apps_count_span_value,
+.domain_wildcard_span_value,
 .services_count_span_value
 {
     font-family: 'Segoe UI Light', 'Open Sans', Verdana, Arial, Helvetica, sans-serif;
@@ -1973,7 +1987,26 @@ h3
     color: #ffffff;
 }
 
+.domain_wildcard_span_value.true
+{
+    display: block;
+    width: 25px;
+    height: 25px;
+    background-image: url("../images/btn_checkmark.png");
+    background-repeat: no-repeat;
+}
+
+.domain_wildcard_span_value.false
+{
+    display: block;
+    width: 25px;
+    height: 25px;
+    background-image: url("../images/btn_x.png");
+    background-repeat: no-repeat;
+}
+
 .apps_count_span,
+.domain_wildcard_span,
 .services_count_span
 {
     font-family: 'Segoe UI Light', 'Open Sans', Verdana, Arial, Helvetica, sans-serif;

@@ -31,7 +31,9 @@ module Library
       return domains
 
     rescue Exception => e
-      raise "#{e.inspect}, #{e.backtrace}"
+      puts "#{e.inspect}, #{e.backtrace}"
+      puts 'read domains error'
+      return 'error'
     end
 
     # create is used: - to create an domain and map it to an organization or space
@@ -74,7 +76,9 @@ module Library
       end
 
     rescue Exception => e
-      raise "create domain error #{e.inspect}"
+      puts e
+      puts 'create domain method error'
+      return 'error'
     end
 
     # unmaps a domain from an organization or space
@@ -106,7 +110,9 @@ module Library
       end
 
     rescue Exception => e
-      raise "unmap domain error #{e.inspect}"
+      puts e
+      puts 'unmap domain method error'
+      return 'error'
     end
 
     # deletes the domain and unmap all existing connections
@@ -115,7 +121,9 @@ module Library
       domain.delete!
 
     rescue Exception => e
-      raise "delete domain error #{e.inspect}"
+      puts e
+      puts 'delete domain method error'
+      return 'error'
     end
 
     class Domain
