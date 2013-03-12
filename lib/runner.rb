@@ -2,6 +2,7 @@ require "steno"
 require "config"
 require "webui"
 require "thin"
+require "optparse"
 
 module Uhuru::Webui
   class Runner
@@ -66,22 +67,21 @@ module Uhuru::Webui
 
     def run!
       config = @config.dup
+      $config = config.dup
 
+      webui = Uhuru::Webui::Webui.new(config);
       app = Rack::Builder.new do
-        # TODO: we really should put these bootstrapping into a place other
-        # than Rack::Builder
-        use Rack::CommonLogger
-
+        use Rack::Recaptcha, :public_key => $config[:recaptcha][:recaptcha_public_key], :private_key => $config[:recaptcha][:recaptcha_private_key]
         map "/" do
-          run Uhuru::Webui::Webui.new(config)
+          run webui
         end
       end
-      @thin_server = Thin::Server.new(@config[:bind_address], @config[:port])
-      @thin_server.app = app
+      @thin_server = Thin::Server.new(@config[:bind_address], @config[:port], app)
 
       trap_signals
 
-      @thin_server.threaded = true
+      # activate threaded only if required
+      # @thin_server.threaded = true
       @thin_server.start!
     end
 
