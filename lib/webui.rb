@@ -25,10 +25,8 @@ module Uhuru::Webui
     set :sessions, true
 
     helpers Rack::Recaptcha::Helpers
-    enable :sessions
-    recaptcha = YAML::load(File.open('../config/uhuru-webui.yml'))
+
     use Rack::Logger
-    use Rack::Recaptcha, :public_key => recaptcha["recaptcha"]["recaptcha_public_key"], :private_key => recaptcha["recaptcha"]["recaptcha_private_key"]
 
     register Uhuru::Webui::SinatraRoutes::Guest
     register Uhuru::Webui::SinatraRoutes::Account
