@@ -15,6 +15,7 @@ module Uhuru::Webui
           spaces_Obj = Library::Spaces.new(session[:token], $cf_target)
           readapps_Obj = TemplateApps.new
           users_setup_Obj = UsersSetup.new($config)
+          routes_Obj = Library::Routes.new(session[:token], $cf_target)
           all_space_users = users_setup_Obj.uaa_get_usernames
 
           #session[:space_name] = spaces_Obj.get_name(@this_guid)
@@ -22,6 +23,7 @@ module Uhuru::Webui
           spaces_Obj.set_current_space(params[:space_guid])
           apps_list = spaces_Obj.read_apps(params[:space_guid])
           services_list = spaces_Obj.read_service_instances(params[:space_guid])
+          routes_list = routes_Obj.read_routes(params[:space_guid])
 
           owners_list = spaces_Obj.read_owners($config, params[:space_guid])
           developers_list = spaces_Obj.read_developers($config, params[:space_guid])
@@ -48,12 +50,10 @@ module Uhuru::Webui
                       :all_space_users => all_space_users,
                       :owners_list => owners_list,
                       :auditors_list => auditors_list,
-                      :users_count => owners_list.count + developers_list.count + auditors_list.count,
                       :developers_list => developers_list,
                       :apps_list => apps_list,
                       :services_list => services_list,
-                      :apps_count => apps_list.count,
-                      :services_count => services_list.count,
+                      :routes_list => routes_list,
                       :error_message => error_message,
                       :include_erb => :'user_pages/modals/members_add'
                   }
@@ -79,9 +79,9 @@ module Uhuru::Webui
             add_user = users_Obj.invite_user_with_role_to_space($config, params[:userEmail], params[:current_space], params[:userType])
 
             if add_user == 'error'
-              redirect ORGANIZATIONS + "/#{params[:current_organization]}/#{params[:current_space]}/#{params[:current_tab]}/add_user" + '?error=add_user'
+              redirect ORGANIZATIONS + "/#{params[:current_organization]}/spaces/#{params[:current_space]}/#{params[:current_tab]}/add_user" + '?error=add_user'
             else
-              redirect ORGANIZATIONS + "/#{params[:current_organization]}/#{params[:current_space]}/#{params[:current_tab]}"
+              redirect ORGANIZATIONS + "/#{params[:current_organization]}/spaces/#{params[:current_space]}/#{params[:current_tab]}"
             end
           end
         end
@@ -102,9 +102,9 @@ module Uhuru::Webui
             delete_user = users_Obj.remove_user_with_role_from_space(params[:current_organization], params[:thisUser], params[:thisUserRole])
 
             if delete_user == 'error'
-              redirect ORGANIZATIONS + "/#{params[:current_organization]}/#{params[:current_space]}/#{params[:current_tab]}" + '?error=delete_user'
+              redirect ORGANIZATIONS + "/#{params[:current_organization]}/spaces/#{params[:current_space]}/#{params[:current_tab]}" + '?error=delete_user'
             else
-              redirect ORGANIZATIONS + "/#{params[:current_organization]}/#{params[:current_space]}/#{params[:current_tab]}"
+              redirect ORGANIZATIONS + "/#{params[:current_organization]}/spaces/#{params[:current_space]}/#{params[:current_tab]}"
             end
           end
         end

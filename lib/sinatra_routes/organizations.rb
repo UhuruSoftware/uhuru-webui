@@ -6,7 +6,6 @@ module Uhuru::Webui
       def self.registered(app)
 
         app.get ORGANIZATIONS do
-
           if session[:login_] == false || session[:login_] == nil
             redirect INDEX
           end
@@ -32,7 +31,6 @@ module Uhuru::Webui
         end
 
         app.get ORGANIZATIONS_CREATE do
-
           if session[:login_] == false || session[:login_] == nil
             redirect INDEX
           end

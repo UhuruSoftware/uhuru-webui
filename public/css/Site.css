@@ -455,7 +455,7 @@ li.new .icon
 .count-value.wildcard
 {
     position: absolute;
-    bottom: 5px;
+    top: 5px;
     right: 5px;
 }
 
@@ -807,7 +807,7 @@ section {
 
 .page-margin
 {
-    width: 940px;
+    width: 1070px;
     margin: 0 auto;
     position: relative;
     display: block;

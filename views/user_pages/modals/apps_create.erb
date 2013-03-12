@@ -2,7 +2,7 @@
 
 <div class="modal fade hide" id="create_tempcta_modal">
   <div class="modal-header" style="background-color: #09293e">
-    <a href="<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/#{current_space}/apps" %>" class="close"></a>
+    <a href="<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/spaces/#{current_space}/apps" %>" class="close"></a>
     <h3>Add a new app template</h3>
   </div>
 
@@ -96,7 +96,7 @@
   <div class="modal-footer">
     <span class="server_errors" id="create_app_failed"><%= error_message %></span>
     <div class="button_case_create_organization_and_space">
-      <a href="<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/#{current_space}/apps" %>" class="btn btn_right_create_organization_and_space cancel"><span class="line">| </span>Cancel </a>
+      <a href="<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/spaces/#{current_space}/apps" %>" class="btn btn_right_create_organization_and_space cancel"><span class="line">| </span>Cancel </a>
     </div>
   </div>
 </div>

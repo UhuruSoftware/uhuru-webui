@@ -7,6 +7,11 @@ function deleteSpace(obj)
     document.getElementById('space_guid').value = obj.title;
 }
 
+function deleteDomain(obj)
+{
+    document.getElementById('domain_guid').value = obj.title;
+}
+
 function deleteOrganization(obj)
 {
     document.getElementById('org_guid').value = obj.id;
@@ -53,6 +58,12 @@ function prepareToDeleteService(obj)
 {
     document.getElementById('pass_service').value = obj.title;
     document.getElementById('this_service_name').innerHTML = obj.id;
+}
+
+function prepareToDeleteRoute(obj)
+{
+    document.getElementById('pass_route').value = obj.title;
+    document.getElementById('this_route_name').innerHTML = obj.id;
 }
 
 

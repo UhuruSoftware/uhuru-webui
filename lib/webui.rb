@@ -13,6 +13,8 @@ require 'sinatra_routes/spaces'
 require 'sinatra_routes/apps'
 require 'sinatra_routes/services'
 require 'sinatra_routes/users'
+require 'sinatra_routes/domains'
+require 'sinatra_routes/routes'
 
 module Uhuru::Webui
   class Webui < Sinatra::Base
@@ -37,6 +39,8 @@ module Uhuru::Webui
     register Uhuru::Webui::SinatraRoutes::Apps
     register Uhuru::Webui::SinatraRoutes::Services
     register Uhuru::Webui::SinatraRoutes::Users
+    register Uhuru::Webui::SinatraRoutes::Domains
+    register Uhuru::Webui::SinatraRoutes::Routes
 
     def initialize(config)
       $config = config

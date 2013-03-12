@@ -2,7 +2,7 @@
 
 <div class="modal fade hide" id="add_ctService_modal" onmousemove="newServiceName();">
   <div class="modal-header">
-    <a href="<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/#{current_space}/services" %>" class="close"></a>
+    <a href="<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/spaces/#{current_space}/services" %>" class="close"></a>
     <h3>New Service</h3>
   </div>
 
@@ -24,7 +24,7 @@
   <div class="modal-footer">
     <span class="server_errors" id="create_service_failed"><%= error_message %></span>
     <div class="button_case_create_organization_and_space">
-      <a href="<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/#{current_space}/services" %>" class="btn btn_right_create_organization_and_space cancel"><span class="line">| </span>Close </a>
+      <a href="<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/spaces/#{current_space}/services" %>" class="btn btn_right_create_organization_and_space cancel"><span class="line">| </span>Close </a>
 
       <form action="/createService" method="post">
         <input type="hidden" id="new_service_name" name="serviceName" />

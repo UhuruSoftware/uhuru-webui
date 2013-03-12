@@ -56,8 +56,7 @@ module Uhuru::Webui
 
 
 
-        app.get '/create_subscription' do
-
+        app.get CREATE_SUBSCRIPTION do
           if session[:login_] == false || session[:login_] == nil
             redirect INDEX
           end
@@ -71,7 +70,8 @@ module Uhuru::Webui
           last_name = name[:last_name] != nil ? name[:last_name] : ""
           email = session[:username]
 
-          org_guid = session[:currentOrganization]
+          org_guid = params[:org_guid]
+          puts org_guid
           org = Library::Organizations.new(session[:token], $cf_target)
           billing_managers = org.read_billings($config, org_guid)
           billing_manager_guid = billing_managers[0].guid
@@ -84,17 +84,16 @@ module Uhuru::Webui
           redirect product_hosted_page
         end
 
-        app.get '/subscribe_result' do
+        app.get SUBSCRIPTION_RESULT do
 
           if session[:login_] == false || session[:login_] == nil
             redirect INDEX
           end
-
+          org = Library::Organizations.new(session[:token], $cf_target)
           customer_reference = params[:ref]
 
           org_guid = customer_reference.last(36).to_s
           if (ChargifyWrapper.subscription_exists?(customer_reference))
-            org = Library::Organizations.new(session[:token], $cf_target)
             org.make_organization_billable(org_guid)
           end
 
