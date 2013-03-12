@@ -53,20 +53,8 @@ class Applications
         d.name == domain_name
       }
 
-      route = @client.routes.find { |r|
-        r.host == name && r.domain == domain
-      }
-
-      unless route
-        route = @client.route
-
-        route.host = name
-        route.domain = domain
-        route.organization = org
-        route.create!
-      end
-
-      new_app.add_route(route)
+      routes_obj = Library::Routes.initialize_with_client(@client)
+      routes_obj.create(name, space_guid, domain.guid, name)
 
       new_app.upload(path, true)
       new_app.start!
@@ -158,31 +146,6 @@ class Applications
   rescue Exception => e
     puts e
     puts 'unbind service method error'
-    return 'error'
-  end
-
-  #track cf to see how app routes are managed and what is owning organization for a domain
-  def bind_app_url(app_name, org_guid, domain_name, new_url)
-    app = @client.apps.find { |a| a.name == app_name }
-
-    domain = @client.domains.find { |d| d.name == domain_name }
-
-    route = @client.routes.find { |r| r.host == new_url && r.domain == domain }
-
-    unless route
-      route = @client.route
-
-      route.host = new_url
-      route.domain = domain
-      route.organization = @client.organization(org_guid)
-      route.create!
-    end
-
-    app.add_route(route)
-
-  rescue Exception => e
-    puts e
-    puts 'bind uri method error'
     return 'error'
   end
 

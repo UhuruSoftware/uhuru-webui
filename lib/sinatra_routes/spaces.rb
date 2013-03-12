@@ -14,7 +14,7 @@ module Uhuru::Webui
           organizations_Obj = Library::Organizations.new(session[:token], $cf_target)
           credit_cards_Obj = CreditCards.new(session[:token], $cf_target)
           users_setup_Obj = UsersSetup.new($config)
-          domains_Obj = Library::DomainsApi.new(session[:token], $cf_target)
+          domains_Obj = Library::Domains.new(session[:token], $cf_target)
           all_users = users_setup_Obj.uaa_get_usernames
 
           organizations_Obj.set_current_org(params[:org_guid])
@@ -75,7 +75,7 @@ module Uhuru::Webui
           organizations_Obj = Library::Organizations.new(session[:token], $cf_target)
           credit_cards_Obj = CreditCards.new(session[:token], $cf_target)
           users_setup_Obj = UsersSetup.new($config)
-          domains_Obj = Library::DomainsApi.new(session[:token], $cf_target)
+          domains_Obj = Library::Domains.new(session[:token], $cf_target)
           all_users = users_setup_Obj.uaa_get_usernames
 
           organizations_Obj.set_current_org(params[:org_guid])
@@ -134,7 +134,7 @@ module Uhuru::Webui
           organizations_Obj = Library::Organizations.new(session[:token], $cf_target)
           credit_cards_Obj = CreditCards.new(session[:token], $cf_target)
           users_setup_Obj = UsersSetup.new($config)
-          domains_Obj = Library::DomainsApi.new(session[:token], $cf_target)
+          domains_Obj = Library::Domains.new(session[:token], $cf_target)
           all_users = users_setup_Obj.uaa_get_usernames
 
           organizations_Obj.set_current_org(params[:org_guid])

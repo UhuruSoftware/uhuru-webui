@@ -2,7 +2,7 @@ require 'cfoundry'
 require 'config'
 
 module Library
-  class DomainsApi
+  class Domains
     def initialize(token, target)
       @client = CFoundry::V2::Client.new(target, token)
     end
@@ -33,6 +33,20 @@ module Library
     rescue Exception => e
       puts "#{e.inspect}, #{e.backtrace}"
       puts 'read domains error'
+      return 'error'
+    end
+
+    def get_organizations_domain_guid(org_guid)
+      org = @client.organization(org_guid)
+
+      domain = @client.domains.select { |x| x.owning_organization == org }
+      domain = (@client.domains.select{ |x| x.owning_organization == nil }).first if domain == nil
+
+      return domain[0].guid
+
+    rescue Exception => e
+      puts "#{e.inspect}, #{e.backtrace}"
+      puts 'read org domain error'
       return 'error'
     end
 

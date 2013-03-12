@@ -211,8 +211,11 @@ module Uhuru::Webui
         end
 
         app.post '/bindUri' do
-          apps = Applications.new(session[:token], $cf_target)
-          bind = apps.bind_app_url(params[:appName], params[:current_organization], $config[:cloudfoundry][:cloud_controller_api], params[:uriName])
+          domain_obj = Library::Domains.new(session[:token], $cf_target)
+          domain_guid = domain_obj.get_organizations_domain_guid(params[:current_organization])
+
+          routes = Library::Routes.new(session[:token], $cf_target)
+          bind = routes.create(params[:appName], params[:current_space], domain_guid, params[:uriName])
 
           if bind == 'error'
             redirect ORGANIZATIONS + "/#{params[:current_organization]}/#{params[:current_space]}/#{params[:current_tab]}/#{params[:appName]}" + '?error=bind_uri'
