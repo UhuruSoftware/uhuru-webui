@@ -72,9 +72,9 @@ module Uhuru::Webui
           create = spaces_Obj.create_service_instance(params[:serviceName], params[:current_space], @plan)
 
           if create == 'error'
-            redirect ORGANIZATIONS + "/#{params[:current_organization]}/#{params[:current_space]}/#{params[:current_tab]}/create_service" + '?error=create_service'
+            redirect ORGANIZATIONS + "/#{params[:current_organization]}/spaces/#{params[:current_space]}/#{params[:current_tab]}/create_service" + '?error=create_service'
           else
-            redirect ORGANIZATIONS + "/#{params[:current_organization]}/#{params[:current_space]}/#{params[:current_tab]}"
+            redirect ORGANIZATIONS + "/#{params[:current_organization]}/spaces/#{params[:current_space]}/#{params[:current_tab]}"
           end
         end
 
@@ -86,9 +86,9 @@ module Uhuru::Webui
           delete = services_Obj.delete(params[:serviceGuid])
 
           if delete == 'error'
-            redirect ORGANIZATIONS + "/#{params[:current_organization]}/#{params[:current_space]}/#{params[:current_tab]}" + '?error=delete_service'
+            redirect ORGANIZATIONS + "/#{params[:current_organization]}/spaces/#{params[:current_space]}/#{params[:current_tab]}" + '?error=delete_service'
           else
-            redirect ORGANIZATIONS + "/#{params[:current_organization]}/#{params[:current_space]}/#{params[:current_tab]}"
+            redirect ORGANIZATIONS + "/#{params[:current_organization]}/spaces/#{params[:current_space]}/#{params[:current_tab]}"
           end
         end
 

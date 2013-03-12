@@ -7,6 +7,11 @@ function deleteSpace(obj)
     document.getElementById('space_guid').value = obj.title;
 }
 
+function deleteDomain(obj)
+{
+    document.getElementById('domain_guid').value = obj.title;
+}
+
 function deleteOrganization(obj)
 {
     document.getElementById('org_guid').value = obj.id;

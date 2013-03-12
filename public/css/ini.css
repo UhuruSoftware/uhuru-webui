@@ -73,11 +73,13 @@ h1, h2, h3, h4, h5, h6
 #delete_app,
 #delete_service,
 #delete_space_modal,
+#delete_domain_modal,
 #delete_user_modal,
 #create_organization,
 #delete_organization_modal,
 #add_ctService_modal,
 #create_space,
+#create_domain,
 #bind_service_modal,
 #unbind_service_modal,
 #bind_uri_modal,
@@ -98,6 +100,7 @@ h1, h2, h3, h4, h5, h6
 
 #create_organization,
 #create_space,
+#create_domain,
 #add_ctService_modal
 {
     display: block;

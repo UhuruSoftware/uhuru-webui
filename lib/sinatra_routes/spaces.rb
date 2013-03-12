@@ -6,7 +6,6 @@ module Uhuru::Webui
       def self.registered(app)
 
         app.get ORGANIZATION do
-
           if session[:login_] == false || session[:login_] == nil
             redirect INDEX
           end
@@ -42,6 +41,8 @@ module Uhuru::Webui
             error_message = $errors['delete_space_error']
           elsif params[:error] == 'delete_user'
             error_message = $errors['delete_user_error']
+          elsif params[:error] == 'delete_domain'
+            error_message = $errors['delete_domain_error']
           else
             error_message = ''
           end
@@ -67,7 +68,6 @@ module Uhuru::Webui
         end
 
         app.get SPACES_CREATE do
-
           if session[:login_] == false || session[:login_] == nil
             redirect INDEX
           end
@@ -126,7 +126,6 @@ module Uhuru::Webui
         end
 
         app.get ORGANIZATION_MEMBERS_ADD do
-
           if session[:login_] == false || session[:login_] == nil
             redirect INDEX
           end
@@ -184,7 +183,6 @@ module Uhuru::Webui
         end
 
         app.get SPACE do
-
           if session[:login_] == false || session[:login_] == nil
             redirect INDEX
           end
@@ -276,9 +274,9 @@ module Uhuru::Webui
           update = spaces_Obj.update(params[:modified_name], params[:current_space])
 
           if update == 'error'
-            redirect ORGANIZATIONS + "/#{params[:current_organization]}/#{params[:current_space]}/#{params[:current_tab]}" + '?error=update_space'
+            redirect ORGANIZATIONS + "/#{params[:current_organization]}/spaces/#{params[:current_space]}/#{params[:current_tab]}" + '?error=update_space'
           else
-            redirect ORGANIZATIONS + "/#{params[:current_organization]}/#{params[:current_space]}/#{params[:current_tab]}"
+            redirect ORGANIZATIONS + "/#{params[:current_organization]}/spaces/#{params[:current_space]}/#{params[:current_tab]}"
           end
         end
 

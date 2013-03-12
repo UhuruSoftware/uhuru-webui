@@ -123,6 +123,7 @@ module Uhuru::Webui
                       :services_list => services_list,
                       :apps_count => apps_list.count,
                       :services_count => services_list.count,
+                      :error_message => '',
                       :include_erb => :'user_pages/modals/apps_create'
                   }
               }
@@ -148,14 +149,16 @@ module Uhuru::Webui
         #
         #end
 
+
+
         app.post '/deleteApp' do
           applications_Obj = Applications.new(session[:token], $cf_target)
           delete = applications_Obj.delete(params[:appGuid])
 
           if delete == 'error'
-            redirect ORGANIZATIONS + "/#{params[:current_organization]}/#{params[:current_space]}/#{params[:current_tab]}" + '?error=delete_app'
+            redirect ORGANIZATIONS + "/#{params[:current_organization]}/spaces/#{params[:current_space]}/#{params[:current_tab]}" + '?error=delete_app'
           else
-            redirect ORGANIZATIONS + "/#{params[:current_organization]}/#{params[:current_space]}/#{params[:current_tab]}"
+            redirect ORGANIZATIONS + "/#{params[:current_organization]}/spaces/#{params[:current_space]}/#{params[:current_tab]}"
           end
         end
 
@@ -164,9 +167,9 @@ module Uhuru::Webui
           start = apps_obj.start_app(params[:appName])
 
           if start == 'error'
-            redirect ORGANIZATIONS + "/#{params[:current_organization]}/#{params[:current_space]}/#{params[:current_tab]}/#{params[:appName]}" + '?error=start_app'
+            redirect ORGANIZATIONS + "/#{params[:current_organization]}/spaces/#{params[:current_space]}/#{params[:current_tab]}/#{params[:appName]}" + '?error=start_app'
           else
-            redirect ORGANIZATIONS + "/#{params[:current_organization]}/#{params[:current_space]}/#{params[:current_tab]}/#{params[:appName]}"
+            redirect ORGANIZATIONS + "/#{params[:current_organization]}/spaces/#{params[:current_space]}/#{params[:current_tab]}/#{params[:appName]}"
           end
         end
 
@@ -175,9 +178,9 @@ module Uhuru::Webui
           stop = apps_obj.stop_app(params[:appName])
 
           if stop == 'error'
-            redirect ORGANIZATIONS + "/#{params[:current_organization]}/#{params[:current_space]}/#{params[:current_tab]}/#{params[:appName]}" + '?error=stop_app'
+            redirect ORGANIZATIONS + "/#{params[:current_organization]}/spaces/#{params[:current_space]}/#{params[:current_tab]}/#{params[:appName]}" + '?error=stop_app'
           else
-            redirect ORGANIZATIONS + "/#{params[:current_organization]}/#{params[:current_space]}/#{params[:current_tab]}/#{params[:appName]}"
+            redirect ORGANIZATIONS + "/#{params[:current_organization]}/spaces/#{params[:current_space]}/#{params[:current_tab]}/#{params[:appName]}"
           end
         end
 
@@ -186,9 +189,9 @@ module Uhuru::Webui
           update = apps_obj.update(params[:appName], params[:appInstances].to_i, params[:appMemory].to_i)
 
           if update == 'error'
-            redirect ORGANIZATIONS + "/#{params[:current_organization]}/#{params[:current_space]}/#{params[:current_tab]}/#{params[:appName]}" + '?error=update_app'
+            redirect ORGANIZATIONS + "/#{params[:current_organization]}/spaces/#{params[:current_space]}/#{params[:current_tab]}/#{params[:appName]}" + '?error=update_app'
           else
-            redirect ORGANIZATIONS + "/#{params[:current_organization]}/#{params[:current_space]}/#{params[:current_tab]}/#{params[:appName]}"
+            redirect ORGANIZATIONS + "/#{params[:current_organization]}/spaces/#{params[:current_space]}/#{params[:current_tab]}/#{params[:appName]}"
           end
         end
 
@@ -204,9 +207,9 @@ module Uhuru::Webui
           bind = apps.bind_app_services(params[:appName], params[:serviceName])
 
           if bind == 'error'
-            redirect ORGANIZATIONS + "/#{params[:current_organization]}/#{params[:current_space]}/#{params[:current_tab]}/#{params[:appName]}" + '?error=bind_service'
+            redirect ORGANIZATIONS + "/#{params[:current_organization]}/spaces/#{params[:current_space]}/#{params[:current_tab]}/#{params[:appName]}" + '?error=bind_service'
           else
-            redirect ORGANIZATIONS + "/#{params[:current_organization]}/#{params[:current_space]}/#{params[:current_tab]}/#{params[:appName]}"
+            redirect ORGANIZATIONS + "/#{params[:current_organization]}/spaces/#{params[:current_space]}/#{params[:current_tab]}/#{params[:appName]}"
           end
         end
 
@@ -218,9 +221,9 @@ module Uhuru::Webui
           bind = routes.create(params[:appName], params[:current_space], domain_guid, params[:uriName])
 
           if bind == 'error'
-            redirect ORGANIZATIONS + "/#{params[:current_organization]}/#{params[:current_space]}/#{params[:current_tab]}/#{params[:appName]}" + '?error=bind_uri'
+            redirect ORGANIZATIONS + "/#{params[:current_organization]}/spaces/#{params[:current_space]}/#{params[:current_tab]}/#{params[:appName]}" + '?error=bind_uri'
           else
-            redirect ORGANIZATIONS + "/#{params[:current_organization]}/#{params[:current_space]}/#{params[:current_tab]}/#{params[:appName]}"
+            redirect ORGANIZATIONS + "/#{params[:current_organization]}/spaces/#{params[:current_space]}/#{params[:current_tab]}/#{params[:appName]}"
           end
         end
 
@@ -229,9 +232,9 @@ module Uhuru::Webui
           unbind = apps.unbind_app_services(params[:appName], params[:serviceName])
 
           if unbind == 'error'
-            redirect ORGANIZATIONS + "/#{params[:current_organization]}/#{params[:current_space]}/#{params[:current_tab]}/#{params[:appName]}" + '?error=unbind_service'
+            redirect ORGANIZATIONS + "/#{params[:current_organization]}/spaces/#{params[:current_space]}/#{params[:current_tab]}/#{params[:appName]}" + '?error=unbind_service'
           else
-            redirect ORGANIZATIONS + "/#{params[:current_organization]}/#{params[:current_space]}/#{params[:current_tab]}/#{params[:appName]}"
+            redirect ORGANIZATIONS + "/#{params[:current_organization]}/spaces/#{params[:current_space]}/#{params[:current_tab]}/#{params[:appName]}"
           end
         end
 
@@ -240,9 +243,9 @@ module Uhuru::Webui
           unbind = apps.unbind_app_url(params[:appName], $config[:cloudfoundry][:cloud_controller_api], params[:uriName])
 
           if unbind == 'error'
-            redirect ORGANIZATIONS + "/#{params[:current_organization]}/#{params[:current_space]}/#{params[:current_tab]}/#{params[:appName]}" + '?error=unbind_uri'
+            redirect ORGANIZATIONS + "/#{params[:current_organization]}/spaces/#{params[:current_space]}/#{params[:current_tab]}/#{params[:appName]}" + '?error=unbind_uri'
           else
-            redirect ORGANIZATIONS + "/#{params[:current_organization]}/#{params[:current_space]}/#{params[:current_tab]}/#{params[:appName]}"
+            redirect ORGANIZATIONS + "/#{params[:current_organization]}/spaces/#{params[:current_space]}/#{params[:current_tab]}/#{params[:appName]}"
           end
         end
 
