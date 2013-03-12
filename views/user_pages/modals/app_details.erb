@@ -4,7 +4,7 @@
 
 <div class="modal fade hide app_details_modal" id="details_<%= app.name %>">
   <div class="modal_header" id="app_details_header">
-    <a href="<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/#{current_space}/apps" %>" class="close"></a>
+    <a href="<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/spaces/#{current_space}/apps" %>" class="close"></a>
   </div>
 
   <div class="modal-body app_body">
@@ -140,7 +140,7 @@
       <input type="hidden" name="current_tab" value="<%= current_tab %>" />
 
       <div class="button_case_create_organization_and_space">
-        <a href="<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/#{current_space}/apps" %>" class="btn btn_right_create_organization_and_space close_app_details cancel"><span class="line">| </span>Cancel </a>
+        <a href="<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/spaces/#{current_space}/apps" %>" class="btn btn_right_create_organization_and_space close_app_details cancel"><span class="line">| </span>Cancel </a>
         <button type="submit" class="btn btn_left_create_organization_and_space hidden_app_details_submit_button ok"><span class="line">| </span>Update </button>
       </div>
     </form>

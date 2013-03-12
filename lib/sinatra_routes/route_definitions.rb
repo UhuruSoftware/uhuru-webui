@@ -26,16 +26,13 @@ module Uhuru::Webui
     DOMAINS_CREATE            = "#{ORGANIZATION}/add_domains"
 
 
-    SPACE                     = "#{ORGANIZATIONS}/:org_guid/:space_guid/:tab"
-    APP                       = "#{ORGANIZATIONS}/:org_guid/:space_guid/:tab/:app_name"
-    APP_CREATE                = "#{ORGANIZATIONS}/:org_guid/:space_guid/:tab/create_app"
-    #APPS_CREATE_CONFIGURE     = "#{APPS_CREATE}/configure_app"
+    SPACE                     = "#{ORGANIZATIONS}/:org_guid/:spaces/:space_guid/:tab"
+    APP                       = "#{ORGANIZATIONS}/:org_guid/:spaces/:space_guid/:tab/:app_name"
 
-
-
-    SERVICES_CREATE           = "#{SPACE}/create_service"
-    SPACE_MEMBERS_ADD         = "#{SPACE}/add_user"
-    ROUTES_CREATE             = "#{SPACE}/create_routes"
+    APP_CREATE                = "#{SPACE}/create_app/new"
+    SERVICES_CREATE           = "#{SPACE}/create_service/new"
+    SPACE_MEMBERS_ADD         = "#{SPACE}/add_user/new"
+    ROUTES_CREATE             = "#{SPACE}/add_route/new"
 
   end
 end

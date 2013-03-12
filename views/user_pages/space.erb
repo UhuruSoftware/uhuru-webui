@@ -3,7 +3,7 @@
   <span class="breadcrumb_element">&nbsp;/&nbsp;</span>
   <a href="<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/spaces" %>" class="breadcrumb_link"><%= organization_name %></a>
   <span class="breadcrumb_element">&nbsp;/&nbsp;</span>
-  <a href="<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/#{current_space}/apps" %>" class="breadcrumb_link"><%= space_name %></a>
+  <a href="<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/spaces/#{current_space}/apps" %>" class="breadcrumb_link"><%= space_name %></a>
 </div>
 
 
@@ -32,16 +32,20 @@
             </h2>
             <div class="icons_options">
                 <% if current_tab == "apps" %>
-                    <a href="<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/#{current_space}/#{current_tab}/create_app" %>" class="plus_sign_32 plus_sign_position_32" id="create_app"></a>
+                    <a href="<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/spaces/#{current_space}/#{current_tab}/create_app/new" %>" class="plus_sign_32 plus_sign_position_32" id="create_app"></a>
                 <% end %>
 
 
                 <% if current_tab == "services" %>
-                    <a href="<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/#{current_space}/#{current_tab}/create_service" %>" class="plus_sign_32 plus_sign_position_32" id="create_service"></a>
+                    <a href="<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/spaces/#{current_space}/#{current_tab}/create_service/new" %>" class="plus_sign_32 plus_sign_position_32" id="create_service"></a>
                 <% end %>
 
                 <% if current_tab == "members" %>
-                    <a href="<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/#{current_space}/#{current_tab}/add_user" %>" class="plus_sign_32 plus_sign_position_32" id="create_user"></a>
+                    <a href="<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/spaces/#{current_space}/#{current_tab}/add_user/new" %>" class="plus_sign_32 plus_sign_position_32" id="create_user"></a>
+                <% end %>
+
+                <% if current_tab == "routes" %>
+                    <a href="<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/spaces/#{current_space}/#{current_tab}/add_route/new" %>" class="plus_sign_32 plus_sign_position_32" id="create_user"></a>
                 <% end %>
 
                 <input type="button" value="" class="edit_sign_32 edit_sign_position_32" id="edit_space_btn" onclick="showSpacesInput();" />
@@ -53,30 +57,30 @@
 
                <ul id="spaces_tabs" class="nav nav-tabs">
                  <% if current_tab == "apps" %>
-                    <li class="space_selected_tab"><a href="<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/#{current_space}/apps" %>">Apps (<span><%= apps_count %></span>)</a></li>
+                    <li class="space_selected_tab"><a href="<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/spaces/#{current_space}/apps" %>">Apps (<span><%= apps_list.count %></span>)</a></li>
                  <% else %>
-                     <li class="space_unselected_tabs"><a href="<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/#{current_space}/apps" %>">Apps (<span><%= apps_count %></span>)</a></li>
+                     <li class="space_unselected_tabs"><a href="<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/spaces/#{current_space}/apps" %>">Apps (<span><%= apps_list.count %></span>)</a></li>
                  <% end %>
 
 
                  <% if current_tab == "services" %>
-                     <li class="space_selected_tab"><a href="<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/#{current_space}/services" %>">Services (<span><%= services_count %></span>)</a></li>
+                     <li class="space_selected_tab"><a href="<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/spaces/#{current_space}/services" %>">Services (<span><%= services_list.count %></span>)</a></li>
                  <% else %>
-                     <li class="space_unselected_tabs"><a href="<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/#{current_space}/services" %>">Services (<span><%= services_count %></span>)</a></li>
+                     <li class="space_unselected_tabs"><a href="<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/spaces/#{current_space}/services" %>">Services (<span><%= services_list.count %></span>)</a></li>
                  <% end %>
 
 
                  <% if current_tab == "members" %>
-                     <li class="space_selected_tab"><a href="<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/#{current_space}/members" %>">Users (<span><%= users_count %></span>)</a></li>
+                     <li class="space_selected_tab"><a href="<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/spaces/#{current_space}/members" %>">Users (<span><%= owners_list.count + developers_list.count + auditors_list.count %></span>)</a></li>
                  <% else %>
-                     <li class="space_unselected_tabs"><a href="<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/#{current_space}/members" %>">Users (<span><%= users_count %></span>)</a></li>
+                     <li class="space_unselected_tabs"><a href="<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/spaces/#{current_space}/members" %>">Users (<span><%= owners_list.count + developers_list.count + auditors_list.count %></span>)</a></li>
                  <% end %>
 
 
                  <% if current_tab == "routes" %>
-                     <li class="space_selected_tab"><a href="<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/#{current_space}/routes" %>">Routes </a></li>
+                     <li class="space_selected_tab"><a href="<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/spaces/#{current_space}/routes" %>">Routes (<span><%= routes_list.count %></span>)</a></li>
                  <% else %>
-                     <li class="space_unselected_tabs"><a href="<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/#{current_space}/routes" %>">Routes </a></li>
+                     <li class="space_unselected_tabs"><a href="<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/spaces/#{current_space}/routes" %>">Routes (<span><%= routes_list.count %></span>)</a></li>
                  <% end %>
                </ul>
 
@@ -88,7 +92,7 @@
                                 <li class="tile_invisible read_app_details">
                                     <ul class="custom_list">
                                         <li class="tile_app_name" title="<%= app.name %>">
-                                                <a href="<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/#{current_space}/apps/#{app.name}" %>" class="link_tiles_app show_this_app_details" id="<%= app.name %>">
+                                                <a href="<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/spaces/#{current_space}/apps/#{app.name}" %>" class="link_tiles_app show_this_app_details" id="<%= app.name %>">
                                                     <span class="app_name" id="<%= app.name %>" title="<%= app.name %>"><%= app.name %></span>
                                                     <span class="app_state" id="<%= app.state %>"></span>
                                                     <span class="app_instances" id="<%= app.instances %>"></span>
@@ -189,9 +193,31 @@
             <% end %>
 
             <% if defined?(current_tab) && current_tab != nil && current_tab == "routes" %>
-                <div id="routes">
-                    Routes
-                </div>
+               <div id="routes" class="tab-pane">
+                 <ul class="tile_list">
+
+                   <% routes_list.each do |route| %>
+                       <li class="tile_invisible">
+                         <ul class="custom_list">
+                           <li class="tile_route_name" title="<%= route.name %>">
+                                <span>
+                                    <span class="service_name"><%= route.name %></span>
+                                    <a href="#"><span class="small_trash delete-route-button" id="<%= route.name %>" title="<%= route.guid %>" onmousemove="prepareToDeleteRoute(this);"></span></a>
+                                </span>
+                           </li>
+
+                           <li class="tile_service_logo">
+                             <span href="#" class="link_tiles_app"></span>
+                           </li>
+
+                           <li class="tile_route_details">
+                             <%= route.name %>
+                           </li>
+                         </ul>
+                       </li>
+                   <% end %>
+                 </ul>
+               </div>
             <% end %>
 </div>
 
@@ -254,28 +280,56 @@
 
 
     <div class="modal fade hide" id="delete_service">
-        <div class="modal-header">
-            <button class="close"></button>
-            <h3>Delete Service</h3>
+      <div class="modal-header">
+        <button class="close"></button>
+        <h3>Delete Service</h3>
+      </div>
+      <div class="modal-body">
+        <p>
+          Are you sure you want to delete the service &nbsp;<span id="this_service_name"></span>?
+        </p>
+      </div>
+      <div class="modal-footer">
+        <span class="server_errors"><%= session[:e_delete_service] %></span>
+        <div class="button_case_delete_organization_and_space">
+          <button class="btn btn_right_delete_organization_and_space cancel"><span class="line">| </span>Cancel </button>
+          <form action="/deleteService" method="post">
+            <button type="submit" class="btn btn_left_delete_organization_and_space danger"><span class="line">| </span>Delete </button>
+            <input type="hidden" id="pass_service" name="serviceGuid" />
+            <input type="hidden" name="current_organization" value="<%= current_organization %>" />
+            <input type="hidden" name="current_space" value="<%= current_space %>" />
+            <input type="hidden" name="current_tab" value="<%= current_tab %>" />
+          </form>
         </div>
+      </div>
+    </div>
+
+
+    <div class="modal fade hide" id="delete_route">
+      <div class="modal-header">
+        <button class="close"></button>
+        <h3>Delete Route</h3>
+      </div>
+      <form action="/deleteRoute" method="post">
+
         <div class="modal-body">
-            <p>
-                Are you sure you want to delete the service &nbsp;<span id="this_service_name"></span>?
-            </p>
+          <p>
+            <label for="service_name">App Name: </label>
+            <input type="text" id="appName" class="modal_input_box" autofocus />
+          </p>
         </div>
+
         <div class="modal-footer">
-            <span class="server_errors" id="delete_service_failed"><%= session[:e_delete_service] %></span>
-            <div class="button_case_delete_organization_and_space">
+        <span class="server_errors"><%= error_message %></span>
+        <div class="button_case_delete_organization_and_space">
             <button class="btn btn_right_delete_organization_and_space cancel"><span class="line">| </span>Cancel </button>
-                <form action="/deleteService" method="post">
-                    <button type="submit" class="btn btn_left_delete_organization_and_space danger"><span class="line">| </span>Delete </button>
-                    <input type="hidden" id="pass_service" name="serviceGuid" />
-                    <input type="hidden" name="current_organization" value="<%= current_organization %>" />
-                    <input type="hidden" name="current_space" value="<%= current_space %>" />
-                    <input type="hidden" name="current_tab" value="<%= current_tab %>" />
-                </form>
-            </div>
+            <button type="submit" class="btn btn_left_delete_organization_and_space danger"><span class="line">| </span>Delete </button>
+            <input type="hidden" name="current_organization" value="<%= current_organization %>" />
+            <input type="hidden" name="current_space" value="<%= current_space %>" />
+            <input type="hidden" name="current_tab" value="<%= current_tab %>" />
         </div>
+        </div>
+      </form>
     </div>
 
     <div class="modal hide" id="delete_user_modal">

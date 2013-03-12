@@ -37,8 +37,15 @@ var delete_organization_message = function()
 
 var delete_space_message = function()
 {
-	$('#cancel_b_d_space').fadeOut(200);
-	$('#b_d_space').fadeOut(200);
+    $('#cancel_b_d_space').fadeOut(200);
+    $('#b_d_space').fadeOut(200);
+    $('#p_d_space').fadeIn(200);
+}
+
+var delete_domain_message = function()
+{
+    $('#cancel_b_d_space').fadeOut(200);
+    $('#b_d_space').fadeOut(200);
     $('#p_d_space').fadeIn(200);
 }
 
@@ -48,6 +55,7 @@ $('.app_tiles_cloudpush').click(add_template_app_modal);
 
 $('#b_d_organization').click(delete_organization_message);
 $('#b_d_space').click(delete_space_message);
+$('#b_d_domain').click(delete_space_message);
 
 });
 

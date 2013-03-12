@@ -1,0 +1,29 @@
+<div class="dark_background"> </div>
+
+<div class="modal fade hide" id="create_route" onmousemove="newServiceName();">
+  <div class="modal-header">
+    <a href="<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/spaces/#{current_space}/routes" %>" class="close"></a>
+    <h3>New Route</h3>
+  </div>
+
+
+  <form action="/createRoute" method="post">
+      <div class="modal-body">
+        <p>
+          <label for="service_name">App Name: </label>
+          <input type="text" id="appName" class="modal_input_box" autofocus />
+        </p>
+      </div>
+
+      <div class="modal-footer">
+        <span class="server_errors" id="create_service_failed"><%= error_message %></span>
+        <div class="button_case_create_organization_and_space">
+            <a href="<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/spaces/#{current_space}/routes" %>" class="btn btn_right_create_organization_and_space cancel"><span class="line">| </span>Close </a>
+            <input type="hidden" name="current_organization" value="<%= current_organization %>" />
+            <input type="hidden" name="current_space" value="<%= current_space %>" />
+            <input type="hidden" name="current_tab" value="<%= current_tab %>" />
+            <button type="submit" class="btn btn_left_create_organization_and_space ok"><span class="line">| </span>Create </button>
+        </div>
+      </div>
+  </form>
+</div>

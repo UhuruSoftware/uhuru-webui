@@ -3,7 +3,7 @@
 <div class="modal fade" id="add_user">
   <div class="modal-header">
     <% if defined?(current_space) && current_space != nil %>
-        <a href="<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/#{current_space}/members" %>" class="close"></a>
+        <a href="<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/spaces/#{current_space}/members" %>" class="close"></a>
     <% else %>
         <a href="<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/members" %>" class="close"></a>
     <% end %>
