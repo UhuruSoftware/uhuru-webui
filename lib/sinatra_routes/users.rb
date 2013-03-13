@@ -30,8 +30,10 @@ module Uhuru::Webui
 
           collections = readapps_Obj.read_collections
 
-          if params[:error] != '' && params[:error] != nil
+          if params[:error] == 'add_user'
             error_message = $errors['add_user_error']
+          elsif params[:error] == 'delete_user'
+            error_message = $errors['delete_user_error']
           else
             error_message = ''
           end
@@ -66,7 +68,7 @@ module Uhuru::Webui
           organizations_Obj = Library::Organizations.new(session[:token], $cf_target)
           users_Obj = Library::Users.new(session[:token], $cf_target)
 
-          if params[:current_space] == nil && params[:current_space] == ''
+          if params[:current_space] == nil || params[:current_space] == ''
             add_user = users_Obj.invite_user_with_role_to_org($config, params[:userEmail], params[:current_organization], params[:userType])
 
             if add_user == 'error'
@@ -89,7 +91,7 @@ module Uhuru::Webui
           organizations_Obj = Library::Organizations.new(session[:token], $cf_target)
           users_Obj = Library::Users.new(session[:token], $cf_target)
 
-          if params[:current_space] == nil && params[:current_space] == ''
+          if params[:current_space] == nil || params[:current_space] == ''
             delete_user = users_Obj.remove_user_with_role_from_org(params[:current_organization], params[:thisUser], params[:thisUserRole])
 
             if delete_user == 'error'

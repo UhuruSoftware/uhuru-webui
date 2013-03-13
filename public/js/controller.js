@@ -1,3 +1,80 @@
+
+
+//
+//          CONTROLLER FOR THE LANDING PAGE PLACEHOLDERS
+//
+
+$('[placeholder]').focus(function() {
+    var input = $(this);
+    input.css("font-style", "normal");
+    input.css("color", "#ffffff");
+    if (input.val() == input.attr('placeholder')) {
+        input.val('');
+        input.removeClass('placeholder');
+    }
+}).blur(function() {
+        var input = $(this);
+        input.css("font-style", "italic");
+        input.css("color", "gray");
+        if (input.val() == '' || input.val() == input.attr('placeholder')) {
+            input.addClass('placeholder');
+            input.val(input.attr('placeholder'));
+        }
+    }).blur();
+
+$('[placeholder]').parents('form').submit(function() {
+    $(this).find('[placeholder]').each(function() {
+        var input = $(this);
+        if (input.val() == input.attr('placeholder')) {
+            input.val('');
+        }
+    })
+});
+
+
+
+
+
+
+//
+//          CONTROLLING THE UPDATE ORG AND SPACE INPUT BOX AND TEXT (NAME UPDATES)
+//
+
+function showSpacesInput()
+{
+    document.getElementById('space_input').style.display = 'block';
+    document.getElementById('space_input').value = document.getElementById('space_name').innerHTML;
+    document.getElementById('space_input').focus();
+    document.getElementById('space_input').style.border = '1px solid #2eccfa';
+    document.getElementById('space_name').style.display = 'none';
+}
+
+function showOrganizationsInput()
+{
+    document.getElementById('organization_input').style.display = 'block';
+    document.getElementById('organization_input').value = document.getElementById('organization_name').innerHTML;
+    document.getElementById('organization_input').focus();
+    document.getElementById('organization_input').style.border = '1px solid #2eccfa';
+    document.getElementById('organization_name').style.display = 'none';
+}
+
+$('.tiped').bind({
+    focus: function() {
+        $('.tooltips').show(200);
+    },
+    blur: function() {
+        $('.tooltips').hide(300);
+    }
+});
+
+
+
+
+//
+//          PASSING DATA TO DELETE MODALS
+//
+
+
 var delete_organization = function()
 {
     $('#org_guid').val($(this).attr("id"))
@@ -60,3 +137,176 @@ var delete_auditor = function()
 $('.btn_delete_owner').click(delete_owner);
 $('.btn_delete_developer').click(delete_developer);
 $('.btn_delete_auditor').click(delete_auditor);
+
+
+
+
+
+
+
+
+
+/*
+
+ These functions control the big app modal and all its functionality
+
+ */
+
+var element = "";
+
+$('.tile_app_name').hover(function(){
+
+    var id = $(this).contents().find("span:nth-child(1)").attr("id");
+    element = $('body').find('#details_' + id);
+
+    var displayAppDetails = function(){
+        $('#opac_screen').css({	"display": "block", opacity: 0.7, "width": "10000px", "height": "10000px"});
+        $('body').css({"overflow":"hidden"});
+        element.fadeIn(800);
+        $('.close_app_details').click(function(){$('.app_details_modal').css("display", "none");$('#opac_screen').css("display", "none");$('body').css({"overflow":"auto"});});
+        $('.close').click(function(){$('.app_details_modal').css("display", "none");$('#opac_screen').css("display", "none");$('body').css({"overflow":"auto"});});
+    }
+    $('.show_this_app_details').click(displayAppDetails);
+});
+
+$(function(){
+
+    $('.bind_uri_footer').hover(function(){
+        var name = $('#newUri').val();
+        $('#uriName').val(name);
+    });
+
+    $('.get_uri_name').hover(function(){
+        var name = $(this).attr("id");
+        var app = $(this).attr("title");
+
+        $('#unbind_uriName').val(name);
+
+        $('#bind_uri_app_name').val(app);
+        $('#unbind_uri_app_name').val(app);
+    });
+    $('.get_service_name').hover(function(){
+        var name = $(this).attr("id");
+        var app = $(this).attr("title");
+
+        $('#unbind_serviceName').val(name);
+
+        $('#bind_service_app_name').val(app);
+        $('#unbind_service_app_name').val(app);
+    });
+
+});
+
+
+
+
+$(function(){
+    var memory = $('.app_memory_count').text();
+    var instance = 1;
+
+
+    var firstInstance = $('.send_app_instances').val();
+
+    instance = parseInt(instance);
+    memory = parseInt(memory);
+
+
+    var plus_instance = function(){
+        instance+=1;
+        instance = instance + "";
+        $('.app_instances_count').text(instance);
+        $('.send_app_instances').val(instance);
+        instance = parseInt(instance);
+        if(firstInstance != instance)
+        {
+            $('.hidden_app_details_submit_button').fadeIn('slow');
+        }
+        else
+        {
+            $('.hidden_app_details_submit_button').fadeOut('slow');
+        }
+    }
+
+    var minus_instance = function(){
+        instance-=1;
+        instance = instance + "";
+        $('.app_instances_count').text(instance);
+        $('.send_app_instances').val(instance);
+        instance = parseInt(instance);
+        if(firstInstance != instance)
+        {
+            $('.hidden_app_details_submit_button').fadeIn('slow');
+        }
+        else
+        {
+            $('.hidden_app_details_submit_button').fadeOut('slow');
+        }
+    }
+
+
+
+
+
+    $('.tile_app_name').click(function(){
+
+        var appName = $(this).contents().find("span:nth-child(1)").attr("id");
+        var sliderId = $('body').find('#slider_' + appName);
+        var insMemory = $(this).contents().find("span:nth-child(4)").attr("id");
+
+        $(function() {
+
+
+            var slider = sliderId.slider({
+                min: 0,
+                max: 1024,
+                step: 32,
+                value: insMemory,
+                range: "min",
+                change: function(event, ui) {
+                    var sliderValue = sliderId.slider( "option", "value" );
+                    $('.app_memory_count').html(sliderValue);
+                    $('.send_app_memory').val(sliderValue);
+                    if(insMemory != sliderValue)
+                    {
+                        $('.hidden_app_details_submit_button').fadeIn('slow');
+                    }
+                    else
+                    {
+                        $('.hidden_app_details_submit_button').fadeOut('slow');
+                    }
+                }
+
+            });
+
+
+            $('.app_plus_memory').click(function() {
+                var sliderCurrentValue = sliderId.slider( "option", "value" );
+                slider.slider( "value", sliderCurrentValue + 32 );
+            });
+
+            $('.app_minus_memory').click(function() {
+                var sliderCurrentValue = sliderId.slider( "option", "value" );
+                slider.slider( "value", sliderCurrentValue - 32 );
+            });
+
+        });
+
+    });
+
+
+
+
+
+    $('.app_plus_instance').click(plus_instance);
+    $('.app_minus_instance').click(minus_instance);
+
+
+    function showButton()
+    {
+        $('.hidden_app_details_submit_button').show();
+    }
+
+});
+
+
+

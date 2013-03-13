@@ -276,15 +276,17 @@
             </p>
         </div>
         <div class="modal-footer">
-            <span class="server_errors" id="delete_user_failed"></span>
+            <span class="server_errors" id="delete_user_failed"><%= error_message %></span>
+            <p class="hidden_modal_messages" id="span_delete_user">Deleting user...</p>
+
             <div class="button_case_delete_organization_and_space">
-            <button type="button" class="btn btn_right_delete_organization_and_space cancel"><span class="line">| </span>Cancel </button>
+            <button type="button" class="btn btn_right_delete_organization_and_space cancel btn_cancel_user"><span class="line">| </span>Cancel </button>
                 <form action="/deleteUser" method="post">
                     <input type="hidden" id="pass_user_guid" value="" name="thisUser"/>
                     <input type="hidden" id="pass_user_role" value="" name="thisUserRole"/>
                     <input type="hidden" name="current_organization" value="<%= current_organization %>" />
                     <input type="hidden" name="current_tab" value="<%= current_tab %>" />
-                    <button type="submit" class="btn btn_left_delete_organization_and_space danger danger"><span class="line">| </span>Delete </button>
+                    <button type="submit" class="btn btn_left_delete_organization_and_space danger btn_delete_user"><span class="line">| </span>Delete </button>
                 </form>
             </div>
         </div>

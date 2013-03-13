@@ -213,7 +213,8 @@ module Library
       org.update!
 
     rescue Exception => e
-      raise "delete user error-org" #"#{e.inspect}"
+      puts 'delete user from org error (organization)'
+      return 'error'
     end
 
      # role is a string ex: 'owner', 'developer', 'auditor'
@@ -239,7 +240,8 @@ module Library
       space.update!
 
     rescue Exception => e
-      raise "delete user error-space" #"#{e.inspect}"
+      puts 'delete user from space error (organization)'
+      return 'error'
     end
 
     def user_exists(user_guid)

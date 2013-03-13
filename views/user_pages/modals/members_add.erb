@@ -40,11 +40,13 @@
       </div>
       <div class="modal-footer">
         <span class="server_errors" id="create_user_failed"><%= error_message %></span>
+        <p class="hidden_modal_messages" id="span_add_user">Adding user...</p>
+
         <div class="button_case_create_organization_and_space">
             <input type="hidden" name="current_organization" value="<%= current_organization %>" />
             <input type="hidden" name="current_space" value="<%= current_space %>" />
             <input type="hidden" name="current_tab" value="<%= current_tab %>" />
-            <button type="submit" class="btn btn_right_create_organization_and_space ok"><span class="line">| </span>Invite User </button>
+            <button type="submit" class="btn btn_right_create_organization_and_space ok btn_add_user"><span class="line">| </span>Invite User </button>
         </div>
       </div>
   </form>
