@@ -9,7 +9,6 @@ module Uhuru::Webui
       def self.registered(app)
 
         app.get SERVICES_CREATE do
-
           if session[:login_] == false || session[:login_] == nil
             redirect INDEX
           end
@@ -72,7 +71,7 @@ module Uhuru::Webui
           create = spaces_Obj.create_service_instance(params[:serviceName], params[:current_space], @plan)
 
           if create == 'error'
-            redirect ORGANIZATIONS + "/#{params[:current_organization]}/spaces/#{params[:current_space]}/#{params[:current_tab]}/create_service" + '?error=create_service'
+            redirect ORGANIZATIONS + "/#{params[:current_organization]}/spaces/#{params[:current_space]}/#{params[:current_tab]}/create_service/new" + '?error=create_service'
           else
             redirect ORGANIZATIONS + "/#{params[:current_organization]}/spaces/#{params[:current_space]}/#{params[:current_tab]}"
           end

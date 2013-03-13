@@ -70,7 +70,7 @@ module Uhuru::Webui
           create = routes_Obj.create(params[:appName], params[:current_space], domains_Obj.get_organizations_domain_guid(params[:current_organization]))
 
           if create == 'error'
-            redirect ORGANIZATIONS + "/#{params[:current_organization]}/spaces/#{params[:current_space]}/#{params[:current_tab]}" + '?error=create_route'
+            redirect ORGANIZATIONS + "/#{params[:current_organization]}/spaces/#{params[:current_space]}/#{params[:current_tab]}/add_route/new" + '?error=create_route'
           else
             redirect ORGANIZATIONS + "/#{params[:current_organization]}/spaces/#{params[:current_space]}/#{params[:current_tab]}"
           end

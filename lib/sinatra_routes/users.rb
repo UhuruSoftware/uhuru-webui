@@ -6,7 +6,6 @@ module Uhuru::Webui
       def self.registered(app)
 
         app.get SPACE_MEMBERS_ADD do
-
           if session[:login_] == false || session[:login_] == nil
             redirect INDEX
           end
@@ -79,7 +78,7 @@ module Uhuru::Webui
             add_user = users_Obj.invite_user_with_role_to_space($config, params[:userEmail], params[:current_space], params[:userType])
 
             if add_user == 'error'
-              redirect ORGANIZATIONS + "/#{params[:current_organization]}/spaces/#{params[:current_space]}/#{params[:current_tab]}/add_user" + '?error=add_user'
+              redirect ORGANIZATIONS + "/#{params[:current_organization]}/spaces/#{params[:current_space]}/#{params[:current_tab]}/add_user/new" + '?error=add_user'
             else
               redirect ORGANIZATIONS + "/#{params[:current_organization]}/spaces/#{params[:current_space]}/#{params[:current_tab]}"
             end

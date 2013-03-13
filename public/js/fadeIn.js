@@ -72,11 +72,10 @@ $('.delete-app-button').click(delete_app);
 $('.delete-service-button').click(delete_service);
 $('.delete-route-button').click(delete_route);
 $('.delete-user-button').click(delete_user);
-
-
-
 $('.delete_this_organization').click(delete_organization_modal);
 $('.delete_this_space').click(delete_space_modal);
+
+
 
 var bind_service = function(){
 	$('#screen').css({	"display": "block", opacity: 0.7, "width": "10000px", "height": "10000px"});
@@ -112,9 +111,74 @@ var unbind_uri = function(){
 
 $('.button_bound_services').click(bind_service);
 $('.button_unbound_services').click(unbind_service);
-
 $('.button_bound_uri').click(bind_uri);
 $('.button_unbound_uri').click(unbind_uri);
+
+
+
+var saving_modal_start = function()
+{
+    $('#screen').css({	display: "block", opacity: 0.9, width: "10000px", height: "10000px"});
+    $('body').css({"overflow":"hidden"});
+    $('#saving_modal').fadeIn(200);
+    $('.stopApp_btn').css("display", "block");
+    $('.startApp_btn').css("display", "none");
+}
+
+var saving_modal_stop = function()
+{
+    $('#screen').css({	display: "block", opacity: 0.9, width: "10000px", height: "10000px"});
+    $('body').css({"overflow":"hidden"});
+    $('#saving_modal').fadeIn(200);
+    $('.startApp_btn').css("display", "block");
+    $('.stopApp_btn').css("display", "none");
+}
+
+var delete_organization_message = function()
+{
+    $('#cancel_btn_delete_organization').fadeOut(200);
+    $('#btn_delete_organization').fadeOut(200);
+    $('#span_delete_organization').fadeIn(200);
+}
+
+var delete_space_message = function()
+{
+    $('#cancel_btn_delete_space').fadeOut(200);
+    $('#btn_delete_space').fadeOut(200);
+    $('#span_delete_space').fadeIn(200);
+}
+
+var delete_domain_message = function()
+{
+    $('#cancel_btn_delete_domain').fadeOut(200);
+    $('#btn_delete_domain').fadeOut(200);
+    $('#span_delete_domain').fadeIn(200);
+}
+
+var delete_app_message = function()
+{
+    $('#btn_cancel_app').fadeOut(200);
+    $('#btn_delete_app').fadeOut(200);
+    $('#span_delete_app').fadeIn(200);
+}
+
+var delete_service_message = function()
+{
+    $('#btn_cancel_service').fadeOut(200);
+    $('#btn_delete_service').fadeOut(200);
+    $('#span_delete_service').fadeIn(200);
+}
+
+$('.startApp_btn').click(saving_modal_start);
+$('.stopApp_btn').click(saving_modal_stop);
+
+$('#btn_delete_organization').click(delete_organization_message);
+$('#btn_delete_space').click(delete_space_message);
+$('#btn_delete_domain').click(delete_domain_message);
+$('#btn_delete_app').click(delete_app_message);
+$('#btn_delete_service').click(delete_service_message);
+
+
 
 $('#logout_key').click(function(){
     $('#logout_small_modal').slideToggle(200, function(){
@@ -127,10 +191,9 @@ $('#logout_key').click(function(){
         });
     });
 
-
 });
 
-$('.create_app_header_tab_right').click(function(){
-    $('#create_app_templates_list').fadeIn(600);
-    $('#create_app_templates').fadeIn(600);
-});
+
+
+
+

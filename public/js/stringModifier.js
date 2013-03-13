@@ -42,47 +42,47 @@ $('.tiped').bind({
 
 
 $(function() {
-//    $('#b_c_organization').click(function(event){
-//        var org = $('#org_name').val();
-//
-//        if(org.length < 4) {
-//            event.preventDefault();
-//            $('.server_errors').hide().text("Please enter a name(4 letters)!").fadeIn(200);
-//        }
-//        else
-//        {
-//            $('#cancel_b_c_organization').fadeOut(200);
-//            $('#b_c_organization').fadeOut(200);
-//            $('#p_c_organization').fadeIn(200);
-//        }
-//    });
-//
-//    $('#b_c_space').click(function(event){
-//        var space = $('.space_name_i').val();
-//
-//        if(space.length < 4) {
-//            event.preventDefault();
-//            $('.server_errors').hide().text("Please enter a name(4 letters)!").fadeIn(200);
-//        }
-//        else
-//        {
-//            $('#cancel_b_c_space').fadeOut(200);
-//            $('#b_c_space').fadeOut(200);
-//            $('#p_c_space').fadeIn(200);
-//        }
-//    });
-//
-//    $('#b_add_user').click(function(event){
-//        var user = $('#user_email').val();
-//
-//        if( /(.+)@(.+){2,}\.(.+){2,}/.test(user) ){
-//            $('#b_add_user').fadeOut(200);
-//            $('#p_add_user').fadeIn(200);
-//        } else {
-//            event.preventDefault();
-//            $('.server_errors').hide().text("Please type a valid email address!").fadeIn(200);
-//        }
-//    });
+    $('#b_c_organization').click(function(event){
+        var org = $('#org_name').val();
+
+        if(org.length < 4) {
+            event.preventDefault();
+            $('.server_errors').hide().text("Please enter a name(4 letters)!").fadeIn(200);
+        }
+        else
+        {
+            $('#cancel_b_c_organization').fadeOut(200);
+            $('#b_c_organization').fadeOut(200);
+            $('#p_c_organization').fadeIn(200);
+        }
+    });
+
+    $('#b_c_space').click(function(event){
+        var space = $('.space_name_i').val();
+
+        if(space.length < 4) {
+            event.preventDefault();
+            $('.server_errors').hide().text("Please enter a name(4 letters)!").fadeIn(200);
+        }
+        else
+        {
+            $('#cancel_b_c_space').fadeOut(200);
+            $('#b_c_space').fadeOut(200);
+            $('#p_c_space').fadeIn(200);
+        }
+    });
+
+    $('#b_add_user').click(function(event){
+        var user = $('#user_email').val();
+
+        if( /(.+)@(.+){2,}\.(.+){2,}/.test(user) ){
+            $('#b_add_user').fadeOut(200);
+            $('#p_add_user').fadeIn(200);
+        } else {
+            event.preventDefault();
+            $('.server_errors').hide().text("Please type a valid email address!").fadeIn(200);
+        }
+    });
 
     $('#b_delete_user').click(function(){
         $('#b_delete_user').fadeOut(200);
