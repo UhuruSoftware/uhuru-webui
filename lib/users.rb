@@ -258,12 +258,10 @@ module Library
     private
 
     def create_user(user_guid)
-      base_path = @client.target + '/v2/users'
-      headers = {'Content-Type' => 'application/json', 'Authorization' => @client.token}
-      attributes = {:guid => user_guid}
 
-      response = HttpDirectClient.post("#{base_path}", :headers => headers, :body => attributes.to_json)
-      return true if response.request.last_response.code == '201'
+      user = @client.user
+      user.guid = user_guid
+      return user.create!
 
     rescue Exception => e
       false

@@ -21,6 +21,11 @@ class UsersSetup
         return 'error'
       end
 
+      # new login with cfoundry gem !!!
+      #client = CFoundry::V2::Client.new(@cf_target)
+      #client.login(email, password)
+      #token = client.token
+
       users_obj = Library::Users.new(user_token, @cf_target)
       user_guid = users_obj.get_user_guid
 
@@ -72,6 +77,7 @@ class UsersSetup
       admin_token = get_user_token(@cf_admin, @cf_pass)
 
       if admin_token != 'user_token_error'
+        #admin_token = CFoundry::AuthToken.new(admin_token)
         users_obj = Library::Users.new(admin_token, @cf_target)
         organizations_Obj = Library::Organizations.new(admin_token, @cf_target)
         org_name = email + "'s organization"
@@ -171,7 +177,7 @@ class UsersSetup
     uaac = get_uaa_client
     uaa_user = uaac.get(:user, user_guid)
 
-    uaa_user['userName']
+    uaa_user['username']
   end
 
   # todo: stefi: consider not using this method or at least once per server instance. may have scalability problems
@@ -214,7 +220,7 @@ class UsersSetup
     token_issuer = CF::UAA::TokenIssuer.new(@uaaApi, 'vmc', '')
     token_obj = token_issuer.implicit_grant_with_creds(username: email, password: password)
     token_user = token_obj.info['token_type'] + ' ' + token_obj.info['access_token']
-
+    token_user = CFoundry::AuthToken.new(token_user)
     token_user
 
     rescue Exception => e

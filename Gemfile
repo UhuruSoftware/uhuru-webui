@@ -2,7 +2,7 @@ source 'http://rubygems.org'
 
 gem 'vcap_logging', :require => ['vcap/logging']#, :git => 'https://github.com/cloudfoundry/common.git', :ref => 'e36886a1'
 gem "cf-uaa-lib"#, "~> 1.2.5", :git => 'git://github.com/cloudfoundry/uaa'
-gem "cfoundry", "~> 0.4.19"
+gem "cfoundry"
 gem "sinatra"
 gem "sinatra-session"
 gem "httparty"
@@ -18,3 +18,4 @@ gem "rest-client"
 gem "base32"
 
 gem "chargify_api_ares"
+gem "activeresource", "~> 3.2.12"
