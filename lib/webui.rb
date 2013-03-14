@@ -43,7 +43,7 @@ module Uhuru::Webui
     def initialize(config)
       $config = config
       $cf_target = $config[:cloud_controller_url]
-      $errors = YAML::load(File.open('../config/error_messages.yml'))
+      $errors = YAML::load(File.open(File.expand_path("../../config/error_messages.yml", __FILE__)))
 
       ChargifyWrapper.configure(config)
       BillingHelper.initialize(config)
