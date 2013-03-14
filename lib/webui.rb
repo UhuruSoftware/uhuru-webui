@@ -42,7 +42,7 @@ module Uhuru::Webui
 
     def initialize(config)
       $config = config
-      $cf_target = $config[:cloudfoundry][:cloud_controller_api]
+      $cf_target = $config[:cloud_controller_url]
       $errors = YAML::load(File.open('../config/error_messages.yml'))
 
       ChargifyWrapper.configure(config)

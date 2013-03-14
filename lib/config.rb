@@ -49,21 +49,17 @@ class Uhuru::Webui::Config < VCAP::Config
           :support_link                     => String
       },
 
-      :cloudfoundry => {
-        :cloud_controller_api               => String,
-        :client_id                          => String,
-        :client_secret                      => String,
-        :cloud_controller_admin             => String,
-        :cloud_controller_pass              => String
+      :cloud_controller_url                 => String,
+
+      :uaa => {
+          :url                          => String,
+          :client_id                        => String,
+          :client_secret                    => String
       },
 
       :default_domain => {
         :page_title                         => String,
         :welcome_message                    => String
-      },
-
-      :uaa => {
-        :uaa_api                            => String
       },
 
       :contact => {

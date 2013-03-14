@@ -243,7 +243,7 @@ module Uhuru::Webui
 
         app.post '/unbindUri' do
           apps = Applications.new(session[:token], $cf_target)
-          unbind = apps.unbind_app_url(params[:appName], $config[:cloudfoundry][:cloud_controller_api], params[:uriName])
+          unbind = apps.unbind_app_url(params[:appName], $config[:cloud_controller_url], params[:uriName])
 
           if unbind == 'error'
             redirect ORGANIZATIONS + "/#{params[:current_organization]}/spaces/#{params[:current_space]}/#{params[:current_tab]}/#{params[:appName]}" + '?error=unbind_uri'

@@ -5,13 +5,12 @@ require 'config'
 class UsersSetup
 
   def initialize(config)
-    @config = config
-    @uaaApi = @config[:uaa][:uaa_api]
-    @client_secret = @config[:cloudfoundry][:client_secret]
-    @client_id = @config[:cloudfoundry][:client_id]
-    @cf_target = @config[:cloudfoundry][:cloud_controller_api]
-    @cf_admin = @config[:cloudfoundry][:cloud_controller_admin]
-    @cf_pass = @config[:cloudfoundry][:cloud_controller_pass]
+    @config         = config
+    @uaaApi         = @config[:uaa][:url]
+    @client_id      = @config[:uaa][:client_id]
+    @client_secret  = @config[:uaa][:client_secret]
+    @cf_target      = @config[:cloud_controller_url]
+
   end
 
   def login(email, password)
@@ -74,7 +73,7 @@ class UsersSetup
 
     if (user != nil)
       user_id = user['id']
-      admin_token = get_user_token(@cf_admin, @cf_pass)
+      admin_token = get_admin_token
 
       if admin_token != 'user_token_error'
         #admin_token = CFoundry::AuthToken.new(admin_token)
@@ -161,14 +160,16 @@ class UsersSetup
   end
 
   def get_admin_token
-    get_user_token(@cf_admin, @cf_pass)
+    token_issuer = CF::UAA::TokenIssuer.new(@uaaApi, @client_id, @client_secret)
+    token = token_issuer.client_credentials_grant()
+    CFoundry::AuthToken.from_uaa_token_info(token)
   end
 
   def get_uaa_client
     token_issuer = CF::UAA::TokenIssuer.new(@uaaApi, @client_id, @client_secret)
     token = token_issuer.client_credentials_grant()
 
-    uaac = CF::UAA::Scim.new(@uaaApi, token.info['token_type'] + ' ' + token.info['access_token'])
+    uaac = CF::UAA::Scim.new(@uaaApi, token.auth_header)
 
     uaac
   end
@@ -217,12 +218,11 @@ class UsersSetup
   def get_user_token(email, password)
 
     begin
-    token_issuer = CF::UAA::TokenIssuer.new(@uaaApi, 'vmc', '')
-    token_obj = token_issuer.implicit_grant_with_creds(username: email, password: password)
-    token_user = token_obj.info['token_type'] + ' ' + token_obj.info['access_token']
-    token_user = CFoundry::AuthToken.new(token_user)
-    token_user
+      token_issuer = CF::UAA::TokenIssuer.new(@uaaApi, @client_id, @client_secret)
+      # token_obj = token_issuer.implicit_grant_with_creds(username: email, password: password)
+      token_obj = token_issuer.owner_password_grant(email, password)
 
+      CFoundry::AuthToken.from_uaa_token_info(token_obj)
     rescue Exception => e
       puts e
       puts 'get_user_token method error'
@@ -232,7 +232,6 @@ class UsersSetup
 
   def get_user_details(user_guid)
     uaac = get_uaa_client
-
     uaa_user = uaac.get(:user, user_guid)
 
     user_details = {:first_name => uaa_user['name']['givenName'], :last_name => uaa_user['name']['familyName']}

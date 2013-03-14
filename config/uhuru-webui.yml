@@ -1,18 +1,14 @@
 pid_filename: /tmp/uhuru_webui.pid
-local_route: 192.168.1.112
+local_route: 8.8.8.8
 port: 4567
 dev-mode: true
 
-cloudfoundry:
-  cloud_controller_api: "http://api.ccng-dev.net"
-  client_id: "cloud_controller"
-  client_secret: "cc"
-  cloud_controller_admin: "sre@vmware.com"
-  cloud_controller_pass: "password1234!"
+cloud_controller_url: "http://api.ccng-dev.net"
 
-# todo: remove this and get the uaa endpoint from api.../info
 uaa:
-  uaa_api: "http://uaa.ccng-dev.net"
+  url: "http://uaa.ccng-dev.net"
+  client_id: "webui"
+  client_secret: "webuisecret"
 
 
 contact:

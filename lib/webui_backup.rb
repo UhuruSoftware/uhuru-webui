@@ -21,7 +21,7 @@ module Uhuru::Webui
     def initialize(config)
       @config = config
       $config = config
-      @cf_target = @config[:cloudfoundry][:cloud_controller_api]
+      @cf_target = @config[:cloud_controller_url]
       # this is a variable witch holds the / symbol to be rendered afterwards in css, it is used at breadcrumb navigation
       $slash = '<span class="breadcrumb_slash"> / </span>'
 
