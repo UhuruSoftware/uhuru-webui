@@ -70,9 +70,7 @@ class Uhuru::Webui::Config < VCAP::Config
       },
 
       :email => {
-        :smtp_link_1                        => String,
-        :smtp_link_2                        => String,
-        :from_title                         => String,
+        :mailgun_api_url                    => String,
         :from                               => String,
         :subject                            => String
       },

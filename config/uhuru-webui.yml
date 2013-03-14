@@ -18,9 +18,8 @@ contact:
   email: "uhuru@uhurusoftware.com"
 
 email:
-  smtp_link_1: "https://api:key-3ax6xnjp29jd6fds4gc373sgvjxteol0"
-  smtp_link_2: "@api.mailgun.net/v2/samples.mailgun.org/messages"
-  from_title: Uhuru Cloud
+  mailgun_api_url: "https://api:key-3ax6xnjp29jd6fds4gc373sgvjxteol0@api.mailgun.net/v2/samples.mailgun.org/messages"
+  from_title: "Uhuru Cloud"
   from: "marius.ivan@uhurusoftware.mailgun.org" #"postmaster@uhurusoftware.mailgun.org"
   subject: "Uhuru Cloud E-mail Validation"
 
