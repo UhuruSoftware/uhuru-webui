@@ -10,13 +10,17 @@ module Uhuru::Webui
 
           welcome_message = nil
           page_title = nil
+          $site_tab = nil
+
           $config[:domains].each do |domain|
             if request.env['HTTP_HOST'].to_s == domain['url']
               welcome_message = domain['welcome_message']
               page_title = domain['page_title']
+              $site_tab = domain['site_tab']
             else
               page_title = $config[:default_domain][:page_title]
               welcome_message = $config[:default_domain][:welcome_message]
+              $site_tab = $config[:default_domain][:site_tab]
             end
           end
 

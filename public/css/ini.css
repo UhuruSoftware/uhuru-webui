@@ -1438,6 +1438,10 @@ h2 .count
     float: left;
     list-style: none;
 }
+.hidden_app_details_submit_button
+{
+    display: none;
+}
 
 .RUNNING
 {

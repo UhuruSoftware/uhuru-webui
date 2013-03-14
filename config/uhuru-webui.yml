@@ -39,16 +39,20 @@ logging:
 domains:
   - url: "192.168.1.195:4567"
     page_title: "Uhuru WebUi"
+    site_tab: "Uhuru"
     welcome_message: "PeakColo PaaS - powered by Uhuru"
   - url: "127.0.0.1:4567"
     page_title: "Uhuru WebUi"
+    site_tab: "Uhuru"
     welcome_message: "PeakColo PaaS - powered by Uhuru"
   - url: "192.168.1.112:4567"
     page_title: "Uhuru WebUi LINUX BOxX"
+    site_tab: "Uhuru"
     welcome_message: "PeakColo PaaS - powered by Uhuru LINUX BOX"
 default_domain:
   page_title: Uhuru Software .Inc
   welcome_message: Welcome to Uhuru Cloud
+  site_tab: "Uhuru"
 
 webui:
   activation_link_secret: "terceseht"

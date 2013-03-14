@@ -15,7 +15,7 @@
             <div class="tile_app_name">
               <span class="app_name_big"><%= app.name %></span>
               <span class="app_status">Status: <span class="pass_app_status"><%= app.state %></span></span>
-              <a href="#"><span class="small_trash delete-app-button" id="<%= app.name %>" title="<%= app.name %>" onmousemove="prepareToDeleteApp(this);"></span></a>
+              <a href="#"><span class="small_trash delete-app-button" id="<%= app.name %>" title="<%= app.name %>"></span></a>
             </div>
 
             <% if app.state == "STOPPED" %>
@@ -116,7 +116,7 @@
           <div class="slider_case">
             <div class="slider_div_app" id="slider_case_<%= app.name %>" style="height: 12px;">
 
-              <div id="slider_<%= app.name %>"></div>
+              <div id="slider_app_memory"></div>
 
             </div>
 
@@ -149,148 +149,142 @@
 
 
 
-
-
-
-
-
-<div class="modal fade hide" id="saving_modal">
-  <div class="modal-header" style="background-color: #187ebc;">
-    <h3>Saving changes</h3>
-  </div>
-
-
-  <div class="modal-body">
-    <p>
-      Please wait while your changes are saved.
-    </p>
-    <p style="font-size: 0.8em">
-      This dialog will be dismissed automatically after the changes are made.
-    </p>
-  </div>
-</div>
-
-
-
-
-
-<div class="modal fade hide" id="bind_service_modal">
-  <form action="/bindServices" method="post">
-
-    <div class="modal-header">
-      <h3>Add service</h3>
+    <div class="modal fade hide" id="saving_modal">
+        <div class="modal-header" style="background-color: #187ebc;">
+            <h3>Saving changes</h3>
+        </div>
+        <div class="modal-body">
+            <p>
+                Please wait while your changes are saved.
+            </p>
+            <p style="font-size: 0.8em">
+                This dialog will be dismissed automatically after the changes are made.
+            </p>
+        </div>
     </div>
+
+
+
+    <div class="modal fade hide" id="bind_service_modal">
+        <form action="/bindServices" method="post">
+
+        <div class="modal-header">
+            <h3>Add service</h3>
+        </div>
+        <div class="modal-body">
+            <p>Add a new service to <span></span></p>
+            <p>
+                <label for="bind_services_list">Available services</label>
+                <select id="bind_services_list" name="serviceName" class="modal_input_box">
+                    <% services_list.each do |service| %>
+                        <option value="<%= service.name %>" id="<%= service.name %>"> <%= service.name %> </option>
+                    <% end %>
+                </select>
+            </p>
+        </div>
+        <div class="modal-footer">
+            <input type="hidden" id="bind_service_app_name" name="appName" value="<%= app.name %>" />
+            <input type="hidden" name="current_organization" value="<%= current_organization %>" />
+            <input type="hidden" name="current_space" value="<%= current_space %>" />
+            <input type="hidden" name="current_tab" value="<%= current_tab %>" />
+
+            <div class="button_case_create_organization_and_space">
+                <button type="button" class="btn btn_right_bind cancel"><span class="line">| </span>Cancel </button>
+                <button type="submit" class="btn btn_left_bind ok"><span class="line">| </span>Bind </button>
+            </div>
+        </div>
+        </form>
+    </div>
+
+    <div class="modal fade hide" id="unbind_service_modal">
+        <div class="modal-header">
+            <h3>Unbind service</h3>
+        </div>
     <div class="modal-body">
-      <p>Add a new service to <span></span></p>
-      <p>
-        <label for="bind_services_list">Available services</label>
-        <select id="bind_services_list" name="serviceName" class="modal_input_box">
-          <% services_list.each do |service| %>
-              <option value="<%= service.name %>" id="<%= service.name %>"> <%= service.name %> </option>
-          <% end %>
-        </select>
-      </p>
+        <p>
+            Are you sure you want to unbind <span style="font-weight: bold">
+                </span> from <span style="font-weight: bold"></span>? Your
+            app will no longer be able to connect to this service.
+        </p>
+        <p>
+            Unbinding does not delete the service. Please delete service from service page to permanently delete it.
+        </p>
     </div>
     <div class="modal-footer">
-      <input type="hidden" id="bind_service_app_name" name="appName" />
-      <input type="hidden" name="current_organization" value="<%= current_organization %>" />
-      <input type="hidden" name="current_space" value="<%= current_space %>" />
-      <input type="hidden" name="current_tab" value="<%= current_tab %>" />
-      <div class="button_case_create_organization_and_space">
-        <button type="button" class="btn btn_right_bind cancel"><span class="line">| </span>Cancel </button>
-        <button type="submit" class="btn btn_left_bind ok"><span class="line">| </span>Bind </button>
-      </div>
+        <form action="/unbindServices" method="post">
+            <input type="hidden" name="serviceName" id="unbind_serviceName" />
+            <input type="hidden" id="unbind_service_app_name" name="appName" value="<%= app.name %>" />
+            <input type="hidden" name="current_organization" value="<%= current_organization %>" />
+            <input type="hidden" name="current_space" value="<%= current_space %>" />
+            <input type="hidden" name="current_tab" value="<%= current_tab %>" />
+
+            <div class="button_case_create_organization_and_space">
+                <button type="button" class="btn btn_right_unbind cancel"><span class="line">| </span>Cancel </button>
+                <button type="submit" class="btn btn_left_unbind danger"><span class="line">| </span>Unbind </button>
+            </div>
+        </form>
     </div>
-  </form>
-</div>
-
-<div class="modal fade hide" id="unbind_service_modal">
-  <div class="modal-header">
-    <h3>Unbind service</h3>
-  </div>
-  <div class="modal-body">
-    <p>
-      Are you sure you want to unbind <span style="font-weight: bold">
-            </span> from <span style="font-weight: bold"></span>? Your
-      app will no longer be able to connect to this service.
-    </p>
-    <p>
-      Unbinding does not delete the service. Please delete service from service page to permanently delete it.
-    </p>
-  </div>
-  <div class="modal-footer">
-    <form action="/unbindServices" method="post">
-      <input type="hidden" name="serviceName" id="unbind_serviceName" />
-      <input type="hidden" id="unbind_service_app_name" name="appName" />
-      <input type="hidden" name="current_organization" value="<%= current_organization %>" />
-      <input type="hidden" name="current_space" value="<%= current_space %>" />
-      <input type="hidden" name="current_tab" value="<%= current_tab %>" />
-      <div class="button_case_create_organization_and_space">
-        <button type="button" class="btn btn_right_unbind cancel"><span class="line">| </span>Cancel </button>
-        <button type="submit" class="btn btn_left_unbind danger"><span class="line">| </span>Unbind </button>
-      </div>
-    </form>
-  </div>
-</div>
+    </div>
 
 
 
-<div class="modal fade hide" id="bind_uri_modal">
-  <div class="modal-header">
-    <h3>Add new URI</h3>
-  </div>
-  <div class="modal-body">
-    <p>
-    <table>
-      <tbody>
-      <tr>
-        <td>
-          <input id="newUri" class="modal_input_box"/>
-        </td>
-        <td style="vertical-align: top; color: #ffffff;">
-          .uhurucloud.com
-        </td>
-      </tr>
-      </tbody>
-    </table>
-    </p>
-  </div>
-  <div class="modal-footer bind_uri_footer">
-    <form action="/bindUri" method="post">
-      <input type="hidden" name="uriName" id="uriName" />
-      <input type="hidden" id="bind_uri_app_name" name="appName" />
-      <input type="hidden" name="current_organization" value="<%= current_organization %>" />
-      <input type="hidden" name="current_space" value="<%= current_space %>" />
-      <input type="hidden" name="current_tab" value="<%= current_tab %>" />
-      <div class="button_case_create_organization_and_space">
-        <button type="button" class="btn btn_right_bind cancel"><span class="line">| </span>Cancel </button>
-        <button type="submit" class="btn btn_left_bind ok"><span class="line">| </span>Bind </button>
-      </div>
-    </form>
-  </div>
-</div>
+    <div class="modal fade hide" id="bind_uri_modal">
+        <form action="/bindUri" method="post">
+            <div class="modal-header">
+                <h3>Add new URI</h3>
+            </div>
+            <div class="modal-body">
+            <p>
+                <table>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <input id="uriName" class="modal_input_box"/>
+                            </td>
+                            <td style="vertical-align: top; color: #ffffff;">
+                                .uhurucloud.com
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </p>
+            </div>
+            <div class="modal-footer bind_uri_footer">
+                <input type="hidden" id="bind_uri_app_name" name="appName" value="<%= app.name %>" />
+                <input type="hidden" name="current_organization" value="<%= current_organization %>" />
+                <input type="hidden" name="current_space" value="<%= current_space %>" />
+                <input type="hidden" name="current_tab" value="<%= current_tab %>" />
+
+                <div class="button_case_create_organization_and_space">
+                    <button type="button" class="btn btn_right_bind cancel"><span class="line">| </span>Cancel </button>
+                    <button type="submit" class="btn btn_left_bind ok"><span class="line">| </span>Bind </button>
+                </div>
+            </div>
+        </form>
+    </div>
 
 
-<div class="modal fade hide" id="unbind_uri_modal">
-  <div class="modal-header">
-    <h3>Unbind URI</h3>
-  </div>
-  <div class="modal-body">
-    <p>
-      Are you sure you want to unbind this app? Your app will no longer be able to use this URI.<br />
-    </p>
-  </div>
-  <div class="modal-footer">
-    <form action="/unbindUri" method="post">
-      <input type="hidden" name="uriName" id="unbind_uriName" />
-      <input type="hidden" id="unbind_uri_app_name" name="appName" />
-      <input type="hidden" name="current_organization" value="<%= current_organization %>" />
-      <input type="hidden" name="current_space" value="<%= current_space %>" />
-      <input type="hidden" name="current_tab" value="<%= current_tab %>" />
-      <div class="button_case_create_organization_and_space">
-        <button type="button" class="btn btn_right_unbind cancel"><span class="line">| </span>Cancel </button>
-        <button type="submit" class="btn btn_left_unbind danger"><span class="line">| </span>Unbind </button>
-      </div>
-    </form>
-  </div>
-</div>
+    <div class="modal fade hide" id="unbind_uri_modal">
+        <div class="modal-header">
+            <h3>Unbind URI</h3>
+        </div>
+        <div class="modal-body">
+            <p>
+                Are you sure you want to unbind this app? <br />Your app will no longer be able to use this URI.
+            </p>
+        </div>
+        <div class="modal-footer">
+            <form action="/unbindUri" method="post">
+                <input type="hidden" name="uriName" id="unbind_uriName" />
+                <input type="hidden" id="unbind_uri_app_name" name="appName" value="<%= app.name %>" />
+                <input type="hidden" name="current_organization" value="<%= current_organization %>" />
+                <input type="hidden" name="current_space" value="<%= current_space %>" />
+                <input type="hidden" name="current_tab" value="<%= current_tab %>" />
+
+                <div class="button_case_create_organization_and_space">
+                    <button type="button" class="btn btn_right_unbind cancel"><span class="line">| </span>Cancel </button>
+                    <button type="submit" class="btn btn_left_unbind danger"><span class="line">| </span>Unbind </button>
+                </div>
+            </form>
+        </div>
+    </div>
