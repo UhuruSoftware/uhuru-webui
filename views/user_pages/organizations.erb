@@ -70,6 +70,35 @@
     </div>
 </div>
 
+
+
+
+<% if params[:error] != '' && params[:error] != nil %>
+    <div class="dark_background"> </div>
+
+    <div class="modal" id="errors_modal">
+      <div class="modal-header">
+        <h3>Error</h3>
+      </div>
+
+      <div class="modal-body">
+        <p>
+          An error has occurred:
+        </p>
+        <p class="red_error">
+          <%= error_message %>
+        </p>
+      </div>
+
+      <div class="modal-footer">
+        <div class="button_case_delete_organization_and_space">
+          <a  href="<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS %>" class="btn btn_right_delete_organization_and_space cancel btn_cancel_user"><span class="line">| </span>Close </a>
+        </div>
+      </div>
+    </div>
+<% end %>
+
+
 <% if defined?(include_erb) && include_erb != nil %>
     <%= erb(include_erb, :layout => false, :locals => { :error_message => error_message }) %>
 <% end %>

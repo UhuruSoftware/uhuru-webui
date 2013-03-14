@@ -225,7 +225,6 @@ $('#btn_delete_service').click(delete_service_message);
 $('.btn_delete_user').click(delete_user_message);
 
 
-
 $('#logout_key').click(function(){
     $('#logout_small_modal').slideToggle(200, function(){
         //
@@ -238,6 +237,8 @@ $('#logout_key').click(function(){
     });
 
 });
+
+
 
 
 

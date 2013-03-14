@@ -336,7 +336,7 @@
 
     <div class="modal hide" id="delete_user_modal">
       <div class="modal-header">
-        <button class="close"></button>
+        <a href="#" class="close"></a>
         <h3>Delete User</h3>
       </div>
       <div class="modal-body">
@@ -345,11 +345,11 @@
         </p>
       </div>
       <div class="modal-footer">
-        <span class="server_errors" id="delete_user_failed"><%= error_message %></span>
         <p class="hidden_modal_messages" id="span_delete_user">Deleting user...</p>
 
         <div class="button_case_delete_organization_and_space">
-          <button type="button" class="btn btn_right_delete_organization_and_space cancel btn_cancel_user"><span class="line">| </span>Cancel </button>
+          <a  href="#" class="btn btn_right_delete_organization_and_space cancel btn_cancel_user"><span class="line">| </span>Cancel </a>
+
           <form action="/deleteUser" method="post">
             <input type="hidden" id="pass_user_guid" value="" name="thisUser"/>
             <input type="hidden" id="pass_user_role" value="" name="thisUserRole"/>
@@ -365,31 +365,37 @@
 
 
 
-    <% if defined?(include_erb) && include_erb != nil %>
-        <%= erb(include_erb, :layout => false, :locals => { :current_organization => current_organization, :current_space => current_space, :collections => collections, :current_tab => current_tab, :error_message => error_message }) %>
+    <% if params[:error] != '' && params[:error] != nil %>
+        <div class="dark_background"> </div>
+
+        <div class="modal" id="errors_modal">
+            <div class="modal-header">
+                <h3>Error</h3>
+            </div>
+
+            <div class="modal-body">
+                <p>
+                    An error has occurred:
+                </p>
+                <p class="red_error">
+                    <%= error_message %>
+                </p>
+            </div>
+
+            <div class="modal-footer">
+                <div class="button_case_delete_organization_and_space">
+                    <a  href="<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/spaces/#{current_space}/#{current_tab}" %>" class="btn btn_right_delete_organization_and_space cancel btn_cancel_user"><span class="line">| </span>Close </a>
+                </div>
+            </div>
+        </div>
     <% end %>
 
 
 
 
 
-
-
-
-
-<div class="modal fade hide" id="add_new_template_app_modal">
-    <div class="modal-header" style="background-color: #187ebc;">
-        <h3>Add a new template app</h3>
-    </div>
-
-
-    <div class="modal-body">
-        <p>
-            Your app is being created. This could take a minute or two.
-        </p>
-    </div>
-</div>
-
-
+    <% if defined?(include_erb) && include_erb != nil %>
+        <%= erb(include_erb, :layout => false, :locals => { :current_organization => current_organization, :current_space => current_space, :collections => collections, :current_tab => current_tab, :error_message => error_message }) %>
+    <% end %>
 
 </div>

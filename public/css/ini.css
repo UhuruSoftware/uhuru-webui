@@ -91,7 +91,8 @@ h1, h2, h3, h4, h5, h6
 #bind_service_modal,
 #unbind_service_modal,
 #bind_uri_modal,
-#unbind_uri_modal
+#unbind_uri_modal,
+#errors_modal
 {
 
 	width: 600px;
@@ -115,6 +116,10 @@ h1, h2, h3, h4, h5, h6
     display: block;
 }
 
+#errors_modal
+{
+    display: block !important;
+}
 
 
 
@@ -1233,7 +1238,8 @@ h2 .count
 
 .tile_user_owner,
 .tile_user_developer,
-.tile_user_manager
+.tile_user_manager,
+.tile_user_billing_manager
 {
     margin: 4px;
     width: 150px;
@@ -1301,13 +1307,18 @@ h2 .count
 }
 .tile_user_developer
 {
+    background-image: url("../images/tile_big_orange.png");
+    background-repeat: repeat-y;
+    border: 1px solid #d75a3c;
+}
+.tile_user_manager
+{
     background-image: url("../images/tile_big_light_green.png");
     background-repeat: repeat-y;
     border: 1px solid #7ec135;
 }
-.tile_user_manager
+.tile_user_billing_manager
 {
-
     background-image: url("../images/tile_big_red.png");
     background-repeat: repeat-y;
     border: 1px solid #b43051;
@@ -2372,6 +2383,10 @@ h4
     float: left;
     margin-top: 20px;
     margin-left: 0;
+}
+.red_error
+{
+    color: #ff7799 !important;
 }
 .error_btn
 {
