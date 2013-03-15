@@ -6,6 +6,11 @@
 
 
 <div class="modal hide" id="signup_modal">
+  <script type="text/javascript">
+    var RecaptchaOptions = {
+        theme : 'blackglass'
+    };
+</script>
     <form action="/signup" method="post" id="sign_up">
         <div class="modal-header">
             <a href="<%= Uhuru::Webui::SinatraRoutes::INDEX %>" class="close"></a>
@@ -38,7 +43,8 @@
                 <input type="text" id="last_name" name="last_name" class="modal_input_box" placeholder="... last name" value = "<%= error_last_name %>" />
             </p>
 
-            <%= recaptcha_tag :challenge %>
+
+            <%= recaptcha_tag :challenge, :language => :en %>
         </div>
 
         <div class="modal-footer sign_up_footer_modal">

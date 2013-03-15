@@ -24,8 +24,8 @@ email:
   subject: "Uhuru Cloud E-mail Validation"
 
 recaptcha:
-  recaptcha_public_key: "6LcrstkSAAAAAIaBF-lyD5tpCQkqk8Z0uxgfsnRv"
-  recaptcha_private_key: "6LcrstkSAAAAANnW08PSKQSOiC3r5PfHb02t-0OV-"
+  recaptcha_public_key: "6LfuXN4SAAAAAAVoUDfpUzxftBrpecXQSzTuKcZk"
+  recaptcha_private_key: "6LfuXN4SAAAAAEuH--10s_lH_HMeYdjQtxha3UKd"
 
 
 logging:

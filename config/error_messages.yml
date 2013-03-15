@@ -7,6 +7,7 @@ signup_error_password_difference: Your password and confirm password don't match
 signup_error_email_format: Your email format is not accepted!
 signup_error_first_name: Your need to enter your first name!
 signup_error_last_name: Your need to enter your last name!
+signup_error_recaptcha: Human challenge failed! Retype the code in the box!
 
 
 change_username_error: Failed to update user data!
@@ -47,6 +48,7 @@ unbind_uri_error: Failed to unbind this uri from this app!
 
 
 create_service_error: Failed to create Service!
+service_error_name_size: Service name must be at least 4 characters long!
 delete_service_error: Failed to delete this service!
 
 add_user_error: Failed to add this User!

@@ -34,7 +34,11 @@ module Uhuru::Webui
           collections = readapps_Obj.read_collections
 
           if params[:error] == 'create_service'
-            error_message = $errors['create_service_error']
+            if params[:message] == 'name_size'
+              error_message = $errors['service_error_name_size']
+            else
+              error_message = $errors['create_service_error']
+            end
           else
             error_message = ''
           end
@@ -62,13 +66,15 @@ module Uhuru::Webui
               }
         end
 
-
         app.post '/createService' do
           @plan = "d85b0ad5-02d3-49e7-8bcb-19057a847bf7"
 
-          organizations_Obj = Library::Organizations.new(session[:token], $cf_target)
-          spaces_Obj = ServiceInstances.new(session[:token], $cf_target)
-          create = spaces_Obj.create_service_instance(params[:serviceName], params[:current_space], @plan)
+          if params[:serviceName].size >= 4
+            spaces_Obj = ServiceInstances.new(session[:token], $cf_target)
+            create = spaces_Obj.create_service_instance(params[:serviceName], params[:current_space], @plan)
+          else
+            redirect ORGANIZATIONS + "/#{params[:current_organization]}/spaces/#{params[:current_space]}/#{params[:current_tab]}/create_service/new" + '?error=create_service&message=name_size'
+          end
 
           if create == 'error'
             redirect ORGANIZATIONS + "/#{params[:current_organization]}/spaces/#{params[:current_space]}/#{params[:current_tab]}/create_service/new" + '?error=create_service'
@@ -78,9 +84,6 @@ module Uhuru::Webui
         end
 
         app.post '/deleteService' do
-          organizations_Obj = Library::Organizations.new(session[:token], $cf_target)
-          spaces_Obj = Library::Spaces.new(session[:token], $cf_target)
-          applications_Obj = Applications.new(session[:token], $cf_target)
           services_Obj = ServiceInstances.new(session[:token], $cf_target)
           delete = services_Obj.delete(params[:serviceGuid])
 

@@ -86,7 +86,9 @@ module Uhuru::Webui
             error_first_name = params[:first_name]
             error_last_name = params[:last_name]
 
-            if params[:message] == 'email_format'
+            if params[:message] == 'recaptcha'
+              error_message = $errors['signup_error_recaptcha']
+            elsif params[:message] == 'email_format'
               error_message = $errors['signup_error_email_format']
             elsif params[:message] == 'first_name'
               error_message = $errors['signup_error_first_name']
@@ -154,6 +156,12 @@ module Uhuru::Webui
         end
 
         app.post SIGNUP do
+          if recaptcha_valid?
+            #puts 'recaptcha valid!'
+          else
+            redirect SIGNUP + "?error=server_error&username=#{params[:email]}&first_name=#{params[:first_name]}&last_name=#{params[:last_name]}&message=recaptcha"
+          end
+
           key = $config[:webui][:activation_link_secret]
 
           if /\b[A-Z0-9._%a-z\-]+@(?:[A-Z0-9a-z\-]+\.)+[A-Za-z]{2,4}\z/.match(params[:email])
@@ -190,12 +198,6 @@ module Uhuru::Webui
 
             link = "http://#{request.env['HTTP_HOST'].to_s}/activate/#{URI.encode(Base32.encode(pass))}/#{URI.encode(Base32.encode(user.guid))}"
             Email::send_email(params[:email], erb(:'guest_pages/email', {:locals =>{:link => link}}))
-
-            ##if recaptcha_valid? then
-
-              #TODO:   --   MAKE RECAPTCH ERRORS
-
-            ##end
 
             session[:token] = user.token
             session[:fname] = user.first_name

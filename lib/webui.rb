@@ -27,7 +27,6 @@ module Uhuru::Webui
     set :sessions, true
 
     helpers Rack::Recaptcha::Helpers
-
     use Rack::Logger
 
     register Uhuru::Webui::SinatraRoutes::Guest
