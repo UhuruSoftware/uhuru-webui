@@ -66,8 +66,8 @@ module Uhuru::Webui
           users = UsersSetup.new($config)
           name = users.get_details(session[:user_guid])
 
-          first_name = name[:first_name] != nil ? name[:first_name] : ""
-          last_name = name[:last_name] != nil ? name[:last_name] : ""
+          first_name = name["familyname"] != nil ? name["familyname"] : ""
+          last_name = name["givenname"] != nil ? name["givenname"] : ""
           email = session[:username]
 
           org_guid = params[:org_guid]

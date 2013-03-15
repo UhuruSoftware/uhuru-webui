@@ -8,6 +8,11 @@ module Library
       @client = CFoundry::V2::Client.new(target, token)
     end
 
+    # ???to be replaced with change_password from user_setup
+    #def change_password(verified_password, old_password)
+    #  @client.current_user.change_password!(verified_password, old_password)
+    #end
+
     # roles is an array of roles ex: ['owner', 'billing', 'auditor']
     def add_user_to_org_with_role(org_guid, user_guid, roles)
 
