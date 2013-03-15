@@ -85,7 +85,18 @@ module Uhuru::Webui
             error_username = params[:username]
             error_first_name = params[:first_name]
             error_last_name = params[:last_name]
-            if params[:error] == 'server_error'
+
+            if params[:message] == 'email_format'
+              error_message = $errors['signup_error_email_format']
+            elsif params[:message] == 'first_name'
+              error_message = $errors['signup_error_first_name']
+            elsif params[:message] == 'last_name'
+              error_message = $errors['signup_error_last_name']
+            elsif params[:message] == 'password_size'
+              error_message = $errors['signup_error_password_size']
+            elsif params[:message] == 'password_difference'
+              error_message = $errors['signup_error_password_difference']
+            elsif params[:error] == 'server_error'
               error_message = $errors['signup_server_error']
             elsif params[:error] == 'user_exists'
               error_message = $errors['signup_user_exists_error']
@@ -143,12 +154,34 @@ module Uhuru::Webui
         end
 
         app.post SIGNUP do
-
           key = $config[:webui][:activation_link_secret]
-          email = Encryption.encrypt_text(params[:email], key)
-          pass = Encryption.encrypt_text(params[:password], key)
-          family_name = Encryption.encrypt_text(params[:first_name], key)
-          given_name = Encryption.encrypt_text(params[:last_name], key)
+
+          if /\b[A-Z0-9._%a-z\-]+@(?:[A-Z0-9a-z\-]+\.)+[A-Za-z]{2,4}\z/.match(params[:email])
+            email = Encryption.encrypt_text(params[:email], key)
+          else
+            redirect SIGNUP + "?error=server_error&username=#{params[:email]}&first_name=#{params[:first_name]}&last_name=#{params[:last_name]}&message=email_format"
+          end
+
+          if params[:first_name].size >= 1
+            family_name = Encryption.encrypt_text(params[:first_name], key)
+          else
+            redirect SIGNUP + "?error=server_error&username=#{params[:email]}&first_name=#{params[:first_name]}&last_name=#{params[:last_name]}&message=first_name"
+          end
+          if params[:last_name].size >= 1
+            given_name = Encryption.encrypt_text(params[:last_name], key)
+          else
+            redirect SIGNUP + "?error=server_error&username=#{params[:email]}&first_name=#{params[:first_name]}&last_name=#{params[:last_name]}&message=last_name"
+          end
+
+          if params[:password].size >= 8
+            if params[:password] == params[:confirm_password]
+              pass = Encryption.encrypt_text(params[:password], key)
+            else
+              redirect SIGNUP + "?error=server_error&username=#{params[:email]}&first_name=#{params[:first_name]}&last_name=#{params[:last_name]}&message=password_difference"
+            end
+          else
+            redirect SIGNUP + "?error=server_error&username=#{params[:email]}&first_name=#{params[:first_name]}&last_name=#{params[:last_name]}&message=password_size"
+          end
 
           user_sign_up = UsersSetup.new($config)
           user = user_sign_up.signup(params[:email], $config[:webui][:signup_user_password], params[:last_name], params[:first_name])

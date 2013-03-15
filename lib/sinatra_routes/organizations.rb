@@ -39,7 +39,11 @@ module Uhuru::Webui
           organizations_list = organizations_Obj.read_all
 
           if params[:error] != '' && params[:error] != nil
-            error_message = $errors['create_organization_error']
+            if params[:message] == 'name_size'
+              error_message = $errors['organization_error_name_size']
+            else
+              error_message = $errors['create_organization_error']
+            end
           else
             error_message = ''
           end
@@ -57,8 +61,12 @@ module Uhuru::Webui
         end
 
         app.post '/createOrganization' do
-          organizations_Obj = Library::Organizations.new(session[:token], $cf_target)
-          create = organizations_Obj.create($config, params[:orgName], session[:user_guid])
+          if params[:orgName].size >= 4
+            organizations_Obj = Library::Organizations.new(session[:token], $cf_target)
+            create = organizations_Obj.create($config, params[:orgName], session[:user_guid])
+          else
+            redirect ORGANIZATIONS_CREATE + '?error=create_organization&message=name_size'
+          end
 
           if create == 'error'
             redirect ORGANIZATIONS_CREATE + '?error=create_organization'
@@ -79,8 +87,12 @@ module Uhuru::Webui
         end
 
         app.post '/updateOrganization' do
-          organizations_Obj = Library::Organizations.new(session[:token], $cf_target)
-          update = organizations_Obj.update(params[:modified_name], params[:current_organization])
+          if params[:modified_name].size >= 4
+            organizations_Obj = Library::Organizations.new(session[:token], $cf_target)
+            update = organizations_Obj.update(params[:modified_name], params[:current_organization])
+          else
+            redirect redirect ORGANIZATIONS + "/#{params[:current_organization]}/#{params[:current_tab]}" + '?error=update_organization&message=name_size'
+          end
 
           if update == 'error'
             redirect redirect ORGANIZATIONS + "/#{params[:current_organization]}/#{params[:current_tab]}" + '?error=update_organization'

@@ -365,7 +365,7 @@
 
 
 
-    <% if params[:error] != '' && params[:error] != nil %>
+    <% if params[:error] != '' && params[:error] != nil && params[:error] != 'update_space' && params[:error] != 'update_app' && params[:error] != 'create_service' && params[:error] != 'create_route' && params[:error] != 'add_user' %>
         <div class="dark_background"> </div>
 
         <div class="modal" id="errors_modal">

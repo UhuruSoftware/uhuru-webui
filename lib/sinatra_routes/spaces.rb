@@ -11,7 +11,6 @@ module Uhuru::Webui
           end
 
           organizations_Obj = Library::Organizations.new(session[:token], $cf_target)
-          credit_cards_Obj = CreditCards.new(session[:token], $cf_target)
           users_setup_Obj = UsersSetup.new($config)
           domains_Obj = Library::Domains.new(session[:token], $cf_target)
           all_users = users_setup_Obj.uaa_get_usernames
@@ -36,7 +35,11 @@ module Uhuru::Webui
           end
 
           if params[:error] == 'update_organization'
-            error_message = $errors['update_organization_error']
+            if params[:message] == 'name_size'
+              error_message = $errors['organization_error_name_size']
+            else
+              error_message = $errors['update_organization_error']
+            end
           elsif params[:error] == 'delete_space'
             error_message = $errors['delete_space_error']
           elsif params[:error] == 'delete_user'
@@ -73,7 +76,6 @@ module Uhuru::Webui
           end
 
           organizations_Obj = Library::Organizations.new(session[:token], $cf_target)
-          credit_cards_Obj = CreditCards.new(session[:token], $cf_target)
           users_setup_Obj = UsersSetup.new($config)
           domains_Obj = Library::Domains.new(session[:token], $cf_target)
           all_users = users_setup_Obj.uaa_get_usernames
@@ -85,9 +87,12 @@ module Uhuru::Webui
           auditors_list = organizations_Obj.read_auditors($config, params[:org_guid])
           domains_list = domains_Obj.read_domains()
 
-          if params[:error] != '' && params[:error] != nil
-            error_message = $errors['create_space_error']
-            puts error_message
+          if params[:error] == 'create_space'
+            if params[:message] == 'name_size'
+              error_message = $errors['space_error_name_size']
+            else
+              error_message = $errors['create_space_error']
+            end
           else
             error_message = ''
           end
@@ -131,7 +136,6 @@ module Uhuru::Webui
           end
 
           organizations_Obj = Library::Organizations.new(session[:token], $cf_target)
-          credit_cards_Obj = CreditCards.new(session[:token], $cf_target)
           users_setup_Obj = UsersSetup.new($config)
           domains_Obj = Library::Domains.new(session[:token], $cf_target)
           all_users = users_setup_Obj.uaa_get_usernames
@@ -208,8 +212,11 @@ module Uhuru::Webui
           collections = readapps_Obj.read_collections
 
           if params[:error] == 'update_space'
-            error_message = $errors['update_space_error']
-
+            if params[:message] == 'name_size'
+              error_message = $errors['space_error_name_size']
+            else
+              error_message = $errors['update_space_error']
+            end
           elsif params[:error] == 'delete_app'
             error_message = $errors['delete_app_error']
 
@@ -245,9 +252,13 @@ module Uhuru::Webui
         end
 
         app.post '/createSpace' do
-          organizations_Obj = Library::Organizations.new(session[:token], $cf_target)
-          spaces_Obj = Library::Spaces.new(session[:token], $cf_target)
-          create = spaces_Obj.create(params[:org_guid], params[:spaceName])
+          if params[:spaceName].size >= 4
+            organizations_Obj = Library::Organizations.new(session[:token], $cf_target)
+            spaces_Obj = Library::Spaces.new(session[:token], $cf_target)
+            create = spaces_Obj.create(params[:org_guid], params[:spaceName])
+          else
+            redirect ORGANIZATIONS + "/#{params[:org_guid]}/spaces/create_space" + '?error=create_space&message=name_size'
+          end
 
           if create == 'error'
             redirect ORGANIZATIONS + "/#{params[:org_guid]}/spaces/create_space" + '?error=create_space'
@@ -269,9 +280,13 @@ module Uhuru::Webui
         end
 
         app.post '/updateSpace' do
-          organizations_Obj = Library::Organizations.new(session[:token], $cf_target)
-          spaces_Obj = Library::Spaces.new(session[:token], $cf_target)
-          update = spaces_Obj.update(params[:modified_name], params[:current_space])
+          if params[:modified_name].size >= 4
+            organizations_Obj = Library::Organizations.new(session[:token], $cf_target)
+            spaces_Obj = Library::Spaces.new(session[:token], $cf_target)
+            update = spaces_Obj.update(params[:modified_name], params[:current_space])
+          else
+            redirect ORGANIZATIONS + "/#{params[:current_organization]}/spaces/#{params[:current_space]}/#{params[:current_tab]}" + '?error=update_space&message=name_size'
+          end
 
           if update == 'error'
             redirect ORGANIZATIONS + "/#{params[:current_organization]}/spaces/#{params[:current_space]}/#{params[:current_tab]}" + '?error=update_space'
