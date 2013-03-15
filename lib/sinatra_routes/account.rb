@@ -11,7 +11,19 @@ module Uhuru::Webui
             redirect INDEX
           end
 
-          if params[:error] == 'change_username'
+          if params[:message] == 'first_name_size'
+            error_message_username = $errors['username_error_first_name_size']
+            error_message_password = ''
+          elsif params[:message] == 'last_name_size'
+            error_message_username = $errors['username_error_last_name_size']
+            error_message_password = ''
+          elsif params[:message] == 'password_size'
+            error_message_password = $errors['username_error_password_size']
+            error_message_username = ''
+          elsif params[:message] == 'password_difference'
+            error_message_password = $errors['username_error_password_difference']
+            error_message_username = ''
+          elsif params[:error] == 'change_username'
             error_message_username = $errors['change_username_error']
             error_message_password = ''
           elsif params[:error] == 'change_password'
@@ -32,6 +44,12 @@ module Uhuru::Webui
         end
 
         app.post '/updateUserName' do
+          if params[:first_name].size < 1
+            redirect ACCOUNT + '?error=change_password&message=first_name_size'
+          elsif params[:last_name].size < 1
+            redirect ACCOUNT + '?error=change_password&message=last_name_size'
+          end
+
           user_sign_up = UsersSetup.new($config)
           user = user_sign_up.update_user_info(session[:user_guid], params[:first_name], params[:last_name])
           session[:fname] = params[:first_name]
@@ -44,6 +62,12 @@ module Uhuru::Webui
         end
 
         app.post '/updateUserPassword' do
+          if params[:new_pass1].size < 8 || params[:new_pass2].size < 8
+            redirect ACCOUNT + '?message=password_size'
+          elsif params[:new_pass1] != params[:new_pass2]
+            redirect ACCOUNT + '?message=password_difference'
+          end
+
           user_sign_up = UsersSetup.new($config)
           password = user_sign_up.change_password(session[:user_guid], params[:new_pass1], params[:old_pass])
 

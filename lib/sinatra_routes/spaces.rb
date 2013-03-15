@@ -253,7 +253,6 @@ module Uhuru::Webui
 
         app.post '/createSpace' do
           if params[:spaceName].size >= 4
-            organizations_Obj = Library::Organizations.new(session[:token], $cf_target)
             spaces_Obj = Library::Spaces.new(session[:token], $cf_target)
             create = spaces_Obj.create(params[:org_guid], params[:spaceName])
           else
@@ -268,7 +267,6 @@ module Uhuru::Webui
         end
 
         app.post '/deleteSpace' do
-          organizations_Obj = Library::Organizations.new(session[:token], $cf_target)
           spaces_Obj = Library::Spaces.new(session[:token], $cf_target)
           delete = spaces_Obj.delete(params[:spaceGuid])
 
@@ -281,7 +279,6 @@ module Uhuru::Webui
 
         app.post '/updateSpace' do
           if params[:modified_name].size >= 4
-            organizations_Obj = Library::Organizations.new(session[:token], $cf_target)
             spaces_Obj = Library::Spaces.new(session[:token], $cf_target)
             update = spaces_Obj.update(params[:modified_name], params[:current_space])
           else

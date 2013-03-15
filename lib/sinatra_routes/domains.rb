@@ -11,7 +11,6 @@ module Uhuru::Webui
           end
 
           organizations_Obj = Library::Organizations.new(session[:token], $cf_target)
-          credit_cards_Obj = CreditCards.new(session[:token], $cf_target)
           users_setup_Obj = UsersSetup.new($config)
           domains_Obj = Library::Domains.new(session[:token], $cf_target)
           all_users = users_setup_Obj.uaa_get_usernames

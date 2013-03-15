@@ -13,6 +13,11 @@ signup_error_recaptcha: Human challenge failed! Retype the code in the box!
 change_username_error: Failed to update user data!
 change_password_error: Failed to update user password!
 
+username_error_first_name_size: The first name can not be blank!
+username_error_last_name_size: The last name can not be blank!
+username_error_password_size: Your password is to short(min 8 characters)!
+username_error_password_difference: Your password and confirm password don't match!
+
 organization_error_name_size: Organization name must be at least 4 characters long!
 space_error_name_size: Space name must be at least 4 characters long!
 
