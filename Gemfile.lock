@@ -1,10 +1,10 @@
 GIT
   remote: git://github.com/cloudfoundry/vcap-common.git
-  revision: 7b7dd74ddffeb5293af2325f0ed6efb35e226774
-  ref: 7b7dd74d
+  revision: e5d71831a19f9a59cf757b4e2bd25b2af32f1611
+  ref: e5d71831a1
   specs:
-    vcap_common (2.0.9)
-      em-http-request (~> 1.0.0.beta3)
+    vcap_common (2.0.10)
+      em-http-request (~> 1.0.0.beta3, < 1.0.0.beta4)
       eventmachine
       httpclient
       membrane (~> 0.0.2)
@@ -40,15 +40,13 @@ GEM
       rubyzip (~> 0.9)
     chargify_api_ares (0.6.1)
       activeresource (>= 3.0.0)
-    cookiejar (0.3.0)
     daemons (1.1.9)
     descendants_tracker (0.0.1)
-    em-http-request (1.0.3)
+    em-http-request (1.0.0.beta.3)
       addressable (>= 2.2.3)
-      cookiejar
       em-socksify
-      eventmachine (>= 1.0.0.beta.4)
-      http_parser.rb (>= 0.5.3)
+      eventmachine
+      http_parser.rb (>= 0.5.1)
     em-socksify (0.2.1)
       eventmachine (>= 1.0.0.beta.4)
     encryptor (1.1.3)
@@ -102,7 +100,6 @@ GEM
       rack (~> 1.4)
       rack-protection (~> 1.3)
       tilt (~> 1.3, >= 1.3.3)
-    sinatra-captcha (0.1.0.0)
     sinatra-session (1.0.0)
       sinatra (>= 1.0)
     steno (1.0.3)
@@ -113,8 +110,6 @@ GEM
       eventmachine (>= 0.12.6)
       rack (>= 1.0.0)
     tilt (1.3.5)
-    vcap_logging (0.1.4)
-      rake
     virtus (0.5.4)
       backports (~> 2.6.1)
       descendants_tracker (~> 0.0.1)
@@ -132,14 +127,13 @@ DEPENDENCIES
   cfoundry
   chargify_api_ares
   encryptor
+  eventmachine (>= 1.0.0)
   httparty
   rack-recaptcha
   rake (~> 10.0.3)
   rest-client
   sinatra
-  sinatra-captcha
   sinatra-session
   steno
   thin (~> 1.5.0)
   vcap_common (~> 2.0.8)!
-  vcap_logging
