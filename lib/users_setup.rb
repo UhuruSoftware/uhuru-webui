@@ -20,17 +20,11 @@ class UsersSetup
         return 'error'
       end
 
-      # new login with cfoundry gem !!!
-      #client = CFoundry::V2::Client.new(@cf_target)
-      #client.login(email, password)
-      #token = client.token
-
       users_obj = Library::Users.new(user_token, @cf_target)
       user_guid = users_obj.get_user_guid
+      user_detail = get_details(user_guid)
 
-      user_detail = get_user_details(user_guid)
-
-      user = UserDetails.new(user_token, user_guid, user_detail[:first_name], user_detail[:last_name])
+      user = UserDetails.new(user_token, user_guid, user_detail["familyname"], user_detail["givenname"])
       user
     rescue Exception => e
       puts e
@@ -183,12 +177,11 @@ class UsersSetup
 
   # todo: stefi: consider not using this method or at least once per server instance. may have scalability problems
   # returns an array with all usernames in uaa
-  def uaa_get_usernames
+  # added the possibility to filter usernames with 'contains' the string received as a parameter
+  def uaa_get_usernames(filter_by = String.new)
     uaac = get_uaa_client
-    query = {:attributes => 'userName'}
-    users = uaac.query(:user, query)
-
-    users['resources'].collect { |u| u['userName']}
+    users = uaac.query(:user, {:attributes => 'username', :filter => 'userName co "' + filter_by + '"' })
+    users['resources'].collect { |u| u['username']}
   end
 
   def uaa_get_user_by_name(username)
@@ -203,12 +196,7 @@ class UsersSetup
 
   def get_details(user_guid)
     uaac = get_uaa_client
-
-    uaa_user = uaac.get(:user, user_guid)
-
-    user_details = {:first_name => uaa_user['name']['givenName'], :last_name => uaa_user['name']['familyName']}
-
-    user_details
+    return uaac.get(:user, user_guid)
   rescue Exception => e
     raise "#{e.inspect}"
   end
@@ -228,17 +216,6 @@ class UsersSetup
       puts 'get_user_token method error'
       return 'user_token_error'
     end
-  end
-
-  def get_user_details(user_guid)
-    uaac = get_uaa_client
-    uaa_user = uaac.get(:user, user_guid)
-
-    user_details = {:first_name => uaa_user['name']['givenName'], :last_name => uaa_user['name']['familyName']}
-
-    user_details
-  rescue Exception => e
-    raise "#{e.inspect}"
   end
 
   class UserDetails
