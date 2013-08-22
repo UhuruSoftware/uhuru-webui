@@ -112,7 +112,7 @@ module Library
           app_uris << Applications::Url.new(r.host + "." + r.domain.name)
         end
 
-        apps_list << Applications::Application.new(app.name, app.runtime.name, app.guid, app.state, app_service_instances, app_uris, app.total_instances, app.memory, app.production)
+        apps_list << Applications::Application.new(app.name, app.guid, app.stack, app.state, app_service_instances, app_uris, app.total_instances, app.memory)
 
       end
 

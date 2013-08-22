@@ -52,7 +52,7 @@ module Library
 
     # create is used: - to create an domain and map it to an organization or space
     #                 - just to map an domain to an organization or space if the domain exists
-    def create(name, org_guid, space_guid = nil)
+    def create(name, org_guid, domain_wildcard, space_guid = nil)
       domain_exist = @client.domains.find { |d|
           d.name == name }
 
@@ -63,6 +63,7 @@ module Library
         domain = @client.domain
         domain.owning_organization = org
         domain.name = name
+        domain.wildcard = domain_wildcard
         domain.create!
       else
         domain = domain_exist
@@ -90,8 +91,8 @@ module Library
       end
 
     rescue Exception => e
-      puts e
-      puts 'create domain method error'
+      puts e.message
+      puts e.backtrace
       return 'error'
     end
 

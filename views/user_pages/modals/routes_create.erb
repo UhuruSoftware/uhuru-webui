@@ -11,8 +11,16 @@
       <div class="modal-body">
         <p>
           <label for="service_name">App Name: </label>
-          <input type="text" id="appName" class="modal_input_box" autofocus />
+          <input type="text" id="appName" name="appName" class="modal_input_box" autofocus />
+
+          <label for="domain_guid">Domain: </label>
+          <select class="modal_input_box" name="domain_guid">
+            <% @domains_list.each do |domain| %>
+                <option value="<%= domain.guid %>"><%= domain.name %></option>
+            <% end %>
+          </select>
         </p>
+
       </div>
 
       <div class="modal-footer">
@@ -22,7 +30,7 @@
             <input type="hidden" name="current_organization" value="<%= current_organization %>" />
             <input type="hidden" name="current_space" value="<%= current_space %>" />
             <input type="hidden" name="current_tab" value="<%= current_tab %>" />
-            <button type="submit" class="btn btn_left_create_organization_and_space ok"><span class="line">| </span>Create </button>
+            <button type="submit" class="btn btn_left_create_organization_and_space ok"><span class="line">| </span>Map </button>
         </div>
       </div>
   </form>

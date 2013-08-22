@@ -63,7 +63,8 @@ module Uhuru::Webui
 
         app.post '/createDomain' do
           domains_Obj = Library::Domains.new(session[:token], $cf_target)
-          create = domains_Obj.create(params[:domainName], params[:org_guid])
+          wildcard = params[:domain_wildcard] ? true : false
+          create = domains_Obj.create(params[:domainName], params[:org_guid], wildcard)
 
           if create == 'error'
             redirect ORGANIZATIONS + "/#{params[:org_guid]}/domains/add_domains" + '?error=add_domain'
