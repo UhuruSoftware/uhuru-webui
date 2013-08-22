@@ -49,7 +49,7 @@ module Library
         begin
           route = @client.route
 
-          route.host = host if host != nil
+          route.host = host if host != nil #app_name if app_name != nil
           route.domain = domain
           route.space = space
           route.create!

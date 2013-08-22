@@ -14,7 +14,7 @@
         <!--  -->
         <!-- Objects and Methods should not have an = sign after % -->
         <!--  -->
-        <%= base_url = request.base_url %>
+        <% base_url = request.base_url %>
         <% collections["collections"].each do |collection| %>
             <% readapps_Obj = TemplateApps.new %>
             <% collection_details = readapps_Obj.read_collection(collection["collection"]["folder"]) %>

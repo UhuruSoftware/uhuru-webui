@@ -9,7 +9,7 @@ class ServiceInstances
 
   def create_service_instance(name, space_guid, service_plan_guid)
 
-    service = @client.service_instance
+    service = @client.managed_service_instance
     service.name = name
     service.space = @client.space(space_guid)
     service.service_plan = @client.service_plan(service_plan_guid)
@@ -18,7 +18,8 @@ class ServiceInstances
     service
 
   rescue Exception => e
-    puts e
+    puts e.message
+    puts e.backtrace
     puts 'create service method error'
     return 'error'
   end

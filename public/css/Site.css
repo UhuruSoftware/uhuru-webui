@@ -594,38 +594,6 @@ li.new .icon
    buttom: 0;
 }
 
-.app-default
-{
-
-}
-
-.app-dotnet
-{
-    background: transparent url("../images/net_icon.png") no-repeat scroll center center;
-}
-.app-php
-{
-    background: transparent url("../images/php_icon.png") no-repeat scroll center center;
-}
-.app-node,
-.app-nodejs,
-.app-node08,
-.app-node06
-{
-    background: transparent url("../images/node.js_icon.png") no-repeat scroll center center;
-}
-.app-ruby,
-.app-ruby18,
-.app-ruby19
-{
-    background: transparent url("../images/ruby_icon.png") no-repeat scroll center center;
-}
-.app-java,
-.app-java7
-{
-    background: transparent url("../images/java_icon.png") no-repeat scroll center center;
-}
-
 .span_credit_card_icon_visa
 {
     background-image: url("../images/visa.png");
@@ -705,6 +673,13 @@ li.new .icon
     height: 90px;
     padding-left: 7px;
     float: left;
+}
+
+.app_stack
+{
+    font-size: 20px;
+    text-align: center;
+    padding-top: 25px;
 }
 
 .back-button

@@ -20,7 +20,7 @@ module Uhuru::Webui
           owners_list = organizations_Obj.read_owners($config, params[:org_guid])
           billings_list = organizations_Obj.read_billings($config, params[:org_guid])
           auditors_list = organizations_Obj.read_auditors($config, params[:org_guid])
-          domains_list = domains_Obj.read_domains()
+          domains_list = domains_Obj.read_domains(params[:org_guid])
 
           if params[:error] == 'add_domain'
             error_message = $errors['create_domain_error']
@@ -63,7 +63,8 @@ module Uhuru::Webui
 
         app.post '/createDomain' do
           domains_Obj = Library::Domains.new(session[:token], $cf_target)
-          create = domains_Obj.create(params[:domainName], params[:org_guid])
+          wildcard = params[:domain_wildcard] ? true : false
+          create = domains_Obj.create(params[:domainName], params[:org_guid], wildcard)
 
           if create == 'error'
             redirect ORGANIZATIONS + "/#{params[:org_guid]}/domains/add_domains" + '?error=add_domain'

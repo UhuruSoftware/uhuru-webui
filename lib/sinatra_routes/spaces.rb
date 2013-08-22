@@ -20,7 +20,7 @@ module Uhuru::Webui
           owners_list = organizations_Obj.read_owners($config, params[:org_guid])
           billings_list = organizations_Obj.read_billings($config, params[:org_guid])
           auditors_list = organizations_Obj.read_auditors($config, params[:org_guid])
-          domains_list = domains_Obj.read_domains()
+          domains_list = domains_Obj.read_domains(params[:org_guid])
 
           begin
             if (organizations_Obj.is_organization_billable?(@this_guid))
@@ -196,9 +196,8 @@ module Uhuru::Webui
           readapps_Obj = TemplateApps.new
           users_setup_Obj = UsersSetup.new($config)
           routes_Obj = Library::Routes.new(session[:token], $cf_target)
+          domains_Obj = Library::Domains.new(session[:token], $cf_target)
           all_space_users = users_setup_Obj.uaa_get_usernames
-
-          #session[:space_name] = spaces_Obj.get_name(@this_guid)
 
           spaces_Obj.set_current_space(params[:space_guid])
           apps_list = spaces_Obj.read_apps(params[:space_guid])
@@ -208,6 +207,7 @@ module Uhuru::Webui
           owners_list = spaces_Obj.read_owners($config, params[:space_guid])
           developers_list = spaces_Obj.read_developers($config, params[:space_guid])
           auditors_list = spaces_Obj.read_auditors($config, params[:space_guid])
+          domains_list = domains_Obj.read_domains(params[:org_guid], params[:space_guid])
 
           collections = readapps_Obj.read_collections
 

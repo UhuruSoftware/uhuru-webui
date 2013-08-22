@@ -102,8 +102,9 @@ var delete_service = function()
 }
 var delete_route = function()
 {
-    $('#pass_route').val($(this).attr("id"));
-    $('#this_route_name').text($(this).attr("title"));
+    $('#pass_route_guid').val($(this).attr("id"));
+    $('#pass_route_app_name').val($(this).attr("title"));
+    $('#this_route_app_name').text($(this).attr("title"));
 }
 
 
