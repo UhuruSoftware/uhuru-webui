@@ -1,3 +1,4 @@
+<% apps = collections %>
 <div class="dark_background"> </div>
 
 <div class="modal fade hide" id="create_tempcta_modal">
@@ -7,90 +8,94 @@
   </div>
 
   <div class="modal-body" id="template_apps_container">
-    <div id="app_small_container">
-      <div class="template_apps_overflow_div">
-
-        <!-- READ THE COLLECTIONS FILE TO GET EACH FOLDERS CONTETS -->
-        <!--  -->
-        <!-- Objects and Methods should not have an = sign after % -->
-        <!--  -->
-        <% base_url = request.base_url %>
-        <% collections["collections"].each do |collection| %>
-            <% readapps_Obj = TemplateApps.new %>
-            <% collection_details = readapps_Obj.read_collection(collection["collection"]["folder"]) %>
-            <% if collection_details != nil %>
-                <div class="template_apps_collection_div" id="<%= collection_details["id"] + "_div" %>">
-                  <% if collection_details["logo"] != nil %>
-                      <image src ="<%= "#{base_url}/images/apps_logos/" + collection_details["logo"] + ".png" %>" class="template_apps_collection_logos" />
-                  <% else %>
-                  <% end %>
-                  <p class="template_apps_collection_header_paragraph"><%= collection_details["name"] == nil ? 'No name given' : collection_details["name"] %></p>
-                </div>
-
-                <% app_folders = Array.new %>
-                <% read_folders = Dir.foreach("../template_apps/" + collection["collection"]["folder"]) %>
-                <% read_folders.each do |this_folder| %>
-                    <!-- THE REVERSE METHOD IS USED TO TAKE OUT THE COLLECTION LOGO FROM THE FOLDER ARRAY ALONG WITH THE .YML FILE -->
-                    <% if this_folder != "." && this_folder != ".." && this_folder != "template_collection_manifest.yml" && this_folder.to_s.reverse[0...4].reverse != ".png" %>
-                        <% app_folders.push this_folder %>
-                    <% end %>
-                <% end %>
-
-                <% if app_folders != nil %>
-                    <% app_folders.each do |app_folder| %>
-
-                        <% app_details = readapps_Obj.read_apps(collection["collection"]["folder"], app_folder) %>
-                        <% app_vmc_manifest = readapps_Obj.read_app_vmc(collection["collection"]["folder"], app_folder) %>
-
-                        <!-- THE SUBCLASS COLLECTION_DETAILS IS GIVEN FOR THE PURPOSE OF JAVASCRIPT CODE -->
-                        <div class="template_apps_application_div <%= collection_details["id"] + "_div_apps" %>">
-                          <% if app_details != nil %>
-                              <% if app_details["logo"] != nil %>
-                                  <image src ="<%= "#{base_url}/images/apps_logos/" + app_details["logo"] + ".png" %>" class="template_apps_application_logos" />
-                              <% else %>
-                              <% end %>
-                              <p class="template_apps_application_header_paragraph"><%= app_details["name"] == nil ? 'No name given' : app_details["name"] %></p>
-
-                              <% if app_details["description"] != nil %>
-                                  <p class="template_apps_application_paragraph"><%= app_details["description"].length <= 210 ? app_details["description"] : app_details["description"][0, 210] %></p>
-                              <% end %>
-
-                              <span class="template_apps_application_tags">Tags:&nbsp;
-                                <% if app_details["tags"] != nil %>
-                                           <% app_details["tags"].each do |tag| %>
-                                              <%= tag %>,&nbsp;
-                                           <% end %>
-                                          <% else %>
-                                            No Tag
-                                          <% end %>
-                                        </span>
-
-                              <input type="button" value="Push" class=" btn template_apps_buttons app_push_btn" />
-                              <% if app_details["can_download"] != nil %>
-                                  <% if app_details["can_download"] == true %>
-                                      <input type="button" value="Download" class="btn template_apps_buttons app_download_btn" />
-                                  <% end %>
-                              <% end %>
-
-                              <% if app_vmc_manifest != nil && app_vmc_manifest != false %>
-                                  <% if app_vmc_manifest["applications"] != nil && app_vmc_manifest["applications"]["."] != nil %>
-                                      <span class="template_apps_service_icons <%=app_vmc_manifest["applications"]["."]["services"]["type"] %>"></span>
-                                  <% end %>
-                                  <% if app_vmc_manifest["applications"] != nil && app_vmc_manifest["applications"]["."] != nil %>
-                                      <span class="template_apps_runtime_icons <%= app_vmc_manifest["applications"]["."]["framework"]["name"] %>"></span>
-                                  <% end %>
-                              <% end %>
-                          <% end %>
-                        </div>
-
-                    <% end %>
-                <% end %>
-            <% end %>
+      <!-- LOOP AND CREATE A LIST OF COLLECTIONS AND APPS -->
+      <ul class="apps_list">
+        <% apps.each do |app_id, app| %>
+            <li class="app_menu_item" id="<%= app_id %>" onclick="showPanel(this);">
+              <%= app['name'] == nil ? 'N/A - Please provide an application name' : app['name'] %>
+            </li>
         <% end %>
+      </ul>
 
-      </div>
+      <!-- LOOP AND CREATE THE CONTENT OF EACH COLLECTION AND APP -->
+      <% apps.each do |app_id, app| %>
+          <div class="template_apps" id="<%= app_id %>_div">
 
-    </div>
+            <!-- INSERT APP LOGO, NAME, DESCRIPTION AND SERVICE ICONS -->
+            <image src ="/images/apps_logos/<%= app_id %>.png" class="template_app_logo" />
+
+            <span class="template_app_name">
+              <%= app['name'] %>
+              <span class="query_link" onclick="redirectTo('<%= app_id %>');"></span>
+            </span>
+
+            <% app['service_type'].each do |service_name| %>
+                <img src="/images/apps_logos/services/<%= service_name %>.png" class="small_app_icons" />
+            <% end %>
+            <img src="/images/apps_logos/services/<%= app['vmc_manifest']['applications']['.']['framework']['name'] %>.png" class="small_app_icons" />
+            <br /><br />
+            <p class="template_app_description">
+              <%= app['description'][0..500] %>
+            </p>
+
+
+
+            <div class="template_apps_footer">
+              <!-- INSERT TAGS -->
+              <div class="tags_div">
+                <span class="template_app_tag_span">Tags:</span>
+              <span class="template_app_tags">
+                <% if app['tags'] != nil %>
+                    <%= app['tags'].join(',&nbsp;') %>
+                <% else %>
+                    none
+                <% end %>
+              </span>
+                <br />
+                <span class="template_app_pub_span">Publisher:</span>
+              <span class="template_app_tags">
+                <% if app['collection']['name'] != nil %>
+                    <%= app['collection']['name'] %>
+                <% end %>
+              </span>
+              </div>
+
+              <!-- INSERT BUTTONS DOWNLOAD IF NECESSARY AND PUSH -->
+              <div class="buttons_div">
+                <form method="post" action="/push">
+                  <table class="collection_buttons_table">
+                    <tr>
+                      <td class="template_app_push_span_title">Push App:</td>
+                      <td> </td>
+                    </tr>
+                    <tr>
+                      <td><label for="app_name" class="template_app_name_span">App Name:</label></td>
+                      <td><input type="text" value="" name="app_name" class="modal_input_box" /></td>
+                    </tr>
+                    <tr>
+                      <td><label for="app_url" class="template_app_url_span">App URL:</label></td>
+                      <td><input type="text" value="" name="app_url" class="modal_input_box" /><%=  %></td>
+                    </tr>
+                    <tr>
+                      <td></td>
+                      <td>
+                        <% if app['can_download'] != nil %>
+                            <% if app['can_download'] == true %>
+                                <a href="<%= app['app_src'].sub!'template_manifest.yml', 'wordpress.zip' %>"><input type="button" value="Download" class="btn download_btn" /></a>
+                            <% end %>
+                        <% end %>
+                        <input type="submit" value="Push" class="btn push_btn" />
+                      </td>
+                    </tr>
+                  </table>
+                  <input type="hidden" value="<%= app_id %>" name="app_id" />
+                  <!-- read apps function returns the path of the template_manifest file -->
+                  <input type="hidden" value="<%= app['app_src'].sub!'template_manifest.yml', '' %>" name="app_src" />
+                </form>
+              </div>
+            </div>
+          </div>
+      <% end %>
   </div>
 
   <div class="modal-footer">
@@ -100,4 +105,70 @@
     </div>
   </div>
 </div>
+
+
+<script type="text/javascript">
+    /* ENSURE THE APPS ARE INSERTED IN THE JAVASCRIPT ARRAY IN THE SAME ORDER */
+
+    <% js_apps = [] %>
+    <% counter = 0 %>
+
+    <% apps.each do |app| %>
+    <% js_apps[counter] = app[0] %>
+    <% counter += 1 %>
+    <% end %>
+    var js_apps = <%= js_apps %>;
+
+    /* SHOW CORRECT APP IF THE PAGE IS LOADED  //  the 'app' -- is the query string parameter  */
+
+    var app = getParameterByName('app');
+    if (app != '')
+    {
+        var element = null;
+        for(var counter = 0; counter <= js_apps.length; counter++)
+        {
+            element = js_apps[counter];
+            if(element == app)
+            {
+                showPanel(document.getElementById(js_apps[counter]));
+            }
+        }
+    }
+    else
+    {
+        showPanel(document.getElementById('<%= apps.first[0] %>'));
+    }
+
+    function redirectTo(id)
+    {
+        window.location.href='<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/spaces/#{current_space}/apps/create_app/new" %>?app=' + id;
+    }
+
+    function showPanel(obj)
+    {
+        if(obj.id != 0)
+        {
+            $('.app_menu_item').removeClass('selected');
+            $('.template_apps').css("display", "none");
+            $('#' + obj.id + '_div').css("display", "block");
+            $('#' + obj.id).addClass('selected');
+        }
+    }
+
+    function getParameterByName( name ){
+        name = name.replace(/[\[]/,"\\\[").replace(/[\]]/,"\\\]");
+        var regexS = "[\\?&]"+name+"=([^&#]*)",
+                regex = new RegExp( regexS ),
+                results = regex.exec( window.location.href );
+        if( results == null ){
+            return "";
+        } else{
+            return decodeURIComponent(results[1].replace(/\+/g, " "));
+        }
+    }
+
+    function isInteger(possibleInteger) {
+        return Object.prototype.toString.call(possibleInteger) !== "[object Array]" && /^[\d]+$/.test(possibleInteger);
+    }
+</script>
 

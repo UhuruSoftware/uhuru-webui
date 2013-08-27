@@ -8,15 +8,34 @@
       </div>
 
       <div class="modal-body">
-        <p>
-          <label for="service_name">Name: </label>
-          <input type="text" name="serviceName" class="modal_input_box" autofocus />
-          <label for="team_services_list">Service Type: </label>
-          <select id="team_services_list" class="modal_input_box">
-            <option value="wardenized">Wardenized</option>
-            <option value="free">Free</option>
-          </select>
-        </p>
+        <table style="width: 100%;">
+        <tr>
+          <td><label for="serviceName">Name: </label></td>
+          <td><input type="text" name="serviceName" class="modal_input_box" autofocus /></td>
+        </tr>
+
+        <tr>
+          <td><label for="team_services_list">Service Plan: </label></td>
+          <td>
+              <select name="team_services_list" class="modal_input_box" style="width: 200px;">
+                <% ServiceInstances.new(session[:token], $cf_target).read_service_plans.each do |plan| %>
+                    <option value="<%= plan.name %>"><%= plan.name.capitalize %></option>
+                <% end %>
+              </select>
+          </td>
+        </tr>
+
+          <tr>
+          <td><label for="team_services_list_type">Service Type: </label></td>
+          <td>
+              <select name="team_services_list_type" class="modal_input_box" style="width: 200px;">
+                <% ServiceInstances.new(session[:token], $cf_target).read_service_types.each do |type| %>
+                    <option value="<%= type %>"><%= type %></option>
+                <% end %>
+              </select>
+          </td>
+          </tr>
+        </table>
       </div>
 
       <div class="modal-footer">

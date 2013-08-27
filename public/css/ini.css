@@ -1240,7 +1240,10 @@ h2 .count
 .tile_user_owner,
 .tile_user_developer,
 .tile_user_manager,
-.tile_user_billing_manager
+.tile_user_billing_manager,
+.tile_space_domain,
+.tile_domains,
+.tile_routes
 {
     margin: 4px;
     width: 150px;
@@ -1319,6 +1322,19 @@ h2 .count
     border: 1px solid #7ec135;
 }
 .tile_user_billing_manager
+{
+    background-image: url("../images/tile_big_red.png");
+    background-repeat: repeat-y;
+    border: 1px solid #b43051;
+}
+.tile_space_domain,
+.tile_domains
+{
+    background-image: url("../images/tile_big_blue.png");
+    background-repeat: repeat-y;
+    border: 1px solid #4399f1;
+}
+.tile_routes
 {
     background-image: url("../images/tile_big_red.png");
     background-repeat: repeat-y;
@@ -2452,164 +2468,6 @@ h4
     color: #ffffff;
 }
 
-.collection_tab_btn
-{
-    cursor: pointer;
-}
-
-.collection_tab_btn:focus
-{
-    background-color: #0071b7;
-    text-decoration: underline;
-}
-
-
-.template_apps_collection_div
-{
-    display: block;
-    position: relative;
-    padding-top: 3px;
-    padding-bottom: 3px;
-    height: 32px;
-    width: 99%;
-    margin-top: 10px;
-    text-align: left;
-    background-color: #015A6B;
-    /*border-top: 5px solid #3C81EE;
-    /* LOGO : 88 X 31 */
-}
-
-.template_apps_application_div
-{
-    display: block;
-    position: relative;
-    padding-top: 5px;
-    padding-bottom: 5px;
-    height: 80px;
-    width: 99%;
-    margin-top: 10px;
-    text-align: left;
-    background-color: #2878EC;
-    /*border-top: 5px solid #1B6877;
-    /* LOGO : 120 X 60 */
-}
-
-
-
-.template_apps_overflow_div
-{
-    overflow: auto;
-    height: 400px;
-}
-#template_apps_container
-{
-    overflow: hidden;
-}
-
-
-.template_apps_collection_header_paragraph,
-.template_apps_application_header_paragraph
-{
-    font-weight: 600;
-    font-size: 18px;
-    line-height: 16px;
-    margin: 0;
-}
-.template_apps_collection_header_paragraph
-{
-    margin-top: 7px;
-}
-.template_apps_collection_paragraph,
-.template_apps_application_paragraph
-{
-    font-weight: 200;
-    font-size: 10px;
-    margin-top: 3px;
-    margin-right: 150px;
-}
-.template_apps_application_tags
-{
-    display: block;
-    position: absolute;
-    bottom: 5px;
-    left: 5px;
-    font-weight: 100;
-    font-size: 12px;
-}
-
-
-.template_apps_collection_logos
-{
-    width: 88px;
-    height: 31px;
-    float: left;
-    margin-left: 10px;
-    margin-right: 10px;
-}
-.template_apps_application_logos
-{
-    width: 120px;
-    height: 60px;
-    float: left;
-    margin-left: 10px;
-    margin-right: 10px;
-}
-
-.template_apps_buttons
-{
-    cursor: pointer;
-    position: absolute;
-
-    line-height: 12px;
-    font-family: 'Segoe UI Light', 'Open Sans', Verdana, Arial, Helvetica, sans-serif;
-    font-weight: 100;
-    font-size: 10px;
-    letter-spacing: 0.01em;
-    text-align: center;
-}
-.app_push_btn
-{
-    background-image: url("../images/template_apps_push.png");
-    background-repeat: no-repeat;
-    background-position: 4px center;
-    top: 10px;
-    right: 5px;
-}
-.app_download_btn
-{
-    background-image: url("../images/template_apps_download.png");
-    background-repeat: no-repeat;
-    background-position: 4px center;
-    top: 35px;
-    right: 5px;
-}
-
-.template_apps_service_icons
-{
-    background-image: url("../images/smallicons.png");
-    width: 16px;
-    height: 16px;
-    position: absolute;
-    bottom: 5px;
-    right: 5px;
-}
-
-.template_apps_runtime_icons
-{
-    background-image: url("../images/smallicons.png");
-    width: 16px;
-    height: 16px;
-    position: absolute;
-    bottom: 5px;
-    right: 25px;
-}
-
-
-.template_apps_service_icons.none,
-.template_apps_runtime_icons.none
-{
-    background-position: 0px 0px;
-}
 
 /*          RUNTIMES             */
 
@@ -2671,4 +2529,167 @@ h4
 .template_apps_service_icons.uhurufs
 {
     background-position: -896px 0px;
+}
+
+
+
+/**********************       TEMPLATE APPS LIST          ***********************/
+
+.template_apps_container
+{
+    position: relative;
+    display: block;
+    width: 100%;
+    padding: 0 !important;
+}
+.apps_list
+{
+    display: inline-block;
+    position: relative;
+    float: left;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+.app_menu_item
+{
+    font-size: 14px;
+    font-weight: 100;
+    text-align: center;
+    padding: 2px 5px 2px 5px;
+    cursor: pointer;
+    background-color: #09293e;
+}
+.app_menu_item:hover
+{
+    background-color: #0e4769;
+}
+
+
+/**********************       TEMPLATE APPS          ***********************/
+
+.collection_buttons_table
+{
+    float: right;
+}
+
+.small_app_icons
+{
+    float: left;
+    margin-top: 5px;
+    margin-left: 5px;
+}
+
+.template_apps
+{
+    position: relative;
+    width: 685px;
+    min-height: 200px;
+    margin-left: 5px;
+    float: right;
+    display: none;
+}
+
+.template_app_logo
+{
+    display: block;
+    position: relative;
+    float: right;
+    margin: 0;
+}
+.template_app_name
+{
+    display: block;
+    position: relative;
+    text-align: left;
+    padding-bottom: 3px;
+    color: #fff;
+    font-size: 28px;
+    width: 40%;
+    border-bottom: 1px solid #fff;
+}
+.query_link
+{
+    display: inline-block;
+    position: relative;
+    cursor: pointer;
+    width: 24px;
+    height: 24px;
+    background-image: url("/images/apps_logos/link.png");
+}
+.template_app_description
+{
+    font-size: 12px;
+    text-align: left;
+}
+
+.template_app_name_span,
+.template_app_url_span
+{
+    background-color: transparent !important;
+}
+
+
+.template_apps_footer
+{
+    display: block;
+    padding: 5px 0 0 0;
+    border-top: 1px solid #fff;
+}
+.tags_div
+{
+    display: block;
+    position: relative;
+    float: left;
+    margin-top: 20px;
+    width: 35%;
+}
+.buttons_div
+{
+    display: block;
+    position: relative;
+    float: right;
+    width: 60%;
+    border-left: 1px solid #fff;
+}
+
+.template_app_pub_span,
+.template_app_tag_span
+{
+    color: #fff;
+    font-size: 17px;
+    font-weight: 400;
+    text-align: left;
+    padding-left: 5px;
+}
+.template_app_pub_span
+{
+}
+
+
+.template_app_push_span_title,
+.template_app_name_span,
+.template_app_url_span
+{
+    display: block;
+    position: relative;
+    float: right;
+    padding-right: 5px;
+    color: #fff;
+    font-size: 14px;
+}
+.template_app_push_span_title
+{
+    font-size: 16px;
+    font-weight: 400;
+}
+.template_app_tags
+{
+    cursor: inherit;
+    color: #689768;
+    font-size: 14px;
+}
+.template_app_tags:hover
+{
+    border-bottom: 1px solid #689768;
 }

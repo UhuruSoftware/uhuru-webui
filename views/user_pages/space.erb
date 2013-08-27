@@ -7,7 +7,6 @@
 </div>
 
 
-
 <div class="sections" id="space_page">
 
         <div class="manage_content_header">
@@ -85,9 +84,9 @@
 
 
                  <% if current_tab == "domains" %>
-                     <li class="space_selected_tab"><a href="<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/spaces/#{current_space}/domains" %>">Routes (<span></span>)</a></li>
+                     <li class="space_selected_tab"><a href="<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/spaces/#{current_space}/domains" %>"><%= space_name %>'s domains (<span><%= defined?(domains_list) ? domains_list.count : '...' %></span>)</a></li>
                  <% else %>
-                     <li class="space_unselected_tabs"><a href="<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/spaces/#{current_space}/domains" %>">Routes (<span></span>)</a></li>
+                     <li class="space_unselected_tabs"><a href="<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/spaces/#{current_space}/domains" %>"><%= space_name %>'s domains (<span><%= defined?(domains_list) ? domains_list.count : '...' %></span>)</a></li>
                  <% end %>
                </ul>
 
@@ -219,7 +218,7 @@
                             <% end %>
                        <% end %>
 
-                       <li class="tile_user_manager">
+                       <li class="tile_routes">
                          <a href="http://<%= route.name %>" class="link_tiles_routes" title="<%= route.name %>"><span class="to_be_underlined organization_name_span"><%= route.name %></span></a>
                          <span class="user_type_span">Route</span>
 
@@ -232,6 +231,25 @@
                  </ul>
                </div>
             <% end %>
+
+
+            <% if defined?(current_tab) && current_tab != nil && current_tab == "domains" %>
+             <div id="domains" class="tab-pane">
+               <ul class="tile_list">
+                 <% domains_list.each do |domain| %>
+                     <li class="tile_space_domain" title="<%= domain.name %>">
+                       <span class="count-value wildcard domain_wildcard_span_value <%= domain.wildcard %>"></span>
+                       <span class="count-label wildcard domain_wildcard_span"><%= domain.name %></span>
+
+                       <span class="span_bg_icon_domains"></span>
+                       <a href="#"><span class="small_trash delete-domain-button" id="<%= domain.name %>" title="<%= domain.guid %>"></span></a>
+                     </li>
+                 <% end %>
+
+                 <div class="div_ul_shape"></div>
+               </ul>
+             </div>
+         <% end %>
 </div>
 
 
@@ -413,7 +431,7 @@
 
 
     <% if defined?(include_erb) && include_erb != nil %>
-        <%= erb(include_erb, :layout => false, :locals => { :current_organization => current_organization, :current_space => current_space, :collections => collections, :current_tab => current_tab, :error_message => error_message }) %>
+        <%= erb(include_erb, :layout => false, :locals => { :current_organization => current_organization, :current_space => current_space, :collections => apps, :current_tab => current_tab, :error_message => error_message, :services_list => services_list }) %>
     <% end %>
 
 </div>

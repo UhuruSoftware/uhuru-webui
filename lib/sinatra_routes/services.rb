@@ -1,8 +1,5 @@
 require 'sinatra/base'
 
-
-#Service plan should not be hardcoded
-
 module Uhuru::Webui
   module SinatraRoutes
     module Services
@@ -13,25 +10,23 @@ module Uhuru::Webui
             redirect INDEX
           end
 
-          organizations_Obj = Library::Organizations.new(session[:token], $cf_target)
-          spaces_Obj = Library::Spaces.new(session[:token], $cf_target)
-          readapps_Obj = TemplateApps.new
-          users_setup_Obj = UsersSetup.new($config)
-          routes_Obj = Library::Routes.new(session[:token], $cf_target)
-          all_space_users = users_setup_Obj.uaa_get_usernames
+          org = Library::Organizations.new(session[:token], $cf_target)
+          space = Library::Spaces.new(session[:token], $cf_target)
+          app = TemplateApps.new
+          user = UsersSetup.new($config)
+          route = Library::Routes.new(session[:token], $cf_target)
+          all_space_users = user.uaa_get_usernames
 
-          #session[:space_name] = spaces_Obj.get_name(@this_guid)
+          space.set_current_space(params[:space_guid])
+          apps_list = space.read_apps(params[:space_guid])
+          services_list = space.read_service_instances(params[:space_guid])
+          routes_list = route.read_routes(params[:space_guid])
 
-          spaces_Obj.set_current_space(params[:space_guid])
-          apps_list = spaces_Obj.read_apps(params[:space_guid])
-          services_list = spaces_Obj.read_service_instances(params[:space_guid])
-          routes_list = routes_Obj.read_routes(params[:space_guid])
+          owners_list = space.read_owners($config, params[:space_guid])
+          developers_list = space.read_developers($config, params[:space_guid])
+          auditors_list = space.read_auditors($config, params[:space_guid])
 
-          owners_list = spaces_Obj.read_owners($config, params[:space_guid])
-          developers_list = spaces_Obj.read_developers($config, params[:space_guid])
-          auditors_list = spaces_Obj.read_auditors($config, params[:space_guid])
-
-          collections = readapps_Obj.read_collections
+          collections = app.read_collections
 
           if params[:error] == 'create_service'
             if params[:message] == 'name_size'
@@ -47,8 +42,8 @@ module Uhuru::Webui
               {
                   :layout => :'layouts/user',
                   :locals => {
-                      :organization_name => organizations_Obj.get_name(params[:org_guid]),
-                      :space_name => spaces_Obj.get_name(params[:space_guid]),
+                      :organization_name => org.get_name(params[:org_guid]),
+                      :space_name => space.get_name(params[:space_guid]),
                       :current_organization => params[:org_guid],
                       :current_space => params[:space_guid],
                       :current_tab => params[:tab],
@@ -70,8 +65,7 @@ module Uhuru::Webui
           @plan = "ff33164f-7d84-4392-b467-ed6c3eac0463" # wardenized: 3ae1cc4f-0c55-4d32-8e75-2cc1ec5ac011   ||  free: ff33164f-7d84-4392-b467-ed6c3eac0463
 
           if params[:serviceName].size >= 4
-            spaces_Obj = ServiceInstances.new(session[:token], $cf_target)
-            create = spaces_Obj.create_service_instance(params[:serviceName], params[:current_space], @plan)
+            create = ServiceInstances.new(session[:token], $cf_target).create_service_instance(params[:serviceName], params[:current_space], @plan)
           else
             redirect ORGANIZATIONS + "/#{params[:current_organization]}/spaces/#{params[:current_space]}/#{params[:current_tab]}/create_service/new" + '?error=create_service&message=name_size'
           end
@@ -84,8 +78,7 @@ module Uhuru::Webui
         end
 
         app.post '/deleteService' do
-          services_Obj = ServiceInstances.new(session[:token], $cf_target)
-          delete = services_Obj.delete(params[:serviceGuid])
+          delete = ServiceInstances.new(session[:token], $cf_target).delete(params[:serviceGuid])
 
           if delete == 'error'
             redirect ORGANIZATIONS + "/#{params[:current_organization]}/spaces/#{params[:current_space]}/#{params[:current_tab]}" + '?error=delete_service'

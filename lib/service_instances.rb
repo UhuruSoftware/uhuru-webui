@@ -26,7 +26,15 @@ class ServiceInstances
 
   def read_service_plans()
     @client.service_plans
+  end
 
+  def read_service_types()
+    types = []
+    @client.services.each do |type|
+      types << type.label
+    end
+
+    types
   end
 
   def delete(service_instance_guid)

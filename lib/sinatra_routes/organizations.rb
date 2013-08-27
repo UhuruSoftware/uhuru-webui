@@ -10,8 +10,7 @@ module Uhuru::Webui
             redirect INDEX
           end
 
-          organizations_Obj = Library::Organizations.new(session[:token], $cf_target)
-          organizations_list = organizations_Obj.read_all
+          organizations_list = Library::Organizations.new(session[:token], $cf_target).read_all
 
           if params[:error] != '' && params[:error] != nil
             error_message = $errors['delete_organization_error']
@@ -35,8 +34,7 @@ module Uhuru::Webui
             redirect INDEX
           end
 
-          organizations_Obj = Library::Organizations.new(session[:token], $cf_target)
-          organizations_list = organizations_Obj.read_all
+          organizations_list = Library::Organizations.new(session[:token], $cf_target).read_all
 
           if params[:error] != '' && params[:error] != nil
             if params[:message] == 'name_size'
@@ -62,8 +60,7 @@ module Uhuru::Webui
 
         app.post '/createOrganization' do
           if params[:orgName].size >= 4
-            organizations_Obj = Library::Organizations.new(session[:token], $cf_target)
-            create = organizations_Obj.create($config, params[:orgName], session[:user_guid])
+            create = Library::Organizations.new(session[:token], $cf_target).create($config, params[:orgName], session[:user_guid])
           else
             redirect ORGANIZATIONS_CREATE + '?error=create_organization&message=name_size'
           end
@@ -76,8 +73,7 @@ module Uhuru::Webui
         end
 
         app.post '/deleteOrganization' do
-          organizations_Obj = Library::Organizations.new(session[:token], $cf_target)
-          delete = organizations_Obj.delete($config, params[:orgGuid])
+          delete = Library::Organizations.new(session[:token], $cf_target).delete($config, params[:orgGuid])
 
           if delete == 'error'
             redirect ORGANIZATIONS + '?error=delete_organization'
@@ -88,8 +84,7 @@ module Uhuru::Webui
 
         app.post '/updateOrganization' do
           if params[:modified_name].size >= 4
-            organizations_Obj = Library::Organizations.new(session[:token], $cf_target)
-            update = organizations_Obj.update(params[:modified_name], params[:current_organization])
+            update =  Library::Organizations.new(session[:token], $cf_target).update(params[:modified_name], params[:current_organization])
           else
             redirect redirect ORGANIZATIONS + "/#{params[:current_organization]}/#{params[:current_tab]}" + '?error=update_organization&message=name_size'
           end

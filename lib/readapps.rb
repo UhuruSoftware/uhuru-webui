@@ -3,129 +3,43 @@ require 'yaml'
 class TemplateApps
 
   def read_collections
-    begin
-      collections = YAML.load_file("../template_apps/collections_list.yml")
-      return collections
-    rescue Exception => ex
-      puts ex
-      puts " ---> read_collections"
-      return nil
-    end
-  end
+    result = {}
+    search_collections =  File.expand_path("../../template_apps/*/manifest.yml", __FILE__)
+    all_collections = Dir.glob(search_collections)
 
-  def read_collection(collection)
-    begin
-      collection = YAML.load_file("../template_apps/" + collection + "/template_collection_manifest.yml")
-      return collection
-    rescue Exception => ex
-      puts ex
-      puts " ---> read_collection"
-      return nil
-    end
-  end
+    all_collections.each do |collection|
 
-  def read_apps(collection, app)
-    begin
-      app = YAML.load_file("../template_apps/" + collection + "/" + app + "/template_manifest.yml")
-      return app
-    rescue Exception => ex
-      puts ex
-      puts " ---> read_apps"
-      return nil
-    end
-  end
+      collection_manifest = YAML.load_file collection
 
-  def read_app_vmc(collection, app)
-    begin
-      vmc = YAML.load_file("../template_apps/" + collection + "/" + app + "/vmc_manifest.yml")
-      return vmc
-    rescue Exception => ex
-      puts ex
-      puts " ---> read app vmc"
-      return nil
-    end
-  end
 
+      apps_search = File.expand_path("../*/template_manifest.yml", collection)
+      all_apps = Dir.glob(apps_search)
+
+      all_apps.each do |app|
+        service_types = []
+        app_manifest = YAML.load_file app
+
+        app_manifest['collection'] = collection_manifest
+        app_manifest['collection_src'] = collection
+        app_manifest['app_src'] = app
+        app_manifest['logo'] = File.expand_path("../logo.png", app)
+        app_manifest['vmc_manifest_file'] = File.expand_path("../vmc_manifest.yml", app)
+        app_manifest['vmc_manifest'] = YAML.load_file app_manifest['vmc_manifest_file']
+        service_manifest = YAML.load_file app_manifest['vmc_manifest_file']
+        services = service_manifest['applications']['.']['services']
+
+        services.each do |_, value|
+          value.each do |_, service_type|
+            service_types << service_type
+          end
+        end
+
+        app_manifest['service_type'] = service_types
+
+        result[app_manifest['id']] = app_manifest
+      end
+    end
+
+    result
+  end
 end
-
-
-
-#def read_apps
-#
-#  @apps = Array.new
-#  @i = 0
-#
-#  app_file = File.join(File.dirname(__FILE__), "../apps.yaml")
-#
-#  file = YAML.load_file app_file
-#  file.each_key { |key|
-#    @apps[@i] = file[key]
-#    @i = @i + 1
-#  }
-#  @apps
-#end
-
-
-
-
-<<-Doc
-    def read_apps
-      @apps = Array.new
-      @i = 0
-
-      file = YAML.load_file "apps.yaml"
-      file.each_key { |key|
-        @apps[@i] = file[key]['name']
-        @i = @i + 1
-      }
-      @apps
-    end
-
-    def read_runtimes
-      @runtimes = Array.new
-      @i = 0
-
-      file = YAML.load_file "apps.yaml"
-      file.each_key { |key|
-        @runtimes[@i] = file[key]['runtime']
-        @i = @i + 1
-      }
-      @runtimes
-    end
-
-    def read_frameworks
-      @frameworks = Array.new
-      @i = 0
-
-      file = YAML.load_file "apps.yaml"
-      file.each_key { |key|
-        @frameworks[@i] = file[key]['framework']['name']
-        @i = @i + 1
-      }
-      @frameworks
-    end
-
-    def read_memory
-      @memory = Array.new
-      @i = 0
-
-      file = YAML.load_file "apps.yaml"
-      file.each_key { |key|
-        @memory[@i] = file[key]['mem']
-        @i = @i + 1
-      }
-      @memory
-    end
-
-    def read_locations
-      @locations = Array.new
-      @i = 0
-
-      file = YAML.load_file "apps.yaml"
-      file.each_key { |key|
-        @locations[@i] = file[key]['download-location']
-        @i = @i + 1
-      }
-      @locations
-    end
-Doc

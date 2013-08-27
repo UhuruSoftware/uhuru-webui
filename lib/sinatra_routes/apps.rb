@@ -17,26 +17,23 @@ module Uhuru::Webui
             redirect INDEX
           end
 
-          organizations_Obj = Library::Organizations.new(session[:token], $cf_target)
-          spaces_Obj = Library::Spaces.new(session[:token], $cf_target)
-          readapps_Obj = TemplateApps.new
-          users_setup_Obj = UsersSetup.new($config)
-          routes_Obj = Library::Routes.new(session[:token], $cf_target)
-          all_space_users = users_setup_Obj.uaa_get_usernames
+          org = Library::Organizations.new(session[:token], $cf_target)
+          space = Library::Spaces.new(session[:token], $cf_target)
+          app = TemplateApps.new
+          user = UsersSetup.new($config)
+          route = Library::Routes.new(session[:token], $cf_target)
+          all_space_users = user.uaa_get_usernames
 
-          #session[:space_name] = spaces_Obj.get_name(@this_guid)
+          space.set_current_space(params[:space_guid])
+          apps_list = space.read_apps(params[:space_guid])
+          services_list = space.read_service_instances(params[:space_guid])
+          routes_list = route.read_routes(params[:space_guid])
 
-          spaces_Obj.set_current_space(params[:space_guid])
-          apps_list = spaces_Obj.read_apps(params[:space_guid])
-          services_list = spaces_Obj.read_service_instances(params[:space_guid])
-          routes_list = routes_Obj.read_routes(params[:space_guid])
+          owners_list = space.read_owners($config, params[:space_guid])
+          developers_list = space.read_developers($config, params[:space_guid])
+          auditors_list = space.read_auditors($config, params[:space_guid])
 
-          owners_list = spaces_Obj.read_owners($config, params[:space_guid])
-          developers_list = spaces_Obj.read_developers($config, params[:space_guid])
-          auditors_list = spaces_Obj.read_auditors($config, params[:space_guid])
-
-          collections = readapps_Obj.read_collections
-
+          collections = app.read_collections
 
 
           if params[:error] == 'delete_app'
@@ -63,8 +60,8 @@ module Uhuru::Webui
               {
                   :layout => :'layouts/user',
                   :locals => {
-                      :organization_name => organizations_Obj.get_name(params[:org_guid]),
-                      :space_name => spaces_Obj.get_name(params[:space_guid]),
+                      :organization_name => org.get_name(params[:org_guid]),
+                      :space_name => space.get_name(params[:space_guid]),
                       :current_organization => params[:org_guid],
                       :current_space => params[:space_guid],
                       :current_tab => params[:tab],
@@ -89,36 +86,34 @@ module Uhuru::Webui
             redirect INDEX
           end
 
-          organizations_Obj = Library::Organizations.new(session[:token], $cf_target)
-          spaces_Obj = Library::Spaces.new(session[:token], $cf_target)
-          readapps_Obj = TemplateApps.new
-          users_setup_Obj = UsersSetup.new($config)
-          routes_Obj = Library::Routes.new(session[:token], $cf_target)
-          all_space_users = users_setup_Obj.uaa_get_usernames
+          org = Library::Organizations.new(session[:token], $cf_target)
+          space = Library::Spaces.new(session[:token], $cf_target)
+          app = TemplateApps.new
+          user = UsersSetup.new($config)
+          route = Library::Routes.new(session[:token], $cf_target)
+          all_space_users = user.uaa_get_usernames
 
-          #session[:space_name] = spaces_Obj.get_name(@this_guid)
+          space.set_current_space(params[:space_guid])
+          apps_list = space.read_apps(params[:space_guid])
+          services_list = space.read_service_instances(params[:space_guid])
+          routes_list = route.read_routes(params[:space_guid])
 
-          spaces_Obj.set_current_space(params[:space_guid])
-          apps_list = spaces_Obj.read_apps(params[:space_guid])
-          services_list = spaces_Obj.read_service_instances(params[:space_guid])
-          routes_list = routes_Obj.read_routes(params[:space_guid])
+          owners_list = space.read_owners($config, params[:space_guid])
+          developers_list = space.read_developers($config, params[:space_guid])
+          auditors_list = space.read_auditors($config, params[:space_guid])
 
-          owners_list = spaces_Obj.read_owners($config, params[:space_guid])
-          developers_list = spaces_Obj.read_developers($config, params[:space_guid])
-          auditors_list = spaces_Obj.read_auditors($config, params[:space_guid])
-
-          collections = readapps_Obj.read_collections
+          collections = app.read_collections
 
           erb :'user_pages/space',
               {
                   :layout => :'layouts/user',
                   :locals => {
-                      :organization_name => organizations_Obj.get_name(params[:org_guid]),
-                      :space_name => spaces_Obj.get_name(params[:space_guid]),
+                      :organization_name => org.get_name(params[:org_guid]),
+                      :space_name => space.get_name(params[:space_guid]),
                       :current_organization => params[:org_guid],
                       :current_space => params[:space_guid],
                       :current_tab => params[:tab],
-                      :collections => collections,
+                      :apps => collections,
                       :all_space_users => all_space_users,
                       :owners_list => owners_list,
                       :auditors_list => auditors_list,
@@ -130,6 +125,14 @@ module Uhuru::Webui
                       :include_erb => :'user_pages/modals/apps_create'
                   }
               }
+        end
+
+        app.get '/app_logo/:app_id' do
+          #apps = TemplateApps.read_apps
+          #app_id = params[:app_id]
+          #content_type 'image/png'
+          #send_file apps[app_id]['logo']
+          redirect '/organizations'
         end
 
 
@@ -155,8 +158,7 @@ module Uhuru::Webui
 
 
         app.post '/deleteApp' do
-          applications_Obj = Applications.new(session[:token], $cf_target)
-          delete = applications_Obj.delete(params[:appGuid])
+          delete = Applications.new(session[:token], $cf_target).delete(params[:appGuid])
 
           if delete == 'error'
             redirect ORGANIZATIONS + "/#{params[:current_organization]}/spaces/#{params[:current_space]}/#{params[:current_tab]}" + '?error=delete_app'
@@ -166,8 +168,7 @@ module Uhuru::Webui
         end
 
         app.post '/startApp' do
-          apps_obj = Applications.new(session[:token], $cf_target)
-          start = apps_obj.start_app(params[:appName])
+          start = Applications.new(session[:token], $cf_target).start_app(params[:appName])
 
           if start == 'error'
             redirect ORGANIZATIONS + "/#{params[:current_organization]}/spaces/#{params[:current_space]}/#{params[:current_tab]}/#{params[:appName]}" + '?error=start_app'
@@ -177,8 +178,7 @@ module Uhuru::Webui
         end
 
         app.post '/stopApp' do
-          apps_obj = Applications.new(session[:token], $cf_target)
-          stop = apps_obj.stop_app(params[:appName])
+          stop = Applications.new(session[:token], $cf_target).stop_app(params[:appName])
 
           if stop == 'error'
             redirect ORGANIZATIONS + "/#{params[:current_organization]}/spaces/#{params[:current_space]}/#{params[:current_tab]}/#{params[:appName]}" + '?error=stop_app'
@@ -188,8 +188,7 @@ module Uhuru::Webui
         end
 
         app.post '/updateApp' do
-          apps_obj = Applications.new(session[:token], $cf_target)
-          update = apps_obj.update(params[:appName], params[:appInstances].to_i, params[:appMemory].to_i)
+          update = Applications.new(session[:token], $cf_target).update(params[:appName], params[:appInstances].to_i, params[:appMemory].to_i)
 
           if update == 'error'
             redirect ORGANIZATIONS + "/#{params[:current_organization]}/spaces/#{params[:current_space]}/#{params[:current_tab]}/#{params[:appName]}" + '?error=update_app'
@@ -201,13 +200,8 @@ module Uhuru::Webui
 
 
 
-
-
-
-
         app.post '/bindServices' do
-          apps = Applications.new(session[:token], $cf_target)
-          bind = apps.bind_app_services(params[:appName], params[:serviceName])
+          bind = Applications.new(session[:token], $cf_target).bind_app_services(params[:appName], params[:serviceName])
 
           if bind == 'error'
             redirect ORGANIZATIONS + "/#{params[:current_organization]}/spaces/#{params[:current_space]}/#{params[:current_tab]}/#{params[:appName]}" + '?error=bind_service'
@@ -217,10 +211,8 @@ module Uhuru::Webui
         end
 
         app.post '/bindUri' do
-          domain_obj = Library::Domains.new(session[:token], $cf_target)
-          domain_guid = domain_obj.get_organizations_domain_guid(params[:current_organization])
+          domain_guid = Library::Domains.new(session[:token], $cf_target).get_organizations_domain_guid(params[:current_organization])
 
-          routes = Library::Routes.new(session[:token], $cf_target)
           bind = routes.create(params[:appName], params[:current_space], domain_guid, params[:uriName])
 
           if bind == 'error'
@@ -231,8 +223,7 @@ module Uhuru::Webui
         end
 
         app.post '/unbindServices' do
-          apps = Applications.new(session[:token], $cf_target)
-          unbind = apps.unbind_app_services(params[:appName], params[:serviceName])
+          unbind = Applications.new(session[:token], $cf_target).unbind_app_services(params[:appName], params[:serviceName])
 
           if unbind == 'error'
             redirect ORGANIZATIONS + "/#{params[:current_organization]}/spaces/#{params[:current_space]}/#{params[:current_tab]}/#{params[:appName]}" + '?error=unbind_service'
@@ -242,8 +233,7 @@ module Uhuru::Webui
         end
 
         app.post '/unbindUri' do
-          apps = Applications.new(session[:token], $cf_target)
-          unbind = apps.unbind_app_url(params[:appName], $config[:cloud_controller_url], params[:uriName])
+          unbind = Applications.new(session[:token], $cf_target).unbind_app_url(params[:appName], $config[:cloud_controller_url], params[:uriName])
 
           if unbind == 'error'
             redirect ORGANIZATIONS + "/#{params[:current_organization]}/spaces/#{params[:current_space]}/#{params[:current_tab]}/#{params[:appName]}" + '?error=unbind_uri'

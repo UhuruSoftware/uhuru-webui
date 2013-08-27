@@ -11,28 +11,25 @@ module Uhuru::Webui
             redirect INDEX
           end
 
-          organizations_Obj = Library::Organizations.new(session[:token], $cf_target)
-          spaces_Obj = Library::Spaces.new(session[:token], $cf_target)
-          readapps_Obj = TemplateApps.new
-          users_setup_Obj = UsersSetup.new($config)
-          routes_Obj = Library::Routes.new(session[:token], $cf_target)
-          domains_Obj = Library::Domains.new(session[:token], $cf_target)
-          all_space_users = users_setup_Obj.uaa_get_usernames
+          org = Library::Organizations.new(session[:token], $cf_target)
+          space = Library::Spaces.new(session[:token], $cf_target)
+          app = TemplateApps.new
+          user = UsersSetup.new($config)
+          route = Library::Routes.new(session[:token], $cf_target)
+          domain = Library::Domains.new(session[:token], $cf_target)
+          all_space_users = user.uaa_get_usernames
 
-          #session[:space_name] = spaces_Obj.get_name(@this_guid)
-
-          spaces_Obj.set_current_space(params[:space_guid])
-          apps_list = spaces_Obj.read_apps(params[:space_guid])
-          services_list = spaces_Obj.read_service_instances(params[:space_guid])
-          routes_list = routes_Obj.read_routes(params[:space_guid])
-          # instanced domains_list variable to avoid repetition in other modals
+          space.set_current_space(params[:space_guid])
+          apps_list = space.read_apps(params[:space_guid])
+          services_list = space.read_service_instances(params[:space_guid])
+          routes_list = route.read_routes(params[:space_guid])
           @domains_list = domains_Obj.read_domains()
 
-          owners_list = spaces_Obj.read_owners($config, params[:space_guid])
-          developers_list = spaces_Obj.read_developers($config, params[:space_guid])
-          auditors_list = spaces_Obj.read_auditors($config, params[:space_guid])
+          owners_list = space.read_owners($config, params[:space_guid])
+          developers_list = space.read_developers($config, params[:space_guid])
+          auditors_list = space.read_auditors($config, params[:space_guid])
 
-          collections = readapps_Obj.read_collections
+          collections = app.read_collections
 
           if params[:error] == 'create_route'
             error_message = $errors['create_route_error']
@@ -46,8 +43,8 @@ module Uhuru::Webui
               {
                   :layout => :'layouts/user',
                   :locals => {
-                      :organization_name => organizations_Obj.get_name(params[:org_guid]),
-                      :space_name => spaces_Obj.get_name(params[:space_guid]),
+                      :organization_name => org.get_name(params[:org_guid]),
+                      :space_name => space.get_name(params[:space_guid]),
                       :current_organization => params[:org_guid],
                       :current_space => params[:space_guid],
                       :current_tab => params[:tab],
@@ -68,9 +65,7 @@ module Uhuru::Webui
 
 
         app.post '/createRoute' do
-          domains_Obj = Library::Domains.new(session[:token], $cf_target)
-          routes_Obj = Library::Routes.new(session[:token], $cf_target)
-          create = routes_Obj.create(params[:appName], params[:current_space], params[:domain_guid])
+          create = Library::Routes.new(session[:token], $cf_target).create(params[:appName], params[:current_space], params[:domain_guid])
 
           if create == 'error'
             redirect ORGANIZATIONS + "/#{params[:current_organization]}/spaces/#{params[:current_space]}/#{params[:current_tab]}/add_route/new" + '?error=create_route'
@@ -80,8 +75,7 @@ module Uhuru::Webui
         end
 
         app.post '/deleteRoute' do
-          routes_Obj = Library::Routes.new(session[:token], $cf_target)
-          delete = routes_Obj.delete(params[:routeAppName], true, params[:routeGuid])
+          delete = Library::Routes.new(session[:token], $cf_target).delete(params[:routeAppName], true, params[:routeGuid])
 
           if delete == 'error'
             redirect ORGANIZATIONS + "/#{params[:current_organization]}/spaces/#{params[:current_space]}/#{params[:current_tab]}" + '?error=delete_route'
