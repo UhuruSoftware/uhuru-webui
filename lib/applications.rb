@@ -15,9 +15,8 @@ class Applications
   end
 
   # parameters with default arguments (= nil) may be
-  def create(org_guid, space_guid, name, runtime, framework, instances, memory, domain_name, path, service_plan_guid)
+  def create(org_guid, space_guid, name, instances, memory, domain_name, path, plan, app_services)
 
-    org = @client.organization(org_guid)
     space = @client.space(space_guid)
 
     new_app = @client.app
@@ -27,25 +26,21 @@ class Applications
     new_app.memory = memory
 
     if (new_app.create!)
+      new_app.upload path
 
-      unless !service_plan_guid
-        #service_db = ServiceInstances.new(@client.base.token, @client.target).create_service_instance(name + "DB", space_guid, service_plan_guid)
-        #new_app.bind(service_db)
-
-        # can't be used for now, if maybe in the future for uhuru file system
-        #service_fs = service_obj.create_service_instance(name + "FS", space_guid, "uhurufs_service_plan_guid")
-        #new_app.bind(service_fs)
+      unless !plan
+        app_services.each do |service|
+          service_db_name = ServiceInstances.new(@client.base.token, @client.target).create_service_instance(service[:name], space_guid, plan, service[:type])
+          app = @client.apps.find { |a| a.name == name }
+          app.bind(service_db_name)
+        end
       end
 
-      #domain = @client.domains.find { |d|
-      #  d.name == domain_name
-      #}
-      #
-      #routes_obj = Library::Routes.initialize_client_for_template_apps(@client)
-      #routes_obj.create(name, space_guid, domain.guid, name)
-      #
-      #new_app.upload(path, true)
-      new_app.upload path
+      domain = @client.domains.find { |d|
+        d.name == domain_name
+      }
+      Library::Routes.new(@client.base.token, @client.target).create(name, space_guid, domain.guid, 'test_host_name')
+
       new_app.start!
     end
 
@@ -141,8 +136,8 @@ class Applications
 
   def unbind_app_url(app_name, domain_name, old_url)
     app = @client.apps.find { |a| a.name == app_name }
-    domain = @client.domains.find { |d| d.name == domain_name }
-    route = @client.routes.find { |r| r.host == old_url && r.domain == domain }
+    domain = @client.domains.find { |d| '.' + d.name == domain_name }
+    route = @client.routes.find { |r| r.domain == domain } #route = @client.routes.find { |r| r.host == old_url && r.domain == domain }
 
     app.remove_route(route)
 

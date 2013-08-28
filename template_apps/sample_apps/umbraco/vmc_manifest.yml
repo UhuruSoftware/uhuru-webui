@@ -15,4 +15,4 @@ applications:
       wptestmanDB:
         type: mysql
       wptestmanFS:
-        type: uhurufs
+        type: mysql

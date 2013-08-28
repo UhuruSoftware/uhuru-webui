@@ -74,7 +74,13 @@
                     </tr>
                     <tr>
                       <td><label for="app_url" class="template_app_url_span">App URL:</label></td>
-                      <td><input type="text" value="" name="app_url" class="modal_input_box" /><%=  %></td>
+                      <td>
+                        <select class="modal_input_box" name="app_url">
+                          <% @domains_list.each do |domain| %>
+                              <option value="<%= domain.name %>"><%= domain.name %></option>
+                          <% end %>
+                        </select>
+                      </td>
                     </tr>
                     <tr>
                       <td></td>
@@ -90,8 +96,7 @@
                         <input type="hidden" name="app_src" value="<%= app['collection_src'] %>" >
                         <input type="hidden" name="app_memory" value="<%= app['vmc_manifest']['applications']['.']['mem'] %>" >
                         <input type="hidden" name="app_instances" value="<%= app['vmc_manifest']['applications']['.']['instances'] %>" >
-                        <input type="hidden" name="app_framework" value="<%= app['vmc_manifest']['applications']['.']['framework']['name'] %>" >
-                        <input type="hidden" name="app_runtime" value="<%= app['vmc_manifest']['applications']['.']['framework']['info']['exec'] %>" >
+
                         <input type="submit" value="Push" class="btn push_btn" />
                       </td>
                     </tr>

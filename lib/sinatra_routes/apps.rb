@@ -22,6 +22,7 @@ module Uhuru::Webui
           app = TemplateApps.new
           user = UsersSetup.new($config)
           route = Library::Routes.new(session[:token], $cf_target)
+          domain = Library::Domains.new(session[:token], $cf_target)
           all_space_users = user.uaa_get_usernames
 
           space.set_current_space(params[:space_guid])
@@ -32,6 +33,7 @@ module Uhuru::Webui
           owners_list = space.read_owners($config, params[:space_guid])
           developers_list = space.read_developers($config, params[:space_guid])
           auditors_list = space.read_auditors($config, params[:space_guid])
+          @domains_list = domain.read_domains()
 
           collections = app.read_collections
 
@@ -91,6 +93,7 @@ module Uhuru::Webui
           app = TemplateApps.new
           user = UsersSetup.new($config)
           route = Library::Routes.new(session[:token], $cf_target)
+          domain = Library::Domains.new(session[:token], $cf_target)
           all_space_users = user.uaa_get_usernames
 
           space.set_current_space(params[:space_guid])
@@ -101,6 +104,7 @@ module Uhuru::Webui
           owners_list = space.read_owners($config, params[:space_guid])
           developers_list = space.read_developers($config, params[:space_guid])
           auditors_list = space.read_auditors($config, params[:space_guid])
+          @domains_list = domain.read_domains()
 
           collections = app.read_collections
 
@@ -140,13 +144,19 @@ module Uhuru::Webui
           url = params[:app_url]
           memory = params[:app_memory]
           instances = params[:app_instances]
-          framework = params[:app_framework]
-          runtime = params[:app_runtime]
           src = params[:app_src] + params[:app_id] + '.zip'
-          plan = "ff33164f-7d84-4392-b467-ed6c3eac0463"
+          plan = "free"
+
+          location = File.expand_path(params[:app_src] + 'vmc_manifest.yml', __FILE__)
+          manifest = YAML.load_file location
+          service_list = manifest['applications']['.']['services'] || []
+          app_services = []
+          service_list.each do |service|
+            app_services << { :name => service[0], :type => service[1]['type'] }
+          end
 
           apps_obj = Applications.new(session[:token], $cf_target)
-          apps_obj.create(params[:app_organization], params[:app_space], name, runtime, framework, instances.to_i, memory.to_i, url, src, plan)
+          apps_obj.create(params[:app_organization], params[:app_space], name, instances.to_i, memory.to_i, url, src, plan, app_services)
           redirect ORGANIZATIONS + "/#{params[:app_organization]}/spaces/#{params[:app_space]}/apps/create_app/new"
         end
 
@@ -207,8 +217,7 @@ module Uhuru::Webui
 
         app.post '/bindUri' do
           domain_guid = Library::Domains.new(session[:token], $cf_target).get_organizations_domain_guid(params[:current_organization])
-
-          bind = routes.create(params[:appName], params[:current_space], domain_guid, params[:uriName])
+          bind = Library::Routes.new(session[:token], $cf_target).create(params[:appName], params[:current_space], domain_guid, params[:uriName])
 
           if bind == 'error'
             redirect ORGANIZATIONS + "/#{params[:current_organization]}/spaces/#{params[:current_space]}/#{params[:current_tab]}/#{params[:appName]}" + '?error=bind_uri'
@@ -228,7 +237,7 @@ module Uhuru::Webui
         end
 
         app.post '/unbindUri' do
-          unbind = Applications.new(session[:token], $cf_target).unbind_app_url(params[:appName], $config[:cloud_controller_url], params[:uriName])
+          unbind = Applications.new(session[:token], $cf_target).unbind_app_url(params[:appName], params[:uriName], $config[:cloud_controller_url])
 
           if unbind == 'error'
             redirect ORGANIZATIONS + "/#{params[:current_organization]}/spaces/#{params[:current_space]}/#{params[:current_tab]}/#{params[:appName]}" + '?error=unbind_uri'
