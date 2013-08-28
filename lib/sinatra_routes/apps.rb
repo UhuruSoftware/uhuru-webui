@@ -135,25 +135,20 @@ module Uhuru::Webui
           redirect '/organizations'
         end
 
+        app.post '/push' do
+          name = params[:app_name]
+          url = params[:app_url]
+          memory = params[:app_memory]
+          instances = params[:app_instances]
+          framework = params[:app_framework]
+          runtime = params[:app_runtime]
+          src = params[:app_src] + params[:app_id] + '.zip'
+          plan = "ff33164f-7d84-4392-b467-ed6c3eac0463"
 
-        #app.post '/createApp' do
-        #  #@name =
-        #  #@runtime =
-        #  #@framework =
-        #  instance = 1
-        #  #@memory =
-        #  #@path =
-        #  #@domain =
-        #  #@plan =
-        #
-        #  organizations_Obj = Organizations.new(session[:token], $cf_target)
-        #  spaces_Obj = Spaces.new(session[:token], $cf_target)
-        #  apps_obj = Applications.new(session[:token], $cf_target)
-        #  apps_obj.create(session[:currentOrganization], session[:currentSpace], params[:appName], params[:appRuntime], params[:appFramework], instance, params[:appMemory].to_i, params[:appDomain], params[:appPath], params[:appPlan])
-        #
-        #  #redirect "/space" + session[:currentSpace]
-        #
-        #end
+          apps_obj = Applications.new(session[:token], $cf_target)
+          apps_obj.create(params[:app_organization], params[:app_space], name, runtime, framework, instances.to_i, memory.to_i, url, src, plan)
+          redirect ORGANIZATIONS + "/#{params[:app_organization]}/spaces/#{params[:app_space]}/apps/create_app/new"
+        end
 
 
 

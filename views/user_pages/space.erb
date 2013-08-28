@@ -431,7 +431,7 @@
 
 
     <% if defined?(include_erb) && include_erb != nil %>
-        <%= erb(include_erb, :layout => false, :locals => { :current_organization => current_organization, :current_space => current_space, :collections => apps, :current_tab => current_tab, :error_message => error_message, :services_list => services_list }) %>
+        <%= erb(include_erb, :layout => false, :locals => { :current_organization => current_organization, :current_space => current_space, :collections => defined?(apps) ? apps : nil, :current_tab => current_tab, :error_message => error_message, :services_list => services_list }) %>
     <% end %>
 
 </div>

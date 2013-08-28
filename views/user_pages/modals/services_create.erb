@@ -15,9 +15,9 @@
         </tr>
 
         <tr>
-          <td><label for="team_services_list">Service Plan: </label></td>
+          <td><label for="service_plan">Service Plan: </label></td>
           <td>
-              <select name="team_services_list" class="modal_input_box" style="width: 200px;">
+              <select name="service_plan" class="modal_input_box" style="width: 200px;">
                 <% ServiceInstances.new(session[:token], $cf_target).read_service_plans.each do |plan| %>
                     <option value="<%= plan.name %>"><%= plan.name.capitalize %></option>
                 <% end %>
@@ -26,9 +26,9 @@
         </tr>
 
           <tr>
-          <td><label for="team_services_list_type">Service Type: </label></td>
+          <td><label for="service_type">Service Type: </label></td>
           <td>
-              <select name="team_services_list_type" class="modal_input_box" style="width: 200px;">
+              <select name="service_type" class="modal_input_box" style="width: 200px;">
                 <% ServiceInstances.new(session[:token], $cf_target).read_service_types.each do |type| %>
                     <option value="<%= type %>"><%= type %></option>
                 <% end %>

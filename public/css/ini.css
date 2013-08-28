@@ -2693,3 +2693,17 @@ h4
 {
     border-bottom: 1px solid #689768;
 }
+
+.download_btn
+{
+    background-position: 10% 50%;
+    background-image: url("/images/template_apps_download.png");
+    background-repeat: no-repeat;
+}
+.push_btn
+{
+    background-position: 10% 50%;
+    background-image: url("/images/template_apps_push.png");
+    background-repeat: no-repeat;
+    float: right;
+}

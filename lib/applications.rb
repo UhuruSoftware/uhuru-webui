@@ -20,18 +20,8 @@ class Applications
     org = @client.organization(org_guid)
     space = @client.space(space_guid)
 
-    runtime_obj = @client.runtimes.find { |r|
-      r.name == runtime
-    }
-
-    framework_obj = @client.frameworks.find { |f|
-      f.name == framework
-    }
-
     new_app = @client.app
     new_app.space = space
-    new_app.runtime = runtime_obj
-    new_app.framework = framework_obj
     new_app.name = name
     new_app.total_instances = instances
     new_app.memory = memory
@@ -39,29 +29,29 @@ class Applications
     if (new_app.create!)
 
       unless !service_plan_guid
-        service_obj = ServiceInstances.new(@client.base.token, @client.target)
-
-        service_db = service_obj.create_service_instance(name + "DB", space_guid, service_plan_guid)
-        new_app.bind(service_db)
+        #service_db = ServiceInstances.new(@client.base.token, @client.target).create_service_instance(name + "DB", space_guid, service_plan_guid)
+        #new_app.bind(service_db)
 
         # can't be used for now, if maybe in the future for uhuru file system
         #service_fs = service_obj.create_service_instance(name + "FS", space_guid, "uhurufs_service_plan_guid")
         #new_app.bind(service_fs)
       end
 
-      domain = @client.domains.find { |d|
-        d.name == domain_name
-      }
-
-      routes_obj = Library::Routes.initialize_with_client(@client)
-      routes_obj.create(name, space_guid, domain.guid, name)
-
-      new_app.upload(path, true)
+      #domain = @client.domains.find { |d|
+      #  d.name == domain_name
+      #}
+      #
+      #routes_obj = Library::Routes.initialize_client_for_template_apps(@client)
+      #routes_obj.create(name, space_guid, domain.guid, name)
+      #
+      #new_app.upload(path, true)
+      new_app.upload path
       new_app.start!
     end
 
   rescue Exception => e
-    puts e
+    puts e.message
+    puts e.backtrace
     puts 'create app method error'
     return 'error'
   end

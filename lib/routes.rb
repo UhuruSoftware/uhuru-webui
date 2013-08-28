@@ -12,6 +12,10 @@ module Library
       @client = client
     end
 
+    def self.initialize_client_for_template_apps(client)
+      @client = client
+    end
+
     # will read all routes in space, if domain_guid is specified will filter for the domain given
     def read_routes(space_guid, domain_guid = nil)
       routes = []

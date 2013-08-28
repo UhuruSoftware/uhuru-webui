@@ -23,7 +23,7 @@ module Uhuru::Webui
           apps_list = space.read_apps(params[:space_guid])
           services_list = space.read_service_instances(params[:space_guid])
           routes_list = route.read_routes(params[:space_guid])
-          @domains_list = domains_Obj.read_domains()
+          @domains_list = domain.read_domains()
 
           owners_list = space.read_owners($config, params[:space_guid])
           developers_list = space.read_developers($config, params[:space_guid])

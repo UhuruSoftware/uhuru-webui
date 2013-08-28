@@ -19,7 +19,7 @@
 
       <!-- LOOP AND CREATE THE CONTENT OF EACH COLLECTION AND APP -->
       <% apps.each do |app_id, app| %>
-          <div class="template_apps" id="<%= app_id %>_div">
+          <div class="template_apps" id="<%= app_id %>_div" <%= apps.first[1]['id'] == app_id ? "style='display: block;'" : '' %>>
 
             <!-- INSERT APP LOGO, NAME, DESCRIPTION AND SERVICE ICONS -->
             <image src ="/images/apps_logos/<%= app_id %>.png" class="template_app_logo" />
@@ -84,6 +84,14 @@
                                 <a href="<%= app['app_src'].sub!'template_manifest.yml', 'wordpress.zip' %>"><input type="button" value="Download" class="btn download_btn" /></a>
                             <% end %>
                         <% end %>
+                        <input type="hidden" name="app_space" value="<%= current_space %>" >
+                        <input type="hidden" name="app_organization" value="<%= current_organization %>" >
+                        <input type="hidden" name="app_id" value="<%= app_id %>" >
+                        <input type="hidden" name="app_src" value="<%= app['collection_src'] %>" >
+                        <input type="hidden" name="app_memory" value="<%= app['vmc_manifest']['applications']['.']['mem'] %>" >
+                        <input type="hidden" name="app_instances" value="<%= app['vmc_manifest']['applications']['.']['instances'] %>" >
+                        <input type="hidden" name="app_framework" value="<%= app['vmc_manifest']['applications']['.']['framework']['name'] %>" >
+                        <input type="hidden" name="app_runtime" value="<%= app['vmc_manifest']['applications']['.']['framework']['info']['exec'] %>" >
                         <input type="submit" value="Push" class="btn push_btn" />
                       </td>
                     </tr>
@@ -133,10 +141,6 @@
                 showPanel(document.getElementById(js_apps[counter]));
             }
         }
-    }
-    else
-    {
-        showPanel(document.getElementById('<%= apps.first[0] %>'));
     }
 
     function redirectTo(id)
