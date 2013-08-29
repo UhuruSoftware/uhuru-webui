@@ -22,6 +22,7 @@
 
       <div class="button_case_create_organization_and_space">
         <a href="<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/domains" %>" class="btn btn_right_create_organization_and_space cancel" id="cancel_b_c_space"><span class="line">| </span>Cancel </a>
+        <input type="hidden" name="org_guid" value="<%= current_organization %>" />
         <button type="submit" value="Create" class="btn btn_left_create_organization_and_space ok" id="b_c_space"><span class="line">| </span>Create </button>
         <p class="hidden_modal_messages" id="p_c_space">Please wait...</p>
       </div>

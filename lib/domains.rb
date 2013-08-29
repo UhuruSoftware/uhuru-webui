@@ -25,7 +25,7 @@ module Library
 
       domains_api.each do |d|
         owning_org_name = d.owning_organization == nil ? "Shared" : d.owning_organization.name
-        domains << Domain.new(d.name, d.wildcard, owning_org_name, d.guid)
+        domains << Domain.new(d.name, d.wildcard, owning_org_name, d.spaces, d.guid)
       end
 
       return domains
@@ -142,12 +142,13 @@ module Library
     end
 
     class Domain
-      attr_reader :name, :wildcard, :owning_org_name, :guid
+      attr_reader :name, :wildcard, :owning_org_name, :owning_spaces, :guid
 
-      def initialize(name, wildcard, owning_org_name, guid)
+      def initialize(name, wildcard, owning_org_name, owning_spaces, guid)
         @name = name
         @wildcard = wildcard
-        @owning_org = owning_org_name
+        @owning_org_name = owning_org_name
+        @owning_spaces = owning_spaces
         @guid = guid
       end
     end

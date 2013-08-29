@@ -126,7 +126,7 @@ class Applications
     app = @client.apps.find { |a| a.name == app_name }
     service_instance = @client.service_instances.find { |s| s.name == service_instance_name }
 
-    app.bind(service_instance)
+    app.unbind(service_instance)
 
   rescue Exception => e
     puts e
@@ -134,13 +134,11 @@ class Applications
     return 'error'
   end
 
-  def unbind_app_url(app_name, domain_name, old_url)
+  def unbind_app_url(app_name, url)
     app = @client.apps.find { |a| a.name == app_name }
-    domain = @client.domains.find { |d| '.' + d.name == domain_name }
-    route = @client.routes.find { |r| r.domain == domain } #route = @client.routes.find { |r| r.host == old_url && r.domain == domain }
+    route = @client.routes.find { |r| r.host + '.' + r.domain.name == url }
 
     app.remove_route(route)
-
   rescue Exception => e
     puts e
     puts 'unbind uri method error'

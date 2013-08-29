@@ -71,9 +71,9 @@
                     <% end %>
 
                     <% if current_tab == "domains" %>
-                        <li class="organization_selected_tab"><a href="<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/domains" %>">Domains (<span><%= domains_list.count %></span>)</a></li>
+                        <li class="organization_selected_tab"><a href="<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/domains" %>">Domains (<span><%= domains_list.count { |d| d.owning_org_name == organization_name } %></span>)</a></li>
                     <% else %>
-                        <li class="organization_unselected_tabs"><a href="<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/domains" %>">Domains (<span><%= domains_list.count %></span>)</a></li>
+                        <li class="organization_unselected_tabs"><a href="<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/domains" %>">Domains (<span><%= domains_list.count { |d| d.owning_org_name == organization_name } %></span>)</a></li>
                     <% end %>
                 </ul>
 
@@ -154,13 +154,15 @@
                     <div id="domains">
                          <ul class="tile_list">
                            <% domains_list.each do |domain| %>
-                               <li class="tile_domains" title="<%= domain.name %>">
-                                 <span class="count-value wildcard domain_wildcard_span_value <%= domain.wildcard %>"></span>
-                                 <span class="count-label wildcard domain_wildcard_span"><%= domain.name %></span>
+                               <% if domain.owning_org_name == organization_name %>
+                                   <li class="tile_domains" title="<%= domain.name %>">
+                                     <span class="count-value wildcard domain_wildcard_span_value <%= domain.wildcard %>"></span>
+                                     <span class="count-label wildcard domain_wildcard_span"><%= domain.name %></span>
 
-                                 <span class="span_bg_icon_domains"></span>
-                                 <a href="#"><span class="small_trash delete-domain-button" id="<%= domain.name %>" title="<%= domain.guid %>"></span></a>
-                               </li>
+                                     <span class="span_bg_icon_domains"></span>
+                                     <a href="#"><span class="small_trash delete-domain-button" id="<%= domain.name %>" title="<%= domain.guid %>"></span></a>
+                                   </li>
+                               <% end %>
                            <% end %>
 
                            <div class="div_ul_shape"></div>

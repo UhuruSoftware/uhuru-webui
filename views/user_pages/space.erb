@@ -34,7 +34,6 @@
                     <a href="<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/spaces/#{current_space}/#{current_tab}/create_app/new" %>" class="plus_sign_32 plus_sign_position_32" id="create_app"></a>
                 <% end %>
 
-
                 <% if current_tab == "services" %>
                     <a href="<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/spaces/#{current_space}/#{current_tab}/create_service/new" %>" class="plus_sign_32 plus_sign_position_32" id="create_service"></a>
                 <% end %>
@@ -45,6 +44,10 @@
 
                 <% if current_tab == "routes" %>
                     <a href="<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/spaces/#{current_space}/#{current_tab}/add_route/new" %>" class="plus_sign_32 plus_sign_position_32" id="create_user"></a>
+                <% end %>
+
+                <% if current_tab == "domains" %>
+                    <a href="<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/spaces/#{current_space}/#{current_tab}/map_domain/new" %>" class="plus_sign_32 plus_sign_position_32" id="create_user"></a>
                 <% end %>
 
                 <input type="button" value="" class="edit_sign_32 edit_sign_position_32" id="edit_space_btn" onclick="showSpacesInput();" />
@@ -84,9 +87,9 @@
 
 
                  <% if current_tab == "domains" %>
-                     <li class="space_selected_tab"><a href="<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/spaces/#{current_space}/domains" %>"><%= space_name %>'s domains (<span><%= defined?(domains_list) ? domains_list.count : '...' %></span>)</a></li>
+                     <li class="space_selected_tab"><a href="<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/spaces/#{current_space}/domains" %>">Domains (<span><%= defined?(domains_list) ? domains_list.count { |d| d.owning_org_name == organization_name && d.owning_spaces.count { |s| s.name == space_name } != 0 } : '...' %></span>)</a></li>
                  <% else %>
-                     <li class="space_unselected_tabs"><a href="<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/spaces/#{current_space}/domains" %>"><%= space_name %>'s domains (<span><%= defined?(domains_list) ? domains_list.count : '...' %></span>)</a></li>
+                     <li class="space_unselected_tabs"><a href="<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/spaces/#{current_space}/domains" %>">Domains (<span><%= defined?(domains_list) ? domains_list.count { |d| d.owning_org_name == organization_name && d.owning_spaces.count { |s| s.name == space_name } != 0 } : '...' %></span>)</a></li>
                  <% end %>
                </ul>
 
@@ -237,13 +240,15 @@
              <div id="domains" class="tab-pane">
                <ul class="tile_list">
                  <% domains_list.each do |domain| %>
-                     <li class="tile_space_domain" title="<%= domain.name %>">
-                       <span class="count-value wildcard domain_wildcard_span_value <%= domain.wildcard %>"></span>
-                       <span class="count-label wildcard domain_wildcard_span"><%= domain.name %></span>
+                     <% if domain.owning_org_name == organization_name && domain.owning_spaces.count { |s| s.name == space_name } != 0 %>
+                         <li class="tile_space_domain" title="<%= domain.name %>">
+                           <span class="count-value wildcard domain_wildcard_span_value <%= domain.wildcard %>"></span>
+                           <span class="count-label wildcard domain_wildcard_span"><%= domain.name %></span>
 
-                       <span class="span_bg_icon_domains"></span>
-                       <a href="#"><span class="small_trash delete-domain-button" id="<%= domain.name %>" title="<%= domain.guid %>"></span></a>
-                     </li>
+                           <span class="span_bg_icon_domains"></span>
+                           <a href="#"><span class="small_trash delete-domain-button" id="<%= domain.name %>" title="<%= domain.guid %>"></span></a>
+                         </li>
+                     <% end %>
                  <% end %>
 
                  <div class="div_ul_shape"></div>
@@ -348,7 +353,7 @@
 
         <div class="modal-body">
           <p>
-            Are you sure you want to delete the route for app: "<span id="this_route_app_name"></span>"?
+            Are you sure you want to delete this route?
           </p>
         </div>
 
@@ -359,7 +364,6 @@
         <div class="button_case_delete_organization_and_space">
             <button class="btn btn_right_delete_organization_and_space cancel" id="btn_cancel_route"><span class="line">| </span>Cancel </button>
             <button type="submit" class="btn btn_left_delete_organization_and_space danger" id="btn_delete_route"><span class="line">| </span>Delete </button>
-            <input type="hidden" id="pass_route_app_name" name="routeAppName" />
             <input type="hidden" id="pass_route_guid" name="routeGuid" />
             <input type="hidden" name="current_organization" value="<%= current_organization %>" />
             <input type="hidden" name="current_space" value="<%= current_space %>" />
@@ -431,7 +435,7 @@
 
 
     <% if defined?(include_erb) && include_erb != nil %>
-        <%= erb(include_erb, :layout => false, :locals => { :current_organization => current_organization, :current_space => current_space, :collections => defined?(apps) ? apps : nil, :current_tab => current_tab, :error_message => error_message, :services_list => services_list }) %>
+        <%= erb(include_erb, :layout => false, :locals => { :current_organization => current_organization, :current_space => current_space, :space_name => space_name,:collections => defined?(apps) ? apps : nil, :current_tab => current_tab, :error_message => error_message, :services_list => services_list, :domains_list => domains_list }) %>
     <% end %>
 
 </div>

@@ -15,6 +15,7 @@ module Uhuru::Webui
           readapps_Obj = TemplateApps.new
           users_setup_Obj = UsersSetup.new($config)
           routes_Obj = Library::Routes.new(session[:token], $cf_target)
+          domain = Library::Domains.new(session[:token], $cf_target)
           all_space_users = users_setup_Obj.uaa_get_usernames
 
           #session[:space_name] = spaces_Obj.get_name(@this_guid)
@@ -23,6 +24,7 @@ module Uhuru::Webui
           apps_list = spaces_Obj.read_apps(params[:space_guid])
           services_list = spaces_Obj.read_service_instances(params[:space_guid])
           routes_list = routes_Obj.read_routes(params[:space_guid])
+          domains_list = domain.read_domains(params[:org_guid], params[:space_guid])
 
           owners_list = spaces_Obj.read_owners($config, params[:space_guid])
           developers_list = spaces_Obj.read_developers($config, params[:space_guid])
@@ -55,6 +57,7 @@ module Uhuru::Webui
                       :apps_list => apps_list,
                       :services_list => services_list,
                       :routes_list => routes_list,
+                      :domains_list => domains_list,
                       :error_message => error_message,
                       :include_erb => :'user_pages/modals/members_add'
                   }

@@ -33,6 +33,7 @@ module Uhuru::Webui
     SERVICES_CREATE           = "#{SPACE}/create_service/new"
     SPACE_MEMBERS_ADD         = "#{SPACE}/add_user/new"
     ROUTES_CREATE             = "#{SPACE}/add_route/new"
+    DOMAINS_MAP_SPACE         = "#{SPACE}/map_domain/new"
 
 
     CREATE_SUBSCRIPTION       = "#{ORGANIZATIONS}/:org_guid/:tab/create_subscription"

@@ -76,7 +76,7 @@
                       <td><label for="app_url" class="template_app_url_span">App URL:</label></td>
                       <td>
                         <select class="modal_input_box" name="app_url">
-                          <% @domains_list.each do |domain| %>
+                          <% domains_list.each do |domain| %>
                               <option value="<%= domain.name %>"><%= domain.name %></option>
                           <% end %>
                         </select>
@@ -87,7 +87,7 @@
                       <td>
                         <% if app['can_download'] != nil %>
                             <% if app['can_download'] == true %>
-                                <a href="<%= app['app_src'].sub!'template_manifest.yml', 'wordpress.zip' %>"><input type="button" value="Download" class="btn download_btn" /></a>
+                                <a href="<%= "/download_app/" + app['id'] %>"><input type="button" value="Download" class="btn download_btn" /></a>
                             <% end %>
                         <% end %>
                         <input type="hidden" name="app_space" value="<%= current_space %>" >

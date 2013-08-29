@@ -243,7 +243,7 @@
                             </td>
                             <td style="vertical-align: top; color: #ffffff;">
                               <select class="modal_input_box" name="app_url">
-                                <% @domains_list.each do |domain| %>
+                                <% domains_list.each do |domain| %>
                                     <option value="<%= domain.name %>"><%= domain.name %></option>
                                 <% end %>
                               </select>
@@ -279,7 +279,7 @@
         </div>
         <div class="modal-footer">
             <form action="/unbindUri" method="post">
-                <input type="hidden" name="uriName" id="unbind_uriName" />
+                <input type="hidden" name="appUrl" id="unbind_uriName" />
                 <input type="hidden" id="unbind_uri_app_name" name="appName" value="<%= app.name %>" />
                 <input type="hidden" name="current_organization" value="<%= current_organization %>" />
                 <input type="hidden" name="current_space" value="<%= current_space %>" />

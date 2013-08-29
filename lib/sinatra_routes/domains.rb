@@ -61,14 +61,95 @@ module Uhuru::Webui
               }
         end
 
+        app.get DOMAINS_MAP_SPACE do
+          if session[:login_] == false || session[:login_] == nil
+            redirect INDEX
+          end
+
+          org = Library::Organizations.new(session[:token], $cf_target)
+          space = Library::Spaces.new(session[:token], $cf_target)
+          app = TemplateApps.new
+          user = UsersSetup.new($config)
+          route = Library::Routes.new(session[:token], $cf_target)
+          domain = Library::Domains.new(session[:token], $cf_target)
+
+          all_space_users = user.uaa_get_usernames
+          org.set_current_org(params[:org_guid])
+
+          spaces_list = org.read_spaces(params[:org_guid])
+          space.set_current_space(params[:space_guid])
+          apps_list = space.read_apps(params[:space_guid])
+          services_list = space.read_service_instances(params[:space_guid])
+          routes_list = route.read_routes(params[:space_guid])
+          domains_list = domain.read_domains()
+
+          owners_list = space.read_owners($config, params[:space_guid])
+          developers_list = space.read_developers($config, params[:space_guid])
+          auditors_list = space.read_auditors($config, params[:space_guid])
+
+          collections = app.read_collections
+
+          if params[:error] == 'add_domain'
+            error_message = $errors['create_domain_error']
+          else
+            error_message = ''
+          end
+
+          begin
+            if (org.is_organization_billable?(@this_guid))
+              billing_manager_guid = billings_list[0].guid
+              credit_card_type , credit_card_masked_number = ChargifyWrapper.get_subscription_card_type_and_number(@this_guid, billing_manager_guid)
+            end
+          rescue Exception => ex
+            credit_card_type = nil
+            credit_card_masked_number = nil
+            puts 'Exception raised for credit card type and masked number!'
+            puts ex
+          end
+
+          erb :'user_pages/space',
+              {
+                  :layout => :'layouts/user',
+                  :locals => {
+                      :organization_name => org.get_name(params[:org_guid]),
+                      :space_name => space.get_name(params[:space_guid]),
+                      :current_organization => params[:org_guid],
+                      :current_space => params[:space_guid],
+                      :current_tab => params[:tab],
+                      :card_type => credit_card_type,
+                      :card_masked_number => credit_card_masked_number,
+                      :spaces_list => spaces_list,
+                      :collections => collections,
+                      :all_space_users => all_space_users,
+                      :owners_list => owners_list,
+                      :developers_list => developers_list,
+                      :auditors_list => auditors_list,
+                      :apps_list => apps_list,
+                      :services_list => services_list,
+                      :routes_list => routes_list,
+                      :domains_list => domains_list,
+                      :error_message => error_message,
+                      :include_erb => :'user_pages/modals/domains_map_space'
+                  }
+              }
+        end
+
         app.post '/createDomain' do
           wildcard = params[:domain_wildcard] ? true : false
-          create = Library::Domains.new(session[:token], $cf_target).create(params[:domainName], params[:org_guid], wildcard)
+          create = Library::Domains.new(session[:token], $cf_target).create(params[:domainName], params[:org_guid], wildcard, params[:space_guid])
 
           if create == 'error'
-            redirect ORGANIZATIONS + "/#{params[:org_guid]}/domains/add_domains" + '?error=add_domain'
+            if params[:current_tab].to_s == 'space'
+              redirect ORGANIZATIONS + "/#{params[:org_guid]}/spaces/#{params[:space_guid]}/domains/map_domain/new" + '?error=add_domain'
+            else
+              redirect ORGANIZATIONS + "/#{params[:org_guid]}/domains/add_domains" + '?error=add_domain'
+            end
           else
-            redirect ORGANIZATIONS + "/#{params[:org_guid]}/domains"
+            if params[:current_tab].to_s == 'space'
+              redirect ORGANIZATIONS + "/#{params[:org_guid]}/spaces/#{params[:space_guid]}/domains"
+            else
+              redirect ORGANIZATIONS + "/#{params[:org_guid]}/domains"
+            end
           end
         end
 

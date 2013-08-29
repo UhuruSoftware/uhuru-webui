@@ -33,7 +33,7 @@ module Uhuru::Webui
           owners_list = space.read_owners($config, params[:space_guid])
           developers_list = space.read_developers($config, params[:space_guid])
           auditors_list = space.read_auditors($config, params[:space_guid])
-          @domains_list = domain.read_domains()
+          domains_list = domain.read_domains()
 
           collections = app.read_collections
 
@@ -75,9 +75,9 @@ module Uhuru::Webui
                       :apps_list => apps_list,
                       :services_list => services_list,
                       :routes_list => routes_list,
+                      :domains_list => domains_list,
                       :error_message => error_message,
                       :app => params[:app],
-                      :error_message => error_message
                   }
               }
         end
@@ -104,7 +104,7 @@ module Uhuru::Webui
           owners_list = space.read_owners($config, params[:space_guid])
           developers_list = space.read_developers($config, params[:space_guid])
           auditors_list = space.read_auditors($config, params[:space_guid])
-          @domains_list = domain.read_domains()
+          domains_list = domain.read_domains()
 
           collections = app.read_collections
 
@@ -125,18 +125,25 @@ module Uhuru::Webui
                       :apps_list => apps_list,
                       :services_list => services_list,
                       :routes_list => routes_list,
+                      :domains_list => domains_list,
                       :error_message => '',
                       :include_erb => :'user_pages/modals/apps_create'
                   }
               }
         end
 
-        app.get '/app_logo/:app_id' do
-          #apps = TemplateApps.read_apps
-          #app_id = params[:app_id]
-          #content_type 'image/png'
-          #send_file apps[app_id]['logo']
-          redirect '/organizations'
+        app.get '/download_app/:app_id' do
+          collection = TemplateApps.new
+          apps = collection.read_collections
+          source = nil
+
+          apps.each do |app|
+            if app[1]['id'] == params[:app_id]
+              source = app[1]['app_src']
+            end
+          end
+
+          send_file(source.sub!'template_manifest.yml', params[:app_id] + '.zip')
         end
 
         app.post '/push' do
@@ -237,7 +244,7 @@ module Uhuru::Webui
         end
 
         app.post '/unbindUri' do
-          unbind = Applications.new(session[:token], $cf_target).unbind_app_url(params[:appName], params[:uriName], $config[:cloud_controller_url])
+          unbind = Applications.new(session[:token], $cf_target).unbind_app_url(params[:appName], params[:appUrl])
 
           if unbind == 'error'
             redirect ORGANIZATIONS + "/#{params[:current_organization]}/spaces/#{params[:current_space]}/#{params[:current_tab]}/#{params[:appName]}" + '?error=unbind_uri'

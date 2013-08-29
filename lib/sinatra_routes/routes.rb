@@ -23,7 +23,7 @@ module Uhuru::Webui
           apps_list = space.read_apps(params[:space_guid])
           services_list = space.read_service_instances(params[:space_guid])
           routes_list = route.read_routes(params[:space_guid])
-          @domains_list = domain.read_domains()
+          domains_list = domain.read_domains()
 
           owners_list = space.read_owners($config, params[:space_guid])
           developers_list = space.read_developers($config, params[:space_guid])
@@ -56,6 +56,7 @@ module Uhuru::Webui
                       :apps_list => apps_list,
                       :services_list => services_list,
                       :routes_list => routes_list,
+                      :domains_list => domains_list,
                       :error_message => error_message,
                       :include_erb => :'user_pages/modals/routes_create'
                   }
@@ -65,7 +66,7 @@ module Uhuru::Webui
 
 
         app.post '/createRoute' do
-          create = Library::Routes.new(session[:token], $cf_target).create(params[:appName], params[:current_space], params[:domain_guid])
+          create = Library::Routes.new(session[:token], $cf_target).create(params[:appName], params[:current_space], params[:domain_guid], params[:host])
 
           if create == 'error'
             redirect ORGANIZATIONS + "/#{params[:current_organization]}/spaces/#{params[:current_space]}/#{params[:current_tab]}/add_route/new" + '?error=create_route'
@@ -75,7 +76,7 @@ module Uhuru::Webui
         end
 
         app.post '/deleteRoute' do
-          delete = Library::Routes.new(session[:token], $cf_target).delete(params[:routeAppName], true, params[:routeGuid])
+          delete = Library::Routes.new(session[:token], $cf_target).delete(params[:routeGuid])
 
           if delete == 'error'
             redirect ORGANIZATIONS + "/#{params[:current_organization]}/spaces/#{params[:current_space]}/#{params[:current_tab]}" + '?error=delete_route'

@@ -73,23 +73,10 @@ module Library
       return 'error'
     end
 
-    # delete is used: - to unmap a route (url) from an app
-    #                 - to unmap a route and delete it
-    # the second parameter will decide if it's an unmap or a delete
-    # if route_guid is not passed, will unmap/delete all the routes
-    def delete(app_name, delete = false, route_guid = nil)
-      app = @client.apps.find { |a| a.name == app_name }
+    def delete(route_guid)
+      route = @client.route(route_guid)
+      route.delete!
 
-      if (route_guid != nil)
-        route = @client.route(route_guid)
-        app.remove_route(route)
-        route.delete! if delete
-      else
-        app.routes.each do |r|
-          app.remove_route(r)
-          r.delete! if delete
-        end
-      end
     rescue Exception => e
       puts e
       puts 'unbind url error'
