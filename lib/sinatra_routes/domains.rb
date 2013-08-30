@@ -163,6 +163,24 @@ module Uhuru::Webui
           end
         end
 
+        app.post '/unmapFromSpace' do
+          unmap = Library::Domains.new(session[:token], $cf_target).unmap_domain(params[:domainGuid], nil, params[:current_space])
+
+          if unmap == 'error'
+            if params[:current_tab].to_s == 'space'
+              redirect ORGANIZATIONS + "/#{params[:current_organization]}/spaces/#{params[:current_space]}/domains" + '?error=delete_domain'
+            else
+              redirect ORGANIZATIONS + "/#{params[:current_organization]}/domains" + '?error=delete_domain'
+            end
+          else
+            if params[:current_tab].to_s == 'space'
+              redirect ORGANIZATIONS + "/#{params[:current_organization]}/spaces/#{params[:current_space]}/domains"
+            else
+              redirect ORGANIZATIONS + "/#{params[:current_organization]}/domains"
+            end
+          end
+        end
+
       end
     end
   end
