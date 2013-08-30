@@ -33,7 +33,7 @@ module Uhuru::Webui
           owners_list = space.read_owners($config, params[:space_guid])
           developers_list = space.read_developers($config, params[:space_guid])
           auditors_list = space.read_auditors($config, params[:space_guid])
-          domains_list = domain.read_domains()
+          @domains_list = domain.read_domains()
 
           collections = app.read_collections
 
@@ -75,7 +75,6 @@ module Uhuru::Webui
                       :apps_list => apps_list,
                       :services_list => services_list,
                       :routes_list => routes_list,
-                      :domains_list => domains_list,
                       :error_message => error_message,
                       :app => params[:app],
                   }
@@ -130,6 +129,14 @@ module Uhuru::Webui
                       :include_erb => :'user_pages/modals/apps_create'
                   }
               }
+        end
+
+        app.get '/get_logo/:app_id' do
+          collection = TemplateApps.new
+          apps = collection.read_collections
+          app_id = params[:app_id]
+          content_type 'image/png'
+          send_file apps[app_id]['logo']
         end
 
         app.get '/download_app/:app_id' do
@@ -224,7 +231,7 @@ module Uhuru::Webui
 
         app.post '/bindUri' do
           domain_guid = Library::Domains.new(session[:token], $cf_target).get_organizations_domain_guid(params[:current_organization])
-          bind = Library::Routes.new(session[:token], $cf_target).create(params[:appName], params[:current_space], domain_guid, params[:uriName])
+          bind = Library::Routes.new(session[:token], $cf_target).create(params[:appName], params[:current_space], params[:domain], params[:host])
 
           if bind == 'error'
             redirect ORGANIZATIONS + "/#{params[:current_organization]}/spaces/#{params[:current_space]}/#{params[:current_tab]}/#{params[:appName]}" + '?error=bind_uri'

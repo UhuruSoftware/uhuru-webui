@@ -71,9 +71,9 @@
                     <% end %>
 
                     <% if current_tab == "domains" %>
-                        <li class="organization_selected_tab"><a href="<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/domains" %>">Domains (<span><%= domains_list.count { |d| d.owning_org_name == organization_name } %></span>)</a></li>
+                        <li class="organization_selected_tab"><a href="<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/domains" %>">Domains (<span><%= domains_list.count { |d| d.owning_org_name == organization_name || d.owning_org_name == 'Shared' } %></span>)</a></li>
                     <% else %>
-                        <li class="organization_unselected_tabs"><a href="<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/domains" %>">Domains (<span><%= domains_list.count { |d| d.owning_org_name == organization_name } %></span>)</a></li>
+                        <li class="organization_unselected_tabs"><a href="<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/domains" %>">Domains (<span><%= domains_list.count { |d| d.owning_org_name == organization_name || d.owning_org_name == 'Shared' } %></span>)</a></li>
                     <% end %>
                 </ul>
 
@@ -154,7 +154,7 @@
                     <div id="domains">
                          <ul class="tile_list">
                            <% domains_list.each do |domain| %>
-                               <% if domain.owning_org_name == organization_name %>
+                               <% if domain.owning_org_name == organization_name || domain.owning_org_name == 'Shared' %>
                                    <li class="tile_domains" title="<%= domain.name %>">
                                      <span class="count-value wildcard domain_wildcard_span_value <%= domain.wildcard %>"></span>
                                      <span class="count-label wildcard domain_wildcard_span"><%= domain.name %></span>

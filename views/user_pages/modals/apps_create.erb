@@ -22,7 +22,9 @@
           <div class="template_apps" id="<%= app_id %>_div" <%= apps.first[1]['id'] == app_id ? "style='display: block;'" : '' %>>
 
             <!-- INSERT APP LOGO, NAME, DESCRIPTION AND SERVICE ICONS -->
-            <image src ="/images/apps_logos/<%= app_id %>.png" class="template_app_logo" />
+            <% if File.exists? app['logo'] %>
+                <image src ="/get_logo/<%= app_id %>" class="template_app_logo" />
+            <% end %>
 
             <span class="template_app_name">
               <%= app['name'] %>
@@ -30,9 +32,9 @@
             </span>
 
             <% app['service_type'].each do |service_name| %>
-                <img src="/images/apps_logos/services/<%= service_name %>.png" class="small_app_icons" />
+                <img src="/images/tmp_apps_icons/<%= service_name %>.png" class="small_app_icons" />
             <% end %>
-            <img src="/images/apps_logos/services/<%= app['vmc_manifest']['applications']['.']['framework']['name'] %>.png" class="small_app_icons" />
+            <img src="/images/tmp_apps_icons/<%= app['vmc_manifest']['applications']['.']['framework']['name'] %>.png" class="small_app_icons" />
             <br /><br />
             <p class="template_app_description">
               <%= app['description'][0..500] %>

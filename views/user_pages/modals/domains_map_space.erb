@@ -12,7 +12,7 @@
         <label for="domainName">domain:</label>
         <select class="modal_input_box" name="domainName">
           <% domains_list.each do |domain| %>
-              <% if domain.owning_spaces.count { |s| s.name == space_name } != 0 %>
+              <% if domain.owning_org_name == organization_name || domain.owning_org_name == 'Shared'%>
                 <option value="<%= domain.name %>"><%= domain.name %></option>
               <% end %>
           <% end %>

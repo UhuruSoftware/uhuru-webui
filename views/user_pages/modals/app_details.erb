@@ -234,24 +234,24 @@
                 <h3>Add new URI</h3>
             </div>
             <div class="modal-body">
-            <p>
-                <table>
-                    <tbody>
-                        <tr>
-                            <td>
-                                <input type="text" name="uriName" class="modal_input_box"/>
-                            </td>
-                            <td style="vertical-align: top; color: #ffffff;">
-                              <select class="modal_input_box" name="app_url">
-                                <% domains_list.each do |domain| %>
-                                    <option value="<%= domain.name %>"><%= domain.name %></option>
-                                <% end %>
-                              </select>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </p>
+            <table style="width: 100%;">
+                <tbody>
+                    <tr>
+                        <td>
+                            <label for="host">host: </label>
+                            <input type="text" name="host" class="modal_input_box"/>
+                        </td>
+                        <td style="vertical-align: top; color: #ffffff;">
+                          <label for="domain">domain: </label>
+                          <select class="modal_input_box" name="domain">
+                            <% @domains_list.each do |domain| %>
+                                <option value="<%= domain.guid %>"><%= domain.name %></option>
+                            <% end %>
+                          </select>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
             </div>
             <div class="modal-footer bind_uri_footer">
                 <input type="hidden" id="bind_uri_app_name" name="appName" value="<%= app.name %>" />
