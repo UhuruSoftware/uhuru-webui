@@ -8,20 +8,15 @@ module Library
       @client = CFoundry::V2::Client.new(target, token)
     end
 
-    # ???to be replaced with change_password from user_setup
-    #def change_password(verified_password, old_password)
-    #  @client.current_user.change_password!(verified_password, old_password)
-    #end
-
     # roles is an array of roles ex: ['owner', 'billing', 'auditor']
     def add_user_to_org_with_role(org_guid, user_guid, roles)
 
       org = @client.organization(org_guid)
 
       user_exist = true
-      user = @client.users.find { |u| u.guid == user_guid }
+      user = org.users.find { |u| u.guid == user_guid }
       unless user
-        user_exist = create_user(user_guid)
+        user_exist = user_exists(user_guid)
       end
 
       if (user_exist)
@@ -218,6 +213,7 @@ module Library
       org.update!
 
     rescue Exception => e
+      puts e
       puts 'delete user from org error (organization)'
       return 'error'
     end
@@ -250,7 +246,8 @@ module Library
     end
 
     def user_exists(user_guid)
-      user = @client.users.find { |u|
+      org = @client.organization(org_guid)
+      user = @client.organization(org_guid).find { |u|
         u.guid == user_guid
       }
       if user == nil

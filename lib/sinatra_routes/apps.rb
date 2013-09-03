@@ -76,7 +76,7 @@ module Uhuru::Webui
                       :services_list => services_list,
                       :routes_list => routes_list,
                       :error_message => error_message,
-                      :app => params[:app],
+                      :app => params[:app]
                   }
               }
         end

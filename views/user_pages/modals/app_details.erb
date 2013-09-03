@@ -245,7 +245,9 @@
                           <label for="domain">domain: </label>
                           <select class="modal_input_box" name="domain">
                             <% @domains_list.each do |domain| %>
-                                <option value="<%= domain.guid %>"><%= domain.name %></option>
+                                <% if domain.owning_org_name == organization_name || domain.owning_org_name == 'Shared' %>
+                                    <option value="<%= domain.guid %>"><%= domain.name %></option>
+                                <% end %>
                             <% end %>
                           </select>
                         </td>

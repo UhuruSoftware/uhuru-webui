@@ -5,7 +5,7 @@ module Library
   class Spaces
 
     def initialize(token, target)
-      @client = CFoundry::Client.new(target, token)
+      @client = CFoundry::Client.get(target, token)
     end
 
     def get_name(space_guid)

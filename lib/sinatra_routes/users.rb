@@ -5,6 +5,62 @@ module Uhuru::Webui
     module Users
       def self.registered(app)
 
+        app.get ORGANIZATION_MEMBERS_ADD do
+          if session[:login_] == false || session[:login_] == nil
+            redirect INDEX
+          end
+
+          org = Library::Organizations.new(session[:token], $cf_target)
+          user = UsersSetup.new($config)
+          domain = Library::Domains.new(session[:token], $cf_target)
+          all_users = user.uaa_get_usernames
+
+          org.set_current_org(params[:org_guid])
+          spaces_list = org.read_spaces(params[:org_guid])
+          owners_list = org.read_owners($config, params[:org_guid])
+          billings_list = org.read_billings($config, params[:org_guid])
+          auditors_list = org.read_auditors($config, params[:org_guid])
+          domains_list = domain.read_domains()
+
+          begin
+            if (org.is_organization_billable?(@this_guid))
+              billing_manager_guid = billings_list[0].guid
+              credit_card_type , credit_card_masked_number = ChargifyWrapper.get_subscription_card_type_and_number(@this_guid, billing_manager_guid)
+            end
+          rescue Exception => ex
+            credit_card_type = nil
+            credit_card_masked_number = nil
+            puts 'Exception raised for credit card type and masked number!'
+            puts ex
+          end
+
+          if params[:error] != '' && params[:error] != nil
+            error_message = $errors['add_user_error']
+          else
+            error_message = ''
+          end
+
+          erb :'user_pages/organization',
+              {
+                  :layout => :'layouts/user',
+                  :locals => {
+                      :organization_name => org.get_name(params[:org_guid]),
+                      :current_organization => params[:org_guid],
+                      :current_tab => params[:tab],
+                      :card_type => credit_card_type,
+                      :card_masked_number => credit_card_masked_number,
+                      :all_users => all_users,
+                      :spaces_list => spaces_list,
+                      :owners_list => owners_list,
+                      :billings_list => billings_list,
+                      :auditors_list => auditors_list,
+                      :domains_list => domains_list,
+                      :error_message => error_message,
+                      :include_erb => :'user_pages/modals/members_add'
+                  }
+              }
+        end
+
         app.get SPACE_MEMBERS_ADD do
           if session[:login_] == false || session[:login_] == nil
             redirect INDEX
@@ -103,7 +159,7 @@ module Uhuru::Webui
               redirect ORGANIZATIONS + "/#{params[:current_organization]}/#{params[:current_tab]}"
             end
           else
-            delete_user = users_Obj.remove_user_with_role_from_space(params[:current_organization], params[:thisUser], params[:thisUserRole])
+            delete_user = users_Obj.remove_user_with_role_from_space(params[:current_space], params[:thisUser], params[:thisUserRole])
 
             if delete_user == 'error'
               redirect ORGANIZATIONS + "/#{params[:current_organization]}/spaces/#{params[:current_space]}/#{params[:current_tab]}" + '?error=delete_user'

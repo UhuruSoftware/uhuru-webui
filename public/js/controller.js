@@ -126,6 +126,12 @@ var delete_developer = function()
     $('#pass_user_guid').val($(this).attr("id"));
     $('#pass_user_role').val("developer");
 }
+var delete_billing = function()
+{
+    $('#this_user_name').text($(this).attr("title"));
+    $('#pass_user_guid').val($(this).attr("id"));
+    $('#pass_user_role').val("billing");
+}
 var delete_auditor = function()
 {
     $('#this_user_name').text($(this).attr("title"));
@@ -135,6 +141,7 @@ var delete_auditor = function()
 
 $('.btn_delete_owner').click(delete_owner);
 $('.btn_delete_developer').click(delete_developer);
+$('.btn_delete_billing').click(delete_billing);
 $('.btn_delete_auditor').click(delete_auditor);
 
 

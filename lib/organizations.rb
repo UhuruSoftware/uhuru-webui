@@ -53,7 +53,6 @@ module Library
     def get_name(org_guid)
       org = @client.organization(org_guid)
       org.name
-
     end
 
     def get_members_count(org_guid)

@@ -79,7 +79,9 @@
                       <td>
                         <select class="modal_input_box" name="app_url">
                           <% domains_list.each do |domain| %>
-                              <option value="<%= domain.name %>"><%= domain.name %></option>
+                              <% if domain.owning_org_name == organization_name || domain.owning_org_name == 'Shared' %>
+                                <option value="<%= domain.name %>"><%= domain.name %></option>
+                              <% end %>
                           <% end %>
                         </select>
                       </td>
