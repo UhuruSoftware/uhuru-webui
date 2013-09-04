@@ -29,12 +29,14 @@
         </ul>
 
         <ul class="create_user_modal_ul" id="radio_buttons">
-          <li><input type="radio" name="userType" value="owner" id="owner">Owner</li>
-          <li><input type="radio" name="userType" value="manager" id="auditor">Auditor</li>
           <% if defined?(current_space) && current_space != nil %>
-              <li><input type="radio" name="userType" value="developer" id="developer" checked>Developer</li>
+              <li><input type="radio" name="userType" value="owner" id="owner">Owner</li>
+              <li><input type="radio" name="userType" value="developer" id="developer">Developer</li>
+              <li><input type="radio" name="userType" value="auditor" id="auditor" checked>Auditor</li>
           <% else %>
-              <li><input type="radio" name="userType" value="developer" id="billing" checked>Billing Manager</li>
+              <li><input type="radio" name="userType" value="owner" id="owner">Owner</li>
+              <li><input type="radio" name="userType" value="billing" id="billing">Billing Manager</li>
+              <li><input type="radio" name="userType" value="auditor" id="auditor" checked>Auditor</li>
           <% end %>
         </ul>
       </div>

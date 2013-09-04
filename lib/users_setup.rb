@@ -10,7 +10,6 @@ class UsersSetup
     @client_id      = @config[:uaa][:client_id]
     @client_secret  = @config[:uaa][:client_secret]
     @cf_target      = @config[:cloud_controller_url]
-
   end
 
   def login(email, password)

@@ -8,114 +8,100 @@ module Library
       @client = CFoundry::V2::Client.new(target, token)
     end
 
-    # roles is an array of roles ex: ['owner', 'billing', 'auditor']
     def add_user_to_org_with_role(org_guid, user_guid, roles)
-
       org = @client.organization(org_guid)
+      owner = org.managers.find { |u| u.guid == user_guid }
+      billing = org.billing_managers.find { |u| u.guid == user_guid }
+      auditor = org.auditors.find { |u| u.guid == user_guid }
 
-      user_exist = true
-      user = org.users.find { |u| u.guid == user_guid }
-      unless user
-        user_exist = user_exists(user_guid)
+      roles.each do |role|
+        case role
+          when 'owner'
+            unless owner
+              existing_managers = org.managers
+              existing_managers << @client.user(user_guid)
+              org.managers = existing_managers
+            end
+          when 'billing'
+            unless billing
+              existing_billing_managers = org.billing_managers
+              existing_billing_managers << @client.user(user_guid)
+              org.billing_managers = existing_billing_managers
+            end
+          when 'auditor'
+            unless auditor
+              existing_auditors = org.auditors
+              existing_auditors << @client.user(user_guid)
+              org.auditors = existing_auditors
+            end
+        end
       end
 
-      if (user_exist)
-        user_find = org.users.find { |u| u.guid == user_guid }
-
-        unless user_find
-          existing_users = org.users
-          existing_users << @client.user(user_guid)
-          org.users = existing_users
-        end
-
-        roles.each do |role|
-          case role
-            when 'owner'
-              user_find = org.managers.find { |u| u.guid == user_guid }
-
-              unless user_find
-                existing_managers = org.managers
-                existing_managers << @client.user(user_guid)
-
-                org.managers = existing_managers
-              end
-            when 'billing'
-              user_find = org.billing_managers.find { |u| u.guid == user_guid }
-
-              unless user_find
-                existing_billing_managers = org.billing_managers
-                existing_billing_managers << @client.user(user_guid)
-
-                org.billing_managers = existing_billing_managers
-              end
-            when 'auditor'
-              user_find = org.auditors.find { |u| u.guid == user_guid }
-
-              unless user_find
-                existing_auditors = org.auditors
-                existing_auditors << @client.user(user_guid)
-
-                org.auditors = existing_auditors
-              end
-          end
-        end
-
-        org.update!
-      end
-
+      org.update!
     rescue Exception => e
       puts e
-      puts 'add user method error (2nd method)(org)'
+      puts "error occured in adding user guid: #{ user_guid } with roles: #{ roles }"
       return 'error'
     end
 
-    # roles is an array of roles ex: ['owner', 'developer', 'auditor']
     def add_user_with_role_to_space(space_guid, user_guid, roles)
       space = @client.space(space_guid)
+      owner = space.managers.find { |u| u.guid == user_guid }
+      developer = space.developers.find { |u| u.guid == user_guid }
+      auditor = space.auditors.find { |u| u.guid == user_guid }
 
-      user = @client.user(user_guid)
+      roles.each do |role|
+        case role
+          when 'owner'
+            unless owner
+              org = @client.organization_by_space_guid(space_guid)
+              org.add_user(@client.user(user_guid))
+              org.update!
 
-      if (user != nil)
-
-        roles.each do |role|
-          case role
-            when 'owner'
               existing_managers = space.managers
-              existing_managers << user
-
+              existing_managers << @client.user(user_guid)
               space.managers = existing_managers
-            when 'developer'
+            end
+          when 'developer'
+            unless developer
+              org = @client.organization_by_space_guid(space_guid)
+              org.add_user(@client.user(user_guid))
+              org.update!
+
               existing_developers = space.developers
-              existing_developers << user
-
+              existing_developers << @client.user(user_guid)
               space.developers = existing_developers
-            when 'auditor'
+            end
+          when 'auditor'
+            unless auditor
+              org = @client.organization_by_space_guid(space_guid)
+              org.add_user(@client.user(user_guid))
+              org.update!
+
               existing_auditors = space.auditors
-              existing_auditors << user
-
+              existing_auditors << @client.user(user_guid)
               space.auditors = existing_auditors
-          end
+            end
         end
-
-        space.update!
       end
 
+      space.update!
     rescue Exception => e
       puts e
-      puts 'add user method error (2nd method)(space)'
+      puts "error occured in adding user guid: #{ user_guid } with roles: #{ roles }"
       return 'error'
     end
-
-    #to be modified to search through uaa user names list
+    ##
+    ## FUNCTIONS CALLED FROM ERB POST METHOD
+    ##
     def invite_user_with_role_to_org(config, username, org_guid, role)
       user_setup_obj = UsersSetup.new(config)
       user_guid = user_setup_obj.uaa_get_user_by_name(username)
 
-      # if the user doesn't exist in the uaa, should create it but there are missing information (first name, last name, password)
-      unless !user_guid
+      if user_guid
         add_user_to_org_with_role(org_guid, user_guid, [role])
       else
-        puts 'add user method error (organization)'
+        puts 'the user does not exist in the uaa database!'
         return 'error'
       end
     end
@@ -124,11 +110,10 @@ module Library
       user_setup_obj = UsersSetup.new(config)
       user_guid = user_setup_obj.uaa_get_user_by_name(username)
 
-      # if the user doesn't exist in the uaa, should create it but there are missing information (first name, last name, password)
-      unless !user_guid
+      if user_guid
         add_user_with_role_to_space(space_guid, user_guid, [role])
       else
-        puts 'add user method error (space)'
+        puts 'the user does not exist in the uaa database!'
         return 'error'
       end
     end
@@ -211,9 +196,7 @@ module Library
       end
 
       org.update!
-
     rescue Exception => e
-      puts e
       puts 'delete user from org error (organization)'
       return 'error'
     end
@@ -246,8 +229,7 @@ module Library
     end
 
     def user_exists(user_guid)
-      org = @client.organization(org_guid)
-      user = @client.organization(org_guid).find { |u|
+      user = @client.users.find { |u|
         u.guid == user_guid
       }
       if user == nil
@@ -255,19 +237,6 @@ module Library
       else
         return true
       end
-    end
-
-    private
-
-    def create_user(user_guid)
-
-      user = @client.user
-      user.guid = user_guid
-      return user.create!
-
-    rescue Exception => e
-      false
-      #raise "#{e.inspect}"
     end
 
     class User
@@ -283,3 +252,14 @@ module Library
 
   end
 end
+
+
+#private
+
+#def create_user(user_guid)
+#  user = @client.user
+#  user.guid = user_guid
+#  return user.create!
+#rescue Exception => e
+#  false
+#end
