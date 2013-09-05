@@ -1,0 +1,16 @@
+--- 
+applications: 
+  .: 
+    instances: 1
+    name: dotnetwithuhurufs-uhurumonitoringjz9ez
+    services: 
+      fs: 
+        type: uhurufs
+    url: ${name}.${target-base}
+    framework: 
+      name: dotNet
+      info: 
+        description: .Net Web Application
+        exec: 
+        mem: 128M
+    mem: 128M

@@ -1,0 +1,16 @@
+--- 
+applications: 
+  .: 
+    mem: 128M
+    url: ${name}.${target-base}
+    instances: 1
+    services: 
+      mongodb20: 
+        type: mongodb
+    framework: 
+      info: 
+        mem: 128M
+        exec: ruby foo.rb
+        description: Sinatra Application
+      name: sinatra
+    name: rubytomongo-uhurumonitoringkqp38

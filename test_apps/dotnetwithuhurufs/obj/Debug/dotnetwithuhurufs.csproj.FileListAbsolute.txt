@@ -1,0 +1,6 @@
+C:\Users\andreea.mladin.UHURUSOFTWARE\Desktop\dotnetwithuhurufs\dotnetwithuhurufs\bin\TransferFile.txt
+C:\Users\andreea.mladin.UHURUSOFTWARE\Desktop\dotnetwithuhurufs\dotnetwithuhurufs\bin\dotnetwithuhurufs.dll
+C:\Users\andreea.mladin.UHURUSOFTWARE\Desktop\dotnetwithuhurufs\dotnetwithuhurufs\bin\dotnetwithuhurufs.pdb
+C:\Users\andreea.mladin.UHURUSOFTWARE\Desktop\dotnetwithuhurufs\dotnetwithuhurufs\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\andreea.mladin.UHURUSOFTWARE\Desktop\dotnetwithuhurufs\dotnetwithuhurufs\obj\Debug\dotnetwithuhurufs.dll
+C:\Users\andreea.mladin.UHURUSOFTWARE\Desktop\dotnetwithuhurufs\dotnetwithuhurufs\obj\Debug\dotnetwithuhurufs.pdb

@@ -1,0 +1,16 @@
+--- 
+applications: 
+  .: 
+    name: dotnetwithmssql-monit-28ef9
+    instances: 1
+    url: dotnetwithmssql-monit-28ef9.uhurucloud.net
+    mem: 128M
+    framework: 
+      name: dotNet
+      info: 
+        exec: 
+        description: .Net Web Application
+        mem: 128M
+    services: 
+      dotnetmssqlmonit: 
+        type: mssql

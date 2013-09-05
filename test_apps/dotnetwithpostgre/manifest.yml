@@ -1,0 +1,16 @@
+--- 
+applications: 
+  .: 
+    framework: 
+      name: dotNet
+      info: 
+        mem: 128M
+        exec: 
+        description: .Net Web Application
+    name: dotnetwithpostgre-uhurumonitoring0ec0a
+    instances: 1
+    services: 
+      dotnetpostgremonit: 
+        type: postgresql
+    mem: 128M
+    url: dotnetwithpostgre-uhurumonitoring0ec0a.uhurucloud.net

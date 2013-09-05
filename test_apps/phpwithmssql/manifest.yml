@@ -1,0 +1,16 @@
+--- 
+applications: 
+  .: 
+    instances: 1
+    mem: 128M
+    framework: 
+      info: 
+        exec: 
+        mem: 128M
+        description: PHP Application
+      name: php
+    name: phpwithmssql-monit-60e25
+    services: 
+      mssql-2008: 
+        type: mssql
+    url: phpwithmssql-monit-60e25.uhurucloud.net

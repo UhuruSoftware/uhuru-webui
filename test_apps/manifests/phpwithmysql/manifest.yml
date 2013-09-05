@@ -1,0 +1,16 @@
+--- 
+applications: 
+  .: 
+    framework: 
+      info: 
+        exec: 
+        mem: 128M
+        description: PHP Application
+      name: php
+    name: phpwithmysql-uhurumonitoring1iooj
+    instances: 1
+    mem: 128M
+    url: ${name}.${target-base}
+    services: 
+      mysql-5.1: 
+        type: mysql

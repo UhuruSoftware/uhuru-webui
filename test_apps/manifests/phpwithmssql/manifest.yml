@@ -1,0 +1,16 @@
+--- 
+applications: 
+  .: 
+    instances: 1
+    mem: 128M
+    framework: 
+      info: 
+        exec: 
+        mem: 128M
+        description: PHP Application
+      name: php
+    name: phpwithmssql-uhurumonitorings1yj0
+    services: 
+      mssql-2008: 
+        type: mssql
+    url: ${name}.${target-base}

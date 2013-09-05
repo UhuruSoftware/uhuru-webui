@@ -68,3 +68,65 @@ quota_settings:
   auth_token: kQbDEn5os7NTX-TVv9GT
   product_handle: paid
   division_factor: 256
+
+monitoring:
+  reports:
+    half_of_day:
+      resolution: 30
+      resolution_unit: 'minutes'
+      sample_count: 30
+    last_day:
+      resolution: 1
+      resolution_unit: 'hours'
+      sample_count: 30
+    last_week:
+      resolution: 6
+      resolution_unit: 'hours'
+      sample_count: 30
+    last_month:
+      resolution: 1
+      resolution_unit: 'days'
+      sample_count: 30
+    last_year:
+      resolution: 12
+      resolution_unit: 'days'
+      sample_count: 30
+  vmc_executable_path: cf
+  cloud_user: admin
+  cloud_password: password1234!
+  default_org: monitoring
+  default_space: monitoring
+  apps_domain: ["apps.ccng-dev.net"]
+  email_to: ada.sescu@uhurusoftware.com
+  sleep_after_app_push: 60
+  pause_after_each_app: 45
+  database:
+    database: "monitoring"
+    host: 10.0.5.156
+    port: 5432
+    encoding: utf8
+    username: root
+    password: klcmBLc0kY5j
+    adapter: postgresql
+    timeout: 2000
+#    adapter: sqlite3
+#    database: /tmp/monitoring.db
+#    pool: 5
+#    timeout: 5000
+  components:
+    dea: 2
+    win_dea: 0
+    mysql_node: 1
+    mongodb_node: 1
+    redis_node: 1
+    rabbit_node: 1
+    postgresql_node: 1
+    uhuru_tunnel: 1
+    uhurufs_node: 1
+    mssql_node: 1
+  buildpacks:
+    dotNet: xx
+    java: https://github.com/cloudfoundry/java-buildpack
+    nodejs: https://github.com/cloudfoundry/heroku-buildpack-nodejs
+    php: https://github.com/heroku/heroku-buildpack-php
+    ruby: https://github.com/cloudfoundry/heroku-buildpack-ruby

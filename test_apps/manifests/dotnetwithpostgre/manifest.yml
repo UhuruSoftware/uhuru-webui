@@ -1,0 +1,16 @@
+--- 
+applications: 
+  .: 
+    framework: 
+      name: dotNet
+      info: 
+        mem: 128M
+        exec: 
+        description: .Net Web Application
+    name: dotnetwithpostgre-uhurumonitoringasw1g
+    instances: 1
+    services: 
+      dotnetpostgremonit: 
+        type: postgresql
+    mem: 128M
+    url: ${name}.${target-base}

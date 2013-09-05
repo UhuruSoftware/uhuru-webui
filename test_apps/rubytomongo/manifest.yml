@@ -1,0 +1,16 @@
+--- 
+applications: 
+  .: 
+    mem: 128M
+    url: rubytomongo-monit-d0e73.uhurucloud.net
+    instances: 1
+    services: 
+      mongodb20: 
+        type: mongodb
+    framework: 
+      info: 
+        mem: 128M
+        exec: ruby foo.rb
+        description: Sinatra Application
+      name: sinatra
+    name: rubytomongo-monit-d0e73

@@ -21,6 +21,12 @@ GEM
     activemodel (4.0.0)
       activesupport (= 4.0.0)
       builder (~> 3.1.0)
+    activerecord (4.0.0)
+      activemodel (= 4.0.0)
+      activerecord-deprecated_finders (~> 1.0.2)
+      activesupport (= 4.0.0)
+      arel (~> 4.0.0)
+    activerecord-deprecated_finders (1.0.3)
     activeresource (4.0.0)
       activemodel (~> 4.0)
       activesupport (~> 4.0)
@@ -32,10 +38,23 @@ GEM
       thread_safe (~> 0.1)
       tzinfo (~> 0.3.37)
     addressable (2.3.5)
+    arel (4.0.0)
     atomic (1.1.13)
     backports (3.3.3)
     base32 (0.2.0)
     builder (3.1.4)
+    caldecott-client (0.0.2)
+      multi_json (~> 1.3)
+    cf (5.2.0)
+      addressable (~> 2.2)
+      caldecott-client (~> 0.0.2)
+      cfoundry (~> 4.3.0)
+      interact (~> 0.5)
+      json_pure (~> 1.6)
+      mothership (>= 0.5.1, < 1.0)
+      multi_json (~> 1.3)
+      rest-client (~> 1.6)
+      uuidtools (~> 2.1)
     cf-uaa-lib (2.0.0)
       multi_json
     cfoundry (4.3.4)
@@ -79,11 +98,13 @@ GEM
       multi_xml (>= 0.5.2)
     httpclient (2.3.4.1)
     i18n (0.6.5)
+    interact (0.5.2)
     json (1.8.0)
     json_pure (1.8.0)
     membrane (0.0.2)
     mime-types (1.24)
     minitest (4.7.5)
+    mothership (0.5.1)
     msgpack (0.5.5)
     msgpack (0.5.5-x86-mingw32)
     multi_json (1.7.9)
@@ -116,6 +137,7 @@ GEM
       tilt (~> 1.3, >= 1.3.4)
     sinatra-session (1.0.0)
       sinatra (>= 1.0)
+    sqlite3 (1.3.8)
     steno (1.1.0)
       fluent-logger
       grape
@@ -128,6 +150,7 @@ GEM
       atomic
     tilt (1.4.1)
     tzinfo (0.3.37)
+    uuidtools (2.1.4)
     virtus (0.5.5)
       backports (~> 3.3)
       descendants_tracker (~> 0.0.1)
@@ -139,8 +162,10 @@ PLATFORMS
   x86-mingw32
 
 DEPENDENCIES
+  activerecord (>= 3.0.0)
   activeresource (~> 4.0.0)
   base32
+  cf
   cf-uaa-lib
   cfoundry (~> 4.3.4)
   chargify_api_ares
@@ -152,6 +177,7 @@ DEPENDENCIES
   rest-client
   sinatra
   sinatra-session
+  sqlite3
   steno
   thin (~> 1.5.0)
   vcap_common (~> 2.0.8)!

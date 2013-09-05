@@ -1,0 +1,16 @@
+---
+applications:
+- name: rubytomysql-monit-518a1
+  memory: 256M
+  instances: 1
+  host: rubytomysql-monit-518a1
+  domain: apps.ccng-dev.net
+  path: .
+  services:
+    rubytomysql55:
+      label: mysql
+      provider: core
+      version: '5.5'
+      plan: free
+  buildpack: https://github.com/cloudfoundry/heroku-buildpack-ruby
+  command: bundle exec ruby foo.rb

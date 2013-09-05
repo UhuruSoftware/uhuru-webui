@@ -1,0 +1,16 @@
+--- 
+applications: 
+  .: 
+    name: javawithredis-monit
+    framework: 
+      name: spring
+      info: 
+        mem: 512M
+        description: Java SpringSource Spring Application
+        exec: 
+    url: ${name}.${target-base}
+    mem: 256M
+    instances: 1
+    services: 
+      javaredis-monit: 
+        type: redis

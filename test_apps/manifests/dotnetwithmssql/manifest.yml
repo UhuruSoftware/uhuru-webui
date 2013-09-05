@@ -1,0 +1,16 @@
+--- 
+applications: 
+  .: 
+    name: dotnetwithmssql-uhurumonitoring4hz9c
+    instances: 1
+    url: ${name}.${target-base}
+    mem: 128M
+    framework: 
+      name: dotNet
+      info: 
+        exec: 
+        description: .Net Web Application
+        mem: 128M
+    services: 
+      dotnetmssqlmonit: 
+        type: mssql

@@ -1,0 +1,16 @@
+--- 
+applications: 
+  .: 
+    framework: 
+      info: 
+        exec: 
+        description: .Net Web Application
+        mem: 128M
+      name: dotNet
+    mem: 128M
+    name: dotnetwithmysql-uhurumonitoring2lojb
+    instances: 1
+    services: 
+      dotnetmysqlmonit: 
+        type: mysql
+    url: ${name}.${target-base}

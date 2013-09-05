@@ -1,0 +1,16 @@
+--- 
+applications: 
+  .: 
+    framework: 
+      info: 
+        description: .Net Web Application
+        mem: 128M
+        exec: 
+      name: dotNet
+    mem: 128M
+    url: ${name}.${target-base}
+    instances: 1
+    name: dotnetwithmongo-uhurumonitoring9vkz2
+    services: 
+      dotnetmongomonit: 
+        type: mongodb

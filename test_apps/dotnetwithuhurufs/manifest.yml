@@ -1,0 +1,16 @@
+--- 
+applications: 
+  .: 
+    instances: 1
+    name: dotnetwithuhurufs-monit-dd634
+    services: 
+      fs: 
+        type: uhurufs
+    url: dotnetwithuhurufs-monit-dd634.uhurucloud.net
+    framework: 
+      name: dotNet
+      info: 
+        description: .Net Web Application
+        exec: 
+        mem: 128M
+    mem: 128M

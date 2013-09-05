@@ -20,3 +20,7 @@ gem "base32"
 
 gem "chargify_api_ares"
 gem "activeresource", "~> 4.0.0"
+
+gem "activerecord", ">= 3.0.0"
+gem "sqlite3"
+gem "cf"

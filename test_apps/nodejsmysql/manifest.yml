@@ -1,0 +1,16 @@
+--- 
+applications: 
+  .: 
+    name: nodejsmysql-monit-23010
+    framework: 
+      name: node
+      info: 
+        mem: 64M
+        description: Node.js Application
+        exec: 
+    url: nodejsmysql-monit-23010.uhurucloud.net
+    mem: 64M
+    instances: 1
+    services: 
+      nodejsmysql-monit: 
+        type: mysql

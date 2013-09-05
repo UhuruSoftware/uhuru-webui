@@ -1,0 +1,16 @@
+--- 
+applications: 
+  .: 
+    instances: 1
+    url: phpwithuhurufs-monit-51e5d.uhurucloud.net
+    framework: 
+      info: 
+        description: PHP Application
+        exec: 
+        mem: 128M
+      name: php
+    mem: 128M
+    services: 
+      uhurufs-0.9: 
+        type: uhurufs
+    name: phpwithuhurufs-monit-51e5d

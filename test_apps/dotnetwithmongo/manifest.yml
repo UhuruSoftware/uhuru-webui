@@ -1,0 +1,16 @@
+--- 
+applications: 
+  .: 
+    framework: 
+      info: 
+        description: .Net Web Application
+        mem: 128M
+        exec: 
+      name: dotNet
+    mem: 128M
+    url: dotnetwithmongo-monit-78ba9.uhurucloud.net
+    instances: 1
+    name: dotnetwithmongo-monit-78ba9
+    services: 
+      dotnetmongomonit: 
+        type: mongodb

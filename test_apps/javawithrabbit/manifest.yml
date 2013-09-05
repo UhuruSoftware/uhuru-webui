@@ -1,0 +1,16 @@
+--- 
+applications: 
+  .: 
+    name: javawithrabbit-monit-18a55
+    framework: 
+      name: spring
+      info: 
+        mem: 512M
+        description: Java SpringSource Spring Application
+        exec: 
+    url: javawithrabbit-monit-18a55.uhurucloud.net
+    mem: 256M
+    instances: 1
+    services: 
+      javarabbitmq-monit: 
+        type: rabbitmq

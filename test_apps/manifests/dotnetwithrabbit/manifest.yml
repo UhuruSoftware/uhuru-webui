@@ -1,0 +1,16 @@
+--- 
+applications: 
+  .: 
+    name: dotnetwithrabbit-monit
+    framework: 
+      name: dotNet
+      info: 
+        mem: 128M
+        description: .Net Web Application
+        exec: 
+    url: ${name}.${target-base}
+    mem: 128M
+    instances: 1
+    services: 
+      dotnetrabbitmonit: 
+        type: rabbitmq

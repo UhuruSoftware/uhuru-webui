@@ -1,0 +1,7 @@
+c:\users\stefan.schneider\documents\visual studio 2010\Projects\dotnetwithrabbit\dotnetwithrabbit\bin\dotnetwithrabbit.dll
+c:\users\stefan.schneider\documents\visual studio 2010\Projects\dotnetwithrabbit\dotnetwithrabbit\bin\dotnetwithrabbit.pdb
+c:\users\stefan.schneider\documents\visual studio 2010\Projects\dotnetwithrabbit\dotnetwithrabbit\bin\RabbitMQ.Client.dll
+c:\users\stefan.schneider\documents\visual studio 2010\Projects\dotnetwithrabbit\dotnetwithrabbit\bin\RabbitMQ.Client.xml
+c:\users\stefan.schneider\documents\visual studio 2010\Projects\dotnetwithrabbit\dotnetwithrabbit\obj\Debug\dotnetwithrabbit.csprojResolveAssemblyReference.cache
+c:\users\stefan.schneider\documents\visual studio 2010\Projects\dotnetwithrabbit\dotnetwithrabbit\obj\Debug\dotnetwithrabbit.dll
+c:\users\stefan.schneider\documents\visual studio 2010\Projects\dotnetwithrabbit\dotnetwithrabbit\obj\Debug\dotnetwithrabbit.pdb

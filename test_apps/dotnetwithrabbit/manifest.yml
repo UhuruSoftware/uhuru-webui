@@ -1,0 +1,16 @@
+--- 
+applications: 
+  .: 
+    name: dotnetwithrabbit-monit-bab7d
+    framework: 
+      name: dotNet
+      info: 
+        mem: 128M
+        description: .Net Web Application
+        exec: 
+    url: dotnetwithrabbit-monit-bab7d.uhurucloud.net
+    mem: 128M
+    instances: 1
+    services: 
+      dotnetrabbitmonit: 
+        type: rabbitmq

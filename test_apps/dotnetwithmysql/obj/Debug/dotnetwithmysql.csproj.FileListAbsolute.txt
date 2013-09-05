@@ -1,0 +1,8 @@
+C:\Users\andreea.mladin.UHURUSOFTWARE\Desktop\dotnetwithmysql\dotnetwithmysql\bin\dotnetwithmysql.dll
+C:\Users\andreea.mladin.UHURUSOFTWARE\Desktop\dotnetwithmysql\dotnetwithmysql\bin\dotnetwithmysql.pdb
+C:\Users\andreea.mladin.UHURUSOFTWARE\Desktop\dotnetwithmysql\dotnetwithmysql\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\andreea.mladin.UHURUSOFTWARE\Desktop\dotnetwithmysql\dotnetwithmysql\obj\Debug\dotnetwithmysql.dll
+C:\Users\andreea.mladin.UHURUSOFTWARE\Desktop\dotnetwithmysql\dotnetwithmysql\obj\Debug\dotnetwithmysql.pdb
+C:\Users\andreea.mladin.UHURUSOFTWARE\Desktop\dotnetwithmysql\dotnetwithmysql\bin\MySql.Data.dll
+C:\Users\andreea.mladin.UHURUSOFTWARE\Desktop\dotnetwithmysql\dotnetwithmysql\bin\MySql.Data.Entity.dll
+C:\Users\andreea.mladin.UHURUSOFTWARE\Desktop\dotnetwithmysql\dotnetwithmysql\bin\MySql.Web.dll
