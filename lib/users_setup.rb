@@ -15,8 +15,11 @@ class UsersSetup
   def login(email, password)
     begin
       user_token = get_user_token(email, password)
-      if user_token == 'user_token_error'
-        return 'error'
+
+      begin
+        raise 'Authentication error' if defined?(user_token.info['error']) || defined?(user_token.info['error_description'])
+      rescue Exception => e
+        return e
       end
 
       users_obj = Library::Users.new(user_token, @cf_target)
@@ -26,8 +29,7 @@ class UsersSetup
       user = UserDetails.new(user_token, user_guid, user_detail["familyname"], user_detail["givenname"])
       user
     rescue Exception => e
-      puts e
-      return 'error'
+      return e
     end
   end
 
@@ -36,8 +38,7 @@ class UsersSetup
     begin
       uaac = get_uaa_client
     rescue Exception => e
-      puts e
-      return 'error'
+      return e
     end
 
     # if user already exist in uaa continue with next steps without creating it
@@ -51,7 +52,6 @@ class UsersSetup
     unless user
       begin
         emails = [email]
-
         info = {userName: email, password: password, name: {givenName: first_name, familyName: last_name}}
         info[:emails] = emails.respond_to?(:each) ?
             emails.each_with_object([]) { |email, o| o.unshift({:value => email}) } :
@@ -59,8 +59,7 @@ class UsersSetup
 
         user = uaac.add(:user, info)
       rescue Exception => e
-        puts e
-        return 'user exists'
+        return e
       end
     end
 
@@ -68,14 +67,14 @@ class UsersSetup
       user_id = user['id']
       admin_token = get_admin_token
 
-      if admin_token != 'user_token_error'
-        #admin_token = CFoundry::AuthToken.new(admin_token)
+      begin
+        raise 'The username already exists' if defined?(admin_token.info['error']) || defined?(admin_token.info['error_description'])
         users_obj = Library::Users.new(admin_token, @cf_target)
         organizations_Obj = Library::Organizations.new(admin_token, @cf_target)
         org_name = email + "'s organization"
         org = organizations_Obj.get_organization_by_name(org_name)
-      else
-        return 'org create error'
+      rescue Exception => e
+        return e
       end
 
       unless users_obj.user_exists(user_id)
@@ -103,8 +102,7 @@ class UsersSetup
             users_obj.add_user_to_org_with_role(org.guid, user_id, ['owner', 'billing'])
           end
         rescue Exception => e
-          puts e
-          return 'org create error'
+          return e
         end
       else
         begin
@@ -113,20 +111,21 @@ class UsersSetup
             users_obj.add_user_to_org_with_role(org.guid, user_id, ['owner', 'billing'])
           end
         rescue Exception => e
-          puts e
-          return 'org create error'
+          return e
         end
       end
 
-      user_token = get_user_token(email, password)
+      #the username password shoud be generated for each user for better security
+      user_token = get_user_token(email, $config[:webui][:activation_link_secret])
 
-      if user_token == 'user_token_error'
-        return 'user exists'
+      begin
+        raise 'The username already exists' if defined?(user_token.info['error']) || defined?(user_token.info['error_description'])
+      rescue Exception => e
+        return e
       end
 
       user = UserDetails.new(user_token, user_id, first_name, last_name)
       user
-
     end
   end
 
@@ -150,12 +149,6 @@ class UsersSetup
     puts e
     puts 'update password method error'
     return 'error'
-  end
-
-  def get_admin_token
-    token_issuer = CF::UAA::TokenIssuer.new(@uaaApi, @client_id, @client_secret)
-    token = token_issuer.client_credentials_grant()
-    CFoundry::AuthToken.from_uaa_token_info(token)
   end
 
   def get_uaa_client
@@ -200,20 +193,24 @@ class UsersSetup
     raise "#{e.inspect}"
   end
 
-  private
 
-  def get_user_token(email, password)
-
+  def get_admin_token
     begin
       token_issuer = CF::UAA::TokenIssuer.new(@uaaApi, @client_id, @client_secret)
-      # token_obj = token_issuer.implicit_grant_with_creds(username: email, password: password)
-      token_obj = token_issuer.owner_password_grant(email, password)
+      token = token_issuer.client_credentials_grant()
+      CFoundry::AuthToken.from_uaa_token_info(token)
+    rescue Exception => e
+      return e
+    end
+  end
 
+  def get_user_token(email, password)
+    begin
+      token_issuer = CF::UAA::TokenIssuer.new(@uaaApi, @client_id, @client_secret)
+      token_obj = token_issuer.owner_password_grant(email, password)
       CFoundry::AuthToken.from_uaa_token_info(token_obj)
     rescue Exception => e
-      puts e
-      puts 'get_user_token method error'
-      return 'user_token_error'
+      return e
     end
   end
 

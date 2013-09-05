@@ -10,65 +10,57 @@ uaa:
   client_id: "webui"
   client_secret: "webuisecret"
 
-
 contact:
   company: "Uhuru Software, Inc."
   address: "17530 NE Union Hill Road, Suite 120, Redmond, WA 98052, USA."
   phone: "+1 (425) 406-6383"
   email: "uhuru@uhurusoftware.com"
+  company_link: "http://www.uhurusoftware.com"
+  support_link: "http://uhurusoftware.zendesk.com"
 
 email:
-  mailgun_api_url: "https://api:key-3ax6xnjp29jd6fds4gc373sgvjxteol0@api.mailgun.net/v2/samples.mailgun.org/messages"
-  from_title: "Uhuru Cloud"
-  from: "marius.ivan@uhurusoftware.mailgun.org" #"postmaster@uhurusoftware.mailgun.org"
-  subject: "Uhuru Cloud E-mail Validation"
+  from: "postmaster@uhurusoftware.mailgun.org"
+  from_alias: "Uhuru Cloud"
+  server: "smtp.mailgun.org"
+  port: 587
+  user: "postmaster@uhurusoftware.mailgun.org"
+  secret: "4q899o1avzu3"
+  auth_method: "plain"
+  enable_tls: 'true'
 
 recaptcha:
   recaptcha_public_key: "6LfuXN4SAAAAAAVoUDfpUzxftBrpecXQSzTuKcZk"
   recaptcha_private_key: "6LfuXN4SAAAAAEuH--10s_lH_HMeYdjQtxha3UKd"
 
-
 logging:
   level: debug
-
-domains:
-  - url: "192.168.1.195:4567"
-    page_title: "Uhuru WebUi"
-    site_tab: "Uhuru"
-    welcome_message: "PeakColo PaaS - powered by Uhuru"
-  - url: "127.0.0.1:4567"
-    page_title: "Uhuru WebUi"
-    site_tab: "Uhuru"
-    welcome_message: "PeakColo PaaS - powered by Uhuru"
-  - url: "192.168.1.112:4567"
-    page_title: "Uhuru WebUi LINUX BOxX"
-    site_tab: "Uhuru"
-    welcome_message: "PeakColo PaaS - powered by Uhuru LINUX BOX"
-default_domain:
-  page_title: Uhuru Software .Inc
-  welcome_message: Welcome to Uhuru Cloud
-  site_tab: "Uhuru"
+  #file: /var/vcap/sys/log/simple_webui/simple_webui.log
 
 webui:
+  page_title: "Uhuru WebUi"
+  site_tab: "Uhuru"
+  welcome_message: "Uhuru AppClound NG"
+  copyright_message: "&copy; Copyright Uhuru Software 2012"
+
+  #color_theme: "<%= properties.uhuru.simple_webui.color_theme || "simple_white" %>"
+  #<% if properties.uhuru.simple_webui && properties.uhuru.webui.domain %>
+  #domain: "<%= properties.uhuru.webui.domain %>"
+  #<% else %>
+  domain: "192.168.100.100"
+  #<% end %>
+
   activation_link_secret: "terceseht"
-  signup_user_password: "tHis1sth3def4ultuserpa55w0rd!!!"
-  company_link: http://www.uhurusoftware.com
-  support_link: http://uhurusoftware.zendesk.com
+  more_videos_link: 'http://support.uhurusoftware.com/forums/20507726-uhuru-knowledge-bases'
+  guest_feedback_link: 'http://bit.ly/uhrbloglife'
+  twitter_link: 'https://www.twitter.com/uhurusoftware'
+  facebook_link: 'https://www.facebook.com/uhurusoftware'
 
-
-  more_videos_link: http://support.uhurusoftware.com/forums/20507726-uhuru-knowledge-bases
-  guest_feedback_link: http://bit.ly/uhrbloglife
-  twitter_link: https://www.twitter.com/uhurusoftware
-  facebook_link: https://www.facebook.com/uhurusoftware
-
-  terms_of_services_link: http://uhurusoftware.com/tos
-  privacy_policy_link: http://uhurusoftware.com/privacy/
-  support_link: http://uhurusoftware.zendesk.com
-
-  visual_studio_plugin_link: vs
-  app_cloud_admin_link: appc
-  command_line_link: http://support.uhurusoftware.com/entries/21454287-deploying-and-managing-apps-with-command-line
-
+  terms_of_services_link: 'http://uhurusoftware.com/tos'
+  privacy_policy_link: 'http://uhurusoftware.com/privacy/'
+  visual_studio_plugin_link: 'http://www.uhurucloud.com/tools/visualstudio'
+  app_cloud_admin_link: "http://www.uhurucloud.com/tools/cloudadmin"
+  command_line_link: "http://docs.cloudfoundry.com/tools/vmc/installing-vmc.html"
+  eclipse_url: "http://docs.cloudfoundry.com/tools/STS/configuring-STS.html"
 
 quota_settings:
   billing_provider: chargify
