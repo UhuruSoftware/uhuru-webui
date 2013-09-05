@@ -7,60 +7,28 @@ module Uhuru::Webui
 
         app.get INDEX do
           session[:login_] = false
-
-          welcome_message = nil
-          page_title = nil
-          $site_tab = nil
-
-          $config[:domains].each do |domain|
-            if request.env['HTTP_HOST'].to_s == domain['url']
-              welcome_message = domain['welcome_message']
-              page_title = domain['page_title']
-              $site_tab = domain['site_tab']
-            else
-              page_title = $config[:default_domain][:page_title]
-              welcome_message = $config[:default_domain][:welcome_message]
-              $site_tab = $config[:default_domain][:site_tab]
-            end
-          end
+          $site_tab = $config[:webui][:site_tab]
 
           erb :'guest_pages/index',
               {
                   :layout => :'layouts/guest',
                   :locals => {
-                      :page_title => page_title,
-                      :welcome_message => welcome_message
+                      :page_title => $config[:webui][:page_title],
+                      :welcome_message => $config[:webui][:welcome_message],
                   }
               }
         end
 
         app.get LOGIN do
-          welcome_message = nil
-          page_title = nil
-          $config[:domains].each do |domain|
-            if request.env['HTTP_HOST'].to_s == domain['url']
-              welcome_message = domain['welcome_message']
-              page_title = domain['page_title']
-            else
-              page_title = $config[:default_domain][:page_title]
-              welcome_message = $config[:default_domain][:welcome_message]
-            end
-          end
-
-          if params[:error] != nil && params[:error] != ''
-            error_message = $errors['login_error']
-            error_username = params[:username]
-          else
-            error_message = ''
-            error_username = ''
-          end
+          error_message = params[:error] if defined?(params[:error])
+          error_username = params[:username] if defined?(params[:username])
 
           erb :'guest_pages/login',
               {
                   :layout => :'layouts/guest',
                   :locals => {
-                      :page_title => page_title,
-                      :welcome_message => welcome_message,
+                      :page_title => $config[:webui][:page_title],
+                      :welcome_message => $config[:webui][:welcome_message],
                       :error => error_message,
                       :error_username => error_username,
                       :include_erb => :'user_pages/login'
@@ -69,55 +37,17 @@ module Uhuru::Webui
         end
 
         app.get SIGNUP do
-          welcome_message = nil
-          page_title = nil
-          $config[:domains].each do |domain|
-            if request.env['HTTP_HOST'].to_s == domain['url']
-              welcome_message = domain['welcome_message']
-              page_title = domain['page_title']
-            else
-              page_title = $config[:default_domain][:page_title]
-              welcome_message = $config[:default_domain][:welcome_message]
-            end
-          end
-
-          if params[:error] != nil && params[:error] != ''
-            error_username = params[:username]
-            error_first_name = params[:first_name]
-            error_last_name = params[:last_name]
-
-            if params[:message] == 'recaptcha'
-              error_message = $errors['signup_error_recaptcha']
-            elsif params[:message] == 'email_format'
-              error_message = $errors['signup_error_email_format']
-            elsif params[:message] == 'first_name'
-              error_message = $errors['signup_error_first_name']
-            elsif params[:message] == 'last_name'
-              error_message = $errors['signup_error_last_name']
-            elsif params[:message] == 'password_size'
-              error_message = $errors['signup_error_password_size']
-            elsif params[:message] == 'password_difference'
-              error_message = $errors['signup_error_password_difference']
-            elsif params[:error] == 'server_error'
-              error_message = $errors['signup_server_error']
-            elsif params[:error] == 'user_exists'
-              error_message = $errors['signup_user_exists_error']
-            else
-              error_message = $errors['signup_create_organization_error']
-            end
-          else
-            error_message = ''
-            error_username = ''
-            error_first_name = ''
-            error_last_name = ''
-          end
+          error_username = params[:username] if defined?(params[:username])
+          error_first_name = params[:first_name] if defined?(params[:firstname])
+          error_last_name = params[:last_name] if defined?(params[:lastname])
+          error_message = params[:message] if defined?(params[:message])
 
           erb :'guest_pages/signup',
               {
                   :layout => :'layouts/guest',
                   :locals => {
-                      :page_title => page_title,
-                      :welcome_message => welcome_message,
+                      :page_title => $config[:webui][:page_title],
+                      :welcome_message => $config[:webui][:welcome_message],
                       :error_message => error_message,
                       :error_username => error_username,
                       :error_first_name => error_first_name,
@@ -130,13 +60,11 @@ module Uhuru::Webui
 
 
         app.post LOGIN do
-
           if params[:username]
-
             user_login = UsersSetup.new($config)
             user = user_login.login(params[:username], params[:password])
 
-            if user != 'error'
+            unless defined?(user.message)
               session[:token] = user.token
               session[:login_] = true
 
@@ -148,7 +76,7 @@ module Uhuru::Webui
 
               redirect ORGANIZATIONS
             else
-              redirect LOGIN + "?error=login_error&username=#{params[:username]}"
+              redirect LOGIN + "?error=#{user.message}&username=#{params[:username]}"
             end
           else
             redirect LOGIN
@@ -156,48 +84,38 @@ module Uhuru::Webui
         end
 
         app.post SIGNUP do
-          if recaptcha_valid?
-            #puts 'recaptcha valid!'
-          else
-            redirect SIGNUP + "?error=server_error&username=#{params[:email]}&first_name=#{params[:first_name]}&last_name=#{params[:last_name]}&message=recaptcha"
+          unless recaptcha_valid?
+            redirect SIGNUP + "?username=#{params[:email]}&first_name=#{params[:first_name]}&last_name=#{params[:last_name]}&message=Please type the correct code"
           end
 
           key = $config[:webui][:activation_link_secret]
 
-          if /\b[A-Z0-9._%a-z\-]+@(?:[A-Z0-9a-z\-]+\.)+[A-Za-z]{2,4}\z/.match(params[:email])
-            email = Encryption.encrypt_text(params[:email], key)
-          else
-            redirect SIGNUP + "?error=server_error&username=#{params[:email]}&first_name=#{params[:first_name]}&last_name=#{params[:last_name]}&message=email_format"
+          unless /\b[A-Z0-9._%a-z\-]+@(?:[A-Z0-9a-z\-]+\.)+[A-Za-z]{2,4}\z/.match(params[:email])
+            redirect SIGNUP + "?username=#{params[:email]}&first_name=#{params[:first_name]}&last_name=#{params[:last_name]}&message=Incorrect email format"
           end
-
-          if params[:first_name].size >= 1
-            family_name = Encryption.encrypt_text(params[:first_name], key)
-          else
-            redirect SIGNUP + "?error=server_error&username=#{params[:email]}&first_name=#{params[:first_name]}&last_name=#{params[:last_name]}&message=first_name"
+          unless params[:first_name].size >= 1
+            redirect SIGNUP + "?username=#{params[:email]}&first_name=#{params[:first_name]}&last_name=#{params[:last_name]}&message=Please enter your first name"
           end
-          if params[:last_name].size >= 1
-            given_name = Encryption.encrypt_text(params[:last_name], key)
-          else
-            redirect SIGNUP + "?error=server_error&username=#{params[:email]}&first_name=#{params[:first_name]}&last_name=#{params[:last_name]}&message=last_name"
+          unless params[:last_name].size >= 1
+            redirect SIGNUP + "?username=#{params[:email]}&first_name=#{params[:first_name]}&last_name=#{params[:last_name]}&message=Please enter your last name"
           end
 
           if params[:password].size >= 8
             if params[:password] == params[:confirm_password]
               pass = Encryption.encrypt_text(params[:password], key)
             else
-              redirect SIGNUP + "?error=server_error&username=#{params[:email]}&first_name=#{params[:first_name]}&last_name=#{params[:last_name]}&message=password_difference"
+              redirect SIGNUP + "?username=#{params[:email]}&first_name=#{params[:first_name]}&last_name=#{params[:last_name]}&message=Confirm the password correctly"
             end
           else
-            redirect SIGNUP + "?error=server_error&username=#{params[:email]}&first_name=#{params[:first_name]}&last_name=#{params[:last_name]}&message=password_size"
+            redirect SIGNUP + "?username=#{params[:email]}&first_name=#{params[:first_name]}&last_name=#{params[:last_name]}&message=The password is not strong enough"
           end
 
           user_sign_up = UsersSetup.new($config)
-          user = user_sign_up.signup(params[:email], $config[:webui][:signup_user_password], params[:last_name], params[:first_name])
+          user = user_sign_up.signup(params[:email], $config[:webui][:activation_link_secret], params[:last_name], params[:first_name])
 
-          if user != 'error' && user != 'user exists' && user != 'org create error'
-
+          unless defined?(user.message)
             link = "http://#{request.env['HTTP_HOST'].to_s}/activate/#{URI.encode(Base32.encode(pass))}/#{URI.encode(Base32.encode(user.guid))}"
-            Email::send_email(params[:email], erb(:'guest_pages/email', {:locals =>{:link => link}}))
+            Email::send_email(params[:email], 'Uhuru account confirmation', erb(:'guest_pages/email', {:locals =>{:link => link}}))
 
             session[:token] = user.token
             session[:fname] = user.first_name
@@ -209,13 +127,7 @@ module Uhuru::Webui
 
             redirect PLEASE_CONFIRM
           else
-            if user == 'error'
-              redirect SIGNUP + "?error=server_error&username=#{params[:email]}&first_name=#{params[:first_name]}&last_name=#{params[:last_name]}"
-            elsif user == 'user exists'
-              redirect SIGNUP + "?error=user_exists&username=#{params[:email]}&first_name=#{params[:first_name]}&last_name=#{params[:last_name]}"
-            else
-              redirect SIGNUP + "?error=create_organization&username=#{params[:email]}&first_name=#{params[:first_name]}&last_name=#{params[:last_name]}"
-            end
+            redirect SIGNUP + "?error=#{user.message}&username=#{params[:email]}&first_name=#{params[:first_name]}&last_name=#{params[:last_name]}"
           end
         end
 
@@ -225,29 +137,15 @@ module Uhuru::Webui
           redirect INDEX
         end
 
-
-
         app.get PLEASE_CONFIRM do
           session[:login_] = false
-
-          welcome_message = nil
-          page_title = nil
-          $config[:domains].each do |domain|
-            if request.env['HTTP_HOST'].to_s == domain['url']
-              welcome_message = domain['welcome_message']
-              page_title = domain['page_title']
-            else
-              page_title = $config[:default_domain][:page_title]
-              welcome_message = $config[:default_domain][:welcome_message]
-            end
-          end
 
           erb :'guest_pages/pleaseConfirm',
               {
                   :layout => :'layouts/guest',
                   :locals => {
-                      :page_title => page_title,
-                      :welcome_message => welcome_message
+                      :page_title => $config[:webui][:page_title],
+                      :welcome_message => $config[:webui][:welcome_message],
                   }
               }
         end
@@ -269,28 +167,15 @@ module Uhuru::Webui
         app.get ACTIVE do
           session[:login_] = false
 
-          welcome_message = nil
-          page_title = nil
-          $config[:domains].each do |domain|
-            if request.env['HTTP_HOST'].to_s == domain['url']
-              welcome_message = domain['welcome_message']
-              page_title = domain['page_title']
-            else
-              page_title = $config[:default_domain][:page_title]
-              welcome_message = $config[:default_domain][:welcome_message]
-            end
-          end
-
           erb :'guest_pages/activated',
               {
                   :layout => :'layouts/guest',
                   :locals => {
-                      :page_title => page_title,
-                      :welcome_message => welcome_message
+                      :page_title => $config[:webui][:page_title],
+                      :welcome_message => $config[:webui][:welcome_message],
                   }
               }
         end
-
       end
     end
   end

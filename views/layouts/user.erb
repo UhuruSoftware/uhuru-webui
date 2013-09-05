@@ -74,6 +74,7 @@
                             <strong>
                                 <a href="<%= $config[:webui][:visual_studio_plugin_link] %>" class="footer_links">Visual Studio Plugin</a><span style="color: #ffffff;"> | </span>
                                 <a href="<%= $config[:webui][:app_cloud_admin_link] %>" class="footer_links">AppCloud Admin</a><span style="color: #ffffff;"> | </span>
+                                <a href="<%= $config[:webui][:eclipse_url] %>" class="footer_links">Eclipse</a><span style="color: #ffffff;"> | </span>
                                 <a href="<%= $config[:webui][:command_line_link] %>" target="_blank" class="footer_links">Command Line</a>
                             </strong>
                         </div>
@@ -83,7 +84,7 @@
                 <div class="bottom">
                     <div class="page-margin" id="footer_container">
                         <span class="copyright">
-                            &copy; 2012 Uhuru Software. All rights reserved.
+                            <%= $config[:webui][:copyright_message] %>
                         </span>
                         <ul class="footer-menu">
                             <li><a href="<%= $config[:webui][:terms_of_services_link] %>">Terms of Service</a></li>
