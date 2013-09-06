@@ -76,8 +76,8 @@ class Uhuru::Webui::Config < VCAP::Config
         :port                             => Integer,
         :user                             => String,
         :secret                           => String,
-        :auth_method                      => String,
-        :enable_tls                       => String
+        :auth_method                      => Symbol,
+        :enable_tls                       => TrueClass
       },
 
       :recaptcha => {
