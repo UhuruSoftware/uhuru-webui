@@ -1,9 +1,9 @@
 ---
 applications:
-- name: rubytomysql-monit-518a1
+- name: rubytomysql-monit-dcc9f
   memory: 256M
   instances: 1
-  host: rubytomysql-monit-518a1
+  host: rubytomysql-monit-dcc9f
   domain: apps.ccng-dev.net
   path: .
   services:

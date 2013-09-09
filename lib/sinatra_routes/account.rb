@@ -6,56 +6,33 @@ module Uhuru::Webui
       def self.registered(app)
 
         app.get ACCOUNT do
-
           if session[:login_] == false || session[:login_] == nil
             redirect INDEX
           end
 
-          if params[:message] == 'first_name_size'
-            error_message_username = $errors['username_error_first_name_size']
-            error_message_password = ''
-          elsif params[:message] == 'last_name_size'
-            error_message_username = $errors['username_error_last_name_size']
-            error_message_password = ''
-          elsif params[:message] == 'password_size'
-            error_message_password = $errors['username_error_password_size']
-            error_message_username = ''
-          elsif params[:message] == 'password_difference'
-            error_message_password = $errors['username_error_password_difference']
-            error_message_username = ''
-          elsif params[:error] == 'change_username'
-            error_message_username = $errors['change_username_error']
-            error_message_password = ''
-          elsif params[:error] == 'change_password'
-            error_message_password = $errors['change_password_error']
-            error_message_username = ''
-          else
-            error_message_username = ''
-            error_message_password = ''
-          end
+          error_message = params[:message] if defined?(params[:message])
 
           erb :'user_pages/usersettings', {
               :layout => :'layouts/user',
               :locals => {
-                  :error_message_username => error_message_username,
-                  :error_message_password => error_message_password
+                  :error_message => error_message
               }
           }
         end
 
         app.post '/updateUserName' do
           if params[:first_name].size < 1
-            redirect ACCOUNT + '?error=change_password&message=first_name_size'
+            redirect ACCOUNT + '?message=Please enter your first name'
           elsif params[:last_name].size < 1
-            redirect ACCOUNT + '?error=change_password&message=last_name_size'
+            redirect ACCOUNT + '?message=Please enter your last name'
           end
 
           user_sign_up = UsersSetup.new($config)
           user = user_sign_up.update_user_info(session[:user_guid], params[:first_name], params[:last_name])
           session[:fname] = params[:first_name]
 
-          if user == 'error'
-            redirect ACCOUNT + '?error=change_username'
+          if defined?(user.message)
+            redirect ACCOUNT + "?message=#{user.info['error_description']}"
           else
             redirect ACCOUNT
           end
@@ -63,16 +40,16 @@ module Uhuru::Webui
 
         app.post '/updateUserPassword' do
           if params[:new_pass1].size < 8 || params[:new_pass2].size < 8
-            redirect ACCOUNT + '?message=password_size'
+            redirect ACCOUNT + '?message=The password you have entered is to weak'
           elsif params[:new_pass1] != params[:new_pass2]
-            redirect ACCOUNT + '?message=password_difference'
+            redirect ACCOUNT + '?message=The password and confirm password are not the same'
           end
 
           user_sign_up = UsersSetup.new($config)
           password = user_sign_up.change_password(session[:user_guid], params[:new_pass1], params[:old_pass])
 
-          if password == 'error'
-            redirect ACCOUNT + '?error=change_password'
+          if defined?(password.message)
+            redirect ACCOUNT + "?message=#{password.info['error_description']}"
           else
             redirect ACCOUNT
           end

@@ -23,11 +23,6 @@
                 </tr>
 
                 <tr class="account_settings_rows">
-                    <td></td>
-                    <td class="account_settings_left"><p class="form_errors1"></p><span class="server_errors" id="update_user_failed"><%= error_message_username %></span></td>
-                </tr>
-
-                <tr class="account_settings_rows">
                     <td class="account_settings_left"></td>
                     <td class="account_settings_right"><button type="submit" class="btn login last_row submit_form1 ok" style="float: left;"><span class="line">| </span>Update </button></td>
                 </tr>
@@ -58,18 +53,13 @@
                 </tr>
 
                 <tr class="account_settings_rows">
-                    <td></td>
-                    <td class="account_settings_left">
-                        <p class="form_errors2"></p>
-                        <span class="server_errors" id="update_password_failed"><%= error_message_password %></span>
-                    </td>
-                </tr>
-
-                <tr class="account_settings_rows">
                     <td class="account_settings_left"></td>
                     <td class="account_settings_right"><button type="submit" class="btn login last_row submit_form2 ok" style="float: left;"><span class="line">| </span>Update </button></td>
                 </tr>
             </table>
         </form>
       </div>
+
+      <br /><br />
+      <span class="server_errors" id="update_password_failed"><%= error_message %></span>
 </div>

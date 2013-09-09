@@ -25,8 +25,8 @@ email:
   port: 587
   user: "postmaster@uhurusoftware.mailgun.org"
   secret: "4q899o1avzu3"
-  auth_method: "plain"
-  enable_tls: 'true'
+  auth_method: :login
+  enable_tls: true
 
 recaptcha:
   recaptcha_public_key: "6LfuXN4SAAAAAAVoUDfpUzxftBrpecXQSzTuKcZk"

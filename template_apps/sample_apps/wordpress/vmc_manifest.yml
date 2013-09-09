@@ -1,7 +1,7 @@
 ---
 applications:
   .:
-    name: wptestman
+    name: wordpress
     framework:
       name: php
       info:
@@ -12,7 +12,7 @@ applications:
     mem: '512'
     instances: 1
     services:
-      wptestmanDB:
+      wordpressDB:
         type: mysql
-      wptestmanFS:
-        type: uhurufs
+      wordpressFS:
+        type: mysql

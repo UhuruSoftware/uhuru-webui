@@ -1,7 +1,7 @@
 ---
 applications:
   .:
-    name: wptestman
+    name: orchard
     framework:
       name: php
       info:
@@ -12,7 +12,7 @@ applications:
     mem: '512'
     instances: 1
     services:
-      wptestmanDB:
+      orchardDB:
         type: mysql
-      wptestmanFS:
-        type: uhurufs
+      orchardFS:
+        type: mysql

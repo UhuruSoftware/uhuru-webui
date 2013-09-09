@@ -136,9 +136,7 @@ class UsersSetup
     uaac.update(user_guid, uaa_user.merge(user_attributes))
 
   rescue Exception => e
-    puts e
-    puts 'update user method error'
-    return 'error'
+    return e
   end
 
   def change_password(user_id, verified_password, old_password)
@@ -146,9 +144,7 @@ class UsersSetup
     uaac.change_password(user_id, verified_password, old_password)
 
   rescue Exception => e
-    puts e
-    puts 'update password method error'
-    return 'error'
+    return e
   end
 
   def get_uaa_client

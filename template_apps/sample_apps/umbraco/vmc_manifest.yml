@@ -1,7 +1,7 @@
 ---
 applications:
   .:
-    name: wptestman
+    name: umbraco
     framework:
       name: php
       info:
@@ -12,7 +12,7 @@ applications:
     mem: '512'
     instances: 1
     services:
-      wptestmanDB:
+      umbracoDB:
         type: mysql
-      wptestmanFS:
+      umbracoFS:
         type: mysql
