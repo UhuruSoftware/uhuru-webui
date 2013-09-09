@@ -102,11 +102,11 @@ monitoring:
   pause_after_each_app: 45
   database:
     database: "monitoring"
-    host: 10.0.5.156
+    host: localhost
     port: 5432
     encoding: utf8
-    username: root
-    password: klcmBLc0kY5j
+    username: postgres
+    password:
     adapter: postgresql
     timeout: 2000
 #    adapter: sqlite3
