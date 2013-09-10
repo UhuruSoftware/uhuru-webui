@@ -29,16 +29,8 @@ module Uhuru::Webui
           auditors_list = space.read_auditors($config, params[:space_guid])
 
           collections = app.read_collections
+          error_message = params[:error] if defined?(params[:error])
 
-          if params[:error] == 'create_service'
-            if params[:message] == 'name_size'
-              error_message = $errors['service_error_name_size']
-            else
-              error_message = $errors['create_service_error']
-            end
-          else
-            error_message = ''
-          end
 
           erb :'user_pages/space',
               {
@@ -70,11 +62,11 @@ module Uhuru::Webui
           if params[:serviceName].size >= 4
             create = ServiceInstances.new(session[:token], $cf_target).create_service_instance(params[:serviceName], params[:current_space], params[:service_plan], params[:service_type])
           else
-            redirect ORGANIZATIONS + "/#{params[:current_organization]}/spaces/#{params[:current_space]}/#{params[:current_tab]}/create_service/new" + '?error=create_service&message=name_size'
+            redirect ORGANIZATIONS + "/#{params[:current_organization]}/spaces/#{params[:current_space]}/#{params[:current_tab]}/create_service/new" + '?error=The service name is too short.'
           end
 
-          if create == 'error'
-            redirect ORGANIZATIONS + "/#{params[:current_organization]}/spaces/#{params[:current_space]}/#{params[:current_tab]}/create_service/new" + '?error=create_service'
+          if defined?(create.message)
+            redirect ORGANIZATIONS + "/#{params[:current_organization]}/spaces/#{params[:current_space]}/#{params[:current_tab]}/create_service/new" + "?error=#{create.description}"
           else
             redirect ORGANIZATIONS + "/#{params[:current_organization]}/spaces/#{params[:current_space]}/#{params[:current_tab]}"
           end
@@ -83,8 +75,8 @@ module Uhuru::Webui
         app.post '/deleteService' do
           delete = ServiceInstances.new(session[:token], $cf_target).delete(params[:serviceGuid])
 
-          if delete == 'error'
-            redirect ORGANIZATIONS + "/#{params[:current_organization]}/spaces/#{params[:current_space]}/#{params[:current_tab]}" + '?error=delete_service'
+          if defined?(delete.message)
+            redirect ORGANIZATIONS + "/#{params[:current_organization]}/spaces/#{params[:current_space]}/#{params[:current_tab]}" + "?error=#{delete.description}"
           else
             redirect ORGANIZATIONS + "/#{params[:current_organization]}/spaces/#{params[:current_space]}/#{params[:current_tab]}"
           end

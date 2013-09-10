@@ -33,7 +33,7 @@ module Library
     rescue Exception => e
       puts "#{e.inspect}, #{e.backtrace}"
       puts 'read domains error'
-      return 'error'
+      return e
     end
 
     def get_organizations_domain_guid(org_guid)
@@ -47,7 +47,7 @@ module Library
     rescue Exception => e
       puts "#{e.inspect}, #{e.backtrace}"
       puts 'read org domain error'
-      return 'error'
+      return e
     end
 
     # create is used: - to create an domain and map it to an organization or space
@@ -91,9 +91,7 @@ module Library
       end
 
     rescue Exception => e
-      puts e.message
-      puts e.backtrace
-      return 'error'
+      return e
     end
 
     # unmaps a domain from an organization or space
@@ -125,9 +123,7 @@ module Library
       end
 
     rescue Exception => e
-      puts e
-      puts 'unmap domain method error'
-      return 'error'
+      return e
     end
 
     # deletes the domain and unmap all existing connections
@@ -136,9 +132,7 @@ module Library
       domain.delete!
 
     rescue Exception => e
-      puts e
-      puts 'delete domain method error'
-      return 'error'
+      return e
     end
 
     class Domain

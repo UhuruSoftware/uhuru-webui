@@ -39,9 +39,7 @@ module Library
 
       org.update!
     rescue Exception => e
-      puts e
-      puts "error occured in adding user guid: #{ user_guid } with roles: #{ roles }"
-      return 'error'
+      return e
     end
 
     def add_user_with_role_to_space(space_guid, user_guid, roles)
@@ -87,9 +85,7 @@ module Library
 
       space.update!
     rescue Exception => e
-      puts e
-      puts "error occured in adding user guid: #{ user_guid } with roles: #{ roles }"
-      return 'error'
+      return e
     end
     ##
     ## FUNCTIONS CALLED FROM ERB POST METHOD
@@ -101,8 +97,8 @@ module Library
       if user_guid
         add_user_to_org_with_role(org_guid, user_guid, [role])
       else
-        puts 'the user does not exist in the uaa database!'
-        return 'error'
+        error = UserError.new('inexistent', 'The user does not exist in the UAA database!')
+        return error
       end
     end
 
@@ -113,8 +109,8 @@ module Library
       if user_guid
         add_user_with_role_to_space(space_guid, user_guid, [role])
       else
-        puts 'the user does not exist in the uaa database!'
-        return 'error'
+        error = UserError.new('inexistent', 'The user does not exist in the UAA database!')
+        return error
       end
     end
 
@@ -197,8 +193,7 @@ module Library
 
       org.update!
     rescue Exception => e
-      puts 'delete user from org error (organization)'
-      return 'error'
+      return e
     end
 
      # role is a string ex: 'owner', 'developer', 'auditor'
@@ -224,8 +219,7 @@ module Library
       space.update!
 
     rescue Exception => e
-      puts 'delete user from space error (organization)'
-      return 'error'
+      return e
     end
 
     def user_exists(user_guid)
@@ -247,6 +241,15 @@ module Library
         @role = role
         @verified = verified
         @guid = guid
+      end
+    end
+
+    class UserError
+      attr_reader :message, :description
+
+      def initialize(message, description)
+        @message = message
+        @description = description
       end
     end
 

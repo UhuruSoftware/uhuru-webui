@@ -26,10 +26,7 @@ class ServiceInstances
     service_instance
 
   rescue Exception => e
-    puts e.message
-    puts e.backtrace
-    puts 'create service method error'
-    return 'error'
+    return e
   end
 
   def read_service_plans()
@@ -54,9 +51,7 @@ class ServiceInstances
     service_instance.delete!
 
   rescue Exception => e
-    puts e
-    puts 'create service method error'
-    return 'error'
+    return e
   end
 
   class Service

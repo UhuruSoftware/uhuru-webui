@@ -5,8 +5,6 @@
 </div>
 
 
-
-
 <div class="sections" id="organization_page" xmlns="http://www.w3.org/1999/html">
 
         <div class="manage_content_header">
@@ -297,7 +295,7 @@
 
 
 
-    <% if params[:error] != '' && params[:error] != nil && params[:error] != 'create_space' && params[:error] != 'update_organization' && params[:error] != 'add_user' && params[:error] != 'add_domain' %>
+    <% if params[:error] != '' && params[:error] != nil && params[:error] != 'create_space' && params[:error] && params[:error] != 'add_user' && params[:error] != 'add_domain' %>
         <div class="dark_background"> </div>
 
         <div class="modal" id="errors_modal">

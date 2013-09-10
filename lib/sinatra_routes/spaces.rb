@@ -34,21 +34,7 @@ module Uhuru::Webui
             puts ex
           end
 
-          if params[:error] == 'update_organization'
-            if params[:message] == 'name_size'
-              error_message = $errors['organization_error_name_size']
-            else
-              error_message = $errors['update_organization_error']
-            end
-          elsif params[:error] == 'delete_space'
-            error_message = $errors['delete_space_error']
-          elsif params[:error] == 'delete_user'
-            error_message = $errors['delete_user_error']
-          elsif params[:error] == 'delete_domain'
-            error_message = $errors['delete_domain_error']
-          else
-            error_message = ''
-          end
+          error_message = params[:error] if defined?(params[:error])
 
           erb :'user_pages/organization',
               {
@@ -87,15 +73,7 @@ module Uhuru::Webui
           auditors_list = org.read_auditors($config, params[:org_guid])
           domains_list = domain.read_domains()
 
-          if params[:error] == 'create_space'
-            if params[:message] == 'name_size'
-              error_message = $errors['space_error_name_size']
-            else
-              error_message = $errors['create_space_error']
-            end
-          else
-            error_message = ''
-          end
+          error_message = params[:error] if defined?(params[:error])
 
           begin
             if (org.is_organization_billable?(@this_guid))
@@ -154,24 +132,7 @@ module Uhuru::Webui
           domains_list = domain.read_domains(params[:org_guid], params[:space_guid])
 
           collections = app.read_collections
-
-          if params[:error] == 'update_space'
-            if params[:message] == 'name_size'
-              error_message = $errors['space_error_name_size']
-            else
-              error_message = $errors['update_space_error']
-            end
-          elsif params[:error] == 'delete_app'
-            error_message = $errors['delete_app_error']
-
-          elsif params[:error] == 'delete_service'
-            error_message = $errors['delete_service_error']
-
-          elsif params[:error] == 'delete_user'
-            error_message = $errors['delete_user_error']
-          else
-            error_message = ''
-          end
+          error_message = params[:error] if defined?(params[:error])
 
           erb :'user_pages/space',
               {
@@ -200,11 +161,11 @@ module Uhuru::Webui
           if params[:spaceName].size >= 4
             create = Library::Spaces.new(session[:token], $cf_target).create(params[:org_guid], params[:spaceName])
           else
-            redirect ORGANIZATIONS + "/#{params[:org_guid]}/spaces/create_space" + '?error=create_space&message=name_size'
+            redirect ORGANIZATIONS + "/#{params[:org_guid]}/spaces/create_space" + '?error=The space name is to short.'
           end
 
-          if create == 'error'
-            redirect ORGANIZATIONS + "/#{params[:org_guid]}/spaces/create_space" + '?error=create_space'
+          if defined?(create.message)
+            redirect ORGANIZATIONS + "/#{params[:org_guid]}/spaces/create_space" + "?error=#{create.description}"
           else
             redirect ORGANIZATIONS + "/#{params[:org_guid]}/spaces"
           end
@@ -213,8 +174,8 @@ module Uhuru::Webui
         app.post '/deleteSpace' do
           delete = Library::Spaces.new(session[:token], $cf_target).delete(params[:spaceGuid])
 
-          if delete == 'error'
-            redirect ORGANIZATIONS + "/#{params[:org_guid]}/spaces" + '?error=delete_space'
+          if defined?(delete.message)
+            redirect ORGANIZATIONS + "/#{params[:org_guid]}/spaces" + "?error=#{delete.description}"
           else
             redirect ORGANIZATIONS + "/#{params[:org_guid]}/spaces"
           end
@@ -224,11 +185,11 @@ module Uhuru::Webui
           if params[:modified_name].size >= 4
             update = Library::Spaces.new(session[:token], $cf_target).update(params[:modified_name], params[:current_space])
           else
-            redirect ORGANIZATIONS + "/#{params[:current_organization]}/spaces/#{params[:current_space]}/#{params[:current_tab]}" + '?error=update_space&message=name_size'
+            redirect ORGANIZATIONS + "/#{params[:current_organization]}/spaces/#{params[:current_space]}/#{params[:current_tab]}" + '?error=The space name is to short.'
           end
 
-          if update == 'error'
-            redirect ORGANIZATIONS + "/#{params[:current_organization]}/spaces/#{params[:current_space]}/#{params[:current_tab]}" + '?error=update_space'
+          if defined?(update.message)
+            redirect ORGANIZATIONS + "/#{params[:current_organization]}/spaces/#{params[:current_space]}/#{params[:current_tab]}" + "?error=#{update.description}"
           else
             redirect ORGANIZATIONS + "/#{params[:current_organization]}/spaces/#{params[:current_space]}/#{params[:current_tab]}"
           end

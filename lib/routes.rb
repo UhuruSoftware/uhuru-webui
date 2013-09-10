@@ -33,9 +33,7 @@ module Library
       return routes
 
     rescue Exception => e
-      puts e
-      puts 'read route error'
-      return 'error'
+      return e
     end
 
     # create is used: - to create a route (url) and map it to an app
@@ -57,20 +55,16 @@ module Library
           route.domain = domain
           route.space = space
           route.create!
-        rescue Exception => e
-          puts e
-          puts 'create route error'
-          return 'error'
-        end
 
+        rescue Exception => e
+          return e
+        end
       end
 
       app.add_route(route)
       return route
     rescue Exception => e
-      puts e
-      puts 'bind uri method error'
-      return 'error'
+      return e
     end
 
     def delete(route_guid)
@@ -78,9 +72,7 @@ module Library
       route.delete!
 
     rescue Exception => e
-      puts e
-      puts 'unbind url error'
-      return 'error'
+      return e
     end
 
     class Route

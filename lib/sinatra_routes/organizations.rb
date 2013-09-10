@@ -11,12 +11,7 @@ module Uhuru::Webui
           end
 
           organizations_list = Library::Organizations.new(session[:token], $cf_target).read_all
-
-          if params[:error] != '' && params[:error] != nil
-            error_message = $errors['delete_organization_error']
-          else
-            error_message = ''
-          end
+          error_message = params[:error] if defined?(params[:error])
 
           erb :'user_pages/organizations',
               {
@@ -35,16 +30,7 @@ module Uhuru::Webui
           end
 
           organizations_list = Library::Organizations.new(session[:token], $cf_target).read_all
-
-          if params[:error] != '' && params[:error] != nil
-            if params[:message] == 'name_size'
-              error_message = $errors['organization_error_name_size']
-            else
-              error_message = $errors['create_organization_error']
-            end
-          else
-            error_message = ''
-          end
+          error_message = params[:error] if defined?(params[:error])
 
           erb :'user_pages/organizations',
               {
@@ -62,11 +48,11 @@ module Uhuru::Webui
           if params[:orgName].size >= 4
             create = Library::Organizations.new(session[:token], $cf_target).create($config, params[:orgName], session[:user_guid])
           else
-            redirect ORGANIZATIONS_CREATE + '?error=create_organization&message=name_size'
+            redirect ORGANIZATIONS_CREATE + '?error=The name is too short (min. 4 characters)'
           end
 
-          if create == 'error'
-            redirect ORGANIZATIONS_CREATE + '?error=create_organization'
+          if defined?(create.message)
+            redirect ORGANIZATIONS_CREATE + "?error=#{create.description}"
           else
             redirect ORGANIZATIONS
           end
@@ -75,8 +61,8 @@ module Uhuru::Webui
         app.post '/deleteOrganization' do
           delete = Library::Organizations.new(session[:token], $cf_target).delete($config, params[:orgGuid])
 
-          if delete == 'error'
-            redirect ORGANIZATIONS + '?error=delete_organization'
+          if defined?(delete.message)
+            redirect ORGANIZATIONS + "?error=#{delete.description}"
           else
             redirect ORGANIZATIONS
           end
@@ -86,11 +72,11 @@ module Uhuru::Webui
           if params[:modified_name].size >= 4
             update =  Library::Organizations.new(session[:token], $cf_target).update(params[:modified_name], params[:current_organization])
           else
-            redirect redirect ORGANIZATIONS + "/#{params[:current_organization]}/#{params[:current_tab]}" + '?error=update_organization&message=name_size'
+            redirect redirect ORGANIZATIONS + "/#{params[:current_organization]}/#{params[:current_tab]}" + '?error=The name is too short (min. 4 characters)'
           end
 
-          if update == 'error'
-            redirect redirect ORGANIZATIONS + "/#{params[:current_organization]}/#{params[:current_tab]}" + '?error=update_organization'
+          if defined?(update.message)
+            redirect redirect ORGANIZATIONS + "/#{params[:current_organization]}/#{params[:current_tab]}" + "?error=#{update.description}"
           else
             redirect ORGANIZATIONS + "/#{params[:current_organization]}/#{params[:current_tab]}"
           end

@@ -22,11 +22,7 @@ module Uhuru::Webui
           auditors_list = org.read_auditors($config, params[:org_guid])
           domains_list = domain.read_domains(params[:org_guid])
 
-          if params[:error] == 'add_domain'
-            error_message = $errors['create_domain_error']
-          else
-            error_message = ''
-          end
+          error_message = params[:error] if defined?(params[:error])
 
           begin
             if (org.is_organization_billable?(@this_guid))
@@ -89,11 +85,7 @@ module Uhuru::Webui
 
           collections = app.read_collections
 
-          if params[:error] == 'add_domain'
-            error_message = $errors['create_domain_error']
-          else
-            error_message = ''
-          end
+          error_message = params[:error] if defined?(params[:error])
 
           begin
             if (org.is_organization_billable?(@this_guid))
@@ -138,11 +130,11 @@ module Uhuru::Webui
           wildcard = params[:domain_wildcard] ? true : false
           create = Library::Domains.new(session[:token], $cf_target).create(params[:domainName], params[:org_guid], wildcard, params[:space_guid])
 
-          if create == 'error'
+          if defined?(create.message)
             if params[:current_tab].to_s == 'space'
-              redirect ORGANIZATIONS + "/#{params[:org_guid]}/spaces/#{params[:space_guid]}/domains/map_domain/new" + '?error=add_domain'
+              redirect ORGANIZATIONS + "/#{params[:org_guid]}/spaces/#{params[:space_guid]}/domains/map_domain/new" + "?error=#{create.description}"
             else
-              redirect ORGANIZATIONS + "/#{params[:org_guid]}/domains/add_domains" + '?error=add_domain'
+              redirect ORGANIZATIONS + "/#{params[:org_guid]}/domains/add_domains" + "?error=#{create.description}"
             end
           else
             if params[:current_tab].to_s == 'space'
@@ -156,8 +148,8 @@ module Uhuru::Webui
         app.post '/deleteDomain' do
           delete = Library::Domains.new(session[:token], $cf_target).delete(params[:domainGuid])
 
-          if delete == 'error'
-            redirect ORGANIZATIONS + "/#{params[:org_guid]}/domains" + '?error=delete_domain'
+          if defined?(delete.message)
+            redirect ORGANIZATIONS + "/#{params[:org_guid]}/domains" + "?error=#{delete.description}"
           else
             redirect ORGANIZATIONS + "/#{params[:org_guid]}/domains"
           end
@@ -166,11 +158,11 @@ module Uhuru::Webui
         app.post '/unmapFromSpace' do
           unmap = Library::Domains.new(session[:token], $cf_target).unmap_domain(params[:domainGuid], nil, params[:current_space])
 
-          if unmap == 'error'
+          if defined?(unmap.message)
             if params[:current_tab].to_s == 'space'
-              redirect ORGANIZATIONS + "/#{params[:current_organization]}/spaces/#{params[:current_space]}/domains" + '?error=delete_domain'
+              redirect ORGANIZATIONS + "/#{params[:current_organization]}/spaces/#{params[:current_space]}/domains" + "?error=#{unmapp.description}"
             else
-              redirect ORGANIZATIONS + "/#{params[:current_organization]}/domains" + '?error=delete_domain'
+              redirect ORGANIZATIONS + "/#{params[:current_organization]}/domains" + "?error=#{unmapp.description}"
             end
           else
             if params[:current_tab].to_s == 'space'

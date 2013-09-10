@@ -95,9 +95,7 @@ module Library
       end
 
     rescue Exception => e
-      puts e
-      puts 'create org method error'
-      return 'error'
+      return e
     end
 
     def update(name, org_guid)
@@ -106,9 +104,7 @@ module Library
       org.update!
 
     rescue Exception => e
-      puts e
-      puts 'update org method error'
-      return 'error'
+      return e
     end
 
     def delete(config, org_guid)
@@ -135,9 +131,7 @@ module Library
 
       deleted
     rescue Exception => e
-      puts e
-      puts 'delete org method error'
-      return 'error'
+      return e
     end
 
     def read_spaces(org_guid)

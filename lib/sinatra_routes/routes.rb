@@ -30,14 +30,7 @@ module Uhuru::Webui
           auditors_list = space.read_auditors($config, params[:space_guid])
 
           collections = app.read_collections
-
-          if params[:error] == 'create_route'
-            error_message = $errors['create_route_error']
-          elsif params[:error] == 'delete_route'
-            error_message = $errors['delete_route_error']
-          else
-            error_message = ''
-          end
+          error_message = params[:error] if defined?(params[:error])
 
           erb :'user_pages/space',
               {
@@ -64,12 +57,11 @@ module Uhuru::Webui
         end
 
 
-
         app.post '/createRoute' do
           create = Library::Routes.new(session[:token], $cf_target).create(params[:appName], params[:current_space], params[:domain_guid], params[:host])
 
-          if create == 'error'
-            redirect ORGANIZATIONS + "/#{params[:current_organization]}/spaces/#{params[:current_space]}/#{params[:current_tab]}/add_route/new" + '?error=create_route'
+          if defined?(create.message)
+            redirect ORGANIZATIONS + "/#{params[:current_organization]}/spaces/#{params[:current_space]}/#{params[:current_tab]}/add_route/new" + "?error=#{create.description}"
           else
             redirect ORGANIZATIONS + "/#{params[:current_organization]}/spaces/#{params[:current_space]}/#{params[:current_tab]}"
           end
@@ -78,8 +70,8 @@ module Uhuru::Webui
         app.post '/deleteRoute' do
           delete = Library::Routes.new(session[:token], $cf_target).delete(params[:routeGuid])
 
-          if delete == 'error'
-            redirect ORGANIZATIONS + "/#{params[:current_organization]}/spaces/#{params[:current_space]}/#{params[:current_tab]}" + '?error=delete_route'
+          if defined?(delete.message)
+            redirect ORGANIZATIONS + "/#{params[:current_organization]}/spaces/#{params[:current_space]}/#{params[:current_tab]}" + "?error=#{delete.description}"
           else
             redirect ORGANIZATIONS + "/#{params[:current_organization]}/spaces/#{params[:current_space]}/#{params[:current_tab]}"
           end

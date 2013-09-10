@@ -30,61 +30,66 @@ class Applications
 
       unless !plan
         app_services.each do |service|
-          service_db_name = ServiceInstances.new(@client.base.token, @client.target).create_service_instance(service[:name], space_guid, plan, service[:type])
+          begin
+            service_db_name = ServiceInstances.new(@client.base.token, @client.target).create_service_instance(service[:name], space_guid, plan, service[:type])
+          rescue Exception => e
+            return e
+          end
+
           app = @client.apps.find { |a| a.name == name }
-          app.bind(service_db_name)
+
+          begin
+            app.bind(service_db_name)
+          rescue Exception => e
+            return e
+          end
         end
       end
 
       domain = @client.domains.find { |d|
         d.name == domain_name
       }
-      Library::Routes.new(@client.base.token, @client.target).create(name, space_guid, domain.guid, 'test_host_name')
 
-      new_app.start!
+      begin
+        Library::Routes.new(@client.base.token, @client.target).create(name, space_guid, domain.guid, 'test_host_name')
+      rescue Exception => e
+        return route
+      end
+      begin
+        new_app.start!
+      rescue Exception => e
+        return e
+      end
     end
 
   rescue Exception => e
-    puts e.message
-    puts e.backtrace
-    puts 'create app method error'
-    return 'error'
+    return e
   end
 
   def start_app(app_name)
     app = @client.apps.find { |a| a.name == app_name }
-
     app.start!
 
   rescue Exception => e
-    puts e
-    puts 'start app method error'
-    return 'error'
+    return e
   end
 
   def stop_app(app_name)
     app = @client.apps.find { |a| a.name == app_name }
-
     app.stop!
 
   rescue Exception => e
-    puts e
-    puts 'stop app method error'
-    return 'error'
+    return e
   end
 
   def update(app_name, instances, memory)
     app = @client.apps.find { |a| a.name == app_name }
-
     app.total_instances = instances
     app.memory = memory
-
     app.update!
 
   rescue Exception => e
-    puts e
-    puts 'update app method error'
-    return 'error'
+    return e
   end
 
   def delete(app_name)
@@ -101,48 +106,37 @@ class Applications
     end
 
   rescue Exception => e
-    puts e
-    puts 'delete app method error'
-    return 'error'
+    return e
   end
 
   def bind_app_services(app_name, service_instance_name)
     app = @client.apps.find { |a| a.name == app_name }
     service_instance = @client.service_instances.find { |s| s.name == service_instance_name }
-
     service_binding = @client.service_binding
     service_binding.app = app
     service_binding.service_instance = service_instance
-
     app.bind(service_instance)
 
   rescue Exception => e
-    puts e
-    puts 'bind service method error'
-    return 'error'
+    return e
   end
 
   def unbind_app_services(app_name, service_instance_name)
     app = @client.apps.find { |a| a.name == app_name }
     service_instance = @client.service_instances.find { |s| s.name == service_instance_name }
-
     app.unbind(service_instance)
 
   rescue Exception => e
-    puts e
-    puts 'unbind service method error'
-    return 'error'
+    return e
   end
 
   def unbind_app_url(app_name, url)
     app = @client.apps.find { |a| a.name == app_name }
     route = @client.routes.find { |r| r.host + '.' + r.domain.name == url }
-
     app.remove_route(route)
+
   rescue Exception => e
-    puts e
-    puts 'unbind uri method error'
-    return 'error'
+    return e
   end
 
   class Application
