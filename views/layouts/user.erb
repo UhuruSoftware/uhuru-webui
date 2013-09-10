@@ -4,14 +4,15 @@
 
     <head>
         <title>
+            <% site_tab = $config[:webui][:site_tab] || 'Uhuru AppCloud' %>
             <% if defined?(organization_name) %>
                 <% if defined?(space_name) %>
-                    <%= $site_tab + '-' + space_name %>
+                    <%= site_tab + '-' + space_name %>
                 <% else %>
-                    <%= $site_tab + '-' + organization_name %>
+                    <%= site_tab + '-' + organization_name %>
                 <% end %>
             <% else %>
-                <%= $site_tab %>
+                <%= site_tab %>
             <% end %>
         </title>
         <link rel="stylesheet" type="text/css" href="<%= request.base_url %>/css/Site.css"/>

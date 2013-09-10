@@ -241,6 +241,16 @@ $('#logout_key').click(function(){
 
 
 
+var cancel_error_modal = function()
+{
+    $('.dark_background_error').hide(200);
+    $('#errors_modal').hide(200);
+}
+
+
+$('.button_error_cancel').click(cancel_error_modal);
+
+
 
 
 

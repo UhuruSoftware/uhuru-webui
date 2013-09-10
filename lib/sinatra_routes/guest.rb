@@ -7,7 +7,6 @@ module Uhuru::Webui
 
         app.get INDEX do
           session[:login_] = false
-          $site_tab = $config[:webui][:site_tab]
 
           erb :'guest_pages/index',
               {

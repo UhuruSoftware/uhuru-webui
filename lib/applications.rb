@@ -32,16 +32,18 @@ class Applications
         app_services.each do |service|
           begin
             service_db_name = ServiceInstances.new(@client.base.token, @client.target).create_service_instance(service[:name], space_guid, plan, service[:type])
-          rescue Exception => e
-            return e
+          rescue
+            error = AppError.new('service error', 'Could not create service for this app, create manually.')
+            return error
           end
 
           app = @client.apps.find { |a| a.name == name }
 
           begin
             app.bind(service_db_name)
-          rescue Exception => e
-            return e
+          rescue
+            error = AppError.new('bind error', 'Could not bind the app to the service(s).')
+            return error
           end
         end
       end
@@ -52,13 +54,15 @@ class Applications
 
       begin
         Library::Routes.new(@client.base.token, @client.target).create(name, space_guid, domain.guid, 'test_host_name')
-      rescue Exception => e
-        return route
+      rescue
+        error = AppError.new('route error', 'Could not map a route to this app, map it manually.')
+        return error
       end
       begin
         new_app.start!
-      rescue Exception => e
-        return e
+      rescue
+        error = AppError.new('startapp error', 'Could not start the app, start it manually.')
+        return error
       end
     end
 
@@ -159,6 +163,15 @@ class Applications
 
     def initialize(url)
       @url = url
+    end
+  end
+
+  class AppError
+    attr_reader :message, :description
+
+    def initialize(message, description)
+      @message = message
+      @description = description
     end
   end
 
