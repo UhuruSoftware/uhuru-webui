@@ -91,7 +91,97 @@ class Uhuru::Webui::Config < VCAP::Config
           :auth_token                     => String,
           :product_handle                 => String,
           :division_factor                => Integer
+      },
+
+      :monitoring => {
+          :reports => {
+             :half_of_day => {
+                  :resolution             =>Integer,
+                  :resolution_unit        =>String,
+                  :sample_count           =>Integer
+             },
+             :last_day => {
+                 :resolution              =>Integer,
+                 :resolution_unit         =>String,
+                 :sample_count            =>Integer
+             },
+             :last_week => {
+                  :resolution             =>Integer,
+                  :resolution_unit        =>String,
+                  :sample_count           =>Integer
+              },
+             :last_month => {
+                  :resolution             =>Integer,
+                  :resolution_unit        =>String,
+                  :sample_count           =>Integer
+              },
+             :last_year => {
+                 :resolution              =>Integer,
+                 :resolution_unit         =>String,
+                 :sample_count            =>Integer
+             }
+          },
+          :vmc_executable_path            =>String,
+          :cloud_user                     =>String,
+          :cloud_password                 =>String,
+          :default_org                    =>String,
+          :default_space                  =>String,
+          :apps_domain                    =>Array,
+          :email_to                       =>String,
+          :sleep_after_app_push           =>Integer,
+          :pause_after_each_app           =>Integer,
+          :database => {
+            :database                     =>String,
+            :host                         =>String,
+            :port                         =>Integer,
+            :encoding                     =>String,
+            :username                     =>String,
+            optional(:password)           =>String,
+            :adapter                      =>String,
+            :timeout                      =>Integer,
+          },
+          :components => {
+          :deas                           =>Array,
+          :services                       =>Array,
+          },
+          :buildpacks => {
+            :dotNet                       =>String,
+            :java                         =>String,
+            :nodejs                       =>String,
+            :php                          =>String,
+            :ruby                         =>String
+          }
       }
+
+    #components:
+    #       deas:
+    #        - name: "dea"
+    #    - name: "win_dea"
+    #   services:
+    #        - name: mysql_node
+    #      token: ec9743a4-6587-4356-8b9e-72d66b36a7f4
+    #    - name: mongodb_node
+    #      token: ec9743a4-6587-4356-8b9e-72d66b36a7f4
+    #    - name: redis_node
+    #      token: ec9743a4-6587-4356-8b9e-72d66b36a7f4
+    #    - name: redis_node
+    #      token: ec9743a4-6587-4356-8b9e-72d66b36a7f4
+    #    - name: rabbit_node
+    #      token: ec9743a4-6587-4356-8b9e-72d66b36a7f4
+    #    - name: postgresql_node
+    #      token: ec9743a4-6587-4356-8b9e-72d66b36a7f4
+    #    - name: uhuru_tunnel_node
+    #      token: ec9743a4-6587-4356-8b9e-72d66b36a7f4
+    #    - name: uhurufs_node
+    #      token: ec9743a4-6587-4356-8b9e-72d66b36a7f4
+    #    - name: mssql_node
+    #      token: ec9743a4-6587-4356-8b9e-72d66b36a7f4
+    #buildpacks:
+    #    dotNet: https://github.com/stefanschneider/dummy-buildpack.git
+    #java: https://github.com/cloudfoundry/java-buildpack
+    #nodejs: https://github.com/cloudfoundry/heroku-buildpack-nodejs
+    #php: https://github.com/heroku/heroku-buildpack-php
+    #ruby: https://github.com/cloudfoundry/heroku-buildpack-ruby
     }
   end
 

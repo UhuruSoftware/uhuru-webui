@@ -89,7 +89,6 @@ def configure
 
   @cloud_target = $config[:cloud_controller_url]
   @domain = $config[:monitoring][:apps_domain][0]
-  #@domain = @cloud_target.reverse.split('.', 3).collect(&:reverse)[0..1].reverse.join(".")
   @app_dir = File.expand_path("../../test_apps", __FILE__)
   @manifest_dir = File.join(@app_dir, 'manifests')
 
@@ -141,14 +140,14 @@ def send_email(subject, body)
 end
 
 def cf_target
-  %x(#{@cf} -q target #{@cloud_target})
+  %x(#{@cf} --script target #{@cloud_target})
   if $?.exitstatus != 0
     raise Exception, "Target is unavailable"
   end
 end
 
 def cf_login
-  login = %x(#{@cf} -q login #{@username} --password #{@password} -o #{@default_org} -s #{@default_space})
+  login = %x(#{@cf} --script login #{@username} --password #{@password} -o #{@default_org} -s #{@default_space})
   if login.downcase.include?("error") || login.downcase.include?("problem")
     logger.error("Unable to login in vmc. vmc error: #{login.strip}")
     raise Exception, "Unable to login in vmc. vmc error: #{login.strip}"
@@ -170,9 +169,10 @@ end
 
 def get_buildpacks
   buildpacks = []
+  existing_dea = @components[:deas].map {|dea| dea["name"]}
   $config[:monitoring][:buildpacks].each do |k, v|
-    buildpacks << v.to_s if k.to_s != "dotNet" && @components[:dea] > 0
-    buildpacks << v.to_s if k.to_s == "dotNet" && @components[:win_dea] > 0
+    buildpacks << v.to_s if k.to_s != "dotNet" && existing_dea.include?("dea")
+    buildpacks << v.to_s if k.to_s == "dotNet" && existing_dea.include?("win_dea")
   end
 
   buildpacks
@@ -180,12 +180,10 @@ end
 
 def get_services
   services = []
-  @components.select do |k, v|
-    if ((!k.in? [:dea, :win_dea, :uhuru_tunnel]) && v > 0)
-      service = k.to_s
+  @components[:services].each do |s|
+      service = s["name"]
       service.slice!("_node")
       services << service
-    end
   end
   return services
 end
@@ -280,7 +278,7 @@ def main_apps
   app_names = @apps_to_monitor
   faulty_apps = []
   mutex = Mutex.new
-  # db_mutex = Mutex.new
+  db_mutex = Mutex.new
   error_mail_body = String.new
   threads = []
 
@@ -340,26 +338,26 @@ def main_apps
           } if push_success * http_status == 0
         }
 
-        #db_mutex.synchronize {
-        #  monit = Monitoring.new
-        #  monit.name = app_new_name
-        #  monit.description = app_description
-        #  monit.push_output_log = push_output
-        #  monit.timestamp = DateTime.current.new_offset(Rational(0, 24))
-        #  monit.push_status = push_success
-        #  monit.http_code = response_code
-        #  monit.latency = latency
-        #  monit.duration = push_duration.real.round(2)
-        #  monit.framework = framework
-        #  monit.runtime = ""
-        #  monit.databases = databases.join(", ")
-        #  monit.memory_usage = total_mem
-        #  monit.http_status = http_status
-        #  monit.url_content = url_content
-        #  monit.save!
-        #
-        #  ActiveRecord::Base.connection.close
-        #}
+        db_mutex.synchronize {
+          monit = Monitoring.new
+          monit.name = app_new_name
+          monit.description = app_description
+          monit.push_output_log = push_output
+          monit.timestamp = DateTime.current.new_offset(Rational(0, 24))
+          monit.push_status = push_success
+          monit.http_code = response_code
+          monit.latency = latency
+          monit.duration = push_duration.real.round(2)
+          monit.framework = framework
+          monit.runtime = ""
+          monit.databases = databases.join(", ")
+          monit.memory_usage = total_mem
+          monit.http_status = http_status
+          monit.url_content = url_content
+          monit.save!
+
+          ActiveRecord::Base.connection.close
+        }
       rescue => e
         logger.error("Error processing app #{app} - #{e.message}:#{e.backtrace}")
       end
@@ -567,7 +565,7 @@ def main
 
   configure
   logger.info("Monitoring started")
-  #initialize_activeresource
+  initialize_activeresource
 
   begin
     cf_target
@@ -581,7 +579,7 @@ def main
     raise
   end
 
-  #delete_all_apps_and_services
+  delete_all_apps_and_services
   main_apps
   #delete_all_apps_and_services
 
@@ -615,9 +613,5 @@ rescue => e
 end
 
 main
-
-
-
-
 
 
