@@ -30,13 +30,22 @@ a:<%= style %>
     font-style: normal;
 }
 
-/************************** ERROR MESSAGES ****************************/
+/************************** ERROR MESSAGES AND WARNINGS ****************************/
 .error
 {
     margin: 5px;
     border: 1px solid <%= design['error']['border-color'] %>;
     color: <%= design['error']['font-color'] %>;
     background-color: <%= design['error']['background-color'] %>;
+    padding: 5px;
+    text-align: center;
+}
+.warning
+{
+    margin: 5px;
+    border: 1px solid <%= design['warning']['border-color'] %>;
+    color: <%= design['warning']['font-color'] %>;
+    background-color: <%= design['warning']['background-color'] %>;
     padding: 5px;
     text-align: center;
 }
@@ -415,7 +424,7 @@ button.image.s<%= size %>.<%= image %>
 
 .modal
 {
-    position: absolute;
+    position: fixed;
     top: 130px;
     left: 50%;
     z-index: 200;
@@ -436,6 +445,10 @@ button.image.s<%= size %>.<%= image %>
 }
 
 .hide
+{
+    display: none;
+}
+.show
 {
     display: none;
 }

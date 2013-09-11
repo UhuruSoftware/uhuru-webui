@@ -38,7 +38,7 @@
 
       <div class="modal-footer">
         <span class="server_errors" id="create_service_failed"><%= error_message %></span>
-        <div class="button_case_create_organization_and_space">
+        <div>
             <a href="<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/spaces/#{current_space}/routes" %>" class="btn btn_right_create_organization_and_space cancel"><span class="line">| </span>Close </a>
             <input type="hidden" name="current_organization" value="<%= current_organization %>" />
             <input type="hidden" name="current_space" value="<%= current_space %>" />

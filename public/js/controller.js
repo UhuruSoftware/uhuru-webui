@@ -75,10 +75,10 @@ $('.tiped').bind({
 //
 
 
-var delete_organization = function()
+var delete_element = function()
 {
-    $('#org_guid').val($(this).attr("id"))
-    $('#this_organization_name').text($(this).attr("title"));
+    $('#selected_guid').val($(this).attr("id"))
+    $('#selected_name').text($(this).attr("title"));
 }
 var delete_space = function()
 {
@@ -106,12 +106,7 @@ var delete_route = function()
 }
 
 
-$('.delete-organization-button').click(delete_organization);
-$('.delete-space-button').click(delete_space);
-$('.delete-domain-button').click(delete_domain);
-$('.delete-app-button').click(delete_app);
-$('.delete-service-button').click(delete_service);
-$('.delete-route-button').click(delete_route);
+$('.tile.org .tile.top :button').click(delete_element);
 
 
 var delete_owner = function()

@@ -31,6 +31,10 @@ error:
   border-color: '#D8000C'
   background-color: '#FFBABA'
   font-color: '#D8000C'
+warning:
+  border-color: '#ff9200'
+  background-color: '#ffc373'
+  font-color: '#a63a00'
 
 button:
   border-color: '#cccccc'
@@ -163,12 +167,16 @@ modal:
     login:
       width: 350
     signup:
-      width: 350
+      width: 400
+    logout:
+      width: 320
     app-push:
       width: 250
     delete-confirmation:
-      width: 350
+      width: 500
     service-create:
+      width: 450
+    error-message:
       width: 450
 
 controls:

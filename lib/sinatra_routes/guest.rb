@@ -28,7 +28,7 @@ module Uhuru::Webui
                   :locals => {
                       :page_title => $config[:webui][:page_title],
                       :welcome_message => $config[:webui][:welcome_message],
-                      :error => error_message,
+                      :error_message => error_message,
                       :error_username => error_username,
                       :include_erb => :'user_pages/login'
                   }

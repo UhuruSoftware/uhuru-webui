@@ -1,27 +1,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>
-    <% if $site_tab != nil %>
-
-        <% if defined?(organization_name) %>
-            <% if defined?(space_name) %>
-                <%= $site_tab + '-' + space_name %>
-            <% else %>
-                <%= $site_tab + '-' + organization_name %>
-            <% end %>
-        <% else %>
-            <%= $site_tab %>
-        <% end %>
-
-    <% else %>
-        <%= $config[:default_domain][:site_tab] %>
-    <% end %>
-  </title>
+  <title><%= $config[:webui][:site_tab] || 'Uhuru AppCloud' %></title>
   <link rel="stylesheet" type="text/css" href="/css"/>
   <meta charset="utf-8" />
 </head>
-
 
 <body>
 
@@ -48,14 +31,6 @@
       <a href="<%= $config[:webui][:company_link] %>" target="_blank">COMPANY</a>
     </div>
 
-    <div class="modal hide">
-      <p id="logout_small_modal_paragraph">Are you sure you want to logout?</p> <br />
-      <div class="button_case_delete_organization_and_space">
-        <button type="button" class="btn btn_right_delete_organization_and_space toggle_logout_up cancel"><span class="line">| </span>No </button>
-        <a href="<%= Uhuru::Webui::SinatraRoutes::LOGOUT %>"><button type="button" style="margin-right: -16px;" class="btn btn_left_delete_organization_and_space logout_locked" value="Yes"><span class="line">| </span>Yes </button></a>
-      </div>
-    </div>
-
   </div>
 </div>
 
@@ -63,6 +38,17 @@
   <div id="content">
 
     <%= yield %>
+
+    <div class="modal logout hide">
+      <div class="modal_header">
+        <p>Are you sure you want to logout?</p> <br />
+      </div>
+
+      <div class="modal_footer">
+        <button type="button" class="cancel_button">Cancel</button>
+        <button onclick="window.location = '<%= Uhuru::Webui::SinatraRoutes::LOGOUT %>';">Logut</button>
+      </div>
+    </div>
 
   </div>
 </div>
@@ -87,15 +73,15 @@
     <ul id="footer-menu">
       <li><a href="<%= $config[:webui][:terms_of_services_link] %>">Terms of Service</a></li>
       <li><a href="<%= $config[:webui][:privacy_policy_link] %>">Privacy Policy</a></li>
-      <li class="last"><a href="<%= $config[:webui][:support_link] %>">Support</a></li>
+      <li><a href="<%= $config[:webui][:support_link] %>">Support</a></li>
     </ul>
   </div>
 </div>
 
 <script type="text/javascript" src="<%= request.base_url %>/js/jquery-1.5.js"></script>
-<!--<script type="text/javascript" src="<%= request.base_url %>/js/jquery_ui.js"></script>-->
+<script type="text/javascript" src="<%= request.base_url %>/js/jquery_ui.js"></script>
 <script type="text/javascript" src="<%= request.base_url %>/js/fadeIn.js"></script>
-<!--<script type="text/javascript" src="<%= request.base_url %>/js/controller.js"></script>-->
+<script type="text/javascript" src="<%= request.base_url %>/js/controller.js"></script>
 
 
 </body>

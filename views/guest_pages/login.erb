@@ -1,39 +1,34 @@
-
 <%= erb(:'guest_pages/index', :layout => false, :locals => {:page_title => page_title, :welcome_message => welcome_message}) %>
-
 
 <div class="modal login">
   <form action="/login" method="post">
+
     <div class="modal_header">
-      Login
+        Login
     </div>
 
     <div class="modal_content">
-
-      <p>
-        <div>Username</div>
-        <input type="text" id="id" name="username" autofocus="autofocus" value = "<%= error_username %>" autofocus />
-      </p>
-      <p>
-        <div>Password</div>
-        <input type="password" id="pass" name="password" />
-      </p>
-
-      <p>Forgot your password? Click <a href="#" class="index_links">here</a></p>
+        <div>Username</div><input type="text" name="username" value = "<%= error_username %>" autofocus="autofocus"/>
+        <br />
+        <div>Password</div><input type="password" name="password" />
+        <br />
+        <br />
+        <br />
+        <br />
     </div>
 
     <div class="modal_footer">
-      <% unless error.empty? %>
-          <div class="error"><%= error %></div>
-      <% end %>
+        <% unless error_message.nil? || error_message.empty? %>
+            <div class="error"><%= error_message %></div>
+        <% end %>
 
-      <div class="button_case_create_organization_and_space">
-        <a href="<%= Uhuru::Webui::SinatraRoutes::INDEX %>"><button type="button">Cancel</button></a>
-
-        <button type="submit" class="btn btn_left_create_organization_and_space login_unlocked"><span class="line">| </span>Login </button>
-      </div>
+        <div>
+            <button type="button" onclick="window.location = '<%= Uhuru::Webui::SinatraRoutes::INDEX %>';">Cancel</button>
+            <button type="submit">Login</button>
+        </div>
     </div>
+
   </form>
 </div>
 
-<div class="modal-background" />
+<div class="modal-background"></div>

@@ -1,9 +1,6 @@
-<div class="breadcrumb" xmlns="http://www.w3.org/1999/html">
+<div class="breadcrumb" xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html">
   <span class="breadcrumb_element">...&nbsp;/&nbsp;</span><a href="<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS %>" class="breadcrumb_link">organizations</a>
 </div>
-
-
-
 
 <div class="sections" id="organizations_page">
     <div class="manage_content_header">
@@ -13,78 +10,72 @@
         <a href="<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS_CREATE %>" class="plus_sign_32 plus_sign_organization" id="create_organization_btn" value=""></a>
     </div>
 
-        <% organizations_list.each do |org| %>
+    <% organizations_list.each do |org| %>
 
+      <div class="tile org">
 
-          <div class="tile org">
+        <div class="tile top">
+          <a class="tile_action" href="<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{org.guid}/spaces" %>" title="<%= org.name %>">
+                <%= org.name %>
+          </a>
 
-            <div class="tile top">
-              <a class="tile_action" href="<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{org.guid}/spaces" %>" class="link_tiles_org" title="<%= org.name %>">
-                    <%= org.name %>
-              </a>
+          <button id="<%= org.guid %>" class="image s24px trash" title="Delete '<%= org.name %>'"></button>
+        </div>
 
-              <button id="delete-organization-button" class="image s24px trash" title="Delete '<%= org.name %>'"></button>
+        <div class="tile bottom">
+          <div class="tile left">
+            <div class="tile_action">
+              <%= org.members_count %>
             </div>
-
-            <div class="tile bottom">
-              <div class="tile left">
-                <div class="tile_action">
-                  <%= org.members_count %>
-                </div>
-                 <div class="tile_info">members</div>
-              </div>
-
-              <div class="tile right">
-                <div class="tile_action">
-                  $<%= org.cost %>
-                </div>
-                <div class="tile_info">monthly</div>
-              </div>
-            </div>
+            <div class="tile_info">members</div>
           </div>
-        <% end %>
 
-      <div class="div_ul_shape"></div>
+          <div class="tile right">
+            <div class="tile_action">
+              $<%= org.cost %>
+            </div>
+            <div class="tile_info">monthly</div>
+          </div>
+        </div>
+      </div>
+
+    <% end %>
 </div>
 
-
-
-<div class="modal hide" id="delete_organization_modal">
+<div class="modal delete-confirmation hide">
     <div class="modal_header">
         <a href="#" class="close"></a>
-        <h3>Delete organization</h3>
+        <h3 id="selected_name"></h3>
     </div>
 
     <div class="modal_content">
         <p>
-            Are you sure you want to delete the organization "<span id="this_organization_name"></span>"?
+            Are you sure you want to delete this organization?
         </p>
-        <p>
-            <strong>
-                WARNING! All Spaces, applications and services in this organization will be deleted! This action cannot be reversed.
-            </strong>
+        <p class="warning">
+          WARNING: All contents of this organization will be removed! This action cannot be reversed.
         </p>
+        <br />
     </div>
 
     <div class="modal_footer">
-        <span class="server_errors" id="delete_organization_failed"><%= error_message %></span>
-        <p class="hidden_modal_messages" id="span_delete_organization">Deleting organization...</p>
+        <% unless error_message.nil? || error_message.empty? %>
+            <div class="error"> <%= error_message %> </div>
+        <% end %>
+        <p class="hide">Deleting organization...</p>
 
-        <div class="button_case_delete_organization_and_space">
-            <a href="#" class="btn btn_right_delete_organization_and_space cancel" id="cancel_btn_delete_organization"><span class="line">| </span>Cancel</a>
-            <form action="/deleteOrganization" method="post">
-                <button type="submit" value="Delete" class="btn btn_left_delete_organization_and_space ok" id="btn_delete_organization"><span class="line">| </span>Delete </button>
-                <input type="hidden" id="org_guid" name="orgGuid" class="" />
+        <div>
+          <form action="/deleteOrganization" method="post">
+                <button type="button" class="cancel_button">Cancel</button>
+                <button type="submit" value="Delete">Delete</button>
+                <input type="hidden" id="selected_guid" name="orgGuid" />
             </form>
         </div>
     </div>
 </div>
 
-
-<% if params[:error] != '' && params[:error] != nil && params[:error] != 'create_organization' %>
-    <div class="modal-background"> </div>
-
-    <div class="modal" id="errors_modal">
+<% if params[:error] != '' && params[:error] != nil %>
+    <div class="modal error-message" id="errors_modal">
       <div class="modal_header">
         <h3>Error</h3>
       </div>
@@ -93,20 +84,19 @@
         <p>
           An error has occurred:
         </p>
-        <p class="red_error">
-          <%= error_message %>
-        </p>
+        <% unless error_message.nil? || error_message.empty? %>
+            <div class="error"> <%= error_message %> </div>
+        <% end %>
       </div>
 
       <div class="modal_footer">
-        <div class="button_case_delete_organization_and_space">
-          <a  href="<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS %>" class="btn btn_right_delete_organization_and_space cancel btn_cancel_user"><span class="line">| </span>Close </a>
-        </div>
+          <button type="button" onclick="window.location = '<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS %>';">Cancel</button>
       </div>
     </div>
 <% end %>
 
-
 <% if defined?(include_erb) && include_erb != nil %>
     <%= erb(include_erb, :layout => false, :locals => { :error_message => error_message }) %>
 <% end %>
+
+<div class="modal-background" style="display: none;"></div>
