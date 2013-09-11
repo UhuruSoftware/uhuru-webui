@@ -1,5 +1,5 @@
 pid_filename: /tmp/uhuru_webui.pid
-local_route: 8.8.8.8
+local_route: 10.0.0.1
 port: 4567
 dev-mode: true
 

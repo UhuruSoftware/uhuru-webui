@@ -67,5 +67,23 @@ module Uhuru::Webui
       }
     end
 
+    get '/css' do
+
+      design = YAML.load_file(File.expand_path('../../config/design.yml', __FILE__))
+
+      content_type 'text/css', :charset => 'utf-8'
+
+      erb :'design/site.css', {
+
+      :locals =>
+              {
+                  :design => design
+              }
+      }
+    end
+
+    get '/design' do
+      erb :'design/design_test.html'
+    end
   end
 end

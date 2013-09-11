@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>AppCloud NG Design</title>
+  <link rel="stylesheet" type="text/css" href="/css"/>
+</head>
+<body>
+
+<div id="header_container">
+  <div id="header">
+    <h1>Uhuru AppCloud</h1>
+
+    <div id="login_control">
+      <a href="#">
+        <button id="login_button" class="btn login_key" >
+          <img src="/images/login_key.png" />
+          <span>Login</span>
+        </button>
+      </a>
+    </div>  </div>
+</div>
+
+<div id="container">
+  <div id="content">
+
+    <div class="tab_menu">
+      <ul>
+        <li class="selected">Meniu 1</li>
+        <li>Meniu doi</li>
+        <li>Trei (9)</li>
+      </ul>
+    </div>
+
+    <div class="tile app">
+      <div class="tile top">
+
+      </div>
+
+      <div class="tile bottom">
+        <div class="tile left">
+
+        </div>
+
+        <div class="tile right">
+
+        </div>
+      </div>
+    </div>
+
+    <div class="tile app">
+      <div class="tile top">
+
+      </div>
+
+      <div class="tile bottom">
+        <div class="tile left">
+
+        </div>
+
+        <div class="tile right">
+
+        </div>
+      </div>
+    </div>
+
+    <div class="tile app">
+      <div class="tile top">
+
+        <a class="tile_action" href="#">
+        <div class="ellipsis"><div>
+          asdhajksdasdhjajshdbasdjhbasjkdhb ajshdb ajkshdb akjshbd kajshbd kajshbd akjhsdb
+        </div></div>
+        </a>
+        <!--<a class="tile_action ellipsis">askdlnaskdjn aksdjn asdiuasd niasndalksjdn aslkjdn askldjn asdasd asd asd asd</a>-->
+
+      </div>
+
+      <div class="tile bottom">
+        <div class="tile left">
+
+        </div>
+
+        <div class="tile right">
+
+        </div>
+      </div>
+    </div>
+
+    <div class="tile app">
+      <div class="tile top">
+        <a class="tile_action">askdlnaskdjn aksdjn asdiuasd niasndalksjdn aslkjdn askldjn</a>
+
+      </div>
+
+      <div class="tile bottom">
+        <div class="tile left">
+
+        </div>
+
+        <div class="tile right">
+
+        </div>
+      </div>
+    </div>
+
+    <div class="tile app">
+      <div class="tile top">
+        <a class="tile_action">askdlnaskdjn aksdjn asdiuasd niasndalksjdn aslkjdn askldjn</a>
+      </div>
+
+      <div class="tile bottom">
+        <div class="tile left">
+
+        </div>
+
+        <div class="tile right">
+
+        </div>
+      </div>
+    </div>
+
+
+    <!--<div class="modal-background">-->
+    <!--</div>-->
+
+    <div class="modal login">
+      <div class="modal_header">
+        Login
+      </div>
+
+      <div class="modal_content">
+        <div>Username</div><input type="text" value="test">
+        <br/>
+        <div>Password</div><input type="text" value="test">
+
+        <br>
+        <br>
+
+        <button class="image s24px trash" />
+      </div>
+
+      <div class="modal_footer">
+        <button>Ok</button>
+        <button onclick="alert('asd')">Cancel</button>
+      </div>
+    </div>
+    <p>
+      Give us feedback on your experience with the App Cloud beta and get 1 year free premium hosting when we go commercial.
+      Click <a href="<%= $config[:webui][:guest_feedback_link] %>" class="index_links">here</a> for more details
+    </p>
+
+
+  </div>
+</div>
+
+<div id="footer_container">
+  <div id="footer">
+
+    <div id="footer_links">
+      <a href="<%= $config[:webui][:twitter_link] %>" class="icon-social twitter"></a>
+      <a href="<%= $config[:webui][:facebook_link] %>" class="icon-social facebook"></a>
+    </div>
+
+    <div id="copyright">
+        &copy; 2013 Uhuru Software. All rights reserved.
+    </div>
+
+    <ul id="footer-menu">
+      <li><a href="<%= $config[:webui][:terms_of_services_link] %>">Terms of Service</a></li>
+      <li><a href="<%= $config[:webui][:privacy_policy_link] %>">Privacy Policy</a></li>
+      <li class="last"><a href="<%= $config[:webui][:support_link] %>">Support</a></li>
+    </ul>
+  </div>
+</div>
+</body>
+</html>

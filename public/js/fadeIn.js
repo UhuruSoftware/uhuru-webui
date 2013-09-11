@@ -9,6 +9,7 @@ $('#space_page').fadeIn(400);
 $(function(){
 
 var delete_organization_modal = function(){
+    alert("asd");
     $('#screen').css({	"display": "block", opacity: 0.7, "width": "10000px", "height": "10000px"});
     $('body').css({"overflow":"hidden"});
     $('#delete_organization_modal').fadeIn(600);
@@ -65,15 +66,15 @@ var delete_user = function(){
 }
 
 
-$('.delete-organization-button').click(delete_organization_modal);
-$('.delete-space-button').click(delete_space_modal);
-$('.delete-domain-button').click(delete_domain_modal);
-$('.delete-app-button').click(delete_app);
-$('.delete-service-button').click(delete_service);
-$('.delete-route-button').click(delete_route);
-$('.delete-user-button').click(delete_user);
-$('.delete_this_organization').click(delete_organization_modal);
-$('.delete_this_space').click(delete_space_modal);
+$('.tile.org .tile.top :button').click(delete_organization_modal);
+
+$('#delete-space-button').click(delete_space_modal);
+$('#delete-domain-button').click(delete_domain_modal);
+$('#delete-app-button').click(delete_app);
+$('#delete-service-button').click(delete_service);
+$('#delete-route-button').click(delete_route);
+$('#delete-user-button').click(delete_user);
+$('#delete_this_space').click(delete_space_modal);
 
 
 

@@ -1,42 +1,44 @@
-<div class="dark_background"> </div>
 
 <%= erb(:'guest_pages/index', :layout => false, :locals => {:page_title => page_title, :welcome_message => welcome_message}) %>
 
-<div class="modal hide" id="signup_modal">
+
+
+<div class="modal signup">
   <script type="text/javascript">
     var RecaptchaOptions = {
         theme : 'blackglass'
     };
-</script>
+  </script>
+
     <form action="/signup" method="post" id="sign_up">
-        <div class="modal-header">
+        <div class="modal_header">
             <a href="<%= Uhuru::Webui::SinatraRoutes::INDEX %>" class="close"></a>
-            <h3>Sign Up</h3>
+            Sign Up
         </div>
 
-        <div class="modal-body" id="signup_modal_content">
+        <div class="modal_content" id="signup_modal_content">
             <p>
-                <label for="email">e-mail: </label>
+                <div>E-mail</div>
                 <input type="text" id="email" name="email" class="modal_input_box" placeholder="... email" value = "<%= error_username %>" autofocus />
             </p>
 
             <p>
-                <label for="password">Password: </label>
+                <div>Password</div>
                 <input type="password" id="password" name="password" class="modal_input_box" />
             </p>
 
             <p>
-                <label for="confirm_password">Confirm Password: </label>
+                <div>Confirm Password</div>
                 <input type="password" id="confirm_password" name="confirm_password" class="modal_input_box" />
             </p>
 
             <p>
-                <label for="first_name">First Name: </label>
+                <div>First Name</div>
                 <input type="text" id="first_name" name="first_name" class="modal_input_box" placeholder="... first name" value = "<%= error_first_name %>" />
             </p>
 
             <p>
-                <label for="last_name">Last Name: </label>
+                <div for="last_name">Last Name: </div>
                 <input type="text" id="last_name" name="last_name" class="modal_input_box" placeholder="... last name" value = "<%= error_last_name %>" />
             </p>
 
@@ -44,14 +46,18 @@
             <%= recaptcha_tag :challenge, :language => :en %>
         </div>
 
-        <div class="modal-footer sign_up_footer_modal">
-            <span class="server_errors" id="sign_up_failed"><%= error_message %></span>
-            <span id="show_modal_errors"></span>
+        <div class="modal_footer">
+          <% unless error_message.empty? %>
+              <div class="error"><%= error_message %></div>
+          <% end %>
 
             <div class="button_case_create_organization_and_space">
-                <a href="<%= Uhuru::Webui::SinatraRoutes::INDEX %>" class="btn btn_right_create_organization_and_space cancel"><span class="line">| </span>Cancel</a>
-                <button type="submit" class="btn btn-success btn_left_create_organization_and_space signup_preferences submit_form"><span class="line">| </span>Sign up </button>
+                <a href="<%= Uhuru::Webui::SinatraRoutes::INDEX %>"><button type="button">Cancel</button></a>
+
+                <button type="submit">Sign up</button>
             </div>
         </div>
     </form>
 </div>
+
+<div class="modal-background" />

@@ -1,0 +1,178 @@
+---
+
+background-color: '#FFFFFF'
+font-family: 'QuickSand'
+font-color: '#000000'
+link:
+  link: '#FF00FF'
+  visited: '#00F3F9'
+  hover: '#326544'
+  active: '#098786'
+
+header:
+  background-color: '#000000'
+  font-color: '#FFFFFF'
+  link:
+    link: '#FF00FF'
+    visited: '#00F3F9'
+    hover: '#326544'
+    active: '#098786'
+
+footer:
+  background-color: '#000000'
+  font-color: '#FFFFFF'
+  link:
+    link: '#FF00FF'
+    visited: '#00F3F9'
+    hover: '#326544'
+    active: '#098786'
+
+error:
+  border-color: '#D8000C'
+  background-color: '#FFBABA'
+  font-color: '#D8000C'
+
+button:
+  border-color: '#cccccc'
+  background-color: '#000000'
+  font-color: '#FFFFFF'
+  hover:
+    border-color: '#000000'
+    background-color: '#cccccc'
+    font-color: '#FFFFFF'
+
+image-buttons:
+  24px:
+    close: 'x.png'
+    trash: 'trash_24px.png'
+    edit: 'edit_24px.png'
+    plus: 'plus_24px.png'
+    minus: 'minus_24px.png'
+    start: 'play_24px.png'
+    stop: 'pause_24px.png'
+  32px:
+    money: 'money_sign_32.png'
+    home: 'house.png'
+    plus: 'plus_sign_32.png'
+    edit: 'edit_sign_32.png'
+    trash: 'trash_sign_32.png'
+    undo: 'undo_sign_32.png'
+    gear: 'gear_32px.png'
+    key: 'key_32px.png'
+    money: 'money_bag_sign_32.png'
+
+tiles:
+  app:
+    top:
+      border-color: '#cccccc'
+      background-color: '#000000'
+      font-color: '#FFFFFF'
+      image-link: '/images/erlang_icon.png'
+      link:
+        link: '#FF00FF'
+        visited: '#00F3F9'
+        hover: '#326544'
+        active: '#098786'
+    left:
+      border-color: '#cccccc'
+      background-color: '#000000'
+      font-color: '#FFFFFF'
+      image-link: '/images/erlang_icon.png'
+      link:
+        link: '#FF00FF'
+        visited: '#00F3F9'
+        hover: '#326544'
+        active: '#098786'
+    right:
+      border-color: '#cccccc'
+      background-color: '#000000'
+      font-color: '#FFFFFF'
+      image-link: '/images/erlang_icon.png'
+      link:
+        link: '#FF00FF'
+        visited: '#00F3F9'
+        hover: '#326544'
+        active: '#098786'
+  org: # http://colorschemedesigner.com/#4L42do0ssxQGE
+    top:
+      border-color: '#C075DE'
+      background-color: '#782A97'
+      font-color: '#FFFFFF'
+      #image-link: '/images/erlang_icon.png'
+      link:
+        link: '#FFFFFF'
+        visited: '#FFFFFF'
+        hover: '#FFFFFF'
+        active: '#FFFFFF'
+    left:
+      border-color: '#F37B89'
+      background-color: '#D93649'
+      font-color: '#FFFFFF'
+      image-link: '/images/users_32px.png'
+      link:
+        link: '#FF00FF'
+        visited: '#00F3F9'
+        hover: '#326544'
+        active: '#098786'
+    right:
+      border-color: '#8FEB77'
+      background-color: '#4DBF30'
+      font-color: '#FFFFFF'
+      image-link: '/images/money_bag_32px.png'
+      link:
+        link: '#000000'
+        visited: '#000000'
+        hover: '#000000'
+        active: '#000000'
+
+tab_menu:
+  border-color: '#327487'
+  font-color: '#828374'
+  link:
+    link: '#FF00FF'
+    visited: '#00F3F9'
+    hover: '#326544'
+    active: '#098786'
+
+modal:
+  footer:
+      background-color: '#000000'
+      font-color: '#FFFFFF'
+      link:
+        link: '#FF00FF'
+        visited: '#00F3F9'
+        hover: '#326544'
+        active: '#098786'
+  header:
+      background-color: '#897668'
+      font-color: '#FFFFFF'
+      link:
+        link: '#FF00FF'
+        visited: '#00F3F9'
+        hover: '#326544'
+        active: '#098786'
+  content:
+      background-color: '#213452'
+      font-color: '#FFFFFF'
+      link:
+        link: '#FF00FF'
+        visited: '#00F3F9'
+        hover: '#326544'
+        active: '#098786'
+  definitions:
+    login:
+      width: 350
+    signup:
+      width: 350
+    app-push:
+      width: 250
+    delete-confirmation:
+      width: 350
+    service-create:
+      width: 450
+
+controls:
+  text:
+      border-color: '#cccccc'
+      background-color: '#000000'
+      font-color: '#FFFFFF'

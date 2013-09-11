@@ -1,105 +1,103 @@
 <!DOCTYPE html>
-
 <html>
+<head>
+  <title>
+    <% if $site_tab != nil %>
 
-    <head>
-        <title>
-            <% site_tab = $config[:webui][:site_tab] || 'Uhuru AppCloud' %>
-            <% if defined?(organization_name) %>
-                <% if defined?(space_name) %>
-                    <%= site_tab + '-' + space_name %>
-                <% else %>
-                    <%= site_tab + '-' + organization_name %>
-                <% end %>
+        <% if defined?(organization_name) %>
+            <% if defined?(space_name) %>
+                <%= $site_tab + '-' + space_name %>
             <% else %>
-                <%= site_tab %>
+                <%= $site_tab + '-' + organization_name %>
             <% end %>
-        </title>
-        <link rel="stylesheet" type="text/css" href="<%= request.base_url %>/css/Site.css"/>
-        <link rel="stylesheet" type="text/css" href="<%= request.base_url %>/css/ini.css"/>
-        <link rel="stylesheet" type="text/css" href="<%= request.base_url %>/css/jquery.css"/>
-        <meta charset="utf-8" />
-    </head>
+        <% else %>
+            <%= $site_tab %>
+        <% end %>
+
+    <% else %>
+        <%= $config[:default_domain][:site_tab] %>
+    <% end %>
+  </title>
+  <link rel="stylesheet" type="text/css" href="/css"/>
+  <meta charset="utf-8" />
+</head>
 
 
-    <body class="manage">
-        <div id="screen"> </div>
+<body>
 
-        <div id="container">
-            <header id="site_header">
-                <div class="page-margin">
-                    <a href="<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS %>" title="Home"><h1>Uhuru AppCloud</h1></a>
+<div id="header_container">
+  <div id="header">
+    <a href="<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS %>" title="Home"><h1>Uhuru AppCloud</h1></a>
 
-                    <div id="current_user">
-                        <span id="current_user_name"></span>
-                        <a href="/organizations" title="Home"><input type="button" class="home_sign_32" value="" id="home_icon" /></a>
-                        <a href="/account" title="Account Settings"><input type="button" class="gear_sign_32" value="" id="current_user_edit_btn" /></a>
-                        <a href="#" title="LogOut" id="logout_key"><input type="button" class="key_sign_32" value="" id="current_user_log_out" /></a>
-                    </div>
+    <div id="user_panel">
+      <a href="/organizations" title="Home">
+        <button class="image s32px home"></button>
+      </a>
 
-                    <div id="header_links">
-                        <a href="<%= $config[:webui][:company_link] %>" target="_blank"><span class="head_link">COMPANY</span></a>
-                        <a href="<%= $config[:webui][:support_link] %>" target="_blank"><span class="head_link">SUPPORT</span></a>
-                    </div>
+      <a href="/account" title="Account Settings">
+        <button class="image s32px gear"></button>
+      </a>
 
-                    <div id="logout_small_modal">
-                        <p id="logout_small_modal_paragraph">Are you sure you want to logout?</p> <br />
-                        <div class="button_case_delete_organization_and_space">
-                            <button type="button" class="btn btn_right_delete_organization_and_space toggle_logout_up cancel"><span class="line">| </span>No </button>
-                            <a href="<%= Uhuru::Webui::SinatraRoutes::LOGOUT %>"><button type="button" style="margin-right: -16px;" class="btn btn_left_delete_organization_and_space logout_locked" value="Yes"><span class="line">| </span>Yes </button></a>
-                        </div>
-                    </div>
-                </div>
-            </header>
+      <a href="#" title="LogOut" id="logout_key">
+        <button class="image s32px key"></button>
+      </a>
+    </div>
 
-            <div class="page-margin" id="body">
+    <div id="header_links">
+      <a href="<%= $config[:webui][:support_link] %>" target="_blank">SUPPORT</a>
+      <a href="<%= $config[:webui][:company_link] %>" target="_blank">COMPANY</a>
+    </div>
 
-            <%= yield %>
+    <div class="modal hide">
+      <p id="logout_small_modal_paragraph">Are you sure you want to logout?</p> <br />
+      <div class="button_case_delete_organization_and_space">
+        <button type="button" class="btn btn_right_delete_organization_and_space toggle_logout_up cancel"><span class="line">| </span>No </button>
+        <a href="<%= Uhuru::Webui::SinatraRoutes::LOGOUT %>"><button type="button" style="margin-right: -16px;" class="btn btn_left_delete_organization_and_space logout_locked" value="Yes"><span class="line">| </span>Yes </button></a>
+      </div>
+    </div>
 
-            </div>
+  </div>
+</div>
 
-            <footer id="site_footer">
-                <div class="page-margin">
-                    <div class="ez-box" id="site_footer_ezbox">
-                        <span id="footer_span_ezbox">
-                            <span class="title_icon"></span>  <span id="tools_">Tools:</span>
-                        </span>
+<div id="container">
+  <div id="content">
 
-                        <div id="site_footer_subdiv">
-                            <strong>
-                                <a href="<%= $config[:webui][:visual_studio_plugin_link] %>" class="footer_links">Visual Studio Plugin</a><span style="color: #ffffff;"> | </span>
-                                <a href="<%= $config[:webui][:app_cloud_admin_link] %>" class="footer_links">AppCloud Admin</a><span style="color: #ffffff;"> | </span>
-                                <a href="<%= $config[:webui][:eclipse_url] %>" class="footer_links">Eclipse</a><span style="color: #ffffff;"> | </span>
-                                <a href="<%= $config[:webui][:command_line_link] %>" target="_blank" class="footer_links">Command Line</a>
-                            </strong>
-                        </div>
-                    </div>
-                </div>
+    <%= yield %>
 
-                <div class="bottom">
-                    <div class="page-margin" id="footer_container">
-                        <span class="copyright">
-                            <%= $config[:webui][:copyright_message] %>
-                        </span>
-                        <ul class="footer-menu">
-                            <li><a href="<%= $config[:webui][:terms_of_services_link] %>">Terms of Service</a></li>
-                            <li><a href="<%= $config[:webui][:privacy_policy_link] %>">Privacy Policy</a></li>
-                            <li class="last"><a href="<%= $config[:webui][:support_link] %>" target="_blank">Support</a></li>
-                        </ul>
+  </div>
+</div>
 
-                        <span class="cloud-target">
-                            Your cloud target: <span class="cloud-target-url">http://services.uhurucloud.com</span>
-                        </span>
-                    </div>
-                </div>
-            </footer>
-        </div>
+<span class="cloud-target">
+    Your cloud target: <span class="cloud-target-url">http://services.uhurucloud.com</span>
+</span>
 
 
-        <script type="text/javascript" src="<%= request.base_url %>/js/jquery-1.5.js"></script>
-        <script type="text/javascript" src="<%= request.base_url %>/js/jquery_ui.js"></script>
+<div id="footer_container">
+  <div id="footer">
 
-        <script type="text/javascript" src="<%= request.base_url %>/js/fadeIn.js"></script>
-        <script type="text/javascript" src="<%= request.base_url %>/js/controller.js"></script>
-    </body>
+    <div id="footer_links">
+      <a href="<%= $config[:webui][:twitter_link] %>" class="icon-social twitter"></a>
+      <a href="<%= $config[:webui][:facebook_link] %>" class="icon-social facebook"></a>
+    </div>
+
+    <div id="copyright">
+      &copy; 2013 Uhuru Software. All rights reserved.
+    </div>
+
+    <ul id="footer-menu">
+      <li><a href="<%= $config[:webui][:terms_of_services_link] %>">Terms of Service</a></li>
+      <li><a href="<%= $config[:webui][:privacy_policy_link] %>">Privacy Policy</a></li>
+      <li class="last"><a href="<%= $config[:webui][:support_link] %>">Support</a></li>
+    </ul>
+  </div>
+</div>
+
+<script type="text/javascript" src="<%= request.base_url %>/js/jquery-1.5.js"></script>
+<!--<script type="text/javascript" src="<%= request.base_url %>/js/jquery_ui.js"></script>-->
+<script type="text/javascript" src="<%= request.base_url %>/js/fadeIn.js"></script>
+<!--<script type="text/javascript" src="<%= request.base_url %>/js/controller.js"></script>-->
+
+
+</body>
+
 </html>
