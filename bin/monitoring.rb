@@ -110,6 +110,76 @@ def configure
   @client = CFoundry::V2::Client.new(@cloud_target, token)
 end
 
+def bootstrap_monitoring
+  # get monitoring user from uaa
+  users_setup = UsersSetup.new($config)
+  user = users_setup.uaa_get_user_by_name(@username)
+  # create monitoring user in uaa if doesn't exist
+  unless user
+    uaac = users_setup.get_uaa_client
+
+    emails = [@username]
+    info = {userName: @username, password: @password, name: {givenName: "monitoring", familyName: "user"}}
+    info[:emails] = emails.respond_to?(:each) ?
+        emails.each_with_object([]) { |email, o| o.unshift({:value => email}) } :
+        [{:value => (emails || name)}]
+
+    user = uaac.add(:user, info)
+  end
+
+  user_id = user != nil ? user : user['id']
+  admin_token = users_setup.get_admin_token
+
+  client = CFoundry::V2::Client.new(@cloud_target, admin_token)
+  # check if monitoring org exists
+  org = client.organizations.find { |o|
+    o.name == @default_org
+  }
+  # create monitoring org with admin privileges
+  unless org
+    new_org = client.organization
+    new_org.name = @default_org
+    if new_org.create!
+      users_obj = Library::Users.new(client.token, client.target)
+      users_obj.add_user_to_org_with_role(new_org.guid, user_id, ['owner', 'billing'])
+    end
+    org = new_org
+  end
+  # check if monitoring space exists
+  space = client.spaces.find { |s|
+    s.name == @default_space
+  }
+  # create monitoring space with admin privileges
+  unless space
+    new_space = client.space
+    new_space.organization = org
+    new_space.name = @default_space
+    if new_space.create!
+      users_obj = Library::Users.new(client.token, client.target)
+      users_obj.add_user_with_role_to_space(new_space.guid, user_id, ['owner', 'developer'])
+    end
+  end
+
+  # get existing service authorisation tokens
+  existing_service_auth_tokens = []
+  client.service_auth_tokens.each do |s|
+    existing_service_auth_tokens << s.label
+  end
+
+  # add service authorisation tokens
+  @components[:services].each do |s|
+    service = s["name"]
+    service.slice!("_node")
+    if !existing_service_auth_tokens.include?(service)
+      service_auth_token = client.service_auth_token
+      service_auth_token.label = service
+      service_auth_token.provider = "core"
+      service_auth_token.token = s["token"]
+      service_auth_token.create!
+    end
+  end
+end
+
 def setup_logging
   steno_config = Steno::Config.to_config_hash($config[:logging])
   steno_config[:context] = Steno::Context::ThreadLocal.new
@@ -565,6 +635,7 @@ def main
 
   configure
   logger.info("Monitoring started")
+  bootstrap_monitoring
   initialize_activeresource
 
   begin
