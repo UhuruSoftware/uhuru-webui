@@ -115,37 +115,26 @@ monitoring:
 #    timeout: 5000
   components:
     deas:
-      -
-        name: dea
-      -
-        name: win_dea
+      - name: dea
+      - name: win_dea
     services:
-      -
-        name: mysql_node
+      - name: mysql_node
         token: ec9743a4-6587-4356-8b9e-72d66b36a7f4
-      -
-        name: mongodb_node
+      - name: mongodb_node
         token: ec9743a4-6587-4356-8b9e-72d66b36a7f4
-      -
-        name: redis_node
+      - name: redis_node
         token: ec9743a4-6587-4356-8b9e-72d66b36a7f4
-      -
-        name: redis_node
+      - name: redis_node
         token: ec9743a4-6587-4356-8b9e-72d66b36a7f4
-      -
-        name: rabbit_node
+      - name: rabbit_node
         token: ec9743a4-6587-4356-8b9e-72d66b36a7f4
-      -
-        name: postgresql_node
+      - name: postgresql_node
         token: ec9743a4-6587-4356-8b9e-72d66b36a7f4
-      -
-        name: uhuru_tunnel_node
+      - name: uhuru_tunnel_node
         token: ec9743a4-6587-4356-8b9e-72d66b36a7f4
-      -
-        name: uhurufs_node
+      - name: uhurufs_node
         token: ec9743a4-6587-4356-8b9e-72d66b36a7f4
-      -
-        name: mssql_node
+      - name: mssql_node
         token: ec9743a4-6587-4356-8b9e-72d66b36a7f4
   buildpacks:
     dotNet: https://github.com/stefanschneider/dummy-buildpack.git
