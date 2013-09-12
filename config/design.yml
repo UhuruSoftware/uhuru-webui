@@ -60,50 +60,29 @@ image-buttons:
   32px:
     money: 'money_sign_32.png'
     home: 'house.png'
-    plus: 'plus_sign_32.png'
-    edit: 'edit_sign_32.png'
-    trash: 'trash_sign_32.png'
+    plus: 'plus_32px.png'
+    edit: 'edit_32px.png'
+    trash: 'trash_32px.png'
     undo: 'undo_sign_32.png'
     gear: 'gear_32px.png'
     key: 'key_32px.png'
     money: 'money_bag_sign_32.png'
+  48px:
+    money: 'money_sign_48.png'
+    home: 'house.png'
+    plus: 'plus_48px.png'
+    edit: 'edit_48px.png'
+    trash: 'trash_48px.png'
+    undo: 'undo_sign_48.png'
+    gear: 'gear_48px.png'
+    key: 'key_48px.png'
+    money: 'money_bag_sign_48.png'
 
 tile-options:
   shadow-color: "#FFFFFF"
   opacity: 0.8
 
 tiles:
-  app:
-    top:
-      border-color: '#cccccc'
-      background-color: '#000000'
-      font-color: '#FFFFFF'
-      image-link: '/images/erlang_icon.png'
-      link:
-        link: '#FF00FF'
-        visited: '#00F3F9'
-        hover: '#326544'
-        active: '#098786'
-    left:
-      border-color: '#cccccc'
-      background-color: '#000000'
-      font-color: '#FFFFFF'
-      image-link: '/images/erlang_icon.png'
-      link:
-        link: '#FF00FF'
-        visited: '#00F3F9'
-        hover: '#326544'
-        active: '#098786'
-    right:
-      border-color: '#cccccc'
-      background-color: '#000000'
-      font-color: '#FFFFFF'
-      image-link: '/images/erlang_icon.png'
-      link:
-        link: '#FF00FF'
-        visited: '#00F3F9'
-        hover: '#326544'
-        active: '#098786'
   org: # http://colorschemedesigner.com/#4L42do0ssxQGE
     top:
       border-color: '#C075DE'
@@ -135,15 +114,168 @@ tiles:
         visited: '#000000'
         hover: '#000000'
         active: '#000000'
+  space:
+    top:
+      border-color: '#C075DE'
+      background-color: '#782A97'
+      font-color: '#FFFFFF'
+      #image-link: '/images/erlang_icon.png'
+      link:
+        link: '#FFFFFF'
+        visited: '#FFFFFF'
+        hover: '#FFFFFF'
+        active: '#FFFFFF'
+    left:
+      border-color: '#F37B89'
+      background-color: '#D93649'
+      font-color: '#FFFFFF'
+      image-link: '/images/users_32px.png'
+      link:
+        link: '#FF00FF'
+        visited: '#00F3F9'
+        hover: '#326544'
+        active: '#098786'
+    right:
+      border-color: '#8FEB77'
+      background-color: '#4DBF30'
+      font-color: '#FFFFFF'
+      image-link: '/images/money_bag_32px.png'
+      link:
+        link: '#000000'
+        visited: '#000000'
+        hover: '#000000'
+        active: '#000000'
+  app:
+    top:
+      border-color: '#cccccc'
+      background-color: '#000000'
+      font-color: '#FFFFFF'
+      image-link: '/images/erlang_icon.png'
+      link:
+        link: '#FF00FF'
+        visited: '#00F3F9'
+        hover: '#326544'
+        active: '#098786'
+    left:
+      border-color: '#cccccc'
+      background-color: '#000000'
+      font-color: '#FFFFFF'
+      image-link: '/images/erlang_icon.png'
+      link:
+        link: '#FF00FF'
+        visited: '#00F3F9'
+        hover: '#326544'
+        active: '#098786'
+    right:
+      border-color: '#cccccc'
+      background-color: '#000000'
+      font-color: '#FFFFFF'
+      image-link: '/images/erlang_icon.png'
+      link:
+        link: '#FF00FF'
+        visited: '#00F3F9'
+        hover: '#326544'
+        active: '#098786'
+  service:
+    top:
+      border-color: '#cccccc'
+      background-color: '#a60000'
+      font-color: '#FFFFFF'
+      image-link: '/images/erlang_icon.png'
+      link:
+        link: '#FF00FF'
+        visited: '#00F3F9'
+        hover: '#326544'
+        active: '#098786'
+    left:
+      border-color: '#cccccc'
+      background-color: '#1240ab'
+      font-color: '#FFFFFF'
+      image-link: '/images/erlang_icon.png'
+      link:
+        link: '#FF00FF'
+        visited: '#00F3F9'
+        hover: '#326544'
+        active: '#098786'
+    right:
+      border-color: '#cccccc'
+      background-color: '#1240ab'
+      font-color: '#FFFFFF'
+      image-link: '/images/erlang_icon.png'
+      link:
+        link: '#FF00FF'
+        visited: '#00F3F9'
+        hover: '#326544'
+        active: '#098786'
+
+square_tiles:
+  owner:
+    border-color: '#008500'
+    background-color: '#008500'
+    font-color: '#FFFFFF'
+    link:
+      link: '#FFFFFF'
+      visited: '#FFFFFF'
+      hover: '#FFFFFF'
+      active: '#FFFFFF'
+  billing:
+    border-color: '#a60000'
+    background-color: '#a60000'
+    font-color: '#FFFFFF'
+    link:
+      link: '#FFFFFF'
+      visited: '#FFFFFF'
+      hover: '#FFFFFF'
+      active: '#FFFFFF'
+  developer:
+    border-color: '#a60000'
+    background-color: '#a60000'
+    font-color: '#FFFFFF'
+    link:
+      link: '#FFFFFF'
+      visited: '#FFFFFF'
+      hover: '#FFFFFF'
+      active: '#FFFFFF'
+  auditor:
+    border-color: '#ff7400'
+    background-color: '#ff7400'
+    font-color: '#FFFFFF'
+    link:
+      link: '#FFFFFF'
+      visited: '#FFFFFF'
+      hover: '#FFFFFF'
+      active: '#FFFFFF'
+  domain:
+    border-color: '#1240ab'
+    background-color: '#1240ab'
+    font-color: '#FFFFFF'
+    link:
+      link: '#FFFFFF'
+      visited: '#FFFFFF'
+      hover: '#FFFFFF'
+      active: '#FFFFFF'
+  route:
+      border-color: '#1240ab'
+      background-color: '#1240ab'
+      font-color: '#FFFFFF'
+      link:
+        link: '#FFFFFF'
+        visited: '#FFFFFF'
+        hover: '#FFFFFF'
+        active: '#FFFFFF'
+
+#  domains:
+#  routes:
+#  services:
 
 tab_menu:
-  border-color: '#327487'
-  font-color: '#828374'
+  border-color: '#000000'
+  font-color: '#000000'
   link:
-    link: '#FF00FF'
-    visited: '#00F3F9'
-    hover: '#326544'
-    active: '#098786'
+    link: '#000000'
+    visited: '#000000'
+    hover: '#000000'
+    active: '#000000'
 
 modal:
   footer:
