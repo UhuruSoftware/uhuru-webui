@@ -6,3 +6,10 @@ C:\Users\andreea.mladin.UHURUSOFTWARE\Desktop\dotnetwithmysql\dotnetwithmysql\ob
 C:\Users\andreea.mladin.UHURUSOFTWARE\Desktop\dotnetwithmysql\dotnetwithmysql\bin\MySql.Data.dll
 C:\Users\andreea.mladin.UHURUSOFTWARE\Desktop\dotnetwithmysql\dotnetwithmysql\bin\MySql.Data.Entity.dll
 C:\Users\andreea.mladin.UHURUSOFTWARE\Desktop\dotnetwithmysql\dotnetwithmysql\bin\MySql.Web.dll
+E:\dotnetwithmysql\bin\dotnetwithmysql.dll
+E:\dotnetwithmysql\bin\dotnetwithmysql.pdb
+E:\dotnetwithmysql\bin\MySql.Data.dll
+E:\dotnetwithmysql\bin\MySql.Data.Entity.dll
+E:\dotnetwithmysql\bin\MySql.Web.dll
+E:\dotnetwithmysql\obj\Debug\dotnetwithmysql.dll
+E:\dotnetwithmysql\obj\Debug\dotnetwithmysql.pdb

@@ -6,6 +6,8 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using MySql.Data.MySqlClient;
 using System.Configuration;
+using System.Web.Script.Serialization;
+using System.Collections;
 
 namespace dotnetwithmysql
 {
@@ -14,7 +16,6 @@ namespace dotnetwithmysql
         protected void Page_Load(object sender, EventArgs e)
         {
             string serverConnectionString = ConfigurationManager.AppSettings["cnnString"];
-
             using (MySqlConnection conn = new MySqlConnection(serverConnectionString))
             {
                 try

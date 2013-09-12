@@ -1,16 +1,16 @@
---- 
-applications: 
-  .: 
-    framework: 
-      info: 
-        exec: 
-        description: .Net Web Application
-        mem: 128M
-      name: dotNet
-    mem: 128M
-    name: dotnetwithmysql-uhurumonitoring2lojb
-    instances: 1
-    services: 
-      dotnetmysqlmonit: 
-        type: mysql
-    url: ${name}.${target-base}
+---
+applications:
+- name: dotnetmysql
+  memory: 128M
+  instances: 1
+  host: dotnetmysql
+  domain: apps.ccng-dev.net
+  path: .
+  services:
+    dotnetmysqlmonit:
+      label: mysql
+      provider: core
+      version: '5.5'
+      plan: free
+  buildpack: https://github.com/stefanschneider/dummy-buildpack.git
+  stack: florind

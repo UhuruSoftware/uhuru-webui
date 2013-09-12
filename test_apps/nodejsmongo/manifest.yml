@@ -1,16 +1,15 @@
---- 
-applications: 
-  .: 
-    name: nodejsmongo-monit-ca552
-    framework: 
-      name: node
-      info: 
-        mem: 64M
-        description: Node.js Application
-        exec: 
-    url: nodejsmongo-monit-ca552.uhurucloud.net
-    mem: 64M
-    instances: 1
-    services: 
-      nodejsmongo-monit: 
-        type: mongodb
+---
+applications:
+- name: nodejsmongo
+  memory: 64M
+  instances: 1
+  host: nodejsmongo
+  domain: apps.ccng-dev.net
+  command: node app.js
+  buildpack: https://github.com/cloudfoundry/heroku-buildpack-nodejs
+  services:
+    nodejsmongo-monit:
+      label: mongodb
+      provider: core
+      version: '2.0'
+      plan: free

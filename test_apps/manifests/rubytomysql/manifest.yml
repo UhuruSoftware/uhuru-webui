@@ -1,16 +1,15 @@
 ---
 applications:
 - name: rubytomysql
-  memory: 256M
+  memory: 128M
   instances: 1
-  host: testrubymysql
+  host: rubytomysql
   domain: apps.ccng-dev.net
   path: .
+  buildpack: https://github.com/cloudfoundry/heroku-buildpack-ruby
   services:
     rubytomysql55:
       label: mysql
       provider: core
       version: '5.5'
       plan: free
-  buildpack: https://github.com/cloudfoundry/heroku-buildpack-ruby
-  command: bundle exec ruby foo.rb

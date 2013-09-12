@@ -1,0 +1,13 @@
+{
+  "name": "hello-node",
+  "version": "0.0.1",
+  "dependencies": {
+    "express": "*",
+    "cf-autoconfig": "*",
+    "mongodb": "*",
+    "mongoose": "*"
+  },
+  "engines": {
+    "node": "0.8.x"
+  }
+}

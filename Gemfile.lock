@@ -115,6 +115,7 @@ GEM
       eventmachine (>= 0.12.10)
       json_pure (>= 1.7.3)
       thin (>= 1.4.1)
+    pg (0.16.0)
     posix-spawn (0.3.6)
     rack (1.5.2)
     rack-accept (0.4.5)
@@ -172,6 +173,7 @@ DEPENDENCIES
   encryptor
   eventmachine (>= 1.0.0)
   httparty
+  pg
   rack-recaptcha
   rake (~> 10.0.3)
   rest-client

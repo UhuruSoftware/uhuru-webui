@@ -1,16 +1,15 @@
---- 
-applications: 
-  .: 
-    mem: 128M
-    url: ${name}.${target-base}
-    instances: 1
-    services: 
-      mongodb20: 
-        type: mongodb
-    framework: 
-      info: 
-        mem: 128M
-        exec: ruby foo.rb
-        description: Sinatra Application
-      name: sinatra
-    name: rubytomongo-uhurumonitoringkqp38
+---
+applications:
+- name: rubytomongo
+  memory: 128M
+  instances: 1
+  host: rubytomongo
+  domain: apps.ccng-dev.net
+  path: .
+  buildpack: https://github.com/cloudfoundry/heroku-buildpack-ruby
+  services:
+    rubytomongodb20:
+      label: mongodb
+      provider: core
+      version: '2.0'
+      plan: free

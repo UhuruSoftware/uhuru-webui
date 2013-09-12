@@ -3,13 +3,15 @@ require 'sinatra'
 require 'mysql'
 require 'json'
 
-
 get '/' do
-    obj = JSON.parse(ENV['VCAP_SERVICES'])
-	credentials = obj['mysql-5.1'][0]['credentials']
-	
-	#my = Mysql.new(hostname, username, password, databasename)  
-	con = Mysql.new(credentials['hostname'], credentials['user'], credentials['password'], credentials['name']) 
-	puts 'success'
-	
+  obj = JSON.parse(ENV['VCAP_SERVICES'])
+  credentials = obj['mysql-5.5'][0]['credentials']  
+  
+  begin
+    con = Mysql.new(credentials['hostname'], credentials['user'], credentials['password'], credentials['name']) 
+    "<h3>Success</h1>"
+  rescue => e
+    "#{e.message} #{e.backtrace}"
+  end  
+
 end
