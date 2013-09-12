@@ -300,6 +300,15 @@ button.image.s<%= size %>.<%= image %>
     -moz-border-radius:5px;
     border-radius: 5px;
 }
+.square_tile
+{
+    position: relative;
+    display: inline-block;
+    width: 180px;
+    height: 180px;
+    margin: 0 50px 50px 0;
+    padding: 5px;
+}
 
 .tile:hover .tile.top,
 .tile:hover .tile.right,
@@ -386,6 +395,8 @@ button.image.s<%= size %>.<%= image %>
 
 /************************** TILE CATEGORIES ****************************/
 
+/**************************  segmented    *****************************/
+
 <% design['tiles'].each do |tile_type, tile_design| %>
 .tile.<%= tile_type %> .tile.top
 {
@@ -452,6 +463,33 @@ button.image.s<%= size %>.<%= image %>
     color: <%= color %>;
 }
 <% end %>
+
+<% end %>
+
+
+
+/****************************  square    *******************************/
+
+<% design['square_tiles'].each do |tile_type, tile_design| %>
+
+.square_tile.<%= tile_type %>
+{
+    position: absolute;
+    background-color: <%= tile_design['background-color'] %>;
+    border: 1px solid <%= tile_design['border-color'] %>;
+    background-image: url('<%= tile_design["image-link"] %>');
+    background-repeat: no-repeat;
+    background-position: 98% 90%;
+    color: <%= tile_design['font-color'] %>;
+}
+
+<% tile_design['link'].each do |style, color| %>
+.square_tile.<%= tile_type %> a:<%= style %>
+{
+    color: <%= color %>;
+}
+<% end %>
+
 
 <% end %>
 

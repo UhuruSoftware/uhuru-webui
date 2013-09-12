@@ -31,23 +31,23 @@
   </h2>
   <div class="icons_options">
     <% if current_tab == "apps" %>
-        <a href="<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/spaces/#{current_space}/#{current_tab}/create_app/new" %>" class="plus_sign_32 plus_sign_position_32" id="create_app"></a>
+        <a href="<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/spaces/#{current_space}/#{current_tab}/create_app/new" %>"></a>
     <% end %>
 
     <% if current_tab == "services" %>
-        <a href="<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/spaces/#{current_space}/#{current_tab}/create_service/new" %>" class="plus_sign_32 plus_sign_position_32" id="create_service"></a>
+        <a href="<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/spaces/#{current_space}/#{current_tab}/create_service/new" %>"></a>
     <% end %>
 
     <% if current_tab == "members" %>
-        <a href="<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/spaces/#{current_space}/#{current_tab}/add_user/new" %>" class="plus_sign_32 plus_sign_position_32" id="create_user"></a>
+        <a href="<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/spaces/#{current_space}/#{current_tab}/add_user/new" %>"></a>
     <% end %>
 
     <% if current_tab == "routes" %>
-        <a href="<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/spaces/#{current_space}/#{current_tab}/add_route/new" %>" class="plus_sign_32 plus_sign_position_32" id="create_user"></a>
+        <a href="<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/spaces/#{current_space}/#{current_tab}/add_route/new" %>"></a>
     <% end %>
 
     <% if current_tab == "domains" %>
-        <a href="<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/spaces/#{current_space}/#{current_tab}/map_domain/new" %>" class="plus_sign_32 plus_sign_position_32" id="create_user"></a>
+        <a href="<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/spaces/#{current_space}/#{current_tab}/map_domain/new" %>"></a>
     <% end %>
 
     <input type="button" value="" class="edit_sign_32 edit_sign_position_32" id="edit_space_btn" onclick="showSpacesInput();" />
@@ -55,157 +55,154 @@
   </div>
 </div>
 
-<div id="team_tabs">
+<div class="tab_menu">
 
-  <ul id="spaces_tabs" class="nav nav-tabs">
+  <ul>
     <% if current_tab == "apps" %>
-        <li class="space_selected_tab"><a href="<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/spaces/#{current_space}/apps" %>">Apps (<span><%= apps_list.count %></span>)</a></li>
+        <li class="selected"><a href="<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/spaces/#{current_space}/apps" %>">Apps (<span><%= apps_list.count %></span>)</a></li>
     <% else %>
-        <li class="space_unselected_tabs"><a href="<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/spaces/#{current_space}/apps" %>">Apps (<span><%= apps_list.count %></span>)</a></li>
+        <li><a href="<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/spaces/#{current_space}/apps" %>">Apps (<span><%= apps_list.count %></span>)</a></li>
     <% end %>
 
 
     <% if current_tab == "services" %>
-        <li class="space_selected_tab"><a href="<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/spaces/#{current_space}/services" %>">Services (<span><%= services_list.count %></span>)</a></li>
+        <li class="selected"><a href="<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/spaces/#{current_space}/services" %>">Services (<span><%= services_list.count %></span>)</a></li>
     <% else %>
-        <li class="space_unselected_tabs"><a href="<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/spaces/#{current_space}/services" %>">Services (<span><%= services_list.count %></span>)</a></li>
+        <li><a href="<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/spaces/#{current_space}/services" %>">Services (<span><%= services_list.count %></span>)</a></li>
     <% end %>
 
 
     <% if current_tab == "members" %>
-        <li class="space_selected_tab"><a href="<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/spaces/#{current_space}/members" %>">Users (<span><%= owners_list.count + developers_list.count + auditors_list.count %></span>)</a></li>
+        <li class="selected"><a href="<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/spaces/#{current_space}/members" %>">Users (<span><%= owners_list.count + developers_list.count + auditors_list.count %></span>)</a></li>
     <% else %>
-        <li class="space_unselected_tabs"><a href="<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/spaces/#{current_space}/members" %>">Users (<span><%= owners_list.count + developers_list.count + auditors_list.count %></span>)</a></li>
+        <li><a href="<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/spaces/#{current_space}/members" %>">Users (<span><%= owners_list.count + developers_list.count + auditors_list.count %></span>)</a></li>
     <% end %>
 
 
     <% if current_tab == "routes" %>
-        <li class="space_selected_tab"><a href="<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/spaces/#{current_space}/routes" %>">Routes (<span><%= routes_list.count %></span>)</a></li>
+        <li class="selected"><a href="<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/spaces/#{current_space}/routes" %>">Routes (<span><%= routes_list.count %></span>)</a></li>
     <% else %>
-        <li class="space_unselected_tabs"><a href="<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/spaces/#{current_space}/routes" %>">Routes (<span><%= routes_list.count %></span>)</a></li>
+        <li><a href="<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/spaces/#{current_space}/routes" %>">Routes (<span><%= routes_list.count %></span>)</a></li>
     <% end %>
 
 
     <% if current_tab == "domains" %>
-        <li class="space_selected_tab"><a href="<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/spaces/#{current_space}/domains" %>">Domains (<span><%= defined?(domains_list) ? domains_list.count { |d| d.owning_org_name == organization_name && d.owning_spaces.count { |s| s.name == space_name } != 0 } : '...' %></span>)</a></li>
+        <li class="selected"><a href="<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/spaces/#{current_space}/domains" %>">Domains (<span><%= defined?(domains_list) ? domains_list.count { |d| d.owning_org_name == organization_name && d.owning_spaces.count { |s| s.name == space_name } != 0 } : '...' %></span>)</a></li>
     <% else %>
-        <li class="space_unselected_tabs"><a href="<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/spaces/#{current_space}/domains" %>">Domains (<span><%= defined?(domains_list) ? domains_list.count { |d| d.owning_org_name == organization_name && d.owning_spaces.count { |s| s.name == space_name } != 0 } : '...' %></span>)</a></li>
+        <li><a href="<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/spaces/#{current_space}/domains" %>">Domains (<span><%= defined?(domains_list) ? domains_list.count { |d| d.owning_org_name == organization_name && d.owning_spaces.count { |s| s.name == space_name } != 0 } : '...' %></span>)</a></li>
     <% end %>
   </ul>
+</div>
 
 
   <% if defined?(current_tab) && current_tab != nil && current_tab == "apps" %>
-      <div id="apps" class="tab_pane">
-        <ul class="tile_list">
-          <% apps_list.each do |app| %>
-              <li class="tile_invisible read_app_details">
-                <ul class="custom_list">
-                  <li class="tile_app_name" title="<%= app.name %>">
-                    <a href="<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/spaces/#{current_space}/apps/#{app.name}" %>" class="link_tiles_app show_this_app_details" id="<%= app.name %>">
-                      <span class="app_name" id="<%= app.name %>" title="<%= app.name %>"><%= app.name %></span>
-                      <span class="app_state" id="<%= app.state %>"></span>
-                      <span class="app_instances" id="<%= app.instances %>"></span>
-                      <span class="app_memory" id="<%= app.memory %>"></span>
-                    </a>
+      <div class="tile app">
+        <% apps_list.each do |app| %>
 
-                    <span class="app_instances" id="<%= app.instances %>">instances: <%= app.instances %></span>
-                    <span class="app_memory" id="<%= app.memory %>">memory: <%= app.memory %></span>
+            <div class="tile top">
 
-                    <span class="small_trash delete-app-button" id="<%= app.name %>" title="<%= app.name %>"></span>
-                  </li>
+              <div class="tile_action">
+                <a class="tile_action show_this_app_details" href="<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/spaces/#{current_space}/apps/#{app.name}" %>" id="<%= app.name %>">
+                  <span class="app_name" id="<%= app.name %>" title="<%= app.name %>"><%= app.name %></span>
+                  <span class="app_state" id="<%= app.state %>"></span>
+                  <span class="app_instances" id="<%= app.instances %>"></span>
+                  <span class="app_memory" id="<%= app.memory %>"></span>
+                </a>
+              </div>
 
-                  <li class="tile_app_logo">
-                    <span href="#" class="link_tiles_app app_stack"><%= app.stack.name %></span>
-                  </li>
+              <button id="<%= app.name %>" title="<%= app.name %>" class="image s24px trash" />
+            </div>
 
-                  <li class="tile_app_details <%= app.state %>">
-                    <span class="app_state" id="<%= app.state %>"><%= app.state %></span>
-                  </li>
-                </ul>
-              </li>
 
-              <% if params[:app_name] == app.name %>
-                  <%= erb(:'user_pages/modals/app_details', :layout => false, :locals => { :current_organization => current_organization, :current_space => current_space, :organization_name => organization_name, :collections => collections, :current_tab => current_tab, :app => app, :services_list => services_list, :error_message => error_message }) %>
-              <% end %>
+            <div class="tile bottom">
+              <div class="tile left">
+                <span><%= app.stack.name %></span>
+                <span>instances: <%= app.instances %></span>
+                <span>memory: <%= app.memory %></span>
+              </div>
 
-          <% end %>
+              <div class="tile right">
+                <span><%= app.state %></span>
+              </div>
+            </div>
 
-        </ul>
+            <% if params[:app_name] == app.name %>
+                <%= erb(:'user_pages/modals/app_details', :layout => false, :locals => { :current_organization => current_organization, :current_space => current_space, :organization_name => organization_name, :collections => collections, :current_tab => current_tab, :app => app, :services_list => services_list, :error_message => error_message }) %>
+            <% end %>
+
+        <% end %>
       </div>
   <% end %>
 
 
   <% if defined?(current_tab) && current_tab != nil && current_tab == "services" %>
-      <div id="services" class="tab-pane">
-        <ul class="tile_list">
+      <div class="tile service">
 
-          <% services_list.each do |service| %>
-              <li class="tile_invisible">
-                <ul class="custom_list">
-                  <li class="tile_service_name" title="<%= service.name %>">
-                                        <span>
-                                            <span class="service_name"><%= service.name %></span>
-                                            <a href="#"><span class="small_trash delete-service-button" id="<%= service.name %>" title="<%= service.guid %>"></span></a>
-                                        </span>
-                  </li>
+        <% services_list.each do |service| %>
+            <div class= "tile top">
+              <a href="#" class="tile_action" title="<%= service.name %>">
+                <span><%= service.name %></span>
+              </a>
+              <button class="image s24px trash" id="<%= service.name %>" title="<%= service.guid %>" />
+            </div>
 
-                  <li class="tile_service_logo">
-                    <span href="#" class="link_tiles_app  service-icon-<%= service.type %>"></span>
-                  </li>
+            <div class="tile bottom">
+              <div class="tile left">
+                <span><%= service.type %></span>
+              </div>
 
-                  <li class="tile_service_details">
-                    <span class="service_plan_span">Plan: <%= service.type %></span>
-                    <span class="service_cost_span">Cost: <%= service.type %></span>
-                  </li>
-                </ul>
-              </li>
-          <% end %>
+              <div class="tile right">
+                <span>Plan: <%= service.type %></span>
+                <span>Cost: <%= service.type %></span>
+              </div>
+            </div>
+        <% end %>
 
-        </ul>
       </div>
   <% end %>
 
 
   <% if defined?(current_tab) && current_tab != nil && current_tab == "members" %>
-      <div id="users" class="tab-pane">
-        <ul class="tile_list">
+      <div class="square_tile">
           <% owners_list.each do |owner| %>
-              <li class="tile_user_owner" title="<%= owner.email %>">
-                <span class="user_name_span"><%= owner.email %></span>
-                <span class="user_type_span">Owner</span>
-                <a href="#"><span class="small_trash delete-user-button btn_delete_owner" id="<%= owner.guid %>" title="<%= owner.email %>"></span></a>
+              <div class="square_tile owner" title="<%= owner.email %>">
+                <span><%= owner.email %></span>
+                <span>Owner</span>
+                <button class="image s24px trash" id="<%= owner.guid %>" title="<%= owner.email %>" />
 
                 <span class="span_bg_icon"></span>
-              </li>
+              </div>
           <% end %>
+      </div>
 
+      <div class="square_tile">
           <% developers_list.each do |dev| %>
-              <li class="tile_user_developer" title="<%= dev.email %>">
-                <span class="user_name_span"><%= dev.email %></span>
-                <span class="user_type_span">Developer</span>
-                <a href="#"><span class="small_trash delete-user-button btn_delete_developer" id="<%= dev.guid %>" title="<%= dev.email %>"></span></a>
+              <div class="square_tile developer" title="<%= dev.email %>">
+                <span><%= dev.email %></span>
+                <span>Developer</span>
+                <button class="image s24px trash" id="<%= dev.guid %>" title="<%= dev.email %>" />
 
                 <span class="span_bg_icon"></span>
-              </li>
+              </div>
           <% end %>
+      </div>
 
+      <div class="square_tile">
           <% auditors_list.each do |auditor| %>
-              <li class="tile_user_manager" title="<%= auditor.email %>">
-                <span class="user_name_span"><%= auditor.email  %></span>
-                <span class="user_type_span">Auditor</span>
-                <a href="#"><span class="small_trash delete-user-button btn_delete_auditor" id="<%= auditor.guid %>" title="<%= auditor.email %>"></span></a>
+              <div class="square_tile auditor" title="<%= auditor.email %>">
+                <span><%= auditor.email  %></span>
+                <span>Auditor</span>
+                <button class="image s24px trash" id="<%= auditor.guid %>" title="<%= auditor.email %>" />
 
                 <span class="span_bg_icon"></span>
-              </li>
+              </div>
           <% end %>
-
-        </ul>
       </div>
   <% end %>
 
+
   <% if defined?(current_tab) && current_tab != nil && current_tab == "routes" %>
-      <div id="routes" class="tab-pane">
-        <ul class="tile_list">
+      <div class="square_tile">
 
           <% routes_list.each do |route| %>
               <% route_app_name = nil %>
@@ -218,36 +215,34 @@
                   <% end %>
               <% end %>
 
-              <li class="tile_routes">
-                <a href="http://<%= route.name %>" class="link_tiles_routes" title="<%= route.name %>"><span class="to_be_underlined organization_name_span"><%= route.name %></span></a>
-                <span class="user_type_span">Route</span>
+              <div class="square_tile route">
+                <a href="http://<%= route.name %>" class="tile_action" title="<%= route.name %>"><%= route.name %></a>
 
+                <span>Route</span>
                 <span class="span_bg_icon_routes"></span>
-                <a href="#"><span class="small_trash delete-route-button" id="<%= route.guid %>" title="<%= route_app_name %>"></span></a>
-              </li>
+                <button class="image s24px trash" id="<%= route.guid %>" title="<%= route_app_name %>" />
+              </div>
           <% end %>
 
-        </ul>
       </div>
   <% end %>
 
 
   <% if defined?(current_tab) && current_tab != nil && current_tab == "domains" %>
-      <div id="domains" class="tab-pane">
-        <ul class="tile_list">
+      <div class="square_tile">
+
           <% domains_list.each do |domain| %>
               <% if domain.owning_org_name == organization_name && domain.owning_spaces.count { |s| s.name == space_name } != 0 %>
-                  <li class="tile_space_domain" title="<%= domain.name %>">
-                    <span class="count-value wildcard domain_wildcard_span_value <%= domain.wildcard %>"></span>
-                    <span class="count-label wildcard domain_wildcard_span"><%= domain.name %></span>
+                  <div class="square_tile domain" title="<%= domain.name %>">
+                    <span><%= domain.wildcard %></span>
+                    <span><%= domain.name %></span>
 
                     <span class="span_bg_icon_domains"></span>
-                    <a href="#"><span class="small_trash delete-domain-button" id="<%= domain.name %>" title="<%= domain.guid %>"></span></a>
-                  </li>
+                    <button class="image s24px trash" id="<%= domain.name %>" title="<%= domain.guid %>" />
+                  </div>
               <% end %>
           <% end %>
 
-        </ul>
       </div>
   <% end %>
 </div>
