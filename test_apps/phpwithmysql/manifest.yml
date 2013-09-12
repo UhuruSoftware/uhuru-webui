@@ -1,16 +1,15 @@
---- 
-applications: 
-  .: 
-    framework: 
-      info: 
-        exec: 
-        mem: 128M
-        description: PHP Application
-      name: php
-    name: phpwithmysql-monit-28e63
-    instances: 1
-    mem: 128M
-    url: phpwithmysql-monit-28e63.uhurucloud.net
-    services: 
-      mysql-5.1: 
-        type: mysql
+---
+applications:
+- name: phpwithmysql
+  memory: 128M
+  instances: 1
+  host: phpwithmysql
+  domain: apps.ccng-dev.net
+  path: .
+  services:
+    phpwithmysql55:
+      label: mysql
+      provider: core
+      version: '5.5'
+      plan: free
+  buildpack: https://github.com/heroku/heroku-buildpack-php

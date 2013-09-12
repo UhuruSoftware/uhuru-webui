@@ -86,5 +86,34 @@ module Uhuru::Webui
     get '/design' do
       erb :'design/design_test.html'
     end
+
+    get '/monitoring' do
+
+      report = params[:report] || 'half_of_day'
+
+      report_data_cache_dir = File.expand_path('../../monitoring_cache', __FILE__)
+      header_file = File.join(report_data_cache_dir, "#{report}.header")
+      data_file = File.join(report_data_cache_dir, "#{report}.data")
+      header_title = 'QoS Monitoring'
+
+      unless File.exist?(header_file) && File.exist?(data_file)
+        return  erb :'monitoring/monitoring_empty', :layout => :'monitoring/monitoring_layout',
+                    :locals => {
+                        :page_title => 'Monitoring',
+                        :header_title => header_title
+                    }
+      end
+
+      header = JSON.parse(File.read(header_file))
+      body_content =  JSON.parse(File.read(data_file))
+
+      erb :'monitoring/monitoring', :layout => :'monitoring/monitoring_layout',
+          :locals => {
+              :header => header,
+              :body_content => body_content,
+              :header_title => header_title,
+              :page_title => 'Monitoring'
+          }
+    end
   end
 end

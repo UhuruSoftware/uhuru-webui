@@ -1,9 +1,9 @@
 ---
 applications:
-- name: dotnetmysql
+- name: dotnetwithmysql-monit-30f27
   memory: 128M
   instances: 1
-  host: dotnetmysql
+  host: dotnetwithmysql-monit-30f27
   domain: apps.ccng-dev.net
   path: .
   services:

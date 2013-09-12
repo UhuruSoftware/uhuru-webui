@@ -1,9 +1,9 @@
 ---
 applications:
-- name: nodejsmongo
+- name: nodejsmongo-monit-535fe
   memory: 64M
   instances: 1
-  host: nodejsmongo
+  host: nodejsmongo-monit-535fe
   domain: apps.ccng-dev.net
   command: node app.js
   buildpack: https://github.com/cloudfoundry/heroku-buildpack-nodejs

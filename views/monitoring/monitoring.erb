@@ -1,0 +1,252 @@
+<table class="details_table" cellspacing="0" cellpadding="0">
+
+<% data_hash_values = []
+
+   last_year = nil
+   year_colspan = 1
+   create_year_column = true
+
+   last_month = nil
+   month_colspan = 1
+   create_month_column = true
+
+   last_day = nil
+   day_colspan = 1
+   create_day_column = true
+
+%>
+
+<thead>
+
+
+<tr class="table_row header">
+  <td class="table_cell header meta info" rowspan="4"></td>
+  <td class="table_cell header meta framework" rowspan="4">Framework</td>
+  <td class="table_cell header meta service" rowspan="4">Service</td>
+  <td class="table_cell header" rowspan="4">Uptime</td>
+
+  <% header.each_with_index do |head, head_index| %>
+      <% if head.downcase != 'framework' && head.downcase != 'uptime' && head.downcase != 'info' && head.downcase != 'service' %>
+
+          <%
+             year = DateTime.parse(head).year
+
+             if year == last_year
+               create_year_column = false
+             else
+               create_year_column = true
+
+               year_colspan = 0
+               index = head_index
+
+               while (index < header.size) && (DateTime.parse(header[index]).year == year)
+                 index = index + 1
+                 year_colspan = year_colspan +1
+               end
+             end
+
+             last_year = year
+          %>
+
+          <% if create_year_column %>
+              <td class="table_cell header" colspan="<%= year_colspan %>"><%= year %></td>
+          <% end %>
+      <% end %>
+  <% end %>
+</tr>
+
+<tr class="table_row header">
+  <% header.each_with_index do |head, head_index| %>
+      <% if head.downcase != 'framework' && head.downcase != 'uptime' && head.downcase != 'info' && head.downcase != 'service' %>
+          <%
+             year = DateTime.parse(head).year
+             month = DateTime.parse(head).month
+
+             if year == last_year && month == last_month
+               create_month_column = false
+             else
+               create_month_column = true
+
+               month_colspan = 0
+               index = head_index
+
+               while (index < header.size) && (DateTime.parse(header[index]).year == year) && (DateTime.parse(header[index]).month == month)
+                 index = index + 1
+                 month_colspan = month_colspan +1
+               end
+             end
+
+             last_year = year
+             last_month = month
+          %>
+
+          <% if create_month_column %>
+              <td class="table_cell header" colspan="<%= month_colspan %>"><%= month %></td>
+          <% end %>
+      <% end %>
+  <% end %>
+</tr>
+
+<tr class="table_row header">
+  <% header.each_with_index do |head, head_index| %>
+      <% if head.downcase != 'framework' && head.downcase != 'uptime' && head.downcase != 'info' && head.downcase != 'service' %>
+          <%
+             year = DateTime.parse(head).year
+             month = DateTime.parse(head).month
+             day = DateTime.parse(head).day
+
+             if year == last_year && month == last_month && day == last_day
+               create_day_column = false
+             else
+               create_day_column = true
+
+               day_colspan = 0
+               index = head_index
+
+               while (index < header.size) && (DateTime.parse(header[index]).year == year) && (DateTime.parse(header[index]).month == month)  && (DateTime.parse(header[index]).day == day)
+                 index = index + 1
+                 day_colspan = day_colspan +1
+               end
+             end
+
+             last_year = year
+             last_month = month
+             last_day = day
+          %>
+
+          <% if create_day_column %>
+              <td class="table_cell header" colspan="<%= day_colspan %>"><%= day %></td>
+          <% end %>
+      <% end %>
+  <% end %>
+</tr>
+
+<tr class="table_row header">
+  <% header.each do |head| %>
+      <% if head.downcase != 'framework' && head.downcase != 'uptime' && head.downcase != 'info' && head.downcase != 'service' %>
+          <td class="table_cell header">
+            h<%= DateTime.parse(head).hour %><br />m<%= DateTime.parse(head).min %>
+            <% data_hash_values << head %>
+          </td>
+      <% end %>
+  <% end %>
+</tr>
+</thead>
+
+<tbody>
+
+<%
+   last_row = nil
+   create_framework_td = true
+   framework_span = 0
+
+   create_service_td = true
+   service_span = 0
+
+   css_class = ''
+%>
+
+<% body_content.each_with_index do |body, body_index| %>
+
+    <%
+       if (last_row == nil) || (body['framework'] != last_row['framework'])
+         create_framework_td = true
+         framework_span = 0
+
+         index = body_index
+         while (index < body_content.size) && (body_content[index]['framework'] == body['framework'])
+           index = index + 1
+           framework_span = framework_span +1
+         end
+       else
+         create_framework_td = false
+       end
+
+       if (last_row == nil) || (body['service'] != last_row['service'] || create_framework_td)
+         create_service_td = true
+         service_span = 0
+
+         index = body_index
+         while (index < body_content.size) && (body_content[index]['framework'] == body['framework']) && (body_content[index]['service'] == body['service'])
+           index = index + 1
+           service_span = service_span +1
+         end
+       else
+         create_service_td = false
+       end
+
+       css_class = [body['framework'], body['service'], body['info']].map {|term| term.gsub(/\s/, '_').downcase }.join(' ')
+       css_class = "table_cell #{ body_index % 2 ? 'even' : 'odd' } #{css_class}"
+    %>
+
+
+
+    <tr class="table_row <%= body_index % 2 == 0 ? 'odd' : 'even' %> <%= body['framework'].downcase %> <%= body['service'].downcase %>">
+
+      <td class="<%= css_class %> meta info"><%= body['info'] %></td>
+
+      <% if create_framework_td %>
+          <td class="<%= css_class %> meta framework" rowspan="<%= framework_span %>"><img alt="<%= body['framework'] %>" src="../images/<%= body['framework'].gsub(/\s|\./, '_').downcase %>.png"></td>
+      <% end %>
+
+      <% if create_service_td %>
+          <td class="<%= css_class %> meta service" rowspan="<%= service_span %>"><img alt="<%= body['service'] %>" src="../images/<%= body['service'].gsub(/\s|\./, '_').downcase %>.png"></td>
+          <td class="<%= css_class %> meta uptime" rowspan="<%= service_span %>"><%= body['uptime'].to_f.round(2) %>%</td>
+      <% end %>
+
+
+      <% data_hash_values.each do |hash| %>
+          <td class="<%= css_class %>" title="<%= body[hash].to_f.round(2) %>">
+            <% if (body['info'].downcase == 'push duration') || (body['info'].downcase == 'latency') %>
+                <%
+                   border_size = 1
+                   min = max = 0
+                   all_values = data_hash_values.map { |h| body[h] }.select { |v| v != nil }.map{ |v| v.to_f }
+
+                   if all_values.size > 0
+                     min = all_values.min
+                     max = all_values.max
+                   else
+                     min = max = 0
+                   end
+
+                   max = max - min
+                   if max != 0
+                     if body[hash]
+                       value = body[hash].to_f
+                       value = value - min
+
+                       border_size = border_size + ((value / max) * 15).to_i
+                     end
+                   end
+                %>
+
+                <div class="div_chart"><span class="span_chart" style="border-top-style: <%= body[hash] ? 'solid' : 'dashed' %>; border-top-width: <%= border_size %>px;"></span></div>
+            <% else %>
+
+                <%
+                   status = 'Unknown'
+                   if body[hash] != nil && body[hash] > 0.99
+                     status = 'Ok'
+                   elsif body[hash] != nil && body[hash] > 0.9
+                     status = 'Warning'
+                   elsif body[hash] != nil && body[hash] >= 0
+                     status = 'Down'
+                   end
+                %>
+
+                <img title="<%= "#{status} @ #{DateTime.parse(hash).rfc2822}" %>." alt="<%= status %>" src="../images/<%= status.downcase %>.png" />
+
+            <% end %>
+
+
+          </td>
+
+      <% end %>
+    </tr>
+
+    <% last_row = body  %>
+<% end %>
+</tbody>
+
+</table>

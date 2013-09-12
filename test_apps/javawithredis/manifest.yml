@@ -1,16 +1,9 @@
---- 
-applications: 
-  .: 
-    name: javawithredis-monit-96f5e
-    framework: 
-      name: spring
-      info: 
-        mem: 512M
-        description: Java SpringSource Spring Application
-        exec: 
-    url: javawithredis-monit-96f5e.uhurucloud.net
-    mem: 256M
-    instances: 1
-    services: 
-      javaredis-monit: 
-        type: redis
+---
+applications:
+- name: javaredistest
+  memory: 256M
+  instances: 1
+  host: javaredistest
+  domain: apps.ccng-dev.net
+  path: javawithredis.war
+  buildpack: https://github.com/cloudfoundry/java-buildpack

@@ -652,7 +652,7 @@ def main
 
   delete_all_apps_and_services
   main_apps
-  #delete_all_apps_and_services
+  delete_all_apps_and_services
 
   report_data_cache_dir = File.expand_path('../../monitoring_cache', __FILE__)
 
@@ -660,24 +660,24 @@ def main
     Dir.mkdir report_data_cache_dir
   end
 
-  #$config[:monitoring][:reports].each do |name, report|
-  #  resolution = report[:resolution]
-  #  resolution_unit = report[:resolution_unit]
-  #  sample_count = report[:sample_count]
-  #
-  #  header, data = generate_report(resolution_unit, sample_count, resolution)
-  #
-  #  header_file = File.join(report_data_cache_dir, "#{name}.header")
-  #  data_file = File.join(report_data_cache_dir, "#{name}.data")
-  #
-  #  File.open(header_file, 'w') do |file|
-  #    file << header.to_json
-  #  end
-  #
-  #  File.open(data_file, 'w') do |file|
-  #    file << data.to_json
-  #  end
-  #end
+  $config[:monitoring][:reports].each do |name, report|
+    resolution = report[:resolution]
+    resolution_unit = report[:resolution_unit]
+    sample_count = report[:sample_count]
+
+    header, data = generate_report(resolution_unit, sample_count, resolution)
+
+    header_file = File.join(report_data_cache_dir, "#{name}.header")
+    data_file = File.join(report_data_cache_dir, "#{name}.data")
+
+    File.open(header_file, 'w') do |file|
+      file << header.to_json
+    end
+
+    File.open(data_file, 'w') do |file|
+      file << data.to_json
+    end
+  end
 rescue => e
   puts e
   logger.error("#{e.message} #{e.backtrace}")

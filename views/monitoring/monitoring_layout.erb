@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+  <title> Monitoring </title>
+  <link href="/css/monitoring.css" rel="stylesheet" />
+</head>
+
+<body>
+<form id="form1">
+  <div id="content">
+    <div id="site_header">
+      <div class="container">
+        <h1 id="title"><%= header_title %></h1>
+      </div>
+      <a href="/" class="home_link"><< Home</a>
+    </div>
+
+    <div id="scriptMenuContainer">
+      <a href="/monitoring?report=half_of_day">Last half of day (30 minutes resolution)</a>
+      <a href="/monitoring?report=last_day">Last day (1 hour resolution)</a>
+      <a href="/monitoring?report=last_week">Last week (6 hours resolution)</a>
+      <a href="/monitoring?report=last_month">Last month (1 day resolution)</a>
+      <a href="/monitoring?report=last_year">Last year (12 day resolution)</a>
+    </div>
+
+
+
+    <div id="tableContainer">
+      <%= yield %>
+    </div>
+  </div>
+</form>
+</body>
+</html>
