@@ -1,3 +1,13 @@
+<%
+    def html2rgb(html_color, alpha=1)
+        rgb = Color::RGB.from_html(html_color)
+        red = (rgb.r * 255).to_i
+        green = (rgb.g * 255).to_i
+        blue = (rgb.b * 255).to_i
+        "rgba(#{red},#{green},#{blue},#{alpha})"
+    end
+%>
+
 /************************** BODY AND FONTS ****************************/
 
 html, body
@@ -5,6 +15,13 @@ html, body
     margin: 0;
     padding: 0;
     background-color: <%= design['background-color'] %>;
+
+    /*http://bg.siteorigin.com/*/
+    /*http://colorschemedesigner.com/#0142kuettxQGE*/
+    background-image: <%= design['background-image'] %>;
+
+    background-repeat: repeat;
+    background-attachment:fixed;
     font-family: "<%= design['font-family'] %>";
     font-weight: 200;
     color: <%= design['font-color'] %>;
@@ -57,8 +74,16 @@ a:<%= style %>
 #header_container
 {
     background-color: <%= design['header']['background-color'] %>;
+
+    background-image: <%= design['background-image'] %>;
+
+    background-repeat: repeat;
+    background-attachment:fixed;
+
+
     color: <%= design['header']['font-color'] %>;
-    border:1px solid #666;
+    border:1px solid <%= design['header']['border-color'] %>;
+    border-width: 0 0 1px 0;
     height:60px; left:0;
     position:fixed;
     width:100%;
@@ -66,7 +91,7 @@ a:<%= style %>
     z-index: 50;
 }
 
-<% design['header'].each do |style, color| %>
+<% design['header']['link'].each do |style, color| %>
 #header_container a:<%= style %>
 {
     color: <%= color %>;
@@ -130,9 +155,17 @@ a:<%= style %>
 
 #footer_container
 {
+    background-image: <%= design['background-image'] %>;
+
+    background-repeat: repeat;
+    background-attachment:fixed;
+
     background-color: <%= design['footer']['background-color'] %>;
     color: <%= design['footer']['font-color'] %>;
-    border:0;
+
+    border:1px solid <%= design['footer']['border-color'] %>;
+    border-width: 1px 0 0 0;
+
     bottom:0;
     height:80px;
     left:0;
@@ -232,6 +265,7 @@ button.image.s<%= size %>.<%= image %>
     border: 0;
     background-color: transparent;
 }
+
     <% end %>
 <% end %>
 
@@ -258,9 +292,31 @@ button.image.s<%= size %>.<%= image %>
     width: 280px;
     height: 171px;
     display: inline-block;
-    margin: 0 20px 30px 0;
+    margin: 0 10px 30px 10px;
     padding: 5px;
+    position: relative;
+
+    -webkit-border-radius: 5px;
+    -moz-border-radius:5px;
+    border-radius: 5px;
 }
+
+.tile:hover .tile.top,
+.tile:hover .tile.right,
+.tile:hover .tile.left
+{
+    -webkit-box-shadow: 0px 0px 15px rgba(50, 50, 50, 1);
+    -moz-box-shadow:    0px 0px 15px rgba(50, 50, 50, 1);
+    box-shadow:         0px 0px 15px rgba(50, 50, 50, 1);
+}
+
+.tile:hover .tile.top,
+.tile:hover .tile.bottom
+{
+    top: -2px;
+    left: -2px;
+}
+
 
 .tile.top
 {
@@ -333,12 +389,17 @@ button.image.s<%= size %>.<%= image %>
 <% design['tiles'].each do |tile_type, tile_design| %>
 .tile.<%= tile_type %> .tile.top
 {
-    background-color: <%= tile_design['top']['background-color'] %>;
+    background-color: <%= html2rgb(tile_design['top']['background-color'], design['tile-options']['opacity']) %>;
     border: 1px solid <%= tile_design['top']['border-color'] %>;
     background-image: url('<%= tile_design['top']["image-link"] %>');
     background-repeat: no-repeat;
     background-position: 98% 90%;
     color: <%= tile_design['top']['font-color'] %>;
+}
+
+.tile.<%= tile_type %>:hover .tile.top
+{
+    background-color: <%= html2rgb(tile_design['top']['background-color']) %>;
 }
 
 <% tile_design['top']['link'].each do |style, color| %>
@@ -350,12 +411,17 @@ button.image.s<%= size %>.<%= image %>
 
 .tile.<%= tile_type %> .tile.left
 {
-    background-color: <%= tile_design['left']['background-color'] %>;
+    background-color: <%= html2rgb(tile_design['left']['background-color'], design['tile-options']['opacity']) %>;
     border: 1px solid <%= tile_design['left']['border-color'] %>;
     background-image: url('<%= tile_design['left']["image-link"] %>');
     background-repeat: no-repeat;
     background-position: 98% 90%;
     color: <%= tile_design['left']['font-color'] %>;
+}
+
+.tile.<%= tile_type %>:hover .tile.left
+{
+    background-color: <%= html2rgb(tile_design['left']['background-color']) %>;
 }
 
 <% tile_design['left']['link'].each do |style, color| %>
@@ -367,12 +433,17 @@ button.image.s<%= size %>.<%= image %>
 
 .tile.<%= tile_type %> .tile.right
 {
-    background-color: <%= tile_design['right']['background-color'] %>;
+    background-color: <%= html2rgb(tile_design['right']['background-color'], design['tile-options']['opacity']) %>;
     border: 1px solid <%= tile_design['right']['border-color'] %>;
     background-image: url('<%= tile_design['right']["image-link"] %>');
     background-repeat: no-repeat;
     background-position: 98% 90%;
     color: <%= tile_design['right']['font-color'] %>;
+}
+
+.tile.<%= tile_type %>:hover .tile.right
+{
+    background-color: <%= html2rgb(tile_design['right']['background-color']) %>;
 }
 
 <% tile_design['right']['link'].each do |style, color| %>

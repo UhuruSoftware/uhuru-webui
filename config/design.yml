@@ -1,6 +1,7 @@
 ---
 
 background-color: '#FFFFFF'
+background-image: "url('/images/backgrounds/math_paper.png')"
 font-family: 'QuickSand'
 font-color: '#000000'
 link:
@@ -10,16 +11,18 @@ link:
   active: '#098786'
 
 header:
-  background-color: '#000000'
+  background-color: '#5EAD63'
+  border-color: '#072463'
   font-color: '#FFFFFF'
   link:
-    link: '#FF00FF'
-    visited: '#00F3F9'
-    hover: '#326544'
-    active: '#098786'
+    link: '#FFFFFF'
+    visited: '#FFFFFF'
+    hover: '#FFFFFF'
+    active: '#FFFFFF'
 
 footer:
-  background-color: '#000000'
+  background-color: '#1C1c1c'
+  border-color: '#072463'
   font-color: '#FFFFFF'
   link:
     link: '#FF00FF'
@@ -64,6 +67,10 @@ image-buttons:
     gear: 'gear_32px.png'
     key: 'key_32px.png'
     money: 'money_bag_sign_32.png'
+
+tile-options:
+  shadow-color: "#FFFFFF"
+  opacity: 0.8
 
 tiles:
   app:
