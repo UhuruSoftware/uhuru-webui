@@ -150,6 +150,33 @@ a:<%= style %>
     margin-right: 5px;
 }
 
+/****  ORG AND SPACE TITLE WITH CREATE, MODIFY AND DELETE  ****/
+.section_title
+{
+    display: inline-block;
+    position: relative;
+    width: 60%;
+}
+.section_title p
+{
+    margin: 0;
+    font-size: 28px;
+    font-weight: 400;
+}
+
+.icons_options
+{
+    display: inline-block;
+    position: relative;
+    width: 38%;
+    float: right;
+}
+.icons_options button
+{
+    float: right;
+    margin-right: 7px;
+}
+
 /************************** FOOTER ****************************/
 
 
@@ -252,6 +279,7 @@ button img
     vertical-align: middle;
 }
 
+
 /************************** BUTTONS WITH IMAGES ONLY ****************************/
 
 <% design['image-buttons'].each do |size, images| %>
@@ -262,6 +290,7 @@ button.image.s<%= size %>.<%= image %>
     width: <%= size %>;
     height: <%= size %>;
     background-image: url('/images/<%= src %>');
+    background-repeat: no-repeat;
     border: 0;
     background-color: transparent;
 }
@@ -519,6 +548,7 @@ button.image.s<%= size %>.<%= image %>
     position: relative;
     padding: 5px;
     top: 1px;
+    cursor: pointer;
 }
 
 .tab_menu ul li.selected
@@ -527,6 +557,8 @@ button.image.s<%= size %>.<%= image %>
     border-bottom: 2px solid <%= design['background-color'] %>;
     -webkit-border-top-left-radius: 3px;
     -webkit-border-top-right-radius: 3px;
+    background-color: <%= design['tab_menu']['selected-item-background'] %>;
+    color: <%= design['tab_menu']['selected-item-foreground'] %>;
 }
 
 /************************** MODAL FORM ****************************/

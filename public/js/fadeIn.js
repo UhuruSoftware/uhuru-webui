@@ -1,13 +1,3 @@
-/*
-    Here are all the modals that will fade in
-*/
-
-$('#organizations_page').fadeIn(400);
-$('#organization_page').fadeIn(400);
-$('#space_page').fadeIn(400);
-
-
-
 
 $(function(){
 
@@ -18,13 +8,37 @@ $('#logout_key').click(function(){
 });
 
 var delete_selected_element = function(){
+    $('#selected_guid').val($(this).attr("id"))
+    $('#selected_name').text($(this).attr("title"));
     $('.modal-background').css({ "display": "block" });
     $('body').css({"overflow":"hidden"});
-    $('.delete-confirmation').fadeIn(600);
+    $('.delete_confirmation').fadeIn(600);
 }
+
 
 $('.cancel_button').click(function(){$(".modal").css("display", "none");$('.modal-background').css("display", "none");$('body').css({"overflow":"auto"});});
 $('.tile.org .tile.top :button').click(delete_selected_element);
+$('.tile.space .tile.top :button').click(delete_selected_element);
+$('.tile.app .tile.top :button').click(delete_selected_element);
+$('.tile.service .tile.top :button').click(delete_selected_element);
+
+$('.square_tile .square_tile.domain :button').click(delete_selected_element);
+$('.square_tile .square_tile.route :button').click(delete_selected_element);
+
+
+
+$('.square_tile .square_tile.owner :button').click(delete_selected_element, $('#aditional_data').val('owner'));
+$('.square_tile .square_tile.developer :button').click(delete_selected_element);
+$('.square_tile .square_tile.billing :button').click(delete_selected_element);
+$('.square_tile .square_tile.auditor :button').click(delete_selected_element);
+
+
+
+
+
+
+
+
 
 
 
