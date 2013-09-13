@@ -1,53 +1,55 @@
-<div class="dark_background"> </div>
+<div class="modal-background"> </div>
 
-<div class="modal fade hide" id="add_ctService_modal">
+<div class="modal">
   <form action="/createService" method="post">
-      <div class="modal-header">
-        <a href="<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/spaces/#{current_space}/services" %>" class="close"></a>
-        <h3>New Service</h3>
-      </div>
+    <div class="modal_header">
+      <h3>New Service</h3>
+    </div>
 
-      <div class="modal-body">
-        <table style="width: 100%;">
+    <div class="modal_content">
+      <table style="width: 100%;">
         <tr>
           <td><label for="serviceName">Name: </label></td>
-          <td><input type="text" name="serviceName" class="modal_input_box" autofocus /></td>
+          <td><input type="text" name="serviceName" autofocus /></td>
         </tr>
 
         <tr>
           <td><label for="service_plan">Service Plan: </label></td>
           <td>
-              <select name="service_plan" class="modal_input_box" style="width: 200px;">
-                <% ServiceInstances.new(session[:token], $cf_target).read_service_plans.each do |plan| %>
-                    <option value="<%= plan.name %>"><%= plan.name.capitalize %></option>
-                <% end %>
-              </select>
+            <select name="service_plan" style="width: 200px;">
+              <% ServiceInstances.new(session[:token], $cf_target).read_service_plans.each do |plan| %>
+                  <option value="<%= plan.name %>"><%= plan.name.capitalize %></option>
+              <% end %>
+            </select>
           </td>
         </tr>
 
-          <tr>
+        <tr>
           <td><label for="service_type">Service Type: </label></td>
           <td>
-              <select name="service_type" class="modal_input_box" style="width: 200px;">
-                <% ServiceInstances.new(session[:token], $cf_target).read_service_types.each do |type| %>
-                    <option value="<%= type %>"><%= type %></option>
-                <% end %>
-              </select>
+            <select name="service_type" style="width: 200px;">
+              <% ServiceInstances.new(session[:token], $cf_target).read_service_types.each do |type| %>
+                  <option value="<%= type %>"><%= type %></option>
+              <% end %>
+            </select>
           </td>
-          </tr>
-        </table>
-      </div>
+        </tr>
+      </table>
+    </div>
 
-      <div class="modal-footer">
-        <span class="server_errors" id="create_service_failed"><%= error_message %></span>
-        <div>
-            <a href="<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/spaces/#{current_space}/services" %>" class="btn btn_right_create_organization_and_space cancel"><span class="line">| </span>Close </a>
+    <div class="modal_footer">
+      <% unless error_message.nil? || error_message.empty? %>
+          <div class="error"> <%= error_message %> </div>
+      <% end %>
+      <p class="hide hidden_message"></p>
 
-            <input type="hidden" name="current_organization" value="<%= current_organization %>" />
-            <input type="hidden" name="current_space" value="<%= current_space %>" />
-            <input type="hidden" name="current_tab" value="<%= current_tab %>" />
-            <button type="submit" class="btn btn_left_create_organization_and_space ok"><span class="line">| </span>Create </button>
-        </div>
+      <div>
+        <button type="button" onclick="window.location = '<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/spaces/#{current_space}/services" %>';">Close</button>
+        <input type="hidden" name="current_organization" value="<%= current_organization %>" />
+        <input type="hidden" name="current_space" value="<%= current_space %>" />
+        <input type="hidden" name="current_tab" value="<%= current_tab %>" />
+        <button type="submit">Create</button>
       </div>
+    </div>
   </form>
 </div>

@@ -29,22 +29,22 @@
 
   <div class="icons_options">
     <% if current_tab == "spaces" %>
-        <button onclick="window.location = '<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/#{current_tab}/create_space" %>';" class="image s32px plus" />
+        <button type="button" onclick="window.location = '<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/#{current_tab}/create_space" %>';" class="image s32px plus"></button>
     <% end %>
 
     <% if current_tab == "members" %>
-        <button onclick="window.location = '<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/#{current_tab}/add_user" %>';" class="image s32px plus" />
+        <button type="button" onclick="window.location = '<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/#{current_tab}/add_user" %>';" class="image s32px plus"></button>
     <% end %>
 
     <% if current_tab == "domains" %>
-        <button onclick="window.locatiom = '<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/#{current_tab}/add_domains" %>';" class="image s32px plus" />
+        <button type="button" onclick="window.location = '<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/#{current_tab}/add_domains" %>';" class="image s32px plus"></button>
     <% end %>
 
     <button type="button" class="image s32px edit" onclick="showOrganizationsInput();" />
-    <button type="submit" class="image s32px trash" />
+    <button type="button" class="image s32px trash" onclick="deleteCurrentOrganization();" />
 
     <% if card_type == nil && card_masked_number == nil %>
-        <button onclick="windows.location = '<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/#{current_tab}/create_subscription" %>';" class="image s32px money" />
+        <button type="button" onclick="window.location = '<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/#{current_tab}/create_subscription" %>';" class="image s32px money"></button>
     <% end %>
   </div>
 
@@ -149,41 +149,42 @@
 
   <% if defined?(current_tab) && current_tab != nil && current_tab == "members" %>
 
-      <div class="square_tile">
+
         <% owners_list.each do |owner| %>
-            <div class="square_tile owner" title="<%= owner.email %>">
-              <span><%= owner.email %></span>
-              <span>Owner</span>
-              <button id="<%= owner.guid %>" class="image s24px trash" title="Delete '<%= owner.email %>'"></button>
+            <div class="square_tile members">
+                <div class="square_tile owner" title="<%= owner.email %>">
+                  <span><%= owner.email %></span>
+                  <span>Owner</span>
+                  <button type="button" id="<%= owner.guid %>" class="image s24px trash" title="Delete '<%= owner.email %>'"></button>
 
-              <span class="span_bg_icon"></span>
+                  <span class="span_bg_icon"></span>
+                </div>
             </div>
         <% end %>
-      </div>
 
-      <div class="square_tile">
         <% billings_list.each do |billing| %>
-            <div class="square_tile billing" title="<%= billing.email %>">
-              <span><%= billing.email %></span>
-              <span>Billing Manager</span>
-              <button id="<%= billing.guid %>" class="image s24px trash" title="Delete '<%= billing.email %>'"></button>
+            <div class="square_tile">
+                <div class="square_tile billing" title="<%= billing.email %>">
+                  <span><%= billing.email %></span>
+                  <span>Billing Manager</span>
+                  <button type="button" id="<%= billing.guid %>" class="image s24px trash" title="Delete '<%= billing.email %>'"></button>
 
-              <span class="span_bg_icon"></span>
+                  <span class="span_bg_icon"></span>
+                </div>
             </div>
         <% end %>
-      </div>
 
-      <div class="square_tile">
         <% auditors_list.each do |auditor| %>
-            <div class="square_tile auditor" title="<%= auditor.email %>">
-              <span><%= auditor.email %></span>
-              <span>Auditor</span>
-              <button id="<%= auditor.guid %>" class="image s24px trash" title="Delete '<%= auditor.email %>'"></button>
+            <div class="square_tile">
+                <div class="square_tile auditor" title="<%= auditor.email %>">
+                  <span><%= auditor.email %></span>
+                  <span>Auditor</span>
+                  <button type="button" id="<%= auditor.guid %>" class="image s24px trash" title="Delete '<%= auditor.email %>'"></button>
 
-              <span class="span_bg_icon"></span>
+                  <span class="span_bg_icon"></span>
+                </div>
             </div>
         <% end %>
-      </div>
 
 
 

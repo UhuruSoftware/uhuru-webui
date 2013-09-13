@@ -27,10 +27,10 @@ $('.square_tile .square_tile.route :button').click(delete_selected_element);
 
 
 
-$('.square_tile .square_tile.owner :button').click(delete_selected_element, $('#aditional_data').val('owner'));
-$('.square_tile .square_tile.developer :button').click(delete_selected_element);
-$('.square_tile .square_tile.billing :button').click(delete_selected_element);
-$('.square_tile .square_tile.auditor :button').click(delete_selected_element);
+$('.square_tile.members .square_tile.owner :button').click(alert('owner'));
+//$('.square_tile.developer :button').click(alert('dev'));
+//$('.square_tile.billing :button').click(alert('billing'));
+//$('.square_tile.auditor :button').click(alert('audit'));
 
 
 
