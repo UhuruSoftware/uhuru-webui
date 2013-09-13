@@ -1,42 +1,6 @@
 
 
 //
-//          CONTROLLER FOR THE LANDING PAGE PLACEHOLDERS
-//
-
-$('[placeholder]').focus(function() {
-    var input = $(this);
-    input.css("font-style", "normal");
-    input.css("color", "#ffffff");
-    if (input.val() == input.attr('placeholder')) {
-        input.val('');
-        input.removeClass('placeholder');
-    }
-}).blur(function() {
-        var input = $(this);
-        input.css("font-style", "italic");
-        input.css("color", "gray");
-        if (input.val() == '' || input.val() == input.attr('placeholder')) {
-            input.addClass('placeholder');
-            input.val(input.attr('placeholder'));
-        }
-    }).blur();
-
-$('[placeholder]').parents('form').submit(function() {
-    $(this).find('[placeholder]').each(function() {
-        var input = $(this);
-        if (input.val() == input.attr('placeholder')) {
-            input.val('');
-        }
-    })
-});
-
-
-
-
-
-
-//
 //          CONTROLLING THE UPDATE ORG AND SPACE INPUT BOX AND TEXT (NAME UPDATES)
 //
 
@@ -69,78 +33,6 @@ $('.tiped').bind({
 
 
 
-
-//
-//          PASSING DATA TO DELETE MODALS
-//
-
-
-var delete_element = function()
-{
-    $('#selected_guid').val($(this).attr("id"))
-    $('#selected_name').text($(this).attr("title"));
-}
-var delete_space = function()
-{
-    $('#space_guid').val($(this).attr("title"));
-    $('#this_space_name').text($(this).attr("id"));
-}
-var delete_domain = function()
-{
-    $('#domain_guid').val($(this).attr("title"));
-    $('#this_domain_name').text($(this).attr("id"));
-}
-var delete_app = function()
-{
-    $('#pass_app').val($(this).attr("id"));
-    $('#this_app_name').text($(this).attr("id"));
-}
-var delete_service = function()
-{
-    $('#pass_service').val($(this).attr("title"));
-    $('#this_service_name').text($(this).attr("id"));
-}
-var delete_route = function()
-{
-    $('#pass_route_guid').val($(this).attr("id"));
-}
-
-
-$('.tile.org .tile.top :button').click(delete_element);
-
-
-var delete_owner = function()
-{
-    $('#this_user_name').text($(this).attr("title"));
-    $('#pass_user_guid').val($(this).attr("id"));
-    $('#pass_user_role').val("owner");
-}
-var delete_developer = function()
-{
-    $('#this_user_name').text($(this).attr("title"));
-    $('#pass_user_guid').val($(this).attr("id"));
-    $('#pass_user_role').val("developer");
-}
-var delete_billing = function()
-{
-    $('#this_user_name').text($(this).attr("title"));
-    $('#pass_user_guid').val($(this).attr("id"));
-    $('#pass_user_role').val("billing");
-}
-var delete_auditor = function()
-{
-    $('#this_user_name').text($(this).attr("title"));
-    $('#pass_user_guid').val($(this).attr("id"));
-    $('#pass_user_role').val("auditor");
-}
-
-$('.btn_delete_owner').click(delete_owner);
-$('.btn_delete_developer').click(delete_developer);
-$('.btn_delete_billing').click(delete_billing);
-$('.btn_delete_auditor').click(delete_auditor);
-
-
-//bindings and unbindings
 
 $('.get_uri_name').hover(function(){
     var name = $(this).attr("id");

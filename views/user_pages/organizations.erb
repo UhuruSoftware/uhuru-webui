@@ -42,9 +42,8 @@
     <% end %>
 </div>
 
-<div class="modal delete-confirmation hide">
+<div class="modal delete_confirmation org hide">
     <div class="modal_header">
-        <a href="#" class="close"></a>
         <h3 id="selected_name"></h3>
     </div>
 
@@ -74,8 +73,8 @@
     </div>
 </div>
 
-<% if params[:error] != '' && params[:error] != nil %>
-    <div class="modal error-message" id="errors_modal">
+<% unless error_message.nil? || error_message.empty? %>
+    <div class="modal error-message">
       <div class="modal_header">
         <h3>Error</h3>
       </div>
@@ -84,13 +83,11 @@
         <p>
           An error has occurred:
         </p>
-        <% unless error_message.nil? || error_message.empty? %>
-            <div class="error"> <%= error_message %> </div>
-        <% end %>
+        <div class="error"> <%= error_message %> </div>
       </div>
 
       <div class="modal_footer">
-          <button type="button" onclick="window.location = '<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS %>';">Cancel</button>
+          <button type="button" onclick="window.location = '<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS %>';">Close</button>
       </div>
     </div>
 <% end %>
