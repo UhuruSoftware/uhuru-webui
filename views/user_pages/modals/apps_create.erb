@@ -1,15 +1,14 @@
 <% apps = collections %>
-<div class="dark_background"> </div>
+<div class="modal-background"> </div>
 
-<div class="modal fade hide" id="create_tempcta_modal">
-  <div class="modal-header" style="background-color: #09293e">
-    <a href="<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/spaces/#{current_space}/apps" %>" class="close"></a>
+<div class="modal app_push">
+  <div class="modal_header">
     <h3>Add a new app template</h3>
   </div>
 
-  <div class="modal-body" id="template_apps_container">
+  <div class="modal_content">
       <!-- LOOP AND CREATE A LIST OF COLLECTIONS AND APPS -->
-      <ul class="apps_list">
+      <ul class="app_push list">
         <% apps.each do |app_id, app| %>
             <li class="app_menu_item" id="<%= app_id %>" onclick="showPanel(this);">
               <%= app['name'] == nil ? 'N/A - Please provide an application name' : app['name'] %>
@@ -19,7 +18,7 @@
 
       <!-- LOOP AND CREATE THE CONTENT OF EACH COLLECTION AND APP -->
       <% apps.each do |app_id, app| %>
-          <div class="template_apps" id="<%= app_id %>_div" <%= apps.first[1]['id'] == app_id ? "style='display: block;'" : '' %>>
+          <div class="template_apps hide" id="<%= app_id %>_div" <%= apps.first[1]['id'] == app_id ? "style='display: block;'" : '' %>>
 
             <!-- INSERT APP LOGO, NAME, DESCRIPTION AND SERVICE ICONS -->
             <% if File.exists? app['logo'] %>
@@ -30,6 +29,7 @@
               <%= app['name'] %>
               <span class="query_link" onclick="redirectTo('<%= app_id %>');"></span>
             </span>
+            <br /><br />
 
             <% app['service_type'].each do |service_name| %>
                 <img src="/images/tmp_apps_icons/<%= service_name %>.png" class="small_app_icons" />
@@ -40,26 +40,26 @@
               <%= app['description'][0..500] %>
             </p>
 
-
+            <br />
 
             <div class="template_apps_footer">
               <!-- INSERT TAGS -->
               <div class="tags_div">
-                <span class="template_app_tag_span">Tags:</span>
-              <span class="template_app_tags">
-                <% if app['tags'] != nil %>
-                    <%= app['tags'].join(',&nbsp;') %>
-                <% else %>
-                    none
-                <% end %>
-              </span>
+                <span class="tag_span">Tags:</span>
+                  <span class="tags">
+                    <% if app['tags'] != nil %>
+                        <%= app['tags'].join(',&nbsp;') %>
+                    <% else %>
+                        none
+                    <% end %>
+                  </span>
                 <br />
-                <span class="template_app_pub_span">Publisher:</span>
-              <span class="template_app_tags">
-                <% if app['collection']['name'] != nil %>
-                    <%= app['collection']['name'] %>
-                <% end %>
-              </span>
+                <span class="publisher_span">Publisher:</span>
+                  <span class="tags">
+                    <% if app['collection']['name'] != nil %>
+                        <%= app['collection']['name'] %>
+                    <% end %>
+                  </span>
               </div>
 
               <!-- INSERT BUTTONS DOWNLOAD IF NECESSARY AND PUSH -->
@@ -91,7 +91,7 @@
                       <td>
                         <% if app['can_download'] != nil %>
                             <% if app['can_download'] == true %>
-                                <a href="<%= "/download_app/" + app['id'] %>"><input type="button" value="Download" class="btn download_btn" /></a>
+                                <button type="button" onclick="window.location = '<%= "/download_app/" + app['id'] %>';" title="Download '<%= app['name'] %>'">Download</button>
                             <% end %>
                         <% end %>
                         <input type="hidden" name="app_space" value="<%= current_space %>" >
@@ -101,7 +101,7 @@
                         <input type="hidden" name="app_memory" value="<%= app['vmc_manifest']['applications']['.']['mem'] %>" >
                         <input type="hidden" name="app_instances" value="<%= app['vmc_manifest']['applications']['.']['instances'] %>" >
 
-                        <input type="submit" value="Push" class="btn push_btn" />
+                        <button type="submit">Push</button>
                       </td>
                     </tr>
                   </table>
@@ -115,10 +115,14 @@
       <% end %>
   </div>
 
-  <div class="modal-footer">
-    <span class="server_errors" id="create_app_failed"><%= error_message %></span>
+  <div class="modal_footer">
+    <% unless error_message.nil? || error_message.empty? %>
+        <div class="error"> <%= error_message %> </div>
+    <% end %>
+    <p class="hide hidden_message">Pushing app ...</p>
+
     <div>
-      <a href="<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/spaces/#{current_space}/apps" %>" class="btn btn_right_create_organization_and_space cancel"><span class="line">| </span>Cancel </a>
+      <button onclick="window.location = '<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/spaces/#{current_space}/apps" %>';" class="close_button">Close</button>
     </div>
   </div>
 </div>

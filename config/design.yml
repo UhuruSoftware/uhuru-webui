@@ -83,12 +83,11 @@ tile-options:
   opacity: 0.8
 
 tiles:
-  org: # http://colorschemedesigner.com/#4L42do0ssxQGE
+  org:
     top:
       border-color: '#C075DE'
       background-color: '#782A97'
       font-color: '#FFFFFF'
-      #image-link: '/images/erlang_icon.png'
       link:
         link: '#FFFFFF'
         visited: '#FFFFFF'
@@ -119,7 +118,6 @@ tiles:
       border-color: '#C075DE'
       background-color: '#782A97'
       font-color: '#FFFFFF'
-      #image-link: '/images/erlang_icon.png'
       link:
         link: '#FFFFFF'
         visited: '#FFFFFF'
@@ -150,7 +148,6 @@ tiles:
       border-color: '#cccccc'
       background-color: '#000000'
       font-color: '#FFFFFF'
-      image-link: '/images/erlang_icon.png'
       link:
         link: '#FF00FF'
         visited: '#00F3F9'
@@ -181,7 +178,6 @@ tiles:
       border-color: '#cccccc'
       background-color: '#a60000'
       font-color: '#FFFFFF'
-      image-link: '/images/erlang_icon.png'
       link:
         link: '#FF00FF'
         visited: '#00F3F9'
@@ -213,6 +209,7 @@ square_tiles:
     border-color: '#008500'
     background-color: '#008500'
     font-color: '#FFFFFF'
+    image-link: '/images/members_icon.png'
     link:
       link: '#FFFFFF'
       visited: '#FFFFFF'
@@ -222,6 +219,7 @@ square_tiles:
     border-color: '#a60000'
     background-color: '#a60000'
     font-color: '#FFFFFF'
+    image-link: '/images/members_icon.png'
     link:
       link: '#FFFFFF'
       visited: '#FFFFFF'
@@ -231,6 +229,7 @@ square_tiles:
     border-color: '#a60000'
     background-color: '#a60000'
     font-color: '#FFFFFF'
+    image-link: '/images/members_icon.png'
     link:
       link: '#FFFFFF'
       visited: '#FFFFFF'
@@ -240,6 +239,7 @@ square_tiles:
     border-color: '#ff7400'
     background-color: '#ff7400'
     font-color: '#FFFFFF'
+    image-link: '/images/members_icon.png'
     link:
       link: '#FFFFFF'
       visited: '#FFFFFF'
@@ -249,6 +249,7 @@ square_tiles:
     border-color: '#1240ab'
     background-color: '#1240ab'
     font-color: '#FFFFFF'
+    image-link: '/images/domains_icon_64px.png'
     link:
       link: '#FFFFFF'
       visited: '#FFFFFF'
@@ -258,6 +259,7 @@ square_tiles:
       border-color: '#1240ab'
       background-color: '#1240ab'
       font-color: '#FFFFFF'
+      image-link: '/images/domains_icon_64px.png'
       link:
         link: '#FFFFFF'
         visited: '#FFFFFF'
@@ -301,19 +303,7 @@ rectangle_tile:
       visited: '#FFFFFF'
       hover: '#FFFFFF'
       active: '#FFFFFF'
-  memory:
-    border-color: '#3f9d2d'
-    background-color: '#0b61a4'
-    font-color: '#FFFFFF'
-    link:
-      link: '#FFFFFF'
-      visited: '#FFFFFF'
-      hover: '#FFFFFF'
-      active: '#FFFFFF'
 
-#  domains:
-#  routes:
-#  services:
 
 tab_menu:
   border-color: '#000000'
@@ -361,7 +351,7 @@ modal:
     app_details:
       width: 900
     app_push:
-      width: 250
+      width: 900
     delete-confirmation:
       width: 500
     error-message:
@@ -372,3 +362,11 @@ controls:
       border-color: '#cccccc'
       background-color: '#000000'
       font-color: '#FFFFFF'
+
+app_push:
+  list:
+    background-color: '#05296e'
+    border-color: '#1144aa'
+  tags:
+    tag_color: '#028e98'
+    text_color: '#00af64'
