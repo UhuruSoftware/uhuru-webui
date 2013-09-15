@@ -151,11 +151,11 @@
 
 
         <% owners_list.each do |owner| %>
-            <div class="square_tile members">
+            <div class="square_tile">
                 <div class="square_tile owner" title="<%= owner.email %>">
                   <span><%= owner.email %></span>
                   <span>Owner</span>
-                  <button type="button" id="<%= owner.guid %>" class="image s24px trash" title="Delete '<%= owner.email %>'"></button>
+                  <button type="button" id="<%= owner.guid %>" class="image s24px trash" title="Delete '<%= owner.email %>'" onclick="deleteUserModal(this, 'owner');"></button>
 
                   <span class="span_bg_icon"></span>
                 </div>
@@ -167,7 +167,7 @@
                 <div class="square_tile billing" title="<%= billing.email %>">
                   <span><%= billing.email %></span>
                   <span>Billing Manager</span>
-                  <button type="button" id="<%= billing.guid %>" class="image s24px trash" title="Delete '<%= billing.email %>'"></button>
+                  <button id="<%= billing.guid %>" class="image s24px trash" title="Delete '<%= billing.email %>'" onclick="deleteUserModal(this, 'billing');"></button>
 
                   <span class="span_bg_icon"></span>
                 </div>
@@ -179,7 +179,7 @@
                 <div class="square_tile auditor" title="<%= auditor.email %>">
                   <span><%= auditor.email %></span>
                   <span>Auditor</span>
-                  <button type="button" id="<%= auditor.guid %>" class="image s24px trash" title="Delete '<%= auditor.email %>'"></button>
+                  <button type="button" id="<%= auditor.guid %>" class="image s24px trash" title="Delete '<%= auditor.email %>'" onclick="deleteUserModal(this, 'auditor');"></button>
 
                   <span class="span_bg_icon"></span>
                 </div>
@@ -198,7 +198,7 @@
           Are you sure you want to delete the user?
         </p>
       </div>
-      <div class="modal-footer">
+      <div class="modal_footer">
         <% unless error_message.nil? || error_message.empty? %>
             <div class="error"> <%= error_message %> </div>
         <% end %>
@@ -208,8 +208,8 @@
           <form action="/deleteUser" method="post">
             <button type="button" class="cancel_button">Cancel</button>
             <button type="submit" value="Delete">Delete</button>
-            <input type="text" id="selected_guid" value="" name="thisUser"/>
-            <input type="text" id="aditional_data" value="" name="thisUserRole"/>
+            <input type="hidden" id="selected_guid" value="" name="thisUser"/>
+            <input type="hidden" id="aditional_data" value="" name="thisUserRole"/>
             <input type="hidden" name="current_organization" value="<%= current_organization %>" />
             <input type="hidden" name="current_tab" value="<%= current_tab %>" />
           </form>
@@ -222,18 +222,18 @@
 
   <% if defined?(current_tab) && current_tab != nil && current_tab == "domains" %>
 
-      <div class="square_tile">
         <% domains_list.each do |domain| %>
             <% if domain.owning_org_name == organization_name || domain.owning_org_name == 'Shared' %>
-                <div class="square_tile domain" title="<%= domain.name %>">
-                  <span><%= domain.wildcard %></span>
-                  <span><%= domain.name %></span>
-                  <button id="<%= domain.guid %>" class="image s24px trash" title="Delete '<%= domain.name %>'"></button>
-                  <span class="span_bg_icon_domain"></span>
+                <div class="square_tile">
+                    <div class="square_tile domain" title="<%= domain.name %>">
+                      <span><%= domain.wildcard %></span>
+                      <span><%= domain.name %></span>
+                      <button type="button" id="<%= domain.guid %>" class="image s24px trash" title="Delete '<%= domain.name %>'"></button>
+                      <span class="span_bg_icon_domain"></span>
+                    </div>
                 </div>
             <% end %>
         <% end %>
-      </div>
 
 
       <div class="modal delete_confirmation domain hide">
@@ -243,7 +243,7 @@
 
         <div class="modal_content">
           <p>
-            Are you sure you want to delete the domain "<span id="this_domain_name"></span>"?
+            Are you sure you want to delete the domain?
           </p>
           <p>
             <strong>

@@ -1,23 +1,22 @@
-<div class="dark_background"> </div>
+<div class="modal-background"> </div>
 
-
-
-<div class="modal fade hide app_details_modal" id="details_<%= app.name %>">
-  <div class="modal_header" id="app_details_header">
-    <a href="<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/spaces/#{current_space}/apps" %>" class="close"></a>
+<div class="modal app_details" id="details_<%= app.name %>">
+  <div class="modal_header">
+    <%= app.name %>
   </div>
 
-  <div class="modal-body app_body">
-    <table>
-      <tr>
-        <td>
-          <div class="app-control">
-            <div class="tile_app_name">
-              <span class="app_name_big"><%= app.name %></span>
-              <span class="app_status">Status: <span class="pass_app_status"><%= app.state %></span></span>
-              <a href="#"><span class="small_trash delete-app-button" id="<%= app.name %>" title="<%= app.name %>"></span></a>
-            </div>
+  <div class="modal_content">
+    <div style="margin-bottom: 15px;">
+      <div>
+        <div class="rectangle_tile">
+          <div class="rectangle_tile app">
+            <span><%= app.name %></span>
+            <span><%= app.state %></span>
+            <button type="button" class="image s24px trash" title="Delete '<%= app.name %>'"></button>
+          </div>
+        </div>
 
+        <div class="right_buttons">
             <% if app.state == "STOPPED" %>
                 <form action="/startApp" method="post">
                   <input type="hidden" name="appName" value="<%= app.name %>" />
@@ -37,111 +36,107 @@
                   <input type="submit" name="stopApp" class="stop stop_button_apps stopApp_btn" value="" />
                 </form>
             <% end %>
-          </div>
-        </td>
-        <td></td>
-      </tr>
+        </div>
+      </div>
+    </div>
 
-      <tr>
-        <td>
-          <h4 class="app_details_titles">Services Bound
-            <input type="button" class="plus button_bound_services get_service_name" style="float: right;" title="<%= app.name %>" /></h4>
-          <div id="hidden_app_div" style="display: none;">
-            <span class="hidden_span"></span>
-          </div>
-          <ul class="app_details_ul">
-            <% app.services.each do |service| %>
-                <li class="tile_service_name get_service_name" id="<%= service.name %>" title="<%= app.name %>">
-                  <span class="service_name" title="<%= service.name %>"><%= service.name %></span>
-                  <input type="button" class="small_trash button_unbound_services" value="" />
-                </li>
-            <% end %>
-          </ul>
-        </td>
-        <td>
-          <h4 class="app_details_titles">URIs Bound <input type="button" class="plus button_bound_uri get_uri_name" style="float: right;" title="<%= app.name %>" /></h4>
-          <ul class="app_details_ul">
-            <% app.uris.each do |uri| %>
-                <li class="tile_space_name get_uri_name" id="<%= uri.url %>" title="<%= app.name %>">
-                  <span class="uri_name" title="<%= uri.url %>"><%= uri.url %></span>
-                  <input type="button" class="small_trash button_unbound_uri" value="" />
-                </li>
-            <% end %>
-          </ul>
-        </td>
-      </tr>
-
-      <tr>
-        <td>
-          <h4 class="app_details_titles">App Instances
-            <span style="float: right">
-                <input type="button" class="minus app_minus_instance" />
-                <input type="button" class="plus app_plus_instance"  />
-            </span>
-          </h4>
-
-          <ul class="app_details_ul">
-            <li class="tile_app_details_instances">
-                <span class="instance-info">
-                    <span class="instance-count pass_app_instances app_instances_count"><%= app.instances %></span>
-                    <span class="instance-type">Provisioned</span>
-                </span>
-                <span class="instance-info">
-                    <span class="instance-count pass_app_instances"><%= app.instances %></span>
-                    <span class="instance-type">Running</span>
-                </span>
-            </li>
-          </ul>
-          <p class="app_text_p" style="text-align: left;">
-            Max memory: 1024MB
-          </p>
-        </td>
-        <td>
-          <h4 class="app_details_titles">Memory Provisioned
-            <span style="float: right">
-                <input type="button" class="minus app_minus_memory" />
-                <input type="button" class="plus app_plus_memory" />
-            </span>
-          </h4>
-          <ul class="app_details_ul">
-            <li class="tile_app_details_memory" style="color: #fff;">
-                <span class="instance-count pass_app_memory">
-                      <div class="app_memory_count">
-                        <%= app.memory %>
-                      </div>
-                </span>
-              <span class="instance-type">MB</span>
-            </li>
-          </ul>
-          <div class="slider_case">
-            <div class="slider_div_app" id="slider_case_<%= app.name %>" style="height: 12px;">
-
-              <div id="slider_app_memory"></div>
-
+    <div>
+      <div>
+        <h4>Services Bound<div class="right_buttons"><button type="button" class="image s24px plus bind_service_button" title="<%= app.name %>"></button></div></h4>
+          <% app.services.each do |service| %>
+            <div class="rectangle_tile">
+              <div class="rectangle_tile service">
+                <span><%= service.name %></span>
+                <button type="button" class="image s24px trash" title="Delete '<%= service.name %>'"></button>
+              </div>
             </div>
+          <% end %>
+      </div>
 
-            <p class="app_text_p" style="text-align: left;">
-              Max memory: 1024MB
-            </p>
+      <div>
+        <h4>URIs Bound<div class="right_buttons"><button type="button" class="image s24px plus bind_uri_button" title="Delete '<%= app.name %>'" id="<%= app.name %>"></button></div></h4>
+          <% app.uris.each do |uri| %>
+              <div class="rectangle_tile">
+                <div class="rectangle_tile uri">
+                    <span><%= uri.url %></span>
+                    <button type="button" class="image s24px trash" title="Delete '<%= uri.url %>'"></button>
+                </div>
+              </div>
+          <% end %>
+      </div>
+    </div>
+
+    <div>
+      <div>
+        <h4>App Instances
+            <div class="right_buttons">
+              <button type="button" class="image s24px minus subtract_instance"></button>
+              <button type="button" class="image s24px plus add_instance"></button>
+            </div>
+        </h4>
+
+        <div class="rectangle_tile">
+          <div class="rectangle_tile instances">
+            <table style="width: 100%;">
+              <tr>
+                  <td class="pass_app_instances instances_count"><%= app.instances %></td>
+                  <td>Provisioned</td>
+              </tr>
+              <tr>
+                <td><%= app.instances %></td>
+                <td>Running</td>
+              </tr>
+            </table>
           </div>
-        </td>
-      </tr>
-    </table>
+        </div>
+          <span>
+            Max memory: 1024MB
+          </span>
+      </div>
+
+      <div>
+        <h4>Memory Provisioned
+            <div class="right_buttons">
+              <button type="button" class="image s24px minus subtract_memory"></button>
+              <button type="button" class="image s24px plus add_memory"></button>
+            </div>
+        </h4>
+
+        <div class="rectangle_tile">
+          <div class="rectangle_tile instances">
+            <span class="instance-count pass_app_memory">
+                  <div class="memory_count">
+                    <%= app.memory %>
+                  </div>
+            </span>
+            <span>MB</span>
+          </div>
+        </div>
+
+        <div class="slider_div_app" id="slider_case_<%= app.name %>">
+          <div id="memory_slider"></div>
+        </div>
+      </div>
+    </div>
   </div>
 
-  <div class="modal-footer app_details_footer">
-    <span class="server_errors"><!-- %#error_message %> --></span>
+  <div class="modal_footer">
+    <% unless error_message.nil? || error_message.empty? %>
+        <div class="error"> <%= error_message %> </div>
+    <% end %>
+    <p class="hide hidden_message">Deleting organization...</p>
+
     <form action="/updateApp" method="post">
-      <input type="hidden" class="send_app_name" name="appName" value="<%= app.name %>" />
-      <input type="hidden" class="send_app_instances" name="appInstances" value="<%= app.instances %>"/>
-      <input type="hidden" class="send_app_memory" name="appMemory" value="<%= app.memory %>" />
+      <input type="text" class="send_app_name" name="appName" value="<%= app.name %>" />
+      <input type="text" class="send_app_instances" name="appInstances" value="<%= app.instances %>"/>
+      <input type="text" class="send_app_memory" name="appMemory" value="<%= app.memory %>" />
       <input type="hidden" name="current_organization" value="<%= current_organization %>" />
       <input type="hidden" name="current_space" value="<%= current_space %>" />
       <input type="hidden" name="current_tab" value="<%= current_tab %>" />
 
       <div>
-        <a href="<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/spaces/#{current_space}/apps" %>" class="btn btn_right_create_organization_and_space close_app_details cancel"><span class="line">| </span>Cancel </a>
-        <button type="submit" class="btn btn_left_create_organization_and_space hidden_app_details_submit_button ok"><span class="line">| </span>Update </button>
+        <button type="button" onclick="window.location = '<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/spaces/#{current_space}/apps" %>';" class="cancel_button">Cancel</button>
+        <button type="submit" class="update_button">Update</button>
       </div>
     </form>
   </div>
@@ -149,148 +144,144 @@
 
 
 
-    <div class="modal fade hide" id="saving_modal">
-        <div class="modal-header" style="background-color: #187ebc;">
-            <h3>Saving changes</h3>
-        </div>
-        <div class="modal-body">
-            <p>
-                Please wait while your changes are saved.
-            </p>
-            <p style="font-size: 0.8em">
-                This dialog will be dismissed automatically after the changes are made.
-            </p>
-        </div>
+<div class="modal hide" id="saving_modal">
+  <div class="modal-header" style="background-color: #187ebc;">
+    <h3>Saving changes</h3>
+  </div>
+  <div class="modal_body">
+    <p>
+      Please wait while your changes are saved.
+    </p>
+    <p>
+      This dialog will be dismissed automatically after the changes are made.
+    </p>
+  </div>
+</div>
+
+
+
+<div class="modal bind_service hide">
+  <form action="/bindServices" method="post">
+
+    <div class="modal_header">
+      <h3>Add service</h3>
     </div>
-
-
-
-    <div class="modal fade hide" id="bind_service_modal">
-        <form action="/bindServices" method="post">
-
-        <div class="modal-header">
-            <h3>Add service</h3>
-        </div>
-        <div class="modal-body">
-            <p>Add a new service to <span></span></p>
-            <p>
-                <label for="bind_services_list">Available services</label>
-                <select id="bind_services_list" name="serviceName" class="modal_input_box">
-                    <% services_list.each do |service| %>
-                        <option value="<%= service.name %>" id="<%= service.name %>"> <%= service.name %> </option>
-                    <% end %>
-                </select>
-            </p>
-        </div>
-        <div class="modal-footer">
-            <input type="hidden" id="bind_service_app_name" name="appName" value="<%= app.name %>" />
-            <input type="hidden" name="current_organization" value="<%= current_organization %>" />
-            <input type="hidden" name="current_space" value="<%= current_space %>" />
-            <input type="hidden" name="current_tab" value="<%= current_tab %>" />
-
-            <div>
-                <button type="button" class="btn btn_right_bind cancel"><span class="line">| </span>Cancel </button>
-                <button type="submit" class="btn btn_left_bind ok"><span class="line">| </span>Bind </button>
-            </div>
-        </div>
-        </form>
+    <div class="modal_body">
+      <p>Add a new service to <span></span></p>
+      <p>
+        <label for="bind_services_list">Available services</label>
+        <select id="bind_services_list" name="serviceName" class="modal_input_box">
+          <% services_list.each do |service| %>
+              <option value="<%= service.name %>" id="<%= service.name %>"> <%= service.name %> </option>
+          <% end %>
+        </select>
+      </p>
     </div>
+    <div class="modal_footer">
+      <input type="hidden" id="bind_service_app_name" name="appName" value="<%= app.name %>" />
+      <input type="hidden" name="current_organization" value="<%= current_organization %>" />
+      <input type="hidden" name="current_space" value="<%= current_space %>" />
+      <input type="hidden" name="current_tab" value="<%= current_tab %>" />
 
-    <div class="modal fade hide" id="unbind_service_modal">
-        <div class="modal-header">
-            <h3>Unbind service</h3>
-        </div>
-    <div class="modal-body">
-        <p>
-            Are you sure you want to unbind <span style="font-weight: bold">
-                </span> from <span style="font-weight: bold"></span>? Your
-            app will no longer be able to connect to this service.
-        </p>
-        <p>
-            Unbinding does not delete the service. Please delete service from service page to permanently delete it.
-        </p>
+      <div>
+        <button type="button" class="cancel_button_app_details">Cancel</button>
+        <button type="submit">Bind</button>
+      </div>
     </div>
-    <div class="modal-footer">
-        <form action="/unbindServices" method="post">
-            <input type="hidden" name="serviceName" id="unbind_serviceName" />
-            <input type="hidden" id="unbind_service_app_name" name="appName" value="<%= app.name %>" />
-            <input type="hidden" name="current_organization" value="<%= current_organization %>" />
-            <input type="hidden" name="current_space" value="<%= current_space %>" />
-            <input type="hidden" name="current_tab" value="<%= current_tab %>" />
+  </form>
+</div>
 
-            <div>
-                <button type="button" class="btn btn_right_unbind cancel"><span class="line">| </span>Cancel </button>
-                <button type="submit" class="btn btn_left_unbind danger"><span class="line">| </span>Unbind </button>
-            </div>
-        </form>
+<div class="modal bind_uri hide" >
+  <form action="/bindUri" method="post">
+    <div class="modal_header">
+      <h3>Add new URI</h3>
     </div>
+    <div class="modal_content">
+      <table style="width: 100%;">
+        <tbody>
+        <tr>
+          <td>
+            <label for="host">host: </label>
+            <input type="text" name="host" class="modal_input_box"/>
+          </td>
+          <td style="vertical-align: top; color: #ffffff;">
+            <label for="domain">domain: </label>
+            <select class="modal_input_box" name="domain">
+              <% @domains_list.each do |domain| %>
+                  <% if domain.owning_org_name == organization_name || domain.owning_org_name == 'Shared' %>
+                      <option value="<%= domain.guid %>"><%= domain.name %></option>
+                  <% end %>
+              <% end %>
+            </select>
+          </td>
+        </tr>
+        </tbody>
+      </table>
     </div>
+    <div class="modal_footer">
+      <input type="hidden" id="bind_uri_app_name" name="appName" value="<%= app.name %>" />
+      <input type="hidden" name="current_organization" value="<%= current_organization %>" />
+      <input type="hidden" name="current_space" value="<%= current_space %>" />
+      <input type="hidden" name="current_tab" value="<%= current_tab %>" />
 
-
-
-    <div class="modal fade hide" id="bind_uri_modal">
-        <form action="/bindUri" method="post">
-            <div class="modal-header">
-                <h3>Add new URI</h3>
-            </div>
-            <div class="modal-body">
-            <table style="width: 100%;">
-                <tbody>
-                    <tr>
-                        <td>
-                            <label for="host">host: </label>
-                            <input type="text" name="host" class="modal_input_box"/>
-                        </td>
-                        <td style="vertical-align: top; color: #ffffff;">
-                          <label for="domain">domain: </label>
-                          <select class="modal_input_box" name="domain">
-                            <% @domains_list.each do |domain| %>
-                                <% if domain.owning_org_name == organization_name || domain.owning_org_name == 'Shared' %>
-                                    <option value="<%= domain.guid %>"><%= domain.name %></option>
-                                <% end %>
-                            <% end %>
-                          </select>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-            </div>
-            <div class="modal-footer bind_uri_footer">
-                <input type="hidden" id="bind_uri_app_name" name="appName" value="<%= app.name %>" />
-                <input type="hidden" name="current_organization" value="<%= current_organization %>" />
-                <input type="hidden" name="current_space" value="<%= current_space %>" />
-                <input type="hidden" name="current_tab" value="<%= current_tab %>" />
-
-                <div>
-                    <button type="button" class="btn btn_right_bind cancel"><span class="line">| </span>Cancel </button>
-                    <button type="submit" class="btn btn_left_bind ok"><span class="line">| </span>Bind </button>
-                </div>
-            </div>
-        </form>
+      <div>
+        <button type="button" class="cancel_button_app_details">Cancel</button>
+        <button type="submit">Bind</button>
+      </div>
     </div>
+  </form>
+</div>
 
 
-    <div class="modal fade hide" id="unbind_uri_modal">
-        <div class="modal-header">
-            <h3>Unbind URI</h3>
-        </div>
-        <div class="modal-body">
-            <p>
-                Are you sure you want to unbind this app? <br />Your app will no longer be able to use this URI.
-            </p>
-        </div>
-        <div class="modal-footer">
-            <form action="/unbindUri" method="post">
-                <input type="hidden" name="appUrl" id="unbind_uriName" />
-                <input type="hidden" id="unbind_uri_app_name" name="appName" value="<%= app.name %>" />
-                <input type="hidden" name="current_organization" value="<%= current_organization %>" />
-                <input type="hidden" name="current_space" value="<%= current_space %>" />
-                <input type="hidden" name="current_tab" value="<%= current_tab %>" />
+<div class="modal unbind_service hide">
+  <div class="modal_header">
+    <h3>Unbind service</h3>
+  </div>
+  <div class="modal_content">
+    <p>
+      Are you sure you want to unbind your app from this url? will no longer be able to connect to this service.
+    </p>
+    <p>
+      Unbinding does not delete the service. Please delete service from service page to permanently delete it.
+    </p>
+  </div>
+  <div class="modal_footer">
+    <form action="/unbindServices" method="post">
+      <input type="hidden" name="serviceName" id="unbind_serviceName" />
+      <input type="hidden" id="unbind_service_app_name" name="appName" value="<%= app.name %>" />
+      <input type="hidden" name="current_organization" value="<%= current_organization %>" />
+      <input type="hidden" name="current_space" value="<%= current_space %>" />
+      <input type="hidden" name="current_tab" value="<%= current_tab %>" />
 
-                <div>
-                    <button type="button" class="btn btn_right_unbind cancel"><span class="line">| </span>Cancel </button>
-                    <button type="submit" class="btn btn_left_unbind danger"><span class="line">| </span>Unbind </button>
-                </div>
-            </form>
-        </div>
-    </div>
+      <div>
+        <button type="button" class="cancel_button_app_details">Cancel</button>
+        <button type="submit">Unbind</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="modal unbind_uri hide">
+  <div class="modal_header">
+    <h3>Unbind URI</h3>
+  </div>
+  <div class="modal_content">
+    <p>
+      Are you sure you want to unbind this app? <br />Your app will no longer be able to use this URI.
+    </p>
+  </div>
+  <div class="modal_footer">
+    <form action="/unbindUri" method="post">
+      <input type="text" name="appUrl" id="unbind_uriName" />
+      <input type="hidden" id="unbind_uri_app_name" name="appName" value="<%= app.name %>" />
+      <input type="hidden" name="current_organization" value="<%= current_organization %>" />
+      <input type="hidden" name="current_space" value="<%= current_space %>" />
+      <input type="hidden" name="current_tab" value="<%= current_tab %>" />
+
+      <div>
+        <button type="button" class="cancel_button_app_details">Cancel</button>
+        <button type="submit">Unbind</button>
+      </div>
+    </form>
+  </div>
+</div>
