@@ -1,34 +1,44 @@
 ---
 
-background-color: '#FFFFFF'
-background-image: "url('/images/backgrounds/math_paper.png')"
+background-color: '#005f78'
+background-image: "url('/images/backgrounds/bubbles.png')"
 font-family: 'QuickSand'
-font-color: '#000000'
+font-color: '#daf9ff'
+background-repeat: 'false'
 link:
-  link: '#FF00FF'
-  visited: '#00F3F9'
-  hover: '#326544'
-  active: '#098786'
+  link: '#daf9ff'
+  visited: '#ffffff'
+  hover: '#007491'
+  active: '#ffffff'
 
 header:
-  background-color: '#5EAD63'
-  border-color: '#072463'
-  font-color: '#FFFFFF'
+  background-color: '#10101E'
+  border-color: '#007491'
+  font-color: '#daf9ff'
   link:
-    link: '#FFFFFF'
+    link: '#daf9ff'
     visited: '#FFFFFF'
-    hover: '#FFFFFF'
+    hover: '#007491'
     active: '#FFFFFF'
 
 footer:
   background-color: '#1C1c1c'
-  border-color: '#072463'
-  font-color: '#FFFFFF'
+  border-color: '#007491'
+  font-color: '#daf9ff'
   link:
-    link: '#FF00FF'
+    link: '#daf9ff'
     visited: '#00F3F9'
-    hover: '#326544'
+    hover: '#007491'
     active: '#098786'
+
+breadcrumb:
+  breadcrumb:
+   color: '#daf9ff'
+   font-size: '18px'
+  breadcrumb-element:
+    color: '#daf9ff'
+    hover: '#ffffff'
+    font-size: '18px'
 
 error:
   border-color: '#D8000C'
@@ -85,8 +95,8 @@ tile-options:
 tiles:
   org:
     top:
-      border-color: '#C075DE'
-      background-color: '#782A97'
+      border-color: '#4573d5'
+      background-color: '#1142aa'
       font-color: '#FFFFFF'
       link:
         link: '#FFFFFF'
@@ -94,8 +104,8 @@ tiles:
         hover: '#FFFFFF'
         active: '#FFFFFF'
     left:
-      border-color: '#F37B89'
-      background-color: '#D93649'
+      border-color: '#ffa840'
+      background-color: '#ff8b00'
       font-color: '#FFFFFF'
       image-link: '/images/users_32px.png'
       link:
@@ -104,8 +114,8 @@ tiles:
         hover: '#326544'
         active: '#098786'
     right:
-      border-color: '#8FEB77'
-      background-color: '#4DBF30'
+      border-color: '#33cdc7'
+      background-color: '#009b95'
       font-color: '#FFFFFF'
       image-link: '/images/money_bag_32px.png'
       link:
@@ -115,8 +125,8 @@ tiles:
         active: '#000000'
   space:
     top:
-      border-color: '#C075DE'
-      background-color: '#782A97'
+      border-color: '#e768ab'
+      background-color: '#7f0055'
       font-color: '#FFFFFF'
       link:
         link: '#FFFFFF'
@@ -124,8 +134,8 @@ tiles:
         hover: '#FFFFFF'
         active: '#FFFFFF'
     left:
-      border-color: '#F37B89'
-      background-color: '#D93649'
+      border-color: '#f73esf'
+      background-color: '#ef002a'
       font-color: '#FFFFFF'
       image-link: '/images/users_32px.png'
       link:
@@ -134,8 +144,8 @@ tiles:
         hover: '#326544'
         active: '#098786'
     right:
-      border-color: '#8FEB77'
-      background-color: '#4DBF30'
+      border-color: '#a13dd5'
+      background-color: '#7309aa'
       font-color: '#FFFFFF'
       image-link: '/images/money_bag_32px.png'
       link:
@@ -149,15 +159,15 @@ tiles:
       background-color: '#000000'
       font-color: '#FFFFFF'
       link:
-        link: '#FF00FF'
-        visited: '#00F3F9'
-        hover: '#326544'
-        active: '#098786'
+        link: '#FFFFFF'
+        visited: '#FFFFFF'
+        hover: '#FFFFFF'
+        active: '#FFFFFF'
     left:
       border-color: '#cccccc'
       background-color: '#000000'
       font-color: '#FFFFFF'
-      image-link: '/images/erlang_icon.png'
+      #image-link: '/images/erlang_icon.png'
       link:
         link: '#FF00FF'
         visited: '#00F3F9'
@@ -167,7 +177,7 @@ tiles:
       border-color: '#cccccc'
       background-color: '#000000'
       font-color: '#FFFFFF'
-      image-link: '/images/erlang_icon.png'
+      #image-link: '/images/erlang_icon.png'
       link:
         link: '#FF00FF'
         visited: '#00F3F9'
@@ -179,10 +189,10 @@ tiles:
       background-color: '#a60000'
       font-color: '#FFFFFF'
       link:
-        link: '#FF00FF'
-        visited: '#00F3F9'
-        hover: '#326544'
-        active: '#098786'
+        link: '#FFFFFF'
+        visited: '#FFFFFF'
+        hover: '#FFFFFF'
+        active: '#FFFFFF'
     left:
       border-color: '#cccccc'
       background-color: '#1240ab'
@@ -257,7 +267,7 @@ square_tiles:
       active: '#FFFFFF'
   route:
       border-color: '#1240ab'
-      background-color: '#1240ab'
+      background-color: '#a60000'
       font-color: '#FFFFFF'
       image-link: '/images/domains_icon_64px.png'
       link:

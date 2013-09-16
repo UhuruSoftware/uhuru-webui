@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html xmlns="http://www.w3.org/1999/html">
 <head>
   <title><%= $config[:webui][:site_tab] || 'Uhuru AppCloud' %></title>
   <link rel="stylesheet" type="text/css" href="/css"/>
@@ -42,7 +42,10 @@
 
     <div class="modal logout hide">
       <div class="modal_header">
-        <p>Are you sure you want to logout?</p> <br />
+        <span>Logout</span>
+      </div>
+      <div class="modal_content">
+        <p class="warning">Are you sure you want to logout?</p>
       </div>
 
       <div class="modal_footer">

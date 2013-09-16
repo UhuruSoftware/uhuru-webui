@@ -133,7 +133,7 @@
 
           <div class="modal delete_confirmation app hide">
             <div class="modal_header">
-              <h3 id="selected_name"></h3>
+              <span id="selected_name"></span>
             </div>
 
             <div class="modal_content">
@@ -172,8 +172,8 @@
     <% services_list.each do |service| %>
         <div class="tile service">
           <div class= "tile top">
-            <a href="#" class="tile_action" title="<%= service.name %>">
-              <span><%= service.name %></span>
+            <a class="tile_action" href="#" title="<%= service.name %>">
+              <%= service.name %>
             </a>
 
             <button type="button" class="image s24px trash" id="<%= service.guid %>" title="Delete '<%= service.name %>'" />
@@ -199,7 +199,7 @@
 
     <div class="modal delete_confirmation service hide" id="delete_service">
       <div class="modal_header">
-        <h3 id="selected_name"></h3>
+        <span id="selected_name"></span>
       </div>
 
       <div class="modal_content">
@@ -235,7 +235,7 @@
         <div class="square_tile">
           <div class="square_tile owner" title="<%= owner.email %>">
             <span><%= owner.email %></span>
-            <span>Owner</span>
+            <span class="bottom_left">Owner</span>
             <button type="button" class="image s24px trash" id="<%= owner.guid %>" title="<%= owner.email %>" onclick="deleteUserModal(this, 'owner');" />
 
             <span class="span_bg_icon"></span>
@@ -247,7 +247,7 @@
         <div class="square_tile">
           <div class="square_tile developer" title="<%= dev.email %>">
             <span><%= dev.email %></span>
-            <span>Developer</span>
+            <span class="bottom_left">Developer</span>
             <button type="button" class="image s24px trash" id="<%= dev.guid %>" title="<%= dev.email %>" onclick="deleteUserModal(this, 'developer');" />
 
             <span class="span_bg_icon"></span>
@@ -259,7 +259,7 @@
         <div class="square_tile">
           <div class="square_tile auditor" title="<%= auditor.email %>">
             <span><%= auditor.email  %></span>
-            <span>Auditor</span>
+            <span class="bottom_left">Auditor</span>
             <button type="button" class="image s24px trash" id="<%= auditor.guid %>" title="<%= auditor.email %>" onclick="deleteUserModal(this, 'auditor');" />
 
             <span class="span_bg_icon"></span>
@@ -271,7 +271,7 @@
 
     <div class="modal delete_confirmation user hide">
       <div class="modal_header">
-        <h3 id="selected_name"></h3>
+        <span id="selected_name"></span>
       </div>
 
       <div class="modal_content">
@@ -318,8 +318,7 @@
           <div class="square_tile route">
             <a href="http://<%= route.name %>" class="tile_action" title="<%= route.name %>"><%= route.name %></a>
 
-            <span>Route</span>
-            <span class="span_bg_icon_routes"></span>
+            <span class="bottom_left">Route</span>
             <button type="button" class="image s24px trash" id="<%= route.guid %>" title="<%= route_app_name %>" />
           </div>
         </div>
@@ -327,7 +326,7 @@
 
     <div class="modal delete_confirmation route hide">
       <div class="modal_header">
-        <h3 id="selected_name"></h3>
+        <span id="selected_name"></span>
       </div>
       <form action="/deleteRoute" method="post">
 
@@ -363,10 +362,8 @@
           <% if domain.owning_org_name == organization_name && domain.owning_spaces.count { |s| s.name == space_name } != 0 %>
             <div class="square_tile">
               <div class="square_tile domain" title="<%= domain.name %>">
-                <span><%= domain.wildcard %></span>
                 <span><%= domain.name %></span>
-
-                <span class="span_bg_icon_domains"></span>
+                <span class="bottom_left">Domain: <%= domain.wildcard %></span>
                 <button type="button" class="image s24px trash" id="<%= domain.name %>" title="<%= domain.guid %>" />
               </div>
             </div>
@@ -376,7 +373,7 @@
 
     <div class="modal delete_confirmation domain hide">
       <div class="modal_header">
-        <h3 id="selected_name"></h3>
+        <span id="selected_name"></span>
       </div>
 
       <div class="modal_content">
@@ -410,7 +407,7 @@
 
 <div class="modal space hide" id="delete_current_space_modal">
   <div class="modal_header">
-    <h3>Delete '<%= space_name %>'</h3>
+    <span>Delete '<%= space_name %>'</span>
   </div>
 
   <div class="modal_content">
@@ -445,7 +442,7 @@
 <% unless error_message.nil? || error_message.empty? %>
     <div class="modal error-message" >
       <div class="modal_header">
-        <h3>Error</h3>
+        <span>Error</span>
       </div>
 
       <div class="modal_content">

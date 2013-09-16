@@ -22,9 +22,14 @@ html, body
 
     background-repeat: repeat;
     background-attachment:fixed;
+    background-position: 50% 0%;
     font-family: "<%= design['font-family'] %>";
     font-weight: 200;
     color: <%= design['font-color'] %>;
+
+    <% if design['background-repeat'] == 'false' %>
+        background-repeat: no-repeat;
+    <% end %>
 }
 
 a
@@ -75,15 +80,14 @@ a:<%= style %>
 {
     background-color: <%= design['header']['background-color'] %>;
 
-    background-image: <%= design['background-image'] %>;
 
     background-repeat: repeat;
     background-attachment:fixed;
 
 
     color: <%= design['header']['font-color'] %>;
-    border:1px solid <%= design['header']['border-color'] %>;
-    border-width: 0 0 1px 0;
+    border:3px solid <%= design['header']['border-color'] %>;
+    border-width: 0 0 3px 0;
     height:60px; left:0;
     position:fixed;
     width:100%;
@@ -184,8 +188,6 @@ a:<%= style %>
 
 #footer_container
 {
-    background-image: <%= design['background-image'] %>;
-
     background-repeat: repeat;
     background-attachment:fixed;
 
@@ -328,9 +330,9 @@ button.image.s<%= size %>.<%= image %>
     padding: 5px;
     position: relative;
 
-    -webkit-border-radius: 5px;
-    -moz-border-radius:5px;
-    border-radius: 5px;
+    -webkit-border-radius: 2px;
+    -moz-border-radius:2px;
+    border-radius: 2px;
 }
 .square_tile
 {
@@ -338,9 +340,24 @@ button.image.s<%= size %>.<%= image %>
     display: inline-block;
     width: 180px;
     height: 180px;
-    margin: 0 50px 50px 0;
+    margin: 0 10px 30px 10px;
+    padding: 5px;
+
+    -webkit-border-radius: 2px;
+    -moz-border-radius:2px;
+    border-radius: 2px;
+}
+
+.square_tile .bottom_left
+{
+    display: block;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 80%;
     padding: 5px;
 }
+
 .rectangle_tile
 {
     position: relative;
@@ -517,13 +534,26 @@ button.image.s<%= size %>.<%= image %>
 
 .square_tile.<%= tile_type %>
 {
+    top: 0;
+    left: 0;
     position: absolute;
-    background-color: <%= tile_design['background-color'] %>;
+    background-color: <%= html2rgb(tile_design['background-color'], design['tile-options']['opacity']) %>;
     border: 1px solid <%= tile_design['border-color'] %>;
     background-image: url('<%= tile_design["image-link"] %>');
     background-repeat: no-repeat;
     background-position: 50% 50%;
     color: <%= tile_design['font-color'] %>;
+
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+.square_tile.<%= tile_type %>:hover
+{
+    background-color: <%= html2rgb(tile_design['background-color']) %>;
+    -webkit-box-shadow: 0px 0px 15px rgba(50, 50, 50, 1);
+    -moz-box-shadow:    0px 0px 15px rgba(50, 50, 50, 1);
+    box-shadow:         0px 0px 15px rgba(50, 50, 50, 1);
 }
 
 <% tile_design['link'].each do |style, color| %>
@@ -539,7 +569,7 @@ button.image.s<%= size %>.<%= image %>
 
 
 
-    /****************************  details    *******************************/
+    /****************************  rectangle    *******************************/
 
 <% design['rectangle_tile'].each do |tile_type, tile_design| %>
 
@@ -825,8 +855,9 @@ input[type=text], input[type=password], select
     text-align: right;
     font-family: 'Segoe UI Light', 'Open Sans', Verdana, Arial, Helvetica, sans-serif;
     font-weight: 400;
+    font-size: <%= design['breadcrumb']['breadcrumb']['font-size'] %> !important;
     letter-spacing: 0.01em;
-    color: #ffffff;
+    color: <%= design['breadcrumb']['breadcrumb']['color'] %> !important;
 }
 
 .breadcrumb_element,
@@ -834,14 +865,15 @@ input[type=text], input[type=password], select
 {
     padding: 0px;
     text-decoration: none;
-    color: #ffffff;
+    font-size: <%= design['breadcrumb']['breadcrumb']['font-size'] %> !important;
+    color: <%= design['breadcrumb']['breadcrumb-element']['color'] %> !important;
 }
 
 .breadcrumb_link:hover
 {
     padding: 0px;
     text-decoration: none;
-    color: #f5deb3;
+    color: <%= design['breadcrumb']['breadcrumb-element']['hover'] %> !important;
 }
 
 
