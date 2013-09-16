@@ -6,6 +6,7 @@ ENV['BUNDLE_GEMFILE'] = "#{home}/Gemfile"
 require "rubygems"
 require "bundler/setup"
 require "optparse"
+require "time"
 
 require 'json'
 require 'securerandom'
@@ -649,35 +650,52 @@ def main
     logger.error("Uhuru monitoring could not start - #{exception}")
     raise
   end
+  interrupted = false
 
-  delete_all_apps_and_services
-  main_apps
-  delete_all_apps_and_services
+  trap("TERM") { interrupted = true }
+  while true
+    start_time = DateTime.now
+    delete_all_apps_and_services
+    main_apps
+    delete_all_apps_and_services
 
-  report_data_cache_dir = File.expand_path('../../monitoring_cache', __FILE__)
+    report_data_cache_dir = File.expand_path('../../monitoring_cache', __FILE__)
 
-  unless Dir.exist? report_data_cache_dir
-    Dir.mkdir report_data_cache_dir
-  end
-
-  $config[:monitoring][:reports].each do |name, report|
-    resolution = report[:resolution]
-    resolution_unit = report[:resolution_unit]
-    sample_count = report[:sample_count]
-
-    header, data = generate_report(resolution_unit, sample_count, resolution)
-
-    header_file = File.join(report_data_cache_dir, "#{name}.header")
-    data_file = File.join(report_data_cache_dir, "#{name}.data")
-
-    File.open(header_file, 'w') do |file|
-      file << header.to_json
+    unless Dir.exist? report_data_cache_dir
+      Dir.mkdir report_data_cache_dir
     end
 
-    File.open(data_file, 'w') do |file|
-      file << data.to_json
+    $config[:monitoring][:reports].each do |name, report|
+      resolution = report[:resolution]
+      resolution_unit = report[:resolution_unit]
+      sample_count = report[:sample_count]
+
+      header, data = generate_report(resolution_unit, sample_count, resolution)
+
+      header_file = File.join(report_data_cache_dir, "#{name}.header")
+      data_file = File.join(report_data_cache_dir, "#{name}.data")
+
+      File.open(header_file, 'w') do |file|
+        file << header.to_json
+      end
+
+      File.open(data_file, 'w') do |file|
+        file << data.to_json
+      end
     end
+
+    sleep_time = 1500 - (Time.now - start_time).round
+    if (sleep_time > 0)
+      sleep sleep_time
+    end
+
+    if interrupted
+      exit
+    end
+
   end
+
+
 rescue => e
   puts e
   logger.error("#{e.message} #{e.backtrace}")
