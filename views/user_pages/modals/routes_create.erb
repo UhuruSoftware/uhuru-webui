@@ -1,29 +1,27 @@
-<div class="dark_background"> </div>
+<div class="modal-background"> </div>
 
-<div class="modal fade hide" id="create_route" onmousemove="newServiceName();">
-  <div class="modal-header">
-    <a href="<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/spaces/#{current_space}/routes" %>" class="close"></a>
+<div class="modal">
+  <div class="modal_header">
     <h3>New Route</h3>
   </div>
 
-
   <form action="/createRoute" method="post">
-      <div class="modal-body">
+      <div class="modal_content">
         <table style="width: 100%;">
             <tr>
-              <td><label for="service_name">App Name: </label></td>
-              <td><input type="text" id="appName" name="appName" class="modal_input_box" autofocus /></td>
+              <td><label for="appName">App Name: </label></td>
+              <td><input type="text" id="appName" name="appName" autofocus /></td>
             </tr>
 
             <tr>
-              <td><label for="service_name">Host Name: </label></td>
-              <td><input type="text" name="host" class="modal_input_box" /></td>
+              <td><label for="host">Host Name: </label></td>
+              <td><input type="text" name="host" /></td>
             </tr>
 
             <tr>
               <td><label for="domain_guid">Domain: </label></td>
               <td>
-                <select class="modal_input_box" name="domain_guid">
+                <select name="domain_guid">
                     <% domains_list.each do |domain| %>
                       <% if domain.owning_org_name == organization_name || domain.owning_org_name == 'Shared' %>
                         <option value="<%= domain.guid %>"><%= domain.name %></option>
@@ -33,17 +31,19 @@
               </td>
             </tr>
         </table>
-
       </div>
 
-      <div class="modal-footer">
-        <span class="server_errors" id="create_service_failed"><%= error_message %></span>
+      <div class="modal_footer">
+        <% unless error_message.nil? || error_message.empty? %>
+            <div class="error"> <%= error_message %> </div>
+        <% end %>
+        <p class="hide hidden_message">Creating route...</p>
         <div>
-            <a href="<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/spaces/#{current_space}/routes" %>" class="btn btn_right_create_organization_and_space cancel"><span class="line">| </span>Close </a>
+            <button type="button" onclick="window.location = '<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/spaces/#{current_space}/routes" %>';">Close</button>
             <input type="hidden" name="current_organization" value="<%= current_organization %>" />
             <input type="hidden" name="current_space" value="<%= current_space %>" />
             <input type="hidden" name="current_tab" value="<%= current_tab %>" />
-            <button type="submit" class="btn btn_left_create_organization_and_space ok"><span class="line">| </span>Map </button>
+            <button type="submit">Map</button>
         </div>
       </div>
   </form>

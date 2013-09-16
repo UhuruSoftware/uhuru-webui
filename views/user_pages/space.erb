@@ -53,7 +53,7 @@
     <% end %>
 
     <button class="image s32px edit" onclick="showSpacesInput();" />
-    <button class="image s32px trash" />
+    <button class="image s32px trash" onclick="deleteCurrentSpace();" />
   </div>
 </div>
 
@@ -95,7 +95,6 @@
     <% end %>
   </ul>
 </div>
-
 
 <% if defined?(current_tab) && current_tab != nil && current_tab == "apps" %>
     <% apps_list.each do |app| %>
@@ -177,7 +176,7 @@
               <span><%= service.name %></span>
             </a>
 
-            <button class="image s24px trash" id="<%= service.name %>" title="<%= service.guid %>" />
+            <button class="image s24px trash" id="<%= service.guid %>" title="Delete '<%= service.name %>'" />
           </div>
 
           <div class="tile bottom">

@@ -1,30 +1,29 @@
-<div class="dark_background"> </div>
+<div class="modal-background"> </div>
 
-<div class="modal hide" id="create_domain">
-  <div class="modal-header">
-    <a href="<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/domains" %>" class="close"></a>
+<div class="modal">
+  <div class="modal_header">
     <h3>New Domain</h3>
   </div>
 
   <form action="/createDomain" method="post">
-    <div class="modal-body">
+    <div class="modal_content">
       <p>
-        <label for="team_name">Domain Name:</label>
-        <input type="text" name="domainName" class="modal_input_box space_name_i" autofocus />
+        <label for="domainName">Domain Name:</label>
+        <input type="text" name="domainName" autofocus />
         <input type="hidden" name="org_guid" value="<%= current_organization %>" />
         <label for="domain_wildcard">Wildcard Domain?</label><input type="checkbox" class="modal_input_box" name="domain_wildcard" value="true"/><label>(Y/N)</label>
       </p>
-
     </div>
 
-    <div class="modal-footer">
-      <span class="server_errors" id="create_space_failed"><%= error_message %></span>
+    <div class="modal_footer">
+      <% unless error_message.nil? || error_message.empty? %>
+          <div class="error"> <%= error_message %> </div>
+      <% end %>
 
       <div>
-        <a href="<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/domains" %>" class="btn btn_right_create_organization_and_space cancel" id="cancel_b_c_space"><span class="line">| </span>Cancel </a>
+        <button type="button" onclick="window.location = '<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/domains" %>';">Cancel</button>
         <input type="hidden" name="org_guid" value="<%= current_organization %>" />
-        <button type="submit" value="Create" class="btn btn_left_create_organization_and_space ok" id="b_c_space"><span class="line">| </span>Create </button>
-        <p class="hidden_modal_messages" id="p_c_space">Please wait...</p>
+        <button type="submit" >Create</button>
       </div>
     </div>
   </form>

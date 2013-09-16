@@ -1,25 +1,31 @@
-
-
-//
-//          CONTROLLING THE UPDATE ORG AND SPACE INPUT BOX AND TEXT (NAME UPDATES)
-//
-
 function showSpacesInput()
 {
-    document.getElementById('space_input').style.display = 'block';
-    document.getElementById('space_input').value = document.getElementById('space_name').innerHTML;
-    document.getElementById('space_input').focus();
-    document.getElementById('space_input').style.border = '1px solid #2eccfa';
-    document.getElementById('space_name').style.display = 'none';
+    $('#space_input').css({ "display": "block" });
+    $('#space_input').val($('#space_name').attr('innerHTML'))
+    $('#space_input').focus();
+    $('#space_name').css({ "display": "none" });
 }
 
 function showOrganizationsInput()
 {
-    document.getElementById('organization_input').style.display = 'block';
-    document.getElementById('organization_input').value = document.getElementById('organization_name').innerHTML;
-    document.getElementById('organization_input').focus();
-    document.getElementById('organization_input').style.border = '1px solid #2eccfa';
-    document.getElementById('organization_name').style.display = 'none';
+    $('#organization_input').css({ "display": "block" });
+    $('#organization_input').val($('#space_name').attr('innerHTML'))
+    $('#organization_input').focus();
+    $('#organization_name').css({ "display": "none" });
+}
+
+function deleteCurrentOrganization()
+{
+    $('.modal-background').css({ "display": "block" });
+    $('body').css({"overflow":"hidden"});
+    $('#delete_current_organization_modal').fadeIn(600);
+}
+
+function deleteCurrentSpace()
+{
+    $('.modal-background').css({ "display": "block" });
+    $('body').css({"overflow":"hidden"});
+    $('#delete_current_space_modal').fadeIn(600);
 }
 
 $('.tiped').bind({
@@ -30,6 +36,15 @@ $('.tiped').bind({
         $('.tooltips').hide(300);
     }
 });
+
+
+
+
+
+
+
+
+
 
 
 

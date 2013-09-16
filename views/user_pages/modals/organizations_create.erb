@@ -1,26 +1,29 @@
 
-<div class="dark_background"> </div>
+<div class="modal-background"></div>
 
 
-<div class="modal hide" id="create_organization">
-  <div class="modal-header">
-    <a href="<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS %>" class="close"></a>
+<div class="modal">
+  <div class="modal_header">
     <h3>Create Organization</h3>
   </div>
 
   <form action="/createOrganization" method="post" autocomplete="off">
-    <div class="modal-body">
+    <div class="modal_content">
       <p>
         <label for="org_name">Organization Name: </label>
         <input type="text" id="org_name" name="orgName" class="modal_input_box" autofocus />
       </p>
     </div>
-    <div class="modal-footer">
-      <span class="server_errors" id="create_organization_failed"><%= error_message %></span>
-      <p class="hidden_modal_messages" id="p_c_organization">Please wait...</p>
+
+    <div class="modal_footer">
+      <% unless error_message.nil? || error_message.empty? %>
+          <div class="error"> <%= error_message %> </div>
+      <% end %>
+      <p class="hide hidden_message">Please wait...</p>
+
       <div>
-        <a href="<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS %>" class="btn btn_right_create_organization_and_space cancel" id="cancel_b_c_organization"><span class="line">| </span>Cancel </a>
-        <button type="submit" class="btn btn_left_create_organization_and_space ok" id="b_c_organization"><span class="line">| </span>Create </button>
+        <button type="button" onclick="window.location = '<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS %>';">Cancel</button>
+        <button type="submit">Create</button>
       </div>
     </div>
   </form>

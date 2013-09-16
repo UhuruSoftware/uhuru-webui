@@ -3,11 +3,11 @@
 </div>
 
 <div class="sections" id="organizations_page">
-    <div class="manage_content_header">
-        <h2 class="section_title">
-            <span id="organization_text">Organizations </span><span class="count">(<span><%= organizations_count %></span>)</span>
-        </h2>
-        <a href="<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS_CREATE %>" class="plus_sign_32 plus_sign_organization" id="create_organization_btn" value=""></a>
+    <div class="section_title">
+        <p id="organization_name">Organizations (<%= organizations_count %>)</p>
+    </div>
+    <div class="icons_options">
+        <button onclick="window.location = '<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS_CREATE %>';" class="image s32px plus"></button>
     </div>
 
     <% organizations_list.each do |org| %>
@@ -66,7 +66,7 @@
         <div>
           <form action="/deleteOrganization" method="post">
                 <button type="button" class="cancel_button">Cancel</button>
-                <button type="submit" value="Delete">Delete</button>
+                <button type="submit">Delete</button>
                 <input type="hidden" id="selected_guid" name="orgGuid" />
             </form>
         </div>
@@ -96,4 +96,4 @@
     <%= erb(include_erb, :layout => false, :locals => { :error_message => error_message }) %>
 <% end %>
 
-<div class="modal-background" style="display: none;"></div>
+<div class="modal-background hide"></div>
