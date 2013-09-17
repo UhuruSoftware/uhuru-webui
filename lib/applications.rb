@@ -33,7 +33,7 @@ class Applications
           begin
             service_db_name = ServiceInstances.new(@client.base.token, @client.target).create_service_instance(service[:name], space_guid, plan, service[:type])
           rescue
-            error = AppError.new('service error', 'Could not create service for this app, create manually.')
+            error = AppError.new('service error', 'Could not create service for this app, The app was created, try to create the service manually.')
             return error
           end
 
@@ -42,7 +42,7 @@ class Applications
           begin
             app.bind(service_db_name)
           rescue
-            error = AppError.new('bind error', 'Could not bind the app to the service(s).')
+            error = AppError.new('bind error', 'Could not bind the app to the service(s). App created successfully try binding the service(s) manually.')
             return error
           end
         end
@@ -55,13 +55,13 @@ class Applications
       begin
         Library::Routes.new(@client.base.token, @client.target).create(name, space_guid, domain.guid, 'test_host_name')
       rescue
-        error = AppError.new('route error', 'Could not map a route to this app, map it manually.')
+        error = AppError.new('route error', 'Could not map a route to this app. App created successfully try to map it manually.')
         return error
       end
       begin
         new_app.start!
       rescue
-        error = AppError.new('startapp error', 'Could not start the app, start it manually.')
+        error = AppError.new('startapp error', 'Could not start the app, try starting it manually.')
         return error
       end
     end

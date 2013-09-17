@@ -134,13 +134,14 @@ $('.cancel_button_app_details').click(function(){
 
 $('.bind_service_button').click(bind_service);
 $('.bind_uri_button').click(bind_uri);
+
 $('.rectangle_tile .rectangle_tile.service :button').click(unbind_service);
 $('.rectangle_tile .rectangle_tile.uri :button').click(unbind_uri);
 
 
 
 /*
- APP DETAILS UPDATE
+ APP DETAILS UPDATE MEMORY AND INSTANCES
  */
 
 $(function(){
@@ -181,45 +182,39 @@ $(function(){
         }
     }
 
-
-
     $('.add_instance').click(plus_instance);
     $('.subtract_instance').click(minus_instance);
-
-
-    $(function() {
-        var slider = $('#memory_slider').slider({
-            min: 0,
-            max: 1024,
-            step: 32,
-            value: insMemory,
-            range: "min",
-            change: function(event, ui) {
-                var sliderValue = $('#memory_slider').slider( "option", "value" );
-                $('.memory_count').html(sliderValue);
-                $('.send_app_memory').val(sliderValue);
-                if(insMemory != sliderValue)
-                {
-                    $('.update_button').fadeIn('slow');
-                }
-                else
-                {
-                    $('.update_button').fadeOut('slow');
-                }
-            }
-
-        });
-
-
-        $('.add_memory').click(function() {
-            var sliderCurrentValue = $('#memory_slider').slider( "option", "value" );
-            slider.slider( "value", sliderCurrentValue + 32 );
-        });
-
-        $('.subtract_memory').click(function() {
-            var sliderCurrentValue = $('#memory_slider').slider( "option", "value" );
-            slider.slider( "value", sliderCurrentValue - 32 );
-        });
-
+    $('.update_button').hover(function(){
+        var memory = $('#app_memory_setup').val();
+        $('.send_app_memory').val(memory);
     });
+
+
+
+    var saving_modal = function()
+    {
+        $('.modal-background').css({	display: "block", opacity: 0.9, width: "10000px", height: "10000px"});
+        $('body').css({"overflow":"hidden"});
+        $('#saving_modal').fadeIn(400);
+        $('.stopApp_btn').css("display", "block");
+        $('.startApp_btn').css("display", "none");
+    }
+
+    $('.start_app').click(saving_modal);
+    $('.stop_app').click(saving_modal);
+
 });
+
+
+/* this code needs to be redone in another way */
+
+//$(":submit").click(function(){
+//    $(this).hide();
+//    $(":button").hide();
+//    $('.image').show();
+//    $('.hidden_message').fadeIn(300);
+//});
+//$(document).ready(function(){
+//    $(":submit").show();
+//    $(":button").show();
+//});

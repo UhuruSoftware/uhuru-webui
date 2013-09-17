@@ -23,7 +23,7 @@
                   <input type="hidden" name="current_organization" value="<%= current_organization %>" />
                   <input type="hidden" name="current_space" value="<%= current_space %>" />
                   <input type="hidden" name="current_tab" value="<%= current_tab %>" />
-                  <input type="submit" name="startApp" class="start start_button_apps startApp_btn" value="" />
+                  <button type="submit" name="startApp" class="image s24px start start_app" value="" title="Start!"></button>
                 </form>
             <% end %>
 
@@ -33,7 +33,7 @@
                   <input type="hidden" name="current_organization" value="<%= current_organization %>" />
                   <input type="hidden" name="current_space" value="<%= current_space %>" />
                   <input type="hidden" name="current_tab" value="<%= current_tab %>" />
-                  <input type="submit" name="stopApp" class="stop stop_button_apps stopApp_btn" value="" />
+                  <button type="submit" name="stopApp" class="image s24px stop stop_app" value="" title="Stop!"></button>
                 </form>
             <% end %>
         </div>
@@ -47,19 +47,19 @@
             <div class="rectangle_tile">
               <div class="rectangle_tile service">
                 <span><%= service.name %></span>
-                <button type="button" class="image s24px trash" title="Delete '<%= service.name %>'"></button>
+                <button type="button" class="image s24px trash" title="Delete '<%= service.name %>'" id="<%= service.name %>"></button>
               </div>
             </div>
           <% end %>
       </div>
 
       <div>
-        <h4>URIs Bound<div class="right_buttons"><button type="button" class="image s24px plus bind_uri_button" title="Delete '<%= app.name %>'" id="<%= app.name %>"></button></div></h4>
+        <h4>URIs Bound<div class="right_buttons"><button type="button" class="image s24px plus bind_uri_button" title="Delete '<%= app.name %>'"></button></div></h4>
           <% app.uris.each do |uri| %>
               <div class="rectangle_tile">
                 <div class="rectangle_tile uri">
                     <span><%= uri.url %></span>
-                    <button type="button" class="image s24px trash" title="Delete '<%= uri.url %>'"></button>
+                    <button type="button" class="image s24px trash" title="Delete '<%= uri.url %>'" id="<%= uri.url %>"></button>
                 </div>
               </div>
           <% end %>
@@ -89,9 +89,6 @@
             </table>
           </div>
         </div>
-          <span>
-            Max memory: 1024MB
-          </span>
       </div>
 
       <div>
@@ -102,21 +99,11 @@
             </div>
         </h4>
 
-        <div class="rectangle_tile">
-          <div class="rectangle_tile instances">
-            <span class="instance-count pass_app_memory">
-                  <div class="memory_count">
-                    <%= app.memory %>
-                  </div>
-            </span>
-            <span>MB</span>
-          </div>
-        </div>
-
-        <div class="slider_div_app" id="slider_case_<%= app.name %>">
-          <div id="memory_slider"></div>
+        <div>
+            <input type="text" name="appMemory" id="app_memory_setup" value="<%= app.memory %>"/> MB
         </div>
       </div>
+      <br /><br /><br />
     </div>
   </div>
 
@@ -124,12 +111,12 @@
     <% unless error_message.nil? || error_message.empty? %>
         <div class="error"> <%= error_message %> </div>
     <% end %>
-    <p class="hide hidden_message">Deleting organization...</p>
+    <p class="hide hidden_message">Updating current application...</p>
 
     <form action="/updateApp" method="post">
-      <input type="text" class="send_app_name" name="appName" value="<%= app.name %>" />
-      <input type="text" class="send_app_instances" name="appInstances" value="<%= app.instances %>"/>
-      <input type="text" class="send_app_memory" name="appMemory" value="<%= app.memory %>" />
+      <input type="hidden" class="send_app_name" name="appName" value="<%= app.name %>" />
+      <input type="hidden" class="send_app_instances" name="appInstances" value="<%= app.instances %>"/>
+      <input type="hidden" class="send_app_memory" name="appMemory" />
       <input type="hidden" name="current_organization" value="<%= current_organization %>" />
       <input type="hidden" name="current_space" value="<%= current_space %>" />
       <input type="hidden" name="current_tab" value="<%= current_tab %>" />
@@ -145,15 +132,17 @@
 
 
 <div class="modal hide" id="saving_modal">
-  <div class="modal-header" style="background-color: #187ebc;">
+  <div class="modal_header">
     <h3>Saving changes</h3>
   </div>
-  <div class="modal_body">
-    <p>
-      Please wait while your changes are saved.
-    </p>
+  <div class="modal_content">
     <p>
       This dialog will be dismissed automatically after the changes are made.
+    </p>
+  </div>
+  <div class="modal_footer">
+    <p>
+      Please wait while your app is being updated.
     </p>
   </div>
 </div>

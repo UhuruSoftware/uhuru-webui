@@ -19,7 +19,7 @@
                 <%= org.name %>
           </a>
 
-          <button id="<%= org.guid %>" class="image s24px trash" title="Delete '<%= org.name %>'"></button>
+          <button type="button" id="<%= org.guid %>" class="image s24px trash" title="Delete '<%= org.name %>'"></button>
         </div>
 
         <div class="tile bottom">
@@ -61,7 +61,7 @@
         <% unless error_message.nil? || error_message.empty? %>
             <div class="error"> <%= error_message %> </div>
         <% end %>
-        <p class="hide">Deleting organization...</p>
+        <p class="hide hidden_message">Deleting organization...</p>
 
         <div>
           <form action="/deleteOrganization" method="post">

@@ -257,7 +257,8 @@ a:<%= style %>
 
 /************************** BUTTONS ****************************/
 
-button
+button,
+select
 {
     border: 1px solid <%= design['button']['border-color'] %>;
     background-color: <%= design['button']['background-color'] %>;
@@ -405,6 +406,8 @@ button.image.s<%= size %>.<%= image %>
     margin: 0;
 }
 
+.square_tile button,
+.rectangle_tile button,
 .tile.top button
 {
     position: absolute;
@@ -519,7 +522,7 @@ button.image.s<%= size %>.<%= image %>
     border: 1px solid <%= tile_design['border-color'] %>;
     background-image: url('<%= tile_design["image-link"] %>');
     background-repeat: no-repeat;
-    background-position: 98% 90%;
+    background-position: 50% 50%;
     color: <%= tile_design['font-color'] %>;
 }
 
@@ -738,9 +741,71 @@ button.image.s<%= size %>.<%= image %>
 }
 
 
+/************************    APP Push    *************************/
+
+.app_push.list
+{
+    display: inline-block;
+    float: left;
+    list-style: none;
+    margin: 0 10px 0 0;
+    padding: 0;
+}
+.app_push.list li
+{
+    background-color: <%= design['app_push']['list']['background-color'] %>;
+    border: 1px solid <%= design['app_push']['list']['border-color'] %>;
+    margin: 2px;
+    padding: 3px 10px 3px 10px;
+    cursor: pointer;
+}
+
+.template_app_name
+{
+    font-size: 26px;
+}
+.template_app_description
+{
+    min-height: 60px;
+}
+.template_app_logo
+{
+    float: right;
+    margin: 0;
+}
+.query_link
+{
+    display: inline-block;
+    position: relative;
+    cursor: pointer;
+    width: 24px;
+    height: 24px;
+    background-color: red;
+    background-image: url("/images/apps_logos/link.png");
+}
+
+.tags_div,
+.buttons_div
+{
+    display: inline-block;
+    position: relative;
+    margin: 0;
+    width: 49%;
+}
+
+.template_apps .tag_span,
+.template_apps .publisher_span
+{
+    color: <%= design['app_push']['tags']['tag_color'] %>;
+}
+.template_apps .tags
+{
+    color: <%= design['app_push']['tags']['text_color'] %>;
+}
+
 /************************** CONTROLS ****************************/
 
-input[type=text], input[type=password]
+input[type=text], input[type=password], select
 {
     font-size: 18px;
     padding: 5px;

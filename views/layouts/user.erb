@@ -51,12 +51,12 @@
       </div>
     </div>
 
+    <span>
+        Your cloud target: <%= $config[:cloud_controller_url] %>
+    </span>
   </div>
 </div>
 
-<span class="cloud-target">
-    Your cloud target: <span class="cloud-target-url">http://services.uhurucloud.com</span>
-</span>
 
 
 <div id="footer_container">
@@ -80,7 +80,6 @@
 </div>
 
 <script type="text/javascript" src="<%= request.base_url %>/js/jquery-1.5.js"></script>
-<script type="text/javascript" src="<%= request.base_url %>/js/jquery_ui.js"></script>
 <script type="text/javascript" src="<%= request.base_url %>/js/webui.js"></script>
 
 </body>
