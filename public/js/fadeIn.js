@@ -1,85 +1,4 @@
 
-$(function(){
-
-$('#logout_key').click(function(){
-    $('.modal-background').css({ "display": "block" });
-    $('body').css({"overflow":"hidden"});
-    $('.modal.logout').fadeIn(600);
-});
-
-var delete_selected_element = function(){
-    $('#selected_guid').val($(this).attr("id"))
-    $('#selected_name').text($(this).attr("title"));
-    $('.modal-background').css({ "display": "block" });
-    $('body').css({"overflow":"hidden"});
-    $('.delete_confirmation').fadeIn(600);
-}
-
-
-$('.cancel_button').click(function(){$(".modal").css("display", "none");$('.modal-background').css("display", "none");$('body').css({"overflow":"auto"});});
-$('.tile.org .tile.top :button').click(delete_selected_element);
-$('.tile.space .tile.top :button').click(delete_selected_element);
-$('.tile.app .tile.top :button').click(delete_selected_element);
-$('.tile.service .tile.top :button').click(delete_selected_element);
-
-$('.square_tile .square_tile.domain :button').click(delete_selected_element);
-$('.square_tile .square_tile.route :button').click(delete_selected_element);
-
-
-
-$('.square_tile.members .square_tile.owner :button').click(alert('owner'));
-//$('.square_tile.developer :button').click(alert('dev'));
-//$('.square_tile.billing :button').click(alert('billing'));
-//$('.square_tile.auditor :button').click(alert('audit'));
-
-
-
-
-
-
-
-
-
-
-
-
-var bind_service = function(){
-	$('#screen').css({	"display": "block", opacity: 0.7, "width": "10000px", "height": "10000px"});
-	$('body').css({"overflow":"hidden"});
-	$('#bind_service_modal').fadeIn(600);
-    $('.close').click(function(){$("#bind_service_modal").css("display", "none");$('#screen').css("display", "none")});
-    $('.cancel').click(function(){$("#bind_service_modal").css("display", "none");$('#screen').css("display", "none")});
-}
-
-var unbind_service = function(){
-	$('#screen').css({	"display": "block", opacity: 0.7, "width": "10000px", "height": "10000px"});
-	$('body').css({"overflow":"hidden"});
-	$('#unbind_service_modal').fadeIn(600);
-    $('.close').click(function(){$("#unbind_service_modal").css("display", "none");$('#screen').css("display", "none")});
-    $('.cancel').click(function(){$("#unbind_service_modal").css("display", "none");$('#screen').css("display", "none")});
-}
-
-var bind_uri = function(){
-	$('#screen').css({	"display": "block", opacity: 0.7, "width": "10000px", "height": "10000px"});
-	$('body').css({"overflow":"hidden"});
-	$('#bind_uri_modal').fadeIn(600);
-    $('.close').click(function(){$("#bind_uri_modal").css("display", "none");$('#screen').css("display", "none")});
-    $('.cancel').click(function(){$("#bind_uri_modal").css("display", "none");$('#screen').css("display", "none")});
-}
-
-var unbind_uri = function(){
-	$('#screen').css({	"display": "block", opacity: 0.7, "width": "10000px", "height": "10000px"});
-	$('body').css({"overflow":"hidden"});
-	$('#unbind_uri_modal').fadeIn(600);
-    $('.close').click(function(){$("#unbind_uri_modal").css("display", "none");$('#screen').css("display", "none")});
-    $('.cancel').click(function(){$("#unbind_uri_modal").css("display", "none");$('#screen').css("display", "none")});
-}
-
-$('.button_bound_services').click(bind_service);
-$('.button_unbound_services').click(unbind_service);
-$('.button_bound_uri').click(bind_uri);
-$('.button_unbound_uri').click(unbind_uri);
-
 
 
 
@@ -189,10 +108,6 @@ $('#btn_delete_domain').click(delete_domain_message);
 $('#btn_delete_app').click(delete_app_message);
 $('#btn_delete_service').click(delete_service_message);
 $('.btn_delete_user').click(delete_user_message);
-
-
-
-});
 
 
 

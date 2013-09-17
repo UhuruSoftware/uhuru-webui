@@ -264,6 +264,53 @@ square_tiles:
         hover: '#FFFFFF'
         active: '#FFFFFF'
 
+rectangle_tile:
+  app:
+    border-color: '#8243d6'
+    background-color: '#530fad'
+    font-color: '#FFFFFF'
+    link:
+      link: '#FFFFFF'
+      visited: '#FFFFFF'
+      hover: '#FFFFFF'
+      active: '#FFFFFF'
+  service:
+    border-color: '#f13c73'
+    background-color: '#e40045'
+    font-color: '#FFFFFF'
+    link:
+      link: '#FFFFFF'
+      visited: '#FFFFFF'
+      hover: '#FFFFFF'
+      active: '#FFFFFF'
+  uri:
+    border-color: '#ff9640'
+    background-color: '#ff7400'
+    font-color: '#FFFFFF'
+    link:
+      link: '#FFFFFF'
+      visited: '#FFFFFF'
+      hover: '#FFFFFF'
+      active: '#FFFFFF'
+  instances:
+    border-color: '#3f9d2d'
+    background-color: '#0b61a4'
+    font-color: '#FFFFFF'
+    link:
+      link: '#FFFFFF'
+      visited: '#FFFFFF'
+      hover: '#FFFFFF'
+      active: '#FFFFFF'
+  memory:
+    border-color: '#3f9d2d'
+    background-color: '#0b61a4'
+    font-color: '#FFFFFF'
+    link:
+      link: '#FFFFFF'
+      visited: '#FFFFFF'
+      hover: '#FFFFFF'
+      active: '#FFFFFF'
+
 #  domains:
 #  routes:
 #  services:
@@ -311,12 +358,12 @@ modal:
       width: 400
     logout:
       width: 320
-    app-push:
+    app_details:
+      width: 900
+    app_push:
       width: 250
     delete-confirmation:
       width: 500
-    service-create:
-      width: 450
     error-message:
       width: 450
 

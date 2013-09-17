@@ -340,6 +340,15 @@ button.image.s<%= size %>.<%= image %>
     margin: 0 50px 50px 0;
     padding: 5px;
 }
+.rectangle_tile
+{
+    position: relative;
+    display: inline-block;
+    width: 180px !important;
+    height: 70px;
+    margin: 0 5px 3px 0;
+    padding: 5px;
+}
 
 .tile:hover .tile.top,
 .tile:hover .tile.right,
@@ -499,7 +508,7 @@ button.image.s<%= size %>.<%= image %>
 
 
 
-/****************************  square    *******************************/
+    /****************************  square    *******************************/
 
 <% design['square_tiles'].each do |tile_type, tile_design| %>
 
@@ -525,7 +534,35 @@ button.image.s<%= size %>.<%= image %>
 <% end %>
 
 
-/************************** TAB MENU ****************************/
+
+
+    /****************************  details    *******************************/
+
+<% design['rectangle_tile'].each do |tile_type, tile_design| %>
+
+.rectangle_tile.<%= tile_type %>
+{
+    position: absolute;
+    background-color: <%= tile_design['background-color'] %>;
+    border: 1px solid <%= tile_design['border-color'] %>;
+    background-image: url('<%= tile_design["image-link"] %>');
+    background-repeat: no-repeat;
+    background-position: 98% 90%;
+    color: <%= tile_design['font-color'] %>;
+}
+
+<% tile_design['link'].each do |style, color| %>
+.rectangle_tile.<%= tile_type %> a:<%= style %>
+{
+    color: <%= color %>;
+}
+<% end %>
+
+
+<% end %>
+
+
+    /************************** TAB MENU ****************************/
 .tab_menu ul
 {
     text-align: left;
@@ -671,6 +708,34 @@ button.image.s<%= size %>.<%= image %>
     margin-left: -<%= properties['width'] / 2 %>px;
 }
 <% end %>
+
+
+/************************   APP DETAILS  *************************/
+
+.app_details .modal_content div
+{
+    display: block;
+    position: relative;
+    margin-bottom: 5px;
+    padding: 0;
+    margin: 0;
+}
+
+.app_details .modal_content div div
+{
+    display: inline-block;
+    position: relative;
+    width: 49%;
+}
+
+.app_details .modal_content div div .right_buttons
+{
+    display: block;
+    float: right;
+    width: 150px;
+    padding-right: 10px;
+    text-align: right;
+}
 
 
 /************************** CONTROLS ****************************/

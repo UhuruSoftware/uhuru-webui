@@ -231,41 +231,41 @@
 
 
 <% if defined?(current_tab) && current_tab != nil && current_tab == "members" %>
-    <div class="square_tile">
       <% owners_list.each do |owner| %>
+        <div class="square_tile">
           <div class="square_tile owner" title="<%= owner.email %>">
             <span><%= owner.email %></span>
             <span>Owner</span>
-            <button class="image s24px trash" id="<%= owner.guid %>" title="<%= owner.email %>" />
+            <button class="image s24px trash" id="<%= owner.guid %>" title="<%= owner.email %>" onclick="deleteUserModal(this, 'owner');" />
 
             <span class="span_bg_icon"></span>
           </div>
+        </div>
       <% end %>
-    </div>
 
-    <div class="square_tile">
       <% developers_list.each do |dev| %>
+        <div class="square_tile">
           <div class="square_tile developer" title="<%= dev.email %>">
             <span><%= dev.email %></span>
             <span>Developer</span>
-            <button class="image s24px trash" id="<%= dev.guid %>" title="<%= dev.email %>" />
+            <button class="image s24px trash" id="<%= dev.guid %>" title="<%= dev.email %>" onclick="deleteUserModal(this, 'developer');" />
 
             <span class="span_bg_icon"></span>
           </div>
+        </div>
       <% end %>
-    </div>
 
-    <div class="square_tile">
       <% auditors_list.each do |auditor| %>
+        <div class="square_tile">
           <div class="square_tile auditor" title="<%= auditor.email %>">
             <span><%= auditor.email  %></span>
             <span>Auditor</span>
-            <button class="image s24px trash" id="<%= auditor.guid %>" title="<%= auditor.email %>" />
+            <button class="image s24px trash" id="<%= auditor.guid %>" title="<%= auditor.email %>" onclick="deleteUserModal(this, 'auditor');" />
 
             <span class="span_bg_icon"></span>
           </div>
+        </div>
       <% end %>
-    </div>
 
 
 
@@ -279,7 +279,7 @@
           Are you sure you want to delete the user?
         </p>
       </div>
-      <div class="modal-footer">
+      <div class="modal_footer">
         <% unless error_message.nil? || error_message.empty? %>
             <div class="error"> <%= error_message %> </div>
         <% end %>
@@ -289,8 +289,8 @@
           <form action="/deleteUser" method="post">
             <button type="button" class="cancel_button">Cancel</button>
             <button type="submit" value="Delete">Delete</button>
-            <input type="text" id="selected_guid" value="" name="thisUser"/>
-            <input type="text" id="aditional_data" value="" name="thisUserRole"/>
+            <input type="hidden" id="selected_guid" value="" name="thisUser"/>
+            <input type="hidden" id="aditional_data" value="" name="thisUserRole"/>
             <input type="hidden" name="current_organization" value="<%= current_organization %>" />
             <input type="hidden" name="current_space" value="<%= current_space %>" />
             <input type="hidden" name="current_tab" value="<%= current_tab %>" />
