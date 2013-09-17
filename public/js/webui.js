@@ -153,7 +153,7 @@ $(function(){
     var plus_instance = function(){
         instance+=1;
         instance = instance + "";
-        $('.instances_count').text(instance);
+        $('.instances_count').val(instance);
         $('.send_app_instances').val(instance);
         instance = parseInt(instance);
         if(firstInstance != instance)
@@ -169,7 +169,7 @@ $(function(){
     var minus_instance = function(){
         instance-=1;
         instance = instance + "";
-        $('.instances_count').text(instance);
+        $('.instances_count').val(instance);
         $('.send_app_instances').val(instance);
         instance = parseInt(instance);
         if(firstInstance != instance)
