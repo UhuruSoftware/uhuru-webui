@@ -102,11 +102,11 @@ monitoring:
   pause_after_each_app: 45
   database:
     database: "monitoring"
-    host: locahost
+    host: localhost
     port: 5432
     encoding: utf8
     username: postgres
-    password: ""
+    password: password1234!
     adapter: postgresql
     timeout: 2000
 #    adapter: sqlite3
@@ -138,7 +138,7 @@ monitoring:
         token: ec9743a4-6587-4356-8b9e-72d66b36a7f4
   buildpacks:
     dotNet: https://github.com/stefanschneider/dummy-buildpack.git
-    java: https://github.com/cloudfoundry/java-buildpack
+    java: https://github.com/ramnivas/cloudfoundry-buildpack-java
     nodejs: https://github.com/cloudfoundry/heroku-buildpack-nodejs
     php: https://github.com/heroku/heroku-buildpack-php
     ruby: https://github.com/cloudfoundry/heroku-buildpack-ruby

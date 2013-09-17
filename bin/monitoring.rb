@@ -240,7 +240,7 @@ end
 
 def get_buildpacks
   buildpacks = []
-  existing_dea = @components[:deas].map {|dea| dea["name"]}
+  existing_dea = @components[:deas].map { |dea| dea["name"] }
   $config[:monitoring][:buildpacks].each do |k, v|
     buildpacks << v.to_s if k.to_s != "dotNet" && existing_dea.include?("dea")
     buildpacks << v.to_s if k.to_s == "dotNet" && existing_dea.include?("win_dea")
@@ -252,9 +252,9 @@ end
 def get_services
   services = []
   @components[:services].each do |s|
-      service = s["name"]
-      service.slice!("_node")
-      services << service
+    service = s["name"]
+    service.slice!("_node")
+    services << service
   end
   return services
 end
@@ -391,7 +391,7 @@ def main_apps
         http_status = response_code == "200" ? 1 : 0
 
         databases = []
-        manifest_hash['services'].each do  |s|
+        manifest_hash['services'].each do |s|
           databases << s[1]["label"]
         end
 
@@ -455,7 +455,7 @@ You can find a list of malfunctioning frameworks and services below: <br />
 #{
     faulty_apps.map do |faulty_app|
       if (faulty_app[:push_log] =~ /Error.+$/)
-        error_line = faulty_app[:push_log].split("<<<").select {|x| x[/Error.+$/]}[0].split(">>>", 2)[0].strip
+        error_line = faulty_app[:push_log].split("<<<").select { |x| x[/Error.+$/] }[0].split(">>>", 2)[0].strip
       end
       "<li>App: <b>#{faulty_app[:name]}</b>; Framework: <b>#{faulty_app[:framework]}</b>; Services: <b>#{faulty_app[:services].join(', ')}</b>; Error short description: <b>#{error_line}</b></li>"
     end.join
@@ -477,20 +477,21 @@ ERROR_MAIL
 end
 
 def get_apps(datetime_from, datetime_until)
-  applications = Monitoring.find(:all, :conditions => ["timestamp > ? and timestamp <= ?", datetime_from, datetime_until])
+  applications = Monitoring.where("timestamp > ? AND timestamp <= ?", datetime_from, datetime_until).to_a
   return applications
 end
 
 # will return a distinct list of pairs framework-service readed from app-definitions.yml
 # ex: framework_services = get_frameworks_services
 def get_frameworks_services
-  apps = @app_definitions.select {|a| @apps_to_monitor.include?(a["name"])}
+  apps = @app_definitions.select { |a| @apps_to_monitor.include?(a["name"]) }
 
-  apps.map do |x| {
-      :name => x["name"],
-      :framework => x["framework"],
-      :service => x["service"]
-  }
+  apps.map do |x|
+    {
+        :name => x["name"],
+        :framework => x["framework"],
+        :service => x["service"]
+    }
   end
 end
 
@@ -612,8 +613,8 @@ def generate_report(resolution_unit, sample_count, resolution)
     hash.delete(:sum_app_count)
   end
 
-  sort_keys  = {}
-  infos.each_with_index  do |info, index|
+  sort_keys = {}
+  infos.each_with_index do |info, index|
     sort_keys[info] = index
   end
 

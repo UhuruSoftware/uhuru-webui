@@ -2,7 +2,7 @@
 $decodedDbData = json_decode($_SERVER["VCAP_SERVICES"], true);
 $credentials = $decodedDbData['mysql-5.5'][0]["credentials"];
 
-$con = mysql_connect($credentials["hostname"], $credentials["user"], $credentials["password"]);
+$con = mysql_connect($credentials["hostname"].':'.$credentials["port"], $credentials["user"], $credentials["password"]);
 if (!$con)
 {
 	header('HTTP/1.1 500 Internal Server Error');

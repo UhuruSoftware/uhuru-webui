@@ -1,16 +1,16 @@
---- 
-applications: 
-  .: 
-    instances: 1
-    name: dotnetwithuhurufs-monit-dd634
-    services: 
-      fs: 
-        type: uhurufs
-    url: dotnetwithuhurufs-monit-dd634.uhurucloud.net
-    framework: 
-      name: dotNet
-      info: 
-        description: .Net Web Application
-        exec: 
-        mem: 128M
-    mem: 128M
+---
+applications:
+- name: dotnetwithuhurufs
+  memory: 128M
+  instances: 1
+  host: dotnetwithuhurufs
+  domain: apps.ccng-dev.net
+  path: .
+  buildpack: https://github.com/stefanschneider/dummy-buildpack.git
+  stack: iis75
+  services:
+    dotnetuhurufsmonit:
+      label: uhurufs
+      provider: core
+      version: '0.9'
+      plan: free

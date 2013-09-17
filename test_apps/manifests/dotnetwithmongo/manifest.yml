@@ -1,16 +1,16 @@
---- 
-applications: 
-  .: 
-    framework: 
-      info: 
-        description: .Net Web Application
-        mem: 128M
-        exec: 
-      name: dotNet
-    mem: 128M
-    url: ${name}.${target-base}
-    instances: 1
-    name: dotnetwithmongo-uhurumonitoring9vkz2
-    services: 
-      dotnetmongomonit: 
-        type: mongodb
+---
+applications:
+- name: dotnetwithmongo
+  memory: 128M
+  instances: 1
+  host: dotnetwithmongo
+  domain: apps.ccng-dev.net
+  path: .
+  buildpack: https://github.com/stefanschneider/dummy-buildpack.git
+  stack: iis75
+  services:
+    dotnetmongomonit:
+      label: mongodb
+      provider: core
+      version: '2.2'
+      plan: free

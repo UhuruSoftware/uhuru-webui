@@ -1,16 +1,16 @@
---- 
-applications: 
-  .: 
-    name: dotnetwithrabbit-monit-bab7d
-    framework: 
-      name: dotNet
-      info: 
-        mem: 128M
-        description: .Net Web Application
-        exec: 
-    url: dotnetwithrabbit-monit-bab7d.uhurucloud.net
-    mem: 128M
-    instances: 1
-    services: 
-      dotnetrabbitmonit: 
-        type: rabbitmq
+---
+applications:
+- name: dotnetwithrabbit
+  memory: 128M
+  instances: 1
+  host: dotnetwithrabbit
+  domain: apps.ccng-dev.net
+  path: .
+  buildpack: https://github.com/stefanschneider/dummy-buildpack.git
+  stack: iis75
+  services:
+    dotnetrabbitmonit:
+      label: rabbitmq
+      provider: core
+      version: '3.0'
+      plan: free

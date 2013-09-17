@@ -5,11 +5,10 @@ applications:
   instances: 1
   host: phpwithmysql
   domain: apps.ccng-dev.net
-  path: .
+  buildpack: https://github.com/heroku/heroku-buildpack-php
   services:
-    phpwithmysql55:
+    mysql-5.5:
       label: mysql
       provider: core
       version: '5.5'
       plan: free
-  buildpack: https://github.com/heroku/heroku-buildpack-php

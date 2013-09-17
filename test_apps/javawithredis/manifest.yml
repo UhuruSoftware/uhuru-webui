@@ -1,9 +1,15 @@
 ---
 applications:
-- name: javaredistest
-  memory: 256M
+- name: javawithredis
+  memory: 512M
   instances: 1
-  host: javaredistest
+  host: javawithredis
   domain: apps.ccng-dev.net
   path: javawithredis.war
-  buildpack: https://github.com/cloudfoundry/java-buildpack
+  buildpack: https://github.com/ramnivas/cloudfoundry-buildpack-java
+  services:
+    javaredis-monit:
+      label: redis
+      provider: core
+      version: '2.6'
+      plan: free

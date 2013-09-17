@@ -1,16 +1,16 @@
---- 
-applications: 
-  .: 
-    framework: 
-      name: dotNet
-      info: 
-        mem: 128M
-        exec: 
-        description: .Net Web Application
-    name: dotnetwithpostgre-uhurumonitoring0ec0a
-    instances: 1
-    services: 
-      dotnetpostgremonit: 
-        type: postgresql
-    mem: 128M
-    url: dotnetwithpostgre-uhurumonitoring0ec0a.uhurucloud.net
+---
+applications:
+- name: dotnetwithpostgre
+  memory: 128M
+  instances: 1
+  host: dotnetwithpostgre
+  domain: apps.ccng-dev.net
+  path: .
+  buildpack: https://github.com/stefanschneider/dummy-buildpack.git
+  stack: iis75
+  services:
+    dotnetpostgremonit:
+      label: postgresql
+      provider: core
+      version: '9.2'
+      plan: free

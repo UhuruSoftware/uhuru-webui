@@ -1,9 +1,15 @@
 ---
 applications:
 - name: javawithrabbit
-  memory: 256M
+  memory: 512M
   instances: 1
   host: javawithrabbit
   domain: apps.ccng-dev.net
   path: javawithrabbit.war
-  buildpack: https://github.com/cloudfoundry/java-buildpack
+  buildpack: https://github.com/ramnivas/cloudfoundry-buildpack-java
+  services:
+    javarabbitmq-monit:
+      label: rabbitmq
+      provider: core
+      version: '3.0'
+      plan: free

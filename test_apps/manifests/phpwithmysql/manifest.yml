@@ -1,16 +1,14 @@
---- 
-applications: 
-  .: 
-    framework: 
-      info: 
-        exec: 
-        mem: 128M
-        description: PHP Application
-      name: php
-    name: phpwithmysql-uhurumonitoring1iooj
-    instances: 1
-    mem: 128M
-    url: ${name}.${target-base}
-    services: 
-      mysql-5.1: 
-        type: mysql
+---
+applications:
+- name: phpwithmysql
+  memory: 128M
+  instances: 1
+  host: phpwithmysql
+  domain: apps.ccng-dev.net
+  buildpack: https://github.com/heroku/heroku-buildpack-php
+  services:
+    mysql-5.5:
+      label: mysql
+      provider: core
+      version: '5.5'
+      plan: free

@@ -8,7 +8,7 @@ get '/' do
   credentials = obj['mysql-5.5'][0]['credentials']  
   
   begin
-    con = Mysql.new(credentials['hostname'], credentials['user'], credentials['password'], credentials['name']) 
+    con = Mysql.new(credentials['hostname'], credentials['user'], credentials['password'], credentials['name'], credentials['port']) 
     "<h3>Success</h1>"
   rescue => e
     "#{e.message} #{e.backtrace}"

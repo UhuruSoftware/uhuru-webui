@@ -1,16 +1,14 @@
---- 
-applications: 
-  .: 
-    instances: 1
-    url: ${name}.${target-base}
-    framework: 
-      info: 
-        description: PHP Application
-        exec: 
-        mem: 128M
-      name: php
-    mem: 128M
-    services: 
-      uhurufs-0.9: 
-        type: uhurufs
-    name: phpwithuhurufs-uhurumonitoringnqhep
+---
+applications:
+- name: phpwithuhurufs
+  memory: 128M
+  instances: 1
+  host: phpwithuhurufs
+  domain: apps.ccng-dev.net
+  buildpack: https://github.com/heroku/heroku-buildpack-php
+  services:
+    uhurufs-0.9:
+      label: uhurufs
+      provider: core
+      version: '0.9'
+      plan: free

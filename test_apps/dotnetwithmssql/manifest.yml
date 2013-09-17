@@ -1,16 +1,16 @@
---- 
-applications: 
-  .: 
-    name: dotnetwithmssql-monit-28ef9
-    instances: 1
-    url: dotnetwithmssql-monit-28ef9.uhurucloud.net
-    mem: 128M
-    framework: 
-      name: dotNet
-      info: 
-        exec: 
-        description: .Net Web Application
-        mem: 128M
-    services: 
-      dotnetmssqlmonit: 
-        type: mssql
+---
+applications:
+- name: dotnetwithmssql
+  memory: 128M
+  instances: 1
+  host: dotnetwithmssql
+  domain: apps.ccng-dev.net
+  path: .
+  buildpack: https://github.com/stefanschneider/dummy-buildpack.git
+  stack: iis75
+  services:
+    dotnetmssqlmonit:
+      label: mssql
+      provider: core
+      version: '0.9'
+      plan: free

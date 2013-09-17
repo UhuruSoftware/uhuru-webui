@@ -1,16 +1,15 @@
---- 
-applications: 
-  .: 
-    name: javawithmongo-monit-1f3a6
-    framework: 
-      name: spring
-      info: 
-        mem: 512M
-        description: Java SpringSource Spring Application
-        exec: 
-    url: javawithmongo-monit-1f3a6.uhurucloud.net
-    mem: 256M
-    instances: 1
-    services: 
-      javamongodb-monit: 
-        type: mongodb
+---
+applications:
+- name: javawithmongo
+  memory: 512M
+  instances: 1
+  host: javawithmongo
+  domain: apps.ccng-dev.net
+  path: javawithmongo.war
+  buildpack: https://github.com/ramnivas/cloudfoundry-buildpack-java
+  services:
+    javamongodb-monit:
+      label: mongodb
+      provider: core
+      version: '2.2'
+      plan: free

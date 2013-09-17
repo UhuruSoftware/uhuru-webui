@@ -1,16 +1,15 @@
---- 
-applications: 
-  .: 
-    name: javawithredis-monit
-    framework: 
-      name: spring
-      info: 
-        mem: 512M
-        description: Java SpringSource Spring Application
-        exec: 
-    url: ${name}.${target-base}
-    mem: 256M
-    instances: 1
-    services: 
-      javaredis-monit: 
-        type: redis
+---
+applications:
+- name: javawithredis
+  memory: 512M
+  instances: 1
+  host: javawithredis
+  domain: apps.ccng-dev.net
+  path: javawithredis.war
+  buildpack: https://github.com/ramnivas/cloudfoundry-buildpack-java
+  services:
+    javaredis-monit:
+      label: redis
+      provider: core
+      version: '2.6'
+      plan: free

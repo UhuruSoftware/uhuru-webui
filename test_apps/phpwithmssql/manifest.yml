@@ -1,16 +1,14 @@
---- 
-applications: 
-  .: 
-    instances: 1
-    mem: 128M
-    framework: 
-      info: 
-        exec: 
-        mem: 128M
-        description: PHP Application
-      name: php
-    name: phpwithmssql-monit-60e25
-    services: 
-      mssql-2008: 
-        type: mssql
-    url: phpwithmssql-monit-60e25.uhurucloud.net
+---
+applications:
+- name: phpwithmssql
+  memory: 128M
+  instances: 1
+  host: phpwithmssql
+  domain: apps.ccng-dev.net
+  buildpack: https://github.com/heroku/heroku-buildpack-php
+  services:
+    mssql-2008:
+      label: mssql
+      provider: core
+      version: '0.9'
+      plan: free

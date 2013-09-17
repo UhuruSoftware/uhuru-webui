@@ -1,16 +1,14 @@
---- 
-applications: 
-  .: 
-    instances: 1
-    mem: 128M
-    framework: 
-      info: 
-        exec: 
-        mem: 128M
-        description: PHP Application
-      name: php
-    name: phpwithmssql-uhurumonitorings1yj0
-    services: 
-      mssql-2008: 
-        type: mssql
-    url: ${name}.${target-base}
+---
+applications:
+- name: phpwithmssql
+  memory: 128M
+  instances: 1
+  host: phpwithmssql
+  domain: apps.ccng-dev.net
+  buildpack: https://github.com/heroku/heroku-buildpack-php
+  services:
+    mssql-2008:
+      label: mssql
+      provider: core
+      version: '0.9'
+      plan: free
