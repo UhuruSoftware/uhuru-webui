@@ -104,11 +104,6 @@ def configure
   @app_definitions = YAML::load_file(File.expand_path("../../config/app-definitions.yml", __FILE__))
   @apps_to_monitor = []
   @components = $config[:monitoring][:components]
-
-  users_setup = UsersSetup.new($config)
-  token = users_setup.get_user_token(@username, @password)
-
-  @client = CFoundry::V2::Client.new(@cloud_target, token)
 end
 
 def bootstrap_monitoring
@@ -116,7 +111,7 @@ def bootstrap_monitoring
   users_setup = UsersSetup.new($config)
   user = users_setup.uaa_get_user_by_name(@username)
   # create monitoring user in uaa if doesn't exist
-  unless user
+  if user == nil
     uaac = users_setup.get_uaa_client
 
     emails = [@username]
@@ -126,12 +121,24 @@ def bootstrap_monitoring
         [{:value => (emails || name)}]
 
     user = uaac.add(:user, info)
+    user_id = user['id']
+  else
+    user_id = user
   end
 
-  user_id = user != nil ? user : user['id']
   admin_token = users_setup.get_admin_token
 
   client = CFoundry::V2::Client.new(@cloud_target, admin_token)
+  #check if user exists in ccdb, and create it if not
+  user = client.users.find { |u|
+    u.guid == user_id
+  }
+  unless user
+    user_cf = client.user
+    user_cf.guid = user_id
+    user_cf.create!
+  end
+
   # check if monitoring org exists
   org = client.organizations.find { |o|
     o.name == @default_org
@@ -146,6 +153,7 @@ def bootstrap_monitoring
     end
     org = new_org
   end
+
   # check if monitoring space exists
   space = client.spaces.find { |s|
     s.name == @default_space
@@ -295,7 +303,7 @@ end
 def app_mem(app_name)
   app = get_app_by_name(app_name)
   memory = 0
-  if app.stats["0"][:state] != "DOWN"
+  if app != nil && app.stats["0"][:state] != "DOWN"
     memory = app.stats["0"][:stats][:mem_quota]
   end
   memory
@@ -322,21 +330,24 @@ def app_delete_with_service(app_name)
   app = get_app_by_name(app_name)
 
   services = []
-  app.service_bindings.each do |service|
-    services << service.service_instance
-  end
-
-  routes = app.routes
-
-  if app.delete!
-    routes.each do |route|
-      route.delete!
+  unless !app
+    app.service_bindings.each do |service|
+      services << service.service_instance
     end
 
-    services.each do |service|
-      service.delete!
+    routes = app.routes
+
+    if app.delete!
+      routes.each do |route|
+        route.delete!
+      end
+
+      services.each do |service|
+        service.delete!
+      end
     end
   end
+
 end
 
 def delete_all_apps_and_services()
@@ -385,8 +396,8 @@ def main_apps
 
         sleep(@sleep_after_app_push)
 
-        latency = app_latency("http://#{app_new_name}.#{@domain}/")
         total_mem = app_mem(app_new_name)
+        latency = app_latency("http://#{app_new_name}.#{@domain}/")
         url_content, response_code = app_url_content_response_code("http://#{app_new_name}.#{@domain}")
         http_status = response_code == "200" ? 1 : 0
 
@@ -643,6 +654,11 @@ def main
   begin
     cf_target
     cf_login
+
+    users_setup = UsersSetup.new($config)
+    token = users_setup.get_user_token(@username, @password)
+    @client = CFoundry::V2::Client.new(@cloud_target, token)
+
     set_cfoundry_environment
     set_buildpacks_services
   rescue => e
