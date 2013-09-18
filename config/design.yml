@@ -77,6 +77,8 @@ image-buttons:
     gear: 'gear_32px.png'
     key: 'key_32px.png'
     money: 'money_bag_sign_32.png'
+    start: 'play_24px.png'
+    stop: 'pause_24px.png'
   48px:
     money: 'money_sign_48.png'
     home: 'house.png'

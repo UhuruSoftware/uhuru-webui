@@ -719,7 +719,7 @@ button.image.s<%= size %>.<%= image %>
     display: block;
     position: relative;
     padding: 0;
-    margin: 0 0 20px 0;
+    margin: 5px 0 15px 0;
 }
 .app_details .modal_content div:nth-child(1) .app_status
 {
@@ -727,7 +727,7 @@ button.image.s<%= size %>.<%= image %>
 }
 .app_details .modal_content div:nth-child(1) .app_status_buttons
 {
-    float: left;
+    float: right;
     margin-right: 3px;
 }
 .app_details .modal_content div form
@@ -740,24 +740,27 @@ button.image.s<%= size %>.<%= image %>
 .app_details .modal_content div table
 {
     width: 100%;
+    display: inline;
+    margin: 5px 25px 0 0;
+}
+.app_details .modal_content div table tbody
+{
+    display: inline;
+    width: 100%;
     text-align: left;
 }
-.app_details .modal_content div table td:nth-child(1)
+.app_details .modal_content div table .name
 {
-    width: 400px;
+    min-width: 150px;
 }
-.app_details .modal_content div table td:nth-child(2)
+.app_details .modal_content div table .url
 {
-    width: 200px;
+    min-width: 200px;
 }
-.app_details .modal_content div table td:nth-child(3)
+.app_details .modal_content div table .action
 {
-    width: 200px;
-}
-.app_details .modal_content div table td:nth-child(4)
-{
-    width: 70px;
     text-align: right;
+    min-width: 30px;
 }
 
 
@@ -833,6 +836,24 @@ input[type=text], input[type=password], select
     border: 1px solid <%= design['controls']['text']['border-color'] %>;
     background-color: <%= design['controls']['text']['background-color'] %>;
     color: <%= design['controls']['text']['font-color'] %>;
+}
+.small_input
+{
+    width: 130px;
+    height: 14px;
+    font-size: 6px;
+    margin: 0;
+    outline: 0;
+    padding: 1px;
+}
+select.small_input
+{
+    width: 100%;
+    height: 22px;
+    font-size: 14px;
+    margin: 0;
+    outline: 0;
+    padding: 1px;
 }
 
 /************************** BREADCRUMBS ****************************/

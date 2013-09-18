@@ -7,106 +7,143 @@
 
   <div class="modal_content">
     <div>
-      <span class="app_status">Status: <%= app.state %></span>
-
         <% if app.state == "STOPPED" %>
             <form action="/startApp" method="post">
+              <span class="app_status">Status: "<%= app.state %>"</span>
               <input type="hidden" name="appName" value="<%= app.name %>" />
               <input type="hidden" name="current_organization" value="<%= current_organization %>" />
               <input type="hidden" name="current_space" value="<%= current_space %>" />
               <input type="hidden" name="current_tab" value="<%= current_tab %>" />
               <div class="app_status_buttons">
-                <button type="button" class="image s24px trash" title="Delete '<%= app.name %>'"></button>
-                <button type="submit" name="startApp" class="image s24px start start_app" value="" title="Start!"></button>
+                <button type="button" class="image s32px trash" title="Delete '<%= app.name %>'"></button>
+                <button type="submit" name="startApp" class="image s32px start start_app" value="" title="Start!"></button>
               </div>
             </form>
         <% end %>
 
         <% if app.state == "RUNNING" || app.state == "STARTED" %>
             <form action="/stopApp" method="post">
+              <span class="app_status">Status: "<%= app.state %>"</span>
               <input type="hidden" name="appName" value="<%= app.name %>" />
               <input type="hidden" name="current_organization" value="<%= current_organization %>" />
               <input type="hidden" name="current_space" value="<%= current_space %>" />
               <input type="hidden" name="current_tab" value="<%= current_tab %>" />
               <div class="app_status_buttons">
-                <button type="button" class="image s24px trash" title="Delete '<%= app.name %>'"></button>
-                <button type="submit" name="stopApp" class="image s24px stop stop_app" value="" title="Stop!"></button>
+                <button type="button" class="image s32px trash" title="Delete '<%= app.name %>'"></button>
+                <button type="submit" name="stopApp" class="image s32px stop stop_app" value="" title="Stop!"></button>
               </div>
             </form>
         <% end %>
     </div>
 
-
     <div>
       <div>
-            <span>Provisioned</span><input type="text" class="pass_app_instances instances_count" value="<%= app.instances %>" />
+            <span>Instances:&nbsp;&nbsp;</span><input type="text" class="pass_app_instances instances_count" value="<%= app.instances %>" />
             <button type="button" class="image s24px minus subtract_instance"></button>
             <button type="button" class="image s24px plus add_instance"></button>
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <span>Memory</span><input type="text" name="appMemory" id="app_memory_setup" value="<%= app.memory %>"/> MB
+            <span>Memory:&nbsp;&nbsp;</span><input type="text" name="appMemory" id="app_memory_setup" value="<%= app.memory %>"/> MB
             <button type="button" class="image s24px minus subtract_memory"></button>
             <button type="button" class="image s24px plus add_memory"></button>
       </div>
     </div>
 
+    <hr />
+
     <div>
       <table>
         <tr>
           <td>Name</td>
           <td>Type</td>
           <td>Plan</td>
-          <td>Actions</td>
+          <td></td>
         </tr>
 
         <% app.services.each do |service| %>
             <tr>
-              <td><%= service.name %></td>
+              <td class="name"><%= service.name %></td>
               <td><%= service.type %></td>
               <td>free(hardcoded)</td>
-              <td>
-                <button type="button" class="image s24px trash" title="Delete '<%= service.name %>'" id="<%= service.name %>"></button>
-                <button type="button" class="image s24px plus bind_service_button" title="<%= app.name %>"></button>
+              <td class="action">
+                <button type="button" class="image s24px trash unbind_service_button" title="Delete '<%= service.name %>'" id="<%= service.name %>"></button>
               </td>
             </tr>
         <% end %>
 
+        <tr>
+          <td>
+            <input type="hidden" id="app_name" value="<%= app.name %>" />
+            <select name="serviceName" id="service_name" class="small_input">
+                <% services_list.each do |service| %>
+                    <option value="<%= service.name %>" id="<%= service.name %>"> <%= service.name %> </option>
+                <% end %>
+            </select>
+          </td>
+          <td>
+            <select class="small_input">
+              <% ServiceInstances.new(session[:token], $cf_target).read_service_types.each do |type| %>
+                  <option value="<%= type %>"><%= type %></option>
+              <% end %>
+            </select>
+          </td>
+          <td>
+            <select class="small_input">
+              <% ServiceInstances.new(session[:token], $cf_target).read_service_plans.each do |plan| %>
+                  <option value="<%= plan.name %>"><%= plan.name.capitalize %></option>
+              <% end %>
+            </select>
+          </td>
+          <td class="action">
+            <button type="button" class="image s24px plus bind_service_button" title="<%= app.name %>"></button>
+          </td>
+        </tr>
       </table>
-    </div>
 
-    <div>
       <table>
         <tr>
-          <td>Name</td>
-          <td>Type</td>
-          <td>Plan</td>
-          <td>Actions</td>
+          <td>Host Name</td>
+          <td>Domain</td>
+          <td></td>
         </tr>
 
         <% app.uris.each do |uri| %>
             <tr>
-              <td><%= uri.url %></td>
-              <td><%= 'something' %></td>
-              <td>free(hardcoded)</td>
-              <td>
-                <button type="button" class="image s24px trash" title="Delete '<%= uri.url %>'" id="<%= uri.url %>"></button>
-                <button type="button" class="image s24px plus bind_uri_button" title="Delete '<%= app.name %>'"></button>
+              <td class="name"><%= app.name %></td>
+              <td class="url"><%= uri.url %></td>
+              <td class="action">
+                <button type="button" class="image s24px trash unbind_uri_button" title="Delete '<%= uri.url %>'" id="<%= uri.url %>"></button>
               </td>
             </tr>
         <% end %>
 
+        <tr>
+          <td><input type="text" class="small_input" value="<%= app.name %>" /></td>
+          <td>
+            <select class="small_input" name="domain">
+              <% @domains_list.each do |domain| %>
+                  <% if domain.owning_org_name == organization_name || domain.owning_org_name == 'Shared' %>
+                      <option value="<%= domain.guid %>"><%= domain.name %></option>
+                  <% end %>
+              <% end %>
+            </select>
+          </td>
+          <td class="action">
+            <button type="button" class="image s24px plus bind_uri_button" title="Delete '<%= app.name %>'"></button>
+          </td>
+        </tr>
       </table>
     </div>
   </div>
 
-  <div class="modal_footer">
-    <% unless error_message.nil? || error_message.empty? %>
-        <div class="error"> <%= error_message %> </div>
-    <% end %>
+  <% unless error_message.nil? || error_message.empty? %>
+      <div class="error"> <%= error_message %> </div>
+  <% end %>
 
+  <div class="modal_footer">
     <form action="/updateApp" method="post">
       <input type="hidden" class="send_app_name" name="appName" value="<%= app.name %>" />
-      <input type="text" class="send_app_instances" name="appInstances" value="<%= app.instances %>"/>
-      <input type="text" class="send_app_memory" name="appMemory" />
+      <input type="hidden" class="send_app_instances" name="appInstances" value="<%= app.instances %>"/>
+      <input type="hidden" class="send_app_memory" name="appMemory" />
       <input type="hidden" name="current_organization" value="<%= current_organization %>" />
       <input type="hidden" name="current_space" value="<%= current_space %>" />
       <input type="hidden" name="current_tab" value="<%= current_tab %>" />
@@ -251,7 +288,7 @@
   </div>
   <div class="modal_footer">
     <form action="/unbindUri" method="post">
-      <input type="text" name="appUrl" id="unbind_uriName" />
+      <input type="hidden" name="appUrl" id="unbind_uriName" />
       <input type="hidden" id="unbind_uri_app_name" name="appName" value="<%= app.name %>" />
       <input type="hidden" name="current_organization" value="<%= current_organization %>" />
       <input type="hidden" name="current_space" value="<%= current_space %>" />
@@ -264,3 +301,8 @@
     </form>
   </div>
 </div>
+
+
+<input type="hidden" id="current_organization" value="<%= current_organization %>" />
+<input type="hidden" id="current_space" value="<%= current_space %>" />
+<input type="hidden" id="current_tab" value="<%= current_tab %>" />

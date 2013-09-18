@@ -106,12 +106,14 @@ var bind_uri = function(){
 /*                APP DETAILS                       */
 /****************************************************/
 
+
 var bind_service = function(){
-    $('.bind_service').fadeIn(600);
+    $.ajax( "/bindService", { appName: $('#app_name').val() , serviceName: $('#service_name').val(), current_organization: $('#current_organization').val(), current_space: $('#current_space').val(), current_tab: $('#current_tab').val() });
 }
 var bind_uri = function(){
     $('.bind_uri').fadeIn(600);
 }
+
 var unbind_service = function(){
     $('.unbind_service').fadeIn(600);
     var name = $(this).attr("id");
@@ -126,17 +128,15 @@ var unbind_uri = function(){
 /* cancel buttons on all modals inside the app details */
 $('.cancel_button_app_details').click(function(){
 
-        $(".bind_service").css("display", "none");
         $(".unbind_service").css("display", "none");
-        $(".bind_uri").css("display", "none");
         $(".unbind_uri").css("display", "none");
 });
 
+
 $('.bind_service_button').click(bind_service);
 $('.bind_uri_button').click(bind_uri);
-
-$('.rectangle_tile .rectangle_tile.service :button').click(unbind_service);
-$('.rectangle_tile .rectangle_tile.uri :button').click(unbind_uri);
+$('.unbind_service_button').click(unbind_service);
+$('.unbind_uri_button').click(unbind_uri);
 
 
 
