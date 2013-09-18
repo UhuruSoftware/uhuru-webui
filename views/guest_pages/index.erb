@@ -1,64 +1,19 @@
-<div class="splash">
-    <div class="page-margin">
-    <div id="cloud_photo"></div>
 
-    <div id="splash_content_area">
-        <h2  class="layout_page_header"><%= page_title %></h2>
-        <p class="layout_page_paragraph left_simple_paragraphs">
-            <%= welcome_message %>
-        </p>
+<div id="content">
 
-        <div id="try_it">
-            <span class="title">Give It a <span style="font-weight: bold">Try</span></span><br /><br />
-            <span class="byline layout_page_paragraph">It takes <br />30 seconds</span>
-        </div>
+  <h3>Getting Started</h3>
+  <p>
+    Learn how to register with Ready To Go and start hosting your own web applications.
+    See how you can setup teams for collaboration on your applications and setup multiple app instances
+    for load balancing and fault tolerance
+  </p>
 
-        <div id="signup_container">
-                <div id="promo_code_container">
-                    <p class="layout_page_paragraph">
-                        Promo Code. No issues if you have none.
-                    </p>
-                    <input type="text" id="promo_code_input" name="promoCode" />
-                </div>
 
-                <a href="<%= Uhuru::Webui::SinatraRoutes::SIGNUP %>"><button class="btn signup_clipboard" id="signup_button" style="float: right;"><span class="line">| </span>Sign Up </button></a>
-            <div id="signup_container_text">
-                <br />
-                By using our service you agree to the  <a href="<%= $config[:webui][:terms_of_services_link] %>" target="_blank" class="index_links">Terms of Service</a>
-                and <a href="<%= $config[:webui][:privacy_policy_link] %>" target="_blank" class="index_links">Privacy Policy</a>
-            </div>
-        </div>
+  <div class="square_tile">
+    <div class="square_tile signup" title="Registratiorn ..." id="signup_button" onclick="window.location = '<%= Uhuru::Webui::SinatraRoutes::SIGNUP %>';">
+      <img src="/images/plus_32px.png" style="position: absolute; top: 110px; right: 39px;" />
+      <span>Register</span>
     </div>
+  </div>
 </div>
-</div>
-
-<div class="page-margin">
-    <table id="video_table">
-        <tbody>
-            <tr>
-                <td id="video_placeholder">
-                    <iframe id="video" width="340" height="240" src="http://www.youtube.com/embed/Iv4VpPjz7y0" style="border: 0;"></iframe>
-                </td>
-                <td id="video_description">
-                    <h3 class="layout_page_header">Getting Started</h3>
-                    <p class="layout_page_paragraph">
-                        Learn how to register with Ready To Go and start hosting your own web applications.
-                        See how you can setup teams for collaboration on your applications and setup multiple app instances
-                        for load balancing and fault tolerance
-
-                    </p>
-                    <br />
-                    <p class="layout_page_paragraph">
-                        We have more how-to videos and documentation in our support forum knowledge base
-                        <a href="<%= $config[:webui][:more_videos_link] %>" class="index_links">..more videos</a>
-                    </p>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-</div>
-
-<% if defined?(include_erb) && include_erb != nil %>
-    <%= erb(include_erb, :layout => false) %>
-<% end %>
 

@@ -30,7 +30,7 @@ module Uhuru::Webui
                       :welcome_message => $config[:webui][:welcome_message],
                       :error_message => error_message,
                       :error_username => error_username,
-                      :include_erb => :'user_pages/login'
+                      :include_erb => :'guest_pages/login'
                   }
               }
         end
@@ -51,7 +51,7 @@ module Uhuru::Webui
                       :error_username => error_username,
                       :error_first_name => error_first_name,
                       :error_last_name => error_last_name,
-                      :include_erb => :'user_pages/signup'
+                      :include_erb => :'guest_pages/signup'
                   }
               }
         end

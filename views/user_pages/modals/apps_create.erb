@@ -18,7 +18,7 @@
 
       <!-- LOOP AND CREATE THE CONTENT OF EACH COLLECTION AND APP -->
       <% apps.each do |app_id, app| %>
-          <div class="template_apps hide" id="<%= app_id %>_div" <%= apps.first[1]['id'] == app_id ? "style='display: block;'" : '' %>>
+          <div class="template_apps hide" id="<%= app_id %>_div">
 
             <!-- INSERT APP LOGO, NAME, DESCRIPTION AND SERVICE ICONS -->
             <% if File.exists? app['logo'] %>
@@ -119,7 +119,6 @@
     <% unless error_message.nil? || error_message.empty? %>
         <div class="error"> <%= error_message %> </div>
     <% end %>
-    <p class="hide hidden_message">Pushing app ...</p>
 
     <div>
       <button onclick="window.location = '<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/spaces/#{current_space}/apps" %>';" class="close_button">Close</button>
@@ -128,6 +127,8 @@
 </div>
 
 
+<!-- jquery is necessary here in order for the script to work -->
+<script type="text/javascript" src="<%= request.base_url %>/js/jquery-1.5.js"></script>
 <script type="text/javascript">
     /* ENSURE THE APPS ARE INSERTED IN THE JAVASCRIPT ARRAY IN THE SAME ORDER */
 
@@ -155,6 +156,10 @@
             }
         }
     }
+    else
+    {
+        showPanel(document.getElementById(js_apps[0]));
+    }
 
     function redirectTo(id)
     {
@@ -165,7 +170,11 @@
     {
         if(obj.id != 0)
         {
-            $('.app_menu_item').removeClass('selected');
+            if ($('.app_menu_item').hasClass('selected'))
+            {
+                $('.app_menu_item').removeClass('selected');
+            }
+
             $('.template_apps').css("display", "none");
             $('#' + obj.id + '_div').css("display", "block");
             $('#' + obj.id).addClass('selected');

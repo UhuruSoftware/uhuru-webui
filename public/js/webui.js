@@ -144,77 +144,58 @@ $('.rectangle_tile .rectangle_tile.uri :button').click(unbind_uri);
  APP DETAILS UPDATE MEMORY AND INSTANCES
  */
 
-$(function(){
-    var instance = 1;
-    var firstInstance = $('.send_app_instances').val();
-    instance = parseInt(instance);
-    var insMemory = $(this).contents().find("span:nth-child(4)").attr("id");
+var saving_modal = function()
+{
+    $('.modal-background').css({	display: "block", opacity: 0.9, width: "10000px", height: "10000px"});
+    $('body').css({"overflow":"hidden"});
+    $('#saving_modal').fadeIn(400);
+    $('.stopApp_btn').css("display", "block");
+    $('.startApp_btn').css("display", "none");
+}
 
-    var plus_instance = function(){
-        instance+=1;
-        instance = instance + "";
-        $('.instances_count').val(instance);
-        $('.send_app_instances').val(instance);
-        instance = parseInt(instance);
-        if(firstInstance != instance)
-        {
-            $('.update_button').fadeIn('slow');
-        }
-        else
-        {
-            $('.update_button').fadeOut('slow');
-        }
-    }
-
-    var minus_instance = function(){
-        instance-=1;
-        instance = instance + "";
-        $('.instances_count').val(instance);
-        $('.send_app_instances').val(instance);
-        instance = parseInt(instance);
-        if(firstInstance != instance)
-        {
-            $('.update_button').fadeIn('slow');
-        }
-        else
-        {
-            $('.update_button').fadeOut('slow');
-        }
-    }
-
-    $('.add_instance').click(plus_instance);
-    $('.subtract_instance').click(minus_instance);
-    $('.update_button').hover(function(){
-        var memory = $('#app_memory_setup').val();
-        $('.send_app_memory').val(memory);
-    });
+$('.start_app').click(saving_modal);
+$('.stop_app').click(saving_modal);
 
 
-
-    var saving_modal = function()
+$('.add_instance').click(function(){
+    var new_value = parseInt($('.instances_count').val()) + 1;
+    if(new_value <= 10)
     {
-        $('.modal-background').css({	display: "block", opacity: 0.9, width: "10000px", height: "10000px"});
-        $('body').css({"overflow":"hidden"});
-        $('#saving_modal').fadeIn(400);
-        $('.stopApp_btn').css("display", "block");
-        $('.startApp_btn').css("display", "none");
+        $('.instances_count').val(new_value.toString());
+        $('.send_app_instances').val(new_value.toString());
     }
-
-    $('.start_app').click(saving_modal);
-    $('.stop_app').click(saving_modal);
-
+});
+$('.subtract_instance').click(function(){
+    var new_value = parseInt($('.instances_count').val()) - 1;
+    if(new_value > 0)
+    {
+        $('.instances_count').val(new_value.toString());
+        $('.send_app_instances').val(new_value.toString());
+    }
 });
 
 
-/* this code needs to be redone in another way */
+$('.add_memory').click(function(){
+    var new_value = parseInt($('#app_memory_setup').val()) + 32;
+    if(new_value <= 1024)
+    {
+        $('#app_memory_setup').val(new_value.toString());
+        $('.send_app_memory').val(new_value.toString());
+    }
+});
+$('.subtract_memory').click(function(){
+    var new_value = parseInt($('#app_memory_setup').val()) - 32;
+    if(new_value > 0)
+    {
+        $('#app_memory_setup').val(new_value.toString());
+        $('.send_app_memory').val(new_value.toString());
+    }
+});
 
-//$(":submit").click(function(){
-//    $(this).hide();
-//    $(":button").hide();
-//    $('.image').show();
-//    $('.hidden_message').fadeIn(300);
-//});
-//$(document).ready(function(){
-//    $(":submit").show();
-//    $(":button").show();
-//});
+
+$('.update_button').hover(function(){
+    var memory = $('#app_memory_setup').val();
+    var instances = $('.instances_count').val();
+    $('.send_app_memory').val(memory);
+    $('.send_app_instances').val(instances);
+});
