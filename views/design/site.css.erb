@@ -358,16 +358,6 @@ button.image.s<%= size %>.<%= image %>
     padding: 5px;
 }
 
-.rectangle_tile
-{
-    position: relative;
-    display: inline-block;
-    width: 180px !important;
-    height: 70px;
-    margin: 0 5px 3px 0;
-    padding: 5px;
-}
-
 .tile:hover .tile.top,
 .tile:hover .tile.right,
 .tile:hover .tile.left
@@ -378,7 +368,8 @@ button.image.s<%= size %>.<%= image %>
 }
 
 .tile:hover .tile.top,
-.tile:hover .tile.bottom
+.tile:hover .tile.bottom,
+.square_tile:hover
 {
     top: -2px;
     left: -2px;
@@ -424,7 +415,6 @@ button.image.s<%= size %>.<%= image %>
 }
 
 .square_tile button,
-.rectangle_tile button,
 .tile.top button
 {
     position: absolute;
@@ -558,34 +548,6 @@ button.image.s<%= size %>.<%= image %>
 
 <% tile_design['link'].each do |style, color| %>
 .square_tile.<%= tile_type %> a:<%= style %>
-{
-    color: <%= color %>;
-}
-<% end %>
-
-
-<% end %>
-
-
-
-
-    /****************************  rectangle    *******************************/
-
-<% design['rectangle_tile'].each do |tile_type, tile_design| %>
-
-.rectangle_tile.<%= tile_type %>
-{
-    position: absolute;
-    background-color: <%= tile_design['background-color'] %>;
-    border: 1px solid <%= tile_design['border-color'] %>;
-    background-image: url('<%= tile_design["image-link"] %>');
-    background-repeat: no-repeat;
-    background-position: 98% 90%;
-    color: <%= tile_design['font-color'] %>;
-}
-
-<% tile_design['link'].each do |style, color| %>
-.rectangle_tile.<%= tile_type %> a:<%= style %>
 {
     color: <%= color %>;
 }
@@ -749,26 +711,49 @@ button.image.s<%= size %>.<%= image %>
 {
     display: block;
     position: relative;
-    margin-bottom: 5px;
     padding: 0;
-    margin: 0;
+    margin: 0 0 20px 0;
+}
+.app_details .modal_content div:nth-child(1) .app_status
+{
+    font-size: 26px;
+}
+.app_details .modal_content div:nth-child(1) .app_status_buttons
+{
+    float: left;
+    margin-right: 3px;
+}
+.app_details .modal_content div form
+{
+    width: 100%;
+    padding-top: 5px;
+    height: 45px;
 }
 
-.app_details .modal_content div div
-{
-    display: inline-block;
-    position: relative;
-    width: 49%;
-}
 
-.app_details .modal_content div div .right_buttons
+.app_details .modal_content div table
 {
-    display: block;
-    float: right;
-    width: 150px;
-    padding-right: 10px;
+    width: 100%;
+    text-align: left;
+}
+.app_details .modal_content div table td:nth-child(1)
+{
+    width: 400px;
+}
+.app_details .modal_content div table td:nth-child(2)
+{
+    width: 200px;
+}
+.app_details .modal_content div table td:nth-child(3)
+{
+    width: 200px;
+}
+.app_details .modal_content div table td:nth-child(4)
+{
+    width: 70px;
     text-align: right;
 }
+
 
 
 /************************    APP Push    *************************/

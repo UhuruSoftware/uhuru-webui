@@ -6,104 +6,95 @@
   </div>
 
   <div class="modal_content">
-    <div style="margin-bottom: 15px;">
+    <div>
+      <span class="app_status">Status: <%= app.state %></span>
+
+        <% if app.state == "STOPPED" %>
+            <form action="/startApp" method="post">
+              <input type="hidden" name="appName" value="<%= app.name %>" />
+              <input type="hidden" name="current_organization" value="<%= current_organization %>" />
+              <input type="hidden" name="current_space" value="<%= current_space %>" />
+              <input type="hidden" name="current_tab" value="<%= current_tab %>" />
+              <div class="app_status_buttons">
+                <button type="button" class="image s24px trash" title="Delete '<%= app.name %>'"></button>
+                <button type="submit" name="startApp" class="image s24px start start_app" value="" title="Start!"></button>
+              </div>
+            </form>
+        <% end %>
+
+        <% if app.state == "RUNNING" || app.state == "STARTED" %>
+            <form action="/stopApp" method="post">
+              <input type="hidden" name="appName" value="<%= app.name %>" />
+              <input type="hidden" name="current_organization" value="<%= current_organization %>" />
+              <input type="hidden" name="current_space" value="<%= current_space %>" />
+              <input type="hidden" name="current_tab" value="<%= current_tab %>" />
+              <div class="app_status_buttons">
+                <button type="button" class="image s24px trash" title="Delete '<%= app.name %>'"></button>
+                <button type="submit" name="stopApp" class="image s24px stop stop_app" value="" title="Stop!"></button>
+              </div>
+            </form>
+        <% end %>
+    </div>
+
+
+    <div>
       <div>
-        <div class="rectangle_tile">
-          <div class="rectangle_tile app">
-            <span><%= app.name %></span>
-            <span><%= app.state %></span>
-            <button type="button" class="image s24px trash" title="Delete '<%= app.name %>'"></button>
-          </div>
-        </div>
-
-        <div class="right_buttons">
-            <% if app.state == "STOPPED" %>
-                <form action="/startApp" method="post">
-                  <input type="hidden" name="appName" value="<%= app.name %>" />
-                  <input type="hidden" name="current_organization" value="<%= current_organization %>" />
-                  <input type="hidden" name="current_space" value="<%= current_space %>" />
-                  <input type="hidden" name="current_tab" value="<%= current_tab %>" />
-                  <button type="submit" name="startApp" class="image s24px start start_app" value="" title="Start!"></button>
-                </form>
-            <% end %>
-
-            <% if app.state == "RUNNING" || app.state == "STARTED" %>
-                <form action="/stopApp" method="post">
-                  <input type="hidden" name="appName" value="<%= app.name %>" />
-                  <input type="hidden" name="current_organization" value="<%= current_organization %>" />
-                  <input type="hidden" name="current_space" value="<%= current_space %>" />
-                  <input type="hidden" name="current_tab" value="<%= current_tab %>" />
-                  <button type="submit" name="stopApp" class="image s24px stop stop_app" value="" title="Stop!"></button>
-                </form>
-            <% end %>
-        </div>
+            <span>Provisioned</span><input type="text" class="pass_app_instances instances_count" value="<%= app.instances %>" />
+            <button type="button" class="image s24px minus subtract_instance"></button>
+            <button type="button" class="image s24px plus add_instance"></button>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <span>Memory</span><input type="text" name="appMemory" id="app_memory_setup" value="<%= app.memory %>"/> MB
+            <button type="button" class="image s24px minus subtract_memory"></button>
+            <button type="button" class="image s24px plus add_memory"></button>
       </div>
     </div>
 
     <div>
-      <div>
-        <h4>Services Bound<div class="right_buttons"><button type="button" class="image s24px plus bind_service_button" title="<%= app.name %>"></button></div></h4>
-          <% app.services.each do |service| %>
-            <div class="rectangle_tile">
-              <div class="rectangle_tile service">
-                <span><%= service.name %></span>
+      <table>
+        <tr>
+          <td>Name</td>
+          <td>Type</td>
+          <td>Plan</td>
+          <td>Actions</td>
+        </tr>
+
+        <% app.services.each do |service| %>
+            <tr>
+              <td><%= service.name %></td>
+              <td><%= service.type %></td>
+              <td>free(hardcoded)</td>
+              <td>
                 <button type="button" class="image s24px trash" title="Delete '<%= service.name %>'" id="<%= service.name %>"></button>
-              </div>
-            </div>
-          <% end %>
-      </div>
+                <button type="button" class="image s24px plus bind_service_button" title="<%= app.name %>"></button>
+              </td>
+            </tr>
+        <% end %>
 
-      <div>
-        <h4>URIs Bound<div class="right_buttons"><button type="button" class="image s24px plus bind_uri_button" title="Delete '<%= app.name %>'"></button></div></h4>
-          <% app.uris.each do |uri| %>
-              <div class="rectangle_tile">
-                <div class="rectangle_tile uri">
-                    <span><%= uri.url %></span>
-                    <button type="button" class="image s24px trash" title="Delete '<%= uri.url %>'" id="<%= uri.url %>"></button>
-                </div>
-              </div>
-          <% end %>
-      </div>
+      </table>
     </div>
 
     <div>
-      <div>
-        <h4>App Instances
-            <div class="right_buttons">
-              <button type="button" class="image s24px minus subtract_instance"></button>
-              <button type="button" class="image s24px plus add_instance"></button>
-            </div>
-        </h4>
+      <table>
+        <tr>
+          <td>Name</td>
+          <td>Type</td>
+          <td>Plan</td>
+          <td>Actions</td>
+        </tr>
 
-        <div class="rectangle_tile">
-          <div class="rectangle_tile instances">
-            <table style="width: 100%;">
-              <tr>
-                  <td class="pass_app_instances instances_count"><%= app.instances %></td>
-                  <td>Provisioned</td>
-              </tr>
-              <tr>
-                <td><%= app.instances %></td>
-                <td>Running</td>
-              </tr>
-            </table>
-          </div>
-        </div>
-      </div>
+        <% app.uris.each do |uri| %>
+            <tr>
+              <td><%= uri.url %></td>
+              <td><%= 'something' %></td>
+              <td>free(hardcoded)</td>
+              <td>
+                <button type="button" class="image s24px trash" title="Delete '<%= uri.url %>'" id="<%= uri.url %>"></button>
+                <button type="button" class="image s24px plus bind_uri_button" title="Delete '<%= app.name %>'"></button>
+              </td>
+            </tr>
+        <% end %>
 
-      <div>
-        <h4>Memory Provisioned
-            <div class="right_buttons">
-              <button type="button" class="image s24px minus subtract_memory"></button>
-              <button type="button" class="image s24px plus add_memory"></button>
-            </div>
-        </h4>
-
-        <div>
-            <input type="text" name="appMemory" id="app_memory_setup" value="<%= app.memory %>"/> MB
-        </div>
-      </div>
-      <br /><br /><br />
+      </table>
     </div>
   </div>
 

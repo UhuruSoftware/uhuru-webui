@@ -286,33 +286,6 @@ rectangle_tile:
       visited: '#FFFFFF'
       hover: '#FFFFFF'
       active: '#FFFFFF'
-  service:
-    border-color: '#f13c73'
-    background-color: '#e40045'
-    font-color: '#FFFFFF'
-    link:
-      link: '#FFFFFF'
-      visited: '#FFFFFF'
-      hover: '#FFFFFF'
-      active: '#FFFFFF'
-  uri:
-    border-color: '#ff9640'
-    background-color: '#ff7400'
-    font-color: '#FFFFFF'
-    link:
-      link: '#FFFFFF'
-      visited: '#FFFFFF'
-      hover: '#FFFFFF'
-      active: '#FFFFFF'
-  instances:
-    border-color: '#3f9d2d'
-    background-color: '#0b61a4'
-    font-color: '#FFFFFF'
-    link:
-      link: '#FFFFFF'
-      visited: '#FFFFFF'
-      hover: '#FFFFFF'
-      active: '#FFFFFF'
 
 
 tab_menu:
