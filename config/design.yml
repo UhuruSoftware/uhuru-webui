@@ -104,8 +104,8 @@ tiles:
         hover: '#FFFFFF'
         active: '#FFFFFF'
     left:
-      border-color: '#ffa840'
-      background-color: '#ff8b00'
+      border-color: '#6a48d7'
+      background-color: '#3914af'
       font-color: '#FFFFFF'
       image-link: '/images/users_32px.png'
       link:
@@ -114,8 +114,8 @@ tiles:
         hover: '#326544'
         active: '#098786'
     right:
-      border-color: '#33cdc7'
-      background-color: '#009b95'
+      border-color: '#259433'
+      background-color: '#0acf00'
       font-color: '#FFFFFF'
       image-link: '/images/money_bag_32px.png'
       link:
@@ -125,8 +125,8 @@ tiles:
         active: '#000000'
   space:
     top:
-      border-color: '#e768ab'
-      background-color: '#7f0055'
+      border-color: '#963fd5'
+      background-color: '#680bab'
       font-color: '#FFFFFF'
       link:
         link: '#FFFFFF'
@@ -134,8 +134,8 @@ tiles:
         hover: '#FFFFFF'
         active: '#FFFFFF'
     left:
-      border-color: '#f73esf'
-      background-color: '#ef002a'
+      border-color: '#7147d7'
+      background-color: '#4013af'
       font-color: '#FFFFFF'
       image-link: '/images/users_32px.png'
       link:
@@ -144,8 +144,8 @@ tiles:
         hover: '#326544'
         active: '#098786'
     right:
-      border-color: '#a13dd5'
-      background-color: '#7309aa'
+      border-color: '#36da82'
+      background-color: '#00b454'
       font-color: '#FFFFFF'
       image-link: '/images/money_bag_32px.png'
       link:
@@ -155,8 +155,8 @@ tiles:
         active: '#000000'
   app:
     top:
-      border-color: '#cccccc'
-      background-color: '#000000'
+      border-color: '#35d699'
+      background-color: '#00ac6b'
       font-color: '#FFFFFF'
       link:
         link: '#FFFFFF'
@@ -164,20 +164,18 @@ tiles:
         hover: '#FFFFFF'
         active: '#FFFFFF'
     left:
-      border-color: '#cccccc'
-      background-color: '#000000'
+      border-color: '#39aecf'
+      background-color: '#057d9f'
       font-color: '#FFFFFF'
-      #image-link: '/images/erlang_icon.png'
       link:
         link: '#FF00FF'
         visited: '#00F3F9'
         hover: '#326544'
         active: '#098786'
     right:
-      border-color: '#cccccc'
-      background-color: '#000000'
+      border-color: '#4ae83a'
+      background-color: '#14d100'
       font-color: '#FFFFFF'
-      #image-link: '/images/erlang_icon.png'
       link:
         link: '#FF00FF'
         visited: '#00F3F9'
@@ -185,8 +183,8 @@ tiles:
         active: '#098786'
   service:
     top:
-      border-color: '#cccccc'
-      background-color: '#a60000'
+      border-color: '#4188d2'
+      background-color: '#0d58a6'
       font-color: '#FFFFFF'
       link:
         link: '#FFFFFF'
@@ -194,20 +192,18 @@ tiles:
         hover: '#FFFFFF'
         active: '#FFFFFF'
     left:
-      border-color: '#cccccc'
-      background-color: '#1240ab'
+      border-color: '#6a48d7'
+      background-color: '#3914af'
       font-color: '#FFFFFF'
-      image-link: '/images/erlang_icon.png'
       link:
         link: '#FF00FF'
         visited: '#00F3F9'
         hover: '#326544'
         active: '#098786'
     right:
-      border-color: '#cccccc'
-      background-color: '#1240ab'
+      border-color: '#35d2ab'
+      background-color: '#00a67c'
       font-color: '#FFFFFF'
-      image-link: '/images/erlang_icon.png'
       link:
         link: '#FF00FF'
         visited: '#00F3F9'
@@ -275,6 +271,16 @@ square_tiles:
         visited: '#FFFFFF'
         hover: '#FFFFFF'
         active: '#FFFFFF'
+  signup:
+      border-color: '#1240ab'
+      background-color: '#a60000'
+      font-color: '#FFFFFF'
+      image-link: '/images/members_icon.png'
+      link:
+        link: '#FFFFFF'
+        visited: '#FFFFFF'
+        hover: '#FFFFFF'
+        active: '#FFFFFF'
 
 rectangle_tile:
   app:
@@ -289,10 +295,10 @@ rectangle_tile:
 
 
 tab_menu:
-  border-color: '#000000'
-  font-color: '#000000'
-  selected-item-background: '#000000'
-  selected-item-foreground: '#ffffff'
+  border-color: '#1c1c1c'
+  font-color: '#daf9ff'
+  selected-item-background: '#005f78'
+  selected-item-foreground: '#daf9ff'
   link:
     link: '#000000'
     visited: '#000000'

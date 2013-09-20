@@ -84,7 +84,7 @@ module Uhuru::Webui
     end
 
     get '/design' do
-      erb :'design/design_test.html'
+      erb :'design/design_test.html', {:layout => :'layouts/user'}
     end
 
     get '/monitoring' do

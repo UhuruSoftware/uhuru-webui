@@ -102,12 +102,11 @@
     <% unless error_message.nil? || error_message.empty? %>
         <div class="error"> <%= error_message %> </div>
     <% end %>
-    <p class="hide hidden_message">Updating current application...</p>
 
     <form action="/updateApp" method="post">
       <input type="hidden" class="send_app_name" name="appName" value="<%= app.name %>" />
-      <input type="hidden" class="send_app_instances" name="appInstances" value="<%= app.instances %>"/>
-      <input type="hidden" class="send_app_memory" name="appMemory" />
+      <input type="text" class="send_app_instances" name="appInstances" value="<%= app.instances %>"/>
+      <input type="text" class="send_app_memory" name="appMemory" />
       <input type="hidden" name="current_organization" value="<%= current_organization %>" />
       <input type="hidden" name="current_space" value="<%= current_space %>" />
       <input type="hidden" name="current_tab" value="<%= current_tab %>" />

@@ -31,11 +31,15 @@
       <a href="<%= $config[:webui][:support_link] %>" target="_blank">SUPPORT</a>
       <a href="<%= $config[:webui][:company_link] %>" target="_blank">COMPANY</a>
     </div>
-
   </div>
 </div>
 
+
 <div id="container">
+  <span id="cloud_target">
+    Your cloud target: <%= $config[:cloud_controller_url] %>
+  </span>
+
   <div id="content">
 
     <%= yield %>
@@ -54,9 +58,6 @@
       </div>
     </div>
 
-    <span>
-        Your cloud target: <%= $config[:cloud_controller_url] %>
-    </span>
   </div>
 </div>
 

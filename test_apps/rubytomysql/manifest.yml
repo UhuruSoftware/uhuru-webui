@@ -1,9 +1,9 @@
 ---
 applications:
-- name: rubytomysql-monit-b9d74
+- name: rubytomysql-monit-489d8
   memory: 128M
   instances: 1
-  host: rubytomysql-monit-b9d74
+  host: rubytomysql-monit-489d8
   domain: apps.ccng-dev.net
   path: .
   buildpack: https://github.com/cloudfoundry/heroku-buildpack-ruby

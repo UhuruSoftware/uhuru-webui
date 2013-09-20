@@ -18,7 +18,6 @@
           <% unless error_message.nil? || error_message.empty? %>
               <div class="error"> <%= error_message %> </div>
           <% end %>
-          <p class="hide hidden_message">Deleting organization...</p>
 
           <div>
               <button type="button" onclick="window.location = '<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/spaces" %>';">Cancel</button>
