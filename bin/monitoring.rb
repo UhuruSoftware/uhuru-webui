@@ -219,14 +219,16 @@ def send_email(subject, body)
 end
 
 def cf_target
-  %x(#{@cf} --script target #{@cloud_target})
+  target_command = "#{@cf.chomp('"')} --script target #{@cloud_target}" + '"'
+  %x(#{target_command})
   if $?.exitstatus != 0
     raise Exception, "Target is unavailable"
   end
 end
 
 def cf_login
-  login = %x(#{@cf} --script login #{@username} --password #{@password} -o #{@default_org} -s #{@default_space})
+  login_command = "#{@cf.chomp('"')} --script login #{@username} --password #{@password} -o #{@default_org} -s #{@default_space}" + '"'
+  login = %x(#{login_command})
   if login.downcase.include?("error") || login.downcase.include?("problem")
     logger.error("Unable to login in vmc. vmc error: #{login.strip}")
     raise Exception, "Unable to login in vmc. vmc error: #{login.strip}"
@@ -359,13 +361,13 @@ end
 def main_apps
   app_names = @apps_to_monitor
   faulty_apps = []
-  mutex = Mutex.new
-  db_mutex = Mutex.new
+  #mutex = Mutex.new
+  #db_mutex = Mutex.new
   error_mail_body = String.new
-  threads = []
+  #threads = []
 
   app_names.each do |app|
-    threads << Thread.new do
+    #threads << Thread.new do
       begin
         app_new_name = "#{app}#{APP_NAME_SUFFIX}#{SecureRandom.uuid.slice(0, 5)}"
 
@@ -390,7 +392,8 @@ def main_apps
 
         push_output = ''
         push_duration = Benchmark.measure do
-          push_output = %x(#{@cf} push --script --manifest #{File.join(@app_dir, app, "/manifest.yml")} --reset --trace)
+          push_command = "#{@cf.chomp('"')} push --script --manifest #{File.join(@app_dir, app, "/manifest.yml")} --trace" + '"'
+          push_output = %x(#{push_command})
         end
         push_success = $?.exitstatus == 0 ? 1 : 0
 
@@ -411,16 +414,16 @@ def main_apps
           r.to_s
         end
 
-        mutex.synchronize {
+        #mutex.synchronize {
           faulty_apps << {
               :name => app,
               :push_log => push_output,
               :framework => framework,
               :services => databases
           } if push_success * http_status == 0
-        }
+        #}
 
-        db_mutex.synchronize {
+        #db_mutex.synchronize {
           monit = Monitoring.new
           monit.name = app_new_name
           monit.description = app_description
@@ -439,7 +442,7 @@ def main_apps
           monit.save!
 
           ActiveRecord::Base.connection.close
-        }
+        #}
       rescue => e
         logger.error("Error processing app #{app} - #{e.message}:#{e.backtrace}")
       end
@@ -448,14 +451,14 @@ def main_apps
 
       app_delete_with_service(app_new_name)
       logger.info("Application #{app} deleted")
-    end
+    #end
 
     sleep(@pause_after_each_app)
   end
 
-  threads.each do |t|
-    t.join
-  end
+  #threads.each do |t|
+  #  t.join
+  #end
 
   if faulty_apps.count > 0
     error_mail_body << <<ERROR_MAIL

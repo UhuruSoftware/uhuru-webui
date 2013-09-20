@@ -98,8 +98,8 @@ monitoring:
   default_space: monitoring
   apps_domain: ["apps.ccng-dev.net"]
   email_to: ada.sescu@uhurusoftware.com
-  sleep_after_app_push: 60
-  pause_after_each_app: 45
+  sleep_after_app_push: 240
+  pause_after_each_app: 1
   database:
     database: "monitoring"
     host: localhost
