@@ -1,44 +1,57 @@
 <!DOCTYPE html>
-
-<html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
 <head>
-		<title><% $config[:webui][:site_tab] || 'Uhuru AppCloud' %></title>
-        <link rel="stylesheet" type="text/css" href="<%= request.base_url %>/css/Site.css"/>
-        <link rel="stylesheet" type="text/css" href="<%= request.base_url %>/css/ini.css"/>
-        <link rel="stylesheet" type="text/css" href="<%= request.base_url %>/css/jquery.css"/>
-        <meta charset="utf-8" />
+  <title><%= $config[:webui][:site_tab] || 'Uhuru AppCloud' %></title>
+  <link rel="stylesheet" type="text/css" href="/css"/>
+  <link rel="stylesheet" type="text/css" href="/js/jquery_css.css"/>
+  <meta charset="utf-8" />
 </head>
 
+<body>
 
-<body class="manage">
-    <div id="container">
-        <header id="site_header">
-            <div class="page-margin">
-                <a href="/organizations"><h1>Uhuru AppCloud</h1></a>
-            </div>
-        </header>
-        <div class="page-margin" id="body">
+<div id="header_container">
+  <div id="header">
+    <a href="<%= Uhuru::Webui::SinatraRoutes::INDEX %>" title="Home"><h1>Uhuru AppCloud</h1></a>
 
-        <%= yield %>
-
-        </div>
-        <footer id="site_footer">
-            <div class="bottom">
-                <div class="page-margin" id="footer_container">
-                    <span class="copyright">
-                        <%= $config[:webui][:copyright_message] %>
-                    </span>
-                    <ul class="footer-menu">
-                        <li><a href="http://uhurusoftware.com/tos/">Terms of Service</a></li>
-                        <li><a href="http://uhurusoftware.com/privacy/">Privacy Policy</a></li>
-                        <li class="last"><a href="http://uhurusoftware.zendesk.com" target="_blank">Support</a></li>
-                    </ul>
-                    <span class="cloud-target" style="display: none;">
-                        Your cloud target: <span class="cloud-target-url">http://services.uhurucloud.com</span>
-                    </span>
-                </div>
-            </div>
-        </footer>
+    <div id="header_links">
+      <a href="<%= $config[:webui][:support_link] %>" target="_blank">SUPPORT</a>
+      <a href="<%= $config[:webui][:company_link] %>" target="_blank">COMPANY</a>
     </div>
+
+  </div>
+</div>
+
+
+<div id="container">
+
+  <%= yield %>
+
+</div>
+
+
+<div id="footer_container">
+  <div id="footer">
+
+    <div id="footer_links">
+      <a href="<%= $config[:webui][:twitter_link] %>" class="icon-social twitter"></a>
+      <a href="<%= $config[:webui][:facebook_link] %>" class="icon-social facebook"></a>
+    </div>
+
+    <div id="copyright">
+      &copy; 2013 Uhuru Software. All rights reserved.
+    </div>
+
+    <ul id="footer-menu">
+      <li><a href="<%= $config[:webui][:terms_of_services_link] %>">Terms of Service</a></li>
+      <li><a href="<%= $config[:webui][:privacy_policy_link] %>">Privacy Policy</a></li>
+      <li><a href="<%= $config[:webui][:support_link] %>">Support</a></li>
+    </ul>
+  </div>
+</div>
+
+<script type="text/javascript" src="<%= request.base_url %>/js/jquery-1.5.js"></script>
+<script type="text/javascript" src="<%= request.base_url %>/js/webui.js"></script>
+
 </body>
+
 </html>

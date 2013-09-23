@@ -1,6 +1,7 @@
-<div id="404error_div">
-    <h3 class="error_h3">500 - An error has occurred on our server</h3>
-    <p class="error_p"><%= error %></p>
-    <p class="error_p">We apologize for the inconvenience, click <a href="<%= Uhuru::Webui::SinatraRoutes::INDEX %>" class="error_btn">here</a> to get back to home page</p>
+<div>
+    <h3>500 - An error has occurred on our server</h3>
+    <p><%= defined?(error) ? error : '' %></p>
+    <p>We apologize for the inconvenience, click the button bellow to go to the home page</p>
+    <button type="button" onclick="window.location = '<%= Uhuru::Webui::SinatraRoutes::INDEX %>';">Home Page</button>
 </div>
 
