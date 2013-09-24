@@ -107,12 +107,20 @@ var bind_uri = function(){
 /****************************************************/
 
 
-var bind_service = function(){
-    $.ajax( "/bindService", { appName: $('#app_name').val() , serviceName: $('#service_name').val(), current_organization: $('#current_organization').val(), current_space: $('#current_space').val(), current_tab: $('#current_tab').val() });
-}
-var bind_uri = function(){
-    $('.bind_uri').fadeIn(600);
-}
+
+var bind_service = $.ajax({
+        url: "/bindServices",
+        type: 'POST',
+        cache: false,
+        data: { appName: $('#app_name').val() , serviceName: $('#service_name').val(), current_organization: $('#current_organization').val(), current_space: $('#current_space').val(), current_tab: $('#current_tab').val() }
+    });
+
+var bind_uri = $.ajax({
+    url: "/bindUri",
+    type: 'POST',
+    cache: false,
+    data: { appName: $('#uri_app_name').val() , serviceName: $('#uri_domain_name').val() }
+});
 
 var unbind_service = function(){
     $('.unbind_service').fadeIn(600);

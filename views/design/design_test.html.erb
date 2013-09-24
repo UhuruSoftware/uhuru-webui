@@ -1,176 +1,196 @@
-<!DOCTYPE html>
-<html>
 <head>
   <title>AppCloud NG Design</title>
   <link rel="stylesheet" type="text/css" href="/css"/>
 </head>
-<body>
-
-<div id="header_container">
-  <div id="header">
-    <h1>Uhuru AppCloud</h1>
-
-    <div id="login_control">
-      <a href="#">
-        <button id="login_button" class="btn login_key" >
-          <img src="/images/login_key.png" />
-          <span>Login</span>
-        </button>
-      </a>
-    </div>  </div>
+<div class="breadcrumb" xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html">
+  <span class="breadcrumb_element">...&nbsp;/&nbsp;</span><a href="#" class="breadcrumb_link">organizations</a>
 </div>
 
-<div id="container">
-  <div id="content">
-
-    <div class="tab_menu">
-      <ul>
-        <li class="selected">Meniu 1</li>
-        <li>Meniu doi</li>
-        <li>Trei (9)</li>
-      </ul>
-    </div>
-
-    <div class="tile app">
-      <div class="tile top">
-
-      </div>
-
-      <div class="tile bottom">
-        <div class="tile left">
-
-        </div>
-
-        <div class="tile right">
-
-        </div>
-      </div>
-    </div>
-
-    <div class="tile app">
-      <div class="tile top">
-
-      </div>
-
-      <div class="tile bottom">
-        <div class="tile left">
-
-        </div>
-
-        <div class="tile right">
-
-        </div>
-      </div>
-    </div>
-
-    <div class="tile app">
-      <div class="tile top">
-
-        <a class="tile_action" href="#">
-        <div class="ellipsis"><div>
-          asdhajksdasdhjajshdbasdjhbasjkdhb ajshdb ajkshdb akjshbd kajshbd kajshbd akjhsdb
-        </div></div>
-        </a>
-        <!--<a class="tile_action ellipsis">askdlnaskdjn aksdjn asdiuasd niasndalksjdn aslkjdn askldjn asdasd asd asd asd</a>-->
-
-      </div>
-
-      <div class="tile bottom">
-        <div class="tile left">
-
-        </div>
-
-        <div class="tile right">
-
-        </div>
-      </div>
-    </div>
-
-    <div class="tile app">
-      <div class="tile top">
-        <a class="tile_action">askdlnaskdjn aksdjn asdiuasd niasndalksjdn aslkjdn askldjn</a>
-
-      </div>
-
-      <div class="tile bottom">
-        <div class="tile left">
-
-        </div>
-
-        <div class="tile right">
-
-        </div>
-      </div>
-    </div>
-
-    <div class="tile app">
-      <div class="tile top">
-        <a class="tile_action">askdlnaskdjn aksdjn asdiuasd niasndalksjdn aslkjdn askldjn</a>
-      </div>
-
-      <div class="tile bottom">
-        <div class="tile left">
-
-        </div>
-
-        <div class="tile right">
-
-        </div>
-      </div>
-    </div>
 
 
-    <!--<div class="modal-background">-->
-    <!--</div>-->
 
-    <div class="modal login">
-      <div class="modal_header">
-        Login
-      </div>
+<style>
+  ul{list-style: none; margin: 0; padding: 0;}
+    .mask { float:left; margin:0; padding: 0; width:100%; height:200px; overflow:hidden;  }
+    ul.images { position:relative; top:0px;left:0px; height:2660px; }
+    ul.images li { float:left; position:relative; top:0px;left:0px; }
 
-      <div class="modal_content">
-        <div>Username</div><input type="text" value="test">
-        <br/>
-        <div>Password</div><input type="text" value="test">
-
-        <br>
-        <br>
-
-        <button class="image s24px trash" />
-      </div>
-
-      <div class="modal_footer">
-        <button>Ok</button>
-        <button onclick="alert('asd')">Cancel</button>
-      </div>
-    </div>
-    <p>
-      Give us feedback on your experience with the App Cloud beta and get 1 year free premium hosting when we go commercial.
-      Click <a href="<%= $config[:webui][:guest_feedback_link] %>" class="index_links">here</a> for more details
-    </p>
+    ul.triggers { position:relative; display: none; }
+    .control {position:relative; color:#fff; cursor:pointer;}
+    .prev {  }
+    .next { margin-left: 30px; }
+</style>
 
 
+<div class="sections" id="organizations_page" style="width: 930px; margin: auto;" >
+  <div class="section_title">
+    <p id="organization_name">Organizations (<%= [1, 2, 3, 4, 5, 6, 7, 8].count %>)</p>
   </div>
-</div>
+  <div class="icons_options">
+    <button class="image s32px plus"></button>
+  </div>
 
-<div id="footer_container">
-  <div id="footer">
 
-    <div id="footer_links">
-      <a href="<%= $config[:webui][:twitter_link] %>" class="icon-social twitter"></a>
-      <a href="<%= $config[:webui][:facebook_link] %>" class="icon-social facebook"></a>
-    </div>
 
-    <div id="copyright">
-        &copy; 2013 Uhuru Software. All rights reserved.
-    </div>
+  <div class="mask">
+    <ul class="images">
+          <% [1, 2, 3, 4, 5, 6, 7, 8].each do |x| %>
+              <li>
+              <div class="tile org">
+                <div class="tile top">
+                  <a class="tile_action" href="#" title="Some">
+                    TestOrg <%= x %>
+                  </a>
 
-    <ul id="footer-menu">
-      <li><a href="<%= $config[:webui][:terms_of_services_link] %>">Terms of Service</a></li>
-      <li><a href="<%= $config[:webui][:privacy_policy_link] %>">Privacy Policy</a></li>
-      <li class="last"><a href="<%= $config[:webui][:support_link] %>">Support</a></li>
+                  <button type="button" id="<%= 22323 %>" class="image s24px trash" title="Delete 'thing'"></button>
+                </div>
+
+                <div class="tile bottom">
+                  <div class="tile left">
+                    <div class="tile_action">
+                      <%= 22 %>
+                    </div>
+                    <div class="tile_info">members</div>
+                  </div>
+
+                  <div class="tile right">
+                    <div class="tile_action">
+                      $<%= 100 %>
+                    </div>
+                    <div class="tile_info">monthly</div>
+                  </div>
+                </div>
+              </div>
+              </li>
+          <% end %>
     </ul>
   </div>
+
+
+  <ul class="triggers" style="margin: 0; padding: 0; list-style: none;">
+    <% [1, 2, 3, 4, 5, 6, 7, 8].each do |x| %>
+        <li><%= x %></li>
+    <% end %>
+  </ul>
+  <span class="control prev">Prev</span>
+  <span class="control next">Next</span>
+  <br /><br /><br />
 </div>
-</body>
-</html>
+
+
+<div id="content">
+  <div class="square_tile">
+    <div class="square_tile signup" title="Registratiorn ..." id="signup_button" onclick="testThis();">
+      <img src="/images/plus_32px.png" style="position: absolute; top: 110px; right: 39px;" />
+      <span>Organization Name</span>
+    </div>
+  </div>
+</div>
+
+
+
+<script>
+  function testThis()
+  {
+      var request = $.ajax( {
+          url: "/bindServices",
+          type: 'POST',
+          cache: false,
+
+          data: {  appName: "chacha" ,
+          serviceName: "chacha",
+          current_organization: "chacha",
+          current_space: "chacha",
+          current_tab: "chacha"  }
+  }
+  );
+
+  }
+</script>
+
+
+
+
+<div class="tile org" style="padding: 0;">
+  <div class="tile top" style="width: 280px; padding: 0; height: 83px; margin: 0; border-color: #000000;">
+    <a class="tile_action" href="#" title="Some">
+      Other org
+    </a>
+
+    <button type="button" id="gg" class="image s24px trash" title="Delete 'thing'"></button>
+  </div>
+
+  <div class="tile bottom" style="width: 280px; padding: 0; height: 83px; margin: 0;">
+    <div class="tile left" style="width: 138px; padding: 0; border-color: #000000;">
+      <div class="tile_action">
+        22
+      </div>
+      <div class="tile_info">members</div>
+    </div>
+
+    <div class="tile right" style="width: 138px; padding: 0; border-color: #000000;">
+      <div class="tile_action">
+        $11
+      </div>
+      <div class="tile_info">monthly</div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+<script type="text/javascript" src="<%= request.base_url %>/js/jquery-1.5.js"></script>
+<script type="text/javascript">
+    var triggers = $('ul.triggers li');
+    var images = $('ul.images li');
+    var lastElem = triggers.length-1;
+    var mask = $('.mask ul.images');
+    var imgWidth = images.width();
+    var target;
+
+    triggers.first().addClass('selected');
+    mask.css('width', imgWidth*(lastElem+1) +'px');
+
+    function sliderResponse(target) {
+        mask.stop(true,false).animate({'left':'-'+ imgWidth*target +'px'},300);
+        triggers.removeClass('selected').eq(target).addClass('selected');
+    }
+
+    triggers.click(function() {
+        if ( !$(this).hasClass('selected') ) {
+            target = $(this).index();
+            sliderResponse(target);
+            resetTiming();
+        }
+    });
+    $('.next').click(function() {
+        target = $('ul.triggers li.selected').index();
+        target === lastElem ? target = 0 : target = target+1;
+        sliderResponse(target);
+        resetTiming();
+    });
+    $('.prev').click(function() {
+        target = $('ul.triggers li.selected').index();
+        lastElem = triggers.length-1;
+        target === 0 ? target = lastElem : target = target-1;
+        sliderResponse(target);
+        resetTiming();
+    });
+    function sliderTiming() {
+        target = $('ul.triggers li.selected').index();
+        target === lastElem ? target = 0 : target = target+1;
+        sliderResponse(target);
+    }
+    var timingRun = setInterval(function() { sliderTiming(); },5000);
+    function resetTiming() {
+        clearInterval(timingRun);
+        timingRun = setInterval(function() { sliderTiming(); },5000);
+    }
+</script>
+
+<div class="modal-background hide"></div>

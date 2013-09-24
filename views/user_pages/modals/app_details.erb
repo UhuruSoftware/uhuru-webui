@@ -117,9 +117,9 @@
         <% end %>
 
         <tr>
-          <td><input type="text" class="small_input" value="<%= app.name %>" /></td>
+          <td><input type="text" id="uri_app_name" class="small_input" value="<%= app.name %>" /></td>
           <td>
-            <select class="small_input" name="domain">
+            <select id="uri_domain_name" class="small_input" name="domain">
               <% @domains_list.each do |domain| %>
                   <% if domain.owning_org_name == organization_name || domain.owning_org_name == 'Shared' %>
                       <option value="<%= domain.guid %>"><%= domain.name %></option>
@@ -172,80 +172,6 @@
       Please wait while your app is being updated.
     </p>
   </div>
-</div>
-
-
-
-<div class="modal bind_service hide">
-  <form action="/bindServices" method="post">
-
-    <div class="modal_header">
-      <h3>Add service</h3>
-    </div>
-    <div class="modal_body">
-      <p>Add a new service to <span></span></p>
-      <p>
-        <label for="bind_services_list">Available services</label>
-        <select id="bind_services_list" name="serviceName" class="modal_input_box">
-          <% services_list.each do |service| %>
-              <option value="<%= service.name %>" id="<%= service.name %>"> <%= service.name %> </option>
-          <% end %>
-        </select>
-      </p>
-    </div>
-    <div class="modal_footer">
-      <input type="hidden" id="bind_service_app_name" name="appName" value="<%= app.name %>" />
-      <input type="hidden" name="current_organization" value="<%= current_organization %>" />
-      <input type="hidden" name="current_space" value="<%= current_space %>" />
-      <input type="hidden" name="current_tab" value="<%= current_tab %>" />
-
-      <div>
-        <button type="button" class="cancel_button_app_details">Cancel</button>
-        <button type="submit">Bind</button>
-      </div>
-    </div>
-  </form>
-</div>
-
-<div class="modal bind_uri hide" >
-  <form action="/bindUri" method="post">
-    <div class="modal_header">
-      <h3>Add new URI</h3>
-    </div>
-    <div class="modal_content">
-      <table style="width: 100%;">
-        <tbody>
-        <tr>
-          <td>
-            <label for="host">host: </label>
-            <input type="text" name="host" class="modal_input_box"/>
-          </td>
-          <td style="vertical-align: top; color: #ffffff;">
-            <label for="domain">domain: </label>
-            <select class="modal_input_box" name="domain">
-              <% @domains_list.each do |domain| %>
-                  <% if domain.owning_org_name == organization_name || domain.owning_org_name == 'Shared' %>
-                      <option value="<%= domain.guid %>"><%= domain.name %></option>
-                  <% end %>
-              <% end %>
-            </select>
-          </td>
-        </tr>
-        </tbody>
-      </table>
-    </div>
-    <div class="modal_footer">
-      <input type="hidden" id="bind_uri_app_name" name="appName" value="<%= app.name %>" />
-      <input type="hidden" name="current_organization" value="<%= current_organization %>" />
-      <input type="hidden" name="current_space" value="<%= current_space %>" />
-      <input type="hidden" name="current_tab" value="<%= current_tab %>" />
-
-      <div>
-        <button type="button" class="cancel_button_app_details">Cancel</button>
-        <button type="submit">Bind</button>
-      </div>
-    </div>
-  </form>
 </div>
 
 
