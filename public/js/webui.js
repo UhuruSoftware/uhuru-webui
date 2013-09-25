@@ -1,16 +1,46 @@
 
+function show_modal(modal)
+{
+    $('body').addClass('noscroll');
+    $('.modal-background').show();
+    modal.show();
+    modal.animate({
+        top: '130px',
+        opacity: '1'
+    }, 250);
+}
+
+function hide_modal(modal, execute_after)
+{
+    modal.animate({ top: '0px', opacity:'0' }, 250,
+        function(){
+            modal.hide();
+            $('.modal-background').hide();
+            $('body').removeClass('noscroll');
+
+            if (typeof execute_after !== 'undefined')
+            {
+                execute_after();
+            }
+        });
+}
+
+
+$(document).ready(function(){
+    if ($('#modal_login').length)
+    {
+        show_modal($('#modal_login'));
+    }
+});
+
 $('#logout_key').click(function(){
-    $('.modal-background').css({ "display": "block" });
-    $('body').css({"overflow":"hidden"});
-    $('.modal.logout').fadeIn(600);
+    show_modal($('.modal.logout'));
 });
 
 /* cancel buttons on all modals hide the modal */
 $('.cancel_button').click(function(){
-        $(".modal").css("display", "none");
-        $('.modal-background').css("display", "none");
-        $('body').css({"overflow":"auto"});}
-);
+    hide_modal($('.modal'));
+});
 
 function showSpacesInput()
 {
@@ -30,24 +60,19 @@ function showOrganizationsInput()
 
 function deleteCurrentOrganization()
 {
-    $('.modal-background').css({ "display": "block" });
-    $('body').css({"overflow":"hidden"});
-    $('#delete_current_organization_modal').fadeIn(600);
+    show_modal($('#delete_current_organization_modal'));
 }
 
 function deleteCurrentSpace()
 {
-    $('.modal-background').css({ "display": "block" });
-    $('body').css({"overflow":"hidden"});
-    $('#delete_current_space_modal').fadeIn(600);
+    show_modal($('#delete_current_space_modal'));
 }
 
 var delete_selected_element = function(){
     $('#selected_guid').val($(this).attr("id"));
     $('#selected_name').text($(this).attr("title"));
-    $('.modal-background').css({ "display": "block" });
-    $('body').css({"overflow":"hidden"});
-    $('.delete_confirmation').fadeIn(600);
+
+    show_modal($('.delete_confirmation'));
 }
 
 function deleteUserModal(this_, role)
@@ -55,13 +80,12 @@ function deleteUserModal(this_, role)
     $('#selected_guid').val($(this_).attr("id"));
     $('#selected_name').text($(this_).attr("title"));
     $('#aditional_data').val(role);
-    $('.modal-background').css({ "display": "block" });
-    $('body').css({"overflow":"hidden"});
-    $('.delete_confirmation.user').fadeIn(600);
+
+    show_modal($('.delete_confirmation.user'));
 }
 
 /* ALL THE DELETE MODALS ARE CALLED FROM HERE, EXCEPT THE DELETE USERS
-  DELETE USERS HAVE AN ADDITIONAL PARAMETER AND THE THIS POINTER */
+ DELETE USERS HAVE AN ADDITIONAL PARAMETER AND THE THIS POINTER */
 $('.tile.org .tile.top :button').click(delete_selected_element);
 $('.tile.space .tile.top :button').click(delete_selected_element);
 $('.tile.app .tile.top :button').click(delete_selected_element);
@@ -108,19 +132,19 @@ var bind_uri = function(){
 
 
 
-var bind_service = $.ajax({
-        url: "/bindServices",
-        type: 'POST',
-        cache: false,
-        data: { appName: $('#app_name').val() , serviceName: $('#service_name').val(), current_organization: $('#current_organization').val(), current_space: $('#current_space').val(), current_tab: $('#current_tab').val() }
-    });
-
-var bind_uri = $.ajax({
-    url: "/bindUri",
-    type: 'POST',
-    cache: false,
-    data: { appName: $('#uri_app_name').val() , serviceName: $('#uri_domain_name').val() }
-});
+//var bind_service = $.ajax({
+//        url: "/bindServices",
+//        type: 'POST',
+//        cache: false,
+//        data: { appName: $('#app_name').val() , serviceName: $('#service_name').val(), current_organization: $('#current_organization').val(), current_space: $('#current_space').val(), current_tab: $('#current_tab').val() }
+//    });
+//
+//var bind_uri = $.ajax({
+//    url: "/bindUri",
+//    type: 'POST',
+//    cache: false,
+//    data: { appName: $('#uri_app_name').val() , serviceName: $('#uri_domain_name').val() }
+//});
 
 var unbind_service = function(){
     $('.unbind_service').fadeIn(600);
@@ -136,8 +160,8 @@ var unbind_uri = function(){
 /* cancel buttons on all modals inside the app details */
 $('.cancel_button_app_details').click(function(){
 
-        $(".unbind_service").css("display", "none");
-        $(".unbind_uri").css("display", "none");
+    $(".unbind_service").css("display", "none");
+    $(".unbind_uri").css("display", "none");
 });
 
 

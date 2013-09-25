@@ -10,6 +10,14 @@ uaa:
   client_id: "webui"
   client_secret: "webuisecret"
 
+#cloud_controller_url: "http://api.uhurusoft.com"
+#
+#uaa:
+#  url: "http://uaa.uhurusoft.com"
+#  client_id: "webui"
+#  client_secret: "5fcf640addd47f47f0a1b3a14e876d63"
+
+
 contact:
   company: "Uhuru Software, Inc."
   address: "17530 NE Union Hill Road, Suite 120, Redmond, WA 98052, USA."

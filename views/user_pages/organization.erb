@@ -1,8 +1,12 @@
-<div class="breadcrumb">
-  <span class="breadcrumb_element">...&nbsp;/&nbsp;</span><a href="<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS %>" class="breadcrumb_link">organizations</a>
-  <span class="breadcrumb_element">&nbsp;/&nbsp;</span>
-  <a href="<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/spaces" %>" class="breadcrumb_link"><%= organization_name %></a>
-</div>
+<ul class="breadcrumbs">
+  <li>
+    <a href="<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS %>" >organizations</a></a>
+  </li>
+
+  <li>
+    <a href='<%= "#{Uhuru::Webui::SinatraRoutes::ORGANIZATIONS}/#{current_organization}/spaces" %>' ><%= organization_name %></a></a>
+  </li>
+</ul>
 
 <div class="sections" id="organization_page">
 
@@ -57,25 +61,25 @@
 
 <div id="organization_div">
   <div class="tab_menu">
-    <ul>
+    <div class="tab_menu_start">&nbsp;</div>
       <% if current_tab == "spaces" %>
-          <li class="selected">Spaces (<%= spaces_list.count %>)</li>
+          <div class="selected">Spaces (<%= spaces_list.count %>)</div>
       <% else %>
-          <li onclick="window.location = '<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/spaces" %>';">Spaces (<%= spaces_list.count %>)</li>
+          <div onclick="window.location = '<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/spaces" %>';">Spaces (<%= spaces_list.count %>)</div>
       <% end %>
 
       <% if current_tab == "members" %>
-          <li class="selected">Members (<%= owners_list.count + billings_list.count + auditors_list.count %>)</li>
+          <div class="selected">Members (<%= owners_list.count + billings_list.count + auditors_list.count %>)</div>
       <% else %>
-          <li onclick="window.location = '<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/members" %>';">Members (<%= owners_list.count + billings_list.count + auditors_list.count %>)</li>
+          <div onclick="window.location = '<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/members" %>';">Members (<%= owners_list.count + billings_list.count + auditors_list.count %>)</div>
       <% end %>
 
       <% if current_tab == "domains" %>
-          <li class="selected">Domains (<%= domains_list.count { |d| d.owning_org_name == organization_name || d.owning_org_name == 'Shared' } %>)</li>
+          <div class="selected">Domains (<%= domains_list.count { |d| d.owning_org_name == organization_name || d.owning_org_name == 'Shared' } %>)</div>
       <% else %>
-          <li onclick="window.location = '<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/domains" %>';">Domains (<%= domains_list.count { |d| d.owning_org_name == organization_name || d.owning_org_name == 'Shared' } %>)</li>
+          <div onclick="window.location = '<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/domains" %>';">Domains (<%= domains_list.count { |d| d.owning_org_name == organization_name || d.owning_org_name == 'Shared' } %>)</div>
       <% end %>
-    </ul>
+    <div class="tab_menu_end">&nbsp;</div>
   </div>
 
 
@@ -322,5 +326,4 @@
     <%= erb(include_erb, :layout => false, :locals => { :current_organization => current_organization, :current_tab => current_tab, :current_space => nil, :error_message => error_message }) %>
 <% end %>
 
-<div class="modal-background" style="display: none;"></div>
 </div>

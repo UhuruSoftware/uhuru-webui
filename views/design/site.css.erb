@@ -20,16 +20,30 @@ html, body
     /*http://colorschemedesigner.com/#0142kuettxQGE*/
     background-image: <%= design['background-image'] %>;
 
-    background-repeat: repeat;
     background-attachment:fixed;
     background-position: 50% 0%;
     font-family: "<%= design['font-family'] %>";
     font-weight: 200;
     color: <%= design['font-color'] %>;
 
-    <% if design['background-repeat'] == 'false' %>
-        background-repeat: no-repeat;
-    <% end %>
+
+    background-repeat: <%= design['background-repeat'] ? 'repeat' : 'no-repeat' %>;
+}
+
+body
+{
+    overflow-y: scroll;
+}
+
+body.noscroll
+{
+    position: fixed;
+    width: 100%;
+}
+
+.hide
+{
+    display: none;
 }
 
 a
@@ -80,6 +94,7 @@ a:<%= style %>
 {
     background-color: <%= design['header']['background-color'] %>;
 
+    background-image: <%= design['header']['background-image'] %>;
 
     background-repeat: repeat;
     background-attachment:fixed;
@@ -87,7 +102,7 @@ a:<%= style %>
 
     color: <%= design['header']['font-color'] %>;
     border:3px solid <%= design['header']['border-color'] %>;
-    border-width: 0 0 3px 0;
+    border-width: 0 0 1px 0;
     height:60px; left:0;
     position:fixed;
     width:100%;
@@ -113,9 +128,11 @@ a:<%= style %>
 {
     float: left;
     margin: 0;
-    line-height: 50px;
+    line-height: 40px;
     height: 50px;
+    font-size: 30px;
 }
+
 
 #header #login_control
 {
@@ -125,8 +142,11 @@ a:<%= style %>
 
 #cloud_target
 {
-    text-decoration: underline;
+    text-decoration: none;
     font-weight: 500;
+    font-size: 13px;
+    text-align: right;
+    line-height: 13px;
 }
 
 /************************** USER HEADER PANEL ****************************/
@@ -135,12 +155,14 @@ a:<%= style %>
     line-height: 50px;
     height: 50px;
     float: right;
-    margin-top: 10px;
+    margin-top: auto;
+    margin-bottom: auto;
 }
 
 #user_panel button
 {
     margin-right: 10px;
+    margin-top: 10px;
 }
 
 #header_links
@@ -155,10 +177,6 @@ a:<%= style %>
     margin-right: 20px;
 }
 
-#header a
-{
-    margin-right: 5px;
-}
 
 /****  ORG AND SPACE TITLE WITH CREATE, MODIFY AND DELETE  ****/
 .section_title
@@ -198,6 +216,9 @@ a:<%= style %>
     background-attachment:fixed;
 
     background-color: <%= design['footer']['background-color'] %>;
+
+    background-image: <%= design['footer']['background-image'] %>;
+
     color: <%= design['footer']['font-color'] %>;
 
     border:1px solid <%= design['footer']['border-color'] %>;
@@ -277,6 +298,7 @@ select
     cursor: pointer;
     cursor: hand;
     min-width: 70px;
+    font-size: 14px;
 }
 
 button:hover
@@ -326,21 +348,8 @@ button.image.s<%= size %>.<%= image %>
 
 }
 
-/************************** TILES ****************************/
+/************************** SQUARE TILES ****************************/
 
-.tile
-{
-    width: 280px;
-    height: 170px;
-    display: inline-block;
-    margin: 0 10px 30px 10px;
-    padding: 5px;
-    position: relative;
-
-    -webkit-border-radius: 2px;
-    -moz-border-radius:2px;
-    border-radius: 2px;
-}
 .square_tile
 {
     position: relative;
@@ -350,9 +359,6 @@ button.image.s<%= size %>.<%= image %>
     margin: 0 10px 30px 10px;
     padding: 5px;
 
-    -webkit-border-radius: 2px;
-    -moz-border-radius:2px;
-    border-radius: 2px;
 }
 
 .square_tile .bottom_left
@@ -365,13 +371,28 @@ button.image.s<%= size %>.<%= image %>
     padding: 5px;
 }
 
+/************************** TILES ****************************/
+
+.tile
+{
+    width: 260px;
+    height: 150px;
+    display: inline-block;
+    margin: 0 10px 30px 10px;
+    padding: 5px;
+    position: relative;
+
+}
+
+
+
 .tile:hover .tile.top,
 .tile:hover .tile.right,
 .tile:hover .tile.left
 {
-    -webkit-box-shadow: 0px 0px 15px rgba(50, 50, 50, 1);
-    -moz-box-shadow:    0px 0px 15px rgba(50, 50, 50, 1);
-    box-shadow:         0px 0px 15px rgba(50, 50, 50, 1);
+    -webkit-box-shadow: 0 0 15px rgba(50, 50, 50, 1);
+    -moz-box-shadow:    0 0 15px rgba(50, 50, 50, 1);
+    box-shadow:         0 0 15px rgba(50, 50, 50, 1);
 }
 
 .tile:hover .tile.top,
@@ -385,7 +406,7 @@ button.image.s<%= size %>.<%= image %>
 
 .tile.top
 {
-    width: 266px;
+    width: 250px;
     height: 65px;
     margin: 0;
     position: relative;
@@ -394,8 +415,7 @@ button.image.s<%= size %>.<%= image %>
 .tile.bottom
 {
     margin: 0;
-    margin-top: 10px;
-    width: 278px;
+    width: 262px;
     height: 65px;
     padding: 0;
     position: relative;
@@ -484,6 +504,8 @@ button.image.s<%= size %>.<%= image %>
     background-repeat: no-repeat;
     background-position: 98% 90%;
     color: <%= tile_design['left']['font-color'] %>;
+    border-right: 0;
+    border-top: 0;
 }
 
 .tile.<%= tile_type %>:hover .tile.left
@@ -506,6 +528,7 @@ button.image.s<%= size %>.<%= image %>
     background-repeat: no-repeat;
     background-position: 98% 90%;
     color: <%= tile_design['right']['font-color'] %>;
+    border-top: 0;
 }
 
 .tile.<%= tile_type %>:hover .tile.right
@@ -524,7 +547,7 @@ button.image.s<%= size %>.<%= image %>
 
 
 
-    /****************************  square    *******************************/
+/****************************  square    *******************************/
 
 <% design['square_tiles'].each do |tile_type, tile_design| %>
 
@@ -564,14 +587,42 @@ button.image.s<%= size %>.<%= image %>
 
 
     /************************** TAB MENU ****************************/
-.tab_menu ul
+
+.tab_menu
+{
+    width: 100%;
+    margin-bottom: 20px;
+    font-size: 0;
+}
+
+.tab_menu .tab_menu_start
+{
+    width: 10px;
+}
+
+.tab_menu .tab_menu_end
+{
+    width: 100%;
+}
+
+.tab_menu>div
 {
     text-align: left;
-    list-style: none;
-    display: block;
-    border-bottom: 1px solid <%= design['tab_menu']['border-color'] %>;
-    left: -30px;
+    display: table-cell;
     color: <%= design['tab_menu']['font-color'] %>;
+    border-bottom: 1px solid <%= design['tab_menu']['border-color'] %>;
+    font-size: 18px;
+    padding: 2px 10px 2px 10px;
+    white-space: nowrap;
+    cursor: pointer;
+}
+
+.tab_menu>div.selected
+{
+    border: 1px solid <%= design['tab_menu']['border-color'] %>;
+    border-bottom: 0;
+    background-color: <%= design['tab_menu']['selected-item-background'] %>;
+    color: <%= design['tab_menu']['selected-item-foreground'] %>;
 }
 
 <% design['link'].each do |style, color| %>
@@ -581,27 +632,7 @@ button.image.s<%= size %>.<%= image %>
 }
 <% end %>
 
-.tab_menu ul li
-{
-    text-align: left;
-    display: inline-block;
-    position: relative;
-    padding: 5px;
-    top: 1px;
-    cursor: pointer;
-}
 
-.tab_menu ul li.selected
-{
-    border: 1px solid <%= design['tab_menu']['border-color'] %>;
-    border-bottom: 2px solid <%= design['background-color'] %>;
-    -webkit-border-top-left-radius: 3px;
-    -webkit-border-top-right-radius: 3px;
-    border-top-left-radius: 3px;
-    border-top-right-radius: 3px;
-    background-color: <%= design['tab_menu']['selected-item-background'] %>;
-    color: <%= design['tab_menu']['selected-item-foreground'] %>;
-}
 
 /************************** MODAL FORM ****************************/
 
@@ -619,21 +650,12 @@ button.image.s<%= size %>.<%= image %>
     margin-left: -250px;
 
     min-height: 150px;
-    -moz-border-radius-topright:5px;
-    -moz-border-radius-topleft:5px;
-    -webkit-border-top-right-radius:5px;
-    -webkit-border-top-left-radius:5px;
-    border-top-left-radius:5px;
-    border-top-right-radius:5px;
 }
 
-.hide
+.modal.hide
 {
-    display: none;
-}
-.show
-{
-    display: none;
+    top: 0;
+    opacity: 0;
 }
 
 .modal-background
@@ -858,31 +880,99 @@ select.small_input
 
 /************************** BREADCRUMBS ****************************/
 
-.breadcrumb
+
+
+
+
+
+.breadcrumbs{
+    /* Clear floats */
+    overflow: visible;
+    padding: 0;
+    float: right;
+    display: block;
+    margin-right: 20px;
+    font-size: 0;
+    margin-top: -5px;
+}
+
+.breadcrumbs li{
+    display: inline;
+    float: left !important;
+    font-size: 14px;
+}
+
+.breadcrumbs a{
+    padding: 5px 16px 5px 32px;
+    float: left;
+    text-decoration: none;
+    color: <%= design['breadcrumb']['font-color'] %>;
+    position: relative;
+    background-color: <%= design['breadcrumb']['background-color'] %>;
+    border: 1px solid <%= design['breadcrumb']['border-color'] %>;
+    border-right: 0;
+}
+
+.breadcrumbs a:hover{
+    border: 1px solid <%= design['breadcrumb']['hover']['border-color'] %>;
+    border-right: 0;
+}
+
+.breadcrumbs li:first-child a{
+    padding-left: 16px;
+}
+
+.breadcrumbs a:hover{
+    background: <%= design['breadcrumb']['hover']['background-color'] %>;
+    color: <%= design['breadcrumb']['hover']['font-color'] %>;
+}
+
+.breadcrumbs a::after,
+.breadcrumbs a::before{
+    content: "";
+    position: absolute;
+    top: 50%;
+    margin-top: -13px;
+    border-top: 13px solid transparent;
+    border-bottom: 13px solid transparent;
+    border-left: 16px solid;
+    right: -15px;
+}
+
+.breadcrumbs a::after{
+    z-index: 2;
+    border-left-color: <%= design['breadcrumb']['background-color'] %>;
+
+}
+
+.breadcrumbs a::before{
+    border-left-color: <%= design['breadcrumb']['border-color'] %>;
+    right: -16px;
+    z-index: 1;
+}
+
+.breadcrumbs a:hover::after{
+    border-left-color: <%= design['breadcrumb']['hover']['background-color'] %>;
+}
+
+.breadcrumbs a:hover::before{
+    border-left-color: <%= design['breadcrumb']['hover']['border-color'] %>;
+}
+
+.breadcrumbs .current,
+.breadcrumbs .current:hover{
+    font-weight: bold;
+    background: none;
+}
+
+.breadcrumbs .current::after,
+.breadcrumbs .current::before{
+    content: normal;
+}
+
+
+/************************** ACCOUNT SETTINGS PAGE ****************************/
+.button_row
 {
-    padding-left: 5px;
-    margin-bottom: 10px;
-    margin-right: 10px;
     text-align: right;
-    font-family: 'Segoe UI Light', 'Open Sans', Verdana, Arial, Helvetica, sans-serif;
-    font-weight: 400;
-    font-size: <%= design['breadcrumb']['breadcrumb']['font-size'] %> !important;
-    letter-spacing: 0.01em;
-    color: <%= design['breadcrumb']['breadcrumb']['color'] %> !important;
-}
-
-.breadcrumb_element,
-.breadcrumb_link
-{
-    padding: 0px;
-    text-decoration: none;
-    font-size: <%= design['breadcrumb']['breadcrumb']['font-size'] %> !important;
-    color: <%= design['breadcrumb']['breadcrumb-element']['color'] %> !important;
-}
-
-.breadcrumb_link:hover
-{
-    padding: 0px;
-    text-decoration: none;
-    color: <%= design['breadcrumb']['breadcrumb-element']['hover'] %> !important;
 }

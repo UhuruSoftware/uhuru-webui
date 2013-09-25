@@ -11,7 +11,15 @@
 
 <div id="header_container">
   <div id="header">
-    <a href="<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS %>" title="Home"><h1>Uhuru AppCloud</h1></a>
+    <h1>
+        <a href="<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS %>" title="Home">
+        Uhuru AppCloud
+        </a>
+        <div id="cloud_target">
+          <%= $config[:cloud_controller_url] %>
+        </div>
+    </h1>
+
 
     <div id="user_panel">
       <a href="/organizations" title="Home">
@@ -22,7 +30,7 @@
         <button class="image s32px gear"></button>
       </a>
 
-      <a href="#" title="LogOut" id="logout_key">
+      <a href="#" title="Logout" id="logout_key">
         <button class="image s32px key"></button>
       </a>
     </div>
@@ -36,20 +44,19 @@
 
 
 <div id="container">
-  <span id="cloud_target">
-    Your cloud target: <%= $config[:cloud_controller_url] %>
-  </span>
 
   <div id="content">
+    <div class="modal-background hide"></div>
 
     <%= yield %>
+
 
     <div class="modal logout hide">
       <div class="modal_header">
         <span>Logout</span>
       </div>
       <div class="modal_content">
-        <p class="warning">Are you sure you want to logout?</p>
+        Are you sure you want to logout?
       </div>
 
       <div class="modal_footer">
@@ -70,6 +77,8 @@
       <a href="<%= $config[:webui][:twitter_link] %>" class="icon-social twitter"></a>
       <a href="<%= $config[:webui][:facebook_link] %>" class="icon-social facebook"></a>
     </div>
+
+
 
     <div id="copyright">
       &copy; 2013 Uhuru Software. All rights reserved.

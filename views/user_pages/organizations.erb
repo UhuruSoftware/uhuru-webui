@@ -1,5 +1,5 @@
 <div class="breadcrumb" xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html">
-  <span class="breadcrumb_element">...&nbsp;/&nbsp;</span><a href="<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS %>" class="breadcrumb_link">organizations</a>
+  <span class="breadcrumb_element">/&nbsp;</span><a href="<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS %>" class="breadcrumb_link">organizations</a>
 </div>
 
 <div class="sections" id="organizations_page">
@@ -95,4 +95,3 @@
     <%= erb(include_erb, :layout => false, :locals => { :error_message => error_message }) %>
 <% end %>
 
-<div class="modal-background hide"></div>

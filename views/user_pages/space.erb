@@ -59,41 +59,41 @@
 
 <div class="tab_menu">
 
-  <ul>
+  <div class="tab_menu_start">&nbsp;</div>
     <% if current_tab == "apps" %>
-        <li class="selected">Apps (<%= apps_list.count %>)</li>
+        <div class="selected">Apps (<%= apps_list.count %>)</div>
     <% else %>
-        <li onclick="window.location = '<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/spaces/#{current_space}/apps" %>';">Apps (<%= apps_list.count %>)</li>
+        <div onclick="window.location = '<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/spaces/#{current_space}/apps" %>';">Apps (<%= apps_list.count %>)</div>
     <% end %>
 
 
     <% if current_tab == "services" %>
-        <li class="selected">Services (<span><%= services_list.count %></span>)</a></li>
+        <div class="selected">Services (<span><%= services_list.count %></span>)</a></div>
     <% else %>
-        <li onclick="window.location = '<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/spaces/#{current_space}/services" %>';">Services (<%= services_list.count %>)</li>
+        <div onclick="window.location = '<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/spaces/#{current_space}/services" %>';">Services (<%= services_list.count %>)</div>
     <% end %>
 
 
     <% if current_tab == "members" %>
-        <li class="selected">Users (<%= owners_list.count + developers_list.count + auditors_list.count %>)</li>
+        <div class="selected">Users (<%= owners_list.count + developers_list.count + auditors_list.count %>)</div>
     <% else %>
-        <li onclick="window.location = '<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/spaces/#{current_space}/members" %>';">Users (<%= owners_list.count + developers_list.count + auditors_list.count %>)</li>
+        <div onclick="window.location = '<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/spaces/#{current_space}/members" %>';">Users (<%= owners_list.count + developers_list.count + auditors_list.count %>)</div>
     <% end %>
 
 
     <% if current_tab == "routes" %>
-        <li class="selected">Routes (<%= routes_list.count %>)</li>
+        <div class="selected">Routes (<%= routes_list.count %>)</div>
     <% else %>
-        <li onclick="window.location = '<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/spaces/#{current_space}/routes" %>';">Routes (<%= routes_list.count %>)</li>
+        <div onclick="window.location = '<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/spaces/#{current_space}/routes" %>';">Routes (<%= routes_list.count %>)</div>
     <% end %>
 
 
     <% if current_tab == "domains" %>
-        <li class="selected">Domains (<%= defined?(domains_list) ? domains_list.count { |d| d.owning_org_name == organization_name && d.owning_spaces.count { |s| s.name == space_name } != 0 } : '...' %>)</li>
+        <div class="selected">Domains (<%= defined?(domains_list) ? domains_list.count { |d| d.owning_org_name == organization_name && d.owning_spaces.count { |s| s.name == space_name } != 0 } : '...' %>)</div>
     <% else %>
-        <li onclick="window.location = '<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/spaces/#{current_space}/domains" %>';">Domains (<%= defined?(domains_list) ? domains_list.count { |d| d.owning_org_name == organization_name && d.owning_spaces.count { |s| s.name == space_name } != 0 } : '...' %>)</li>
+        <div onclick="window.location = '<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/spaces/#{current_space}/domains" %>';">Domains (<%= defined?(domains_list) ? domains_list.count { |d| d.owning_org_name == organization_name && d.owning_spaces.count { |s| s.name == space_name } != 0 } : '...' %>)</div>
     <% end %>
-  </ul>
+  <div class="tab_menu_end">&nbsp;</div>
 </div>
 
 <% if defined?(current_tab) && current_tab != nil && current_tab == "apps" %>
@@ -462,4 +462,3 @@
     <%= erb(include_erb, :layout => false, :locals => { :current_organization => current_organization, :current_space => current_space, :organization_name => organization_name, :collections => defined?(apps) ? apps : nil, :current_tab => current_tab, :error_message => error_message, :services_list => services_list, :domains_list => domains_list }) %>
 <% end %>
 
-<div class="modal-background" style="display: none;"></div>

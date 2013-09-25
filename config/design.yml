@@ -1,61 +1,70 @@
 ---
 
-background-color: '#005f78'
-background-image: "url('/images/backgrounds/bubbles.png')"
+background-color: '#303030'
+background-image: "url('/images/backgrounds/pattern-29wp.png')"
 font-family: 'QuickSand'
-font-color: '#daf9ff'
-background-repeat: 'false'
+font-color: '#FFFFFF'
+background-repeat: true
 link:
-  link: '#daf9ff'
-  visited: '#ffffff'
-  hover: '#007491'
-  active: '#ffffff'
+  link: '#FFFFFF'
+  visited: '#FFFFFF'
+  hover: '#FFFFFF'
+  active: '#FFFFFF'
 
 header:
-  background-color: '#10101E'
-  border-color: '#007491'
-  font-color: '#daf9ff'
+  background-color: '#303030'
+  background-image: "url('/images/backgrounds/pattern-cz14.png')"
+  border-color: '#1C1C1C'
+  font-color: '#FFFFFF'
   link:
-    link: '#daf9ff'
+    link: '#FFFFFF'
     visited: '#FFFFFF'
-    hover: '#007491'
+    hover: '#FFFFFF'
     active: '#FFFFFF'
 
 footer:
-  background-color: '#1C1c1c'
-  border-color: '#007491'
-  font-color: '#daf9ff'
+  background-color: '#1C1C1C'
+  background-image: "url('/images/backgrounds/pattern-cz14.png')"
+  border-color: '#1C1C1C'
+  font-color: '#FFFFFF'
   link:
-    link: '#daf9ff'
-    visited: '#00F3F9'
-    hover: '#007491'
-    active: '#098786'
+    link: '#FFFFFF'
+    visited: '#FFFFFF'
+    hover: '#FFFFFF'
+    active: '#FFFFFF'
 
 breadcrumb:
-  breadcrumb:
-   color: '#daf9ff'
-   font-size: '18px'
-  breadcrumb-element:
-    color: '#daf9ff'
-    hover: '#ffffff'
-    font-size: '18px'
+  background-color: '#1F1F1F'
+  font-color: '#FFFFFF'
+  border-color: '#898989'
+  hover:
+    background-color: '#000000'
+    font-color: '#FFFFFF'
+    border-color: '#898989'
+
 
 error:
-  border-color: '#D8000C'
-  background-color: '#FFBABA'
-  font-color: '#D8000C'
+  border-color: '#6B0000'
+  background-color: '#530000'
+  font-color: '#FFFFFF'
 warning:
-  border-color: '#ff9200'
-  background-color: '#ffc373'
-  font-color: '#a63a00'
+  border-color: '#933C06'
+  background-color: '#421B03'
+  font-color: '#FFFFFF'
+
+
+#
+#      border-color: '#484848'
+#      background-color: '#101010'
+#      font-color: '#FFFFFF'
 
 button:
-  border-color: '#cccccc'
-  background-color: '#000000'
+  border-color: '#484848'
+  background-color: '#101010'
   font-color: '#FFFFFF'
   hover:
-    border-color: '#000000'
-    background-color: '#cccccc'
+    border-color: '#101010'
+    background-color: '#1F1F1F'
     font-color: '#FFFFFF'
 
 image-buttons:
@@ -92,13 +101,13 @@ image-buttons:
 
 tile-options:
   shadow-color: "#FFFFFF"
-  opacity: 0.8
+  opacity: 0.85
 
 tiles:
   org:
     top:
-      border-color: '#4573d5'
-      background-color: '#1142aa'
+      border-color: '#000000'
+      background-color: '#603F3F'
       font-color: '#FFFFFF'
       link:
         link: '#FFFFFF'
@@ -106,18 +115,18 @@ tiles:
         hover: '#FFFFFF'
         active: '#FFFFFF'
     left:
-      border-color: '#6a48d7'
-      background-color: '#3914af'
+      border-color: '#000000'
+      background-color: '#545454'
       font-color: '#FFFFFF'
       image-link: '/images/users_32px.png'
       link:
-        link: '#FF00FF'
-        visited: '#00F3F9'
-        hover: '#326544'
-        active: '#098786'
+        link: '#FFFFFF'
+        visited: '#FFFFFF'
+        hover: '#FFFFFF'
+        active: '#FFFFFF'
     right:
-      border-color: '#259433'
-      background-color: '#0acf00'
+      border-color: '#000000'
+      background-color: '#444444'
       font-color: '#FFFFFF'
       image-link: '/images/money_bag_32px.png'
       link:
@@ -127,8 +136,8 @@ tiles:
         active: '#000000'
   space:
     top:
-      border-color: '#963fd5'
-      background-color: '#680bab'
+      border-color: '#000000'
+      background-color: '#3F3F60'
       font-color: '#FFFFFF'
       link:
         link: '#FFFFFF'
@@ -136,18 +145,18 @@ tiles:
         hover: '#FFFFFF'
         active: '#FFFFFF'
     left:
-      border-color: '#7147d7'
-      background-color: '#4013af'
+      border-color: '#000000'
+      background-color: '#545454'
       font-color: '#FFFFFF'
       image-link: '/images/users_32px.png'
       link:
-        link: '#FF00FF'
-        visited: '#00F3F9'
-        hover: '#326544'
-        active: '#098786'
+        link: '#FFFFFF'
+        visited: '#FFFFFF'
+        hover: '#FFFFFF'
+        active: '#FFFFFF'
     right:
-      border-color: '#36da82'
-      background-color: '#00b454'
+      border-color: '#000000'
+      background-color: '#444444'
       font-color: '#FFFFFF'
       image-link: '/images/money_bag_32px.png'
       link:
@@ -157,8 +166,8 @@ tiles:
         active: '#000000'
   app:
     top:
-      border-color: '#35d699'
-      background-color: '#00ac6b'
+      border-color: '#000000'
+      background-color: '#3F603F'
       font-color: '#FFFFFF'
       link:
         link: '#FFFFFF'
@@ -166,8 +175,8 @@ tiles:
         hover: '#FFFFFF'
         active: '#FFFFFF'
     left:
-      border-color: '#39aecf'
-      background-color: '#057d9f'
+      border-color: '#000000'
+      background-color: '#545454'
       font-color: '#FFFFFF'
       link:
         link: '#FF00FF'
@@ -175,8 +184,8 @@ tiles:
         hover: '#326544'
         active: '#098786'
     right:
-      border-color: '#4ae83a'
-      background-color: '#14d100'
+      border-color: '#000000'
+      background-color: '#444444'
       font-color: '#FFFFFF'
       link:
         link: '#FF00FF'
@@ -185,8 +194,8 @@ tiles:
         active: '#098786'
   service:
     top:
-      border-color: '#4188d2'
-      background-color: '#0d58a6'
+      border-color: '#000000'
+      background-color: '#603F60'
       font-color: '#FFFFFF'
       link:
         link: '#FFFFFF'
@@ -194,8 +203,8 @@ tiles:
         hover: '#FFFFFF'
         active: '#FFFFFF'
     left:
-      border-color: '#6a48d7'
-      background-color: '#3914af'
+      border-color: '#000000'
+      background-color: '#545454'
       font-color: '#FFFFFF'
       link:
         link: '#FF00FF'
@@ -203,8 +212,8 @@ tiles:
         hover: '#326544'
         active: '#098786'
     right:
-      border-color: '#35d2ab'
-      background-color: '#00a67c'
+      border-color: '#000000'
+      background-color: '#444444'
       font-color: '#FFFFFF'
       link:
         link: '#FF00FF'
@@ -214,8 +223,8 @@ tiles:
 
 square_tiles:
   owner:
-    border-color: '#008500'
-    background-color: '#008500'
+    border-color: '#000000'
+    background-color: '#3F503F'
     font-color: '#FFFFFF'
     image-link: '/images/members_icon.png'
     link:
@@ -224,8 +233,8 @@ square_tiles:
       hover: '#FFFFFF'
       active: '#FFFFFF'
   billing:
-    border-color: '#a60000'
-    background-color: '#a60000'
+    border-color: '#000000'
+    background-color: '#503F3F'
     font-color: '#FFFFFF'
     image-link: '/images/members_icon.png'
     link:
@@ -234,8 +243,8 @@ square_tiles:
       hover: '#FFFFFF'
       active: '#FFFFFF'
   developer:
-    border-color: '#a60000'
-    background-color: '#a60000'
+    border-color: '#000000'
+    background-color: '#3F3F50'
     font-color: '#FFFFFF'
     image-link: '/images/members_icon.png'
     link:
@@ -244,8 +253,8 @@ square_tiles:
       hover: '#FFFFFF'
       active: '#FFFFFF'
   auditor:
-    border-color: '#ff7400'
-    background-color: '#ff7400'
+    border-color: '#000000'
+    background-color: '#503F50'
     font-color: '#FFFFFF'
     image-link: '/images/members_icon.png'
     link:
@@ -254,8 +263,8 @@ square_tiles:
       hover: '#FFFFFF'
       active: '#FFFFFF'
   domain:
-    border-color: '#1240ab'
-    background-color: '#1240ab'
+    border-color: '#000000'
+    background-color: '#3F3F50'
     font-color: '#FFFFFF'
     image-link: '/images/domains_icon_64px.png'
     link:
@@ -264,8 +273,8 @@ square_tiles:
       hover: '#FFFFFF'
       active: '#FFFFFF'
   route:
-      border-color: '#1240ab'
-      background-color: '#a60000'
+      border-color: '#000000'
+      background-color: '#3F503F'
       font-color: '#FFFFFF'
       image-link: '/images/domains_icon_64px.png'
       link:
@@ -274,8 +283,8 @@ square_tiles:
         hover: '#FFFFFF'
         active: '#FFFFFF'
   signup:
-      border-color: '#1240ab'
-      background-color: '#a60000'
+      border-color: '#000000'
+      background-color: '#3F703F'
       font-color: '#FFFFFF'
       image-link: '/images/members_icon.png'
       link:
@@ -297,10 +306,10 @@ rectangle_tile:
 
 
 tab_menu:
-  border-color: '#1c1c1c'
-  font-color: '#daf9ff'
-  selected-item-background: '#005f78'
-  selected-item-foreground: '#daf9ff'
+  border-color: '#FFFFFF'
+  font-color: '#FFFFFF'
+  selected-item-background: 'transparent'
+  selected-item-foreground: '#FFFFFF'
   link:
     link: '#000000'
     visited: '#000000'
@@ -309,7 +318,7 @@ tab_menu:
 
 modal:
   footer:
-      background-color: '#000000'
+      background-color: '#484848'
       font-color: '#FFFFFF'
       link:
         link: '#FF00FF'
@@ -317,21 +326,21 @@ modal:
         hover: '#326544'
         active: '#098786'
   header:
-      background-color: '#897668'
+      background-color: '#484848'
       font-color: '#FFFFFF'
       link:
-        link: '#FF00FF'
-        visited: '#00F3F9'
-        hover: '#326544'
-        active: '#098786'
+        link: '#FFFFFF'
+        visited: '#FFFFFF'
+        hover: '#FFFFFF'
+        active: '#FFFFFF'
   content:
-      background-color: '#213452'
+      background-color: '#1F1F1F'
       font-color: '#FFFFFF'
       link:
         link: '#FF00FF'
-        visited: '#00F3F9'
-        hover: '#326544'
-        active: '#098786'
+        visited: '#FFFFFF'
+        hover: '#FFFFFF'
+        active: '#FFFFFF'
   definitions:
     login:
       width: 350
@@ -350,8 +359,8 @@ modal:
 
 controls:
   text:
-      border-color: '#cccccc'
-      background-color: '#000000'
+      border-color: '#484848'
+      background-color: '#101010'
       font-color: '#FFFFFF'
 
 app_push:
