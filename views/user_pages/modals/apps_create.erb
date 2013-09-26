@@ -42,7 +42,7 @@
 
             <br />
 
-            <div class="template_apps_footer">
+            <div>
               <!-- INSERT TAGS -->
               <div class="tags_div">
                 <span class="tag_span">Tags:</span>
@@ -65,15 +65,15 @@
               <!-- INSERT BUTTONS DOWNLOAD IF NECESSARY AND PUSH -->
               <div class="buttons_div">
                 <form method="post" action="/push">
-                  <table class="collection_buttons_table">
+                  <table>
                     <tr>
-                      <td><label for="app_name" class="template_app_name_span">App Name:</label></td>
-                      <td><input type="text" value="" name="app_name" class="modal_input_box" /></td>
+                      <td><label for="app_name">app name:</label></td>
+                      <td><input type="text" value="" name="app_name" class="small_input" /></td>
                     </tr>
                     <tr>
-                      <td><label for="app_url" class="template_app_url_span">App URL:</label></td>
+                      <td><label for="app_url">app URL:</label></td>
                       <td>
-                        <select class="modal_input_box" name="app_url">
+                        <select class="small_input" name="app_url">
                           <% domains_list.each do |domain| %>
                               <% if domain.owning_org_name == organization_name || domain.owning_org_name == 'Shared' %>
                                 <option value="<%= domain.name %>"><%= domain.name %></option>
@@ -83,13 +83,14 @@
                       </td>
                     </tr>
                     <tr>
-                      <td></td>
                       <td>
                         <% if app['can_download'] != nil %>
                             <% if app['can_download'] == true %>
                                 <button type="button" onclick="window.location = '<%= "/download_app/" + app['id'] %>';" title="Download '<%= app['name'] %>'">Download</button>
                             <% end %>
                         <% end %>
+                      </td>
+                      <td>
                         <input type="hidden" name="app_space" value="<%= current_space %>" >
                         <input type="hidden" name="app_organization" value="<%= current_organization %>" >
                         <input type="hidden" name="app_id" value="<%= app_id %>" >
@@ -97,7 +98,7 @@
                         <input type="hidden" name="app_memory" value="<%= app['vmc_manifest']['applications']['.']['mem'] %>" >
                         <input type="hidden" name="app_instances" value="<%= app['vmc_manifest']['applications']['.']['instances'] %>" >
 
-                        <button type="submit">Push</button>
+                        <button type="submit" style="float: right;">Push</button>
                       </td>
                     </tr>
                   </table>

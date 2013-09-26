@@ -1,8 +1,10 @@
-
-function show_modal(modal)
+function show_modal(modal, fade_background)
 {
     $('body').addClass('noscroll');
-    $('.modal-background').show();
+    if(fade_background != false)
+    {
+        $('.modal-background').show();
+    }
     modal.show();
     modal.animate({
         top: '130px',
@@ -10,12 +12,15 @@ function show_modal(modal)
     }, 250);
 }
 
-function hide_modal(modal, execute_after)
+function hide_modal(modal, fade_background,execute_after)
 {
     modal.animate({ top: '0px', opacity:'0' }, 250,
         function(){
             modal.hide();
-            $('.modal-background').hide();
+            if(fade_background != false)
+            {
+                $('.modal-background').hide();
+            }
             $('body').removeClass('noscroll');
 
             if (typeof execute_after !== 'undefined')
@@ -25,11 +30,14 @@ function hide_modal(modal, execute_after)
         });
 }
 
-
 $(document).ready(function(){
     if ($('#modal_login').length)
     {
         show_modal($('#modal_login'));
+    }
+    if ($('#modal_signup').length)
+    {
+        show_modal($('#modal_signup'));
     }
 });
 
@@ -42,50 +50,28 @@ $('.cancel_button').click(function(){
     hide_modal($('.modal'));
 });
 
-function showSpacesInput()
-{
-    $('#space_input').css({ "display": "block" });
-    $('#space_input').val($('#space_name').attr('innerHTML'));
-    $('#space_input').focus();
-    $('#space_name').css({ "display": "none" });
-}
 
-function showOrganizationsInput()
-{
-    $('#organization_input').css({ "display": "block" });
-    $('#organization_input').val($('#space_name').attr('innerHTML'));
-    $('#organization_input').focus();
-    $('#organization_name').css({ "display": "none" });
-}
 
-function deleteCurrentOrganization()
-{
-    show_modal($('#delete_current_organization_modal'));
-}
 
-function deleteCurrentSpace()
-{
-    show_modal($('#delete_current_space_modal'));
-}
+/*********************************************************************************************************/
+/*                                            DELETE MODALS                                              */
+/*********************************************************************************************************/
+
 
 var delete_selected_element = function(){
-    $('#selected_guid').val($(this).attr("id"));
-    $('#selected_name').text($(this).attr("title"));
+    $('.selected_guid').val($(this).attr("id"));
+    $('.selected_name').text($(this).attr("title"));
 
     show_modal($('.delete_confirmation'));
 }
-
 function deleteUserModal(this_, role)
 {
-    $('#selected_guid').val($(this_).attr("id"));
-    $('#selected_name').text($(this_).attr("title"));
+    $('.selected_guid').val($(this_).attr("id"));
+    $('.selected_name').text($(this_).attr("title"));
     $('#aditional_data').val(role);
 
     show_modal($('.delete_confirmation.user'));
 }
-
-/* ALL THE DELETE MODALS ARE CALLED FROM HERE, EXCEPT THE DELETE USERS
- DELETE USERS HAVE AN ADDITIONAL PARAMETER AND THE THIS POINTER */
 $('.tile.org .tile.top :button').click(delete_selected_element);
 $('.tile.space .tile.top :button').click(delete_selected_element);
 $('.tile.app .tile.top :button').click(delete_selected_element);
@@ -93,75 +79,54 @@ $('.tile.service .tile.top :button').click(delete_selected_element);
 $('.square_tile .square_tile.domain :button').click(delete_selected_element);
 $('.square_tile .square_tile.route :button').click(delete_selected_element);
 
-/* the binding for focus and blur for the update input boxes */
-$('.tiped').bind({
-    focus: function() {
-        $('.tooltips').show(200);
-    },
-    blur: function() {
-        $('.tooltips').hide(300);
-    }
-});
 
 
-
-
+/*********************************************************************************************************/
+/*                                            APP DETAILS                                                */
+/*********************************************************************************************************/
 
 
 var bind_service = function(){
-    $('#screen').css({	"display": "block", opacity: 0.7, "width": "10000px", "height": "10000px"});
-    $('body').css({"overflow":"hidden"});
-    $('#bind_service_modal').fadeIn(600);
-    $('.close').click(function(){$("#bind_service_modal").css("display", "none");$('#screen').css("display", "none")});
-    $('.cancel').click(function(){$("#bind_service_modal").css("display", "none");$('#screen').css("display", "none")});
+    $.ajax({
+        url: "/bindServices",
+        type: 'POST',
+        cache: false,
+        data: { appName: $('#app_name').val() , serviceName: $('#service_name').val(), current_organization: $('#current_organization').val(), current_space: $('#current_space').val(), current_tab: $('#current_tab').val() }
+    })
+        .done(function( msg ) {
+            location.reload();
+        });
 }
 
 var bind_uri = function(){
-    $('#screen').css({	"display": "block", opacity: 0.7, "width": "10000px", "height": "10000px"});
-    $('body').css({"overflow":"hidden"});
-    $('#bind_uri_modal').fadeIn(600);
-    $('.close').click(function(){$("#bind_uri_modal").css("display", "none");$('#screen').css("display", "none")});
-    $('.cancel').click(function(){$("#bind_uri_modal").css("display", "none");$('#screen').css("display", "none")});
+    $.ajax({
+        url: "/bindUri",
+        type: 'POST',
+        cache: false,
+        data: { appName: $('#app_name').val() , domain: $('#uri_domain_name').val(), host: $('#uri_host').val(), current_organization: $('#current_organization').val(), current_space: $('#current_space').val(), current_tab: $('#current_tab').val() }
+    })
+        .done(function( msg ) {
+            location.reload();
+        }   );
 }
 
-
-
-/****************************************************/
-/*                APP DETAILS                       */
-/****************************************************/
-
-
-
-//var bind_service = $.ajax({
-//        url: "/bindServices",
-//        type: 'POST',
-//        cache: false,
-//        data: { appName: $('#app_name').val() , serviceName: $('#service_name').val(), current_organization: $('#current_organization').val(), current_space: $('#current_space').val(), current_tab: $('#current_tab').val() }
-//    });
-//
-//var bind_uri = $.ajax({
-//    url: "/bindUri",
-//    type: 'POST',
-//    cache: false,
-//    data: { appName: $('#uri_app_name').val() , serviceName: $('#uri_domain_name').val() }
-//});
-
 var unbind_service = function(){
-    $('.unbind_service').fadeIn(600);
+    show_modal($('.unbind_service'), false);
+
     var name = $(this).attr("id");
     $('#unbind_serviceName').val(name);
 }
 var unbind_uri = function(){
-    $('.unbind_uri').fadeIn(600);
+    show_modal($('.unbind_uri'), false);
+
     var name = $(this).attr("id");
     $('#unbind_uriName').val(name);
 }
 
 /* cancel buttons on all modals inside the app details */
 $('.cancel_button_app_details').click(function(){
-
-    $(".unbind_service").css("display", "none");
-    $(".unbind_uri").css("display", "none");
+    hide_modal($(".unbind_service"), false);
+    hide_modal($(".unbind_uri"), false);
 });
 
 
@@ -172,16 +137,16 @@ $('.unbind_uri_button').click(unbind_uri);
 
 
 
+
+
 /*
  APP DETAILS UPDATE MEMORY AND INSTANCES
  */
 
 var saving_modal = function()
 {
-    $('.modal-background').css({	display: "block", opacity: 0.9, width: "10000px", height: "10000px"});
-    $('body').css({"overflow":"hidden"});
-    $('#saving_modal').fadeIn(400);
-    $('.stopApp_btn').css("display", "block");
+    show_modal($('#saving_modal'), false);
+    $('.stopApp_btn').css("display", "none");
     $('.startApp_btn').css("display", "none");
 }
 

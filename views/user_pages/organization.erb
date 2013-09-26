@@ -13,22 +13,6 @@
 <div class="manage_content_header">
   <div class="section_title">
     <p id="organization_name"><%= organization_name %></p>
-
-    <form action="/updateOrganization" method="post">
-      <input type="text" value="" id="organization_input" name="modified_name" class="tiped hide" />
-      <input type="hidden" value="<%= current_organization %>" name="current_organization" />
-      <input type="hidden" value="<%= current_tab %>" name="current_tab" />
-
-      <% if params[:error] == 'update_organization' %>
-          <div class="error">
-            <p><%= error_message %></p>
-          </div>
-      <% end %>
-
-      <div class="tooltips hide">
-        <p>Press enter to update the new name!</p>
-      </div>
-    </form>
   </div>
 
   <div class="icons_options">
@@ -44,8 +28,8 @@
         <button type="button" onclick="window.location = '<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/#{current_tab}/add_domains" %>';" class="image s32px plus"></button>
     <% end %>
 
-    <button type="button" class="image s32px edit" onclick="showOrganizationsInput();" />
-    <button type="button" class="image s32px trash" onclick="deleteCurrentOrganization();" />
+    <button type="button" class="image s32px edit" onclick="show_modal($('#edit_current_organization_modal'), true);" />
+    <button type="button" class="image s32px trash" onclick="show_modal($('#delete_current_organization_modal'));" />
 
     <% if card_type == nil && card_masked_number == nil %>
         <button type="button" onclick="window.location = '<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/#{current_tab}/create_subscription" %>';" class="image s32px money"></button>
@@ -98,15 +82,13 @@
 
             <div class="tile bottom">
               <div class="tile left">
-                <div class="tile_action">
                   <span>#apps: <%= space.apps_count %></span>
                   <span>#services: <%= space.services_count %></span>
-                </div>
               </div>
 
               <div class="tile right">
                 <div class="tile_action">
-                  $<%= space.cost %>
+                  <span class="tile_info">$<%= space.cost %></span>
                 </div>
                 <div class="tile_info">monthly</div>
               </div>
@@ -117,7 +99,7 @@
 
       <div class="modal delete_confirmation space hide">
         <div class="modal_header">
-          <span id="selected_name"></span>
+          <span class="selected_name"></span>
         </div>
 
         <div class="modal_content">
@@ -138,7 +120,7 @@
             <form action="/deleteSpace" method="post">
               <button type="button" class="cancel_button">Cancel</button>
               <button type="submit" Value="Delete">Delete</button>
-              <input type="hidden" id="selected_guid" name="spaceGuid" />
+              <input type="hidden" class="selected_guid" name="spaceGuid" />
               <input type="hidden" name="org_guid" value="<%= current_organization %>" />
             </form>
           </div>
@@ -185,25 +167,27 @@
 
     <div class="modal delete_confirmation user hide">
       <div class="modal_header">
-        <span id="selected_name"></span>
+        <span class="selected_name"></span>
       </div>
 
       <div class="modal_content">
         <p>
           Are you sure you want to delete the user?
         </p>
+        <p class="warning">
+          WARNING! This user will be removed from your organization.
+        </p>
       </div>
       <div class="modal_footer">
         <% unless error_message.nil? || error_message.empty? %>
             <div class="error"> <%= error_message %> </div>
         <% end %>
-        <p class="hide">Deleting user...</p>
 
         <div>
           <form action="/deleteUser" method="post">
             <button type="button" class="cancel_button">Cancel</button>
             <button type="submit" value="Delete">Delete</button>
-            <input type="hidden" id="selected_guid" value="" name="thisUser"/>
+            <input type="hidden" class="selected_guid" value="" name="thisUser"/>
             <input type="hidden" id="aditional_data" value="" name="thisUserRole"/>
             <input type="hidden" name="current_organization" value="<%= current_organization %>" />
             <input type="hidden" name="current_tab" value="<%= current_tab %>" />
@@ -233,17 +217,15 @@
 
       <div class="modal delete_confirmation domain hide">
         <div class="modal_header">
-          <span id="selected_name"></span>
+          <span class="selected_name"></span>
         </div>
 
         <div class="modal_content">
           <p>
             Are you sure you want to delete the domain?
           </p>
-          <p>
-            <strong>
-              WARNING! The domain will be removed!.
-            </strong>
+          <p class="warning">
+            WARNING! This domain will be unmaped from the organization.
           </p>
         </div>
 
@@ -251,13 +233,12 @@
           <% unless error_message.nil? || error_message.empty? %>
               <div class="error"> <%= error_message %> </div>
           <% end %>
-          <p class="hide">Deleting domain...</p>
 
           <div>
             <form action="/deleteDomain" method="post">
               <button type="button" class="cancel_button">Cancel</button>
               <button type="submit" value="Delete">Delete</button>
-              <input type="hidden" id="selected_guid" name="domainGuid" />
+              <input type="hidden" class="selected_guid" name="domainGuid" />
               <input type="hidden" name="org_guid" value="<%= current_organization %>" />
             </form>
           </div>
@@ -289,7 +270,6 @@
     <% unless error_message.nil? || error_message.empty? %>
         <div class="error"> <%= error_message %> </div>
     <% end %>
-    <p class="hide">Deleting organization...</p>
 
     <div>
       <form action="/deleteOrganization" method="post">
@@ -299,6 +279,32 @@
       </form>
     </div>
   </div>
+</div>
+
+
+<div class="modal organization hide" id="edit_current_organization_modal">
+  <form action="/updateOrganization" method="post">
+      <div class="modal_header">
+        <span><%= organization_name %></span>
+      </div>
+
+      <div class="modal_content">
+        new name for: <input type="text" value="<%= organization_name %>" name="modified_name" />
+      </div>
+
+      <div class="modal_footer">
+        <% unless error_message.nil? || error_message.empty? %>
+            <div class="error"> <%= error_message %> </div>
+        <% end %>
+
+        <div>
+            <button type="button" class="cancel_button">Cancel</button>
+            <button type="submit" value="Update">Update</button>
+            <input type="hidden" name="current_organization" value="<%= current_organization %>" />
+            <input type="hidden" value="<%= current_tab %>" name="current_tab" />
+        </div>
+      </div>
+  </form>
 </div>
 
 <% unless error_message.nil? || error_message.empty? %>
@@ -317,7 +323,7 @@
       </div>
 
       <div class="modal_footer">
-          <button type="button" onclick="window.location = '<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/#{current_tab}" %>';" value="Close">
+          <button type="button" onclick="window.location = '<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/#{current_tab}" %>';" value="Close"></button>
       </div>
     </div>
 <% end %>

@@ -33,6 +33,17 @@ footer:
     hover: '#FFFFFF'
     active: '#FFFFFF'
 
+splash:
+  background-color: '#303030'
+  background-image: "url('/images/backgrounds/pattern-cz14.png')"
+  border-color: '#1C1C1C'
+  font-color: '#FFFFFF'
+  link:
+    link: '#FFFFFF'
+    visited: '#FFFFFF'
+    hover: '#FFFFFF'
+    active: '#FFFFFF'
+
 breadcrumb:
   background-color: '#1F1F1F'
   font-color: '#FFFFFF'
@@ -148,7 +159,6 @@ tiles:
       border-color: '#000000'
       background-color: '#545454'
       font-color: '#FFFFFF'
-      image-link: '/images/users_32px.png'
       link:
         link: '#FFFFFF'
         visited: '#FFFFFF'
@@ -365,8 +375,8 @@ controls:
 
 app_push:
   list:
-    background-color: '#05296e'
-    border-color: '#1144aa'
+    background-color: 'transparent'
+    border-color: '#ffffff'
   tags:
     tag_color: '#028e98'
     text_color: '#00af64'

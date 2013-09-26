@@ -1,6 +1,6 @@
 <%= erb(:'guest_pages/index', :layout => false, :locals => {:page_title => page_title, :welcome_message => welcome_message}) %>
 
-<div class="modal signup">
+<div id="modal_signup" class="modal signup hide">
   <script type="text/javascript">
     var RecaptchaOptions = {
         theme : 'blackglass'

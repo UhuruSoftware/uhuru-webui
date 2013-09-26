@@ -1,10 +1,14 @@
-<div class="breadcrumb">
-  <span class="breadcrumb_element">...&nbsp;/&nbsp;</span><a href="<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS %>" class="breadcrumb_link">organizations</a>
-  <span class="breadcrumb_element">&nbsp;/&nbsp;</span>
-  <a href="<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/spaces" %>" class="breadcrumb_link"><%= organization_name %></a>
-  <span class="breadcrumb_element">&nbsp;/&nbsp;</span>
-  <a href="<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/spaces/#{current_space}/apps" %>" class="breadcrumb_link"><%= space_name %></a>
-</div>
+<ul class="breadcrumbs">
+  <li>
+    <a href="<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS %>">organizations</a>
+  </li>
+  <li>
+    <a href="<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/spaces" %>"><%= organization_name %></a>
+  </li>
+  <li>
+    <a href="<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/spaces/#{current_space}/apps" %>"><%= space_name %></a>
+  </li>
+</ul>
 
 
 <div class="sections" id="space_page">
@@ -12,24 +16,6 @@
 <div class="manage_content_header">
   <div class="section_title">
     <p id="space_name"><%= space_name %></p>
-
-    <form action="/updateSpace" method="post">
-      <input type="text" value="" id="space_input" name="modified_name" class="tiped hide" />
-      <input type="hidden" name="current_organization" value="<%= current_organization %>" />
-      <input type="hidden" name="current_space" value="<%= current_space %>" />
-      <input type="hidden" name="current_tab" value="<%= current_tab %>" />
-
-      <% if params[:error] == 'update_space' %>
-          <div class="error_tooltips">
-            <p><%= error_message %></p>
-          </div>
-      <% end %>
-
-      <div class="tooltips hide">
-        <p>Press enter to update the new name!</p>
-      </div>
-    </form>
-
   </div>
   <div class="icons_options">
     <% if current_tab == "apps" %>
@@ -52,8 +38,8 @@
         <button onclick="window.location = '<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/spaces/#{current_space}/#{current_tab}/map_domain/new" %>';" class="image s32px plus" />
     <% end %>
 
-    <button class="image s32px edit" onclick="showSpacesInput();" />
-    <button class="image s32px trash" onclick="deleteCurrentSpace();" />
+    <button class="image s32px edit" onclick="show_modal($('#edit_current_space_modal'), true);" />
+    <button class="image s32px trash" onclick="show_modal($('#delete_current_space_modal'));" />
   </div>
 </div>
 
@@ -68,7 +54,7 @@
 
 
     <% if current_tab == "services" %>
-        <div class="selected">Services (<span><%= services_list.count %></span>)</a></div>
+        <div class="selected">Services (<%= services_list.count %>)</div>
     <% else %>
         <div onclick="window.location = '<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/spaces/#{current_space}/services" %>';">Services (<%= services_list.count %>)</div>
     <% end %>
@@ -110,7 +96,7 @@
               </a>
             </div>
 
-            <button type="button" id="<%= app.guid %>" title="<%= app.name %>" class="image s24px trash" />
+            <button type="button" id="<%= app.guid %>" title="Delete '<%= app.name %>'" class="image s24px trash" />
           </div>
 
 
@@ -133,12 +119,15 @@
 
           <div class="modal delete_confirmation app hide">
             <div class="modal_header">
-              <span id="selected_name"></span>
+              <span class="selected_name"></span>
             </div>
 
             <div class="modal_content">
               <p>
                 Are you sure you want to delete the app?
+              </p>
+              <p class="warning">
+                WARNING! This app will be permanently removed from the cloud.
               </p>
             </div>
 
@@ -146,13 +135,12 @@
               <% unless error_message.nil? || error_message.empty? %>
                   <div class="error"> <%= error_message %> </div>
               <% end %>
-              <p class="hide">Deleting app...</p>
 
               <div>
                 <form action="/deleteApp" method="post">
                   <button type="button" class="cancel_button">Cancel</button>
                   <button type="submit" value="Delete" >Delete</button>
-                  <input type="hidden" id="selected_guid" name="appGuid" />
+                  <input type="hidden" class="selected_guid" name="appGuid" />
                   <input type="hidden" name="current_organization" value="<%= current_organization %>" />
                   <input type="hidden" name="current_space" value="<%= current_space %>" />
                   <input type="hidden" name="current_tab" value="<%= current_tab %>" />
@@ -181,16 +169,12 @@
 
           <div class="tile bottom">
             <div class="tile left">
-              <div class="tile_action">
                 <span><%= service.type %></span>
-              </div>
             </div>
 
             <div class="tile right">
-              <div class="tile_action">
                 <span>Plan: <%= service.type %></span>
-              </div>
-              <div class="tile_info">Cost: <%= service.type %></div>
+                <span>Cost: <%= service.type %></span>
             </div>
           </div>
         </div>
@@ -199,12 +183,15 @@
 
     <div class="modal delete_confirmation service hide" id="delete_service">
       <div class="modal_header">
-        <span id="selected_name"></span>
+        <span class="selected_name"></span>
       </div>
 
       <div class="modal_content">
         <p>
           Are you sure you want to delete the service?
+        </p>
+        <p class="warning">
+          WARNING! This service will be permanently removed from the cloud.
         </p>
       </div>
 
@@ -212,13 +199,12 @@
         <% unless error_message.nil? || error_message.empty? %>
             <div class="error"> <%= error_message %> </div>
         <% end %>
-        <p class="hide">Deleting service...</p>
 
         <div>
           <form action="/deleteService" method="post">
             <button type="button" class="cancel_button">Cancel</button>
             <button type="submit" value="Delete">Delete</button>
-            <input type="hidden" id="selected_guid" name="serviceGuid" />
+            <input type="hidden" class="selected_guid" name="serviceGuid" />
             <input type="hidden" name="current_organization" value="<%= current_organization %>" />
             <input type="hidden" name="current_space" value="<%= current_space %>" />
             <input type="hidden" name="current_tab" value="<%= current_tab %>" />
@@ -271,25 +257,27 @@
 
     <div class="modal delete_confirmation user hide">
       <div class="modal_header">
-        <span id="selected_name"></span>
+        <span class="selected_name"></span>
       </div>
 
       <div class="modal_content">
         <p>
           Are you sure you want to delete the user?
         </p>
+        <p class="warning">
+          WARNING! This user will be removed from your space.
+        </p>
       </div>
       <div class="modal_footer">
         <% unless error_message.nil? || error_message.empty? %>
             <div class="error"> <%= error_message %> </div>
         <% end %>
-        <p class="hide">Deleting user...</p>
 
         <div>
           <form action="/deleteUser" method="post">
             <button type="button" class="cancel_button">Cancel</button>
             <button type="submit" value="Delete">Delete</button>
-            <input type="hidden" id="selected_guid" value="" name="thisUser"/>
+            <input type="hidden" class="selected_guid" value="" name="thisUser"/>
             <input type="hidden" id="aditional_data" value="" name="thisUserRole"/>
             <input type="hidden" name="current_organization" value="<%= current_organization %>" />
             <input type="hidden" name="current_space" value="<%= current_space %>" />
@@ -326,7 +314,7 @@
 
     <div class="modal delete_confirmation route hide">
       <div class="modal_header">
-        <span id="selected_name"></span>
+        <span class="selected_name"></span>
       </div>
       <form action="/deleteRoute" method="post">
 
@@ -334,18 +322,20 @@
           <p>
             Are you sure you want to delete this route?
           </p>
+          <p class="warning">
+            WARNING! This route will be removed from your space.
+          </p>
         </div>
 
         <div class="modal_footer">
           <% unless error_message.nil? || error_message.empty? %>
               <div class="error"> <%= error_message %> </div>
           <% end %>
-          <p class="hide">Deleting route...</p>
 
           <div>
             <button type="button" class="cancel_button">Cancel</button>
             <button type="submit" value="Delete">Delete</button>
-            <input type="hidden" id="selected_guid" name="routeGuid" />
+            <input type="hidden" class="selected_guid" name="routeGuid" />
             <input type="hidden" name="current_organization" value="<%= current_organization %>" />
             <input type="hidden" name="current_space" value="<%= current_space %>" />
             <input type="hidden" name="current_tab" value="<%= current_tab %>" />
@@ -373,12 +363,15 @@
 
     <div class="modal delete_confirmation domain hide">
       <div class="modal_header">
-        <span id="selected_name"></span>
+        <span class="selected_name"></span>
       </div>
 
       <div class="modal_content">
         <p>
           Are you sure you want to unmap?
+        </p>
+        <p class="warning">
+          WARNING! This app will be removed from your space.
         </p>
       </div>
 
@@ -386,13 +379,12 @@
         <% unless error_message.nil? || error_message.empty? %>
             <div class="error"> <%= error_message %> </div>
         <% end %>
-        <p class="hide">Deleting domain...</p>
 
         <div>
           <form action="/unmapFromSpace" method="post">
             <button type="button" class="cancel_button">Cancel</button>
             <button type="submit" value="Delete">Delete</button>
-            <input type="hidden" id="selected_guid" name="domainGuid" />
+            <input type="hidden" class="selected_guid" name="domainGuid" />
             <input type="hidden" name="current_organization" value="<%= current_organization %>" />
             <input type="hidden" name="current_space" value="<%= current_space %>" />
             <input type="hidden" name="current_tab" value="space" />
@@ -423,7 +415,6 @@
     <% unless error_message.nil? || error_message.empty? %>
         <div class="error"> <%= error_message %> </div>
     <% end %>
-    <p class="hide">Deleting space...</p>
 
     <div>
       <form action="/deleteSpace" method="post">
@@ -434,6 +425,32 @@
       </form>
     </div>
   </div>
+</div>
+
+<div class="modal organization hide" id="edit_current_space_modal">
+  <form action="/updateSpace" method="post">
+    <div class="modal_header">
+      <span><%= space_name %></span>
+    </div>
+
+    <div class="modal_content">
+      new name for: <input type="text" value="<%= space_name %>" name="modified_name"/>
+    </div>
+
+    <div class="modal_footer">
+      <% unless error_message.nil? || error_message.empty? %>
+          <div class="error"> <%= error_message %> </div>
+      <% end %>
+
+      <div>
+        <button type="button" class="cancel_button">Cancel</button>
+        <button type="submit" value="Update">Update</button>
+        <input type="hidden" name="current_organization" value="<%= current_organization %>" />
+        <input type="hidden" name="current_space" value="<%= current_space %>" />
+        <input type="hidden" name="current_tab" value="<%= current_tab %>" />
+      </div>
+    </div>
+  </form>
 </div>
 
 
