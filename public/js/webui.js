@@ -1,7 +1,11 @@
-function show_modal(modal, fade_background)
+function show_modal(modal, profiled)
 {
     $('body').addClass('noscroll');
-    if(fade_background != false)
+    if(profiled)
+    {
+        $('.modal-background').css("z-index", "20");
+    }
+    else
     {
         $('.modal-background').show();
     }
@@ -12,15 +16,20 @@ function show_modal(modal, fade_background)
     }, 250);
 }
 
-function hide_modal(modal, fade_background,execute_after)
+function hide_modal(modal, profiled, execute_after)
 {
     modal.animate({ top: '0px', opacity:'0' }, 250,
         function(){
             modal.hide();
-            if(fade_background != false)
+            if(profiled)
+            {
+                $('.modal-background').css("z-index", "10");
+            }
+            else
             {
                 $('.modal-background').hide();
             }
+
             $('body').removeClass('noscroll');
 
             if (typeof execute_after !== 'undefined')
@@ -111,13 +120,13 @@ var bind_uri = function(){
 }
 
 var unbind_service = function(){
-    show_modal($('.unbind_service'), false);
+    show_modal($('.unbind_service'), true);
 
     var name = $(this).attr("id");
     $('#unbind_serviceName').val(name);
 }
 var unbind_uri = function(){
-    show_modal($('.unbind_uri'), false);
+    show_modal($('.unbind_uri'), true);
 
     var name = $(this).attr("id");
     $('#unbind_uriName').val(name);
@@ -125,8 +134,8 @@ var unbind_uri = function(){
 
 /* cancel buttons on all modals inside the app details */
 $('.cancel_button_app_details').click(function(){
-    hide_modal($(".unbind_service"), false);
-    hide_modal($(".unbind_uri"), false);
+    hide_modal($(".unbind_service"), true);
+    hide_modal($(".unbind_uri"), true);
 });
 
 

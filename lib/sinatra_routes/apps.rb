@@ -55,6 +55,7 @@ module Uhuru::Webui
                       :apps_list => apps_list,
                       :services_list => services_list,
                       :routes_list => routes_list,
+                      :domains_list => @domains_list,
                       :error_message => error_message,
                       :app => params[:app]
                   }

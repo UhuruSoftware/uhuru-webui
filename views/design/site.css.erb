@@ -83,7 +83,7 @@ a:<%= style %>
     color: <%= design['warning']['font-color'] %>;
     background-color: <%= design['warning']['background-color'] %>;
     padding: 5px;
-    text-align: center;
+    text-align: left;
 }
 
 
@@ -205,6 +205,10 @@ a:<%= style %>
 {
     float: right;
     margin-right: 7px;
+}
+.sections
+{
+    padding-top: 40px;
 }
 
 /************************** FOOTER ****************************/
@@ -692,6 +696,11 @@ button.image.s<%= size %>.<%= image %>
     min-height: 150px;
 }
 
+.profiled
+{
+    z-index: 25;
+}
+
 .modal.hide
 {
     top: 0;
@@ -805,6 +814,11 @@ button.image.s<%= size %>.<%= image %>
     width: <%= design['modal']['definitions']['app_details']['width'] / 2 -40 %>px;
     margin: 0;
 }
+
+.app_details .modal_content div table tr:nth-child(1)
+{
+    font-weight: 900;
+}
 .app_details .modal_content div table tbody
 {
     display: inline;
@@ -839,6 +853,7 @@ button.image.s<%= size %>.<%= image %>
     list-style: none;
     margin: 0 10px 0 0;
     padding: 0;
+    width: 150px;
     min-height: 100%;
 }
 .app_push.list li
@@ -864,7 +879,9 @@ button.image.s<%= size %>.<%= image %>
 .template_app_logo
 {
     float: right;
-    margin: 0;
+    margin: 0 17px 0 0;
+    padding: 5px;
+    background-color: <%= design['modal']['footer']['background-color'] %>;
 }
 .query_link
 {
@@ -876,18 +893,22 @@ button.image.s<%= size %>.<%= image %>
     background-image: url("/images/link.png");
 }
 
-.tags_div,
-.buttons_div
+.tags_div
 {
     display: inline-block;
     position: relative;
-    margin: 0;
-    width: 49%;
+    margin: 0 0 0 170px;
+    min-width: 40%;
+}
+.table_div
+{
+    display: inline-block;
+    position: relative;
+    min-width: 40%;
 }
  /* place the table directly above the close button */
 .buttons_div table
 {
-    float: right;
     margin-right: -12px;
     margin-bottom: -10px;
 }
@@ -900,6 +921,11 @@ button.image.s<%= size %>.<%= image %>
 {
     color: <%= design['app_push']['tags']['text_color'] %>;
 }
+.create_app_form
+{
+    width: 100%;
+}
+
 
 /************************** CONTROLS ****************************/
 

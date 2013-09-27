@@ -2,16 +2,16 @@
 
 <div class="modal">
   <div class="modal_header">
-    <span>New Domain</span>
+    <span>New domain</span>
   </div>
 
   <form action="/createDomain" method="post">
     <div class="modal_content">
       <p>
-        <label for="domainName">Domain Name:</label>
+        <label for="domainName">domain name</label>
         <input type="text" name="domainName" autofocus />
         <input type="hidden" name="org_guid" value="<%= current_organization %>" />
-        <label for="domain_wildcard">Wildcard Domain?</label><input type="checkbox" class="modal_input_box" name="domain_wildcard" value="true"/><label>(Y/N)</label>
+        <label for="domain_wildcard">wildcard domain?</label><input type="checkbox" class="modal_input_box" name="domain_wildcard" value="true"/><label>(Y/N)</label>
       </p>
     </div>
 

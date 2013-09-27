@@ -87,6 +87,8 @@ image-buttons:
     minus: 'minus_24px.png'
     start: 'play_24px.png'
     stop: 'pause_24px.png'
+    start: 'play_24px.png'
+    stop: 'pause_24px.png'
   32px:
     money: 'money_sign_32.png'
     home: 'house.png'
@@ -379,4 +381,4 @@ app_push:
     border-color: '#ffffff'
   tags:
     tag_color: '#028e98'
-    text_color: '#00af64'
+    text_color: '#ffffff'

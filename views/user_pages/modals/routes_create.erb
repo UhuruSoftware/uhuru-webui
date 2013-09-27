@@ -2,24 +2,24 @@
 
 <div class="modal">
   <div class="modal_header">
-    <span>New Route</span>
+    <span>Create route</span>
   </div>
 
   <form action="/createRoute" method="post">
       <div class="modal_content">
         <table style="width: 100%;">
             <tr>
-              <td><label for="appName">App Name: </label></td>
+              <td><label for="appName">app name</label></td>
               <td><input type="text" id="appName" name="appName" autofocus /></td>
             </tr>
 
             <tr>
-              <td><label for="host">Host Name: </label></td>
+              <td><label for="host">host name</label></td>
               <td><input type="text" name="host" /></td>
             </tr>
 
             <tr>
-              <td><label for="domain_guid">Domain: </label></td>
+              <td><label for="domain_guid">domain</label></td>
               <td>
                 <select name="domain_guid">
                     <% domains_list.each do |domain| %>

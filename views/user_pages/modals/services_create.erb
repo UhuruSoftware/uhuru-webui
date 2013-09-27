@@ -3,18 +3,18 @@
 <div class="modal">
   <form action="/createService" method="post">
     <div class="modal_header">
-      <span>New Service</span>
+      <span>Create service</span>
     </div>
 
     <div class="modal_content">
       <table style="width: 100%;">
         <tr>
-          <td><label for="serviceName">Name: </label></td>
+          <td><label for="serviceName">name</label></td>
           <td><input type="text" name="serviceName" autofocus /></td>
         </tr>
 
         <tr>
-          <td><label for="service_plan">Service Plan: </label></td>
+          <td><label for="service_plan">service plan</label></td>
           <td>
             <select name="service_plan" style="width: 200px;">
               <% ServiceInstances.new(session[:token], $cf_target).read_service_plans.each do |plan| %>
@@ -25,7 +25,7 @@
         </tr>
 
         <tr>
-          <td><label for="service_type">Service Type: </label></td>
+          <td><label for="service_type">service type</label></td>
           <td>
             <select name="service_type" style="width: 200px;">
               <% ServiceInstances.new(session[:token], $cf_target).read_service_types.each do |type| %>

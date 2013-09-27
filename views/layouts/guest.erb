@@ -11,7 +11,13 @@
 
 <div id="header_container">
   <div id="header">
-    <a href="<%= Uhuru::Webui::SinatraRoutes::INDEX %>" title="Home"><h1>Uhuru AppCloud</h1></a>
+    <h1>
+      <a href="<%= Uhuru::Webui::SinatraRoutes::INDEX %>" title="Home">Uhuru AppCloud</a>
+
+      <div id="cloud_target">
+        <%= $config[:cloud_controller_url] %>
+      </div>
+    </h1>
 
     <div id="user_panel">
       <button class="image s32px key" onclick="window.location = '<%= Uhuru::Webui::SinatraRoutes::LOGIN %>';" title="Login"></button>

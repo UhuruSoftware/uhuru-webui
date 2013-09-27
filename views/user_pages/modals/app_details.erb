@@ -15,8 +15,8 @@
               <input type="hidden" name="current_space" value="<%= current_space %>" />
               <input type="hidden" name="current_tab" value="<%= current_tab %>" />
               <div class="app_status_buttons">
-                <button type="button" class="image s32px trash" title="Delete '<%= app.name %>'"></button>
-                <button type="submit" name="startApp" class="image s32px start start_app" value="" title="Start!"></button>
+                <button type="button" class="image s24px trash" title="Delete '<%= app.name %>'"></button>
+                <button type="submit" name="startApp" class="image s24px start start_app" value="" title="Start!"></button>
               </div>
             </form>
         <% end %>
@@ -29,8 +29,8 @@
               <input type="hidden" name="current_space" value="<%= current_space %>" />
               <input type="hidden" name="current_tab" value="<%= current_tab %>" />
               <div class="app_status_buttons">
-                <button type="button" class="image s32px trash" title="Delete '<%= app.name %>'"></button>
-                <button type="submit" name="stopApp" class="image s32px stop stop_app" value="" title="Stop!"></button>
+                <button type="button" class="image s24px trash" title="Delete '<%= app.name %>'"></button>
+                <button type="submit" name="stopApp" class="image s24px stop stop_app" value="" title="Stop!"></button>
               </div>
             </form>
         <% end %>
@@ -38,11 +38,11 @@
 
     <div>
       <div>
-            <span>Instances:&nbsp;&nbsp;</span><input type="text" class="pass_app_instances instances_count" value="<%= app.instances %>" />
+            <span>Instances&nbsp;&nbsp;</span><input type="text" class="pass_app_instances instances_count" value="<%= app.instances %>" />
             <button type="button" class="image s24px minus subtract_instance"></button>
             <button type="button" class="image s24px plus add_instance"></button>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <span>Memory:&nbsp;&nbsp;</span><input type="text" name="appMemory" id="app_memory_setup" value="<%= app.memory %>"/> MB
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <span>Memory&nbsp;&nbsp;</span><input type="text" name="appMemory" id="app_memory_setup" value="<%= app.memory %>"/> MB
             <button type="button" class="image s24px minus subtract_memory"></button>
             <button type="button" class="image s24px plus add_memory"></button>
       </div>
@@ -80,18 +80,14 @@
             </select>
           </td>
           <td>
-            <select class="small_input">
               <% ServiceInstances.new(session[:token], $cf_target).read_service_types.each do |type| %>
-                  <option value="<%= type %>"><%= type %></option>
+                  <label><%= type %></label>
               <% end %>
-            </select>
           </td>
           <td>
-            <select class="small_input">
               <% ServiceInstances.new(session[:token], $cf_target).read_service_plans.each do |plan| %>
-                  <option value="<%= plan.name %>"><%= plan.name.capitalize %></option>
+                  <label><%= plan.name %></label>
               <% end %>
-            </select>
           </td>
           <td class="action">
             <button type="button" class="image s24px plus bind_service_button" title="<%= app.name %>"></button>
@@ -158,7 +154,7 @@
 
 
 
-<div class="modal hide" id="saving_modal">
+<div class="modal hide profiled" id="saving_modal">
   <div class="modal_header">
     <h3>Saving changes</h3>
   </div>
@@ -175,7 +171,7 @@
 </div>
 
 
-<div class="modal unbind_service hide">
+<div class="modal unbind_service hide profiled">
   <div class="modal_header">
     <h3>Unbind service</h3>
   </div>
@@ -203,7 +199,7 @@
   </div>
 </div>
 
-<div class="modal unbind_uri hide">
+<div class="modal unbind_uri hide profiled">
   <div class="modal_header">
     <h3>Unbind URI</h3>
   </div>

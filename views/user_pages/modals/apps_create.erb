@@ -2,125 +2,133 @@
 <div class="modal-background"> </div>
 
 <div class="modal app_push">
-  <div class="modal_header">
-    <span>Add a new app template</span>
-  </div>
+      <div class="modal_header">
+        <span>Add a new app template</span>
+      </div>
 
-  <div class="modal_content">
-      <!-- LOOP AND CREATE A LIST OF COLLECTIONS AND APPS -->
-      <ul class="app_push list">
-        <% apps.each do |app_id, app| %>
-            <li class="app_menu_item" id="<%= app_id %>" onclick="showPanel(this);">
-              <%= app['name'] == nil ? 'N/A - Please provide an application name' : app['name'] %>
-            </li>
-        <% end %>
-      </ul>
-
-      <!-- LOOP AND CREATE THE CONTENT OF EACH COLLECTION AND APP -->
-      <% apps.each do |app_id, app| %>
-          <div class="template_apps hide" id="<%= app_id %>_div">
-
-            <!-- INSERT APP LOGO, NAME, DESCRIPTION AND SERVICE ICONS -->
-            <% if File.exists? app['logo'] %>
-                <image src ="/get_logo/<%= app_id %>" class="template_app_logo" />
+      <div class="modal_content">
+          <!-- LOOP AND CREATE A LIST OF COLLECTIONS AND APPS -->
+          <ul class="app_push list">
+            <% apps.each do |app_id, app| %>
+                <li class="app_menu_item" id="<%= app_id %>" onclick="showPanel(this);">
+                  <%= app['name'] == nil ? 'N/A - Please provide an application name' : app['name'] %>
+                </li>
             <% end %>
+          </ul>
 
-            <span class="template_app_name">
-              <%= app['name'] %>
-              <span class="query_link" onclick="redirectTo('<%= app_id %>');"></span>
-            </span>
-            <br /><br />
+          <!-- LOOP AND CREATE THE CONTENT OF EACH COLLECTION AND APP -->
+          <% apps.each do |app_id, app| %>
+              <div class="template_apps hide" id="<%= app_id %>_div">
 
-            <% app['service_type'].each do |service_name| %>
-                <img src="/images/tmp_apps_icons/<%= service_name %>.png" class="small_app_icons" />
-            <% end %>
-            <img src="/images/tmp_apps_icons/<%= app['vmc_manifest']['applications']['.']['framework']['name'] %>.png" class="small_app_icons" />
-            <br /><br />
-            <p class="template_app_description">
-              <%= app['description'][0..500] %>
-            </p>
+                <!-- INSERT APP LOGO, NAME, DESCRIPTION AND SERVICE ICONS -->
+                <% if File.exists? app['logo'] %>
+                    <image src ="/get_logo/<%= app_id %>" class="template_app_logo" />
+                <% end %>
 
-            <br />
+                <span class="template_app_name">
+                  <%= app['name'] %>
+                  <span class="query_link" onclick="redirectTo('<%= app_id %>');"></span>
+                </span>
+                <br /><br />
 
-            <div>
-              <!-- INSERT TAGS -->
-              <div class="tags_div">
-                <span class="tag_span">Tags:</span>
-                  <span class="tags">
-                    <% if app['tags'] != nil %>
-                        <%= app['tags'].join(',&nbsp;') %>
-                    <% else %>
-                        none
-                    <% end %>
-                  </span>
+                <% app['service_type'].each do |service_name| %>
+                    <img src="/images/tmp_apps_icons/<%= service_name %>.png" class="small_app_icons" />
+                <% end %>
+                <img src="/images/tmp_apps_icons/<%= app['vmc_manifest']['applications']['.']['framework']['name'] %>.png" class="small_app_icons" />
+                <br /><br />
+                <p class="template_app_description">
+                  <%= app['description'][0..500] %>
+                </p>
+
                 <br />
-                <span class="publisher_span">Publisher:</span>
-                  <span class="tags">
-                    <% if app['collection']['name'] != nil %>
-                        <%= app['collection']['name'] %>
-                    <% end %>
-                  </span>
-              </div>
 
-              <!-- INSERT BUTTONS DOWNLOAD IF NECESSARY AND PUSH -->
-              <div class="buttons_div">
-                <form method="post" action="/push">
-                  <table>
-                    <tr>
-                      <td><label for="app_name">app name:</label></td>
-                      <td><input type="text" value="" name="app_name" class="small_input" /></td>
-                    </tr>
-                    <tr>
-                      <td><label for="app_url">app URL:</label></td>
-                      <td>
-                        <select class="small_input" name="app_url">
-                          <% domains_list.each do |domain| %>
-                              <% if domain.owning_org_name == organization_name || domain.owning_org_name == 'Shared' %>
-                                <option value="<%= domain.name %>"><%= domain.name %></option>
-                              <% end %>
-                          <% end %>
-                        </select>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <% if app['can_download'] != nil %>
-                            <% if app['can_download'] == true %>
-                                <button type="button" onclick="window.location = '<%= "/download_app/" + app['id'] %>';" title="Download '<%= app['name'] %>'">Download</button>
-                            <% end %>
+                <div>
+                  <!-- INSERT TAGS -->
+                  <div class="tags_div">
+                    <span class="tag_span">Tags:</span>
+                      <span class="tags">
+                        <% if app['tags'] != nil %>
+                            <%= app['tags'].join(',&nbsp;') %>
+                        <% else %>
+                            none
                         <% end %>
-                      </td>
-                      <td>
-                        <input type="hidden" name="app_space" value="<%= current_space %>" >
-                        <input type="hidden" name="app_organization" value="<%= current_organization %>" >
-                        <input type="hidden" name="app_id" value="<%= app_id %>" >
-                        <input type="hidden" name="app_src" value="<%= app['collection_src'] %>" >
-                        <input type="hidden" name="app_memory" value="<%= app['vmc_manifest']['applications']['.']['mem'] %>" >
-                        <input type="hidden" name="app_instances" value="<%= app['vmc_manifest']['applications']['.']['instances'] %>" >
+                      </span>
+                    <br />
+                    <span class="publisher_span">Publisher:</span>
+                      <span class="tags">
+                        <% if app['collection']['name'] != nil %>
+                            <%= app['collection']['name'] %>
+                        <% end %>
+                      </span>
+                  </div>
 
-                        <button type="submit" style="float: right;">Push</button>
-                      </td>
-                    </tr>
-                  </table>
-                  <input type="hidden" value="<%= app_id %>" name="app_id" />
-                  <!-- read apps function returns the path of the template_manifest file -->
-                  <input type="hidden" value="<%= app['app_src'].sub!'template_manifest.yml', '' %>" name="app_src" />
-                </form>
+                  <!-- INSERT BUTTONS DOWNLOAD IF NECESSARY AND PUSH -->
+                  <div class="table_div">
+                      <table>
+                        <tr>
+                          <td><label>app name</label></td>
+                          <td><input type="text" id="<%= app_id %>_selected_name" /></td>
+                        </tr>
+                        <tr>
+                          <td><label for="app_url">app URL</label></td>
+                          <td>
+                            <select id="<%= app_id %>_selected_domain">
+                              <% domains_list.each do |domain| %>
+                                  <% if domain.owning_org_name == organization_name || domain.owning_org_name == 'Shared' %>
+                                    <option value="<%= domain.name %>"><%= domain.name %></option>
+                                  <% end %>
+                              <% end %>
+                            </select>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td></td>
+                          <td>
+                            <% if app['can_download'] != nil %>
+                                <% if app['can_download'] == true %>
+                                    <button type="button" onclick="window.location = '<%= "/download_app/" + app['id'] %>';" title="Download '<%= app['name'] %>'">Download</button>
+                                <% end %>
+                            <% end %>
+                          </td>
+                          <td>
+                          </td>
+                        </tr>
+                      </table>
+                  </div>
+                </div>
               </div>
-            </div>
-          </div>
-      <% end %>
-  </div>
+          <% end %>
+      </div>
 
-  <div class="modal_footer">
-    <% unless error_message.nil? || error_message.empty? %>
-        <div class="error"> <%= error_message %> </div>
-    <% end %>
+      <div class="modal_footer">
+        <% unless error_message.nil? || error_message.empty? %>
+            <div class="error"> <%= error_message %> </div>
+        <% end %>
 
-    <div>
-      <button onclick="window.location = '<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/spaces/#{current_space}/apps" %>';" class="close_button">Close</button>
-    </div>
-  </div>
+        <div>
+          <form method="post" action="/push" class="create_app_form">
+            <button type="button" onclick="window.location = '<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/spaces/#{current_space}/apps" %>';" class="close_button">Close</button>
+
+              <% apps.each do |app_id, app| %>
+                    <button type="submit" class="submit_buttons" id="<%= app_id %>_selected" style="float: right;">Push</button>
+
+                    <input type="hidden" id="<%= app_id %>_selected_id" value="<%= app_id %>" >
+                    <input type="hidden" id="<%= app_id %>_selected_src" value="<%= app['app_src'] %>" >
+                    <input type="hidden" id="<%= app_id %>_selected_memory" value="<%= app['vmc_manifest']['applications']['.']['mem'] %>" >
+                    <input type="hidden" id="<%= app_id %>_selected_instances" value="<%= app['vmc_manifest']['applications']['.']['instances'] %>" >
+                    <input type="hidden" name="app_space" value="<%= current_space %>" >
+                    <input type="hidden" name="app_organization" value="<%= current_organization %>" >
+              <% end %>
+
+            <input type="hidden" name="app_name" id="current_app_name" />
+            <input type="hidden" name="app_id" id="current_app_id" />
+            <input type="hidden" name="app_url" id="current_app_domain" />
+            <input type="hidden" name="app_src" id="current_app_src" />
+            <input type="hidden" name="app_memory" id="current_app_memory" />
+            <input type="hidden" name="app_instances" id="current_app_instances" />
+          </form>
+        </div>
+      </div>
 </div>
 
 
@@ -173,7 +181,9 @@
             }
 
             $('.template_apps').css("display", "none");
+            $('.submit_buttons').css("display", "none");
             $('#' + obj.id + '_div').css("display", "block");
+            $('#' + obj.id + '_selected').css("display", "block");
             $('#' + obj.id).addClass('selected');
         }
     }
@@ -193,5 +203,22 @@
     function isInteger(possibleInteger) {
         return Object.prototype.toString.call(possibleInteger) !== "[object Array]" && /^[\d]+$/.test(possibleInteger);
     }
+
+
+    $('.submit_buttons').hover(function(){
+        var name = $(this).attr("id") + '_name';
+        var app_id = $(this).attr("id") + '_id';
+        var domain = $(this).attr("id") + '_domain';
+        var src = $(this).attr("id") + '_src';
+        var memory = $(this).attr("id") + '_memory';
+        var instances = $(this).attr("id") + '_instances';
+
+        $('#current_app_name').val($('#' + name).val());
+        $('#current_app_id').val($('#' + app_id).val());
+        $('#current_app_domain').val($('#' + domain).val());
+        $('#current_app_src').val($('#' + src).val());
+        $('#current_app_memory').val($('#' + memory).val());
+        $('#current_app_instances').val($('#' + instances).val());
+    });
 </script>
 

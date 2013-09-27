@@ -2,13 +2,13 @@
 
 <div class="modal">
   <div class="modal_header">
-    <span>Map domain to space:</span>
+    <span>Map domain to space</span>
   </div>
 
   <form action="/createDomain" method="post">
     <div class="modal_content">
       <p>
-        <label for="domainName">domain:</label>
+        <label for="domainName">domain</label>
         <select name="domainName">
           <% domains_list.each do |domain| %>
               <% if domain.owning_org_name == organization_name || domain.owning_org_name == 'Shared' %>
