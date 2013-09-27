@@ -31,16 +31,8 @@
     <button type="button" class="image s32px edit" onclick="show_modal($('#edit_current_organization_modal'), true);" />
     <button type="button" class="image s32px trash" onclick="show_modal($('#delete_current_organization_modal'));" />
 
-    <% if card_type == nil && card_masked_number == nil %>
-        <button type="button" onclick="window.location = '<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/#{current_tab}/create_subscription" %>';" class="image s32px money"></button>
-    <% end %>
   </div>
 
-  <div id="credit_card_info_div">
-    <% if card_type != nil && card_masked_number != nil %>
-        <%= card_masked_number %><span class="<%= card_type %>"></span>
-    <% end %>
-  </div>
 </div>
 
 <div id="organization_div">

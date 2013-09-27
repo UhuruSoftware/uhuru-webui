@@ -5,7 +5,6 @@ gem "sinatra"
 gem "sinatra-session"
 gem "thin", "~> 1.5.0"
 gem "steno"
-gem "httparty"
 
 gem "cfoundry", "~> 4.3.4"
 gem "cf-uaa-lib"
@@ -26,3 +25,5 @@ gem "sqlite3"
 gem "pg"
 gem "cf"
 gem "color"
+
+gem 'stripe'

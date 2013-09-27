@@ -22,18 +22,6 @@ module Uhuru::Webui
           auditors_list = org.read_auditors($config, params[:org_guid])
           domains_list = domain.read_domains()
 
-          begin
-            if (org.is_organization_billable?(@this_guid))
-              billing_manager_guid = billings_list[0].guid
-              credit_card_type , credit_card_masked_number = ChargifyWrapper.get_subscription_card_type_and_number(@this_guid, billing_manager_guid)
-            end
-          rescue Exception => ex
-            credit_card_type = nil
-            credit_card_masked_number = nil
-            puts 'Exception raised for credit card type and masked number!'
-            puts ex
-          end
-
           error_message = params[:error] if defined?(params[:error])
 
           erb :'user_pages/organization',
@@ -43,8 +31,6 @@ module Uhuru::Webui
                       :organization_name => org.get_name(params[:org_guid]),
                       :current_organization => params[:org_guid],
                       :current_tab => params[:tab],
-                      :card_type => credit_card_type,
-                      :card_masked_number => credit_card_masked_number,
                       :all_users => all_users,
                       :spaces_list => spaces_list,
                       :owners_list => owners_list,

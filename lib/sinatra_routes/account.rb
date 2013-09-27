@@ -55,54 +55,6 @@ module Uhuru::Webui
           end
         end
 
-
-
-        app.get CREATE_SUBSCRIPTION do
-          if session[:login_] == false || session[:login_] == nil
-            redirect INDEX
-          end
-
-          product_id = ChargifyWrapper.get_product_by_handle($config[:quota_settings][:product_handle])
-
-          users = UsersSetup.new($config)
-          name = users.get_details(session[:user_guid])
-
-          first_name = name["familyname"] != nil ? name["familyname"] : ""
-          last_name = name["givenname"] != nil ? name["givenname"] : ""
-          email = session[:username]
-
-          org_guid = params[:org_guid]
-          puts org_guid
-          org = Library::Organizations.new(session[:token], $cf_target)
-          billing_managers = org.read_billings($config, org_guid)
-          billing_manager_guid = billing_managers[0].guid
-
-          reference = "#{billing_manager_guid} #{org_guid}"
-          org_name = session[:currentOrganization_Name]
-
-          product_hosted_page = "https://#{$config[:quota_settings][:billing_provider_domain]}.#{$config[:quota_settings][:billing_provider]}.com/h/#{product_id}/subscriptions/new?first_name=#{first_name}&last_name=#{last_name}&email=#{email}&reference=#{reference}&organization=#{org_name}"
-
-          redirect product_hosted_page
-        end
-
-        app.get SUBSCRIPTION_RESULT do
-
-          if session[:login_] == false || session[:login_] == nil
-            redirect INDEX
-          end
-          org = Library::Organizations.new(session[:token], $cf_target)
-          customer_reference = params[:ref]
-
-          org_guid = customer_reference.last(36).to_s
-          if (ChargifyWrapper.subscription_exists?(customer_reference))
-            org.make_organization_billable(org_guid)
-          end
-
-          org_name = org.get_name(org_guid)
-
-          erb :subscribe_result, {:locals => {:org_name => org_name, :org_guid => org_guid}, :layout => :layout_user}
-        end
-
       end
     end
   end

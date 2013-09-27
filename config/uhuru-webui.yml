@@ -70,12 +70,9 @@ webui:
   command_line_link: "http://docs.cloudfoundry.com/tools/vmc/installing-vmc.html"
   eclipse_url: "http://docs.cloudfoundry.com/tools/STS/configuring-STS.html"
 
-quota_settings:
-  billing_provider: chargify
-  billing_provider_domain: uhurutestcloud
-  auth_token: kQbDEn5os7NTX-TVv9GT
-  product_handle: paid
-  division_factor: 256
+stripe:
+  publishable_key: "pk_test_gRsPhGxpLivq7IsDPyuY9zs8"
+  secret_key: "sk_test_fZOqxL3KHooewcpfplMZxVby"
 
 monitoring:
   reports:

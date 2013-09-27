@@ -6,7 +6,6 @@ require 'service_instances'
 require 'users_setup'
 require 'readapps'
 require 'logger'
-require 'credit_cards'
 require 'domains'
 require 'routes'
 require 'vcap/config'
@@ -18,9 +17,6 @@ require "enc"
 require 'rack/recaptcha'
 require 'uri'
 require 'base32'
-require 'chargify_wrapper'
-require 'billing_helper'
-require 'http_direct_client'
 
 module Uhuru
   module Webui
@@ -85,12 +81,9 @@ class Uhuru::Webui::Config < VCAP::Config
         :recaptcha_public_key             => String
       },
 
-      :quota_settings => {
-          :billing_provider               => String,
-          :billing_provider_domain        => String,
-          :auth_token                     => String,
-          :product_handle                 => String,
-          :division_factor                => Integer
+      :stripe => {
+          :publishable_key                => String,
+          :secret_key                     => String
       },
 
       :monitoring => {
@@ -152,36 +145,6 @@ class Uhuru::Webui::Config < VCAP::Config
             :ruby                         =>String
           }
       }
-
-    #components:
-    #       deas:
-    #        - name: "dea"
-    #    - name: "win_dea"
-    #   services:
-    #        - name: mysql_node
-    #      token: ec9743a4-6587-4356-8b9e-72d66b36a7f4
-    #    - name: mongodb_node
-    #      token: ec9743a4-6587-4356-8b9e-72d66b36a7f4
-    #    - name: redis_node
-    #      token: ec9743a4-6587-4356-8b9e-72d66b36a7f4
-    #    - name: redis_node
-    #      token: ec9743a4-6587-4356-8b9e-72d66b36a7f4
-    #    - name: rabbit_node
-    #      token: ec9743a4-6587-4356-8b9e-72d66b36a7f4
-    #    - name: postgresql_node
-    #      token: ec9743a4-6587-4356-8b9e-72d66b36a7f4
-    #    - name: uhuru_tunnel_node
-    #      token: ec9743a4-6587-4356-8b9e-72d66b36a7f4
-    #    - name: uhurufs_node
-    #      token: ec9743a4-6587-4356-8b9e-72d66b36a7f4
-    #    - name: mssql_node
-    #      token: ec9743a4-6587-4356-8b9e-72d66b36a7f4
-    #buildpacks:
-    #    dotNet: https://github.com/stefanschneider/dummy-buildpack.git
-    #java: https://github.com/cloudfoundry/java-buildpack
-    #nodejs: https://github.com/cloudfoundry/heroku-buildpack-nodejs
-    #php: https://github.com/heroku/heroku-buildpack-php
-    #ruby: https://github.com/cloudfoundry/heroku-buildpack-ruby
     }
   end
 

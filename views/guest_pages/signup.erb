@@ -35,7 +35,7 @@
             <br />
             <br />
             <%= recaptcha_tag :challenge, :language => :en %>
-            <br />
+            <div>When you press "Sign up" you'll be required to fulfill the credit card information</div>
             <br />
         </div>
 
@@ -46,7 +46,29 @@
 
           <div>
               <button type="button" onclick="window.location = '<%= Uhuru::Webui::SinatraRoutes::INDEX %>';">Cancel</button>
-              <button type="submit">Sign up</button>
+              <script src="https://checkout.stripe.com/v2/checkout.js"></script>
+              <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.js"></script>
+              <button id="signupButton" type="submit">Sign up</button>
+              <% unless error_message.nil? || error_message.empty? %>
+                <script>
+                  $('#signupButton').click(function(){
+                    var token = function(res){
+                        var $input = $('<input type=hidden name=stripeToken />').val(res.id);
+                        $('form').append($input).submit();
+                    };
+
+                    StripeCheckout.open({
+                        key:         "<%= publishable_key %>",
+                        address:     true,
+                        name:        'Uhuru App Cloud',
+                        panelLabel:  'Register card',
+                        token:       token
+                    });
+
+                    return false;
+                  });
+                </script>
+              <% end %>
           </div>
         </div>
     </form>
