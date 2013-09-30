@@ -96,7 +96,7 @@
               </a>
             </div>
 
-            <button type="button" id="<%= app.guid %>" title="Delete '<%= app.name %>'" class="image s24px trash" />
+            <button type="button" id="<%= app.name %>" title="Delete '<%= app.name %>'" class="image s24px trash" />
           </div>
 
 
@@ -115,41 +115,41 @@
           <% if params[:app_name] == app.name %>
               <%= erb(:'user_pages/modals/app_details', :layout => false, :locals => { :current_organization => current_organization, :current_space => current_space, :organization_name => organization_name, :collections => collections, :current_tab => current_tab, :app => app, :services_list => services_list, :error_message => error_message }) %>
           <% end %>
+        </div>
 
 
-          <div class="modal delete_confirmation app hide">
-            <div class="modal_header">
-              <span class="selected_name"></span>
-            </div>
-
-            <div class="modal_content">
-              <p>
-                Are you sure you want to delete the app?
-              </p>
-              <p class="warning">
-                WARNING! This app will be permanently removed from the cloud.
-              </p>
-            </div>
-
-            <div class="modal_footer">
-              <% unless error_message.nil? || error_message.empty? %>
-                  <div class="error"> <%= error_message %> </div>
-              <% end %>
-
-              <div>
-                <form action="/deleteApp" method="post">
-                  <button type="button" class="cancel_button">Cancel</button>
-                  <button type="submit" value="Delete" >Delete</button>
-                  <input type="hidden" class="selected_guid" name="appGuid" />
-                  <input type="hidden" name="current_organization" value="<%= current_organization %>" />
-                  <input type="hidden" name="current_space" value="<%= current_space %>" />
-                  <input type="hidden" name="current_tab" value="<%= current_tab %>" />
-                </form>
-              </div>
-
-            </div>
+        <div class="modal delete_confirmation app hide">
+          <div class="modal_header">
+            <span class="selected_name"></span>
           </div>
 
+          <div class="modal_content">
+            <p>
+              Are you sure you want to delete the app?
+            </p>
+            <p class="warning">
+              WARNING! This app will be permanently removed from the cloud.
+            </p>
+          </div>
+
+          <div class="modal_footer">
+            <% unless error_message.nil? || error_message.empty? %>
+                <div class="error"> <%= error_message %> </div>
+            <% end %>
+
+            <div>
+              <form action="/deleteApp" method="post">
+                <button type="button" class="cancel_button">Cancel</button>
+                <button type="submit" value="Delete" >Delete</button>
+                <!-- the element selected_guid in this case is the app name -->
+                <input type="hidden" class="selected_guid" name="appName" />
+                <input type="hidden" name="current_organization" value="<%= current_organization %>" />
+                <input type="hidden" name="current_space" value="<%= current_space %>" />
+                <input type="hidden" name="current_tab" value="<%= current_tab %>" />
+              </form>
+            </div>
+
+          </div>
         </div>
     <% end %>
 <% end %>

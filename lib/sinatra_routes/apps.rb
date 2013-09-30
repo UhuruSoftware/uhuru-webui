@@ -171,7 +171,7 @@ module Uhuru::Webui
         end
 
         app.post '/deleteApp' do
-          delete = Applications.new(session[:token], $cf_target).delete(params[:appGuid])
+          delete = Applications.new(session[:token], $cf_target).delete(params[:appName])
 
           if defined?(delete.message)
             redirect ORGANIZATIONS + "/#{params[:current_organization]}/spaces/#{params[:current_space]}/#{params[:current_tab]}" + "?error=#{delete.description}"
