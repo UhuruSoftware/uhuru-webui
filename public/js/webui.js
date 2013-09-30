@@ -1,6 +1,6 @@
 function show_modal(modal, profiled)
 {
-    $('body').addClass('noscroll');
+    //$('body').addClass('noscroll');
     if(profiled)
     {
         $('.modal-background').css("z-index", "20");
@@ -30,7 +30,7 @@ function hide_modal(modal, profiled, execute_after)
                 $('.modal-background').hide();
             }
 
-            $('body').removeClass('noscroll');
+            //$('body').removeClass('noscroll');
 
             if (typeof execute_after !== 'undefined')
             {
