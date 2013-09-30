@@ -83,9 +83,13 @@ module Uhuru::Webui
         end
 
         app.post SIGNUP do
-          unless recaptcha_valid?
-            redirect SIGNUP + "?username=#{params[:email]}&first_name=#{params[:first_name]}&last_name=#{params[:last_name]}&message=Please type the correct code"
+          if params[:stripeToken] != nil
+            session[:card_token] = params[:stripeToken]
           end
+
+          #unless recaptcha_valid?
+          #  redirect SIGNUP + "?username=#{params[:email]}&first_name=#{params[:first_name]}&last_name=#{params[:last_name]}&message=Please type the correct code"
+          #end
 
           key = $config[:webui][:activation_link_secret]
 
@@ -113,11 +117,11 @@ module Uhuru::Webui
           user = user_sign_up.signup(params[:email], $config[:webui][:activation_link_secret], params[:last_name], params[:first_name])
 
           unless defined?(user.message)
-            token = params[:stripeToken]
-            customer = StripeWrapper.create_customer(params[:email], token)
+            customer = StripeWrapper.create_customer(params[:email], session[:card_token])
             if customer != nil
-              StripeWrapper.add_billing_binding(user.guid, customer.id, customer.cards.data[0].id)
+              StripeWrapper.add_billing_binding(user.guid, customer.id, customer.default_card)
             end
+            session[:card_token] = nil
 
             link = "http://#{request.env['HTTP_HOST'].to_s}/activate/#{URI.encode(Base32.encode(pass))}/#{URI.encode(Base32.encode(user.guid))}"
             Email::send_email(params[:email], 'Uhuru account confirmation', erb(:'guest_pages/email', {:locals =>{:link => link}}))

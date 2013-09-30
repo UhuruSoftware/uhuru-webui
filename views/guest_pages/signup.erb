@@ -51,7 +51,7 @@
               <script src="https://checkout.stripe.com/v2/checkout.js"></script>
               <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.js"></script>
               <button id="signupButton" type="submit">Sign up</button>
-              <% unless error_message.nil? || error_message.empty? %>
+              <% if error_message == nil %>
                 <script>
                   $('#signupButton').click(function(){
                     var token = function(res){
