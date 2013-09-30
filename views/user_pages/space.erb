@@ -75,7 +75,7 @@
 
 
     <% if current_tab == "domains" %>
-        <div class="selected">Domains (<%= defined?(domains_list) ? domains_list.count { |d| d.owning_org_name == organization_name && d.owning_spaces.count { |s| s.name == space_name } != 0 } : '...' %>)</div>
+        <div class="selected">Domains (<%= defined?(domains_list) ? domains_list.count { |d| d.owning_org_name == organization_name && d.owning_spaces.count { |s| s.name == space_name } != 0 } : '0' %>)</div>
     <% else %>
         <div onclick="window.location = '<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/spaces/#{current_space}/domains" %>';">Domains (<%= defined?(domains_list) ? domains_list.count { |d| d.owning_org_name == organization_name && d.owning_spaces.count { |s| s.name == space_name } != 0 } : '...' %>)</div>
     <% end %>
@@ -353,7 +353,7 @@
             <div class="square_tile">
               <div class="square_tile domain" title="<%= domain.name %>">
                 <span><%= domain.name %></span>
-                <span class="bottom_left">Domain: <%= domain.wildcard %></span>
+                <span class="bottom_left">Domain: <span <% if domain.wildcard == true %> class="wildcard" <% end %>></span></span>
                 <button type="button" class="image s24px trash" id="<%= domain.name %>" title="<%= domain.guid %>" />
               </div>
             </div>

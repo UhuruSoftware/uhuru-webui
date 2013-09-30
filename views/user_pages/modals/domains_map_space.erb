@@ -11,7 +11,7 @@
         <label for="domainName">domain</label>
         <select name="domainName">
           <% domains_list.each do |domain| %>
-              <% if domain.owning_org_name == organization_name || domain.owning_org_name == 'Shared' %>
+              <% if domain.owning_org_name == organization_name || domain.owning_org_name != 'Shared' %>
                 <option value="<%= domain.name %>"><%= domain.name %></option>
               <% end %>
           <% end %>

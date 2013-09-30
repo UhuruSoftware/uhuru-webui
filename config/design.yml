@@ -89,6 +89,7 @@ image-buttons:
     stop: 'pause_24px.png'
     start: 'play_24px.png'
     stop: 'pause_24px.png'
+    wildcard: 'wildcard.png'
   32px:
     money: 'money_sign_32.png'
     home: 'house.png'

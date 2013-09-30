@@ -198,7 +198,7 @@
                 <div class="square_tile">
                     <div class="square_tile domain" title="<%= domain.name %>">
                       <span><%= domain.name %></span>
-                      <span class="bottom_left"><%= domain.wildcard %></span>
+                      <span class="bottom_left">Domain: <span <% if domain.wildcard == true %> class="wildcard" <% end %>></span></span>
                       <button type="button" id="<%= domain.guid %>" class="image s24px trash" title="Delete '<%= domain.name %>'"></button>
                       <span class="span_bg_icon_domain"></span>
                     </div>

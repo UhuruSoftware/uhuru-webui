@@ -34,7 +34,9 @@
             <input type="text" name="last_name" value = "<%= error_last_name %>" />
             <br />
             <br />
-            <%= recaptcha_tag :challenge, :language => :en %>
+            <% if $config[:recaptcha][:use_recaptcha] == true %>
+                <%= recaptcha_tag :challenge, :language => :en %>
+            <% end %>
             <div>When you press "Sign up" you'll be required to fulfill the credit card information</div>
             <br />
         </div>

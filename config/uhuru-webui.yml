@@ -37,6 +37,7 @@ email:
   enable_tls: true
 
 recaptcha:
+  use_recaptcha: false
   recaptcha_public_key: "6LfuXN4SAAAAAAVoUDfpUzxftBrpecXQSzTuKcZk"
   recaptcha_private_key: "6LfuXN4SAAAAAEuH--10s_lH_HMeYdjQtxha3UKd"
 
