@@ -38,7 +38,7 @@
         <button onclick="window.location = '<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/spaces/#{current_space}/#{current_tab}/map_domain/new" %>';" class="image s32px plus" />
     <% end %>
 
-    <button class="image s32px edit" onclick="show_modal($('#edit_current_space_modal'), true);" />
+    <button class="image s32px edit" onclick="show_modal($('#edit_current_space_modal'), false);" />
     <button class="image s32px trash" onclick="show_modal($('#delete_current_space_modal'));" />
   </div>
 </div>

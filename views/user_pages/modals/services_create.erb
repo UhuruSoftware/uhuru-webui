@@ -35,13 +35,13 @@
           </td>
         </tr>
       </table>
-    </div>
 
-    <div class="modal_footer">
       <% unless error_message.nil? || error_message.empty? %>
           <div class="error"> <%= error_message %> </div>
       <% end %>
+    </div>
 
+    <div class="modal_footer">
       <div>
         <button type="button" onclick="window.location = '<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/spaces/#{current_space}/services" %>';">Close</button>
         <input type="hidden" name="current_organization" value="<%= current_organization %>" />

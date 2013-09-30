@@ -81,18 +81,6 @@
                             </select>
                           </td>
                         </tr>
-                        <tr>
-                          <td></td>
-                          <td>
-                            <% if app['can_download'] != nil %>
-                                <% if app['can_download'] == true %>
-                                    <button type="button" onclick="window.location = '<%= "/download_app/" + app['id'] %>';" title="Download '<%= app['name'] %>'">Download</button>
-                                <% end %>
-                            <% end %>
-                          </td>
-                          <td>
-                          </td>
-                        </tr>
                       </table>
                   </div>
                 </div>
@@ -107,13 +95,18 @@
 
         <div>
           <form method="post" action="/push" class="create_app_form">
-            <button type="button" onclick="window.location = '<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/spaces/#{current_space}/apps" %>';" class="close_button">Close</button>
+            <button type="button" onclick="window.location = '<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/spaces/#{current_space}/apps" %>';">Close</button>
 
               <% apps.each do |app_id, app| %>
                     <button type="submit" class="submit_buttons" id="<%= app_id %>_selected" style="float: right;">Push</button>
+                    <% if app['can_download'] != nil %>
+                        <% if app['can_download'] == true %>
+                            <button type="button" id="<%= app_id %>_down" class="download_buttons" onclick="window.location = '<%= "/download_app/" + app['id'] %>';" title="Download '<%= app['name'] %>'" style="float: right;">Download</button>
+                        <% end %>
+                    <% end %>
 
                     <input type="hidden" id="<%= app_id %>_selected_id" value="<%= app_id %>" >
-                    <input type="hidden" id="<%= app_id %>_selected_src" value="<%= app['app_src'] %>" >
+                    <input type="hidden" id="<%= app_id %>_selected_src" value="<%= app['app_src'].sub('template_manifest.yml', '') %>" >
                     <input type="hidden" id="<%= app_id %>_selected_memory" value="<%= app['vmc_manifest']['applications']['.']['mem'] %>" >
                     <input type="hidden" id="<%= app_id %>_selected_instances" value="<%= app['vmc_manifest']['applications']['.']['instances'] %>" >
                     <input type="hidden" name="app_space" value="<%= current_space %>" >
@@ -182,8 +175,10 @@
 
             $('.template_apps').css("display", "none");
             $('.submit_buttons').css("display", "none");
+            $('.download_buttons').css("display", "none");
             $('#' + obj.id + '_div').css("display", "block");
             $('#' + obj.id + '_selected').css("display", "block");
+            $('#' + obj.id + '_down').css("display", "block");
             $('#' + obj.id).addClass('selected');
         }
     }

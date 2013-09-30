@@ -75,6 +75,8 @@ a:<%= style %>
     background-color: <%= design['error']['background-color'] %>;
     padding: 5px;
     text-align: center;
+    text-overflow: ellipsis;
+    overflow: hidden;
 }
 .warning
 {
@@ -642,11 +644,13 @@ button.image.s<%= size %>.<%= image %>
 .tab_menu .tab_menu_start
 {
     width: 10px;
+    cursor: default;
 }
 
 .tab_menu .tab_menu_end
 {
     width: 100%;
+    cursor: default;
 }
 
 .tab_menu>div

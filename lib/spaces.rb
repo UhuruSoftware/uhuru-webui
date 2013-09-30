@@ -98,7 +98,7 @@ module Library
         app_service_instances = []
         app.services.each do |s|
           type = s.service_plan.service.label
-          app_service_instances << ServiceInstances::Service.new(s.name, type, s.guid)
+          app_service_instances << ServiceInstances::Service.new(s.name, type, s.guid, "free")
         end
 
         app_uris = []
@@ -119,7 +119,7 @@ module Library
 
       services.each do |service|
         type = service.service_plan.service.label
-        services_list << ServiceInstances::Service.new(service.name, type, service.guid)
+        services_list << ServiceInstances::Service.new(service.name, type, service.guid, "free")
       end
 
       services_list

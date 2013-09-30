@@ -55,11 +55,12 @@ class ServiceInstances
   end
 
   class Service
-    attr_reader :name, :type, :guid
+    attr_reader :name, :type, :guid, :plan
 
-    def initialize(name, type, guid)
+    def initialize(name, type, guid, plan)
       @name = name
       @type = type
+      @plan = plan
       @guid = guid
     end
   end

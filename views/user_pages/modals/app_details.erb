@@ -63,7 +63,7 @@
             <tr>
               <td class="name"><%= service.name %></td>
               <td><%= service.type %></td>
-              <td>free(hardcoded)</td>
+              <td><%= service.plan %></td>
               <td class="action">
                 <button type="button" class="image s24px trash unbind_service_button" title="Delete '<%= service.name %>'" id="<%= service.name %>"></button>
               </td>
@@ -73,21 +73,17 @@
         <tr>
           <td>
             <input type="hidden" id="app_name" value="<%= app.name %>" />
-            <select name="serviceName" id="service_name" class="small_input">
+            <select name="serviceName" id="service_name" class="small_input selected_service">
                 <% services_list.each do |service| %>
-                    <option value="<%= service.name %>" id="<%= service.name %>"> <%= service.name %> </option>
+                    <option value="<%= service.name %>" id="<%= app.name %>"> <%= service.name %> </option>
                 <% end %>
             </select>
           </td>
-          <td>
-              <% ServiceInstances.new(session[:token], $cf_target).read_service_types.each do |type| %>
-                  <label><%= type %></label>
-              <% end %>
+          <td id="refresh_service_type">
+              <label><%= services_list[0].type %></label>
           </td>
-          <td>
-              <% ServiceInstances.new(session[:token], $cf_target).read_service_plans.each do |plan| %>
-                  <label><%= plan.name %></label>
-              <% end %>
+          <td id="refresh_service_plan">
+              <label><%= services_list[0].plan %></label>
           </td>
           <td class="action">
             <button type="button" class="image s24px plus bind_service_button" title="<%= app.name %>"></button>
@@ -145,7 +141,7 @@
       <input type="hidden" name="current_tab" value="<%= current_tab %>" />
 
       <div>
-        <button type="button" onclick="window.location = '<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/spaces/#{current_space}/apps" %>';" class="cancel_button">Cancel</button>
+        <button type="button" onclick="window.location = '<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/spaces/#{current_space}/apps" %>';">Cancel</button>
         <button type="submit" class="update_button">Update</button>
       </div>
     </form>

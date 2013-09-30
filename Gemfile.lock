@@ -94,9 +94,6 @@ GEM
     hashie (2.0.5)
     http_parser.rb (0.5.3)
     http_parser.rb (0.5.3-x86-mingw32)
-    httparty (0.11.0)
-      multi_json (~> 1.0)
-      multi_xml (>= 0.5.2)
     httpclient (2.3.4.1)
     i18n (0.6.5)
     interact (0.5.2)
@@ -117,6 +114,7 @@ GEM
       json_pure (>= 1.7.3)
       thin (>= 1.4.1)
     pg (0.16.0)
+    pg (0.16.0-x86-mingw32)
     posix-spawn (0.3.6)
     rack (1.5.2)
     rack-accept (0.4.5)
@@ -145,6 +143,9 @@ GEM
       fluent-logger
       grape
       yajl-ruby (~> 1.0)
+    stripe (1.8.7)
+      multi_json (>= 1.0.4, < 2)
+      rest-client (~> 1.4)
     thin (1.5.1)
       daemons (>= 1.0.9)
       eventmachine (>= 0.12.6)
@@ -175,7 +176,6 @@ DEPENDENCIES
   color
   encryptor
   eventmachine (>= 1.0.0)
-  httparty
   pg
   rack-recaptcha
   rake (~> 10.0.3)
@@ -184,5 +184,6 @@ DEPENDENCIES
   sinatra-session
   sqlite3
   steno
+  stripe
   thin (~> 1.5.0)
   vcap_common (~> 2.0.8)!

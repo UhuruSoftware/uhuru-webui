@@ -57,8 +57,6 @@ module Uhuru::Webui
         end
 
         app.post '/createService' do
-          #plan = "ff33164f-7d84-4392-b467-ed6c3eac0463" # wardenized: 3ae1cc4f-0c55-4d32-8e75-2cc1ec5ac011   ||  free: ff33164f-7d84-4392-b467-ed6c3eac0463
-
           if params[:serviceName].size >= 4
             create = ServiceInstances.new(session[:token], $cf_target).create_service_instance(params[:serviceName], params[:current_space], params[:service_plan], params[:service_type])
           else

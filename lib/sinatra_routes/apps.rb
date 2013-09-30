@@ -121,6 +121,15 @@ module Uhuru::Webui
           send_file apps[app_id]['logo']
         end
 
+        app.post '/get_service_data' do
+          space = Library::Spaces.new(session[:token], $cf_target)
+          space.set_current_space(params[:current_space])
+          services = space.read_service_instances(params[:current_space])
+          service = services.find { |s| s.name.to_s == params[:service_name].to_s }
+
+          "{ \"type\": \"#{service.type}\", \"plan\": \"#{service.plan}\" } "
+        end
+
         app.get '/download_app/:app_id' do
           collection = TemplateApps.new
           apps = collection.read_collections
@@ -161,8 +170,6 @@ module Uhuru::Webui
           end
         end
 
-
-
         app.post '/deleteApp' do
           delete = Applications.new(session[:token], $cf_target).delete(params[:appGuid])
 
@@ -202,9 +209,6 @@ module Uhuru::Webui
             redirect ORGANIZATIONS + "/#{params[:current_organization]}/spaces/#{params[:current_space]}/#{params[:current_tab]}/#{params[:appName]}"
           end
         end
-
-
-
 
         app.post '/bindServices' do
           bind = Applications.new(session[:token], $cf_target).bind_app_services(params[:appName], params[:serviceName])

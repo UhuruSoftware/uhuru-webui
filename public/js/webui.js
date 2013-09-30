@@ -199,9 +199,25 @@ $('.subtract_memory').click(function(){
 });
 
 
+$('.selected_service').change(function(){
+    $.ajax({
+        url: "/get_service_data",
+        type: 'POST',
+        cache: false,
+        data: { service_name: $(this).children(":selected").val(), current_organization: $('#current_organization').val(), current_space: $('#current_space').val(), current_tab: $('#current_tab').val() }
+    })
+
+    .done(function( data ) {
+            var values = jQuery.parseJSON( data );
+            $('#refresh_service_type').html(values.type);
+            $('#refresh_service_plan').html(values.plan);
+    }   );
+});
+
 $('.update_button').hover(function(){
     var memory = $('#app_memory_setup').val();
     var instances = $('.instances_count').val();
     $('.send_app_memory').val(memory);
     $('.send_app_instances').val(instances);
 });
+
