@@ -16,76 +16,78 @@
             <% end %>
           </ul>
 
-          <!-- LOOP AND CREATE THE CONTENT OF EACH COLLECTION AND APP -->
-          <% apps.each do |app_id, app| %>
-              <div class="template_apps hide" id="<%= app_id %>_div">
+          <div class="app_container">
+              <!-- LOOP AND CREATE THE CONTENT OF EACH COLLECTION AND APP -->
+              <% apps.each do |app_id, app| %>
+                  <div class="template_apps hide" id="<%= app_id %>_div">
 
-                <!-- INSERT APP LOGO, NAME, DESCRIPTION AND SERVICE ICONS -->
-                <% if File.exists? app['logo'] %>
-                    <image src ="/get_logo/<%= app_id %>" class="template_app_logo" />
-                <% end %>
+                    <!-- INSERT APP LOGO, NAME, DESCRIPTION AND SERVICE ICONS -->
+                    <% if File.exists? app['logo'] %>
+                        <image src ="/get_logo/<%= app_id %>" class="template_app_logo" />
+                    <% end %>
 
-                <span class="template_app_name">
-                  <%= app['name'] %>
-                  <span class="query_link" onclick="redirectTo('<%= app_id %>');"></span>
-                </span>
-                <br /><br />
+                    <span class="template_app_name">
+                      <%= app['name'] %>
+                      <span class="query_link" onclick="redirectTo('<%= app_id %>');"></span>
+                    </span>
+                    <br /><br />
+                    <p class="template_app_description">
+                      <%= app['description'][0..500] %>
+                    </p>
 
-                <% app['service_type'].each do |service_name| %>
-                    <img src="/images/tmp_apps_icons/<%= service_name %>.png" class="small_app_icons" />
-                <% end %>
-                <img src="/images/tmp_apps_icons/<%= app['vmc_manifest']['applications']['.']['framework']['name'] %>.png" class="small_app_icons" />
-                <br /><br />
-                <p class="template_app_description">
-                  <%= app['description'][0..500] %>
-                </p>
-
-                <br />
-
-                <div>
-                  <!-- INSERT TAGS -->
-                  <div class="tags_div">
-                    <span class="tag_span">Tags:</span>
-                      <span class="tags">
-                        <% if app['tags'] != nil %>
-                            <%= app['tags'].join(',&nbsp;') %>
-                        <% else %>
-                            none
-                        <% end %>
-                      </span>
                     <br />
-                    <span class="publisher_span">Publisher:</span>
-                      <span class="tags">
-                        <% if app['collection']['name'] != nil %>
-                            <%= app['collection']['name'] %>
-                        <% end %>
-                      </span>
-                  </div>
 
-                  <!-- INSERT BUTTONS DOWNLOAD IF NECESSARY AND PUSH -->
-                  <div class="table_div">
-                      <table>
-                        <tr>
-                          <td><label>app name</label></td>
-                          <td><input type="text" id="<%= app_id %>_selected_name" /></td>
-                        </tr>
-                        <tr>
-                          <td><label for="app_url">app URL</label></td>
-                          <td>
-                            <select id="<%= app_id %>_selected_domain">
-                              <% domains_list.each do |domain| %>
-                                  <% if domain.owning_org_name == organization_name || domain.owning_org_name == 'Shared' %>
-                                    <option value="<%= domain.name %>"><%= domain.name %></option>
+                    <div>
+                      <!-- INSERT TAGS -->
+                      <div class="tags_div">
+                        <img src="/images/tmp_apps_icons/<%= app['vmc_manifest']['applications']['.']['framework']['name'] %>.png" class="small_app_icons" />
+                        <% app['service_type'].each do |service_name| %>
+                            <img src="/images/tmp_apps_icons/<%= service_name %>.png" class="small_app_icons" />
+                        <% end %>
+                        <br /><br />
+
+                        <span class="tag_span">Tags:</span>
+                          <span class="tags">
+                            <% if app['tags'] != nil %>
+                                <%= app['tags'].join(',&nbsp;') %>
+                            <% else %>
+                                none
+                            <% end %>
+                          </span>
+                        <br />
+                        <span class="publisher_span">Publisher:</span>
+                          <span class="tags">
+                            <% if app['collection']['name'] != nil %>
+                                <%= app['collection']['name'] %>
+                            <% end %>
+                          </span>
+                      </div>
+
+                      <!-- INSERT BUTTONS DOWNLOAD IF NECESSARY AND PUSH -->
+                      <div class="table_div">
+                          <table>
+                            <tr>
+                              <td><label>app name</label></td>
+                              <td><input type="text" id="<%= app_id %>_selected_name" /></td>
+                            </tr>
+                            <tr>
+                              <td><label for="app_url">app URL</label></td>
+                              <td>
+                                <select id="<%= app_id %>_selected_domain">
+                                  <% domains_list.each do |domain| %>
+                                      <% if domain.owning_org_name == organization_name || domain.owning_org_name == 'Shared' %>
+                                        <option value="<%= domain.name %>"><%= domain.name %></option>
+                                      <% end %>
                                   <% end %>
-                              <% end %>
-                            </select>
-                          </td>
-                        </tr>
-                      </table>
+                                </select>
+                              </td>
+                            </tr>
+                          </table>
+                      </div>
+                    </div>
                   </div>
-                </div>
-              </div>
-          <% end %>
+              <% end %>
+          </div>
       </div>
 
       <div class="modal_footer">

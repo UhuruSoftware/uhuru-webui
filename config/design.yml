@@ -378,8 +378,13 @@ controls:
 
 app_push:
   list:
-    background-color: 'transparent'
-    border-color: '#ffffff'
+    margin_color: '#ffffff'
+    li:
+      background-color: 'transparent'
+      border-color: 'transparent'
+    selected_li:
+      background-color: 'transparent'
+      border-color: '#ffffff'
   tags:
     tag_color: '#028e98'
     text_color: '#ffffff'
