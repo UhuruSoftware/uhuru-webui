@@ -113,7 +113,7 @@
           </div>
 
           <% if params[:app_name] == app.name %>
-              <%= erb(:'user_pages/modals/app_details', :layout => false, :locals => { :current_organization => current_organization, :current_space => current_space, :organization_name => organization_name, :collections => collections, :current_tab => current_tab, :app => app, :services_list => services_list, :error_message => error_message }) %>
+              <%= erb(:'user_pages/modals/app_details', :layout => false, :locals => { :current_organization => current_organization, :current_space => current_space, :organization_name => organization_name, :collections => collections, :current_tab => current_tab, :app => app, :services_list => services_list, :domains_list => domains_list, :error_message => error_message }) %>
           <% end %>
         </div>
 

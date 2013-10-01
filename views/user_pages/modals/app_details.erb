@@ -112,7 +112,7 @@
           <td><input type="text" id="uri_host" class="small_input" /></td>
           <td>
             <select id="uri_domain_name" class="small_input" name="domain">
-              <% @domains_list.each do |domain| %>
+              <% domains_list.each do |domain| %>
                   <% if domain.owning_org_name == organization_name || domain.owning_org_name == 'Shared' %>
                       <option value="<%= domain.guid %>"><%= domain.name %></option>
                   <% end %>
