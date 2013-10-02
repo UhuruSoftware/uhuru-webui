@@ -83,13 +83,11 @@ module Uhuru::Webui
         end
 
         app.post SIGNUP do
-          if params[:stripeToken] != nil
-            session[:card_token] = params[:stripeToken]
+          if $config[:recaptcha][:use_recaptcha] == true
+            unless recaptcha_valid?
+              redirect SIGNUP + "?username=#{params[:email]}&first_name=#{params[:first_name]}&last_name=#{params[:last_name]}&message=Please type the correct code"
+            end
           end
-
-          #unless recaptcha_valid?
-          #  redirect SIGNUP + "?username=#{params[:email]}&first_name=#{params[:first_name]}&last_name=#{params[:last_name]}&message=Please type the correct code"
-          #end
 
           key = $config[:webui][:activation_link_secret]
 
@@ -117,14 +115,15 @@ module Uhuru::Webui
           user = user_sign_up.signup(params[:email], $config[:webui][:activation_link_secret], params[:last_name], params[:first_name])
 
           unless defined?(user.message)
-            customer = StripeWrapper.create_customer(params[:email], session[:card_token])
+            token = params[:stripeToken]
+            customer = StripeWrapper.create_customer(params[:email], token)
             if customer != nil
-              StripeWrapper.add_billing_binding(user.guid, customer.id, customer.default_card)
+              StripeWrapper.add_billing_binding(user.guid, customer.id, customer.cards.data[0].id)
             end
-            session[:card_token] = nil
 
-            link = "http://#{request.env['HTTP_HOST'].to_s}/activate/#{URI.encode(Base32.encode(pass))}/#{URI.encode(Base32.encode(user.guid))}"
-            Email::send_email(params[:email], 'Uhuru account confirmation', erb(:'guest_pages/email', {:locals =>{:link => link}}))
+            link = "http://#{request.env['HTTP_HOST'].to_s}/activate/#{URI.encode(Base32.encode(pass))}/#{URI.encode(Base32.encode(user.guid))}/#{params[:email]}"
+            email_body = $config[:email][:registration_email].gsub('#ACTIVATION_LINK#', link)
+            Email::send_email(params[:email], 'Uhuru account confirmation', email_body)
 
             session[:token] = user.token
             session[:fname] = user.first_name
@@ -136,7 +135,7 @@ module Uhuru::Webui
 
             redirect PLEASE_CONFIRM
           else
-            redirect SIGNUP + "?error=#{user.message}&username=#{params[:email]}&first_name=#{params[:first_name]}&last_name=#{params[:last_name]}"
+            redirect SIGNUP + "?message=#{user.message}&username=#{params[:email]}&first_name=#{params[:first_name]}&last_name=#{params[:last_name]}"
           end
         end
 
@@ -167,6 +166,9 @@ module Uhuru::Webui
 
           change_password = UsersSetup.new($config)
           change_password.change_password(user_guid_b32, password, $config[:webui][:signup_user_password])
+
+          email_body = $config[:email][:welcome_email]
+          Email::send_email(params[:email], 'Uhuru account confirmation', email_body)
 
           redirect ACTIVE
         end

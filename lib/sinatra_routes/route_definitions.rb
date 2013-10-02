@@ -8,7 +8,7 @@ module Uhuru::Webui
     LOGIN                     = "#{INDEX}login"
     SIGNUP                    = "#{INDEX}signup"
     PLEASE_CONFIRM            = "#{INDEX}confirm"
-    ACTIVATE_ACCOUNT          = "#{INDEX}activate/:password/:guid"
+    ACTIVATE_ACCOUNT          = "#{INDEX}activate/:password/:guid/:email"
     ACTIVE                    = "#{INDEX}active"
     LOGOUT                    = "#{INDEX}logout"
 
