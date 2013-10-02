@@ -3,4 +3,12 @@ bindings:
 - cc_user_guid: e18dfe83-7f02-43f7-8b34-082c90d42965
   stripe_customer_id: cus_2eIllDDKwKM5wT
   stripe_card_id: card_102eIl2pgSsmmqMo2fiowvT2
-  org_guid:
+  org_guid: 
+- cc_user_guid: ff421edb-e55e-4388-9a1b-8716aca1ad1d
+  stripe_customer_id: cus_2g6xmUAioAi1Ma
+  stripe_card_id: card_102g6w2pgSsmmqMoR1wXryDL
+  org_guid: 
+- cc_user_guid: ba961fe8-90fd-496e-8152-46bd6951d5e9
+  stripe_customer_id: cus_2g8CEIxtU6Ej15
+  stripe_card_id: card_102g8C2pgSsmmqMoOaiqXEQv
+  org_guid: 

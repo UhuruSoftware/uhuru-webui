@@ -14,13 +14,12 @@
       <% unless error_message.nil? || error_message.empty? %>
           <div class="error"><%= error_message %></div>
       <% end %>
-
     </div>
 
     <div class="modal_footer">
 
         <div>
-            <button type="button" onclick="hide_modal($('#modal_login'), function() { window.location = '<%= Uhuru::Webui::SinatraRoutes::INDEX %>';})">Cancel</button>
+            <button type="button" class="cancel_button" onclick="window.location = '<%= Uhuru::Webui::SinatraRoutes::INDEX %>';">Cancel</button>
             <button type="submit">Login</button>
         </div>
     </div>
