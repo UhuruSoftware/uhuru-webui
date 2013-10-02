@@ -1,25 +1,117 @@
-
 <div class="modal-background"></div>
 
-
 <div class="modal">
+
+  <script type="text/javascript" src="https://js.stripe.com/v2/stripe-debug.js"></script>
+  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+
+  <script type="text/javascript">
+      // This identifies your website in the createToken call below
+      Stripe.setPublishableKey('<%= publishable_key %>');
+
+      var stripeResponseHandler = function(status, response) {
+          var $form = $('#payment-form');
+
+          if (response.error) {
+              // Show the errors on the form
+              $form.find('.payment-errors').text(response.error.message);
+              $form.find('.payment-errors').show();
+              $form.find('button').prop('disabled', false);
+          } else {
+              // token contains id, last4, and card type
+              var token = response.id;
+              // Insert the token into the form so it gets submitted to the server
+              $form.append($('<input type="hidden" name="stripeToken" />').val(token));
+              // and re-submit
+              $form.get(0).submit();
+          }
+      };
+      jQuery(function($) {
+          $('#payment-form').submit(function(e) {
+              var $form = $(this);
+
+              if ($("#org_name").val().length < 4)
+              {
+                  $form.find('.payment-errors').text("The name is too short (min. 4 characters)");
+                  $form.find('.payment-errors').show();
+              }
+              else
+              {
+                  if ($("#name").val() != '' && $("#address_line1").val() != '' && $("#address_city").val() != '' &&
+                          $("#address_state").val() != '' && $("#address_zip").val() != '' && $("#address_country").val() != '')
+                  {
+                      $form.find('.payment-errors').hide();
+                      // Disable the submit button to prevent repeated clicks
+                      $form.find('button').prop('disabled', true);
+
+                      Stripe.createToken($form, stripeResponseHandler);
+                  }
+                  else
+                  {
+                      $form.find('.payment-errors').text("Please complete all fields");
+                      $form.find('.payment-errors').show();
+                  }
+              }
+
+              // Prevent the form from submitting with the default action
+              return false;
+          });
+      });
+
+  </script>
+
   <div class="modal_header">
     <span>Create organization</span>
   </div>
 
-  <form action="/createOrganization" method="post" autocomplete="off">
+  <form action="/createOrganization" method="post" id="payment-form" >
     <div class="modal_content">
-      <p>
-        <label for="org_name">organization name</label>
-        <input type="text" id="org_name" name="orgName" class="modal_input_box" autofocus />
-      </p>
-    </div>
+      <div>Organization Name</div>
+      <input type="text" id="org_name" name="orgName" class="modal_input_box" autofocus />
+      <br />
 
-    <div class="modal_footer">
+      <div>Credit card number</div>
+      <input type="text" size="20" data-stripe="number" />
+      <br />
+
+      <div>Card security code</div>
+      <input type="text" size="4" data-stripe="cvc" />
+      <br />
+
+      <div>Card expiration date</div>
+      <input type="text" size="2" data-stripe="exp-month"/>
+      <input type="text" size="4" data-stripe="exp-year"/>
+
+      <div>Cardholder name</div>
+      <input id="name" type="text" size="20" data-stripe="name" />
+      <br />
+
+      <div>Street</div>
+      <input id="address_line1" type="text" size="20" data-stripe="address_line1" />
+      <br />
+
+      <div>City</div>
+      <input id="address_city" type="text" size="20" data-stripe="address_city" />
+      <br />
+
+      <div>State/Province</div>
+      <input id="address_state" type="text" size="20" data-stripe="address_state" />
+      <br />
+
+      <div>Zip/Postal</div>
+      <input id="address_zip" type="text" size="20" data-stripe="address_zip" />
+      <br />
+
+      <div>Country</div>
+      <input id="address_country" type="text" size="20" data-stripe="address_country" />
+      <br />
+
       <% unless error_message.nil? || error_message.empty? %>
           <div class="error"> <%= error_message %> </div>
       <% end %>
-
+      <div class="payment-errors error hide"></div>
+    </div>
+    <div class="modal_footer">
       <div>
         <button type="button" onclick="window.location = '<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS %>';">Cancel</button>
         <button type="submit">Create</button>

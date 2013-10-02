@@ -1,5 +1,4 @@
 require 'sinatra/base'
-require 'stripe_wrapper'
 
 module Uhuru::Webui
   module SinatraRoutes
@@ -52,8 +51,7 @@ module Uhuru::Webui
                       :error_username => error_username,
                       :error_first_name => error_first_name,
                       :error_last_name => error_last_name,
-                      :include_erb => :'guest_pages/signup',
-                      :publishable_key => $config[:stripe][:publishable_key]
+                      :include_erb => :'guest_pages/signup'
                   }
               }
         end
@@ -115,12 +113,6 @@ module Uhuru::Webui
           user = user_sign_up.signup(params[:email], $config[:webui][:activation_link_secret], params[:last_name], params[:first_name])
 
           unless defined?(user.message)
-            token = params[:stripeToken]
-            customer = StripeWrapper.create_customer(params[:email], token)
-            if customer != nil
-              StripeWrapper.add_billing_binding(user.guid, customer.id, customer.cards.data[0].id)
-            end
-
             link = "http://#{request.env['HTTP_HOST'].to_s}/activate/#{URI.encode(Base32.encode(pass))}/#{URI.encode(Base32.encode(user.guid))}/#{params[:email]}"
             email_body = $config[:email][:registration_email].gsub('#ACTIVATION_LINK#', link)
             Email::send_email(params[:email], 'Uhuru account confirmation', email_body)

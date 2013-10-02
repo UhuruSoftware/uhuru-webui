@@ -1,4 +1,5 @@
 require 'organizations'
+require 'stripe_wrapper'
 
 module Uhuru::Webui
   module SinatraRoutes
@@ -39,7 +40,8 @@ module Uhuru::Webui
                       :organizations_list => organizations_list,
                       :organizations_count => organizations_list.count,
                       :error_message => error_message,
-                      :include_erb => :'user_pages/modals/organizations_create'
+                      :include_erb => :'user_pages/modals/organizations_create',
+                      :publishable_key => $config[:stripe][:publishable_key]
                   }
               }
         end
@@ -54,6 +56,13 @@ module Uhuru::Webui
           if defined?(create.message)
             redirect ORGANIZATIONS_CREATE + "?error=#{create.description}"
           else
+            if params[:stripeToken] != nil
+              puts session[:username]
+              customer = StripeWrapper.create_customer(session[:username], params[:stripeToken])
+              if customer != nil
+                StripeWrapper.add_billing_binding(customer.id, create)
+              end
+            end
             redirect ORGANIZATIONS
           end
         end

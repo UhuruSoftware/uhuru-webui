@@ -15,9 +15,9 @@ class StripeWrapper
   @billing_bindings_file = File.expand_path("../../billing_cache/billing_bindings.yml", __FILE__)
   @billing_bindings = YAML.load_file(@billing_bindings_file)
 
-  def self.add_billing_binding(cc_user_guid, stripe_customer_id, card_id)
+  def self.add_billing_binding(stripe_customer_id, org_gui)
     bindings = @billing_bindings["bindings"] || []
-    bindings << {"cc_user_guid" => cc_user_guid, "stripe_customer_id" => stripe_customer_id, "stripe_card_id" => card_id, "org_guid" => nil}
+    bindings << {"stripe_customer_id" => stripe_customer_id, "org_guid" => org_gui}
     @billing_bindings["bindings"] = bindings
     File.write(@billing_bindings_file, @billing_bindings.to_yaml)
   end
