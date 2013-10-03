@@ -17,9 +17,8 @@ class Applications < Uhuru::Webui::ClassWithFeedback
   end
 
   # parameters with default arguments (= nil) may be
-  def create(org_guid, space_guid, name, instances, memory, domain_name, path, plan, app_services)
-
-    info("Using space app '#{space_guid}'.")
+  def create!(org_guid, space_guid, name, instances, memory, domain_name, path, plan, app_services)
+    info_ln("Pushing app '#{name}' ...")
 
     space = @client.space(space_guid)
 
@@ -29,28 +28,42 @@ class Applications < Uhuru::Webui::ClassWithFeedback
     new_app.total_instances = instances
     new_app.memory = memory
 
-    info("Creating app '#{name}' with #{memory}MB memory and #{instances} instances.")
+    info("Creating app '#{name}' with #{memory}MB memory and #{instances} instances...")
 
     if new_app.create!
-      info("Uploading bits ...")
+      ok_ln("OK")
+
+      info("Uploading bits (#{ File.size(path) / (1024 * 1024) }MB)...")
+
       new_app.upload path
+
+      ok_ln("OK")
+
+      info_ln("Setting up services ...")
 
       unless !plan
         app_services.each do |service|
+
+          info("  Creating service '#{service[:name]}'.")
+
           begin
             service_db_name = ServiceInstances.new(@client.base.token, @client.target).create_service_instance(service[:name], space_guid, plan, service[:type])
+            ok_ln("Done")
           rescue
-            error = AppError.new('service error', 'Could not create service for this app, The app was created, try to create the service manually.')
-            return error
+            error_ln("Failed")
+            warning_ln("    Could not create service '#{service[:name]}' for this app. The app was created, try to create the service manually.")
           end
 
           app = @client.apps.find { |a| a.name == name }
 
+          info("  Binding service '#{service[:name]}'.")
+
           begin
             app.bind(service_db_name)
+            ok_ln("Done")
           rescue
-            error = AppError.new('bind error', 'Could not bind the app to the service(s). App created successfully try binding the service(s) manually.')
-            return error
+            error_ln("Failed")
+            warning_ln("    Could not bind the app to service '#{service[:name]}'. The app was created successfully, try binding the service manually.")
           end
         end
       end
@@ -59,25 +72,27 @@ class Applications < Uhuru::Webui::ClassWithFeedback
         d.name == domain_name
       }
 
+
       begin
+        info("Setting up application route '#{name}.#{domain_name}'...")
         Library::Routes.new(@client.base.token, @client.target).create(name, space_guid, domain.guid, 'test_host_name')
+        ok_ln("Done")
       rescue
-        error = AppError.new('route error', 'Could not map a route to this app. App created successfully try to map it manually.')
-        return error
+        error_ln("Failed")
+        warning_ln("  Could not map route '#{name}.#{domain_name}'. The app was created successfully, try to map the route manually.")
       end
       begin
+        info("Starting the application...")
         new_app.start!
+        ok_ln("OK")
       rescue
-        error = AppError.new('startapp error', 'Could not start the app, try starting it manually.')
-        return error
+        error_ln("Failed")
+        warning_ln('  Could not start the app, try starting it manually.')
       end
     end
-
+    ok_ln("Complete!")
   rescue Exception => e
-    error(e.message)
-    return e
-  ensure
-    close
+    error_ln(e.message)
   end
 
   def start_app(app_name)

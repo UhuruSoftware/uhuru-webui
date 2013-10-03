@@ -3,21 +3,24 @@ require "config"
 require "webui"
 require "thin"
 require "optparse"
+require "class_with_feedback"
 
 module Uhuru::Webui
   class Runner
     def initialize(argv)
       @argv = argv
 
-      # default to production. this may be overriden during opts parsing
+      # default to production. this may be overridden during opts parsing
       ENV["RACK_ENV"] = "production"
-      # default config path. this may be overriden during opts parsing
+      # default config path. this may be overridden during opts parsing
       @config_file = File.expand_path("../../config/uhuru-webui.yml", __FILE__)
 
       parse_options!
 
       @config = Uhuru::Webui::Config.from_file(@config_file)
       @config[:bind_address] = VCAP.local_ip(@config[:local_route])
+
+      ClassWithFeedback.cleanup
 
       create_pidfile
       setup_logging

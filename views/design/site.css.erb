@@ -74,7 +74,6 @@ a:<%= style %>
     color: <%= design['error']['font-color'] %>;
     background-color: <%= design['error']['background-color'] %>;
     padding: 5px;
-    text-align: center;
     text-overflow: ellipsis;
     overflow: hidden;
 }
@@ -1097,4 +1096,35 @@ select.small_input
 .button_row
 {
     text-align: right;
+}
+
+
+/************************** FEEDBACK MESSAGES ****************************/
+.feedback
+{
+    margin: 1px;
+    background-color: transparent;
+    border: 0;
+    padding: 2px;
+    display: inline-block;
+}
+
+<% design['feedback'].each do |type, values| %>
+.feedback.<%= type %>
+{
+    color: <%= values['font-color'] %>;
+    border: 1px solid <%= values['border-color'] %>;
+    background-color: <%= values['background-color'] %>;
+}
+<% end %>
+
+.cloud_feedback
+{
+    height: 300px;
+    overflow-y: scroll;
+}
+
+.feedback_loading
+{
+    float: left;
 }

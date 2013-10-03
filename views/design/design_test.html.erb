@@ -23,15 +23,19 @@
 
 <%
    asd = Uhuru::Webui::ClassWithFeedback.new()
+   asd.start_feedback
 
    th = Thread.new() do
 
-     (1..10).each do |i|
+     (1..4).each do |i|
        asd.info("unu #{i}")
+       asd.ok_ln("OK")
+       asd.warning_ln("  doi #{i}")
+       asd.error("    trei #{i}")
        sleep 1
      end
 
-     asd.close()
+     asd.close_feedback
 
    end
 
@@ -39,11 +43,27 @@
 
 %>
 
-<div id="<%= asd.id %>" class="cloud_feedback">
 
+
+<div class="modal-background"> </div>
+
+<div class="modal cloud_feedback_modal">
+  <div class="modal_header">
+    Pushing your application ...
+  </div>
+
+  <div class="modal_content">
+    <div id="<%= asd.id %>" class="cloud_feedback">
+
+    </div>
+
+  </div>
+
+  <div class="modal_footer">
+    <img class="feedback_loading hide" src="/images/feedback_loading.gif"/>
+    <button type="button" >Close</button>
+  </div>
 </div>
-<img class="feedback_loading" src="/images/feedback_loading.gif"/>
-
 
 
 <div class="sections" id="organizations_page" style="width: 930px; margin: auto;" >

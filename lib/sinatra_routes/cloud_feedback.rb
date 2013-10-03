@@ -12,13 +12,18 @@ module Uhuru::Webui
 
           feedback_id = params[:id]
 
-          feedback = ClassWithFeedback.content(feedback_id)
+          action, feedback = ClassWithFeedback.content(feedback_id)
 
-          if feedback == [ :STOP ]
-            headers 'X-Webui-Feedback-Instructions' => 'stop'
-          else
+          if action == :continue
             headers 'X-Webui-Feedback-Instructions' => 'continue'
             feedback
+          else
+            headers 'X-Webui-Feedback-Instructions' => 'stop'
+            if action == :done
+              feedback
+            else
+              "Can't find log messages..."
+            end
           end
         end
       end

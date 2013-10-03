@@ -376,7 +376,7 @@ modal:
     error-message:
       width: 450
     cloud_feedback_modal:
-      width: 500
+      width: 650
 
 controls:
   text:
@@ -396,3 +396,21 @@ app_push:
   tags:
     tag_color: '#028e98'
     text_color: '#ffffff'
+
+feedback:
+  info:
+    font-color: '#ffffff'
+    border-color: 'transparent'
+    background-color: 'transparent'
+  error:
+    border-color: '#6B0000'
+    background-color: '#530000'
+    font-color: '#FFFFFF'
+  warning:
+    border-color: '#933C06'
+    background-color: '#421B03'
+    font-color: '#FFFFFF'
+  ok:
+    border-color: '#3C9306'
+    background-color: '#1B4203'
+    font-color: '#FFFFFF'

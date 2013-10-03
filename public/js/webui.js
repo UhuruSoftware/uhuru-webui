@@ -230,43 +230,68 @@ if (cloudFeedbackTimerId === undefined)
 {
     var cloudFeedbackTimerId = -1;
 
-    function getCloudFeedback(){
-
-        var request = $.ajax(
-            {
-                url: "/feedback/" + $(".cloud_feedback").attr('id'),
-                type: 'GET',
-                cache: false,
-                error: function(data)
-                {
-                    $(".cloud_feedback").html("there was an error");
-                    $(".feedback_loading").hide();
-                    clearInterval(cloudFeedbackTimerId);
-                },
-                success: function(response)
-                {
-                    var instructions = request.getResponseHeader('X-Webui-Feedback-Instructions');
-                    if (instructions == 'continue')
-                    {
-                        var newText = response;
-                        if (newText !== '')
-                        {
-
-                            $(".cloud_feedback").html(newText);
-                        }
-                    }
-                    else
-                    {
-                        $(".feedback_loading").hide();
-                        window.clearInterval(cloudFeedbackTimerId);
-                    }
-                }
-            });
-    }
 
     if (($('.cloud_feedback').length > 0))
     {
         $(".feedback_loading").show();
         cloudFeedbackTimerId = window.setInterval(getCloudFeedback,  1000);
+
+        var logDiv = document.getElementById($('.cloud_feedback').attr('id'));
+        var scrollToEnd = true;
+        var lastHeight = -1;
+
+        $('.cloud_feedback').onscroll = function () {
+            if (scrollToEnd && !(logDiv.scrollTop >= 0.95 * (logDiv.scrollHeight - logDiv.clientHeight))) {
+                scrollToEnd = false;
+            }
+            else {
+                if (logDiv.scrollTop >= 0.95 * (logDiv.scrollHeight - logDiv.clientHeight)) {
+                    scrollToEnd = true;
+                }
+            }
+        }
+
+        function getCloudFeedback(){
+
+            var request = $.ajax(
+                {
+                    url: "/feedback/" + $(".cloud_feedback").attr('id'),
+                    type: 'GET',
+                    cache: false,
+                    error: function(data)
+                    {
+                        $(".cloud_feedback").html("there was an error");
+                        $(".feedback_loading").hide();
+                        clearInterval(cloudFeedbackTimerId);
+                    },
+                    success: function(response)
+                    {
+                        var instructions = request.getResponseHeader('X-Webui-Feedback-Instructions');
+                        var newText = response;
+                        if (instructions == 'continue')
+                        {
+                            if (newText !== '')
+                            {
+                                $(".cloud_feedback").html(newText);
+                            }
+                        }
+                        else
+                        {
+                            if (newText !== '')
+                            {
+                                $(".cloud_feedback").html(newText);
+                            }
+                            $(".feedback_loading").hide();
+                            window.clearInterval(cloudFeedbackTimerId);
+                        }
+
+                        var currentHeight = logDiv.scrollHeight;
+                        if (lastHeight != currentHeight && scrollToEnd) {
+                            logDiv.scrollTop = currentHeight;
+                            lastHeight = logDiv.scrollTop;
+                        }
+                    }
+                });
+        }
     }
 }

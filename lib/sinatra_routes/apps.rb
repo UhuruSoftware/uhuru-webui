@@ -205,17 +205,14 @@ module Uhuru::Webui
           end
 
           apps_obj = Applications.new(session[:token], $cf_target)
+          apps_obj.start_feedback
+
           Thread.new() do
-            apps_obj.create(params[:app_organization], params[:app_space], name, instances.to_i, memory.to_i, url, src, plan, app_services)
+            apps_obj.create!(params[:app_organization], params[:app_space], name, instances.to_i, memory.to_i, url, src, plan, app_services)
+            apps_obj.close_feedback
           end
 
           redirect "#{ORGANIZATIONS}/#{params[:app_organization]}/spaces/#{params[:app_space]}/apps/create_app_feedback/#{apps_obj.id}"
-
-          #if defined?(push.message)
-          #  redirect ORGANIZATIONS + "/#{params[:app_organization]}/spaces/#{params[:app_space]}/apps/create_app/new" + "?error=#{push.description}"
-          #else
-          #  redirect ORGANIZATIONS + "/#{params[:app_organization]}/spaces/#{params[:app_space]}/apps/create_app/new"
-          #end
         end
 
         app.post '/deleteApp' do
