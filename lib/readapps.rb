@@ -11,7 +11,6 @@ class TemplateApps
 
       collection_manifest = YAML.load_file collection
 
-
       apps_search = File.expand_path("../*/template_manifest.yml", collection)
       all_apps = Dir.glob(apps_search)
 
@@ -26,15 +25,19 @@ class TemplateApps
         app_manifest['vmc_manifest_file'] = File.expand_path("../vmc_manifest.yml", app)
         app_manifest['vmc_manifest'] = YAML.load_file app_manifest['vmc_manifest_file']
         service_manifest = YAML.load_file app_manifest['vmc_manifest_file']
-        services = service_manifest['applications']['.']['services']
+        if service_manifest['applications'][0].include?('services')
+          services = service_manifest['applications'][0]['services']
 
-        services.each do |_, value|
-          value.each do |_, service_type|
-            service_types << service_type
+          services.each do |_, value|
+            value.each do |_, service_type|
+              service_types << service_type if _ == "label"
+            end
           end
-        end
 
-        app_manifest['service_type'] = service_types
+          app_manifest['service_type'] = service_types
+        else
+          app_manifest['service_type'] = []
+        end
 
         result[app_manifest['id']] = app_manifest
       end

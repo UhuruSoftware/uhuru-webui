@@ -1,0 +1,7 @@
+name: Bugzilla
+id: bugzilla
+tags: ['Bugtracker', 'Pearl', 'DBMS']
+description: Bugzilla is a Web-based general-purpose bug tracking system and testing tool for both free and open source software and proprietary projects and products. Licensed under the Mozilla Public License.
+uuid: 550e84ee-e29b-k1d4-a716-446655432703
+can_download: true
+buildpack: python

@@ -291,26 +291,16 @@
 
 <% if defined?(current_tab) && current_tab != nil && current_tab == "routes" %>
 
-      <% routes_list.each do |route| %>
+    <% routes_list.each do |route| %>
         <div class="square_tile">
-          <% route_app_name = nil %>
-
-          <% apps_list.each do |app| %>
-              <% app.uris.each do |uri| %>
-                  <% if uri.url == route.name %>
-                      <% route_app_name = app.name %>
-                  <% end %>
-              <% end %>
-          <% end %>
-
           <div class="square_tile route">
             <a href="http://<%= route.name %>" class="tile_action" title="<%= route.name %>"><%= route.name %></a>
 
             <span class="bottom_left">Route</span>
-            <button type="button" class="image s24px trash" id="<%= route.guid %>" title="<%= route_app_name %>" />
+            <button type="button" class="image s24px trash" id="<%= route.guid %>" title="<%= route.name %>" />
           </div>
         </div>
-      <% end %>
+    <% end %>
 
     <div class="modal delete_confirmation route hide">
       <div class="modal_header">

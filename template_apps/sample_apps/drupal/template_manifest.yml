@@ -1,6 +1,0 @@
-name: Drupal
-id: drupal
-tags: ['CMS', 'Large Project', 'Complex']
-description: Free and open source blogging tool and a content management system (CMS) based on PHP and MySQL
-uuid: 550e84ee-e29b-k1d4-a716-446655432702
-can_download: true

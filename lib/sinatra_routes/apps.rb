@@ -198,10 +198,10 @@ module Uhuru::Webui
 
           location = File.expand_path(params[:app_src] + 'vmc_manifest.yml', __FILE__)
           manifest = YAML.load_file location
-          service_list = manifest['applications']['.']['services'] || []
+          service_list = manifest['applications'][0]['services'] || []
           app_services = []
           service_list.each do |service|
-            app_services << { :name => service[0], :type => service[1]['type'] }
+            app_services << { :name => service[0], :type => service[1]['label'] }
           end
 
           apps_obj = Applications.new(session[:token], $cf_target)

@@ -1,0 +1,9 @@
+--- 
+applications: 
+- name: etherpadtest
+  memory: 256M
+  instances: 1 
+  host: etherpadtest
+  domain: apps.cloudmonit.net 
+  command: node app.js 
+  buildpack: https://github.com/cloudfoundry/heroku-buildpack-nodejs

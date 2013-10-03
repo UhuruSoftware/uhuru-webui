@@ -40,7 +40,7 @@
                     <div>
                       <!-- INSERT TAGS -->
                       <div class="tags_div">
-                        <img src="/images/tmp_apps_icons/<%= app['vmc_manifest']['applications']['.']['framework']['name'] %>.png" class="small_app_icons" />
+                        <img src="/images/tmp_apps_icons/<%= app['buildpack'] %>.png" class="small_app_icons" />
                         <% app['service_type'].each do |service_name| %>
                             <img src="/images/tmp_apps_icons/<%= service_name %>.png" class="small_app_icons" />
                         <% end %>
@@ -109,8 +109,8 @@
 
                     <input type="hidden" id="<%= app_id %>_selected_id" value="<%= app_id %>" >
                     <input type="hidden" id="<%= app_id %>_selected_src" value="<%= app['app_src'].sub('template_manifest.yml', '') %>" >
-                    <input type="hidden" id="<%= app_id %>_selected_memory" value="<%= app['vmc_manifest']['applications']['.']['mem'] %>" >
-                    <input type="hidden" id="<%= app_id %>_selected_instances" value="<%= app['vmc_manifest']['applications']['.']['instances'] %>" >
+                    <input type="hidden" id="<%= app_id %>_selected_memory" value="<%= app['vmc_manifest']['applications'][0]['memory'] %>" >
+                    <input type="hidden" id="<%= app_id %>_selected_instances" value="<%= app['vmc_manifest']['applications'][0]['instances'] %>" >
                     <input type="hidden" name="app_space" value="<%= current_space %>" >
                     <input type="hidden" name="app_organization" value="<%= current_organization %>" >
               <% end %>
