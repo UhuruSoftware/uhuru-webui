@@ -144,6 +144,57 @@ module Uhuru::Webui
           send_file(source.sub!'template_manifest.yml', params[:app_id] + '.zip')
         end
 
+        app.get APP_CREATE_FEEDBACK do
+          if session[:login_] == false || session[:login_] == nil
+            redirect INDEX
+          end
+
+          org = Library::Organizations.new(session[:token], $cf_target)
+          space = Library::Spaces.new(session[:token], $cf_target)
+          app = TemplateApps.new
+          user = UsersSetup.new($config)
+          route = Library::Routes.new(session[:token], $cf_target)
+          domain = Library::Domains.new(session[:token], $cf_target)
+          all_space_users = user.uaa_get_usernames
+
+          space.set_current_space(params[:space_guid])
+          apps_list = space.read_apps(params[:space_guid])
+          services_list = space.read_service_instances(params[:space_guid])
+          routes_list = route.read_routes(params[:space_guid])
+
+          owners_list = space.read_owners($config, params[:space_guid])
+          developers_list = space.read_developers($config, params[:space_guid])
+          auditors_list = space.read_auditors($config, params[:space_guid])
+          domains_list = domain.read_domains()
+
+          collections = app.read_collections
+          error_message = params[:error] if defined?(params[:error])
+
+          erb :'user_pages/space',
+              {
+                  :layout => :'layouts/user',
+                  :locals => {
+                      :organization_name => org.get_name(params[:org_guid]),
+                      :space_name => space.get_name(params[:space_guid]),
+                      :current_organization => params[:org_guid],
+                      :current_space => params[:space_guid],
+                      :current_tab => params[:tab],
+                      :apps => collections,
+                      :all_space_users => all_space_users,
+                      :owners_list => owners_list,
+                      :auditors_list => auditors_list,
+                      :developers_list => developers_list,
+                      :apps_list => apps_list,
+                      :services_list => services_list,
+                      :routes_list => routes_list,
+                      :domains_list => domains_list,
+                      :error_message => error_message,
+                      :feedback_id => params[:id],
+                      :include_erb => :'user_pages/modals/cloud_feedback'
+                  }
+              }
+        end
+
         app.post '/push' do
           name = params[:app_name]
           url = params[:app_url]
@@ -161,13 +212,17 @@ module Uhuru::Webui
           end
 
           apps_obj = Applications.new(session[:token], $cf_target)
-          push = apps_obj.create(params[:app_organization], params[:app_space], name, instances.to_i, memory.to_i, url, src, plan, app_services)
-
-          if defined?(push.message)
-            redirect ORGANIZATIONS + "/#{params[:app_organization]}/spaces/#{params[:app_space]}/apps/create_app/new" + "?error=#{push.description}"
-          else
-            redirect ORGANIZATIONS + "/#{params[:app_organization]}/spaces/#{params[:app_space]}/apps/create_app/new"
+          Thread.new() do
+            apps_obj.create(params[:app_organization], params[:app_space], name, instances.to_i, memory.to_i, url, src, plan, app_services)
           end
+
+          redirect "#{ORGANIZATIONS}/#{params[:app_organization]}/spaces/#{params[:app_space]}/apps/create_app_feedback/#{apps_obj.id}"
+
+          #if defined?(push.message)
+          #  redirect ORGANIZATIONS + "/#{params[:app_organization]}/spaces/#{params[:app_space]}/apps/create_app/new" + "?error=#{push.description}"
+          #else
+          #  redirect ORGANIZATIONS + "/#{params[:app_organization]}/spaces/#{params[:app_space]}/apps/create_app/new"
+          #end
         end
 
         app.post '/deleteApp' do

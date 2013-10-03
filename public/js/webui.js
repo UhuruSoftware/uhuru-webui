@@ -207,11 +207,11 @@ $('.selected_service').change(function(){
         data: { service_name: $(this).children(":selected").val(), current_organization: $('#current_organization').val(), current_space: $('#current_space').val(), current_tab: $('#current_tab').val() }
     })
 
-    .done(function( data ) {
+        .done(function( data ) {
             var values = jQuery.parseJSON( data );
             $('#refresh_service_type').html(values.type);
             $('#refresh_service_plan').html(values.plan);
-    }   );
+        }   );
 });
 
 $('.update_button').hover(function(){
@@ -221,3 +221,52 @@ $('.update_button').hover(function(){
     $('.send_app_instances').val(instances);
 });
 
+
+/*********************************************************************************************************/
+/*                                            CLOUD FEEDBACK                                             */
+/*********************************************************************************************************/
+
+if (cloudFeedbackTimerId === undefined)
+{
+    var cloudFeedbackTimerId = -1;
+
+    function getCloudFeedback(){
+
+        var request = $.ajax(
+            {
+                url: "/feedback/" + $(".cloud_feedback").attr('id'),
+                type: 'GET',
+                cache: false,
+                error: function(data)
+                {
+                    $(".cloud_feedback").html("there was an error");
+                    $(".feedback_loading").hide();
+                    clearInterval(cloudFeedbackTimerId);
+                },
+                success: function(response)
+                {
+                    var instructions = request.getResponseHeader('X-Webui-Feedback-Instructions');
+                    if (instructions == 'continue')
+                    {
+                        var newText = response;
+                        if (newText !== '')
+                        {
+
+                            $(".cloud_feedback").html(newText);
+                        }
+                    }
+                    else
+                    {
+                        $(".feedback_loading").hide();
+                        window.clearInterval(cloudFeedbackTimerId);
+                    }
+                }
+            });
+    }
+
+    if (($('.cloud_feedback').length > 0))
+    {
+        $(".feedback_loading").show();
+        cloudFeedbackTimerId = window.setInterval(getCloudFeedback,  1000);
+    }
+}

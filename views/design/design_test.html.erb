@@ -10,7 +10,7 @@
 
 
 <style>
-  ul{list-style: none; margin: 0; padding: 0;}
+    ul{list-style: none; margin: 0; padding: 0;}
     .mask { float:left; margin:0; padding: 0; width:100%; height:200px; overflow:hidden;  }
     ul.images { position:relative; top:0px;left:0px; height:2660px; }
     ul.images li { float:left; position:relative; top:0px;left:0px; }
@@ -20,6 +20,30 @@
     .prev {  }
     .next { margin-left: 30px; }
 </style>
+
+<%
+   asd = Uhuru::Webui::ClassWithFeedback.new()
+
+   th = Thread.new() do
+
+     (1..10).each do |i|
+       asd.info("unu #{i}")
+       sleep 1
+     end
+
+     asd.close()
+
+   end
+
+   th.run
+
+%>
+
+<div id="<%= asd.id %>" class="cloud_feedback">
+
+</div>
+<img class="feedback_loading" src="/images/feedback_loading.gif"/>
+
 
 
 <div class="sections" id="organizations_page" style="width: 930px; margin: auto;" >
@@ -32,33 +56,33 @@
 
 
 
-          <% [1, 2, 3, 4, 5, 6, 7, 8].each do |x| %>
-              <div class="tile org">
-                <div class="tile top">
-                  <a class="tile_action" href="#" title="Some">
-                    TestOrg <%= x %>
-                  </a>
+  <% [1, 2, 3, 4, 5, 6, 7, 8].each do |x| %>
+      <div class="tile org">
+        <div class="tile top">
+          <a class="tile_action" href="#" title="Some">
+            TestOrg <%= x %>
+          </a>
 
-                  <button type="button" id="<%= 22323 %>" class="image s24px trash" title="Delete 'thing'"></button>
-                </div>
+          <button type="button" id="<%= 22323 %>" class="image s24px trash" title="Delete 'thing'"></button>
+        </div>
 
-                <div class="tile bottom">
-                  <div class="tile left">
-                    <div class="tile_action">
-                      <%= 22 %>
-                    </div>
-                    <div class="tile_info">members</div>
-                  </div>
+        <div class="tile bottom">
+          <div class="tile left">
+            <div class="tile_action">
+              <%= 22 %>
+            </div>
+            <div class="tile_info">members</div>
+          </div>
 
-                  <div class="tile right">
-                    <div class="tile_action">
-                      $<%= 100 %>
-                    </div>
-                    <div class="tile_info">monthly</div>
-                  </div>
-                </div>
-              </div>
-          <% end %>
+          <div class="tile right">
+            <div class="tile_action">
+              $<%= 100 %>
+            </div>
+            <div class="tile_info">monthly</div>
+          </div>
+        </div>
+      </div>
+  <% end %>
 
 
   <ul class="triggers" style="margin: 0; padding: 0; list-style: none;">
@@ -84,22 +108,22 @@
 
 
 <script>
-  function testThis()
-  {
-      var request = $.ajax( {
-          url: "/bindServices",
-          type: 'POST',
-          cache: false,
+    function testThis()
+    {
+        var request = $.ajax( {
+                    url: "/bindServices",
+                    type: 'POST',
+                    cache: false,
 
-          data: {  appName: "chacha" ,
-          serviceName: "chacha",
-          current_organization: "chacha",
-          current_space: "chacha",
-          current_tab: "chacha"  }
-  }
-  );
+                    data: {  appName: "chacha" ,
+                        serviceName: "chacha",
+                        current_organization: "chacha",
+                        current_space: "chacha",
+                        current_tab: "chacha"  }
+                }
+        );
 
-  }
+    }
 </script>
 
 
@@ -139,6 +163,8 @@
 
 
 <script type="text/javascript" src="<%= request.base_url %>/js/jquery-1.5.js"></script>
+<script type="text/javascript" src="/js/webui.js"></script>
+
 <script type="text/javascript">
     var triggers = $('ul.triggers li');
     var images = $('ul.images li');

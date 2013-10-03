@@ -369,6 +369,8 @@ modal:
       width: 500
     error-message:
       width: 450
+    cloud_feedback_modal:
+      width: 500
 
 controls:
   text:

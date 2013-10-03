@@ -30,10 +30,14 @@ module Uhuru::Webui
     APP                       = "#{ORGANIZATIONS}/:org_guid/:spaces/:space_guid/:tab/:app_name"
 
     APP_CREATE                = "#{SPACE}/create_app/new"
+    APP_CREATE_FEEDBACK       = "#{SPACE}/create_app_feedback/:id"
     SERVICES_CREATE           = "#{SPACE}/create_service/new"
     SPACE_MEMBERS_ADD         = "#{SPACE}/add_user/new"
     ROUTES_CREATE             = "#{SPACE}/add_route/new"
     DOMAINS_MAP_SPACE         = "#{SPACE}/map_domain/new"
+
+
+    FEEDBACK                  = "/feedback/:id"
 
   end
 end

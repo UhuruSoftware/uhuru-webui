@@ -4,6 +4,7 @@ require 'dev_utils'
 require 'date'
 require 'profiler'
 require 'color/css'
+require 'class_with_feedback'
 require 'sinatra/session'
 require 'sinatra/base'
 require 'sinatra_routes/route_definitions'
@@ -16,6 +17,7 @@ require 'sinatra_routes/services'
 require 'sinatra_routes/users'
 require 'sinatra_routes/domains'
 require 'sinatra_routes/routes'
+require 'sinatra_routes/cloud_feedback'
 
 module Uhuru::Webui
   class Webui < Sinatra::Base
@@ -39,6 +41,7 @@ module Uhuru::Webui
     register Uhuru::Webui::SinatraRoutes::Users
     register Uhuru::Webui::SinatraRoutes::Domains
     register Uhuru::Webui::SinatraRoutes::Routes
+    register Uhuru::Webui::SinatraRoutes::CloudFeedback
 
     def initialize(config)
       $config = config

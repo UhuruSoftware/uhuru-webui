@@ -3,4 +3,8 @@ bindings:
 - cc_user_guid: e18dfe83-7f02-43f7-8b34-082c90d42965
   stripe_customer_id: cus_2eIllDDKwKM5wT
   stripe_card_id: card_102eIl2pgSsmmqMo2fiowvT2
-  org_guid:
+  org_guid: 
+- cc_user_guid: 33ee234f-2b4e-481b-aa06-c27c576c78b1
+  stripe_customer_id: cus_2fVkvEu8SKGE5h
+  stripe_card_id: card_102fVk2pgSsmmqMo79fXTEWM
+  org_guid: 

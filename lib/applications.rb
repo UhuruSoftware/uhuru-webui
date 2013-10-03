@@ -1,9 +1,11 @@
 require 'cfoundry'
 require 'config'
+require 'class_with_feedback'
 
-class Applications
+class Applications < Uhuru::Webui::ClassWithFeedback
 
   def initialize(token, target)
+    super()
     @client = CFoundry::V2::Client.new(target, token)
   end
 
@@ -17,6 +19,8 @@ class Applications
   # parameters with default arguments (= nil) may be
   def create(org_guid, space_guid, name, instances, memory, domain_name, path, plan, app_services)
 
+    info("Using space app '#{space_guid}'.")
+
     space = @client.space(space_guid)
 
     new_app = @client.app
@@ -25,7 +29,10 @@ class Applications
     new_app.total_instances = instances
     new_app.memory = memory
 
-    if (new_app.create!)
+    info("Creating app '#{name}' with #{memory}MB memory and #{instances} instances.")
+
+    if new_app.create!
+      info("Uploading bits ...")
       new_app.upload path
 
       unless !plan
@@ -67,7 +74,10 @@ class Applications
     end
 
   rescue Exception => e
+    error(e.message)
     return e
+  ensure
+    close
   end
 
   def start_app(app_name)
