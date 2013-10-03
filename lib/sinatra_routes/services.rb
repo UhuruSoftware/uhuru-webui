@@ -13,17 +13,14 @@ module Uhuru::Webui
           org = Library::Organizations.new(session[:token], $cf_target)
           space = Library::Spaces.new(session[:token], $cf_target)
           app = TemplateApps.new
-          user = UsersSetup.new($config)
           route = Library::Routes.new(session[:token], $cf_target)
           domain = Library::Domains.new(session[:token], $cf_target)
-          all_space_users = user.uaa_get_usernames
-
           space.set_current_space(params[:space_guid])
+
           apps_list = space.read_apps(params[:space_guid])
           services_list = space.read_service_instances(params[:space_guid])
           routes_list = route.read_routes(params[:space_guid])
           domains_list = domain.read_domains(params[:org_guid])
-
           owners_list = space.read_owners($config, params[:space_guid])
           developers_list = space.read_developers($config, params[:space_guid])
           auditors_list = space.read_auditors($config, params[:space_guid])
@@ -42,7 +39,6 @@ module Uhuru::Webui
                       :current_space => params[:space_guid],
                       :current_tab => params[:tab],
                       :collections => collections,
-                      :all_space_users => all_space_users,
                       :owners_list => owners_list,
                       :auditors_list => auditors_list,
                       :developers_list => developers_list,

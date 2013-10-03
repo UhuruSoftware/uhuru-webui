@@ -26,16 +26,6 @@ contact:
   company_link: "http://www.uhurusoftware.com"
   support_link: "http://uhurusoftware.zendesk.com"
 
-email:
-  from: "postmaster@uhurusoftware.mailgun.org"
-  from_alias: "Uhuru Cloud"
-  server: "smtp.mailgun.org"
-  port: 587
-  user: "postmaster@uhurusoftware.mailgun.org"
-  secret: "4q899o1avzu3"
-  auth_method: :login
-  enable_tls: true
-
 recaptcha:
   use_recaptcha: false
   recaptcha_public_key: "6LfuXN4SAAAAAAVoUDfpUzxftBrpecXQSzTuKcZk"
@@ -148,3 +138,35 @@ monitoring:
     nodejs: https://github.com/cloudfoundry/heroku-buildpack-nodejs
     php: https://github.com/heroku/heroku-buildpack-php
     ruby: https://github.com/cloudfoundry/heroku-buildpack-ruby
+
+email:
+  from: "postmaster@uhurusoftware.mailgun.org"
+  from_alias: "Uhuru Cloud"
+  server: "smtp.mailgun.org"
+  port: 587
+  user: "postmaster@uhurusoftware.mailgun.org"
+  secret: "4q899o1avzu3"
+  auth_method: :login
+  enable_tls: true
+  registration_email: "
+    <div>
+    <h1>Uhuru Software Confirmation</h1>
+    <p>Your account is ready to use. Please click the link bellow in order to continue and finish the signup process:</p>
+
+    <a href='#ACTIVATION_LINK#' style='text-decoration: none; display: block;'>
+      <div style='display: block; width: 200px; height: 200px; background-color: #603F3F; color: #ffffff; text-align: center; font-size: 24px;'>
+        Finish<br /> registration
+      </div>
+    </a>
+
+    <p>If you have not signup to uhuru cloud please ignore this email and the account will be removed automatically</p>
+    <h3>The Uhuru team</h3>
+    </div>
+  "
+  welcome_email: "
+    <div>
+      <h1>Welcome to Uhuru AppCloud</h1>
+      <p>Thank you for joining the Uhuru community!</p>
+      <h3>The Uhuru team</h3>
+    </div>
+  "

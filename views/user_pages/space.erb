@@ -47,37 +47,37 @@
 
   <div class="tab_menu_start">&nbsp;</div>
     <% if current_tab == "apps" %>
-        <div class="selected">Apps (<%= apps_list.count %>)</div>
+        <div class="selected">Apps</div>
     <% else %>
-        <div onclick="window.location = '<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/spaces/#{current_space}/apps" %>';">Apps (<%= apps_list.count %>)</div>
+        <div onclick="window.location = '<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/spaces/#{current_space}/apps" %>';">Apps</div>
     <% end %>
 
 
     <% if current_tab == "services" %>
-        <div class="selected">Services (<%= services_list.count %>)</div>
+        <div class="selected">Services</div>
     <% else %>
-        <div onclick="window.location = '<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/spaces/#{current_space}/services" %>';">Services (<%= services_list.count %>)</div>
+        <div onclick="window.location = '<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/spaces/#{current_space}/services" %>';">Services</div>
     <% end %>
 
 
     <% if current_tab == "members" %>
-        <div class="selected">Users (<%= owners_list.count + developers_list.count + auditors_list.count %>)</div>
+        <div class="selected">Users</div>
     <% else %>
-        <div onclick="window.location = '<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/spaces/#{current_space}/members" %>';">Users (<%= owners_list.count + developers_list.count + auditors_list.count %>)</div>
+        <div onclick="window.location = '<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/spaces/#{current_space}/members" %>';">Users</div>
     <% end %>
 
 
     <% if current_tab == "routes" %>
-        <div class="selected">Routes (<%= routes_list.count %>)</div>
+        <div class="selected">Routes</div>
     <% else %>
-        <div onclick="window.location = '<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/spaces/#{current_space}/routes" %>';">Routes (<%= routes_list.count %>)</div>
+        <div onclick="window.location = '<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/spaces/#{current_space}/routes" %>';">Routes</div>
     <% end %>
 
 
     <% if current_tab == "domains" %>
-        <div class="selected">Domains (<%= defined?(domains_list) ? domains_list.count { |d| d.owning_org_name == organization_name && d.owning_spaces.count { |s| s.name == space_name } != 0 } : '0' %>)</div>
+        <div class="selected">Domains</div>
     <% else %>
-        <div onclick="window.location = '<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/spaces/#{current_space}/domains" %>';">Domains (<%= defined?(domains_list) ? domains_list.count { |d| d.owning_org_name == organization_name && d.owning_spaces.count { |s| s.name == space_name } != 0 } : '...' %>)</div>
+        <div onclick="window.location = '<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/spaces/#{current_space}/domains" %>';">Domains</div>
     <% end %>
   <div class="tab_menu_end">&nbsp;</div>
 </div>
@@ -113,7 +113,7 @@
           </div>
 
           <% if params[:app_name] == app.name %>
-              <%= erb(:'user_pages/modals/app_details', :layout => false, :locals => { :current_organization => current_organization, :current_space => current_space, :organization_name => organization_name, :collections => collections, :current_tab => current_tab, :app => app, :services_list => services_list, :error_message => error_message }) %>
+              <%= erb(:'user_pages/modals/app_details', :layout => false, :locals => { :current_organization => current_organization, :current_space => current_space, :organization_name => organization_name, :collections => collections, :current_tab => current_tab, :app => app, :services_list => services_list, :domains_list => domains_list, :error_message => error_message }) %>
           <% end %>
         </div>
 

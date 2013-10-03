@@ -862,6 +862,16 @@ button.image.s<%= size %>.<%= image %>
 {
     padding: 20px 3px 20px 3px;
 }
+.app_container
+{
+    margin-top: -20px;
+    margin-bottom: -15px;
+    padding-top: 15px;
+    padding-bottom: 15px;
+
+    margin-left: 149px;
+    border-left: 1px solid <%= design['app_push']['list']['margin_color'] %>;
+}
 .app_push.list
 {
     display: inline-block;
@@ -874,12 +884,17 @@ button.image.s<%= size %>.<%= image %>
 }
 .app_push.list li
 {
-    background-color: <%= design['app_push']['list']['background-color'] %>;
-    border-bottom: 1px solid <%= design['app_push']['list']['border-color'] %>;
+    background-color: <%= design['app_push']['list']['li']['background-color'] %>;
+    border-bottom: 1px solid <%= design['app_push']['list']['li']['border-color'] %>;
     margin: 2px;
     padding: 3px 20px 3px 20px;
     cursor: pointer;
     text-align: center;
+}
+.app_push.list li.selected
+{
+    background-color: <%= design['app_push']['list']['selected_li']['background-color'] %>;
+    border-bottom: 1px solid <%= design['app_push']['list']['selected_li']['border-color'] %>;
 }
 
 .template_app_name
@@ -891,6 +906,7 @@ button.image.s<%= size %>.<%= image %>
     min-height: 60px;
     max-width: 80%;
     display: inline-block;
+    padding-bottom: 35px;
 }
 .template_app_logo
 {
@@ -913,14 +929,25 @@ button.image.s<%= size %>.<%= image %>
 {
     display: inline-block;
     position: relative;
-    margin: 0 0 0 170px;
-    min-width: 40%;
+    margin: 0 0 0 10px;
+    min-width: 50%;
 }
 .table_div
 {
     display: inline-block;
     position: relative;
-    min-width: 40%;
+    min-width: 45%;
+}
+.table_div input[type=text],
+.table_div select
+{
+    width: 100% !important;
+    height: 38px !important;
+
+    box-sizing:border-box;
+    -ms-box-sizing:border-box;
+    -moz-box-sizing:border-box;
+    -webkit-box-sizing:border-box;
 }
  /* place the table directly above the close button */
 .buttons_div table

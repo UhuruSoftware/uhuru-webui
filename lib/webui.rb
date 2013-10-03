@@ -83,8 +83,13 @@ module Uhuru::Webui
       }
     end
 
+
     get '/design' do
       erb :'design/design_test.html', {:layout => :'layouts/user'}
+    end
+
+    get '/email' do
+      erb :'guest_pages/email', :locals => { :link => 'http://www.google.com' }
     end
 
     get '/monitoring' do

@@ -39,21 +39,27 @@
   <div class="tab_menu">
     <div class="tab_menu_start">&nbsp;</div>
       <% if current_tab == "spaces" %>
-          <div class="selected">Spaces (<%= spaces_list.count %>)</div>
+          <div class="selected">Spaces</div>
       <% else %>
-          <div onclick="window.location = '<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/spaces" %>';">Spaces (<%= spaces_list.count %>)</div>
+          <div onclick="window.location = '<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/spaces" %>';">Spaces</div>
       <% end %>
 
       <% if current_tab == "members" %>
-          <div class="selected">Members (<%= owners_list.count + billings_list.count + auditors_list.count %>)</div>
+          <div class="selected">Members</div>
       <% else %>
-          <div onclick="window.location = '<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/members" %>';">Members (<%= owners_list.count + billings_list.count + auditors_list.count %>)</div>
+          <div onclick="window.location = '<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/members" %>';">Members</div>
       <% end %>
 
       <% if current_tab == "domains" %>
-          <div class="selected">Domains (<%= domains_list.count { |d| d.owning_org_name == organization_name || d.owning_org_name == 'Shared' } %>)</div>
+          <div class="selected">Domains</div>
       <% else %>
-          <div onclick="window.location = '<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/domains" %>';">Domains (<%= domains_list.count { |d| d.owning_org_name == organization_name || d.owning_org_name == 'Shared' } %>)</div>
+          <div onclick="window.location = '<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/domains" %>';">Domains</div>
+      <% end %>
+
+      <% if current_tab == "credit_cards" %>
+          <div class="selected">Credit Cards</div>
+      <% else %>
+          <div onclick="window.location = '<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/credit_cards" %>';">Credit Cards</div>
       <% end %>
     <div class="tab_menu_end">&nbsp;</div>
   </div>
@@ -238,6 +244,18 @@
       </div>
 
   <% end %>
+
+  <% if defined?(current_tab) && current_tab != nil && current_tab == "credit_cards" %>
+      <% if credit_card != nil %>
+        <div class="square_tile">
+          <div class="square_tile credit_card" title="<%= credit_card.name %>">
+            <span><%= credit_card.name %></span>
+            <span class="bottom_left">****-****-****-<%= credit_card.last4 %></span>
+
+          </div>
+        </div>
+      <% end %>
+<% end %>
 
 </div>
 

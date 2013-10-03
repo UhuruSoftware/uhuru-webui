@@ -69,50 +69,8 @@ class UsersSetup
 
       begin
         raise 'The username already exists' if defined?(admin_token.info['error']) || defined?(admin_token.info['error_description'])
-        users_obj = Library::Users.new(admin_token, @cf_target)
-        organizations_Obj = Library::Organizations.new(admin_token, @cf_target)
-        org_name = email + "'s organization"
-        org = organizations_Obj.get_organization_by_name(org_name)
       rescue Exception => e
         return e
-      end
-
-      unless users_obj.user_exists(user_id)
-        begin
-          orgs = organizations_Obj.read_orgs_by_user(user_id)
-
-          if orgs == nil && org == nil
-            # when user has no default org and no other org, create default org
-            org_guid = organizations_Obj.create(@config, org_name, user_id)
-          elsif orgs != nil
-            # this should check if for any of the orgs, the user is owner and billing, if not should create the default org
-            correct_roles = true
-
-            orgs.foreach do |org|
-              correct_roles = correct_roles && users_obj.check_user_org_roles(org.guid, user_id, ['owner', 'billing'])
-            end
-
-            if correct_roles == false
-              organizations_Obj.create(@config, org_name, user_id)
-            end
-
-          elsif org != nil
-            # when user has default org, but user and roles are not in db
-
-            users_obj.add_user_to_org_with_role(org.guid, user_id, ['owner', 'billing'])
-          end
-        rescue Exception => e
-          return e
-        end
-      else
-        begin
-          #this part checks if the default org has the right roles - when user is added to default org, but could not add roles
-          if org != nil
-            users_obj.add_user_to_org_with_role(org.guid, user_id, ['owner', 'billing'])
-          end
-        rescue Exception => e
-          return e
-        end
       end
 
       #the username password shoud be generated for each user for better security
