@@ -141,7 +141,7 @@
       <input type="hidden" name="current_tab" value="<%= current_tab %>" />
 
       <div>
-        <button type="button" onclick="window.location = '<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/spaces/#{current_space}/apps" %>';">Cancel</button>
+        <button type="button" onclick="window.location.assign('<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/spaces/#{current_space}/apps" %>');">Cancel</button>
         <button type="submit" class="update_button">Update</button>
       </div>
     </form>
@@ -169,14 +169,14 @@
 
 <div class="modal unbind_service hide profiled">
   <div class="modal_header">
-    <h3>Unbind service</h3>
+    <h3>Un-bind service</h3>
   </div>
   <div class="modal_content">
     <p>
-      Are you sure you want to unbind your app from this url? will no longer be able to connect to this service.
+      Are you sure you want to un-bind your app from this url? You will no longer be able to connect to this service.
     </p>
     <p>
-      Unbinding does not delete the service. Please delete service from service page to permanently delete it.
+      Un-binding does not delete the service. If you want to completely remove the service go to the service page and delete it.
     </p>
   </div>
   <div class="modal_footer">
@@ -189,7 +189,7 @@
 
       <div>
         <button type="button" class="cancel_button_app_details">Cancel</button>
-        <button type="submit">Unbind</button>
+        <button type="submit">Un-bind</button>
       </div>
     </form>
   </div>
@@ -197,11 +197,14 @@
 
 <div class="modal unbind_uri hide profiled">
   <div class="modal_header">
-    <h3>Unbind URI</h3>
+    <h3>Un-bind URI</h3>
   </div>
   <div class="modal_content">
     <p>
-      Are you sure you want to unbind this app? <br />Your app will no longer be able to use this URI.
+      Are you sure you want to un-bind this app from the current URL?
+    </p>
+    <p>
+      Your app will no longer be able to use this URL.
     </p>
   </div>
   <div class="modal_footer">
@@ -214,7 +217,7 @@
 
       <div>
         <button type="button" class="cancel_button_app_details">Cancel</button>
-        <button type="submit">Unbind</button>
+        <button type="submit">Un-bind</button>
       </div>
     </form>
   </div>

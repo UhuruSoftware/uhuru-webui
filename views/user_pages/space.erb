@@ -99,7 +99,6 @@
             <button type="button" id="<%= app.name %>" title="Delete '<%= app.name %>'" class="image s24px trash" />
           </div>
 
-
           <div class="tile bottom">
             <div class="tile left">
               <span><%= app.stack.name %></span>
@@ -124,7 +123,7 @@
           </div>
           <div class="modal_content">
             <p>
-              Are you sure you want to delete the app?
+              Are you sure you want to delete this app?
             </p>
             <p class="warning">
               WARNING! This app will be permanently removed from the cloud.
@@ -178,7 +177,7 @@
       </div>
       <div class="modal_content">
         <p>
-          Are you sure you want to delete the service?
+          Are you sure you want to delete this service?
         </p>
         <p class="warning">
           WARNING! This service will be permanently removed from the cloud.
@@ -243,7 +242,7 @@
       </div>
       <div class="modal_content">
         <p>
-          Are you sure you want to delete the user?
+          Are you sure you want to delete this user?
         </p>
         <p class="warning">
           WARNING! This user will be removed from your space.
@@ -315,7 +314,7 @@
               <div class="square_tile domain" title="<%= domain.name %>">
                 <span><%= domain.name %></span>
                 <span class="bottom_left">Domain: <span <% if domain.wildcard == true %> class="wildcard" <% end %>></span></span>
-                <button type="button" class="image s24px trash" id="<%= domain.name %>" title="<%= domain.guid %>" />
+                <button type="button" class="image s24px trash" id="<%= domain.guid %>" title="Un-map '<%= domain.name %>'" />
               </div>
             </div>
         <% end %>
@@ -327,17 +326,17 @@
       </div>
       <div class="modal_content">
         <p>
-          Are you sure you want to unmap?
+          Are you sure you want to un-map?
         </p>
         <p class="warning">
-          WARNING! This app will be removed from your space.
+          WARNING! This domain will be un-mapped from the current space.
         </p>
       </div>
       <div class="modal_footer">
         <div>
           <form action="/unmapFromSpace" method="post">
             <button type="button" class="cancel_button">Cancel</button>
-            <button type="submit" value="Delete">Delete</button>
+            <button type="submit" value="Delete">Un-map</button>
             <input type="hidden" class="selected_guid" name="domainGuid" />
             <input type="hidden" name="current_organization" value="<%= current_organization %>" />
             <input type="hidden" name="current_space" value="<%= current_space %>" />
@@ -359,7 +358,9 @@
       Are you sure you want to delete this space?
     </p>
     <p class="warning">
-      WARNING! All applications and services in this space will be deleted! This action cannot be reversed.
+      WARNING!  This space will be completely removed with all its contents!
+      <br />
+      This action can't be reversed.
     </p>
   </div>
   <div class="modal_footer">
@@ -380,7 +381,7 @@
       <span><%= space_name %></span>
     </div>
     <div class="modal_content">
-      new name for: <input type="text" value="<%= space_name %>" name="modified_name"/>
+      new name <input type="text" value="<%= space_name %>" name="modified_name"/>
     </div>
     <div class="modal_footer">
       <div>

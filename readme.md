@@ -11,7 +11,7 @@ To start the WebUI run the following commands:
 
 
 The UAA target has to have an oauth2 client with secret for the webui
- with the following confgs:
+ with the following configs:
    webui:
      id: webui
      secret: webuisecret  # Security: assign a random value.

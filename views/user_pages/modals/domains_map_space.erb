@@ -26,7 +26,7 @@
       <% end %>
 
       <div>
-        <button type="button" onclick="window.location = '<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/spaces/#{current_space}/domains" %>';">Cancel</button>
+        <button type="button" onclick="window.location.assign('<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/spaces/#{current_space}/domains" %>');">Cancel</button>
         <input type="hidden" name="org_guid" value="<%= current_organization %>" />
         <input type="hidden" name="space_guid" value="<%= current_space %>" />
         <input type="hidden" name="current_tab" value="space" />
