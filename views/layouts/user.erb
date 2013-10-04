@@ -99,6 +99,69 @@
 
 <script type="text/javascript" src="<%= request.base_url %>/js/webui.js"></script>
 
+
+<!---------------------------------------------------------------->
+<!--    THE CODE FOR THE ERROR MESSAGES OUTSIDE THE MODALS      -->
+<!---------------------------------------------------------------->
+
+<% unless error_message.nil? || error_message.empty? %>
+
+    <% if defined?(current_organization) && current_organization != nil && defined?(current_space) && current_space != nil %>
+        <% if (request.path == Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/spaces/#{current_space}/#{current_tab}") %>
+            <div class="modal error-message" id="error_modal">
+              <div class="modal_header">
+                <span>Error</span>
+              </div>
+              <div class="modal_content">
+                <p>
+                  An error has occurred:
+                </p>
+                <div class="error"> <%= error_message %> </div>
+              </div>
+              <div class="modal_footer">
+                <button type="button" onclick="window.location = '<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/spaces/#{current_space}/#{current_tab}" %>';">Close</button>
+              </div>
+            </div>
+            <script type="text/javascript">show_modal(document.getElementById("errror_modal"), false);</script>
+        <% end %>
+    <% elsif defined?(current_organization) && current_organization %>
+        <% if (request.path == Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/#{current_tab}") %>
+            <div class="modal error-message" id="error_modal">
+              <div class="modal_header">
+                <span>Error</span>
+              </div>
+              <div class="modal_content">
+                <p>
+                  An error has occurred:
+                </p>
+                <div class="error"> <%= error_message %> </div>
+              </div>
+              <div class="modal_footer">
+                <button type="button" onclick="window.location = '<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/#{current_tab}" %>';">Close</button>
+              </div>
+            </div>
+            <script type="text/javascript">show_modal(document.getElementById("errror_modal"), false);</script>
+        <% end %>
+    <% else %>
+        <% if (request.path == Uhuru::Webui::SinatraRoutes::ORGANIZATIONS) %>
+            <div class="modal error-message" id="error_modal">
+              <div class="modal_header">
+                <span>Error</span>
+              </div>
+              <div class="modal_content">
+                <p>
+                  An error has occurred:
+                </p>
+                <div class="error"> <%= error_message %> </div>
+              </div>
+              <div class="modal_footer">
+                <button type="button" onclick="window.location = '<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS %>';">Close</button>
+              </div>
+            </div>
+            <script type="text/javascript">show_modal(document.getElementById("errror_modal"), false);</script>
+        <% end %>
+    <% end %>
+<% end %>
 </body>
 
 </html>

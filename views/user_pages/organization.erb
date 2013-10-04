@@ -69,21 +69,17 @@
 
       <% spaces_list.each do |space| %>
           <div class="tile space">
-
             <div class="tile top">
               <a class="tile_action" href="<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/spaces/#{space.guid}/apps" %>" title="<%= space.name %>">
                 <%= space.name %>
               </a>
-
               <button type="button" id="<%= space.guid %>" class="image s24px trash" title="Delete '<%= space.name %>'"></button>
             </div>
-
             <div class="tile bottom">
               <div class="tile left">
                   <span>#apps: <%= space.apps_count %></span>
                   <span>#services: <%= space.services_count %></span>
               </div>
-
               <div class="tile right">
                 <div class="tile_action">
                   <span class="tile_info">$<%= space.cost %></span>
@@ -94,12 +90,10 @@
           </div>
       <% end %>
 
-
       <div class="modal delete_confirmation space hide">
         <div class="modal_header">
           <span class="selected_name"></span>
         </div>
-
         <div class="modal_content">
           <p>
             Are you sure you want to delete the space?
@@ -108,12 +102,7 @@
               WARNING! All applications and services in this space will be deleted! This action cannot be reversed.
           </p>
         </div>
-
         <div class="modal_footer">
-          <% unless error_message.nil? || error_message.empty? %>
-              <div class="error"> <%= error_message %> </div>
-          <% end %>
-
           <div>
             <form action="/deleteSpace" method="post">
               <button type="button" class="cancel_button">Cancel</button>
@@ -130,44 +119,40 @@
 
   <% if defined?(current_tab) && current_tab != nil && current_tab == "members" %>
 
-
-        <% owners_list.each do |owner| %>
-            <div class="square_tile">
-                <div class="square_tile owner" title="<%= owner.email %>">
-                  <span><%= owner.email %></span>
-                  <span class="bottom_left">Owner</span>
-                  <button type="button" id="<%= owner.guid %>" class="image s24px trash" title="Delete '<%= owner.email %>'" onclick="deleteUserModal(this, 'owner');"></button>
-                </div>
+    <% owners_list.each do |owner| %>
+        <div class="square_tile">
+            <div class="square_tile owner" title="<%= owner.email %>">
+              <span><%= owner.email %></span>
+              <span class="bottom_left">Owner</span>
+              <button type="button" id="<%= owner.guid %>" class="image s24px trash" title="Delete '<%= owner.email %>'" onclick="deleteUserModal(this, 'owner');"></button>
             </div>
-        <% end %>
+        </div>
+    <% end %>
 
-        <% billings_list.each do |billing| %>
-            <div class="square_tile">
-                <div class="square_tile billing" title="<%= billing.email %>">
-                  <span><%= billing.email %></span>
-                  <span class="bottom_left">Billing Manager</span>
-                  <button type="button" id="<%= billing.guid %>" class="image s24px trash" title="Delete '<%= billing.email %>'" onclick="deleteUserModal(this, 'billing');"></button>
-                </div>
+    <% billings_list.each do |billing| %>
+        <div class="square_tile">
+            <div class="square_tile billing" title="<%= billing.email %>">
+              <span><%= billing.email %></span>
+              <span class="bottom_left">Billing Manager</span>
+              <button type="button" id="<%= billing.guid %>" class="image s24px trash" title="Delete '<%= billing.email %>'" onclick="deleteUserModal(this, 'billing');"></button>
             </div>
-        <% end %>
+        </div>
+    <% end %>
 
-        <% auditors_list.each do |auditor| %>
-            <div class="square_tile">
-                <div class="square_tile auditor" title="<%= auditor.email %>">
-                  <span><%= auditor.email %></span>
-                  <span class="bottom_left">Auditor</span>
-                  <button type="button" id="<%= auditor.guid %>" class="image s24px trash" title="Delete '<%= auditor.email %>'" onclick="deleteUserModal(this, 'auditor');"></button>
-                </div>
+    <% auditors_list.each do |auditor| %>
+        <div class="square_tile">
+            <div class="square_tile auditor" title="<%= auditor.email %>">
+              <span><%= auditor.email %></span>
+              <span class="bottom_left">Auditor</span>
+              <button type="button" id="<%= auditor.guid %>" class="image s24px trash" title="Delete '<%= auditor.email %>'" onclick="deleteUserModal(this, 'auditor');"></button>
             </div>
-        <% end %>
-
-
+        </div>
+    <% end %>
 
     <div class="modal delete_confirmation user hide">
       <div class="modal_header">
         <span class="selected_name"></span>
       </div>
-
       <div class="modal_content">
         <p>
           Are you sure you want to delete the user?
@@ -177,10 +162,6 @@
         </p>
       </div>
       <div class="modal_footer">
-        <% unless error_message.nil? || error_message.empty? %>
-            <div class="error"> <%= error_message %> </div>
-        <% end %>
-
         <div>
           <form action="/deleteUser" method="post">
             <button type="button" class="cancel_button">Cancel</button>
@@ -212,12 +193,10 @@
             <% end %>
         <% end %>
 
-
       <div class="modal delete_confirmation domain hide">
         <div class="modal_header">
           <span class="selected_name"></span>
         </div>
-
         <div class="modal_content">
           <p>
             Are you sure you want to delete the domain?
@@ -226,12 +205,7 @@
             WARNING! This domain will be unmaped from the organization.
           </p>
         </div>
-
         <div class="modal_footer">
-          <% unless error_message.nil? || error_message.empty? %>
-              <div class="error"> <%= error_message %> </div>
-          <% end %>
-
           <div>
             <form action="/deleteDomain" method="post">
               <button type="button" class="cancel_button">Cancel</button>
@@ -251,7 +225,6 @@
           <div class="square_tile credit_card" title="<%= credit_card.name %>">
             <span><%= credit_card.name %></span>
             <span class="bottom_left">****-****-****-<%= credit_card.last4 %></span>
-
           </div>
         </div>
       <% end %>
@@ -260,13 +233,10 @@
 </div>
 
 
-
-
 <div class="modal organization hide" id="delete_current_organization_modal">
   <div class="modal_header">
     <span><%= organization_name %></span>
   </div>
-
   <div class="modal_content">
     <p>
       Are you sure you want to delete this organization?
@@ -275,12 +245,7 @@
         WARNING! All Spaces, applications and services in this organization will be deleted! This action cannot be reversed.
     </p>
   </div>
-
   <div class="modal_footer">
-    <% unless error_message.nil? || error_message.empty? %>
-        <div class="error"> <%= error_message %> </div>
-    <% end %>
-
     <div>
       <form action="/deleteOrganization" method="post">
         <button type="button" class="cancel_button">Cancel</button>
@@ -297,16 +262,10 @@
       <div class="modal_header">
         <span><%= organization_name %></span>
       </div>
-
       <div class="modal_content">
         new name for: <input type="text" value="<%= organization_name %>" name="modified_name" />
       </div>
-
       <div class="modal_footer">
-        <% unless error_message.nil? || error_message.empty? %>
-            <div class="error"> <%= error_message %> </div>
-        <% end %>
-
         <div>
             <button type="button" class="cancel_button">Cancel</button>
             <button type="submit" value="Update">Update</button>
@@ -316,27 +275,6 @@
       </div>
   </form>
 </div>
-
-<% unless error_message.nil? || error_message.empty? %>
-    <div class="modal error-message hide"> </div>
-
-    <div class="modal" id="errors_modal">
-      <div class="modal_header">
-        <span>Error</span>
-      </div>
-
-      <div class="modal_content">
-        <p>
-          An error has occurred:
-        </p>
-        <div class="error"> <%= error_message %> </div>
-      </div>
-
-      <div class="modal_footer">
-          <button type="button" onclick="window.location = '<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/#{current_tab}" %>';" value="Close"></button>
-      </div>
-    </div>
-<% end %>
 
 <% if defined?(include_erb) && include_erb != nil %>
     <%= erb(include_erb, :layout => false, :locals => { :current_organization => current_organization, :current_tab => current_tab, :current_space => nil, :error_message => error_message }) %>

@@ -122,7 +122,6 @@
           <div class="modal_header">
             <span class="selected_name"></span>
           </div>
-
           <div class="modal_content">
             <p>
               Are you sure you want to delete the app?
@@ -131,12 +130,7 @@
               WARNING! This app will be permanently removed from the cloud.
             </p>
           </div>
-
           <div class="modal_footer">
-            <% unless error_message.nil? || error_message.empty? %>
-                <div class="error"> <%= error_message %> </div>
-            <% end %>
-
             <div>
               <form action="/deleteApp" method="post">
                 <button type="button" class="cancel_button">Cancel</button>
@@ -148,7 +142,6 @@
                 <input type="hidden" name="current_tab" value="<%= current_tab %>" />
               </form>
             </div>
-
           </div>
         </div>
     <% end %>
@@ -163,7 +156,6 @@
             <a class="tile_action" href="#" title="<%= service.name %>">
               <%= service.name %>
             </a>
-
             <button type="button" class="image s24px trash" id="<%= service.guid %>" title="Delete '<%= service.name %>'" />
           </div>
 
@@ -171,7 +163,6 @@
             <div class="tile left">
               <span><%= service.type %></span>
             </div>
-
             <div class="tile right">
               <span>Plan: <%= service.type %></span>
               <span>Cost: <%= service.type %></span>
@@ -185,7 +176,6 @@
       <div class="modal_header">
         <span class="selected_name"></span>
       </div>
-
       <div class="modal_content">
         <p>
           Are you sure you want to delete the service?
@@ -194,12 +184,7 @@
           WARNING! This service will be permanently removed from the cloud.
         </p>
       </div>
-
       <div class="modal_footer">
-        <% unless error_message.nil? || error_message.empty? %>
-            <div class="error"> <%= error_message %> </div>
-        <% end %>
-
         <div>
           <form action="/deleteService" method="post">
             <button type="button" class="cancel_button">Cancel</button>
@@ -212,7 +197,6 @@
         </div>
       </div>
     </div>
-
 <% end %>
 
 
@@ -253,13 +237,10 @@
         </div>
     <% end %>
 
-
-
     <div class="modal delete_confirmation user hide">
       <div class="modal_header">
         <span class="selected_name"></span>
       </div>
-
       <div class="modal_content">
         <p>
           Are you sure you want to delete the user?
@@ -269,10 +250,6 @@
         </p>
       </div>
       <div class="modal_footer">
-        <% unless error_message.nil? || error_message.empty? %>
-            <div class="error"> <%= error_message %> </div>
-        <% end %>
-
         <div>
           <form action="/deleteUser" method="post">
             <button type="button" class="cancel_button">Cancel</button>
@@ -307,7 +284,6 @@
         <span class="selected_name"></span>
       </div>
       <form action="/deleteRoute" method="post">
-
         <div class="modal_content">
           <p>
             Are you sure you want to delete this route?
@@ -316,12 +292,7 @@
             WARNING! This route will be removed from your space.
           </p>
         </div>
-
         <div class="modal_footer">
-          <% unless error_message.nil? || error_message.empty? %>
-              <div class="error"> <%= error_message %> </div>
-          <% end %>
-
           <div>
             <button type="button" class="cancel_button">Cancel</button>
             <button type="submit" value="Delete">Delete</button>
@@ -350,12 +321,10 @@
         <% end %>
     <% end %>
 
-
     <div class="modal delete_confirmation domain hide">
       <div class="modal_header">
         <span class="selected_name"></span>
       </div>
-
       <div class="modal_content">
         <p>
           Are you sure you want to unmap?
@@ -364,12 +333,7 @@
           WARNING! This app will be removed from your space.
         </p>
       </div>
-
       <div class="modal_footer">
-        <% unless error_message.nil? || error_message.empty? %>
-            <div class="error"> <%= error_message %> </div>
-        <% end %>
-
         <div>
           <form action="/unmapFromSpace" method="post">
             <button type="button" class="cancel_button">Cancel</button>
@@ -382,7 +346,6 @@
         </div>
       </div>
     </div>
-
 <% end %>
 </div>
 
@@ -391,7 +354,6 @@
   <div class="modal_header">
     <span>Delete '<%= space_name %>'</span>
   </div>
-
   <div class="modal_content">
     <p>
       Are you sure you want to delete this space?
@@ -400,12 +362,7 @@
       WARNING! All applications and services in this space will be deleted! This action cannot be reversed.
     </p>
   </div>
-
   <div class="modal_footer">
-    <% unless error_message.nil? || error_message.empty? %>
-        <div class="error"> <%= error_message %> </div>
-    <% end %>
-
     <div>
       <form action="/deleteSpace" method="post">
         <button type="button" class="cancel_button">Cancel</button>
@@ -422,16 +379,10 @@
     <div class="modal_header">
       <span><%= space_name %></span>
     </div>
-
     <div class="modal_content">
       new name for: <input type="text" value="<%= space_name %>" name="modified_name"/>
     </div>
-
     <div class="modal_footer">
-      <% unless error_message.nil? || error_message.empty? %>
-          <div class="error"> <%= error_message %> </div>
-      <% end %>
-
       <div>
         <button type="button" class="cancel_button">Cancel</button>
         <button type="submit" value="Update">Update</button>
@@ -442,28 +393,6 @@
     </div>
   </form>
 </div>
-
-
-
-
-<% unless error_message.nil? || error_message.empty? %>
-    <div class="modal error-message" >
-      <div class="modal_header">
-        <span>Error</span>
-      </div>
-
-      <div class="modal_content">
-        <p>
-          An error has occurred:
-        </p>
-        <div class="error"> <%= error_message %> </div>
-      </div>
-
-      <div class="modal_footer">
-        <button type="button" onclick="window.location.assign('<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/spaces/#{current_space}/#{current_tab}" %>');">Close</button>
-      </div>
-    </div>
-<% end %>
 
 <% if defined?(include_erb) && include_erb != nil %>
     <%= erb(include_erb, :layout => false, :locals => { :current_organization => current_organization, :current_space => current_space, :organization_name => organization_name, :collections => defined?(apps) ? apps : nil, :current_tab => current_tab, :error_message => error_message, :services_list => defined?(services_list) ? services_list : nil, :domains_list => defined?(domains_list) ? domains_list : nil, :feedback_id => defined?(feedback_id) ? feedback_id : nil }) %>
