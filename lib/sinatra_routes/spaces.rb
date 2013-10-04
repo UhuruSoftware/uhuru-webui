@@ -87,15 +87,9 @@ module Uhuru::Webui
           end
 
           org = Library::Organizations.new(session[:token], $cf_target)
-          domain = Library::Domains.new(session[:token], $cf_target)
           org.set_current_org(params[:org_guid])
 
           spaces_list = org.read_spaces(params[:org_guid])
-          owners_list = org.read_owners($config, params[:org_guid])
-          billings_list = org.read_billings($config, params[:org_guid])
-          auditors_list = org.read_auditors($config, params[:org_guid])
-          domains_list = domain.read_domains()
-
           error_message = params[:error] if defined?(params[:error])
 
           erb :'user_pages/organization',
@@ -106,10 +100,6 @@ module Uhuru::Webui
                       :current_organization => params[:org_guid],
                       :current_tab => params[:tab],
                       :spaces_list => spaces_list,
-                      :owners_list => owners_list,
-                      :billings_list => billings_list,
-                      :auditors_list => auditors_list,
-                      :domains_list => domains_list,
                       :error_message => error_message,
                       :include_erb => :'user_pages/modals/spaces_create'
                   }

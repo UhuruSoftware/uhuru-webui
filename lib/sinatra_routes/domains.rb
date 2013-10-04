@@ -13,11 +13,6 @@ module Uhuru::Webui
           org = Library::Organizations.new(session[:token], $cf_target)
           domain = Library::Domains.new(session[:token], $cf_target)
           org.set_current_org(params[:org_guid])
-
-          spaces_list = org.read_spaces(params[:org_guid])
-          owners_list = org.read_owners($config, params[:org_guid])
-          billings_list = org.read_billings($config, params[:org_guid])
-          auditors_list = org.read_auditors($config, params[:org_guid])
           domains_list = domain.read_domains(params[:org_guid])
 
           error_message = params[:error] if defined?(params[:error])
@@ -29,10 +24,6 @@ module Uhuru::Webui
                       :organization_name => org.get_name(params[:org_guid]),
                       :current_organization => params[:org_guid],
                       :current_tab => params[:tab],
-                      :spaces_list => spaces_list,
-                      :owners_list => owners_list,
-                      :billings_list => billings_list,
-                      :auditors_list => auditors_list,
                       :domains_list => domains_list,
                       :error_message => error_message,
                       :include_erb => :'user_pages/modals/domains_create'
@@ -47,22 +38,11 @@ module Uhuru::Webui
 
           org = Library::Organizations.new(session[:token], $cf_target)
           space = Library::Spaces.new(session[:token], $cf_target)
-          app = TemplateApps.new
-          route = Library::Routes.new(session[:token], $cf_target)
           domain = Library::Domains.new(session[:token], $cf_target)
           org.set_current_org(params[:org_guid])
           space.set_current_space(params[:space_guid])
 
-          spaces_list = org.read_spaces(params[:org_guid])
-          apps_list = space.read_apps(params[:space_guid])
-          services_list = space.read_service_instances(params[:space_guid])
-          routes_list = route.read_routes(params[:space_guid])
           domains_list = domain.read_domains()
-          owners_list = space.read_owners($config, params[:space_guid])
-          developers_list = space.read_developers($config, params[:space_guid])
-          auditors_list = space.read_auditors($config, params[:space_guid])
-
-          collections = app.read_collections
           error_message = params[:error] if defined?(params[:error])
 
           erb :'user_pages/space',
@@ -74,14 +54,6 @@ module Uhuru::Webui
                       :current_organization => params[:org_guid],
                       :current_space => params[:space_guid],
                       :current_tab => params[:tab],
-                      :spaces_list => spaces_list,
-                      :collections => collections,
-                      :owners_list => owners_list,
-                      :developers_list => developers_list,
-                      :auditors_list => auditors_list,
-                      :apps_list => apps_list,
-                      :services_list => services_list,
-                      :routes_list => routes_list,
                       :domains_list => domains_list,
                       :error_message => error_message,
                       :include_erb => :'user_pages/modals/domains_map_space'

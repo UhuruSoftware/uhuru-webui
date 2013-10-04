@@ -19,8 +19,7 @@ module Uhuru::Webui
                   :layout => :'layouts/user',
                   :locals => {
                       :organizations_list => organizations_list,
-                      :error_message => error_message,
-                      :organizations_count => organizations_list.count
+                      :error_message => error_message
                   }
               }
         end
@@ -38,7 +37,6 @@ module Uhuru::Webui
                   :layout => :'layouts/user',
                   :locals => {
                       :organizations_list => organizations_list,
-                      :organizations_count => organizations_list.count,
                       :error_message => error_message,
                       :include_erb => :'user_pages/modals/organizations_create',
                       :publishable_key => $config[:stripe][:publishable_key]

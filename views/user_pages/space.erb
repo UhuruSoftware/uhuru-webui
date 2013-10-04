@@ -46,39 +46,39 @@
 <div class="tab_menu">
 
   <div class="tab_menu_start">&nbsp;</div>
-    <% if current_tab == "apps" %>
-        <div class="selected">Apps</div>
-    <% else %>
-        <div onclick="window.location = '<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/spaces/#{current_space}/apps" %>';">Apps</div>
-    <% end %>
+  <% if current_tab == "apps" %>
+      <div class="selected">Apps</div>
+  <% else %>
+      <div onclick="window.location = '<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/spaces/#{current_space}/apps" %>';">Apps</div>
+  <% end %>
 
 
-    <% if current_tab == "services" %>
-        <div class="selected">Services</div>
-    <% else %>
-        <div onclick="window.location = '<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/spaces/#{current_space}/services" %>';">Services</div>
-    <% end %>
+  <% if current_tab == "services" %>
+      <div class="selected">Services</div>
+  <% else %>
+      <div onclick="window.location = '<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/spaces/#{current_space}/services" %>';">Services</div>
+  <% end %>
 
 
-    <% if current_tab == "members" %>
-        <div class="selected">Users</div>
-    <% else %>
-        <div onclick="window.location = '<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/spaces/#{current_space}/members" %>';">Users</div>
-    <% end %>
+  <% if current_tab == "members" %>
+      <div class="selected">Users</div>
+  <% else %>
+      <div onclick="window.location = '<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/spaces/#{current_space}/members" %>';">Users</div>
+  <% end %>
 
 
-    <% if current_tab == "routes" %>
-        <div class="selected">Routes</div>
-    <% else %>
-        <div onclick="window.location = '<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/spaces/#{current_space}/routes" %>';">Routes</div>
-    <% end %>
+  <% if current_tab == "routes" %>
+      <div class="selected">Routes</div>
+  <% else %>
+      <div onclick="window.location = '<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/spaces/#{current_space}/routes" %>';">Routes</div>
+  <% end %>
 
 
-    <% if current_tab == "domains" %>
-        <div class="selected">Domains</div>
-    <% else %>
-        <div onclick="window.location = '<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/spaces/#{current_space}/domains" %>';">Domains</div>
-    <% end %>
+  <% if current_tab == "domains" %>
+      <div class="selected">Domains</div>
+  <% else %>
+      <div onclick="window.location = '<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/spaces/#{current_space}/domains" %>';">Domains</div>
+  <% end %>
   <div class="tab_menu_end">&nbsp;</div>
 </div>
 
@@ -113,7 +113,7 @@
           </div>
 
           <% if params[:app_name] == app.name %>
-              <%= erb(:'user_pages/modals/app_details', :layout => false, :locals => { :current_organization => current_organization, :current_space => current_space, :organization_name => organization_name, :collections => collections, :current_tab => current_tab, :app => app, :services_list => services_list, :domains_list => domains_list, :error_message => error_message }) %>
+              <%= erb(:'user_pages/modals/app_details', :layout => false, :locals => { :current_organization => current_organization, :current_space => current_space, :organization_name => organization_name, :collections => defined?(collections) ? collections : nil, :current_tab => current_tab, :app => app, :services_list => defined?(services_list) ? services_list : nil, :domains_list => defined?(domains_list) ? domains_list : nil, :error_message => error_message }) %>
           <% end %>
         </div>
 
@@ -169,12 +169,12 @@
 
           <div class="tile bottom">
             <div class="tile left">
-                <span><%= service.type %></span>
+              <span><%= service.type %></span>
             </div>
 
             <div class="tile right">
-                <span>Plan: <%= service.type %></span>
-                <span>Cost: <%= service.type %></span>
+              <span>Plan: <%= service.type %></span>
+              <span>Cost: <%= service.type %></span>
             </div>
           </div>
         </div>
@@ -217,7 +217,7 @@
 
 
 <% if defined?(current_tab) && current_tab != nil && current_tab == "members" %>
-      <% owners_list.each do |owner| %>
+    <% owners_list.each do |owner| %>
         <div class="square_tile">
           <div class="square_tile owner" title="<%= owner.email %>">
             <span><%= owner.email %></span>
@@ -227,9 +227,9 @@
             <span class="span_bg_icon"></span>
           </div>
         </div>
-      <% end %>
+    <% end %>
 
-      <% developers_list.each do |dev| %>
+    <% developers_list.each do |dev| %>
         <div class="square_tile">
           <div class="square_tile developer" title="<%= dev.email %>">
             <span><%= dev.email %></span>
@@ -239,9 +239,9 @@
             <span class="span_bg_icon"></span>
           </div>
         </div>
-      <% end %>
+    <% end %>
 
-      <% auditors_list.each do |auditor| %>
+    <% auditors_list.each do |auditor| %>
         <div class="square_tile">
           <div class="square_tile auditor" title="<%= auditor.email %>">
             <span><%= auditor.email  %></span>
@@ -251,7 +251,7 @@
             <span class="span_bg_icon"></span>
           </div>
         </div>
-      <% end %>
+    <% end %>
 
 
 
@@ -338,8 +338,8 @@
 
 <% if defined?(current_tab) && current_tab != nil && current_tab == "domains" %>
 
-      <% domains_list.each do |domain| %>
-          <% if domain.owning_org_name == organization_name && domain.owning_spaces.count { |s| s.name == space_name } != 0 %>
+    <% domains_list.each do |domain| %>
+        <% if domain.owning_org_name == organization_name && domain.owning_spaces.count { |s| s.name == space_name } != 0 %>
             <div class="square_tile">
               <div class="square_tile domain" title="<%= domain.name %>">
                 <span><%= domain.name %></span>
@@ -347,8 +347,8 @@
                 <button type="button" class="image s24px trash" id="<%= domain.name %>" title="<%= domain.guid %>" />
               </div>
             </div>
-          <% end %>
-      <% end %>
+        <% end %>
+    <% end %>
 
 
     <div class="modal delete_confirmation domain hide">
@@ -397,7 +397,7 @@
       Are you sure you want to delete this space?
     </p>
     <p class="warning">
-        WARNING! All applications and services in this space will be deleted! This action cannot be reversed.
+      WARNING! All applications and services in this space will be deleted! This action cannot be reversed.
     </p>
   </div>
 
@@ -460,12 +460,12 @@
       </div>
 
       <div class="modal_footer">
-          <button type="button" onclick="window.location = '<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/spaces/#{current_space}/#{current_tab}" %>';">Close</button>
+        <button type="button" onclick="window.location = '<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/spaces/#{current_space}/#{current_tab}" %>';">Close</button>
       </div>
     </div>
 <% end %>
 
 <% if defined?(include_erb) && include_erb != nil %>
-    <%= erb(include_erb, :layout => false, :locals => { :current_organization => current_organization, :current_space => current_space, :organization_name => organization_name, :collections => defined?(apps) ? apps : nil, :current_tab => current_tab, :error_message => error_message, :services_list => services_list, :domains_list => domains_list, :feedback_id => defined?(feedback_id) ? feedback_id : nil }) %>
+    <%= erb(include_erb, :layout => false, :locals => { :current_organization => current_organization, :current_space => current_space, :organization_name => organization_name, :collections => defined?(apps) ? apps : nil, :current_tab => current_tab, :error_message => error_message, :services_list => defined?(services_list) ? services_list : nil, :domains_list => defined?(domains_list) ? domains_list : nil, :feedback_id => defined?(feedback_id) ? feedback_id : nil }) %>
 <% end %>
 
