@@ -13,9 +13,7 @@ module Uhuru::Webui
 
         app.get APP do
 
-          if session[:login_] == false || session[:login_] == nil
-            redirect INDEX
-          end
+          require_login
 
           org = Library::Organizations.new(session[:token], $cf_target)
           space = Library::Spaces.new(session[:token], $cf_target)
@@ -49,9 +47,7 @@ module Uhuru::Webui
 
         app.get APP_CREATE do
 
-          if session[:login_] == false || session[:login_] == nil
-            redirect INDEX
-          end
+          require_login
 
           org = Library::Organizations.new(session[:token], $cf_target)
           space = Library::Spaces.new(session[:token], $cf_target)
@@ -114,9 +110,7 @@ module Uhuru::Webui
         end
 
         app.get APP_CREATE_FEEDBACK do
-          if session[:login_] == false || session[:login_] == nil
-            redirect INDEX
-          end
+          require_login
 
           org = Library::Organizations.new(session[:token], $cf_target)
           space = Library::Spaces.new(session[:token], $cf_target)

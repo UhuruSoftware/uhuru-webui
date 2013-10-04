@@ -39,5 +39,6 @@ module Uhuru::Webui
 
     FEEDBACK                  = "/feedback/:id"
 
+    ADMINISTRATION            = "/admin"
   end
 end

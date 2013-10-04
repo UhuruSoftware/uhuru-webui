@@ -70,6 +70,7 @@ module Uhuru::Webui
               session[:username] = params[:username]
               session[:user_guid] = user.guid
               session[:secret] = session[:session_id]
+              session[:is_admin] = user.is_admin
 
               redirect ORGANIZATIONS
             else

@@ -18,6 +18,7 @@ require 'sinatra_routes/users'
 require 'sinatra_routes/domains'
 require 'sinatra_routes/routes'
 require 'sinatra_routes/cloud_feedback'
+require 'sinatra_routes/admin'
 
 module Uhuru::Webui
   class Webui < Sinatra::Base
@@ -42,6 +43,7 @@ module Uhuru::Webui
     register Uhuru::Webui::SinatraRoutes::Domains
     register Uhuru::Webui::SinatraRoutes::Routes
     register Uhuru::Webui::SinatraRoutes::CloudFeedback
+    register Uhuru::Webui::SinatraRoutes::Administration
 
     def initialize(config)
       $config = config
@@ -49,6 +51,18 @@ module Uhuru::Webui
       $errors = YAML::load(File.open(File.expand_path("../../config/error_messages.yml", __FILE__)))
 
       super()
+    end
+
+    def require_login
+      if session[:login_] == false || session[:login_] == nil
+        redirect SinatraRoutes::INDEX
+      end
+    end
+
+    def require_admin
+      if session[:login_] == false || session[:login_] == nil || session[:is_admin] == false
+        redirect SinatraRoutes::INDEX
+      end
     end
 
     set :raise_errors, Proc.new { false }

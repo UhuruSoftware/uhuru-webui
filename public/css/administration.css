@@ -1,0 +1,87 @@
+
+/************************** BODY AND FONTS ****************************/
+
+html, body
+{
+    margin: 0;
+    padding: 0;
+    font-family: monospace;
+    font-size: 15px;
+}
+
+h3
+{
+    display: inline;
+}
+
+body
+{
+    overflow-y: scroll;
+}
+
+body.noscroll
+{
+    position: fixed;
+    width: 100%;
+}
+
+.hide
+{
+    display: none;
+}
+
+a
+{
+    text-decoration: none;
+}
+
+/************************** WYSIWYG ****************************/
+
+div.jHtmlArea
+{
+    border: 1px solid #000000;
+}
+
+/************************** TAB MENU ****************************/
+
+.tab_menu
+{
+    width: 100%;
+    margin-bottom: 20px;
+    font-size: 0;
+}
+
+.tab_menu .tab_menu_start
+{
+    width: 10px;
+    cursor: default;
+}
+
+.tab_menu .tab_menu_end
+{
+    width: 100%;
+    cursor: default;
+}
+
+.tab_menu>div
+{
+    text-align: left;
+    display: table-cell;
+    color: #000000;
+    border-bottom: 1px solid #000000;
+    font-size: 18px;
+    padding: 2px 10px 2px 10px;
+    white-space: nowrap;
+    cursor: pointer;
+}
+
+.tab_menu>div.selected
+{
+    border: 1px solid #000000;
+    border-bottom: 0;
+    background-color: transparent;
+    color: #000000;
+}
+
+
+

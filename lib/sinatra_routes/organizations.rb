@@ -7,9 +7,7 @@ module Uhuru::Webui
       def self.registered(app)
 
         app.get ORGANIZATIONS do
-          if session[:login_] == false || session[:login_] == nil
-            redirect INDEX
-          end
+          require_login
 
           organizations_list = Library::Organizations.new(session[:token], $cf_target).read_all
           error_message = params[:error] if defined?(params[:error])
@@ -25,9 +23,7 @@ module Uhuru::Webui
         end
 
         app.get ORGANIZATIONS_CREATE do
-          if session[:login_] == false || session[:login_] == nil
-            redirect INDEX
-          end
+          require_login
 
           organizations_list = Library::Organizations.new(session[:token], $cf_target).read_all
           error_message = params[:error] if defined?(params[:error])

@@ -26,7 +26,9 @@ class UsersSetup
       user_guid = users_obj.get_user_guid
       user_detail = get_details(user_guid)
 
-      user = UserDetails.new(user_token, user_guid, user_detail["familyname"], user_detail["givenname"])
+      is_admin = user_detail['groups'].any? { |group| group['display'] == 'cloud_controller.admin' }
+
+      user = UserDetails.new(user_token, user_guid, user_detail["familyname"], user_detail["givenname"], is_admin)
       user
     rescue Exception => e
       return e
@@ -82,7 +84,7 @@ class UsersSetup
         return e
       end
 
-      user = UserDetails.new(user_token, user_id, first_name, last_name)
+      user = UserDetails.new(user_token, user_id, first_name, last_name, false)
       user
     end
   end
@@ -169,13 +171,14 @@ class UsersSetup
   end
 
   class UserDetails
-    attr_reader :token, :guid, :first_name, :last_name
+    attr_reader :token, :guid, :first_name, :last_name, :is_admin
 
-    def initialize(token, guid, first_name, last_name)
+    def initialize(token, guid, first_name, last_name, is_admin)
       @token = token
       @guid = guid
       @first_name = first_name
       @last_name = last_name
+      @is_admin = is_admin
     end
   end
 

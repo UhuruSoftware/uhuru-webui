@@ -6,9 +6,7 @@ module Uhuru::Webui
       def self.registered(app)
 
         app.get ACCOUNT do
-          if session[:login_] == false || session[:login_] == nil
-            redirect INDEX
-          end
+          require_login
 
           error_message = params[:message] if defined?(params[:message])
 

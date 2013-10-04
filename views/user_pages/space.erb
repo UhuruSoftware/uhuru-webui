@@ -19,23 +19,23 @@
   </div>
   <div class="icons_options">
     <% if current_tab == "apps" %>
-        <button onclick="window.location = '<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/spaces/#{current_space}/#{current_tab}/create_app/new" %>';" class="image s32px plus" />
+        <button onclick="window.location.assign('<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/spaces/#{current_space}/#{current_tab}/create_app/new" %>');" class="image s32px plus" />
     <% end %>
 
     <% if current_tab == "services" %>
-        <button onclick="window.location = '<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/spaces/#{current_space}/#{current_tab}/create_service/new" %>';" class="image s32px plus" />
+        <button onclick="window.location.assign('<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/spaces/#{current_space}/#{current_tab}/create_service/new" %>');" class="image s32px plus" />
     <% end %>
 
     <% if current_tab == "members" %>
-        <button onclick="window.location = '<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/spaces/#{current_space}/#{current_tab}/add_user/new" %>';" class="image s32px plus" />
+        <button onclick="window.location.assign('<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/spaces/#{current_space}/#{current_tab}/add_user/new" %>');" class="image s32px plus" />
     <% end %>
 
     <% if current_tab == "routes" %>
-        <button onclick="window.location = '<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/spaces/#{current_space}/#{current_tab}/add_route/new" %>';" class="image s32px plus" />
+        <button onclick="window.location.assign('<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/spaces/#{current_space}/#{current_tab}/add_route/new" %>');" class="image s32px plus" />
     <% end %>
 
     <% if current_tab == "domains" %>
-        <button onclick="window.location = '<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/spaces/#{current_space}/#{current_tab}/map_domain/new" %>';" class="image s32px plus" />
+        <button onclick="window.location.assign('<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/spaces/#{current_space}/#{current_tab}/map_domain/new" %>');" class="image s32px plus" />
     <% end %>
 
     <button class="image s32px edit" onclick="show_modal($('#edit_current_space_modal'), false);" />
@@ -49,35 +49,35 @@
   <% if current_tab == "apps" %>
       <div class="selected">Apps</div>
   <% else %>
-      <div onclick="window.location = '<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/spaces/#{current_space}/apps" %>';">Apps</div>
+      <div onclick="window.location.assign('<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/spaces/#{current_space}/apps" %>');">Apps</div>
   <% end %>
 
 
   <% if current_tab == "services" %>
       <div class="selected">Services</div>
   <% else %>
-      <div onclick="window.location = '<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/spaces/#{current_space}/services" %>';">Services</div>
+      <div onclick="window.location.assign('<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/spaces/#{current_space}/services" %>');">Services</div>
   <% end %>
 
 
   <% if current_tab == "members" %>
       <div class="selected">Users</div>
   <% else %>
-      <div onclick="window.location = '<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/spaces/#{current_space}/members" %>';">Users</div>
+      <div onclick="window.location.assign('<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/spaces/#{current_space}/members" %>');">Users</div>
   <% end %>
 
 
   <% if current_tab == "routes" %>
       <div class="selected">Routes</div>
   <% else %>
-      <div onclick="window.location = '<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/spaces/#{current_space}/routes" %>';">Routes</div>
+      <div onclick="window.location.assign('<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/spaces/#{current_space}/routes" %>');">Routes</div>
   <% end %>
 
 
   <% if current_tab == "domains" %>
       <div class="selected">Domains</div>
   <% else %>
-      <div onclick="window.location = '<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/spaces/#{current_space}/domains" %>';">Domains</div>
+      <div onclick="window.location.assign('<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/spaces/#{current_space}/domains" %>');">Domains</div>
   <% end %>
   <div class="tab_menu_end">&nbsp;</div>
 </div>
@@ -460,7 +460,7 @@
       </div>
 
       <div class="modal_footer">
-        <button type="button" onclick="window.location = '<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/spaces/#{current_space}/#{current_tab}" %>';">Close</button>
+        <button type="button" onclick="window.location.assign('<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/spaces/#{current_space}/#{current_tab}" %>');">Close</button>
       </div>
     </div>
 <% end %>

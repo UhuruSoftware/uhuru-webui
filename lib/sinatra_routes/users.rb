@@ -6,9 +6,7 @@ module Uhuru::Webui
       def self.registered(app)
 
         app.get ORGANIZATION_MEMBERS_ADD do
-          if session[:login_] == false || session[:login_] == nil
-            redirect INDEX
-          end
+          require_login
 
           org = Library::Organizations.new(session[:token], $cf_target)
           org.set_current_org(params[:org_guid])
@@ -35,9 +33,7 @@ module Uhuru::Webui
         end
 
         app.get SPACE_MEMBERS_ADD do
-          if session[:login_] == false || session[:login_] == nil
-            redirect INDEX
-          end
+          require_login
 
           org = Library::Organizations.new(session[:token], $cf_target)
           space = Library::Spaces.new(session[:token], $cf_target)

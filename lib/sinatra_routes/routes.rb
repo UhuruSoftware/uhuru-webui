@@ -7,9 +7,7 @@ module Uhuru::Webui
 
         app.get ROUTES_CREATE do
 
-          if session[:login_] == false || session[:login_] == nil
-            redirect INDEX
-          end
+          require_login
 
           org = Library::Organizations.new(session[:token], $cf_target)
           space = Library::Spaces.new(session[:token], $cf_target)
