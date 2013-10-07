@@ -1,0 +1,15 @@
+<form action="<%= Uhuru::Webui::SinatraRoutes::ADMINISTRATION_BILLING %>" method="post">
+
+  <h2>Stripe configurations</h2>
+
+  <h3>Public key</h3>
+  <input type="text" id="public_key" name="public_key" size="40" value="<%= public_key %>" />
+  <br />
+
+  <h3>Secret key</h3>
+  <input type="text" id="secret_key" name="secret_key" size="40" value="<%= secret_key %>" />
+  <br />
+
+  <input type="submit" value="Save" />
+
+</form>

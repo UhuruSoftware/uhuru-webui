@@ -45,8 +45,9 @@ module Uhuru::Webui
     register Uhuru::Webui::SinatraRoutes::CloudFeedback
     register Uhuru::Webui::SinatraRoutes::Administration
 
-    def initialize(config)
+    def initialize(config, admin)
       $config = config
+      $admin = admin
       $cf_target = $config[:cloud_controller_url]
       $errors = YAML::load(File.open(File.expand_path("../../config/error_messages.yml", __FILE__)))
 
