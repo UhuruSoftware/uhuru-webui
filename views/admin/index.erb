@@ -1,18 +1,23 @@
 
+<table>
+  <tr>
+    <td><h3>Local IP</h3></td>
+    <td><%= $config[:bind_address] %></td>
+  </tr>
 
-<h3>Local IP</h3>
-<%= $config[:bind_address] %>
-<br/>
+  <tr>
+    <td><h3>Listening on Port</h3></td>
+    <td><%= $config[:port] %></td>
+  </tr>
 
-<h3>Listening on Port</h3>
-<%= $config[:port] %>
-<br/>
+  <tr>
+    <td><h3>API Endpoint</h3></td>
+    <td><%= $config[:cloud_controller_url] %></td>
+  </tr>
 
-<h3>API Endpoint</h3>
-<%= $config[:cloud_controller_url] %>
-<br/>
-
-<h3>UAA Endpoint</h3>
-<%= $config[:uaa][:url] %>
-<br/>
+  <tr>
+    <td><h3>UAA Endpoint</h3></td>
+    <td><%= $config[:uaa][:url] %></td>
+  </tr>
+</table>
 
