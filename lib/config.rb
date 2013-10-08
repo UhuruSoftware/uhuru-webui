@@ -29,61 +29,12 @@ class Uhuru::Webui::Config < VCAP::Config
   define_schema do
     {
 
-      :webui =>{
-        :page_title                       => String,
-        :site_tab                         => String,
-        :welcome_message                  => String,
-        :copyright_message                => String,
-        #:color_theme                     => String,
-
-        :domain                           => String,
-        :activation_link_secret           => String,
-        :more_videos_link                 => String,
-        :guest_feedback_link              => String,
-        :twitter_link                     => String,
-        :facebook_link                    => String,
-        :terms_of_services_link           => String,
-        :privacy_policy_link              => String,
-        :visual_studio_plugin_link        => String,
-        :app_cloud_admin_link             => String,
-        :command_line_link                => String,
-        :eclipse_url                      => String
-      },
-
       :cloud_controller_url               => String,
 
       :uaa => {
         :url                              => String,
         :client_id                        => String,
         :client_secret                    => String
-      },
-
-      :contact => {
-        :company                          => String,
-        :address                          => String,
-        :phone                            => String,
-        :email                            => String
-      },
-
-      :email => {
-        :from                             => String,
-        :from_alias                       => String,
-        :server                           => String,
-        :port                             => Integer,
-        :user                             => String,
-        :secret                           => String,
-        :auth_method                      => Symbol,
-        :enable_tls                       => TrueClass
-      },
-
-      :recaptcha => {
-        :recaptcha_private_key            => String,
-        :recaptcha_public_key             => String
-      },
-
-      :stripe => {
-          :publishable_key                => String,
-          :secret_key                     => String
       },
 
       :monitoring => {

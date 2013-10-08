@@ -1,0 +1,11 @@
+
+<form action="<%= Uhuru::Webui::SinatraRoutes::ADMINISTRATION_EMAIL %>" method="post">
+
+  <h2>Registration e-mail sent to users</h2>
+  <textarea name="registration_email" cols="100" rows="30"><%= registration_email %></textarea>
+
+  <h2>Welcome e-mail sent to users</h2>
+  <textarea name="welcome_email" cols="100" rows="10"><%= welcome_email %></textarea>
+  <input type="submit" value="Save" />
+
+</form>

@@ -40,5 +40,9 @@ module Uhuru::Webui
     FEEDBACK                  = "/feedback/:id"
 
     ADMINISTRATION            = "/admin"
+    ADMINISTRATION_WEBUI      = "#{ADMINISTRATION}/webui"
+    ADMINISTRATION_BILLING    = "#{ADMINISTRATION}/billing"
+    ADMINISTRATION_EMAIL      = "#{ADMINISTRATION}/email"
+
   end
 end

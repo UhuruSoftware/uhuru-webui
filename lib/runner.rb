@@ -1,5 +1,6 @@
 require "steno"
 require "config"
+require "admin_settings"
 require "webui"
 require "thin"
 require "optparse"
@@ -14,9 +15,15 @@ module Uhuru::Webui
       ENV["RACK_ENV"] = "production"
       # default config path. this may be overridden during opts parsing
       @config_file = File.expand_path("../../config/uhuru-webui.yml", __FILE__)
+      @admin_file = File.expand_path("../../config/admin-settings.yml", __FILE__)
 
       parse_options!
 
+      @admin = Uhuru::Webui::AdminSettings.from_file(@admin_file)
+      config = Uhuru::Webui::Config.from_file(@config_file)
+      Uhuru::Webui::AdminSettings.copy_admin_to_config(config, @admin, @config_file)
+
+      #reload config file after update
       @config = Uhuru::Webui::Config.from_file(@config_file)
       @config[:bind_address] = VCAP.local_ip(@config[:local_route])
 
@@ -72,7 +79,7 @@ module Uhuru::Webui
       config = @config.dup
       $config = config.dup
 
-      webui = Uhuru::Webui::Webui.new(config);
+      webui = Uhuru::Webui::Webui.new(config, @admin);
       app = Rack::Builder.new do
         use Rack::CommonLogger
         use Rack::Recaptcha, :public_key => $config[:recaptcha][:recaptcha_public_key], :private_key => $config[:recaptcha][:recaptcha_private_key]
