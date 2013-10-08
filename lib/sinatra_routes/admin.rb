@@ -75,6 +75,33 @@ module Uhuru::Webui
           redirect ADMINISTRATION_WEBUI
         end
 
+        app.get ADMINISTRATION_CONTACT do
+          require_admin
+
+          erb :'admin/contact', {
+              :layout => :'layouts/admin',
+              :locals => {
+                  :current_tab => 'contact',
+                  :company => $admin[:contact][:company],
+                  :address => $admin[:contact][:address],
+                  :phone => $admin[:contact][:phone],
+                  :email => $admin[:contact][:email]
+              }
+          }
+        end
+
+        app.post ADMINISTRATION_CONTACT do
+          require_admin
+
+          $admin[:contact][:company] = params[:company]
+          $admin[:contact][:address] = params[:address]
+          $admin[:contact][:phone] = params[:phone]
+          $admin[:contact][:email] = params[:email]
+          Uhuru::Webui::AdminSettings.save_changed_value
+
+          redirect ADMINISTRATION_CONTACT
+        end
+
         app.get ADMINISTRATION_BILLING do
           require_admin
 
@@ -101,10 +128,21 @@ module Uhuru::Webui
         app.get ADMINISTRATION_EMAIL do
           require_admin
 
+          auth_method_items = {'Plain'=> 'plain', 'Login'=> 'login', 'CRAM-MD5'=> 'cram_md5'}
+
           erb :'admin/email', {
               :layout => :'layouts/admin',
               :locals => {
                   :current_tab => 'email',
+                  :from => $admin[:email][:from],
+                  :from_alias => $admin[:email][:from_alias],
+                  :server => $admin[:email][:server],
+                  :port => $admin[:email][:port],
+                  :user => $admin[:email][:user],
+                  :secret => $admin[:email][:secret],
+                  :auth_method_items => auth_method_items,
+                  :auth_method => $admin[:email][:auth_method],
+                  :enable_tls => $admin[:email][:enable_tls],
                   :registration_email => $admin[:email][:registration_email],
                   :welcome_email => $admin[:email][:welcome_email]
               }
@@ -114,6 +152,18 @@ module Uhuru::Webui
         app.post ADMINISTRATION_EMAIL do
           require_admin
 
+          $admin[:email][:from] = params[:from]
+          $admin[:email][:from_alias] = params[:from_alias]
+          $admin[:email][:server] = params[:server]
+          $admin[:email][:port] = Integer(params[:port])
+          $admin[:email][:user] = params[:user]
+          $admin[:email][:secret] = params[:secret]
+          $admin[:email][:auth_method] = params[:auth_method].to_sym
+          if params[:enable_tls]
+            $admin[:email][:enable_tls] = 'true'
+          else
+            $admin[:email][:enable_tls] = 'false'
+          end
           $admin[:email][:registration_email] = params[:registration_email]
           $admin[:email][:welcome_email] = params[:welcome_email]
           Uhuru::Webui::AdminSettings.save_changed_value()
