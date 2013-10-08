@@ -95,27 +95,29 @@ class Applications < Uhuru::Webui::ClassWithFeedback
     error_ln(e.message)
   end
 
-  def start_app(app_name)
-    app = @client.apps.find { |a| a.name == app_name }
-    app.start!
+  ##################################################################################
+  ####################    update app details new data    ###########################
+  ##################################################################################
+  def update(app_name, state, instances, memory)
+    info_ln("#{app_name} is now beign updated ...")
 
-  rescue Exception => e
-    return e
-  end
+    if state != nil
+      start_app(app_name)
+    else
+      stop_app(app_name)
+    end
 
-  def stop_app(app_name)
-    app = @client.apps.find { |a| a.name == app_name }
-    app.stop!
-
-  rescue Exception => e
-    return e
-  end
-
-  def update(app_name, instances, memory)
+    info_ln("  updating ...")
     app = @client.apps.find { |a| a.name == app_name }
     app.total_instances = instances
+    info_ln("     number of instances: #{instances}.")
+    ok_ln("OK")
     app.memory = memory
+    info_ln("     memory(in MB): #{memory}.")
+    ok_ln("OK")
     app.update!
+    ok_ln("Updated successfully!")
+
 
   rescue Exception => e
     return e
@@ -136,6 +138,25 @@ class Applications < Uhuru::Webui::ClassWithFeedback
 
   rescue Exception => e
     return e
+  end
+
+
+ private
+
+  def start_app(app_name)
+    app = @client.apps.find { |a| a.name == app_name }
+    app.start!
+    return info_ln("App #{app_name} is started.")
+  rescue Exception => e
+    return error_ln(e)
+  end
+
+  def stop_app(app_name)
+    app = @client.apps.find { |a| a.name == app_name }
+    app.stop!
+    return info_ln("App #{app_name} is stopped.")
+  rescue Exception => e
+    return error_ln(e)
   end
 
   def bind_app_services(app_name, service_instance_name)
