@@ -95,9 +95,10 @@ class Uhuru::Webui::Config < VCAP::Config
             :java                         =>String,
             :nodejs                       =>String,
             :php                          =>String,
-            :ruby                         =>String
+            :ruby                         =>String,
           }
-      }
+      },
+      :admin_config_file                  =>String
     }
   end
 

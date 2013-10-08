@@ -16,12 +16,13 @@ module Uhuru::Webui
       ENV["RACK_ENV"] = "production"
       # default config path. this may be overridden during opts parsing
       @config_file = File.expand_path("../../config/uhuru-webui.yml", __FILE__)
-      @admin_file = File.expand_path("../../config/admin-settings.yml", __FILE__)
 
       parse_options!
 
-      @admin = Uhuru::Webui::AdminSettings.from_file(@admin_file)
       config = Uhuru::Webui::Config.from_file(@config_file)
+
+      admin_file = File.expand_path("#{config[:admin_config_file]}", __FILE__)
+      @admin = Uhuru::Webui::AdminSettings.from_file(admin_file)
       Uhuru::Webui::AdminSettings.copy_admin_to_config(config, @admin, @config_file)
 
       #reload config file after update

@@ -6,7 +6,7 @@ module Uhuru
 end
 
 class Uhuru::Webui::AdminSettings < VCAP::Config
-  DEFAULT_CONFIG_PATH = File.expand_path('../../admin-settings.yml', __FILE__)
+  #DEFAULT_CONFIG_PATH = File.expand_path('../../admin-settings.yml', __FILE__)
 
   define_schema do
     {
@@ -74,7 +74,7 @@ class Uhuru::Webui::AdminSettings < VCAP::Config
   end
 
   def self.save_changed_value
-    path = File.expand_path('../../config/admin-settings.yml', __FILE__)
+    path = File.expand_path("#{$config[:admin_config_file]}", __FILE__)
     File.open(path, "w+") do |f|
       f.sync = true
       f.write($admin.to_yaml)

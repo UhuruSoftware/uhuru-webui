@@ -140,3 +140,4 @@
   :address: 17530 NE Union Hill Road, Suite 120, Redmond, WA 98052, USA.
   :phone: +1 (425) 406-6383
   :email: uhuru@uhurusoftware.com
+:admin_config_file: /home/adauser/Desktop/code/private-uhuru-webui/config/admin-settings.yml
