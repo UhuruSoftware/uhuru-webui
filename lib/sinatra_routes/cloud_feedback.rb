@@ -6,10 +6,7 @@ module Uhuru::Webui
       def self.registered(app)
 
         app.get FEEDBACK do
-          if session[:login_] == false || session[:login_] == nil
-            halt 401, 'unauthorized'
-          end
-
+          require_login
           feedback_id = params[:id]
 
           action, feedback = ClassWithFeedback.content(feedback_id)

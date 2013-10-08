@@ -91,77 +91,34 @@ $('.square_tile .square_tile.route :button').click(delete_selected_element);
 
 
 /*********************************************************************************************************/
-/*                                            APP DETAILS                                                */
+/***********                                 APP DETAILS                                     *************/
 /*********************************************************************************************************/
 
 
-var bind_service = function(){
-    $.ajax({
-        url: "/bindServices",
-        type: 'POST',
-        cache: false,
-        data: { appName: $('#app_name').val() , serviceName: $('#service_name').val(), current_organization: $('#current_organization').val(), current_space: $('#current_space').val(), current_tab: $('#current_tab').val() }
-    })
-        .done(function( msg ) {
-            location.reload();
-        });
+///* cancel buttons on all modals inside the app details */
+//$('.cancel_button_app_details').click(function(){
+//    hide_modal($(".unbind_service"), true);
+//    hide_modal($(".unbind_uri"), true);
+//});
+
+var start_app = function(){
+    $('#app_state_input').val('start');
+    $('#start_app').hide();
+    $('#stop_app').show();
+}
+var stop_app = function(){
+    $('#app_state_input').val('stop');
+    $('#start_app').show();
+    $('#stop_app').hide();
 }
 
-var bind_uri = function(){
-    $.ajax({
-        url: "/bindUri",
-        type: 'POST',
-        cache: false,
-        data: { appName: $('#app_name').val() , domain: $('#uri_domain_name').val(), host: $('#uri_host').val(), current_organization: $('#current_organization').val(), current_space: $('#current_space').val(), current_tab: $('#current_tab').val() }
-    })
-        .done(function( msg ) {
-            location.reload();
-        }   );
-}
-
-var unbind_service = function(){
-    show_modal($('.unbind_service'), true);
-
-    var name = $(this).attr("id");
-    $('#unbind_serviceName').val(name);
-}
-var unbind_uri = function(){
-    show_modal($('.unbind_uri'), true);
-
-    var name = $(this).attr("id");
-    $('#unbind_uriName').val(name);
-}
-
-/* cancel buttons on all modals inside the app details */
-$('.cancel_button_app_details').click(function(){
-    hide_modal($(".unbind_service"), true);
-    hide_modal($(".unbind_uri"), true);
-});
+$('#start_app').click(start_app);
+$('#stop_app').click(stop_app);
 
 
-$('.bind_service_button').click(bind_service);
-$('.bind_uri_button').click(bind_uri);
-$('.unbind_service_button').click(unbind_service);
-$('.unbind_uri_button').click(unbind_uri);
-
-
-
-
-
-/*
- APP DETAILS UPDATE MEMORY AND INSTANCES
- */
-
-var saving_modal = function()
-{
-    show_modal($('#saving_modal'), false);
-    $('.stopApp_btn').css("display", "none");
-    $('.startApp_btn').css("display", "none");
-}
-
-$('.start_app').click(saving_modal);
-$('.stop_app').click(saving_modal);
-
+/**************************************************************************/
+/*******************     Instances and Memory       ***********************/
+/**************************************************************************/
 
 $('.add_instance').click(function(){
     var new_value = parseInt($('.instances_count').val()) + 1;
@@ -179,8 +136,6 @@ $('.subtract_instance').click(function(){
         $('.send_app_instances').val(new_value.toString());
     }
 });
-
-
 $('.add_memory').click(function(){
     var new_value = parseInt($('#app_memory_setup').val()) + 32;
     if(new_value <= 1024)
@@ -199,6 +154,7 @@ $('.subtract_memory').click(function(){
 });
 
 
+
 $('.selected_service').change(function(){
     $.ajax({
         url: "/get_service_data",
@@ -212,13 +168,6 @@ $('.selected_service').change(function(){
             $('#refresh_service_type').html(values.type);
             $('#refresh_service_plan').html(values.plan);
         }   );
-});
-
-$('.update_button').hover(function(){
-    var memory = $('#app_memory_setup').val();
-    var instances = $('.instances_count').val();
-    $('.send_app_memory').val(memory);
-    $('.send_app_instances').val(instances);
 });
 
 
