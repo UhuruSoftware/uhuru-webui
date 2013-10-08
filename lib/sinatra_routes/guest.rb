@@ -63,13 +63,11 @@ module Uhuru::Webui
 
             unless defined?(user.message)
               session[:token] = user.token
-              session[:login_] = true
-
+              session[:logged_in] = true
               session[:fname] = user.first_name
               session[:lname] = user.last_name
               session[:username] = params[:username]
               session[:user_guid] = user.guid
-              session[:secret] = session[:session_id]
               session[:is_admin] = user.is_admin
 
               redirect ORGANIZATIONS

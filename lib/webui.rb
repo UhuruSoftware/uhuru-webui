@@ -26,12 +26,9 @@ module Uhuru::Webui
     set :root, File.expand_path("../../", __FILE__)
     set :views, File.expand_path("../../views", __FILE__)
     set :public_folder, File.expand_path("../../public", __FILE__)
-    set :session_fail, '/login'
-    set :session_secret, 'secret!'
-    set :sessions, true
-
     helpers Rack::Recaptcha::Helpers
     use Rack::Logger
+    use Rack::Session::Pool
 
     register Uhuru::Webui::SinatraRoutes::Guest
     register Uhuru::Webui::SinatraRoutes::Account
@@ -53,7 +50,7 @@ module Uhuru::Webui
     end
 
     def require_login
-      if session[:login_] == false || session[:login_] == nil
+      unless session[:logged_in]
         redirect SinatraRoutes::INDEX
       end
     end
@@ -133,5 +130,6 @@ module Uhuru::Webui
               :page_title => 'Monitoring'
           }
     end
+
   end
 end

@@ -64,46 +64,46 @@
     <span>Create organization</span>
   </div>
 
-  <form action="/createOrganization" method="post" id="payment-form" >
+  <form action="/createOrganization" method="post" id="payment-form">
     <div class="modal_content">
       <div>Organization Name</div>
       <input type="text" id="org_name" name="orgName" class="modal_input_box" autofocus />
       <br />
 
       <div>Credit card number</div>
-      <input type="text" size="16" data-stripe="number" />
+      <input type="text" size="16" maxlength="16" data-stripe="number" />
       <br />
 
       <div>Card security code</div>
-      <input type="text" size="4" data-stripe="cvc" />
+      <input type="text" size="4" maxlength="4" data-stripe="cvc" />
       <br />
 
       <div>Card expiration date</div>
-      <input type="text" size="2" data-stripe="exp-month"/>
-      <input type="text" size="4" data-stripe="exp-year"/>
+      <input type="text" size="2" maxlength="2" data-stripe="exp-month"/>
+      <input type="text" size="4" maxlength="4" data-stripe="exp-year"/>
 
       <div>Cardholder name</div>
-      <input id="name" type="text" size="20" data-stripe="name" />
+      <input id="name" type="text" size="20" maxlength="20" data-stripe="name" />
       <br />
 
       <div>Street</div>
-      <input id="address_line1" type="text" size="20" data-stripe="address_line1" />
+      <input id="address_line1" type="text" size="20" maxlength="20" data-stripe="address_line1" />
       <br />
 
       <div>City</div>
-      <input id="address_city" type="text" size="20" data-stripe="address_city" />
+      <input id="address_city" type="text" size="20" maxlength="20" data-stripe="address_city" />
       <br />
 
       <div>State/Province</div>
-      <input id="address_state" type="text" size="20" data-stripe="address_state" />
+      <input id="address_state" type="text" size="20" maxlength="20" data-stripe="address_state" />
       <br />
 
       <div>Zip/Postal</div>
-      <input id="address_zip" type="text" size="20" data-stripe="address_zip" />
+      <input id="address_zip" type="text" size="20" maxlength="20" data-stripe="address_zip" />
       <br />
 
       <div>Country</div>
-      <input id="address_country" type="text" size="20" data-stripe="address_country" />
+      <input id="address_country" type="text" size="20" maxlength="20" data-stripe="address_country" />
       <br />
 
       <% unless error_message.nil? || error_message.empty? %>
