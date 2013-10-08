@@ -5,6 +5,7 @@ require "webui"
 require "thin"
 require "optparse"
 require "class_with_feedback"
+require "cf/registrar"
 
 module Uhuru::Webui
   class Runner
@@ -76,33 +77,60 @@ module Uhuru::Webui
     end
 
     def run!
-      config = @config.dup
-      $config = config.dup
+      EM.run do
+        config = @config.dup
+        $config = config.dup
 
-      webui = Uhuru::Webui::Webui.new(config, @admin);
-      app = Rack::Builder.new do
-        use Rack::CommonLogger
-        use Rack::Recaptcha, :public_key => $config[:recaptcha][:recaptcha_public_key], :private_key => $config[:recaptcha][:recaptcha_private_key]
-        map "/" do
-          run webui
+        webui = Uhuru::Webui::Webui.new(config, @admin);
+        app = Rack::Builder.new do
+          use Rack::CommonLogger
+          use Rack::Recaptcha, :public_key => $config[:recaptcha][:recaptcha_public_key], :private_key => $config[:recaptcha][:recaptcha_private_key]
+          map "/" do
+            run webui
+          end
         end
+        @thin_server = Thin::Server.new(@config[:bind_address], @config[:port], app)
+
+        trap_signals
+
+        # activate threaded only if required
+        @thin_server.threaded = true
+        @thin_server.start!
+        if ($config[:dev_mode] == false)
+          registrar.register_with_router
+        end
+
       end
-      @thin_server = Thin::Server.new(@config[:bind_address], @config[:port], app)
-
-      trap_signals
-
-      # activate threaded only if required
-      # @thin_server.threaded = true
-      @thin_server.start!
     end
+
 
     def trap_signals
       ["TERM", "INT"].each do |signal|
         trap(signal) do
-          @thin_server.stop! if @thin_server
-          EM.stop
+          if ($config[:dev_mode] == false)
+            registrar.shutdown do
+              @thin_server.stop! if @thin_server
+              EM.stop
+            end
+          else
+            @thin_server.stop! if @thin_server
+            EM.stop
+          end
         end
       end
     end
+
+
+    def registrar
+      @registrar ||= Cf::Registrar.new(
+          :mbus => $config[:message_bus_uri],
+          :host => $config[:bind_address],
+          :port => $config[:port],
+          :uri => $config[:webui][:domain],
+          :tags => {:component => "WebUI"},
+          :index => 0
+      )
+    end
+
   end
 end

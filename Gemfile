@@ -8,8 +8,8 @@ gem "steno"
 
 gem "cfoundry", "~> 4.3.4"
 gem "cf-uaa-lib"
-gem "vcap_common",  "~> 2.0.8", :git => 'git://github.com/cloudfoundry/vcap-common.git', :ref => 'e5d71831a1'
-
+gem "vcap_common", :git => 'git://github.com/cloudfoundry/vcap-common.git', :ref => 'cc1d06f746'
+gem "cf-message-bus", :git => "git://github.com/cloudfoundry/cf-message-bus.git", :ref=>'dbc2fc6e71'
 gem "encryptor"
 gem "rack-recaptcha", :require => 'rack/recaptcha'
 gem "rake","~> 10.0.3"

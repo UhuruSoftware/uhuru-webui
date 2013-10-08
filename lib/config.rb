@@ -30,7 +30,9 @@ class Uhuru::Webui::Config < VCAP::Config
     {
 
       :cloud_controller_url               => String,
-
+      :message_bus_uri                    => String,
+      :dev_mode                           => Object,
+      :bind_address                       => String,
       :uaa => {
         :url                              => String,
         :client_id                        => String,
