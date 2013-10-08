@@ -56,7 +56,7 @@ module Uhuru::Webui
     end
 
     def require_admin
-      if session[:login_] == false || session[:login_] == nil || session[:is_admin] == false
+      if session[:logged_in] == false || session[:logged_in] == nil || session[:is_admin] == false
         redirect SinatraRoutes::INDEX
       end
     end
