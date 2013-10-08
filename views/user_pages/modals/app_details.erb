@@ -80,10 +80,10 @@
             </select>
           </td>
           <td id="refresh_service_type">
-              <label><%= services_list[0].type %></label>
+              <label><%= defined?(services_list[0].type) ? services_list[0].type : '-' %></label>
           </td>
           <td id="refresh_service_plan">
-              <label><%= services_list[0].plan %></label>
+              <label><%= defined?(services_list[0].plan) ? services_list[0].plan : '-' %></label>
           </td>
           <td class="action">
             <button type="button" class="image s24px plus bind_service_button" title="<%= app.name %>"></button>
