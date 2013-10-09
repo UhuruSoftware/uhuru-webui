@@ -108,9 +108,7 @@ module Uhuru::Webui
           erb :'admin/billing', {
               :layout => :'layouts/admin',
               :locals => {
-                  :current_tab => 'billing',
-                  #:public_key => $admin[:stripe][:publishable_key],
-                  #:secret_key => $admin[:stripe][:secret_key]
+                  :current_tab => 'billing'
               }
           }
         end
@@ -118,8 +116,14 @@ module Uhuru::Webui
         app.post ADMINISTRATION_BILLING do
           require_admin
 
-          #$admin[:stripe][:publishable_key] = params[:public_key]
-          #$admin[:stripe][:secret_key] = params[:secret_key]
+          $admin[:billing][:provider] = params[:provider]
+
+          $admin[:billing][:options].each do |provider, values|
+            values.each do |key, _|
+              $admin[:billing][:options][provider][key] = params["#{provider}:#{key}"]
+            end
+          end
+
           Uhuru::Webui::AdminSettings.save_changed_value
 
           redirect ADMINISTRATION_BILLING

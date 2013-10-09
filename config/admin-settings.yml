@@ -59,8 +59,9 @@ email:
 billing:
   provider: stripe
   options:
-    publishable_key: pk_test_gRsPhGxpLivq7IsDPyuY9zs8
-    secret_key: sk_test_fZOqxL3KHooewcpfplMZxVby
+    stripe:
+      publishable_key: pk_test_gRsPhGxpLivq7IsDPyuY9zs8
+      secret_key: sk_test_fZOqxL3KHooewcpfplMZxVby
 
 
 

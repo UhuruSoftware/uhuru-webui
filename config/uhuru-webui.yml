@@ -12,7 +12,7 @@ uaa:
   client_secret: webuisecret
 logging:
   level: debug
-  file: /home/adauser/tmp/webui/uhuru_webui.log
+  file: /tmp/uhuru_webui.log
 monitoring:
   reports:
     half_of_day:
@@ -83,7 +83,7 @@ monitoring:
     nodejs: https://github.com/cloudfoundry/heroku-buildpack-nodejs
     php: https://github.com/heroku/heroku-buildpack-php
     ruby: https://github.com/cloudfoundry/heroku-buildpack-ruby
-admin_config_file: /home/adauser/tmp/webui/admin-settings.yml
+admin_config_file: /tmp/admin-settings.yml
 billing_data:
   provider: yml
-  connection: /home/adauser/tmp/webui/billing_bindings.yml
+  connection: /tmp/billing_bindings.yml

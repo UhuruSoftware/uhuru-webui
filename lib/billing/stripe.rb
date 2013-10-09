@@ -7,7 +7,7 @@ module Uhuru::Webui::Billing
     def initialize
       super()
 
-      ::Stripe.api_key = $config[:billing][:options][:secret_key]
+      ::Stripe.api_key = $config[:billing][:options][:stripe][:secret_key]
     end
 
     # this is how you read credit card for org
@@ -28,7 +28,7 @@ module Uhuru::Webui::Billing
       ::Stripe::Customer.create(
           :email => email,
           :card  => token
-      )
+      ).id
     end
 
     def add_billing_binding(customer_id, org_guid)

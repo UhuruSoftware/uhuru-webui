@@ -32,7 +32,8 @@ body.noscroll
 
 a
 {
-    text-decoration: none;
+    color: #000000;
+    text-decoration: underline;
 }
 
 /************************** WYSIWYG ****************************/
