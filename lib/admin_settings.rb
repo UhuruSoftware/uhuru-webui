@@ -53,7 +53,7 @@ class Uhuru::Webui::AdminSettings < VCAP::Config
             :user                             => String,
             :secret                           => String,
             :auth_method                      => Symbol,
-            :enable_tls                       => String,
+            :enable_tls                       => Object,
             :registration_email               => String,
             :welcome_email                    => String
         },
