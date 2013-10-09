@@ -1,10 +1,17 @@
 require 'yaml'
-require 'config'
-require 'dev_utils'
 require 'date'
 require 'profiler'
 require 'color/css'
-require 'class_with_feedback'
+require 'regex'
+require 'net/smtp'
+require 'openssl'
+require "email"
+require "encryption"
+require 'rack/recaptcha'
+require 'uri'
+require 'base32'
+
+
 require 'sinatra/session'
 require 'sinatra/base'
 require 'sinatra_routes/route_definitions'
@@ -20,6 +27,21 @@ require 'sinatra_routes/routes'
 require 'sinatra_routes/cloud_feedback'
 require 'sinatra_routes/admin'
 
+require 'organizations'
+require 'spaces'
+require 'users'
+require 'applications'
+require 'service_instances'
+require 'users_setup'
+require 'readapps'
+require 'domains'
+require 'routes'
+require 'dev_utils'
+
+require 'billing/provider'
+
+
+
 module Uhuru::Webui
   class Webui < Sinatra::Base
 
@@ -27,7 +49,7 @@ module Uhuru::Webui
     set :views, File.expand_path("../../views", __FILE__)
     set :public_folder, File.expand_path("../../public", __FILE__)
     helpers Rack::Recaptcha::Helpers
-    use Rack::Logger
+
     use Rack::Session::Pool
 
     register Uhuru::Webui::SinatraRoutes::Guest
@@ -42,9 +64,7 @@ module Uhuru::Webui
     register Uhuru::Webui::SinatraRoutes::CloudFeedback
     register Uhuru::Webui::SinatraRoutes::Administration
 
-    def initialize(config, admin)
-      $config = config
-      $admin = admin
+    def initialize()
       $cf_target = $config[:cloud_controller_url]
       super()
     end

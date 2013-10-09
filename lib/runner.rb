@@ -1,7 +1,9 @@
+require "vcap/common"
+require 'vcap/config'
+
 require "steno"
 require "config"
 require "admin_settings"
-require "webui"
 require "thin"
 require "optparse"
 require "class_with_feedback"
@@ -21,23 +23,28 @@ module Uhuru::Webui
 
       @config = Uhuru::Webui::Config.from_file(@config_file)
 
-      Uhuru::Webui::AdminSettings.bootstrap(@config[:admin_config_file])
+      @admin_file = @config[:admin_config_file]
+
+      Uhuru::Webui::AdminSettings.bootstrap(@admin_file)
+
+      @admin = Uhuru::Webui::AdminSettings.from_file(@admin_file)
+
 
       @config[:bind_address] = VCAP.local_ip(@config[:local_route])
 
-      @config = Uhuru::Webui::AdminSettings.merge_config(@config, @config[:admin_config_file])
-
-      p @config
+      @config = Uhuru::Webui::AdminSettings.merge_config(@config, @admin)
 
       ClassWithFeedback.cleanup
 
       create_pidfile
       setup_logging
+      @config[:logger] = logger
     end
 
     def logger
-      @logger ||= Steno.logger("webui.runner")
+      $logger ||= Steno.logger("uhuru-webui.runner")
     end
+
 
     def options_parser
       @parser ||= OptionParser.new do |opts|
@@ -79,10 +86,14 @@ module Uhuru::Webui
 
     def run!
       EM.run do
-        config = @config.dup
-        $config = config.dup
+        $config = @config.dup
+        $admin = @admin.dup
 
-        webui = Uhuru::Webui::Webui.new(config, @admin);
+        # Only load the Web UI after configurations are initialized and we're ready to run.
+        require "webui"
+
+        webui = Uhuru::Webui::Webui.new
+
         app = Rack::Builder.new do
           use Rack::CommonLogger
           use Rack::Recaptcha, :public_key => $config[:recaptcha][:recaptcha_public_key], :private_key => $config[:recaptcha][:recaptcha_private_key]

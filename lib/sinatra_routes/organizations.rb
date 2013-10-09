@@ -1,5 +1,5 @@
 require 'organizations'
-require 'stripe_wrapper'
+
 
 module Uhuru::Webui
   module SinatraRoutes
@@ -35,31 +35,43 @@ module Uhuru::Webui
                       :organizations_list => organizations_list,
                       :error_message => error_message,
                       :include_erb => :'user_pages/modals/organizations_create',
-                      :publishable_key => $config[:stripe][:publishable_key]
                   }
               }
         end
 
         app.post '/createOrganization' do
-          if params[:orgName].size >= 4
-            create = Library::Organizations.new(session[:token], $cf_target).create($config, params[:orgName], session[:user_guid])
-          else
+
+          if $config[:billing][:provider] == 'stripe'
+            if params[:stripeToken] == nil
+              redirect ORGANIZATIONS_CREATE + "?error=Could retrieve your credit card information. Please contact support."
+            end
+          end
+
+          if params[:orgName].size < 4
             redirect ORGANIZATIONS_CREATE + '?error=The name is too short (min. 4 characters)'
           end
+
+          create = Library::Organizations.new(session[:token], $cf_target).create($config, params[:orgName], session[:user_guid])
 
           if defined?(create.message)
             redirect ORGANIZATIONS_CREATE + "?error=#{create.description}"
           else
-            if params[:stripeToken] != nil
-              puts session[:username]
-              customer = StripeWrapper.create_customer(session[:username], params[:stripeToken])
-              if customer != nil
-                StripeWrapper.add_billing_binding(customer.id, create)
+            if $config[:billing][:provider] == 'stripe'
+              begin
+                customer = Uhuru::Webui::Billing::Provider.provider.create_customer(session[:username], params[:stripeToken])
+                Uhuru::Webui::Billing::Provider.provider.add_billing_binding(customer.id, create)
+              rescue => e
+                $logger.error("Error while trying to create an org for #{session[:user_guid]} - #{e.message}:#{e.backtrace}")
+                Library::Organizations.new(session[:token], $cf_target).delete($config, create)
+                redirect ORGANIZATIONS_CREATE + "?error=Could not setup your credit card information. Please contact support."
               end
+            else
+              # this else branch is a placeholder for Billing Provider 'none'
             end
-            redirect ORGANIZATIONS
           end
+          redirect ORGANIZATIONS
         end
+
 
         app.post '/deleteOrganization' do
           delete = Library::Organizations.new(session[:token], $cf_target).delete($config, params[:orgGuid])

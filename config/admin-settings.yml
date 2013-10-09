@@ -54,9 +54,13 @@ email:
     Uhuru team</h3> </div> "
   welcome_email: ! '<div> <h1>Welcome to Uhuru AppCloud</h1> <p>Thank you for joining
     the Uhuru community!</p> <h3>The Uhuru team</h3> </div> '
-stripe:
-  publishable_key: pk_test_gRsPhGxpLivq7IsDPyuY9zs8 125
-  secret_key: sk_test_fZOqxL3KHooewcpfplMZxVby
+
+
+billing:
+  provider: stripe
+  options:
+    publishable_key: pk_test_gRsPhGxpLivq7IsDPyuY9zs8
+    secret_key: sk_test_fZOqxL3KHooewcpfplMZxVby
 
 
 
@@ -86,4 +90,3 @@ reports:
     user_column:
       name: guid
       label: User
-  

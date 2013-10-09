@@ -1,4 +1,3 @@
-require 'vcap/config'
 
 module Uhuru
   module Webui
@@ -59,9 +58,8 @@ class Uhuru::Webui::AdminSettings < VCAP::Config
             :welcome_email                    => String
         },
 
-        :stripe => {
-            :publishable_key                => String,
-            :secret_key                     => String
+        :billing => {
+            :provider                       => String
         }
     }
   end
@@ -82,17 +80,20 @@ class Uhuru::Webui::AdminSettings < VCAP::Config
   end
 
   def self.save_changed_value
-    path = File.expand_path("#{$config[:admin_config_file]}", __FILE__)
+    path = $config[:admin_config_file]
+
+    settings = stringify_keys($admin.dup)
+
     File.open(path, "w+") do |f|
       f.sync = true
-      f.write($admin.to_yaml)
+      f.write(settings.to_yaml)
       f.flush()
     end
+
+    merge_config($config, $admin)
   end
 
-  def self.merge_config(config, admin_config_file)
-    admin_settings = from_file(admin_config_file)
-
+  def self.merge_config(config, admin_settings)
     admin_settings.each do |key|
       if config.include?key[0]
         config[key[0]] = admin_settings[key[0]]
@@ -102,6 +103,18 @@ class Uhuru::Webui::AdminSettings < VCAP::Config
     end
 
     config
+  end
+
+  private
+
+  def self.stringify_keys(hash)
+    if hash.is_a? Hash
+      new_hash = {}
+      hash.each {|k, v| new_hash[k.to_s] = stringify_keys(v) }
+      new_hash
+    else
+      hash
+    end
   end
 
 end

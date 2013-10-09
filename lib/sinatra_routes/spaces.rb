@@ -61,7 +61,7 @@ module Uhuru::Webui
                       }
                   }
             when 'credit_cards'
-              credit_card = StripeWrapper.read_credit_card_org(organization_guid)
+              credit_card = Uhuru::Webui::Billing::Provider.provider.read_credit_card_org(organization_guid)
               erb :'user_pages/organization',
                   {
                       :layout => :'layouts/user',

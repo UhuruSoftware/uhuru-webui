@@ -67,6 +67,6 @@
 </div>
 
 <% if defined?(include_erb) && include_erb != nil %>
-    <%= erb(include_erb, :layout => false, :locals => { :error_message => error_message, :publishable_key => publishable_key }) %>
+    <%= erb(include_erb, :layout => false, :locals => { :error_message => error_message }) %>
 <% end %>
 

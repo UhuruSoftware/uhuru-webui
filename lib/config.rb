@@ -1,22 +1,3 @@
-require 'organizations'
-require 'spaces'
-require 'users'
-require 'applications'
-require 'service_instances'
-require 'users_setup'
-require 'readapps'
-require 'logger'
-require 'domains'
-require 'routes'
-require 'vcap/config'
-require 'regex'
-require 'net/smtp'
-require 'openssl'
-require "email"
-require "enc"
-require 'rack/recaptcha'
-require 'uri'
-require 'base32'
 
 module Uhuru
   module Webui
