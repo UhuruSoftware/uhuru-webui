@@ -171,6 +171,18 @@ module Uhuru::Webui
           redirect ADMINISTRATION_EMAIL
         end
 
+
+        app.get ADMINISTRATION_REPORTS do
+          require_admin
+
+          erb :'admin/reports', {
+              :layout => :'layouts/admin',
+              :locals => {
+                  :current_tab => 'reports'
+              }
+          }
+        end
+
       end
     end
   end

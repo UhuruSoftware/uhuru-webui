@@ -1,0 +1,91 @@
+
+
+<%
+
+
+   require 'pg'
+   require 'date'
+   require 'csv'
+
+   class CFReports
+
+     attr_reader :uaa_users
+
+     def reports
+       {
+               :users => 'select * from users',
+               :tables => "select * from information_schema.tables where table_schema='public' order by table_name asc",
+               :apps => "select * from apps",
+               :uaa_users => "SELECT * FROM USERS",
+               :spaces_developers => "SELECT * FROM spaces_managers"
+
+
+       }
+     end
+
+     def init_users
+       conn = PG.connect(
+               host:     '10.0.7.123',
+               port:     '2544',
+               dbname:   'uaa',
+               user:     'uaa',
+               password: 'uaa'
+       )
+
+       uaa_users = conn.exec(reports[:uaa_users])
+       @uaa_users = {}
+
+
+
+       uaa_users.each do |user|
+         @uaa_users[user['id']] = {
+                 :username => user['username'],
+                 :email => user['email'],
+                 :first_name => user['givenname'],
+                 :last_name => user['familyname'],
+                 :phone => user['phonenumber']
+         }
+       end
+
+
+       @uaa_users.define_singleton_method(:get_user_label) do |user_id|
+         if self.has_key?(user_id)
+           self[user_id][:username]
+         else
+           "Unknown (#{user_id})"
+         end
+       end
+
+
+     end
+
+
+     def get_connection
+       conn = PG.connect(
+               host:     '10.0.7.123',
+               port:     '2544',
+               dbname:   'appcloud_ng',
+               user:     'root',
+               password: 'root'
+       )
+
+       return conn
+     end
+
+     def initialize
+       @conn = get_connection
+     end
+
+     def run_query(query)
+       @conn.exec(reports[query])
+     end
+   end
+
+%>
+
+<%=
+    reports = CFReports.new
+    reports.init_users
+    data = reports.run_query(:users)
+    erb(:'admin/reports/simple_table', :layout => false, :locals => { :data => data, :users => { :column => 'guid', :label => 'User', :data => reports.uaa_users } })
+%>

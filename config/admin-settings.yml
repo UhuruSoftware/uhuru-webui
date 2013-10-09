@@ -57,3 +57,33 @@ email:
 stripe:
   publishable_key: pk_test_gRsPhGxpLivq7IsDPyuY9zs8 125
   secret_key: sk_test_fZOqxL3KHooewcpfplMZxVby
+
+
+
+
+reports:
+  users:
+    label: All Users
+    query: select * from users
+    user_column:
+      name: guid
+      label: User
+  users_and_orgs:
+    label: Organizations and Members
+    query: select * from users
+    user_column:
+      name: guid
+      label: User
+  users_count_history:
+    label: User Count History
+    query: select * from users
+    user_column:
+      name: guid
+      label: User
+  apps:
+    label: Apps and Users
+    query: select * from users
+    user_column:
+      name: guid
+      label: User
+  

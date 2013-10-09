@@ -97,8 +97,9 @@ image-buttons:
     gear: 'gear_32px.png'
     key: 'key_32px.png'
     money: 'money_bag_32px.png'
-    start: 'play_24px.png'
-    stop: 'pause_24px.png'
+    start: 'play_32px.png'
+    stop: 'pause_32px.png'
+    admin: 'reports_32px.png'
   48px:
     home: 'house.png'
     plus: 'plus_48px.png'
@@ -279,6 +280,7 @@ square_tiles:
     link:
       link: '#FFFFFF'
       visited: '#FFFFFF'
+      hover: '#FFFFFF'
       hover: '#FFFFFF'
       active: '#FFFFFF'
   route:
