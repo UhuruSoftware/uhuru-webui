@@ -1,50 +1,50 @@
 ---
-:contact:
-  :company: Uhuru Software, Inc.
-  :address: 17530 NE Union Hill Road, Suite 120, Redmond, WA 98052, USA.
-  :phone: +1 (425) 406-6383
-  :email: uhuru@uhurusoftware.com
-:recaptcha:
-  :use_recaptcha: true
-  :recaptcha_public_key: 6LfuXN4SAAAAAAVoUDfpUzxftBrpecXQSzTuKcZk
-  :recaptcha_private_key: 6LfuXN4SAAAAAEuH--10s_lH_HMeYdjQtxha3UKd
-:webui:
-  :page_title: Uhuru WebUi
-  :site_tab: Uhuru
-  :welcome_message: Uhuru AppClound NG
-  :copyright_message: © Copyright Uhuru Software 2012
-  :domain: 192.168.100.100
-  :activation_link_secret: terceseht
-  :more_videos_link: http://support.uhurusoftware.com/forums/20507726-uhuru-knowledge-bases
-  :guest_feedback_link: http://bit.ly/uhrbloglife
-  :twitter_link: https://www.twitter.com/uhurusoftware
-  :facebook_link: https://www.facebook.com/uhurusoftware
-  :terms_of_services_link: http://uhurusoftware.com/tos
-  :privacy_policy_link: http://uhurusoftware.com/privacy/
-  :visual_studio_plugin_link: http://www.uhurucloud.com/tools/visualstudio
-  :app_cloud_admin_link: http://www.uhurucloud.com/tools/cloudadmin
-  :command_line_link: http://docs.cloudfoundry.com/tools/vmc/installing-vmc.html
-  :eclipse_url: http://docs.cloudfoundry.com/tools/STS/configuring-STS.html
-  :company_link: http://www.uhurusoftware.com
-  :support_link: http://uhurusoftware.zendesk.com
-  :start_page_text: ! "<h1>Ready To Go</h1>\r\n<h3> Host your web applications in
+contact:
+  company: Uhuru Software, Inc.
+  address: 17530 NE Union Hill Road, Suite 120, Redmond, WA 98052, USA.
+  phone: +1 (425) 406-6383
+  email: uhuru@uhurusoftware.com
+recaptcha:
+  use_recaptcha: true
+  recaptcha_public_key: 6LfuXN4SAAAAAAVoUDfpUzxftBrpecXQSzTuKcZk
+  recaptcha_private_key: 6LfuXN4SAAAAAEuH--10s_lH_HMeYdjQtxha3UKd
+webui:
+  page_title: Uhuru WebUi
+  site_tab: Uhuru
+  welcome_message: Uhuru AppClound NG
+  copyright_message: © Copyright Uhuru Software 2012
+  domain: 192.168.100.100
+  activation_link_secret: terceseht
+  more_videos_link: http://support.uhurusoftware.com/forums/20507726-uhuru-knowledge-bases
+  guest_feedback_link: http://bit.ly/uhrbloglife
+  twitter_link: https://www.twitter.com/uhurusoftware
+  facebook_link: https://www.facebook.com/uhurusoftware
+  terms_of_services_link: http://uhurusoftware.com/tos
+  privacy_policy_link: http://uhurusoftware.com/privacy/
+  visual_studio_plugin_link: http://www.uhurucloud.com/tools/visualstudio
+  app_cloud_admin_link: http://www.uhurucloud.com/tools/cloudadmin
+  command_line_link: http://docs.cloudfoundry.com/tools/vmc/installing-vmc.html
+  eclipse_url: http://docs.cloudfoundry.com/tools/STS/configuring-STS.html
+  company_link: http://www.uhurusoftware.com
+  support_link: http://uhurusoftware.zendesk.com
+  start_page_text: ! "<h1>Ready To Go</h1>\r\n<h3> Host your web applications in
     minutes. We support apps written in PHP, Node.js, Ruby, Java and .NET. Sign up
     for your free beta account now. Find more details about the Uhuru App Cloud features
     on our web site. </h3>"
-  :start_page_splash_text: <h2>Getting Started</h2> <h3> Learn how to register with
+  start_page_splash_text: <h2>Getting Started</h2> <h3> Learn how to register with
     Ready To Go and start hosting your own web applications. See how you can setup
     teams for collaboration on your applications and setup multiple app instances
     for load balancing and fault tolerance</h3>
-:email:
-  :from: postmaster@uhurusoftware.mailgun.org
-  :from_alias: Uhuru Cloud
-  :server: smtp.mailgun.org
-  :port: 587
-  :user: postmaster@uhurusoftware.mailgun.org
-  :secret: 4q899o1avzu3
-  :auth_method: :login
-  :enable_tls: 'true'
-  :registration_email: ! "<div> <h1>Uhuru Software Confirmation</h1> <p>Your account
+email:
+  from: postmaster@uhurusoftware.mailgun.org
+  from_alias: Uhuru Cloud
+  server: smtp.mailgun.org
+  port: 587
+  user: postmaster@uhurusoftware.mailgun.org
+  secret: 4q899o1avzu3
+  auth_method: :login
+  enable_tls: 'true'
+  registration_email: ! "<div> <h1>Uhuru Software Confirmation</h1> <p>Your account
     is ready to use. Please click the link bellow in order to continue and finish
     the signup process:</p>\r\n<a href=\"#ACTIVATION_LINK#\" style=\"text-decoration:
     none; display: block;\"> <div style=\"display: block; width: 200px; height: 200px;
@@ -52,8 +52,8 @@
     Finish<br> registration </div> </a>\r\n<p>If you have not signup to uhuru cloud
     please ignore this email and the account will be removed automatically</p> <h3>The
     Uhuru team</h3> </div> "
-  :welcome_email: ! '<div> <h1>Welcome to Uhuru AppCloud</h1> <p>Thank you for joining
+  welcome_email: ! '<div> <h1>Welcome to Uhuru AppCloud</h1> <p>Thank you for joining
     the Uhuru community!</p> <h3>The Uhuru team</h3> </div> '
-:stripe:
-  :publishable_key: pk_test_gRsPhGxpLivq7IsDPyuY9zs8 125
-  :secret_key: sk_test_fZOqxL3KHooewcpfplMZxVby
+stripe:
+  publishable_key: pk_test_gRsPhGxpLivq7IsDPyuY9zs8 125
+  secret_key: sk_test_fZOqxL3KHooewcpfplMZxVby

@@ -6,8 +6,6 @@ module Uhuru
 end
 
 class Uhuru::Webui::AdminSettings < VCAP::Config
-  #DEFAULT_CONFIG_PATH = File.expand_path('../../admin-settings.yml', __FILE__)
-
   define_schema do
     {
         :contact => {
@@ -68,6 +66,16 @@ class Uhuru::Webui::AdminSettings < VCAP::Config
     }
   end
 
+
+  def self.bootstrap(destination_file)
+    original_file = File.expand_path('../../config/admin-settings.yml', __FILE__)
+
+    unless File.exist?(destination_file)
+      FileUtils.cp original_file, destination_file
+    end
+  end
+
+
   def self.from_file(*args)
     config = super(*args)
     config
@@ -82,7 +90,8 @@ class Uhuru::Webui::AdminSettings < VCAP::Config
     end
   end
 
-  def self.copy_admin_to_config(config, admin_settings, config_file)
+  def self.merge_config(config, admin_config_file)
+    admin_settings = from_file(admin_config_file)
 
     admin_settings.each do |key|
       if config.include?key[0]
@@ -92,7 +101,7 @@ class Uhuru::Webui::AdminSettings < VCAP::Config
       end
     end
 
-    File.write(config_file, config.to_yaml)
+    config
   end
 
 end

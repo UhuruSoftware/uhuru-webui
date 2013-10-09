@@ -1,10 +1,10 @@
 ---
 applications:
-- name: nodejsmysql-monit-fb73b
+- name: nodejsmysql-monit-a1c9a
   memory: 64M
   instances: 1
-  host: nodejsmysql-monit-fb73b
-  domain: apps.ccng-dev.net
+  host: nodejsmysql-monit-a1c9a
+  domain: apps.cloudmonit.net
   command: node app.js
   buildpack: https://github.com/cloudfoundry/heroku-buildpack-nodejs
   services:

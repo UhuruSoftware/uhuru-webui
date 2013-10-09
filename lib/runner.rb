@@ -19,15 +19,15 @@ module Uhuru::Webui
 
       parse_options!
 
-      config = Uhuru::Webui::Config.from_file(@config_file)
-
-      admin_file = File.expand_path("#{config[:admin_config_file]}", __FILE__)
-      @admin = Uhuru::Webui::AdminSettings.from_file(admin_file)
-      Uhuru::Webui::AdminSettings.copy_admin_to_config(config, @admin, @config_file)
-
-      #reload config file after update
       @config = Uhuru::Webui::Config.from_file(@config_file)
+
+      Uhuru::Webui::AdminSettings.bootstrap(@config[:admin_config_file])
+
       @config[:bind_address] = VCAP.local_ip(@config[:local_route])
+
+      @config = Uhuru::Webui::AdminSettings.merge_config(@config, @config[:admin_config_file])
+
+      p @config
 
       ClassWithFeedback.cleanup
 

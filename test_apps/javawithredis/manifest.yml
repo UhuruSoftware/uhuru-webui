@@ -1,10 +1,10 @@
 ---
 applications:
-- name: javawithredis-monit-6e3c5
+- name: javawithredis-monit-537b0
   memory: 512M
   instances: 1
-  host: javawithredis-monit-6e3c5
-  domain: apps.ccng-dev.net
+  host: javawithredis-monit-537b0
+  domain: apps.cloudmonit.net
   path: javawithredis.war
   buildpack: https://github.com/ramnivas/cloudfoundry-buildpack-java
   services:
