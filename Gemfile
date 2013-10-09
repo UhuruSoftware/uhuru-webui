@@ -27,3 +27,8 @@ gem "cf"
 gem "color"
 
 gem 'stripe'
+
+
+gem "activerecord", ">= 3.0.0"
+gem "sqlite3"
+gem "pg" # required for reports

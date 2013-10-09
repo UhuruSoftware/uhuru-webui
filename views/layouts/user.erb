@@ -21,6 +21,14 @@
 
 
     <div id="user_panel">
+
+      <% if session[:is_admin] %>
+          <a href="/admin" title="Administration">
+            <button class="image s32px admin"></button>
+          </a>
+      <% end %>
+
+
       <a href="/organizations" title="Home">
         <button class="image s32px home"></button>
       </a>
