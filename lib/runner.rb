@@ -132,7 +132,7 @@ module Uhuru::Webui
           :mbus => $config[:message_bus_uri],
           :host => $config[:bind_address],
           :port => $config[:port],
-          :uri => $config[:webui][:domain],
+          :uri => $config[:domain],
           :tags => {:component => "WebUI"},
           :index => 0
       )

@@ -5,6 +5,7 @@ port: 4567
 dev_mode: true
 cloud_controller_url: http://api.ccng-dev.net
 message_bus_uri: nats://116e42690e023d88a208bff76eca54ca:8889dd351e08cc6f076bc02344320fbc@10.0.100.45:4222
+domain: www.cf.me
 bind_address: 10.0.102.200
 uaa:
   url: http://uaa.ccng-dev.net
