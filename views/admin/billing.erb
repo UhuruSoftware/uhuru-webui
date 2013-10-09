@@ -1,14 +1,34 @@
 <form action="<%= Uhuru::Webui::SinatraRoutes::ADMINISTRATION_BILLING %>" method="post">
 
-  <h2>Stripe configurations</h2>
+  <h2>Billing configurations</h2>
 
-  <h3>Public key</h3>
-  <input type="text" id="public_key" name="public_key" size="40" value="<%= public_key %>" />
-  <br />
+  <h3>Provider</h3>
+  <select name='provider'>
+    <% Uhuru::Webui::Billing::Provider.providers.each do |provider, label| %>
+        <option <%= ($config[:billing][:provider] == provider.to_s) ? 'selected' : '' %> value="<%= provider %>">
+          <%= label %>
+        </option>
+    <% end %>
 
-  <h3>Secret key</h3>
-  <input type="text" id="secret_key" name="secret_key" size="40" value="<%= secret_key %>" />
+  </select>
+
   <br />
+  <br/>
+  <br/>
+
+
+
+  <% $config[:billing][:options].each do |provider, values| %>
+
+      <h2>Detailed settings for '<%= provider %>'</h2>
+
+      <% values.each do |key, value| %>
+          <h3><%= key %></h3>
+          <input type="text" id="<%= key %>" name="<%= provider %>:<%= key %>" size="40" value="<%= value %>" />
+          <br />
+      <% end %>
+
+  <% end %>
 
   <input type="submit" value="Save" />
 

@@ -34,7 +34,7 @@ module Uhuru::Webui
                   :locals => {
                       :organizations_list => organizations_list,
                       :error_message => error_message,
-                      :include_erb => :'user_pages/modals/organizations_create',
+                      :include_erb => :"user_pages/modals/organizations_create_#{ $config[:billing][:provider] }",
                   }
               }
         end
@@ -56,17 +56,13 @@ module Uhuru::Webui
           if defined?(create.message)
             redirect ORGANIZATIONS_CREATE + "?error=#{create.description}"
           else
-            if $config[:billing][:provider] == 'stripe'
-              begin
-                customer = Uhuru::Webui::Billing::Provider.provider.create_customer(session[:username], params[:stripeToken])
-                Uhuru::Webui::Billing::Provider.provider.add_billing_binding(customer.id, create)
-              rescue => e
-                $logger.error("Error while trying to create an org for #{session[:user_guid]} - #{e.message}:#{e.backtrace}")
-                Library::Organizations.new(session[:token], $cf_target).delete($config, create)
-                redirect ORGANIZATIONS_CREATE + "?error=Could not setup your credit card information. Please contact support."
-              end
-            else
-              # this else branch is a placeholder for Billing Provider 'none'
+            begin
+              customer = Uhuru::Webui::Billing::Provider.provider.create_customer(session[:username], params[:stripeToken])
+              Uhuru::Webui::Billing::Provider.provider.add_billing_binding(customer, create)
+            rescue => e
+              $logger.error("Error while trying to create an org for #{session[:user_guid]} - #{e.message}:#{e.backtrace}")
+              Library::Organizations.new(session[:token], $cf_target).delete($config, create)
+              redirect ORGANIZATIONS_CREATE + "?error=Could not setup your credit card information. Please contact support."
             end
           end
           redirect ORGANIZATIONS
