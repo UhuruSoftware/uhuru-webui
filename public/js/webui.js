@@ -90,35 +90,30 @@ $('.square_tile .square_tile.route :button').click(delete_selected_element);
 
 
 
+
+
 /*********************************************************************************************************/
 /***********                                 APP DETAILS                                     *************/
 /*********************************************************************************************************/
 
-
-///* cancel buttons on all modals inside the app details */
-//$('.cancel_button_app_details').click(function(){
-//    hide_modal($(".unbind_service"), true);
-//    hide_modal($(".unbind_uri"), true);
-//});
-
-var start_app = function(){
-    $('#app_state_input').val('start');
-    $('#start_app').hide();
-    $('#stop_app').show();
-}
-var stop_app = function(){
-    $('#app_state_input').val('stop');
-    $('#start_app').show();
-    $('#stop_app').hide();
+//****************************  getting app state memory and instances  ******************************//
+function getStateValue()
+{
+    if($('#app_state').is(":checked") == false)
+    {
+        $('#app_state').removeAttr('checked');
+        return false
+    }
+    else
+    {
+        $('#app_state').attr('checked', 'checked');
+        return true
+    }
 }
 
-$('#start_app').click(start_app);
-$('#stop_app').click(stop_app);
-
-
-/**************************************************************************/
-/*******************     Instances and Memory       ***********************/
-/**************************************************************************/
+var app_instances_val = $('.app_instances').val();
+var app_memory_val = $('.app_memory').val();
+var app_state_val = getStateValue();
 
 $('.add_instance').click(function(){
     var new_value = parseInt($('.instances_count').val()) + 1;
@@ -126,6 +121,7 @@ $('.add_instance').click(function(){
     {
         $('.instances_count').val(new_value.toString());
         $('.send_app_instances').val(new_value.toString());
+        app_instances_val = new_value;
     }
 });
 $('.subtract_instance').click(function(){
@@ -134,6 +130,7 @@ $('.subtract_instance').click(function(){
     {
         $('.instances_count').val(new_value.toString());
         $('.send_app_instances').val(new_value.toString());
+        app_instances_val = new_value;
     }
 });
 $('.add_memory').click(function(){
@@ -142,6 +139,7 @@ $('.add_memory').click(function(){
     {
         $('#app_memory_setup').val(new_value.toString());
         $('.send_app_memory').val(new_value.toString());
+        app_memory_val = new_value;
     }
 });
 $('.subtract_memory').click(function(){
@@ -150,12 +148,75 @@ $('.subtract_memory').click(function(){
     {
         $('#app_memory_setup').val(new_value.toString());
         $('.send_app_memory').val(new_value.toString());
+        app_memory_val = new_value;
     }
 });
 
+$('.app_instances').blur(function(){
+    app_instances_val = $(this).val();
+});
+$('.app_memory').blur(function(){
+    app_memory_val = $(this).val();
+});
+
+$('#app_state').click(function(){
+    app_state_val = getStateValue();
+});
 
 
+//*******************************  getting required variables  *********************************//
+var selected_service_name = $('.selected_service').children(":selected").val();
+var selected_service_type = $('.get_service_type').html();
+var selected_service_plan = $('.get_service_plan').html();
+var selected_url_host;
+var selected_url_domain = $('.get_url_domain').children(":selected").html();
+var selected_url_domain_guid = $('.get_url_domain').children(":selected").val();
+$('.get_url_host').blur(function(){
+    selected_url_host = $(this).val();
+});
+$('.get_url_domain').change(function(){
+    selected_url_domain = $(this).children(":selected").html();
+    selected_url_domain_guid = $(this).children(":selected").val();
+});
+
+var services = new Array();
+var urls = new Array();
+
+services = readServices();
+urls = readUrls();
+
+//***********************  getting list of services and urls from table  **********************//
+function readServices()
+{
+    var table = document.getElementById('services_list');
+    var r;
+    var row;
+    var data = new Array();
+
+    for(r = 1, row; row = table.rows[r], r < table.rows.length - 1; r++)
+    {
+        data.push({ name: row.cells[0].innerHTML, type: row.cells[1].innerHTML, plan: row.cells[2].innerHTML });
+    }
+    return data;
+}
+
+function readUrls()
+{
+    var table = document.getElementById('urls_list');
+    var r;
+    var row;
+    var data = new Array();
+
+    for(r = 1, row; row = table.rows[r], r < table.rows.length - 1; r++)
+    {
+        data.push({ host: row.cells[0].innerHTML, domain: row.cells[1].innerHTML, domain_guid: row.cells[2].innerHTML });
+    }
+    return data;
+}
+
+//**************************  getting services from cloud controller  *************************//
 $('.selected_service').change(function(){
+    selected_service_name = $(this).children(":selected").val();
     $.ajax({
         url: "/get_service_data",
         type: 'POST',
@@ -167,8 +228,156 @@ $('.selected_service').change(function(){
             var values = jQuery.parseJSON( data );
             $('#refresh_service_type').html(values.type);
             $('#refresh_service_plan').html(values.plan);
+            selected_service_type = values.type;
+            selected_service_plan = values.plan;
         }   );
 });
+
+//***********************  add services/urls in lists and render them in html  ********************//
+var add_service = function(){
+    var exists = false;
+    if (services.length > 0)
+    {
+        var i;
+        for(i = 0; i < services.length; i++)
+        {
+            if( services[i]['name'] != undefined && services[i]['name'] == selected_service_name )
+            {
+                exists = true;
+            }
+        }
+    }
+
+    if (exists == false)
+    {
+        services.push({ name: selected_service_name, type: selected_service_type, plan: selected_service_plan });
+
+        var table = document.getElementById('services_list');
+        var row = table.insertRow(1);
+        var name = row.insertCell(0);
+        name.className = name.className + 'name';
+        var type = row.insertCell(1);
+        var plan = row.insertCell(2);
+        var action = row.insertCell(3);
+
+        name.innerHTML = selected_service_name;
+        type.innerHTML = selected_service_type;
+        plan.innerHTML = selected_service_plan;
+        action.innerHTML = "<button type='button' id=\'" + selected_service_name + "\' class='image s24px trash remove_service' title='Remove " + selected_service_name + "' onclick='removeService(this)'></button>";
+        action.className = action.className + 'action';
+    }
+}
+
+var add_url = function(){
+    var exists = false;
+    if (urls.length > 0)
+    {
+        var i;
+        for(i = 0; i < urls.length; i++)
+        {
+            if( urls[i]['host'] != undefined && urls[i]['host'] == selected_url_host )
+            {
+                exists = true;
+            }
+        }
+    }
+
+    if (exists == false)
+    {
+        urls.push({ host: selected_url_host, domain: selected_url_domain, domain_guid: selected_url_domain_guid });
+
+        var table = document.getElementById('urls_list');
+        var row = table.insertRow(1);
+        var host = row.insertCell(0);
+        host.className = host.className + 'name';
+        var url = row.insertCell(1);
+        url.className = url.className + 'url';
+        var action = row.insertCell(2);
+
+        host.innerHTML = selected_url_host;
+        url.innerHTML = selected_url_domain;
+        action.innerHTML = "<button type='button' id=\'" + selected_url_host + "\' class='image s24px trash remove_url' title='Remove " + selected_url_host + "' onclick='removeUrl(this)'></button>";
+        action.className = action.className + 'action';
+    }
+}
+
+function removeService(element){
+    id = element.id;
+    var table = document.getElementById('services_list');
+    var r;
+    var row;
+
+    for(r = 1, row; row = table.rows[r], r < table.rows.length - 1; r++)
+    {
+        if(row.cells[0].innerHTML == id)
+        {
+            table.deleteRow(r);
+            var s;
+
+            for(s = 0; s <= services.length - 1; s++)
+            {
+                if(services[s]['name'] == id)
+                {
+                    services.splice(s, 1);
+                }
+            }
+        }
+    }
+}
+
+function removeUrl(element){
+    id = element.id;
+    var table = document.getElementById('urls_list');
+    var r;
+    var row;
+
+    for(r = 1, row; row = table.rows[r], r < table.rows.length - 1; r++)
+    {
+        if(row.cells[0].innerHTML == id)
+        {
+            table.deleteRow(r);
+            var s;
+
+            for(s = 0; s <= urls.length - 1; s++)
+            {
+                if(urls[s]['host'] == id)
+                {
+                    urls.splice(s, 1);
+                }
+            }
+        }
+    }
+
+}
+
+$('#add_service').click(add_service);
+$('#add_url').click(add_url);
+
+//*******************************   update app button  *********************************************//
+$('#update_app').click(function(){
+    $.ajax({
+        url: "/updateApp",
+        type: 'POST',
+        cache: false,
+        data: {
+            current_organization: $('#current_organization').val(),
+            current_space: $('#current_space').val(),
+            current_tab: $('#current_tab').val(),
+            app_name: $('#app_name').val(),
+            app_state: app_state_val,
+            app_instances: app_instances_val,
+            app_memory: app_memory_val,
+            app_services: JSON.stringify(services),
+            app_urls: JSON.stringify(urls)
+        }
+    })
+});
+
+
+
+
+
+
 
 
 /*********************************************************************************************************/

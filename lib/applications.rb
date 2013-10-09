@@ -98,25 +98,41 @@ class Applications < Uhuru::Webui::ClassWithFeedback
   ##################################################################################
   ####################    update app details new data    ###########################
   ##################################################################################
-  def update(app_name, state, instances, memory)
-    info_ln("#{app_name} is now beign updated ...")
+  def update(app_name, state, instances, memory, services, urls, binding_object, current_space)
+    #info_ln("#{app_name} is now beign updated ...")
 
-    if state != nil
-      start_app(app_name)
-    else
-      stop_app(app_name)
+    #if state != nil
+    #  start_app(app_name)
+    #else
+    #  stop_app(app_name)
+    #end
+    #
+    #info_ln("  updating ...")
+    #app = @client.apps.find { |a| a.name == app_name }
+    #app.total_instances = instances
+    #info_ln("     number of instances: #{instances}.")
+    #ok_ln("OK")
+    #app.memory = memory
+    #info_ln("     memory(in MB): #{memory}.")
+    #ok_ln("OK")
+    #app.update!
+    #ok_ln("Updated successfully!")
+
+
+    JSON.parse(services).each do |service|
+      service['name']
+      service['type']
+      service['plan']
+      bind_app_services(app_name, service['name'])
     end
 
-    info_ln("  updating ...")
-    app = @client.apps.find { |a| a.name == app_name }
-    app.total_instances = instances
-    info_ln("     number of instances: #{instances}.")
-    ok_ln("OK")
-    app.memory = memory
-    info_ln("     memory(in MB): #{memory}.")
-    ok_ln("OK")
-    app.update!
-    ok_ln("Updated successfully!")
+    JSON.parse(urls).each do |url|
+      url['host']
+      url['domain']
+      url['domain_guid']
+
+      binding_object.create(app_name, current_space, url['domain_guid'], url['host'])
+    end
 
 
   rescue Exception => e

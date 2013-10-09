@@ -194,18 +194,8 @@ module Uhuru::Webui
           apps_object.start_feedback
 
           Thread.new() do
-            apps_object.update(params[:name], params[:state], params[:instances].to_i, params[:memory].to_i)
-
-            #.unbind_app_url(params[:appName], params[:appUrl])
-            #.unbind_app_services(params[:appName], params[:serviceName])
-            ##bind URL
-            #domain_guid = Library::Domains.new(session[:token], $cf_target).get_organizations_domain_guid(params[:current_organization])
-            #bind = Library::Routes.new(session[:token], $cf_target).create(params[:appName], params[:current_space], params[:domain], params[:host])
-            ###
-            #.bind_app_services(params[:appName], params[:serviceName])
-            #.stop_app(params[:appName])
-            #.start_app(params[:appName])
-
+            binding_object = Library::Routes.new(session[:token], $cf_target)
+            apps_object.update(params[:app_name], params[:app_state], params[:app_instances].to_i, params[:app_memory].to_i, params[:app_services], params[:app_urls], binding_object, params[:current_space])
             apps_object.close_feedback
           end
 

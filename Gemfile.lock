@@ -199,6 +199,7 @@ DEPENDENCIES
   color
   encryptor
   eventmachine (>= 1.0.0)
+  json
   pg
   rack-recaptcha
   rake (~> 10.0.3)
