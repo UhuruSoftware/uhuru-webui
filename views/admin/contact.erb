@@ -1,0 +1,26 @@
+<form action="<%= Uhuru::Webui::SinatraRoutes::ADMINISTRATION_CONTACT %>" method="post">
+  <h2>Contact form data</h2>
+  <table>
+    <tr>
+      <td><h3>Company name</h3></td>
+      <td><input type="text" name="company" size="40" value="<%= company %>" /></td>
+    </tr>
+
+    <tr>
+      <td><h3>Company address</h3></td>
+      <td><input type="text" name="address" size="40" value="<%= address %>" /></td>
+    </tr>
+
+    <tr>
+      <td><h3>Contact phone number</h3></td>
+      <td><input type="text" name="phone" size="40" value="<%= phone %>" /></td>
+    </tr>
+
+    <tr>
+      <td><h3>Contact e-mail</h3></td>
+      <td><input type="text" name="email" size="40" value="<%= email %>" /></td>
+    </tr>
+
+  </table>
+  <input type="submit" value="Save" />
+</form>

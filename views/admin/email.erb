@@ -1,6 +1,62 @@
 
 <form action="<%= Uhuru::Webui::SinatraRoutes::ADMINISTRATION_EMAIL %>" method="post">
 
+  <table>
+    <tr>
+      <td><h3>E-mail address from which the e-mail are sent</h3></td>
+      <td><input type="text" name="from" size="40" value="<%= from %>" /></td>
+    </tr>
+
+    <tr>
+      <td><h3>E-mail alias from which the e-mail are sent</h3></td>
+      <td><input type="text" name="from_alias" size="40" value="<%= from_alias %>" /></td>
+    </tr>
+
+    <tr>
+      <td><h3>E-mail server</h3></td>
+      <td><input type="text" name="server" size="40" value="<%= server %>" /></td>
+    </tr>
+
+    <tr>
+      <td><h3>E-mail port</h3></td>
+      <td><input type="text" name="port" size="40" value="<%= port %>" /></td>
+    </tr>
+
+    <tr>
+      <td><h3>E-mail user</h3></td>
+      <td><input type="text" name="user" size="40" value="<%= user %>" /></td>
+    </tr>
+
+    <tr>
+      <td><h3>E-mail secret</h3></td>
+      <td><input type="text" name="secret" size="40" value="<%= secret %>" /></td>
+    </tr>
+
+    <tr>
+      <td><h3>E-mail authorization method</h3></td>
+      <td><select name="auth_method">
+        <% auth_method_items.each do |k, v| %>
+            <% if auth_method == v.to_sym %>
+                <option value="<%= v.to_sym %>" selected> <%= k.to_s %> </option>
+            <% else %>
+                <option value="<%= v.to_sym %>"> <%= k.to_s %> </option>
+            <% end%>
+        <% end %>
+      </select></td>
+    </tr>
+
+    <tr>
+      <td><h3>Specifies whether the SMTP server uses TLS</h3></td>
+      <td>
+        <% if enable_tls == "true" %>
+            <input type="checkbox" name="enable_tls" value="<%= enable_tls %>" checked />
+        <% else %>
+            <input type="checkbox" name="enable_tls" value="<%= enable_tls %>" />
+        <% end %>
+      </td>
+    </tr>
+  </table>
+
   <h2>Registration e-mail sent to users</h2>
   <textarea name="registration_email" cols="100" rows="30"><%= registration_email %></textarea>
 

@@ -1,229 +1,137 @@
 <div class="modal-background"> </div>
+<form action="/updateApp" method="post">
+    <div class="modal app_details" id="details_<%= app.name %>">
 
-<div class="modal app_details" id="details_<%= app.name %>">
-  <div class="modal_header">
-    <%= app.name %>
-  </div>
-
-  <div class="modal_content">
-    <div>
-        <% if app.state == "STOPPED" %>
-            <form action="/startApp" method="post">
-              <span class="app_status">Status: "<%= app.state %>"</span>
-              <input type="hidden" name="appName" value="<%= app.name %>" />
-              <input type="hidden" name="current_organization" value="<%= current_organization %>" />
-              <input type="hidden" name="current_space" value="<%= current_space %>" />
-              <input type="hidden" name="current_tab" value="<%= current_tab %>" />
-              <div class="app_status_buttons">
-                <button type="button" class="image s24px trash" title="Delete '<%= app.name %>'"></button>
-                <button type="submit" name="startApp" class="image s24px start start_app" value="" title="Start!"></button>
-              </div>
-            </form>
-        <% end %>
-
-        <% if app.state == "RUNNING" || app.state == "STARTED" %>
-            <form action="/stopApp" method="post">
-              <span class="app_status">Status: "<%= app.state %>"</span>
-              <input type="hidden" name="appName" value="<%= app.name %>" />
-              <input type="hidden" name="current_organization" value="<%= current_organization %>" />
-              <input type="hidden" name="current_space" value="<%= current_space %>" />
-              <input type="hidden" name="current_tab" value="<%= current_tab %>" />
-              <div class="app_status_buttons">
-                <button type="button" class="image s24px trash" title="Delete '<%= app.name %>'"></button>
-                <button type="submit" name="stopApp" class="image s24px stop stop_app" value="" title="Stop!"></button>
-              </div>
-            </form>
-        <% end %>
-    </div>
-
-    <div>
-      <div>
-            <span>Instances&nbsp;&nbsp;</span><input type="text" class="pass_app_instances instances_count" value="<%= app.instances %>" />
-            <button type="button" class="image s24px minus subtract_instance"></button>
-            <button type="button" class="image s24px plus add_instance"></button>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <span>Memory&nbsp;&nbsp;</span><input type="text" name="appMemory" id="app_memory_setup" value="<%= app.memory %>"/> MB
-            <button type="button" class="image s24px minus subtract_memory"></button>
-            <button type="button" class="image s24px plus add_memory"></button>
+      <div class="modal_header">
+        <%= app.name %>
       </div>
-    </div>
 
-    <hr />
+      <div class="modal_content">
+        <div>
+          <span class="app_status">Status: "<%= app.state %>"</span>
+          <div class="app_status_buttons">
+            <button type="button" class="image s24px trash" title="Delete '<%= app.name %>'"></button>
 
-    <div>
-      <table>
-        <tr>
-          <td>Name</td>
-          <td>Type</td>
-          <td>Plan</td>
-          <td></td>
-        </tr>
+            <% if app.state != "STOPPED" %>
+                <% hide = 'hide' %>
+            <% end %>
 
-        <% app.services.each do |service| %>
+            <label for="state">Start app? </label><input type="checkbox" name="state" value="<%= 'start' %>" checked/>
+          </div>
+        </div>
+
+        <div>
+          <div>
+                <span>Instances&nbsp;&nbsp;</span><input type="text" class="pass_app_instances instances_count" value="<%= app.instances %>" />
+                <button type="button" class="image s24px minus subtract_instance"></button>
+                <button type="button" class="image s24px plus add_instance"></button>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <span>Memory&nbsp;&nbsp;</span><input type="text" name="appMemory" id="app_memory_setup" value="<%= app.memory %>"/> MB
+                <button type="button" class="image s24px minus subtract_memory"></button>
+                <button type="button" class="image s24px plus add_memory"></button>
+          </div>
+        </div>
+
+        <hr />
+
+        <div>
+          <table>
             <tr>
-              <td class="name"><%= service.name %></td>
-              <td><%= service.type %></td>
-              <td><%= service.plan %></td>
+              <td>Name</td>
+              <td>Type</td>
+              <td>Plan</td>
+              <td></td>
+            </tr>
+
+            <% app.services.each do |service| %>
+                <tr>
+                  <td class="name"><%= service.name %></td>
+                  <td><%= service.type %></td>
+                  <td><%= service.plan %></td>
+                  <td class="action">
+                    <button type="button" class="image s24px trash unbind_service_button" title="Delete '<%= service.name %>'" id="<%= service.name %>"></button>
+                  </td>
+                </tr>
+            <% end %>
+
+            <tr>
+              <td>
+                <select class="small_input selected_service">
+                    <% services_list.each do |service| %>
+                        <option value="<%= service.name %>" id="<%= app.name %>"> <%= service.name %> </option>
+                    <% end %>
+                </select>
+              </td>
+              <td id="refresh_service_type">
+                  <label><%= defined?(services_list[0].type) ? services_list[0].type : '-' %></label>
+              </td>
+              <td id="refresh_service_plan">
+                  <label><%= defined?(services_list[0].plan) ? services_list[0].plan : '-' %></label>
+              </td>
               <td class="action">
-                <button type="button" class="image s24px trash unbind_service_button" title="Delete '<%= service.name %>'" id="<%= service.name %>"></button>
+                <button type="button" class="image s24px plus" title="Bind Service"></button>
               </td>
             </tr>
-        <% end %>
+          </table>
 
-        <tr>
-          <td>
-            <input type="hidden" id="app_name" value="<%= app.name %>" />
-            <select name="serviceName" id="service_name" class="small_input selected_service">
-                <% services_list.each do |service| %>
-                    <option value="<%= service.name %>" id="<%= app.name %>"> <%= service.name %> </option>
-                <% end %>
-            </select>
-          </td>
-          <td id="refresh_service_type">
-              <label><%= defined?(services_list[0].type) ? services_list[0].type : '-' %></label>
-          </td>
-          <td id="refresh_service_plan">
-              <label><%= defined?(services_list[0].plan) ? services_list[0].plan : '-' %></label>
-          </td>
-          <td class="action">
-            <button type="button" class="image s24px plus bind_service_button" title="<%= app.name %>"></button>
-          </td>
-        </tr>
-      </table>
-
-      <table>
-        <tr>
-          <td>Host Name</td>
-          <td>Domain</td>
-          <td></td>
-        </tr>
-
-        <% app.uris.each do |uri| %>
+          <table>
             <tr>
-              <td class="name"><%= app.name %></td>
-              <td class="url"><%= uri.url %></td>
-              <td class="action">
-                <button type="button" class="image s24px trash unbind_uri_button" title="Delete '<%= uri.url %>'" id="<%= uri.url %>"></button>
-              </td>
+              <td>Host Name</td>
+              <td>Domain</td>
+              <td></td>
             </tr>
-        <% end %>
 
-        <tr>
-          <td><input type="text" id="uri_host" class="small_input" /></td>
-          <td>
-            <select id="uri_domain_name" class="small_input" name="domain">
-              <% domains_list.each do |domain| %>
-                  <% if domain.owning_org_name == organization_name || domain.owning_org_name == 'Shared' %>
-                      <option value="<%= domain.guid %>"><%= domain.name %></option>
+            <% app.uris.each do |uri| %>
+                <tr>
+                  <td class="name"><%= app.name %></td>
+                  <td class="url"><%= uri.url %></td>
+                  <td class="action">
+                    <button type="button" class="image s24px trash unbind_uri_button" title="Unbind '<%= uri.url %>'" id="<%= uri.url %>"></button>
+                  </td>
+                </tr>
+            <% end %>
+
+            <tr>
+              <td><input value="<%= app.name %>" type="text" class="small_input" /></td>
+              <td>
+                <select class="small_input">
+                  <% domains_list.each do |domain| %>
+                      <% if domain.owning_org_name == organization_name || domain.owning_org_name == 'Shared' %>
+                          <option value="<%= domain.guid %>"><%= domain.name %></option>
+                      <% end %>
                   <% end %>
-              <% end %>
-            </select>
-          </td>
-          <td class="action">
-            <button type="button" class="image s24px plus bind_uri_button" title="Delete '<%= app.name %>'"></button>
-          </td>
-        </tr>
-      </table>
+                </select>
+              </td>
+              <td class="action">
+                <button type="button" class="image s24px plus" title="Add URL"></button>
+              </td>
+            </tr>
+          </table>
+        </div>
+      </div>
+
+      <% unless error_message.nil? || error_message.empty? %>
+          <div class="error"> <%= error_message %> </div>
+      <% end %>
+
+
+
+      <div class="modal_footer">
+        <input name="name"                 value="<%= app.name %>"              type="hidden" class="send_app_name"/>
+        <input name="instances"            value="<%= app.instances %>"         type="hidden" class="send_app_instances"/>
+        <input name="memory"               value="<%= app.memory %>"            type="hidden" class="send_app_memory"/>
+        <input name="current_organization" value="<%= current_organization %>"  type="hidden" id="current_organization"/>
+        <input name="current_space"        value="<%= current_space %>"         type="hidden" id="current_space"/>
+        <input name="current_tab"          value="<%= current_tab %>"           type="hidden" id="current_tab" />
+
+
+
+
+
+          <div>
+            <button type="button" onclick="window.location.assign('<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/spaces/#{current_space}/apps" %>');">Cancel</button>
+            <button type="submit" class="update_button">Update</button>
+          </div>
+      </div>
     </div>
-  </div>
-
-  <% unless error_message.nil? || error_message.empty? %>
-      <div class="error"> <%= error_message %> </div>
-  <% end %>
-
-  <div class="modal_footer">
-    <form action="/updateApp" method="post">
-      <input type="hidden" class="send_app_name" name="appName" value="<%= app.name %>" />
-      <input type="hidden" class="send_app_instances" name="appInstances" value="<%= app.instances %>"/>
-      <input type="hidden" class="send_app_memory" name="appMemory" />
-      <input type="hidden" name="current_organization" value="<%= current_organization %>" />
-      <input type="hidden" name="current_space" value="<%= current_space %>" />
-      <input type="hidden" name="current_tab" value="<%= current_tab %>" />
-
-      <div>
-        <button type="button" onclick="window.location.assign('<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/spaces/#{current_space}/apps" %>');">Cancel</button>
-        <button type="submit" class="update_button">Update</button>
-      </div>
-    </form>
-  </div>
-</div>
-
-
-
-<div class="modal hide profiled" id="saving_modal">
-  <div class="modal_header">
-    <h3>Saving changes</h3>
-  </div>
-  <div class="modal_content">
-    <p>
-      This dialog will be dismissed automatically after the changes are made.
-    </p>
-  </div>
-  <div class="modal_footer">
-    <p>
-      Please wait while your app is being updated.
-    </p>
-  </div>
-</div>
-
-
-<div class="modal unbind_service hide profiled">
-  <div class="modal_header">
-    <h3>Un-bind service</h3>
-  </div>
-  <div class="modal_content">
-    <p>
-      Are you sure you want to un-bind your app from this url? You will no longer be able to connect to this service.
-    </p>
-    <p>
-      Un-binding does not delete the service. If you want to completely remove the service go to the service page and delete it.
-    </p>
-  </div>
-  <div class="modal_footer">
-    <form action="/unbindServices" method="post">
-      <input type="hidden" name="serviceName" id="unbind_serviceName" />
-      <input type="hidden" id="unbind_service_app_name" name="appName" value="<%= app.name %>" />
-      <input type="hidden" name="current_organization" value="<%= current_organization %>" />
-      <input type="hidden" name="current_space" value="<%= current_space %>" />
-      <input type="hidden" name="current_tab" value="<%= current_tab %>" />
-
-      <div>
-        <button type="button" class="cancel_button_app_details">Cancel</button>
-        <button type="submit">Un-bind</button>
-      </div>
-    </form>
-  </div>
-</div>
-
-<div class="modal unbind_uri hide profiled">
-  <div class="modal_header">
-    <h3>Un-bind URI</h3>
-  </div>
-  <div class="modal_content">
-    <p>
-      Are you sure you want to un-bind this app from the current URL?
-    </p>
-    <p>
-      Your app will no longer be able to use this URL.
-    </p>
-  </div>
-  <div class="modal_footer">
-    <form action="/unbindUri" method="post">
-      <input type="hidden" name="appUrl" id="unbind_uriName" />
-      <input type="hidden" id="unbind_uri_app_name" name="appName" value="<%= app.name %>" />
-      <input type="hidden" name="current_organization" value="<%= current_organization %>" />
-      <input type="hidden" name="current_space" value="<%= current_space %>" />
-      <input type="hidden" name="current_tab" value="<%= current_tab %>" />
-
-      <div>
-        <button type="button" class="cancel_button_app_details">Cancel</button>
-        <button type="submit">Un-bind</button>
-      </div>
-    </form>
-  </div>
-</div>
-
-
-<input type="hidden" id="current_organization" value="<%= current_organization %>" />
-<input type="hidden" id="current_space" value="<%= current_space %>" />
-<input type="hidden" id="current_tab" value="<%= current_tab %>" />
+</form>

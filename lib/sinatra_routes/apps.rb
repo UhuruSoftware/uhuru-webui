@@ -46,7 +46,6 @@ module Uhuru::Webui
         end
 
         app.get APP_CREATE do
-
           require_login
 
           org = Library::Organizations.new(session[:token], $cf_target)
@@ -114,24 +113,9 @@ module Uhuru::Webui
 
           org = Library::Organizations.new(session[:token], $cf_target)
           space = Library::Spaces.new(session[:token], $cf_target)
-          app = TemplateApps.new
-          user = UsersSetup.new($config)
-          route = Library::Routes.new(session[:token], $cf_target)
-          domain = Library::Domains.new(session[:token], $cf_target)
-          all_space_users = user.uaa_get_usernames
 
           space.set_current_space(params[:space_guid])
           apps_list = space.read_apps(params[:space_guid])
-          services_list = space.read_service_instances(params[:space_guid])
-          routes_list = route.read_routes(params[:space_guid])
-
-          owners_list = space.read_owners($config, params[:space_guid])
-          developers_list = space.read_developers($config, params[:space_guid])
-          auditors_list = space.read_auditors($config, params[:space_guid])
-          domains_list = domain.read_domains()
-
-          collections = app.read_collections
-          error_message = params[:error] if defined?(params[:error])
 
           erb :'user_pages/space',
               {
@@ -142,17 +126,35 @@ module Uhuru::Webui
                       :current_organization => params[:org_guid],
                       :current_space => params[:space_guid],
                       :current_tab => params[:tab],
-                      :apps => collections,
-                      :all_space_users => all_space_users,
-                      :owners_list => owners_list,
-                      :auditors_list => auditors_list,
-                      :developers_list => developers_list,
                       :apps_list => apps_list,
-                      :services_list => services_list,
-                      :routes_list => routes_list,
-                      :domains_list => domains_list,
-                      :error_message => error_message,
                       :feedback_id => params[:id],
+                      :error_message => nil,
+                      :include_erb => :'user_pages/modals/cloud_feedback'
+                  }
+              }
+        end
+
+        app.get APP_UPDATE_FEEDBACK do
+          require_login
+
+          org = Library::Organizations.new(session[:token], $cf_target)
+          space = Library::Spaces.new(session[:token], $cf_target)
+
+          space.set_current_space(params[:space_guid])
+          apps_list = space.read_apps(params[:space_guid])
+
+          erb :'user_pages/space',
+              {
+                  :layout => :'layouts/user',
+                  :locals => {
+                      :organization_name => org.get_name(params[:org_guid]),
+                      :space_name => space.get_name(params[:space_guid]),
+                      :current_organization => params[:org_guid],
+                      :current_space => params[:space_guid],
+                      :current_tab => params[:tab],
+                      :apps_list => apps_list,
+                      :feedback_id => params[:id],
+                      :error_message => nil,
                       :include_erb => :'user_pages/modals/cloud_feedback'
                   }
               }
@@ -185,6 +187,33 @@ module Uhuru::Webui
           redirect "#{ORGANIZATIONS}/#{params[:app_organization]}/spaces/#{params[:app_space]}/apps/create_app_feedback/#{apps_obj.id}"
         end
 
+
+
+        app.post '/updateApp' do
+          apps_object = Applications.new(session[:token], $cf_target)
+          apps_object.start_feedback
+
+          Thread.new() do
+            apps_object.update(params[:name], params[:state], params[:instances].to_i, params[:memory].to_i)
+
+            #.unbind_app_url(params[:appName], params[:appUrl])
+            #.unbind_app_services(params[:appName], params[:serviceName])
+            ##bind URL
+            #domain_guid = Library::Domains.new(session[:token], $cf_target).get_organizations_domain_guid(params[:current_organization])
+            #bind = Library::Routes.new(session[:token], $cf_target).create(params[:appName], params[:current_space], params[:domain], params[:host])
+            ###
+            #.bind_app_services(params[:appName], params[:serviceName])
+            #.stop_app(params[:appName])
+            #.start_app(params[:appName])
+
+            apps_object.close_feedback
+          end
+
+          redirect ORGANIZATIONS + "/#{params[:current_organization]}/spaces/#{params[:current_space]}/apps/update_app_feedback/#{apps_object.id}"
+        end
+
+
+
         app.post '/deleteApp' do
           delete = Applications.new(session[:token], $cf_target).delete(params[:appName])
 
@@ -194,78 +223,6 @@ module Uhuru::Webui
             redirect ORGANIZATIONS + "/#{params[:current_organization]}/spaces/#{params[:current_space]}/#{params[:current_tab]}"
           end
         end
-
-        app.post '/startApp' do
-          start = Applications.new(session[:token], $cf_target).start_app(params[:appName])
-
-          if defined?(start.message)
-            redirect ORGANIZATIONS + "/#{params[:current_organization]}/spaces/#{params[:current_space]}/#{params[:current_tab]}/#{params[:appName]}" + "?error=#{start.description}"
-          else
-            redirect ORGANIZATIONS + "/#{params[:current_organization]}/spaces/#{params[:current_space]}/#{params[:current_tab]}/#{params[:appName]}"
-          end
-        end
-
-        app.post '/stopApp' do
-          stop = Applications.new(session[:token], $cf_target).stop_app(params[:appName])
-
-          if defined?(stop.message)
-            redirect ORGANIZATIONS + "/#{params[:current_organization]}/spaces/#{params[:current_space]}/#{params[:current_tab]}/#{params[:appName]}" + "?error=#{stop.description}"
-          else
-            redirect ORGANIZATIONS + "/#{params[:current_organization]}/spaces/#{params[:current_space]}/#{params[:current_tab]}/#{params[:appName]}"
-          end
-        end
-
-        app.post '/updateApp' do
-          update = Applications.new(session[:token], $cf_target).update(params[:appName], params[:appInstances].to_i, params[:appMemory].to_i)
-
-          if defined?(update.message)
-            redirect ORGANIZATIONS + "/#{params[:current_organization]}/spaces/#{params[:current_space]}/#{params[:current_tab]}/#{params[:appName]}" + "?error=#{update.description}"
-          else
-            redirect ORGANIZATIONS + "/#{params[:current_organization]}/spaces/#{params[:current_space]}/#{params[:current_tab]}/#{params[:appName]}"
-          end
-        end
-
-        app.post '/bindServices' do
-          bind = Applications.new(session[:token], $cf_target).bind_app_services(params[:appName], params[:serviceName])
-
-          if defined?(bind.message)
-            redirect ORGANIZATIONS + "/#{params[:current_organization]}/spaces/#{params[:current_space]}/#{params[:current_tab]}/#{params[:appName]}" + "?error=#{bind.description}"
-          else
-            redirect ORGANIZATIONS + "/#{params[:current_organization]}/spaces/#{params[:current_space]}/#{params[:current_tab]}/#{params[:appName]}"
-          end
-        end
-
-        app.post '/bindUri' do
-          domain_guid = Library::Domains.new(session[:token], $cf_target).get_organizations_domain_guid(params[:current_organization])
-          bind = Library::Routes.new(session[:token], $cf_target).create(params[:appName], params[:current_space], params[:domain], params[:host])
-
-          if defined?(bind.message)
-            redirect ORGANIZATIONS + "/#{params[:current_organization]}/spaces/#{params[:current_space]}/#{params[:current_tab]}/#{params[:appName]}" + "?error=#{bind.description}"
-          else
-            redirect ORGANIZATIONS + "/#{params[:current_organization]}/spaces/#{params[:current_space]}/#{params[:current_tab]}/#{params[:appName]}"
-          end
-        end
-
-        app.post '/unbindServices' do
-          unbind = Applications.new(session[:token], $cf_target).unbind_app_services(params[:appName], params[:serviceName])
-
-          if defined?(unbind.message)
-            redirect ORGANIZATIONS + "/#{params[:current_organization]}/spaces/#{params[:current_space]}/#{params[:current_tab]}/#{params[:appName]}" + "?error=#{unbind.description}"
-          else
-            redirect ORGANIZATIONS + "/#{params[:current_organization]}/spaces/#{params[:current_space]}/#{params[:current_tab]}/#{params[:appName]}"
-          end
-        end
-
-        app.post '/unbindUri' do
-          unbind = Applications.new(session[:token], $cf_target).unbind_app_url(params[:appName], params[:appUrl])
-
-          if defined?(unbind.message)
-            redirect ORGANIZATIONS + "/#{params[:current_organization]}/spaces/#{params[:current_space]}/#{params[:current_tab]}/#{params[:appName]}" + "?error=#{unbind.description}"
-          else
-            redirect ORGANIZATIONS + "/#{params[:current_organization]}/spaces/#{params[:current_space]}/#{params[:current_tab]}/#{params[:appName]}"
-          end
-        end
-
       end
     end
   end

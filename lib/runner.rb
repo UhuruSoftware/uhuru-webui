@@ -5,6 +5,7 @@ require "webui"
 require "thin"
 require "optparse"
 require "class_with_feedback"
+require "cf/registrar"
 
 module Uhuru::Webui
   class Runner
@@ -15,12 +16,13 @@ module Uhuru::Webui
       ENV["RACK_ENV"] = "production"
       # default config path. this may be overridden during opts parsing
       @config_file = File.expand_path("../../config/uhuru-webui.yml", __FILE__)
-      @admin_file = File.expand_path("../../config/admin-settings.yml", __FILE__)
 
       parse_options!
 
-      @admin = Uhuru::Webui::AdminSettings.from_file(@admin_file)
       config = Uhuru::Webui::Config.from_file(@config_file)
+
+      admin_file = File.expand_path("#{config[:admin_config_file]}", __FILE__)
+      @admin = Uhuru::Webui::AdminSettings.from_file(admin_file)
       Uhuru::Webui::AdminSettings.copy_admin_to_config(config, @admin, @config_file)
 
       #reload config file after update
@@ -76,33 +78,60 @@ module Uhuru::Webui
     end
 
     def run!
-      config = @config.dup
-      $config = config.dup
+      EM.run do
+        config = @config.dup
+        $config = config.dup
 
-      webui = Uhuru::Webui::Webui.new(config, @admin);
-      app = Rack::Builder.new do
-        use Rack::CommonLogger
-        use Rack::Recaptcha, :public_key => $config[:recaptcha][:recaptcha_public_key], :private_key => $config[:recaptcha][:recaptcha_private_key]
-        map "/" do
-          run webui
+        webui = Uhuru::Webui::Webui.new(config, @admin);
+        app = Rack::Builder.new do
+          use Rack::CommonLogger
+          use Rack::Recaptcha, :public_key => $config[:recaptcha][:recaptcha_public_key], :private_key => $config[:recaptcha][:recaptcha_private_key]
+          map "/" do
+            run webui
+          end
         end
+        @thin_server = Thin::Server.new(@config[:bind_address], @config[:port], app)
+
+        trap_signals
+
+        # activate threaded only if required
+        @thin_server.threaded = true
+        @thin_server.start!
+        if ($config[:dev_mode] == false)
+          registrar.register_with_router
+        end
+
       end
-      @thin_server = Thin::Server.new(@config[:bind_address], @config[:port], app)
-
-      trap_signals
-
-      # activate threaded only if required
-      # @thin_server.threaded = true
-      @thin_server.start!
     end
+
 
     def trap_signals
       ["TERM", "INT"].each do |signal|
         trap(signal) do
-          @thin_server.stop! if @thin_server
-          EM.stop
+          if ($config[:dev_mode] == false)
+            registrar.shutdown do
+              @thin_server.stop! if @thin_server
+              EM.stop
+            end
+          else
+            @thin_server.stop! if @thin_server
+            EM.stop
+          end
         end
       end
     end
+
+
+    def registrar
+      @registrar ||= Cf::Registrar.new(
+          :mbus => $config[:message_bus_uri],
+          :host => $config[:bind_address],
+          :port => $config[:port],
+          :uri => $config[:webui][:domain],
+          :tags => {:component => "WebUI"},
+          :index => 0
+      )
+    end
+
   end
 end

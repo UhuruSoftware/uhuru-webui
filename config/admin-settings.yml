@@ -43,7 +43,7 @@
   :user: postmaster@uhurusoftware.mailgun.org
   :secret: 4q899o1avzu3
   :auth_method: :login
-  :enable_tls: true
+  :enable_tls: 'true'
   :registration_email: ! "<div> <h1>Uhuru Software Confirmation</h1> <p>Your account
     is ready to use. Please click the link bellow in order to continue and finish
     the signup process:</p>\r\n<a href=\"#ACTIVATION_LINK#\" style=\"text-decoration:
@@ -57,3 +57,30 @@
 :stripe:
   :publishable_key: pk_test_gRsPhGxpLivq7IsDPyuY9zs8 125
   :secret_key: sk_test_fZOqxL3KHooewcpfplMZxVby
+
+
+reports:
+  users:
+    label: All Users
+    query: select * from users
+    user_column:
+      name: guid
+      label: User
+  users_and_orgs:
+    label: Organizations and Members
+    query: select * from users
+    user_column:
+      name: guid
+      label: User
+  users_count_history:
+    label: User Count History
+    query: select * from users
+    user_column:
+      name: guid
+      label: User
+  apps:
+    label: Apps and Users
+    query: select * from users
+    user_column:
+      name: guid
+      label: User
