@@ -28,12 +28,47 @@ module Uhuru::Webui
           organizations_list = Library::Organizations.new(session[:token], $cf_target).read_all
           error_message = params[:error] if defined?(params[:error])
 
+          months = []
+          years = []
+
+          current_month = Date.today.strftime("%m").to_i
+          [{:name => 'January', :value => 1},
+           {:name => 'February', :value => 2},
+           {:name => 'March', :value => 3},
+           {:name => 'April', :value => 4},
+           {:name => 'May', :value => 6},
+           {:name => 'June', :value => 6},
+           {:name => 'July', :value => 7},
+           {:name => 'August', :value => 8},
+           {:name => 'September', :value => 9},
+           {:name => 'October', :value => 10},
+           {:name => 'November', :value => 11},
+           {:name => 'December', :value => 12}].each do |month|
+             if month[:value] >= current_month
+               months.push(month)
+             end
+           end
+
+          current_year = Date.today.strftime("%Y").to_i
+          y = current_year
+          #max credit card lifespan is in 20 - 25 years
+          while y <= current_year + 30 do
+            years.push(y)
+            y += 1
+          end
+
+          list = File.open("../config/countries.txt", "rb").read
+          countries = list.split(';')
+
           erb :'user_pages/organizations',
               {
                   :layout => :'layouts/user',
                   :locals => {
                       :organizations_list => organizations_list,
                       :error_message => error_message,
+                      :months => months,
+                      :years => years,
+                      :countries => countries,
                       :include_erb => :"user_pages/modals/organizations_create_#{ $config[:billing][:provider] }",
                   }
               }
