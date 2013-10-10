@@ -25,11 +25,11 @@
 
      def init_users
        conn = PG.connect(
-               host:     '10.0.7.123',
-               port:     '2544',
-               dbname:   'uaa',
-               user:     'uaa',
-               password: 'uaa'
+               host:     $config[:uaadb][:host],
+               port:     $config[:uaadb][:port],
+               dbname:   $config[:uaadb][:dbname],
+               user:     $config[:uaadb][:user],
+               password: $config[:uaadb][:password]
        )
 
        uaa_users = conn.exec(reports[:uaa_users])
@@ -62,11 +62,11 @@
 
      def get_connection
        conn = PG.connect(
-               host:     '10.0.7.123',
-               port:     '2544',
-               dbname:   'appcloud_ng',
-               user:     'root',
-               password: 'root'
+               host:     $config[:ccdb][:host],
+               port:     $config[:ccdb][:port],
+               dbname:   $config[:ccdb][:dbname],
+               user:     $config[:ccdb][:user],
+               password: $config[:ccdb][:password]
        )
 
        return conn

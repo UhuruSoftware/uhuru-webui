@@ -8,6 +8,8 @@ require "bundler/setup"
 require "optparse"
 require "time"
 
+require 'vcap/config'
+
 require 'json'
 require 'securerandom'
 require 'yaml'
@@ -17,6 +19,7 @@ require 'active_record'
 require 'thread'
 require 'net/http'
 require 'config'
+require 'users'
 
 require "users_setup"
 require "cfoundry"

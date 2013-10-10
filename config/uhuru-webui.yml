@@ -7,6 +7,18 @@ cloud_controller_url: http://api.ccng-dev.net
 message_bus_uri: nats://116e42690e023d88a208bff76eca54ca:8889dd351e08cc6f076bc02344320fbc@10.0.100.45:4222
 domain: www.cf.me
 bind_address: 10.0.102.200
+ccdb:
+  host: '10.0.7.123'
+  user: 'root'
+  password: 'root'
+  port: 2544
+  dbname: 'appcloud_ng'
+uaadb:
+  host: '10.0.7.123'
+  user: 'uaa'
+  password: 'uaa'
+  port: 2544
+  dbname: 'uaa'
 uaa:
   url: http://uaa.ccng-dev.net
   client_id: webui
@@ -36,7 +48,7 @@ monitoring:
       resolution: 12
       resolution_unit: days
       sample_count: 30
-  vmc_executable_path: cf
+  vmc_executable_path: bash -c "cf"
   cloud_user: monitoring
   cloud_password: password1234!
   default_org: monitoring
@@ -62,22 +74,22 @@ monitoring:
     services:
     - name: mysql_node
       token: ec9743a4-6587-4356-8b9e-72d66b36a7f4
-    - name: mongodb_node
-      token: ec9743a4-6587-4356-8b9e-72d66b36a7f4
-    - name: redis_node
-      token: ec9743a4-6587-4356-8b9e-72d66b36a7f4
-    - name: redis_node
-      token: ec9743a4-6587-4356-8b9e-72d66b36a7f4
-    - name: rabbit_node
-      token: ec9743a4-6587-4356-8b9e-72d66b36a7f4
-    - name: postgresql_node
-      token: ec9743a4-6587-4356-8b9e-72d66b36a7f4
-    - name: uhuru_tunnel_node
-      token: ec9743a4-6587-4356-8b9e-72d66b36a7f4
-    - name: uhurufs_node
-      token: ec9743a4-6587-4356-8b9e-72d66b36a7f4
-    - name: mssql_node
-      token: ec9743a4-6587-4356-8b9e-72d66b36a7f4
+#    - name: mongodb_node
+#      token: ec9743a4-6587-4356-8b9e-72d66b36a7f4
+#    - name: redis_node
+#      token: ec9743a4-6587-4356-8b9e-72d66b36a7f4
+#    - name: redis_node
+#      token: ec9743a4-6587-4356-8b9e-72d66b36a7f4
+#    - name: rabbit_node
+#      token: ec9743a4-6587-4356-8b9e-72d66b36a7f4
+#    - name: postgresql_node
+#      token: ec9743a4-6587-4356-8b9e-72d66b36a7f4
+#    - name: uhuru_tunnel_node
+#      token: ec9743a4-6587-4356-8b9e-72d66b36a7f4
+#    - name: uhurufs_node
+#      token: ec9743a4-6587-4356-8b9e-72d66b36a7f4
+#    - name: mssql_node
+#      token: ec9743a4-6587-4356-8b9e-72d66b36a7f4
   buildpacks:
     dotNet: https://github.com/stefanschneider/dummy-buildpack.git
     java: https://github.com/ramnivas/cloudfoundry-buildpack-java

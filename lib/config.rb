@@ -19,7 +19,20 @@ class Uhuru::Webui::Config < VCAP::Config
         :client_id                        => String,
         :client_secret                    => String
       },
-
+      :uaadb => {
+        :host                             => String,
+        :user                             => String,
+        :password                         => String,
+        :port                             => Integer,
+        :dbname                           => String
+      },
+      :ccdb => {
+        :host                             => String,
+        :user                             => String,
+        :password                         => String,
+        :port                             => Integer,
+        :dbname                           => String
+      },
       :monitoring => {
           :reports => {
              :half_of_day => {
