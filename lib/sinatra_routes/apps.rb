@@ -164,7 +164,8 @@ module Uhuru::Webui
 
         app.post '/push' do
           name = params[:app_name]
-          url = params[:app_url]
+          domain_name = params[:app_domain]
+          host_name = params[:app_host]
           memory = params[:app_memory]
           instances = params[:app_instances]
           src = params[:app_src] + params[:app_id] + '.zip'
@@ -182,7 +183,7 @@ module Uhuru::Webui
           apps_obj.start_feedback
 
           Thread.new() do
-            apps_obj.create!(params[:app_organization], params[:app_space], name, instances.to_i, memory.to_i, url, src, plan, app_services)
+            apps_obj.create!(params[:app_organization], params[:app_space], name, instances.to_i, memory.to_i, domain_name, host_name, src, plan, app_services)
             apps_obj.close_feedback
           end
 

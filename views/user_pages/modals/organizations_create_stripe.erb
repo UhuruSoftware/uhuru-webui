@@ -79,8 +79,20 @@
       <br />
 
       <div>Card expiration date</div>
-      <input type="text" size="2" maxlength="2" data-stripe="exp-month"/>
-      <input type="text" size="4" maxlength="4" data-stripe="exp-year"/>
+      <select data-stripe="exp-month" >
+        <% months.each do |month| %>
+            <option value="<%= month[:value] %>"><%= month[:name] %></option>
+        <% end %>
+      </select>
+
+      <select data-stripe="exp-year" >
+        <% years.each do |year| %>
+            <option value="<%= year %>"><%= year %></option>
+        <% end %>
+      </select>
+
+      <!--<input type="text"  maxlength="2" class="date_type"/>-->
+      <!--<input type="text" size="4" maxlength="4" class="date_type"/>-->
 
       <div>Cardholder name</div>
       <input id="name" type="text" size="20" maxlength="20" data-stripe="name" />
@@ -103,7 +115,11 @@
       <br />
 
       <div>Country</div>
-      <input id="address_country" type="text" size="20" maxlength="20" data-stripe="address_country" />
+        <select id="address_country" data-stripe="address_country" style="width: 250px;">
+          <% countries.each do |country| %>
+            <option value="<%= country %>"><%= country %></option>
+          <% end %>
+        </select>
       <br />
 
       <% unless error_message.nil? || error_message.empty? %>
