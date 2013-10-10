@@ -51,6 +51,10 @@ module Uhuru::Webui::Billing
       raise "Not implemented!"
     end
 
+    def delete_credit_card_org(org_guid)
+      raise "Not implemented!"
+    end
+
     def create_customer(email, token)
       raise "Not implemented!"
     end
