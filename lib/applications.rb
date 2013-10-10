@@ -98,42 +98,71 @@ class Applications < Uhuru::Webui::ClassWithFeedback
   ##################################################################################
   ####################    update app details new data    ###########################
   ##################################################################################
-  def update(app_name, state, instances, memory, services, urls, binding_object, current_space)
-    #info_ln("#{app_name} is now beign updated ...")
+  def update(app_name, state, instances, memory, services, urls, binding_object, current_space, apps_list)
+    #cloning the app object
+    app = nil
+    apps_list.each do |a|
+      app = a.name == app_name ? a.clone : nil
+    end
 
-    #if state != nil
-    #  start_app(app_name)
-    #else
-    #  stop_app(app_name)
-    #end
-    #
-    #info_ln("  updating ...")
-    #app = @client.apps.find { |a| a.name == app_name }
-    #app.total_instances = instances
-    #info_ln("     number of instances: #{instances}.")
-    #ok_ln("OK")
-    #app.memory = memory
-    #info_ln("     memory(in MB): #{memory}.")
-    #ok_ln("OK")
-    #app.update!
-    #ok_ln("Updated successfully!")
+    info_ln("#{app_name} is now being updated ...")
+    #applying the current state
+    if state == true
+      start_app(app_name)
+    else
+      stop_app(app_name)
+    end
 
+    #modify app details
+    info_ln("&nbsp;&nbsp;&nbsp;&nbsp;updating app details ...")
+    application = @client.apps.find { |a| a.name == app_name }
+    application.total_instances = instances
+    info_ln("&nbsp;&nbsp;&nbsp;&nbsp;number of instances: #{instances} ... OK")
+    application.memory = memory
+    info_ln("&nbsp;&nbsp;&nbsp;&nbsp;memory(in MB): #{memory} ... OK")
+    ok_ln("App details updated successfully!")
 
+    #service bindings
+    info_ln("Updating service bindings ...")
     JSON.parse(services).each do |service|
-      service['name']
-      service['type']
-      service['plan']
-      bind_app_services(app_name, service['name'])
+      element = app.services.find{ |s| s.name == service['name'] }
+      if element == nil
+        bind_app_services(app_name, service['name'])
+        info_ln("&nbsp;&nbsp;&nbsp;&nbsp;the service <b>" + service['name'] + "</b> was successfully bound to <b>" + app_name + "</b>")
+      end
     end
 
+    app.services.each do |service|
+      element = JSON.parse(services).find { |s| s['name'] == service.name }
+      if element == nil
+        unbind_app_services(app_name, service.name)
+        info_ln("&nbsp;&nbsp;&nbsp;&nbsp;unbinding <b>" + service.name + "</b> from <b>" + app_name + "</b>")
+      end
+    end
+    ok_ln("Service bindings updated successfully!")
+
+    #url bindings
+    info_ln("Updating URL bindings ...")
     JSON.parse(urls).each do |url|
-      url['host']
-      url['domain']
-      url['domain_guid']
-
-      binding_object.create(app_name, current_space, url['domain_guid'], url['host'])
+      element = app.uris.find{ |u| u.host == url['host'] && u.domain == url['domain'] }
+      if element == nil
+        binding_object.create(app_name, current_space, url['domain_guid'], url['host'])
+        info_ln("&nbsp;&nbsp;&nbsp;&nbsp;the url <b>" + url['host'] + '.' + url['domain'] + "</b> was successfully bound to <b>" + app_name + "</b>")
+      end
     end
 
+    app.uris.each do |uri|
+      element = JSON.parse(urls).find { |u| u['host'] == uri.host }
+      if element == nil
+        unbind_app_url(app_name, uri.host, uri.domain)
+        info_ln("&nbsp;&nbsp;&nbsp;&nbsp;unbinding <b>" + uri.host + '.' + uri.domain + "</b> from <b>" + app_name + "</b>")
+      end
+    end
+    ok_ln("URL bindings updated successfully!")
+    info_ln("Applying changes ...")
+
+    application.update!
+    ok_ln("The app was updated successfully!")
 
   rescue Exception => e
     return e
@@ -196,9 +225,9 @@ class Applications < Uhuru::Webui::ClassWithFeedback
     return e
   end
 
-  def unbind_app_url(app_name, url)
+  def unbind_app_url(app_name, host, domain)
     app = @client.apps.find { |a| a.name == app_name }
-    route = @client.routes.find { |r| r.host + '.' + r.domain.name == url }
+    route = @client.routes.find { |r| r.host == host && r.domain.name == domain }
     app.remove_route(route)
 
   rescue Exception => e
@@ -221,10 +250,11 @@ class Applications < Uhuru::Webui::ClassWithFeedback
   end
 
   class Url
-    attr_reader :url
+    attr_reader :host, :domain
 
-    def initialize(url)
-      @url = url
+    def initialize(host, domain)
+      @host = host
+      @domain = domain
     end
   end
 

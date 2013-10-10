@@ -1,5 +1,6 @@
 <div class="modal-background"> </div>
-<form>
+
+<form action="/updateApp" method="post">
     <div class="modal app_details" id="details_<%= app.name %>">
 
       <div class="modal_header">
@@ -10,19 +11,17 @@
         <div>
           <span class="app_status">Status: "<%= app.state %>"</span>
           <div class="app_status_buttons">
-            <button type="button" class="image s24px trash" title="Delete '<%= app.name %>'"></button>
-
             <label for="state">Start app? </label><input type="checkbox" id="app_state"/>
           </div>
         </div>
 
         <div>
           <div>
-                <span>Instances&nbsp;&nbsp;</span><input type="text" class="instances_count app_instances" value="<%= app.instances %>" />
+                <span>Instances&nbsp;&nbsp;</span><input type="text" name="app_instances" class="instances_count app_instances" value="<%= app.instances %>" />
                 <button type="button" class="image s24px minus subtract_instance"></button>
                 <button type="button" class="image s24px plus add_instance"></button>
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <span>Memory&nbsp;&nbsp;</span><input type="text" name="appMemory" id="app_memory_setup" class="app_memory" value="<%= app.memory %>"/> MB
+                <span>Memory&nbsp;&nbsp;</span><input type="text" name="app_memory" id="app_memory_setup" class="app_memory" value="<%= app.memory %>"/> MB
                 <button type="button" class="image s24px minus subtract_memory"></button>
                 <button type="button" class="image s24px plus add_memory"></button>
           </div>
@@ -79,10 +78,10 @@
 
             <% app.uris.each do |uri| %>
                 <tr>
-                  <td class="name"><%= app.name %></td>
-                  <td class="url"><%= uri.url %></td>
+                  <td class="name"><%= uri.host %></td>
+                  <td class="url"><%= uri.domain %></td>
                   <td class="action">
-                    <button type="button" class="image s24px trash remove_url" title="Remove '<%= uri.url %>'" id="<%= app.name %>" onclick="removeUrl(this)"></button>
+                    <button type="button" class="image s24px trash remove_url" title="Remove '<%= uri.host %>'" id="<%= uri.host %>" onclick="removeUrl(this)"></button>
                   </td>
                 </tr>
             <% end %>
@@ -110,16 +109,14 @@
           <div class="error"> <%= error_message %> </div>
       <% end %>
 
-
-
       <div class="modal_footer">
-        <input name="name"                 value="<%= app.name %>"              type="hidden" id="app_name"/>
-        <input name="instances"            value="<%= app.instances %>"         type="hidden" id="app_instances" class="send_app_instances"/>
-        <input name="memory"               value="<%= app.memory %>"            type="hidden" id="app_memory" class="send_app_memory"/>
-        <input name="current_organization" value="<%= current_organization %>"  type="hidden" id="current_organization"/>
-        <input name="current_space"        value="<%= current_space %>"         type="hidden" id="current_space"/>
-        <input name="current_tab"          value="<%= current_tab %>"           type="hidden" id="current_tab" />
-
+        <input    name="app_name"               value="<%= app.name %>"              type="hidden" id="app_name"/>
+        <input    name="app_state"              value=""                             type="hidden" id="pass_app_state"/>
+        <textarea name="app_services"           id="app_services"                    class="hide">                       </textarea>
+        <textarea name="app_urls"               id="app_urls"                        class="hide">                       </textarea>
+        <input    name="current_organization"   value="<%= current_organization %>"  type="hidden" id="current_organization"/>
+        <input    name="current_space"          value="<%= current_space %>"         type="hidden" id="current_space"/>
+        <input    name="current_tab"            value="<%= current_tab %>"           type="hidden" id="current_tab" />
           <div>
             <button type="button" onclick="window.location.assign('<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/spaces/#{current_space}/apps" %>');">Cancel</button>
             <button type="submit" id="update_app">Update</button>

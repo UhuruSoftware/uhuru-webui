@@ -396,6 +396,6 @@
 </div>
 
 <% if defined?(include_erb) && include_erb != nil %>
-    <%= erb(include_erb, :layout => false, :locals => { :current_organization => current_organization, :current_space => current_space, :organization_name => organization_name, :collections => defined?(apps) ? apps : nil, :current_tab => current_tab, :error_message => error_message, :services_list => defined?(services_list) ? services_list : nil, :domains_list => defined?(domains_list) ? domains_list : nil, :feedback_id => defined?(feedback_id) ? feedback_id : nil }) %>
+    <%= erb(include_erb, :layout => false, :locals => { :current_organization => current_organization, :current_space => current_space, :organization_name => organization_name, :collections => defined?(apps) ? apps : nil, :current_tab => current_tab, :error_message => error_message, :services_list => defined?(services_list) ? services_list : nil, :domains_list => defined?(domains_list) ? domains_list : nil, :feedback_id => defined?(feedback_id) ? feedback_id : nil, :modal_title => defined?(modal_title) ? modal_title : nil }) %>
 <% end %>
 

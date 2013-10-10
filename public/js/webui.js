@@ -193,9 +193,12 @@ function readServices()
     var row;
     var data = new Array();
 
-    for(r = 1, row; row = table.rows[r], r < table.rows.length - 1; r++)
+    if(table != undefined)
     {
-        data.push({ name: row.cells[0].innerHTML, type: row.cells[1].innerHTML, plan: row.cells[2].innerHTML });
+        for(r = 1, row; row = table.rows[r], r < table.rows.length - 1; r++)
+        {
+            data.push({ name: row.cells[0].innerHTML, type: row.cells[1].innerHTML, plan: row.cells[2].innerHTML });
+        }
     }
     return data;
 }
@@ -207,9 +210,12 @@ function readUrls()
     var row;
     var data = new Array();
 
-    for(r = 1, row; row = table.rows[r], r < table.rows.length - 1; r++)
+    if(table != undefined)
     {
-        data.push({ host: row.cells[0].innerHTML, domain: row.cells[1].innerHTML, domain_guid: row.cells[2].innerHTML });
+        for(r = 1, row; row = table.rows[r], r < table.rows.length - 1; r++)
+        {
+            data.push({ host: row.cells[0].innerHTML, domain: row.cells[1].innerHTML, domain_guid: row.cells[2].innerHTML });
+        }
     }
     return data;
 }
@@ -275,9 +281,12 @@ var add_url = function(){
         var i;
         for(i = 0; i < urls.length; i++)
         {
-            if( urls[i]['host'] != undefined && urls[i]['host'] == selected_url_host )
+            if(urls[i]['host'] != undefined || urls[i]['domain'] != undefined)
             {
-                exists = true;
+                if(urls[i]['host'] == selected_url_host && urls[i]['domain'] == selected_url_domain)
+                {
+                    exists = true;
+                }
             }
         }
     }
@@ -354,31 +363,11 @@ $('#add_service').click(add_service);
 $('#add_url').click(add_url);
 
 //*******************************   update app button  *********************************************//
-$('#update_app').click(function(){
-    $.ajax({
-        url: "/updateApp",
-        type: 'POST',
-        cache: false,
-        data: {
-            current_organization: $('#current_organization').val(),
-            current_space: $('#current_space').val(),
-            current_tab: $('#current_tab').val(),
-            app_name: $('#app_name').val(),
-            app_state: app_state_val,
-            app_instances: app_instances_val,
-            app_memory: app_memory_val,
-            app_services: JSON.stringify(services),
-            app_urls: JSON.stringify(urls)
-        }
-    })
+$('#update_app').hover(function(){
+    $('#pass_app_state').val(app_state_val);
+    $('#app_services').val(JSON.stringify(services));
+    $('#app_urls').val(JSON.stringify(urls));
 });
-
-
-
-
-
-
-
 
 /*********************************************************************************************************/
 /*                                            CLOUD FEEDBACK                                             */

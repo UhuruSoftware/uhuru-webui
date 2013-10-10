@@ -129,6 +129,7 @@ module Uhuru::Webui
                       :apps_list => apps_list,
                       :feedback_id => params[:id],
                       :error_message => nil,
+                      :modal_title => "Pushing your application ...",
                       :include_erb => :'user_pages/modals/cloud_feedback'
                   }
               }
@@ -155,6 +156,7 @@ module Uhuru::Webui
                       :apps_list => apps_list,
                       :feedback_id => params[:id],
                       :error_message => nil,
+                      :modal_title => "Updating your application ...",
                       :include_erb => :'user_pages/modals/cloud_feedback'
                   }
               }
@@ -193,9 +195,14 @@ module Uhuru::Webui
           apps_object = Applications.new(session[:token], $cf_target)
           apps_object.start_feedback
 
+          space = Library::Spaces.new(session[:token], $cf_target)
+          domain = Library::Domains.new(session[:token], $cf_target)
+          space.set_current_space(params[:current_space])
+          apps_list = space.read_apps(params[:current_space])
+
           Thread.new() do
             binding_object = Library::Routes.new(session[:token], $cf_target)
-            apps_object.update(params[:app_name], params[:app_state], params[:app_instances].to_i, params[:app_memory].to_i, params[:app_services], params[:app_urls], binding_object, params[:current_space])
+            apps_object.update(params[:app_name], params[:app_state], params[:app_instances].to_i, params[:app_memory].to_i, params[:app_services], params[:app_urls], binding_object, params[:current_space], apps_list)
             apps_object.close_feedback
           end
 
