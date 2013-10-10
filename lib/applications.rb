@@ -17,7 +17,7 @@ class Applications < Uhuru::Webui::ClassWithFeedback
   end
 
   # parameters with default arguments (= nil) may be
-  def create!(org_guid, space_guid, name, instances, memory, domain_name, path, plan, app_services)
+  def create!(org_guid, space_guid, name, instances, memory, domain_name, host_name, path, plan, app_services)
     info_ln("Pushing app '#{name}' ...")
 
     space = @client.space(space_guid)
@@ -75,7 +75,7 @@ class Applications < Uhuru::Webui::ClassWithFeedback
 
       begin
         info("Setting up application route '#{name}.#{domain_name}'...")
-        Library::Routes.new(@client.base.token, @client.target).create(name, space_guid, domain.guid, 'test_host_name')
+        Library::Routes.new(@client.base.token, @client.target).create(name, space_guid, domain.guid, host_name)
         ok_ln("Done")
       rescue
         error_ln("Failed")
@@ -95,9 +95,7 @@ class Applications < Uhuru::Webui::ClassWithFeedback
     error_ln(e.message)
   end
 
-  ##################################################################################
   ####################    update app details new data    ###########################
-  ##################################################################################
   def update(app_name, state, instances, memory, services, urls, binding_object, current_space, apps_list)
     #cloning the app object
     app = nil

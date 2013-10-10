@@ -67,6 +67,6 @@
 </div>
 
 <% if defined?(include_erb) && include_erb != nil %>
-    <%= erb(include_erb, :layout => false, :locals => { :error_message => error_message }) %>
+    <%= erb(include_erb, :layout => false, :locals => { :months => defined?(months) ? months : nil, :years => defined?(years) ? years : nil, :countries => defined?(countries) ? countries : nil, :error_message => error_message }) %>
 <% end %>
 
