@@ -34,5 +34,13 @@ module Uhuru::Webui::Billing
     def add_billing_binding(customer_id, org_guid)
       save_billing_binding(customer_id, org_guid)
     end
+
+    def delete_credit_card_org(org_guid)
+      customer_id = @data['bindings'][org_guid]
+      if customer_id
+        card = ::Stripe::Customer.retrieve(customer_id).cards.data[0]
+        card.delete()
+      end
+    end
   end
 end
