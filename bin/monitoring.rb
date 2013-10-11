@@ -10,6 +10,7 @@ require "time"
 
 require 'vcap/config'
 
+require 'admin_settings'
 require 'json'
 require 'securerandom'
 require 'yaml'
@@ -20,7 +21,7 @@ require 'thread'
 require 'net/http'
 require 'config'
 require 'users'
-
+require 'email'
 require "users_setup"
 require "cfoundry"
 
@@ -107,6 +108,15 @@ def configure
   @app_definitions = YAML::load_file(File.expand_path("../../config/app-definitions.yml", __FILE__))
   @apps_to_monitor = []
   @components = $config[:monitoring][:components]
+
+  @admin_file = $config[:admin_config_file]
+
+  Uhuru::Webui::AdminSettings.bootstrap(@admin_file)
+
+  @admin = Uhuru::Webui::AdminSettings.from_file(@admin_file)
+
+  $config = Uhuru::Webui::AdminSettings.merge_config($config, @admin)
+
 end
 
 def bootstrap_monitoring
@@ -335,7 +345,8 @@ def app_delete_with_service(app_name)
   app = get_app_by_name(app_name)
 
   services = []
-  unless !app
+
+  if app
     app.service_bindings.each do |service|
       services << service.service_instance
     end
@@ -720,7 +731,7 @@ def main
 
 
 rescue => e
-  puts e
+  puts "#{e.message}: #{e.backtrace}"
   logger.error("#{e.message} #{e.backtrace}")
 end
 
