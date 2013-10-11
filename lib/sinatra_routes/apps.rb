@@ -169,21 +169,20 @@ module Uhuru::Webui
           memory = params[:app_memory]
           instances = params[:app_instances]
           src = params[:app_src] + params[:app_id] + '.zip'
-          plan = "free"
 
           location = File.expand_path(params[:app_src] + 'vmc_manifest.yml', __FILE__)
           manifest = YAML.load_file location
           service_list = manifest['applications'][0]['services'] || []
           app_services = []
           service_list.each do |service|
-            app_services << { :name => service[0], :type => service[1]['label'] }
+            app_services << { :name => service[0], :type => service[1]['label'], :plan => service[1]['plan'] }
           end
 
           apps_obj = Applications.new(session[:token], $cf_target)
           apps_obj.start_feedback
 
           Thread.new() do
-            apps_obj.create!(params[:app_organization], params[:app_space], name, instances.to_i, memory.to_i, domain_name, host_name, src, plan, app_services)
+            apps_obj.create!(params[:app_organization], params[:app_space], name, instances.to_i, memory.to_i, domain_name, host_name, src, app_services)
             apps_obj.close_feedback
           end
 
