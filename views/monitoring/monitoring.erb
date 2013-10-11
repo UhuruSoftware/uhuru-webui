@@ -186,11 +186,11 @@
       <td class="<%= css_class %> meta info"><%= body['info'] %></td>
 
       <% if create_framework_td %>
-          <td class="<%= css_class %> meta framework" rowspan="<%= framework_span %>"><img alt="<%= body['framework'] %>" src="../images/<%= body['framework'].gsub(/\s|\./, '_').downcase %>.png"></td>
+          <td class="<%= css_class %> meta framework" rowspan="<%= framework_span %>"><img alt="<%= body['framework'] %>" src="../images/monitoring/<%= body['framework'].gsub(/\s|\./, '_').downcase %>.png"></td>
       <% end %>
 
       <% if create_service_td %>
-          <td class="<%= css_class %> meta service" rowspan="<%= service_span %>"><img alt="<%= body['service'] %>" src="../images/<%= body['service'].gsub(/\s|\./, '_').downcase %>.png"></td>
+          <td class="<%= css_class %> meta service" rowspan="<%= service_span %>"><img alt="<%= body['service'] %>" src="../images/monitoring/<%= body['service'].gsub(/\s|\./, '_').downcase %>.png"></td>
           <td class="<%= css_class %> meta uptime" rowspan="<%= service_span %>"><%= body['uptime'].to_f.round(2) %>%</td>
       <% end %>
 
@@ -235,7 +235,7 @@
                    end
                 %>
 
-                <img title="<%= "#{status} @ #{DateTime.parse(hash).rfc2822}" %>." alt="<%= status %>" src="../images/<%= status.downcase %>.png" />
+                <img title="<%= "#{status} @ #{DateTime.parse(hash).rfc2822}" %>." alt="<%= status %>" src="../images/monitoring/<%= status.downcase %>.png" />
 
             <% end %>
 
