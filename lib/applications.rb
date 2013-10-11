@@ -17,7 +17,7 @@ class Applications < Uhuru::Webui::ClassWithFeedback
   end
 
   # parameters with default arguments (= nil) may be
-  def create!(org_guid, space_guid, name, instances, memory, domain_name, host_name, path, plan, app_services)
+  def create!(org_guid, space_guid, name, instances, memory, domain_name, host_name, path, app_services)
     info_ln("Pushing app '#{name}' ...")
 
     space = @client.space(space_guid)
@@ -41,30 +41,28 @@ class Applications < Uhuru::Webui::ClassWithFeedback
 
       info_ln("Setting up services ...")
 
-      unless !plan
-        app_services.each do |service|
+      app_services.each do |service|
 
-          info("  Creating service '#{service[:name]}'.")
+        info("  Creating service '#{service[:name]}'.")
 
-          begin
-            service_db_name = ServiceInstances.new(@client.base.token, @client.target).create_service_instance(service[:name], space_guid, plan, service[:type])
-            ok_ln("Done")
-          rescue
-            error_ln("Failed")
-            warning_ln("    Could not create service '#{service[:name]}' for this app. The app was created, try to create the service manually.")
-          end
+        begin
+          service_db_name = ServiceInstances.new(@client.base.token, @client.target).create_service_instance(service[:name], space_guid, service[:plan] || 'free', service[:type])
+          ok_ln("Done")
+        rescue
+          error_ln("Failed")
+          warning_ln("    Could not create service '#{service[:name]}' for this app. The app was created, try to create the service manually.")
+        end
 
-          app = @client.apps.find { |a| a.name == name }
+        app = @client.apps.find { |a| a.name == name }
 
-          info("  Binding service '#{service[:name]}'.")
+        info("  Binding service '#{service[:name]}'.")
 
-          begin
-            app.bind(service_db_name)
-            ok_ln("Done")
-          rescue
-            error_ln("Failed")
-            warning_ln("    Could not bind the app to service '#{service[:name]}'. The app was created successfully, try binding the service manually.")
-          end
+        begin
+          app.bind(service_db_name)
+          ok_ln("Done")
+        rescue
+          error_ln("Failed")
+          warning_ln("    Could not bind the app to service '#{service[:name]}'. The app was created successfully, try binding the service manually.")
         end
       end
 

@@ -101,13 +101,13 @@
 
         <div>
           <form method="post" action="/push" class="create_app_form">
-            <button type="button" onclick="window.location = '<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/spaces/#{current_space}/apps" %>';">Close</button>
+            <button type="button" onclick="window.location.assign('<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/spaces/#{current_space}/apps" %>');">Close</button>
 
               <% apps.each do |app_id, app| %>
                     <button type="submit" class="submit_buttons" id="<%= app_id %>_selected" style="float: right;">Push</button>
                     <% if app['can_download'] != nil %>
                         <% if app['can_download'] == true %>
-                            <button type="button" id="<%= app_id %>_down" class="download_buttons" onclick="window.location = '<%= "/download_app/" + app['id'] %>';" title="Download '<%= app['name'] %>'" style="float: right;">Download</button>
+                            <button type="button" id="<%= app_id %>_down" class="download_buttons" onclick="window.location.assign('<%= "/download_app/" + app['id'] %>');" title="Download '<%= app['name'] %>'" style="float: right;">Download</button>
                         <% end %>
                     <% end %>
 
