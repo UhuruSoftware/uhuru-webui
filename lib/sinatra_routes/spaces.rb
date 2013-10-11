@@ -73,6 +73,8 @@ module Uhuru::Webui
                           :error_message => error_message
                       }
                   }
+            else
+              raise Sinatra::NotFound.new
           end
 
 
@@ -203,6 +205,8 @@ module Uhuru::Webui
                           :error_message => error_message
                       }
                   }
+            else
+              raise Sinatra::NotFound.new
           end
         end
 

@@ -70,8 +70,12 @@ module Uhuru::Webui
     end
 
     def require_login
+      if  CFoundry::V2::Client.new($cf_target, session[:token]).token == nil
+        redirect SinatraRoutes::LOGIN + "?error=Session has expired, please login again."
+      end
+
       unless session[:logged_in]
-        redirect SinatraRoutes::INDEX
+        redirect SinatraRoutes::LOGIN
       end
     end
 
@@ -84,7 +88,7 @@ module Uhuru::Webui
     set :raise_errors, Proc.new { false }
     set :show_exceptions, false
 
-    error 404 do
+    not_found do
       erb :'errors/error404', {:layout => :'layouts/layout_error'}
     end
 
