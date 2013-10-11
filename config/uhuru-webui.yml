@@ -3,7 +3,7 @@ pid_filename: /tmp/uhuru_webui.pid
 local_route: 10.0.0.1
 port: 4567
 dev_mode: true
-cloud_controller_url: http://api.ccng-dev.net
+cloud_controller_url: http://api.cf.me
 message_bus_uri: nats://116e42690e023d88a208bff76eca54ca:8889dd351e08cc6f076bc02344320fbc@10.0.100.45:4222
 domain: www.cf.me
 bind_address: 10.0.102.200
@@ -20,9 +20,9 @@ uaadb:
   port: 2544
   dbname: 'uaa'
 uaa:
-  url: http://uaa.ccng-dev.net
+  url: http://uaa.cf.me
   client_id: webui
-  client_secret: webuisecret
+  client_secret: 579ad478cf55d62c7e1585a71f5e78bc
 logging:
   level: debug
   file: /tmp/uhuru_webui.log
@@ -96,6 +96,8 @@ monitoring:
     nodejs: https://github.com/cloudfoundry/heroku-buildpack-nodejs
     php: https://github.com/heroku/heroku-buildpack-php
     ruby: https://github.com/cloudfoundry/heroku-buildpack-ruby
+
+template_apps_dir: /tmp/template_apps
 admin_config_file: /tmp/admin-settings.yml
 billing_data:
   provider: yml

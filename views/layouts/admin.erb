@@ -7,6 +7,10 @@
 
   <script type="text/javascript" src="/editor/scripts/jquery-1.3.2.js"></script>
   <script type="text/javascript" src="/editor/scripts/jHtmlArea-0.7.5.js"></script>
+
+  <script type="text/javascript" src="/editor/scripts/jHtmlArea-0.7.5.js"></script>
+
+
   <link rel="Stylesheet" type="text/css" href="/editor/style/jHtmlArea.css" />
 
 </head>
@@ -25,7 +29,7 @@
   <div class="<%= current_tab == 'reports' ? 'selected' : '' %>" onclick="window.location.assign('<%= Uhuru::Webui::SinatraRoutes::ADMINISTRATION_REPORTS %>');">Reports</div>
   <div class="<%= current_tab == 'billing' ? 'selected' : '' %>" onclick="window.location.assign('<%= Uhuru::Webui::SinatraRoutes::ADMINISTRATION_BILLING %>');">Billing</div>
   <div class="<%= current_tab == 'design' ? 'selected' : '' %>" onclick="window.location.assign('<%= Uhuru::Webui::SinatraRoutes::ADMINISTRATION %>');">Design</div>
-  <div class="<%= current_tab == 'templates' ? 'selected' : '' %>" onclick="window.location.assign('<%= Uhuru::Webui::SinatraRoutes::ADMINISTRATION %>');">Templates</div>
+  <div class="<%= current_tab == 'templates' ? 'selected' : '' %>" onclick="window.location.assign('<%= Uhuru::Webui::SinatraRoutes::ADMINISTRATION_TEMPLATES %>');">Templates</div>
   <div class="<%= current_tab == 'email' ? 'selected' : '' %>" onclick="window.location.assign('<%= Uhuru::Webui::SinatraRoutes::ADMINISTRATION_EMAIL %>');">Email</div>
 
 

@@ -2,9 +2,15 @@ require 'yaml'
 
 class TemplateApps
 
+  def self.bootstrap
+    FileUtils.mkdir_p $config[:template_apps_dir]
+
+    FileUtils.cp_r(Dir[File.expand_path('../../template_apps/*', __FILE__)], $config[:template_apps_dir])
+  end
+
   def read_collections
     result = {}
-    search_collections =  File.expand_path("../../template_apps/*/manifest.yml", __FILE__)
+    search_collections =  File.expand_path(File.join($config[:template_apps_dir], '/*/manifest.yml'), __FILE__)
     all_collections = Dir.glob(search_collections)
 
     all_collections.each do |collection|

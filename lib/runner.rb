@@ -8,6 +8,9 @@ require "thin"
 require "optparse"
 require "class_with_feedback"
 require "cf/registrar"
+require "rack_dav"
+require "users_setup"
+require "readapps"
 
 module Uhuru::Webui
   class Runner
@@ -83,6 +86,8 @@ module Uhuru::Webui
         $config = @config.dup
         $admin = @admin.dup
 
+        TemplateApps.bootstrap
+
         # Only load the Web UI after configurations are initialized and we're ready to run.
         require "webui"
 
@@ -91,10 +96,23 @@ module Uhuru::Webui
         app = Rack::Builder.new do
           use Rack::CommonLogger
           use Rack::Recaptcha, :public_key => $config[:recaptcha][:recaptcha_public_key], :private_key => $config[:recaptcha][:recaptcha_private_key]
+
           map "/" do
             run webui
           end
+
+          map "/templates" do
+            use Rack::Auth::Basic do |username, password|
+              user_login = UsersSetup.new($config)
+              user = user_login.login(username, password)
+
+              user.is_a?(RuntimeError) ? false : user.is_admin
+            end
+
+            run RackDAV::Handler.new(:root => $config[:template_apps_dir])
+          end
         end
+
         @thin_server = Thin::Server.new(@config[:bind_address], @config[:port], app)
 
         trap_signals
