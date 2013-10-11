@@ -33,3 +33,5 @@ gem "activerecord", ">= 3.0.0"
 gem "sqlite3"
 gem "pg" # required for reports
 gem 'json'
+
+gem 'rack_dav'
