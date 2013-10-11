@@ -75,7 +75,22 @@ reports:
       label: User
   users_and_orgs:
     label: Organizations and Members
-    query: select * from users
+    query: "select
+           	organizations.created_at, organizations.name, organizations.billing_enabled,
+           	array_agg(organizations_auditors.user_id) as auditor,
+           	array_agg(organizations_billing_managers.user_id) as billing,
+           	array_agg(organizations_managers.user_id) as manager
+           from
+           	organizations
+           left outer join
+           	organizations_auditors on organizations.id = organizations_auditors.organization_id
+           left outer join
+           	organizations_billing_managers on organizations.id = organizations_billing_managers.organization_id
+           left outer join
+           	organizations_managers on organizations.id = organizations_managers.organization_id
+           where organizations.created_at >= '2013-09-20' AND organizations.created_at < '2013-10-26'
+           group by organizations.created_at, organizations.id, organizations.name, organizations.updated_at, organizations.billing_enabled
+           order by organizations.created_at"
     user_column:
       name: guid
       label: User
@@ -85,9 +100,75 @@ reports:
     user_column:
       name: guid
       label: User
-  apps:
+  apps_custom_buildpack:
     label: Apps and Users
-    query: select * from users
+    query: "select
+            	apps.created_at, apps.name, apps.buildpack, apps.not_deleted,
+            	array_agg(routes.host || '.' || domains.name) as appurl,
+            	array_agg(distinct spaces_auditors.user_id) as auditor,
+            	array_agg(distinct spaces_developers.user_id) as developer,
+            	array_agg(distinct spaces_managers.user_id) as manager
+            from
+            	apps
+            join
+            	apps_routes on apps.id = apps_routes.app_id
+            join
+            	routes on apps_routes.route_id = routes.id
+            join
+            	domains on routes.domain_id = domains.id
+            left outer join
+            	spaces_auditors on routes.space_id = spaces_auditors.space_id
+            left outer join
+            	spaces_developers on routes.space_id = spaces_developers.space_id
+            left outer join
+            	spaces_managers on routes.space_id = spaces_managers.space_id
+            where apps.created_at >= '2013-09-20' AND apps.created_at < '2013-10-26' AND apps.buildpack != ''
+            group by apps.created_at, apps.name, apps.buildpack, apps.not_deleted
+            order by apps.created_at"
     user_column:
       name: guid
       label: User
+  apps_detected_buildpack:
+      label: Apps and Users
+      query: "select
+              	apps.created_at, apps.name, apps.detected_buildpack, apps.not_deleted,
+              	array_agg(routes.host || '.' || domains.name) as appurl,
+              	array_agg(distinct spaces_auditors.user_id) as auditor,
+              	array_agg(distinct spaces_developers.user_id) as developer,
+              	array_agg(distinct spaces_managers.user_id) as manager
+              from
+              	apps
+              join
+              	apps_routes on apps.id = apps_routes.app_id
+              join
+              	routes on apps_routes.route_id = routes.id
+              join
+              	domains on routes.domain_id = domains.id
+              left outer join
+              	spaces_auditors on routes.space_id = spaces_auditors.space_id
+              left outer join
+              	spaces_developers on routes.space_id = spaces_developers.space_id
+              left outer join
+              	spaces_managers on routes.space_id = spaces_managers.space_id
+              where apps.created_at >= '2013-09-20' AND apps.created_at < '2013-10-26' AND apps.detected_buildpack != ''
+              group by apps.created_at, apps.name, apps.detected_buildpack, apps.not_deleted
+              order by apps.created_at"
+      user_column:
+        name: guid
+        label: User
+  services:
+      label: Services
+      query: "select
+              	service_instances.created_at, service_instances.name, services.label
+              from
+              	service_instances
+              join
+              	service_plans on service_instances.service_plan_id = service_plans.id
+              join
+              	services on service_plans.service_id = services.id
+              where service_instances.created_at >= '2013-09-20' AND service_instances.created_at < '2013-10-26'
+              group by service_instances.created_at, service_instances.name, services.label
+              order by service_instances.created_at"
+      user_column:
+        name: guid
+        label: User
