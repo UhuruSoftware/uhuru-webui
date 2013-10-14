@@ -78,6 +78,8 @@ module Uhuru::Webui
         end
 
         app.get '/get_logo/:app_id' do
+          require_login
+
           collection = TemplateApps.new
           apps = collection.read_collections
           app_id = params[:app_id]
@@ -86,6 +88,8 @@ module Uhuru::Webui
         end
 
         app.post '/get_service_data' do
+          require_login
+
           space = Library::Spaces.new(session[:token], $cf_target)
           space.set_current_space(params[:current_space])
           services = space.read_service_instances(params[:current_space])
@@ -95,6 +99,8 @@ module Uhuru::Webui
         end
 
         app.get '/download_app/:app_id' do
+          require_login
+
           collection = TemplateApps.new
           apps = collection.read_collections
           source = nil
@@ -163,6 +169,8 @@ module Uhuru::Webui
         end
 
         app.post '/push' do
+          require_login
+
           name = params[:app_name]
           domain_name = params[:app_domain]
           host_name = params[:app_host]
@@ -170,7 +178,7 @@ module Uhuru::Webui
           instances = params[:app_instances]
           src = params[:app_src] + params[:app_id] + '.zip'
 
-          location = File.expand_path(params[:app_src] + 'vmc_manifest.yml', __FILE__)
+          location = File.expand_path(params[:app_src] + 'manifest.yml', __FILE__)
           manifest = YAML.load_file location
           service_list = manifest['applications'][0]['services'] || []
           app_services = []
@@ -178,12 +186,21 @@ module Uhuru::Webui
             app_services << { :name => service[0], :type => service[1]['label'], :plan => service[1]['plan'] }
           end
 
+          stack = manifest['applications'][0]['stack']
+
           apps_obj = Applications.new(session[:token], $cf_target)
           apps_obj.start_feedback
 
           Thread.new() do
-            apps_obj.create!(params[:app_organization], params[:app_space], name, instances.to_i, memory.to_i, domain_name, host_name, src, app_services)
-            apps_obj.close_feedback
+            begin
+              apps_obj.create!(params[:app_organization], params[:app_space], name, instances.to_i, memory.to_i, domain_name, host_name, src, app_services, stack)
+            rescue => e
+              apps_obj.info_ln('')
+              apps_obj.error_ln('There was an error while processing the push request - please contact support')
+              $logger.error("Push error: #{e.message} - #{e.backtrace}")
+            ensure
+              apps_obj.close_feedback
+            end
           end
 
           redirect "#{ORGANIZATIONS}/#{params[:app_organization]}/spaces/#{params[:app_space]}/apps/create_app_feedback/#{apps_obj.id}"
@@ -192,6 +209,8 @@ module Uhuru::Webui
 
 
         app.post '/updateApp' do
+          require_login
+
           apps_object = Applications.new(session[:token], $cf_target)
           apps_object.start_feedback
 
@@ -201,8 +220,17 @@ module Uhuru::Webui
           apps_list = space.read_apps(params[:current_space])
 
           Thread.new() do
-            binding_object = Library::Routes.new(session[:token], $cf_target)
-            apps_object.update(params[:app_name], params[:app_state], params[:app_instances].to_i, params[:app_memory].to_i, params[:app_services], params[:app_urls], binding_object, params[:current_space], apps_list)
+            begin
+              binding_object = Library::Routes.new(session[:token], $cf_target)
+              apps_object.update(params[:app_name], params[:app_state], params[:app_instances].to_i, params[:app_memory].to_i, params[:app_services], params[:app_urls], binding_object, params[:current_space], apps_list)
+            rescue => e
+              apps_object.info_ln('')
+              apps_object.error_ln('There was an error while processing the update request - please contact support')
+              $logger.error("Update error: #{e.message} - #{e.backtrace}")
+            ensure
+              apps_object.close_feedback
+            end
+
             apps_object.close_feedback
           end
 
@@ -212,6 +240,8 @@ module Uhuru::Webui
 
 
         app.post '/deleteApp' do
+          require_login
+
           delete = Applications.new(session[:token], $cf_target).delete(params[:appName])
 
           if defined?(delete.message)

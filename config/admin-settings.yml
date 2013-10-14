@@ -36,25 +36,40 @@ webui:
     teams for collaboration on your applications and setup multiple app instances
     for load balancing and fault tolerance</h3>
 email:
-  from: postmaster@uhurusoftware.mailgun.org
+  from: mailer.service@uhurusoftware.com
   from_alias: Uhuru Cloud
-  server: smtp.mailgun.org
+  server: pod51010.outlook.com
   port: 587
-  user: postmaster@uhurusoftware.mailgun.org
-  secret: 4q899o1avzu3
+  user: mailer.service@uhurusoftware.com
+  secret: freed0m!
   auth_method: :login
   enable_tls: 'true'
-  registration_email: ! "<div> <h1>Uhuru Software Confirmation</h1> <p>Your account
-    is ready to use. Please click the link bellow in order to continue and finish
-    the signup process:</p>\r\n<a href=\"#ACTIVATION_LINK#\" style=\"text-decoration:
-    none; display: block;\"> <div style=\"display: block; width: 200px; height: 200px;
-    background-color: #603F3F; color: #ffffff; text-align: center; font-size: 24px;\">
-    Finish<br> registration </div> </a>\r\n<p>If you have not signup to uhuru cloud
-    please ignore this email and the account will be removed automatically</p> <h3>The
-    Uhuru team</h3> </div> "
-  welcome_email: ! '<div> <h1>Welcome to Uhuru AppCloud</h1> <p>Thank you for joining
-    the Uhuru community!</p> <h3>The Uhuru team</h3> </div> '
+  registration_email: |
+    <h3>Hello #FIRST_NAME#,</h3>
+    <p>
+      This is the Uhuru Cloud confirmation e-mail.</br>
+      Your account is ready to use. Please click the link bellow in order to continue and finish the sign-up process:
+    </p>
+    <a href="#ACTIVATION_LINK#">#ACTIVATION_LINK#</a>
 
+    <p>
+      If you have not signed-up to Uhuru Cloud, please ignore this email.
+    </p>
+    <p>
+    Thank you,<br/>
+    The Uhuru Cloud Team
+  welcome_email: |
+    <h3>Hello #FIRST_NAME#,</h3>
+    <p>
+      Your Uhuru Cloud account is now active and ready to be used.
+    </p>
+
+    <p>
+      You can start using the cloud by browsing to our <a href="#WEBSITE_URL#">web console</a>.
+    </p>
+
+    Thank you for using our service,<br/>
+    The Uhuru Cloud Team
 
 billing:
   provider: stripe
@@ -62,8 +77,6 @@ billing:
     stripe:
       publishable_key: pk_test_gRsPhGxpLivq7IsDPyuY9zs8
       secret_key: sk_test_fZOqxL3KHooewcpfplMZxVby
-
-
 
 
 reports:

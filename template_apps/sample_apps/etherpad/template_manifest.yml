@@ -1,7 +1,0 @@
-name: Etherpad
-id: etherpad
-tags: ['Editor', 'Nodejs', 'Simple']
-description: Etherpad is a web-based collaborative real-time editor, allowing authors to simultaneously edit a text document, and see all of the participants' edits in real-time, with the ability to display each author's text in their own color. There is also a chat box in the sidebar to allow meta communication.
-uuid: 550e84ee-e29b-k1d4-a716-446655432704
-can_download: true
-buildpack: nodejs

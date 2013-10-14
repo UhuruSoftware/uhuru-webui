@@ -11,29 +11,21 @@ module Library
     #if one of the params is provided will filter the domains according to the params
     def read_domains(org_guid = nil, space_guid = nil)
       domains = []
-      domains_api = []
 
-      if (org_guid == nil && space_guid == nil)
-        domains_api = @client.domains
-      elsif org_guid != nil
-        org = @client.organization(org_guid)
-        domains_api = org.domains
-      elsif space_guid != nil
-        space = @client.space(space_guid)
-        domains_api = space.domains
-      end
+      type = space_guid == nil ? (org_guid == nil ? :none : :org) : :space
+
+      domains_api = case type
+                      when :org then @client.organization(org_guid).domains + @client.domains.select { |d| d.owning_organization == nil }
+                      when :space then @client.space(space_guid).domains
+                      else @client.domains
+                    end
 
       domains_api.each do |d|
         owning_org_name = d.owning_organization == nil ? "Shared" : d.owning_organization.name
         domains << Domain.new(d.name, d.wildcard, owning_org_name, d.spaces, d.guid)
       end
 
-      return domains
-
-    rescue Exception => e
-      puts "#{e.inspect}, #{e.backtrace}"
-      puts 'read domains error'
-      return e
+      domains.uniq {|d| d.name }
     end
 
     def get_organizations_domain_guid(org_guid)
@@ -41,13 +33,6 @@ module Library
 
       domain = @client.domains.select { |x| x.owning_organization == org }
       domain = (@client.domains.select{ |x| x.owning_organization == nil }).first if domain == nil
-
-      return domain[0].guid
-
-    rescue Exception => e
-      puts "#{e.inspect}, #{e.backtrace}"
-      puts 'read org domain error'
-      return e
     end
 
     # create is used: - to create an domain and map it to an organization or space
@@ -90,8 +75,6 @@ module Library
         end
       end
 
-    rescue Exception => e
-      return e
     end
 
     # unmaps a domain from an organization or space
@@ -121,9 +104,6 @@ module Library
         end
 
       end
-
-    rescue Exception => e
-      return e
     end
 
     # deletes the domain and unmap all existing connections
@@ -131,8 +111,6 @@ module Library
       domain = @client.domain(domain_guid)
       domain.delete!
 
-    rescue Exception => e
-      return e
     end
 
     class Domain

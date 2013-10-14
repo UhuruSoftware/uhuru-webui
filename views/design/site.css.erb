@@ -66,6 +66,37 @@ a:<%= style %>
     font-style: normal;
 }
 
+/************************** CHECKBOX ****************************/
+input[type=checkbox].checkbox {
+    display:none;
+}
+
+input[type=checkbox].checkbox + label.checkbox {
+    padding-left:29px;
+    height:24px;
+    display:inline-block;
+    line-height:24px;
+    background-repeat:no-repeat;
+    background-position: 0 0;
+    font-size:24px;
+    vertical-align:middle;
+    cursor:pointer;
+    margin-top: -10px;
+}
+
+input[type=checkbox].checkbox:checked + label.checkbox {
+    background-position: 0 -24px;
+}
+label.checkbox {
+    background-image:url(/images/checkbox.png);
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
 /************************** ERROR MESSAGES AND WARNINGS ****************************/
 .error
 {

@@ -88,6 +88,7 @@ image-buttons:
     start: 'play_24px.png'
     stop: 'pause_24px.png'
     wildcard: 'wildcard.png'
+    link: 'global_24px.png'
   32px:
     home: 'house.png'
     plus: 'plus_32px.png'
@@ -100,6 +101,7 @@ image-buttons:
     start: 'play_32px.png'
     stop: 'pause_32px.png'
     admin: 'reports_32px.png'
+    link: 'global_32px.png'
   48px:
     home: 'house.png'
     plus: 'plus_48px.png'
@@ -189,19 +191,19 @@ tiles:
       background-color: '#545454'
       font-color: '#FFFFFF'
       link:
-        link: '#FF00FF'
-        visited: '#00F3F9'
-        hover: '#326544'
-        active: '#098786'
+        link: '#FFFFFF'
+        visited: '#FFFFFF'
+        hover: '#FFFFFF'
+        active: '#FFFFFF'
     right:
       border-color: '#000000'
       background-color: '#444444'
       font-color: '#FFFFFF'
       link:
-        link: '#FF00FF'
-        visited: '#00F3F9'
-        hover: '#326544'
-        active: '#098786'
+        link: '#FFFFFF'
+        visited: '#FFFFFF'
+        hover: '#FFFFFF'
+        active: '#FFFFFF'
   service:
     top:
       border-color: '#000000'
@@ -217,19 +219,19 @@ tiles:
       background-color: '#545454'
       font-color: '#FFFFFF'
       link:
-        link: '#FF00FF'
-        visited: '#00F3F9'
-        hover: '#326544'
-        active: '#098786'
+        link: '#FFFFFF'
+        visited: '#FFFFFF'
+        hover: '#FFFFFF'
+        active: '#FFFFFF'
     right:
       border-color: '#000000'
       background-color: '#444444'
       font-color: '#FFFFFF'
       link:
-        link: '#FF00FF'
-        visited: '#00F3F9'
-        hover: '#326544'
-        active: '#098786'
+        link: '#FFFFFF'
+        visited: '#FFFFFF'
+        hover: '#FFFFFF'
+        active: '#FFFFFF'
 
 square_tiles:
   owner:
@@ -342,10 +344,10 @@ modal:
       background-color: '#484848'
       font-color: '#FFFFFF'
       link:
-        link: '#FF00FF'
-        visited: '#00F3F9'
-        hover: '#326544'
-        active: '#098786'
+        link: '#FFFFFF'
+        visited: '#FFFFFF'
+        hover: '#FFFFFF'
+        active: '#FFFFFF'
   header:
       background-color: '#484848'
       font-color: '#FFFFFF'
@@ -358,7 +360,7 @@ modal:
       background-color: '#1F1F1F'
       font-color: '#FFFFFF'
       link:
-        link: '#FF00FF'
+        link: '#FFFFFF'
         visited: '#FFFFFF'
         hover: '#FFFFFF'
         active: '#FFFFFF'

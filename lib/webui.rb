@@ -45,6 +45,9 @@ require 'billing/provider'
 module Uhuru::Webui
   class Webui < Sinatra::Base
 
+    ENV_COPY  = %w[ REQUEST_METHOD HTTP_COOKIE rack.request.cookie_string
+                rack.session rack.session.options rack.input]
+
     set :root, File.expand_path("../../", __FILE__)
     set :views, File.expand_path("../../views", __FILE__)
     set :public_folder, File.expand_path("../../public", __FILE__)
@@ -68,6 +71,29 @@ module Uhuru::Webui
       $cf_target = $config[:cloud_controller_url]
       super()
     end
+
+    def switch_to(uri, method)
+
+      uri_info = URI.parse(URI.escape(uri))
+
+      new_env = env.slice(*ENV_COPY).merge({
+                                               "PATH_INFO"    => uri_info.path,
+                                               "QUERY_STRING"    => uri_info.query,
+                                               "HTTP_REFERER" => env["REQUEST_URI"],
+                                               "REQUEST_METHOD" => method
+                                           })
+      new_env.merge!(headers) if headers
+      call( new_env ).last.join
+    end
+
+    def switch_to_get(uri)
+      switch_to uri, "GET"
+    end
+
+    def switch_to_post(uri)
+      switch_to uri, "POST"
+    end
+
 
     def require_login
       if  CFoundry::V2::Client.new($cf_target, session[:token]).token == nil
@@ -93,6 +119,8 @@ module Uhuru::Webui
     end
 
     error do
+      $logger.error("An error occurred: #{env['sinatra.error'].message} - #{env['sinatra.error'].backtrace} ")
+
       erb :'errors/error500', {
           :layout => :'layouts/layout_error',
           :locals =>

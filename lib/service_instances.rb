@@ -7,26 +7,24 @@ class ServiceInstances
     @client = CFoundry::V2::Client.new(target, token)
   end
 
-  def create_service_instance(name, space_guid, plan, type)
-    service = @client.services.select{ |s| s.label == type }
-    service_plan = nil
+  def create_service_by_names(name, space_guid, service_plan_name, service_type_name)
+    service = @client.services.select{ |s| s.label == service_type_name }
 
-    @client.service_plans_by_service_guid(service.first.guid).each do |current_plan|
-      if current_plan.name == plan
-        service_plan = current_plan
-      end
-    end
+    service_plan_id = @client.service_plans_by_service_guid(service.first.guid).each.find { |current_plan| current_plan.name == service_plan_name }.guid
+
+    create_service_instance(name, space_guid, service_plan_id)
+  end
+
+  def create_service_instance(name, space_guid, service_plan_id)
+    service_plan_instance = CFoundry::V2::ServicePlan.new(service_plan_id, @client)
 
     service_instance = @client.managed_service_instance
     service_instance.name = name
-    service_instance.service_plan = service_plan
+    service_instance.service_plan = service_plan_instance
     service_instance.space = @client.space(space_guid)
 
     service_instance.create!
     service_instance
-
-  rescue Exception => e
-    return e
   end
 
   def read_service_plans()
@@ -49,9 +47,6 @@ class ServiceInstances
     end
 
     service_instance.delete!
-
-  rescue Exception => e
-    return e
   end
 
   class Service

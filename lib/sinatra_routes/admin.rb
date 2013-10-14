@@ -175,6 +175,56 @@ module Uhuru::Webui
           redirect ADMINISTRATION_EMAIL
         end
 
+        app.post ADMINISTRATION_EMAIL_TEST do
+          require_admin
+
+          unless /\b[A-Z0-9._%a-z\-]+@(?:[A-Z0-9a-z\-]+\.)+[A-Za-z]{2,4}\z/.match(params[:test_email])
+            return switch_to_get "#{ADMINISTRATION_EMAIL}?error=Please input a valid destination e-mail address"
+          end
+
+          email_server = params[:server]
+          email_from =  params[:from]
+          email_from_alias =  params[:from_alias]
+          email_port =  Integer(params[:port])
+          email_server_enable_tls = params[:enable_tls]
+          email_server_user =  params[:user]
+          email_server_secret = params[:secret]
+          email_server_auth_method = params[:auth_method].to_sym
+
+
+          client = Net::SMTP.new( email_server,email_port)
+
+          if email_server_enable_tls
+            context =   Net::SMTP.default_ssl_context
+            client.enable_starttls(context)
+          end
+
+          begin
+
+            msg = <<END_OF_MESSAGE
+From: #{email_from_alias} <#{email_from}>
+To: <#{params[:test_email]}>
+Subject: Test email for Cloud Web UI
+MIME-Version: 1.0
+Content-type: text/html
+
+Test email for Uhuru Cloud Web UI
+END_OF_MESSAGE
+
+            client.open_timeout = 10
+            client.start(
+                "localhost",
+                email_server_user,
+                email_server_secret,
+                email_server_auth_method) do
+              client.send_message msg, email_from, params[:test_email]
+
+              switch_to_get "#{ADMINISTRATION_EMAIL}?message=Settings are working correctly."
+            end
+          rescue Exception => e
+            switch_to_get "#{ADMINISTRATION_EMAIL}?error=Cannot connect to email server, please verify settings - #{e.message}"
+          end
+        end
 
         app.get ADMINISTRATION_REPORTS do
           require_admin
@@ -198,6 +248,46 @@ module Uhuru::Webui
           }
         end
 
+        app.get ADMINISTRATION_USERS do
+          require_admin
+
+          erb :'admin/users', {
+              :layout => :'layouts/admin',
+              :locals => {
+                  :current_tab => 'users',
+                  :all_users => UsersSetup.new($config).uaa_get_users
+              }
+          }
+        end
+
+        app.post ADMINISTRATION_USERS_DELETE do
+          require_admin
+
+          UsersSetup.new($config).delete_user(params[:user_id])
+
+          redirect ADMINISTRATION_USERS
+        end
+
+        app.get ADMINISTRATION_LOGS do
+          require_admin
+
+          log_file = $config[:logging][:file]
+          json = File.read log_file
+          logs = []
+
+          Yajl::Parser.parse(json) { |obj|
+            logs << obj
+          }
+
+          erb :'admin/logs', {
+              :layout => :'layouts/admin',
+              :locals => {
+                  :current_tab => 'logs',
+                  :original_size => logs.size,
+                  :logs => logs.reverse[0..199]
+              }
+          }
+        end
       end
     end
   end

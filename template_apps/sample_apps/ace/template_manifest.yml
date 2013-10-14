@@ -1,7 +1,0 @@
-name: Ace
-id: ace
-tags: ['Editor', 'Java Script', 'Simple']
-description: Embeddable code editor written in JavaScript. It matches the features and performance of native editors such as Sublime, Vim and TextMate.
-uuid: 550e84ee-e29b-k1d4-a716-446655432702
-can_download: true
-buildpack: nodejs

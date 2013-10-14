@@ -79,7 +79,7 @@
                               <td>
                                 <select id="<%= app_id %>_selected_domain">
                                   <% domains_list.each do |domain| %>
-                                      <% if domain.owning_org_name == organization_name || domain.owning_org_name == 'Shared' %>
+                                      <% if domain.owning_spaces.any? { |space| space.guid == params[:space_guid] } %>
                                         <option value="<%= domain.name %>"><%= domain.name %></option>
                                       <% end %>
                                   <% end %>
@@ -113,8 +113,8 @@
 
                     <input type="hidden" id="<%= app_id %>_selected_id" value="<%= app_id %>" >
                     <input type="hidden" id="<%= app_id %>_selected_src" value="<%= app['app_src'].sub('template_manifest.yml', '') %>" >
-                    <input type="hidden" id="<%= app_id %>_selected_memory" value="<%= app['vmc_manifest']['applications'][0]['memory'] %>" >
-                    <input type="hidden" id="<%= app_id %>_selected_instances" value="<%= app['vmc_manifest']['applications'][0]['instances'] %>" >
+                    <input type="hidden" id="<%= app_id %>_selected_memory" value="<%= app['manifest']['applications'][0]['memory'] %>" >
+                    <input type="hidden" id="<%= app_id %>_selected_instances" value="<%= app['manifest']['applications'][0]['instances'] %>" >
                     <input type="hidden" name="app_space" value="<%= current_space %>" >
                     <input type="hidden" name="app_organization" value="<%= current_organization %>" >
               <% end %>

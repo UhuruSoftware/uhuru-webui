@@ -59,9 +59,9 @@ module Uhuru::Webui
         app.post LOGIN do
           if params[:username]
             user_login = UsersSetup.new($config)
-            user = user_login.login(params[:username], params[:password])
 
-            unless defined?(user.message)
+            begin
+              user = user_login.login(params[:username], params[:password])
               session[:token] = user.token
               session[:logged_in] = true
               session[:fname] = user.first_name
@@ -71,8 +71,8 @@ module Uhuru::Webui
               session[:is_admin] = user.is_admin
 
               redirect ORGANIZATIONS
-            else
-              redirect LOGIN + "?error=#{user.message}&username=#{params[:username]}"
+            rescue CF::UAA::TargetError
+              redirect LOGIN + "?error=Invalid Username or Password&username=#{params[:username]}"
             end
           else
             redirect LOGIN
@@ -82,7 +82,7 @@ module Uhuru::Webui
         app.post SIGNUP do
           if $config[:recaptcha][:use_recaptcha] == true
             unless recaptcha_valid?
-              redirect SIGNUP + "?username=#{params[:email]}&first_name=#{params[:first_name]}&last_name=#{params[:last_name]}&message=Please type the correct code"
+              redirect SIGNUP + "?username=#{params[:email]}&first_name=#{params[:first_name]}&last_name=#{params[:last_name]}&message=Human validation failed - please type the correct code"
             end
           end
 
@@ -109,11 +109,19 @@ module Uhuru::Webui
           end
 
           user_sign_up = UsersSetup.new($config)
-          user = user_sign_up.signup(params[:email], $config[:webui][:activation_link_secret], params[:last_name], params[:first_name])
+          user = user_sign_up.signup(params[:email], $config[:webui][:activation_link_secret], params[:first_name], params[:last_name])
 
           unless defined?(user.message)
             link = "http://#{request.env['HTTP_HOST'].to_s}/activate/#{URI.encode(Base32.encode(pass))}/#{URI.encode(Base32.encode(user.guid))}/#{params[:email]}"
-            email_body = $config[:email][:registration_email].gsub('#ACTIVATION_LINK#', link)
+
+            email_body = $config[:email][:registration_email]
+
+            email_body.gsub!('#ACTIVATION_LINK#', link)
+            email_body.gsub!('#FIRST_NAME#', params[:first_name])
+            email_body.gsub!('#LAST_NAME#', params[:last_name])
+            email_body.gsub!('#WEBSITE_URL#', "http://#{$config[:domain]}")
+
+
             Email::send_email(params[:email], 'Uhuru account confirmation', email_body)
 
             session[:token] = user.token
@@ -155,10 +163,18 @@ module Uhuru::Webui
           user_guid = Encryption.decrypt_text(user_guid_b32, key)
           password = Encryption.decrypt_text(password_b32, key)
 
-          change_password = UsersSetup.new($config)
-          change_password.change_password(user_guid_b32, password, $config[:webui][:signup_user_password])
+          user = UsersSetup.new($config)
+          user.change_password(user_guid_b32, password, $config[:webui][:signup_user_password])
+
+
+          user_detail = user.get_details(user_guid_b32)
 
           email_body = $config[:email][:welcome_email]
+
+          email_body.gsub!('#FIRST_NAME#', user_detail["name"]["givenname"])
+          email_body.gsub!('#LAST_NAME#', user_detail["name"]["familyname"])
+          email_body.gsub!('#WEBSITE_URL#', "http://#{$config[:domain]}")
+
           Email::send_email(params[:email], 'Uhuru account confirmation', email_body)
 
           redirect ACTIVE
