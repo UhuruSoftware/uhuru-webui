@@ -84,5 +84,19 @@ div.jHtmlArea
     color: #000000;
 }
 
+/************************** TAB MENU ****************************/
 
+.report_table td
+{
+    border-bottom: 1px solid #000000;
+    border-right: 1px solid #000000;
+}
+
+/************************** NORMAL TEXTAREA ****************************/
+
+.normal
+ {
+    width: 550px;
+    height: 100px;
+ }
 

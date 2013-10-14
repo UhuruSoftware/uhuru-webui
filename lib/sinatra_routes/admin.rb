@@ -198,6 +198,26 @@ module Uhuru::Webui
           }
         end
 
+        app.get ADMINISTRATION_LOGS do
+          require_admin
+
+          log_file = $config[:logging][:file]
+          json = File.read log_file
+          logs = []
+
+          Yajl::Parser.parse(json) { |obj|
+            logs << obj
+          }
+
+          erb :'admin/logs', {
+              :layout => :'layouts/admin',
+              :locals => {
+                  :current_tab => 'logs',
+                  :original_size => logs.size,
+                  :logs => logs.reverse[0..199]
+              }
+          }
+        end
       end
     end
   end

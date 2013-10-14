@@ -1,0 +1,7 @@
+name: ASP.NET Web Site Project
+id: asp_net_razor_sample
+tags: ['Hello World', 'ASP.NET', 'Razor']
+description: This is a vanilla ASP.NET Web Site (Razor V2) project created using Visual Studio 2012
+uuid: 939d3fc5-ce6d-48f6-a6ac-4961c6b5124b
+can_download: true
+buildpack: iis8aspnet

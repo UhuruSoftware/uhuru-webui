@@ -31,6 +31,7 @@
   <div class="<%= current_tab == 'design' ? 'selected' : '' %>" onclick="window.location.assign('<%= Uhuru::Webui::SinatraRoutes::ADMINISTRATION %>');">Design</div>
   <div class="<%= current_tab == 'templates' ? 'selected' : '' %>" onclick="window.location.assign('<%= Uhuru::Webui::SinatraRoutes::ADMINISTRATION_TEMPLATES %>');">Templates</div>
   <div class="<%= current_tab == 'email' ? 'selected' : '' %>" onclick="window.location.assign('<%= Uhuru::Webui::SinatraRoutes::ADMINISTRATION_EMAIL %>');">Email</div>
+  <div class="<%= current_tab == 'logs' ? 'selected' : '' %>" onclick="window.location.assign('<%= Uhuru::Webui::SinatraRoutes::ADMINISTRATION_LOGS %>');">Logs</div>
 
 
   <div class="tab_menu_end">&nbsp;</div>
@@ -42,7 +43,7 @@
 
 <script type="text/javascript">
     $(function() {
-        $("textarea").htmlarea();
+        $("textarea:not(.normal)").htmlarea();
     });
 </script>
 </body>

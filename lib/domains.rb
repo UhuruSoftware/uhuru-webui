@@ -28,12 +28,7 @@ module Library
         domains << Domain.new(d.name, d.wildcard, owning_org_name, d.spaces, d.guid)
       end
 
-      return domains
-
-    rescue Exception => e
-      puts "#{e.inspect}, #{e.backtrace}"
-      puts 'read domains error'
-      return e
+      domains
     end
 
     def get_organizations_domain_guid(org_guid)
@@ -41,13 +36,6 @@ module Library
 
       domain = @client.domains.select { |x| x.owning_organization == org }
       domain = (@client.domains.select{ |x| x.owning_organization == nil }).first if domain == nil
-
-      return domain[0].guid
-
-    rescue Exception => e
-      puts "#{e.inspect}, #{e.backtrace}"
-      puts 'read org domain error'
-      return e
     end
 
     # create is used: - to create an domain and map it to an organization or space
@@ -90,8 +78,6 @@ module Library
         end
       end
 
-    rescue Exception => e
-      return e
     end
 
     # unmaps a domain from an organization or space
@@ -121,9 +107,6 @@ module Library
         end
 
       end
-
-    rescue Exception => e
-      return e
     end
 
     # deletes the domain and unmap all existing connections
@@ -131,8 +114,6 @@ module Library
       domain = @client.domain(domain_guid)
       domain.delete!
 
-    rescue Exception => e
-      return e
     end
 
     class Domain

@@ -3,9 +3,9 @@ pid_filename: /tmp/uhuru_webui.pid
 local_route: 10.0.0.1
 port: 4567
 dev_mode: true
-cloud_controller_url: http://api.cf.me
+cloud_controller_url: http://api.rarunchiu.com
 message_bus_uri: nats://116e42690e023d88a208bff76eca54ca:8889dd351e08cc6f076bc02344320fbc@10.0.100.45:4222
-domain: www.cf.me
+domain: www.rarunchiu.com
 bind_address: 10.0.102.200
 ccdb:
   host: '10.0.7.123'
@@ -20,9 +20,9 @@ uaadb:
   port: 2544
   dbname: 'uaa'
 uaa:
-  url: http://uaa.cf.me
+  url: http://uaa.rarunchiu.com
   client_id: webui
-  client_secret: 579ad478cf55d62c7e1585a71f5e78bc
+  client_secret: 930b02497aab3d499abf8bae04e69dc7
 logging:
   level: debug
   file: /tmp/uhuru_webui.log
@@ -97,8 +97,8 @@ monitoring:
     php: https://github.com/heroku/heroku-buildpack-php
     ruby: https://github.com/cloudfoundry/heroku-buildpack-ruby
 
-template_apps_dir: /tmp/template_apps
-admin_config_file: /tmp/admin-settings.yml
+template_apps_dir: D:\temp\template_apps
+admin_config_file: D:\temp\admin-settings.yml
 billing_data:
   provider: yml
-  connection: /tmp/billing_bindings.yml
+  connection: D:\temp\billing_bindings.yml

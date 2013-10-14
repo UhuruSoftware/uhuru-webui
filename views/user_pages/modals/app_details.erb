@@ -9,9 +9,11 @@
 
       <div class="modal_content">
         <div>
-          <span class="app_status">Status: "<%= app.state %>"</span>
+          <span class="app_status">Status: "<%= app.running ? 'RUNNING' : app.state %>"</span>
           <div class="app_status_buttons">
-            <label for="state">Start app? </label><input type="checkbox" id="app_state"/>
+            <label for="app_state">STARTED </label>
+            <input class="checkbox" type="checkbox" name="app_state" id="app_state" value="true" <%= app.state.downcase == 'started' ? 'checked' : '' %>/>
+            <label class="checkbox" for="app_state"></label>
           </div>
         </div>
 

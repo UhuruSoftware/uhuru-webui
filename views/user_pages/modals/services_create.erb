@@ -1,3 +1,26 @@
+<%
+
+   all_services = {}
+
+   ServiceInstances.new(session[:token], $cf_target).read_service_plans.each do |plan|
+     plan_name = plan.name
+     service_name = plan.service.label
+     plan_id = plan.guid
+     service_id = plan.service.guid
+
+     all_services[service_id] = {} unless all_services[service_name]
+
+     all_services[service_id]['label'] = service_name
+     all_services[service_id]['plans'] = {} unless all_services[service_id]['plans']
+     all_services[service_id]['plans'][plan_id] = plan_name
+   end
+
+%>
+
+<script type="text/javascript">
+   var all_services = <%= all_services.to_json %>;
+</script>
+
 <div class="modal-background"> </div>
 
 <div class="modal">
@@ -5,6 +28,7 @@
     <div class="modal_header">
       <span>Create service</span>
     </div>
+
 
     <div class="modal_content">
       <table style="width: 100%;">
@@ -14,27 +38,32 @@
         </tr>
 
         <tr>
-          <td><label for="service_plan">service plan</label></td>
+          <td><label for="service_type">service type</label></td>
           <td>
-            <select name="service_plan" style="width: 200px;">
-              <% ServiceInstances.new(session[:token], $cf_target).read_service_plans.each do |plan| %>
-                  <option value="<%= plan.name %>"><%= plan.name.capitalize %></option>
+            <select name="service_type" id="service_type" style="width: 200px;" onchange="fillSelect(all_services);">
+              <% all_services.each do |id, service| %>
+                  <option value="<%= id %>"><%= service['label'] %></option>
               <% end %>
             </select>
           </td>
         </tr>
 
+
         <tr>
-          <td><label for="service_type">service type</label></td>
+          <td><label for="service_plan">service plan</label></td>
           <td>
-            <select name="service_type" style="width: 200px;">
-              <% ServiceInstances.new(session[:token], $cf_target).read_service_types.each do |type| %>
-                  <option value="<%= type %>"><%= type %></option>
-              <% end %>
+            <select name="service_plan" id="service_plan" style="width: 200px;">
             </select>
           </td>
         </tr>
+
+
       </table>
+
+      <script type="text/javascript">
+
+      </script>
+
 
       <% unless error_message.nil? || error_message.empty? %>
           <div class="error"> <%= error_message %> </div>

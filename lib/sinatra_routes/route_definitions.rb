@@ -47,6 +47,6 @@ module Uhuru::Webui
     ADMINISTRATION_EMAIL      = "#{ADMINISTRATION}/email"
     ADMINISTRATION_REPORTS    = "#{ADMINISTRATION}/reports"
     ADMINISTRATION_TEMPLATES  = "#{ADMINISTRATION}/templates"
-
+    ADMINISTRATION_LOGS       = "#{ADMINISTRATION}/logs"
   end
 end

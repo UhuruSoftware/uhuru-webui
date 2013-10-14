@@ -84,11 +84,17 @@
 
 <% if defined?(current_tab) && current_tab != nil && current_tab == "apps" %>
     <% apps_list.each do |app| %>
+        <%
+           app_uri = '#'
+           if app.uris.first
+             app_uri = "http://#{app.uris.first.host}.#{app.uris[0].domain}"
+           end
+        %>
+
         <div class="tile app">
           <div class="tile top">
-
             <div class="tile_action">
-              <a class="tile_action show_this_app_details" href="<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/spaces/#{current_space}/apps/#{app.name}" %>" id="<%= app.name %>">
+              <a title="Click to update the app's settings" class="tile_action show_this_app_details" href="<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/spaces/#{current_space}/apps/#{app.name}" %>" id="<%= app.name %>">
                 <span class="app_name" id="<%= app.name %>" title="<%= app.name %>"><%= app.name %></span>
                 <span class="app_state" id="<%= app.state %>"></span>
                 <span class="app_instances" id="<%= app.instances %>"></span>
@@ -103,12 +109,18 @@
             <div class="tile left">
               <span><%= app.stack.name %></span>
               <span>instances: <%= app.instances %></span>
-              <span>memory: <%= app.memory %></span>
+              <span>mem: <%= app.memory %> MB</span>
             </div>
 
-            <div class="tile right">
-              <span><%= app.state %></span>
-            </div>
+            <a target="_blank" title="Click to open in browser" href="<%= app_uri %>">
+                <div class="tile right">
+                  <div>
+                    <%= app.uris.size %> route(s)
+                  </div>
+                  <br/>
+                  <span><%= app.running ? 'RUNNING' : app.state %><%= " (#{app.running_instances}/#{app.instances})" %></span>
+                </div>
+            </a>
           </div>
 
           <% if params[:app_name] == app.name %>
@@ -254,7 +266,7 @@
             <button type="button" class="cancel_button">Cancel</button>
             <button type="submit" value="Delete">Delete</button>
             <input type="hidden" class="selected_guid" value="" name="thisUser"/>
-            <input type="hidden" id="aditional_data" value="" name="thisUserRole"/>
+            <input type="hidden" id="additional_data" value="" name="thisUserRole"/>
             <input type="hidden" name="current_organization" value="<%= current_organization %>" />
             <input type="hidden" name="current_space" value="<%= current_space %>" />
             <input type="hidden" name="current_tab" value="<%= current_tab %>" />
@@ -268,14 +280,18 @@
 <% if defined?(current_tab) && current_tab != nil && current_tab == "routes" %>
 
     <% routes_list.each do |route| %>
-        <div class="square_tile">
-          <div class="square_tile route">
-            <a href="http://<%= route.name %>" class="tile_action" title="<%= route.name %>"><%= route.name %></a>
 
-            <span class="bottom_left">Route</span>
-            <button type="button" class="image s24px trash" id="<%= route.guid %>" title="<%= route.name %>" />
+        <a target="_blank" href="http://<%= route.name %>" class="tile_action" title="<%= route.name %>">
+          <div class="square_tile">
+            <div class="square_tile route">
+              <%= route.name %>
+
+
+              <span class="bottom_left">Route</span>
+              <button type="button" class="image s24px trash" id="<%= route.guid %>" title="<%= route.name %>" />
+            </div>
           </div>
-        </div>
+        </a>
     <% end %>
 
     <div class="modal delete_confirmation route hide">
@@ -312,8 +328,10 @@
         <% if domain.owning_org_name == organization_name && domain.owning_spaces.count { |s| s.name == space_name } != 0 %>
             <div class="square_tile">
               <div class="square_tile domain" title="<%= domain.name %>">
-                <span><%= domain.name %></span>
-                <span class="bottom_left">Domain: <span <% if domain.wildcard == true %> class="wildcard" <% end %>></span></span>
+                <span><%= domain.wildcard ? '*.' : '' %><%= domain.name %></span>
+                <span class="bottom_left">
+                  <%= domain.wildcard ? 'Wildcard' : '' %>
+                </span>
                 <button type="button" class="image s24px trash" id="<%= domain.guid %>" title="Un-map '<%= domain.name %>'" />
               </div>
             </div>

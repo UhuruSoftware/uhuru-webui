@@ -167,7 +167,7 @@
             <button type="button" class="cancel_button">Cancel</button>
             <button type="submit" value="Delete">Delete</button>
             <input type="hidden" class="selected_guid" value="" name="thisUser"/>
-            <input type="hidden" id="aditional_data" value="" name="thisUserRole"/>
+            <input type="hidden" id="additional_data" value="" name="thisUserRole"/>
             <input type="hidden" name="current_organization" value="<%= current_organization %>" />
             <input type="hidden" name="current_tab" value="<%= current_tab %>" />
           </form>
@@ -184,8 +184,10 @@
             <% if domain.owning_org_name == organization_name || domain.owning_org_name == 'Shared' %>
                 <div class="square_tile">
                     <div class="square_tile domain" title="<%= domain.name %>">
-                      <span><%= domain.name %></span>
-                      <span class="bottom_left">Domain: <span <% if domain.wildcard == true %> class="wildcard" <% end %>></span></span>
+                      <span><%= domain.wildcard ? '*.' : '' %><%= domain.name %></span>
+                    <span class="bottom_left">
+                      <%= domain.wildcard ? 'Wildcard' : '' %>
+                    </span>
                       <button type="button" id="<%= domain.guid %>" class="image s24px trash" title="Delete '<%= domain.name %>'"></button>
                       <span class="span_bg_icon_domain"></span>
                     </div>

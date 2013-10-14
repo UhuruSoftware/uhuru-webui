@@ -28,9 +28,9 @@ class TemplateApps
         app_manifest['collection_src'] = collection
         app_manifest['app_src'] = app
         app_manifest['logo'] = File.expand_path("../logo.png", app)
-        app_manifest['vmc_manifest_file'] = File.expand_path("../vmc_manifest.yml", app)
-        app_manifest['vmc_manifest'] = YAML.load_file app_manifest['vmc_manifest_file']
-        service_manifest = YAML.load_file app_manifest['vmc_manifest_file']
+        app_manifest['manifest_file'] = File.expand_path("../manifest.yml", app)
+        app_manifest['manifest'] = YAML.load_file app_manifest['manifest_file']
+        service_manifest = YAML.load_file app_manifest['manifest_file']
         if service_manifest['applications'][0].include?('services')
           services = service_manifest['applications'][0]['services']
 
