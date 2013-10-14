@@ -59,9 +59,9 @@ module Uhuru::Webui
         app.post LOGIN do
           if params[:username]
             user_login = UsersSetup.new($config)
-            user = user_login.login(params[:username], params[:password])
 
-            unless defined?(user.message)
+            begin
+              user = user_login.login(params[:username], params[:password])
               session[:token] = user.token
               session[:logged_in] = true
               session[:fname] = user.first_name
@@ -71,8 +71,8 @@ module Uhuru::Webui
               session[:is_admin] = user.is_admin
 
               redirect ORGANIZATIONS
-            else
-              redirect LOGIN + "?error=#{user.message}&username=#{params[:username]}"
+            rescue CF::UAA::TargetError
+              redirect LOGIN + "?error=Invalid Username or Password&username=#{params[:username]}"
             end
           else
             redirect LOGIN
@@ -82,7 +82,7 @@ module Uhuru::Webui
         app.post SIGNUP do
           if $config[:recaptcha][:use_recaptcha] == true
             unless recaptcha_valid?
-              redirect SIGNUP + "?username=#{params[:email]}&first_name=#{params[:first_name]}&last_name=#{params[:last_name]}&message=Please type the correct code"
+              redirect SIGNUP + "?username=#{params[:email]}&first_name=#{params[:first_name]}&last_name=#{params[:last_name]}&message=Human validation failed - please type the correct code"
             end
           end
 

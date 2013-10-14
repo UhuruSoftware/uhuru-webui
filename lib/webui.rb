@@ -93,6 +93,8 @@ module Uhuru::Webui
     end
 
     error do
+      $logger.error("An error occurred: #{env['sinatra.error'].message} - #{env['sinatra.error'].backtrace} ")
+
       erb :'errors/error500', {
           :layout => :'layouts/layout_error',
           :locals =>

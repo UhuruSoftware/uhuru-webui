@@ -32,8 +32,6 @@ module Library
 
       return routes
 
-    rescue Exception => e
-      return e
     end
 
     # create is used: - to create a route (url) and map it to an app
@@ -47,32 +45,23 @@ module Library
       route = @client.routes.find { |r|
         r.host == host && r.domain == domain && r.space == space
       }
+
       unless route
-        begin
-          route = @client.route
+        route = @client.route
 
-          route.host = host if host != nil #app_name if app_name != nil
-          route.domain = domain
-          route.space = space
-          route.create!
-
-        rescue Exception => e
-          return e
-        end
+        route.host = host if host != nil #app_name if app_name != nil
+        route.domain = domain
+        route.space = space
+        route.create!
       end
 
       app.add_route(route)
-      return route
-    rescue Exception => e
-      return e
+      route
     end
 
     def delete(route_guid)
       route = @client.route(route_guid)
       route.delete!
-
-    rescue Exception => e
-      return e
     end
 
     class Route

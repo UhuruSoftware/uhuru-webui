@@ -85,8 +85,6 @@ module Library
         new_org.guid
       end
 
-    rescue Exception => e
-      return e
     end
 
     def update(name, org_guid)
@@ -94,8 +92,6 @@ module Library
       org.name = name
       org.update!
 
-    rescue Exception => e
-      return e
     end
 
     def delete(config, org_guid)
@@ -112,8 +108,6 @@ module Library
       # then put token back to the initial one
       @client.token = token
       deleted
-    rescue Exception => e
-      return e
     end
 
     def read_spaces(org_guid)

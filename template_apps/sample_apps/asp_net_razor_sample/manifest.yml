@@ -1,0 +1,9 @@
+---
+applications:
+- name: asp_net_razor_sample
+  memory: 256M
+  instances: 1
+  host: asp.net_razor_sample
+  domain: mydomain.com
+  path: .
+  stack: win2012

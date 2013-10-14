@@ -1,9 +1,0 @@
----
-applications:
-- name: acetest
-  memory: 256M
-  instances: 1
-  host: acetest
-  domain: cfapps.io
-  path: .
-  command: "node lib/ace/ace.js"

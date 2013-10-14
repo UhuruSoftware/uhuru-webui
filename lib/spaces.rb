@@ -52,8 +52,6 @@ module Library
         new_space.guid
       end
 
-    rescue Exception => e
-      return e
     end
 
     def update(name, space_guid)
@@ -62,16 +60,12 @@ module Library
       space.name = name
       space.update!
 
-    rescue Exception => e
-      return e
     end
 
     def delete(space_guid)
       space = @client.space(space_guid)
       space.delete(:recursive => true)
 
-    rescue Exception => e
-      return e
     end
 
     def read_apps(space_guid)

@@ -113,8 +113,8 @@
 
                     <input type="hidden" id="<%= app_id %>_selected_id" value="<%= app_id %>" >
                     <input type="hidden" id="<%= app_id %>_selected_src" value="<%= app['app_src'].sub('template_manifest.yml', '') %>" >
-                    <input type="hidden" id="<%= app_id %>_selected_memory" value="<%= app['vmc_manifest']['applications'][0]['memory'] %>" >
-                    <input type="hidden" id="<%= app_id %>_selected_instances" value="<%= app['vmc_manifest']['applications'][0]['instances'] %>" >
+                    <input type="hidden" id="<%= app_id %>_selected_memory" value="<%= app['manifest']['applications'][0]['memory'] %>" >
+                    <input type="hidden" id="<%= app_id %>_selected_instances" value="<%= app['manifest']['applications'][0]['instances'] %>" >
                     <input type="hidden" name="app_space" value="<%= current_space %>" >
                     <input type="hidden" name="app_organization" value="<%= current_organization %>" >
               <% end %>

@@ -32,8 +32,10 @@ module Uhuru::Webui
         end
 
         app.post '/createService' do
+          require_login
+
           if params[:serviceName].size >= 4
-            create = ServiceInstances.new(session[:token], $cf_target).create_service_instance(params[:serviceName], params[:current_space], params[:service_plan], params[:service_type])
+            create = ServiceInstances.new(session[:token], $cf_target).create_service_instance(params[:serviceName], params[:current_space], params[:service_plan])
           else
             redirect ORGANIZATIONS + "/#{params[:current_organization]}/spaces/#{params[:current_space]}/#{params[:current_tab]}/create_service/new" + '?error=The service name is too short.'
           end
@@ -46,6 +48,8 @@ module Uhuru::Webui
         end
 
         app.post '/deleteService' do
+          require_login
+
           delete = ServiceInstances.new(session[:token], $cf_target).delete(params[:serviceGuid])
 
           if defined?(delete.message)
