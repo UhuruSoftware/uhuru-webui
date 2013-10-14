@@ -1,0 +1,26 @@
+    <table class="report_table">
+      <tr >
+        <td><b>ID</b></td>
+        <td><b>E-mail</b></td>
+        <td><b>First Name</b></td>
+        <td><b>Last Name</b></td>
+        <td><b>Is Admin</b></td>
+        <td><b>Actions</b></td>
+      </tr>
+
+
+      <% all_users.each do |user| %>
+          <tr>
+            <td ><%= user[:id] %></td>
+            <td ><%= user[:email] %></td>
+            <td ><%= user[:first_name] %></td>
+            <td ><%= user[:last_name] %></td>
+            <td ><%= user[:is_admin] %></td>
+            <td >
+              <form action="<%= Uhuru::Webui::SinatraRoutes::ADMINISTRATION_USERS_DELETE %>" method="POST" onsubmit="return confirm('Are you sure you want to delete the user?')">
+                <input type="hidden" name="user_id" value="<%= user[:id] %>"/>
+                <button type="submit">Delete</button>
+              </form>
+          </tr>
+      <% end%>
+    </table>

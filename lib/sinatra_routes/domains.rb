@@ -38,7 +38,10 @@ module Uhuru::Webui
           org.set_current_org(params[:org_guid])
           space.set_current_space(params[:space_guid])
 
-          domains_list = domain.read_domains()
+          domains_list = domain.read_domains(nil, params[:space_guid])
+
+          domains_list_org = domain.read_domains(params[:org_guid])
+
           error_message = params[:error] if defined?(params[:error])
 
           erb :'user_pages/space',
@@ -51,6 +54,7 @@ module Uhuru::Webui
                       :current_space => params[:space_guid],
                       :current_tab => params[:tab],
                       :domains_list => domains_list,
+                      :domains_list_org => domains_list_org,
                       :error_message => error_message,
                       :include_erb => :'user_pages/modals/domains_map_space'
                   }

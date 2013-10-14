@@ -77,7 +77,7 @@ function deleteUserModal(this_, role)
 {
     $('.selected_guid').val($(this_).attr("id"));
     $('.selected_name').text($(this_).attr("title"));
-    $('#aditional_data').val(role);
+    $('#additional_data').val(role);
 
     show_modal($('.delete_confirmation.user'));
 }
@@ -440,4 +440,31 @@ if (cloudFeedbackTimerId === undefined)
             }
         }
     }
+}
+
+
+/*********************************************************************************************************/
+/*                                            SERVICE CREATION - SERVICE PLANS                           */
+/*********************************************************************************************************/
+
+
+function fillSelect(services)
+{
+    var serviceId = $("#service_type").val();
+
+    $("#service_plan").empty();
+
+    $.each(services[serviceId]['plans'], function(key, value) {
+        $('#service_plan')
+            .append($("<option></option>")
+            .attr("value",key)
+            .text(value));
+    });
+}
+
+if (($('#service_type').length > 0))
+{
+    $( document ).ready(function() {
+        fillSelect(window.all_services);
+    });
 }

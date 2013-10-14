@@ -38,8 +38,6 @@ module Library
       end
 
       org.update!
-    rescue Exception => e
-      return e
     end
 
     def add_user_with_role_to_space(space_guid, user_guid, roles)
@@ -84,8 +82,6 @@ module Library
       end
 
       space.update!
-    rescue Exception => e
-      return e
     end
     ##
     ## FUNCTIONS CALLED FROM ERB POST METHOD
@@ -97,8 +93,7 @@ module Library
       if user_guid
         add_user_to_org_with_role(org_guid, user_guid, [role])
       else
-        error = UserError.new('inexistent', 'The user does not exist in the UAA database!')
-        return error
+        raise UserError.new('inexistent', 'The user does not exist in the UAA database!')
       end
     end
 
@@ -109,8 +104,7 @@ module Library
       if user_guid
         add_user_with_role_to_space(space_guid, user_guid, [role])
       else
-        error = UserError.new('inexistent', 'The user does not exist in the UAA database!')
-        return error
+        raise UserError.new('inexistent', 'The user does not exist in the UAA database!')
       end
     end
 
@@ -192,8 +186,6 @@ module Library
       end
 
       org.update!
-    rescue Exception => e
-      return e
     end
 
      # role is a string ex: 'owner', 'developer', 'auditor'
@@ -217,9 +209,6 @@ module Library
       end
 
       space.update!
-
-    rescue Exception => e
-      return e
     end
 
     def user_exists(user_guid)
@@ -244,10 +233,11 @@ module Library
       end
     end
 
-    class UserError
+    class UserError < Exception
       attr_reader :message, :description
 
       def initialize(message, description)
+        super(message)
         @message = message
         @description = description
       end

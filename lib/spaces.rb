@@ -52,8 +52,6 @@ module Library
         new_space.guid
       end
 
-    rescue Exception => e
-      return e
     end
 
     def update(name, space_guid)
@@ -62,16 +60,12 @@ module Library
       space.name = name
       space.update!
 
-    rescue Exception => e
-      return e
     end
 
     def delete(space_guid)
       space = @client.space(space_guid)
       space.delete(:recursive => true)
 
-    rescue Exception => e
-      return e
     end
 
     def read_apps(space_guid)
@@ -91,7 +85,14 @@ module Library
           app_uris << Applications::Url.new(r.host, r.domain.name)
         end
 
-        apps_list << Applications::Application.new(app.name, app.guid, app.stack, app.state, app_service_instances, app_uris, app.total_instances, app.memory)
+        # This call eventually reaches DEAs, so it may fail if the app is still staging, or there are timeouts
+        begin
+          running_instances = app.running_instances
+        rescue
+          running_instances = 0
+        end
+
+        apps_list << Applications::Application.new(app.name, app.guid, app.stack, app.state, app_service_instances, app_uris, app.total_instances, app.memory, app.running?, running_instances)
 
       end
 

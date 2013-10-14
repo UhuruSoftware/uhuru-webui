@@ -13,35 +13,22 @@ class UsersSetup
   end
 
   def login(email, password)
-    begin
-      user_token = get_user_token(email, password)
+    user_token = get_user_token(email, password)
 
-      begin
-        raise 'Authentication error' if defined?(user_token.info['error']) || defined?(user_token.info['error_description'])
-      rescue Exception => e
-        return e
-      end
+    raise 'Authentication error' if defined?(user_token.info['error']) || defined?(user_token.info['error_description'])
 
-      users_obj = Library::Users.new(user_token, @cf_target)
-      user_guid = users_obj.get_user_guid
-      user_detail = get_details(user_guid)
+    users_obj = Library::Users.new(user_token, @cf_target)
+    user_guid = users_obj.get_user_guid
+    user_detail = get_details(user_guid)
 
-      is_admin = user_detail['groups'].any? { |group| group['display'] == 'cloud_controller.admin' }
+    is_admin = user_detail['groups'].any? { |group| group['display'] == 'cloud_controller.admin' }
 
-      user = UserDetails.new(user_token, user_guid, user_detail["familyname"], user_detail["givenname"], is_admin)
-      user
-    rescue Exception => e
-      return e
-    end
+    UserDetails.new(user_token, user_guid, user_detail["name"]["givenname"], user_detail["name"]["familyname"], is_admin)
   end
 
   def signup(email, password, first_name, last_name)
 
-    begin
-      uaac = get_uaa_client
-    rescue Exception => e
-      return e
-    end
+    uaac = get_uaa_client
 
     # if user already exist in uaa continue with next steps without creating it
     begin
@@ -52,59 +39,40 @@ class UsersSetup
     end
 
     unless user
-      begin
-        emails = [email]
-        info = {userName: email, password: password, name: {givenName: first_name, familyName: last_name}}
-        info[:emails] = emails.respond_to?(:each) ?
-            emails.each_with_object([]) { |email, o| o.unshift({:value => email}) } :
-            [{:value => (emails || name)}]
+     emails = [email]
+      info = {userName: email, password: password, name: {givenName: first_name, familyName: last_name}}
+      info[:emails] = emails.respond_to?(:each) ?
+          emails.each_with_object([]) { |email, o| o.unshift({:value => email}) } :
+          [{:value => (emails || name)}]
 
-        user = uaac.add(:user, info)
-      rescue Exception => e
-        return e
-      end
+      user = uaac.add(:user, info)
     end
 
-    if (user != nil)
+    if user != nil
       user_id = user['id']
       admin_token = get_admin_token
 
-      begin
-        raise 'The username already exists' if defined?(admin_token.info['error']) || defined?(admin_token.info['error_description'])
-      rescue Exception => e
-        return e
-      end
+      raise 'The username already exists' if defined?(admin_token.info['error']) || defined?(admin_token.info['error_description'])
 
-      #the username password shoud be generated for each user for better security
+      #the username password should be generated for each user for better security
       user_token = get_user_token(email, $config[:webui][:activation_link_secret])
 
-      begin
-        raise 'The username already exists' if defined?(user_token.info['error']) || defined?(user_token.info['error_description'])
-      rescue Exception => e
-        return e
-      end
+      raise 'The username already exists' if defined?(user_token.info['error']) || defined?(user_token.info['error_description'])
 
-      user = UserDetails.new(user_token, user_id, first_name, last_name, false)
-      user
+      UserDetails.new(user_token, user_id, first_name, last_name, false)
     end
   end
 
   def update_user_info(user_guid, given_name, family_name)
-    user_attributes = {name: {givenName: given_name, familyName: family_name}}
     uaac = get_uaa_client
-    uaa_user = uaac.get(:user, user_guid)
-    uaac.update(user_guid, uaa_user.merge(user_attributes))
-
-  rescue Exception => e
-    return e
+    info = uaac.get(:user, user_guid)
+    info['name'] = {givenName: given_name, familyName: family_name}
+    uaac.put(:user, info)
   end
 
   def change_password(user_id, verified_password, old_password)
     uaac = get_uaa_client
     uaac.change_password(user_id, verified_password, old_password)
-
-  rescue Exception => e
-    return e
   end
 
   def get_uaa_client
@@ -132,6 +100,28 @@ class UsersSetup
     users['resources'].collect { |u| u['username']}
   end
 
+  def uaa_get_users()
+    uaac = get_uaa_client
+
+    all_users = uaac.query(:user, {})["resources"].map do |user|
+      {
+          id: user["id"],
+          first_name: user["name"]["givenname"].to_s,
+          last_name: user["name"]["familyname"].to_s,
+          email: user["username"],
+          is_admin: user['groups'].any? { |group| group['display'] == 'cloud_controller.admin' }
+      }
+    end
+
+    all_users
+  end
+
+  def delete_user(user_id)
+    uaac = get_uaa_client
+
+    uaac.delete(:user, user_id)
+  end
+
   def uaa_get_user_by_name(username)
     uaac = get_uaa_client
     begin
@@ -144,30 +134,20 @@ class UsersSetup
 
   def get_details(user_guid)
     uaac = get_uaa_client
-    return uaac.get(:user, user_guid)
-  rescue Exception => e
-    raise "#{e.inspect}"
+    uaac.get(:user, user_guid)
   end
 
 
   def get_admin_token
-    begin
-      token_issuer = CF::UAA::TokenIssuer.new(@uaaApi, @client_id, @client_secret)
-      token = token_issuer.client_credentials_grant()
-      CFoundry::AuthToken.from_uaa_token_info(token)
-    rescue Exception => e
-      return e
-    end
+    token_issuer = CF::UAA::TokenIssuer.new(@uaaApi, @client_id, @client_secret)
+    token = token_issuer.client_credentials_grant()
+    CFoundry::AuthToken.from_uaa_token_info(token)
   end
 
   def get_user_token(email, password)
-    begin
-      token_issuer = CF::UAA::TokenIssuer.new(@uaaApi, @client_id, @client_secret)
-      token_obj = token_issuer.owner_password_grant(email, password)
-      CFoundry::AuthToken.from_uaa_token_info(token_obj)
-    rescue Exception => e
-      return e
-    end
+    token_issuer = CF::UAA::TokenIssuer.new(@uaaApi, @client_id, @client_secret)
+    token_obj = token_issuer.owner_password_grant(email, password)
+    CFoundry::AuthToken.from_uaa_token_info(token_obj)
   end
 
   class UserDetails
