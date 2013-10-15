@@ -36,12 +36,12 @@ webui:
     teams for collaboration on your applications and setup multiple app instances
     for load balancing and fault tolerance</h3>
 email:
-  from: postmaster@uhurusoftware.mailgun.org
+  from: mailer.service@uhurusoftware.com
   from_alias: Uhuru Cloud
-  server: smtp.mailgun.org
+  server: pod51010.outlook.com
   port: 587
-  user: postmaster@uhurusoftware.mailgun.org
-  secret: 4q899o1avzu3
+  user: mailer.service@uhurusoftware.com
+  secret: freed0m!
   auth_method: :login
   enable_tls: 'true'
   registration_email: ! "<div> <h1>Uhuru Software Confirmation</h1> <p>Your account
