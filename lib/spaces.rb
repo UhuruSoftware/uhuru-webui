@@ -67,23 +67,8 @@ module Library
     end
 
     def delete(space_guid)
-
       space = @client.space(space_guid)
-      unless space.apps == 0
-        space.apps.each do |app|
-          app_gen = Applications.new(@client.token, @client.target)
-          app_gen.delete(app.name)
-        end
-      end
-
-      unless space.service_instances.count == 0
-        space.service_instances.each do |service|
-          service_gen = ServiceInstances.new(@client.token, @client.target)
-          service_gen.delete(service.guid)
-        end
-      end
-
-      space.delete!
+      space.delete(:recursive => true)
 
     rescue Exception => e
       return e

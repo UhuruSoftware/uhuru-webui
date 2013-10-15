@@ -21,13 +21,14 @@
   <% $config[:billing][:options].each do |provider, values| %>
 
       <h2>Detailed settings for '<%= provider %>'</h2>
-
+      <table>
       <% values.each do |key, value| %>
-          <h3><%= key %></h3>
-          <input type="text" id="<%= key %>" name="<%= provider %>:<%= key %>" size="40" value="<%= value %>" />
-          <br />
+          <tr>
+            <td><h3><%= key %></h3></td>
+            <td><input type="text" id="<%= key %>" name="<%= provider %>:<%= key %>" size="40" value="<%= value %>" /></td>
+          </tr>
       <% end %>
-
+      </table>
   <% end %>
 
   <input type="submit" value="Save" />

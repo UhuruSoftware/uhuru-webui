@@ -106,20 +106,11 @@ module Library
 
       # elevate user just to create organization
       @client.token = admin_token
-
       org = @client.organization(org_guid)
-      unless org.spaces.count == 0
-        org.spaces.each do |space|
-          space_gen = Spaces.new(@client.token, @client.target)
-          space_gen.delete(space.guid)
-        end
-      end
-
-      deleted = org.delete!
+      deleted = org.delete(:recursive => true)
 
       # then put token back to the initial one
       @client.token = token
-
       deleted
     rescue Exception => e
       return e

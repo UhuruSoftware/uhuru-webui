@@ -187,6 +187,17 @@ module Uhuru::Webui
           }
         end
 
+        app.get ADMINISTRATION_TEMPLATES do
+          require_admin
+
+          erb :'admin/templates', {
+              :layout => :'layouts/admin',
+              :locals => {
+                  :current_tab => 'templates'
+              }
+          }
+        end
+
       end
     end
   end

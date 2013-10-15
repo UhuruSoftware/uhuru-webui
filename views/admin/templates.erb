@@ -1,0 +1,126 @@
+<form action="<%= Uhuru::Webui::SinatraRoutes::ADMINISTRATION_BILLING %>" method="post"
+      xmlns="http://www.w3.org/1999/html">
+
+  <h2>Templates</h2>
+
+
+  <p>
+    In order to upload and configure template applications, you can use a WebDAV client,
+    and connect to <a target="_blank" href="http://<%= $config[:domain] %>/templates">http://<%= $config[:domain] %>/templates</a>
+    using your credentials.
+  </p>
+
+  <h3>Windows</h3>
+
+  <p>
+    On Windows, you can map the path as a Network Drive.
+    <br />
+
+    Before doing so, you have to activate support for Basic Authentication.
+    To do this, download and run the registry file from <a target="_blank" href="/tools/enable_basic_auth.reg">here</a>.
+
+    <br />
+
+    After you've run the registry file, open a command prompt (elevated as administrator) and run the following commands:
+    <br/>
+    <b>net stop webclient</b>
+    <br/>
+    <b>net start webclient</b>
+    <br/>
+    <b>net use u: http://<%= $config[:domain] %>/templates /user:[your username] [your password]</b>
+
+    <br/>
+    <br/>
+    Please note that you can change the drive letter (u:) to anything else available on your machine.
+    <br/>
+    After these procedures are completed, you will be able to access the template store through the new Network Drive in My Computer.
+
+  </p>
+
+  <h3>Managing Template Apps</h3>
+
+  <p>
+    The template apps are organized and grouped in categories by "Publisher". Each publisher is represented by a folder in the root directory.
+  </p>
+  <p>
+  To create a new category for a new publisher:
+    <ul>
+      <li>
+        add a new folder in template_apps directory;<br/>
+        the new folder name must have all characters lowercase
+      </li>
+      <li>
+        in the new folder, add an image named "logo.png" – which represents the publisher's logo;<br/>
+        the image must be of size 64x64px, and it has to be a PNG.
+      </li>
+      <li>
+        in the new folder, add a file named <b>publisher_manifest.yml</b> that contains the following:
+        <pre style="background-color: #a9a9a9;">
+name: Sample Apps
+id: unique_id
+description: This is a collection for test purposes in the web ui</pre>
+        Where:
+        <ul>
+          <li>name is the name of the publisher</li>
+          <li>id is a unique string and it must be the same as the folder name</li>
+          <li>description is a short description of the publisher</li>
+        </ul>
+    </ul>
+  </p>
+
+  <p>
+  After a category is created, or to an existing category, you can add as many template apps as you want.<br/>
+  A template app is represented by a folder in a publisher folder.<br/>
+
+    A template app folder contains:
+    <ul>
+      <li>
+        an image named "logo.png" - this is the app's logo<br />
+        this image should be 128x128px, and it has to be a PNG.
+      </li>
+      <li>
+        the source code of the app, which can be a folder or a zip archive
+      </li>
+      <li>
+        a file named "template_manifest.yml" that looks like this:
+        <pre style="background-color: #a9a9a9;">
+name: Wordpress
+id: wordpress
+tags: ['CMS', 'Large Project', 'Complex']
+description: Free and open source blogging tool and a content management system (CMS) based on PHP and MySQL
+uuid: 550e84ee-e29b-k1d4-a716-446655432702
+can_download: true</pre>
+        Where:
+        <ul>
+          <li>name is the name of the template app that will be displayed in the list</li>
+          <li>id must be unique and the same as the name of the folder or zip that contains the app's source code</li>
+          <li>tags are displayed in the info section of the app</li>
+          <li>description is a bit of text detailing what the application does</li>
+          <li>can_download specifies whether the app's source code can be directly downloaded from the web interface</li>
+        </ul>
+      </li>
+      <li>
+        A file named "vmc_manifest.yml" that contains this:
+        <pre style="background-color: #a9a9a9;">
+---
+applications:
+  .:
+    name: wptest
+    framework:
+      name: php
+      info:
+        mem: 128M
+        description: PHP Application
+        exec: !!null
+    url: ${name}.${target-base}
+    mem: '512'
+    instances: 1
+    services:
+      wptestDB:
+        type: mysql</pre>
+        This is a typical manifest file of a Cloud Foundry app - you can generate this using the cf command line tool.
+      </li>
+    </ul>
+  </p>
+
+</form>
