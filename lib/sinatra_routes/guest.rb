@@ -4,7 +4,6 @@ module Uhuru::Webui
   module SinatraRoutes
     module Guest
       def self.registered(app)
-
         app.get INDEX do
           session[:login_] = false
 

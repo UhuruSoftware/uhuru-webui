@@ -4,9 +4,7 @@ module Uhuru::Webui
   module SinatraRoutes
     module Routes
       def self.registered(app)
-
         app.get ROUTES_CREATE do
-
           require_login
 
           org = Library::Organizations.new(session[:token], $cf_target)
@@ -16,7 +14,7 @@ module Uhuru::Webui
           space.set_current_space(params[:space_guid])
 
           routes_list = route.read_routes(params[:space_guid])
-          domains_list = domain.read_domains()
+          domains_list_space = domain.read_domains(params[:org_guid], params[:space_guid])
           error_message = params[:error] if defined?(params[:error])
 
           erb :'user_pages/space',
@@ -29,17 +27,17 @@ module Uhuru::Webui
                       :current_space => params[:space_guid],
                       :current_tab => params[:tab],
                       :routes_list => routes_list,
-                      :domains_list => domains_list,
+                      :domains_list_space => domains_list_space,
                       :error_message => error_message,
                       :include_erb => :'user_pages/modals/routes_create'
                   }
               }
         end
 
-
         app.post '/createRoute' do
-          create = Library::Routes.new(session[:token], $cf_target).create(params[:appName], params[:current_space], params[:domain_guid], params[:host])
+          require_login
 
+          create = Library::Routes.new(session[:token], $cf_target).create(params[:appName], params[:current_space], params[:domain_guid], params[:host])
           if defined?(create.message)
             redirect ORGANIZATIONS + "/#{params[:current_organization]}/spaces/#{params[:current_space]}/#{params[:current_tab]}/add_route/new" + "?error=#{create.description}"
           else
@@ -48,8 +46,9 @@ module Uhuru::Webui
         end
 
         app.post '/deleteRoute' do
-          delete = Library::Routes.new(session[:token], $cf_target).delete(params[:routeGuid])
+          require_login
 
+          delete = Library::Routes.new(session[:token], $cf_target).delete(params[:routeGuid])
           if defined?(delete.message)
             redirect ORGANIZATIONS + "/#{params[:current_organization]}/spaces/#{params[:current_space]}/#{params[:current_tab]}" + "?error=#{delete.description}"
           else

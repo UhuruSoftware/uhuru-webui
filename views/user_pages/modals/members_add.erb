@@ -1,29 +1,17 @@
 <div class="modal-background"> </div>
 
-<div class="modal app_details">
+<div class="modal">
   <form action="/addUser" method="post">
       <div class="modal_header">
         <span>Invite user</span>
-        <br />
-        <p>
-          <strong>Note:</strong> Invitation only works with email addresses that are registered with Windows LiveID, GoogleID or Facebook.
-          Please confirm this with the invitee before sending the invitation
-        </p>
       </div>
 
       <div class="modal_content">
-        <ul>
-          <label for="userEmail">e-mail address</label>
-          <input id="user_email" type="text" name="userEmail" autofocus />
+        <ul class="invite_user input_box">
+          <li><label for="userEmail">e-mail address</label><input id="user_email" type="text" name="userEmail" autofocus /></li>
         </ul>
 
-        <ul>
-          <li><img width="32" height="32"  src="<%= request.base_url %>/images/Gmail_logo.png" alt=""/>&nbsp;GoogleID</li>
-          <li><img width="32" height="32"  src="<%= request.base_url %>/images/msn_logo.png" alt=""/>&nbsp;Microsoft LiveID</li>
-          <li><img  width="32" height="32"  src="<%= request.base_url %>/images/facebook_logo.png" alt=""/>&nbsp;Facebook</li>
-        </ul>
-
-        <ul class="create_user_modal_ul" id="radio_buttons">
+        <ul class="invite_user radio_buttons">
           <% if defined?(current_space) && current_space != nil %>
               <li><input type="radio" name="userType" value="owner" id="owner">Owner</li>
               <li><input type="radio" name="userType" value="developer" id="developer">Developer</li>
@@ -34,21 +22,20 @@
               <li><input type="radio" name="userType" value="auditor" id="auditor" checked>Auditor</li>
           <% end %>
         </ul>
-      </div>
-
-      <div class="modal_footer">
         <% unless error_message.nil? || error_message.empty? %>
             <div class="error"> <%= error_message %> </div>
         <% end %>
+      </div>
 
+      <div class="modal_footer">
         <div>
             <input type="hidden" name="current_organization" value="<%= current_organization %>" />
             <input type="hidden" name="current_space" value="<%= current_space %>" />
             <input type="hidden" name="current_tab" value="<%= current_tab %>" />
             <% if defined?(current_space) && current_space != nil %>
-              <button type="button" onclick="window.location = '<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/spaces/#{current_space}/#{current_tab}" %>';">Cancel</button>
+              <button type="button" onclick="window.location.assign('<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/spaces/#{current_space}/#{current_tab}" %>');">Cancel</button>
             <% else %>
-                <button type="button" onclick="window.location = '<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/members" %>';">Cancel</button>
+                <button type="button" onclick="window.location.assign('<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/members" %>');">Cancel</button>
             <% end %>
             <button type="submit">Invite User</button>
         </div>

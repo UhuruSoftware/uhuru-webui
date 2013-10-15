@@ -38,41 +38,45 @@ module Library
     # create is used: - to create an domain and map it to an organization or space
     #                 - just to map an domain to an organization or space if the domain exists
     def create(name, org_guid, domain_wildcard, space_guid = nil)
-      domain_exist = @client.domains.find { |d|
-          d.name == name }
+      begin
+        domain_exist = @client.domains.find { |d|
+            d.name == name }
 
-      org = @client.organization(org_guid)
+        org = @client.organization(org_guid)
 
-      # if domain doesn't exist will create it and put the organization as owning org
-      if (domain_exist == nil)
-        domain = @client.domain
-        domain.owning_organization = org
-        domain.name = name
-        domain.wildcard = domain_wildcard
-        domain.create!
-      else
-        domain = domain_exist
-        existing_domains = org.domains
+        # if domain doesn't exist will create it and put the organization as owning org
+        if (domain_exist == nil)
+          domain = @client.domain
+          domain.owning_organization = org
+          domain.name = name
+          domain.wildcard = domain_wildcard
+          domain.create!
+        else
+          domain = domain_exist
+          existing_domains = org.domains
 
-        # if domain exist will check that the  org and domain exists, if not will add it
-        if (!existing_domains.include?(domain))
-          existing_domains << domain
-          org.domains = existing_domains
+          # if domain exist will check that the  org and domain exists, if not will add it
+          if (!existing_domains.include?(domain))
+            existing_domains << domain
+            org.domains = existing_domains
 
-          org.update!
+            org.update!
+          end
         end
-      end
 
-      # if a space guid is provided will add a connection between domain and space
-      if space_guid != nil
-        space = @client.space(space_guid)
-        existing_domains = space.domains
-        if (!existing_domains.include?(domain))
-          existing_domains << domain
-          space.domains = existing_domains
+        # if a space guid is provided will add a connection between domain and space
+        if space_guid != nil
+          space = @client.space(space_guid)
+          existing_domains = space.domains
+          if (!existing_domains.include?(domain))
+            existing_domains << domain
+            space.domains = existing_domains
 
-          space.update!
+            space.update!
+          end
         end
+      rescue Exception => e
+        return e
       end
 
     end
@@ -109,8 +113,7 @@ module Library
     # deletes the domain and unmap all existing connections
     def delete(domain_guid)
       domain = @client.domain(domain_guid)
-      domain.delete!
-
+      domain.delete(:recursive => true)
     end
 
     class Domain

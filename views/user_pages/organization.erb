@@ -124,7 +124,9 @@
             <div class="square_tile owner" title="<%= owner.email %>">
               <span><%= owner.email %></span>
               <span class="bottom_left">Owner</span>
-              <button type="button" id="<%= owner.guid %>" class="image s24px trash" title="Delete '<%= owner.email %>'" onclick="deleteUserModal(this, 'owner');"></button>
+              <% if owners_list.count > 1 %>
+                <button type="button" id="<%= owner.guid %>" class="image s24px trash" title="Delete '<%= owner.email %>'" onclick="deleteUserModal(this, 'owner');"></button>
+              <% end %>
             </div>
         </div>
     <% end %>
@@ -281,7 +283,14 @@
 </div>
 
 <% if defined?(include_erb) && include_erb != nil %>
-    <%= erb(include_erb, :layout => false, :locals => { :current_organization => current_organization, :current_tab => current_tab, :current_space => nil, :error_message => error_message }) %>
+    <%= erb(include_erb, :layout => false, :locals =>
+            {
+                    :current_organization => current_organization,
+                    :current_tab => current_tab,
+                    :current_space => nil,
+                    :error_message => error_message
+            })
+    %>
 <% end %>
 
 </div>

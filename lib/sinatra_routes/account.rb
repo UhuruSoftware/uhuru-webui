@@ -4,7 +4,6 @@ module Uhuru::Webui
   module SinatraRoutes
     module Account
       def self.registered(app)
-
         app.get ACCOUNT do
           require_login
 
