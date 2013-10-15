@@ -5,7 +5,6 @@ module Uhuru::Webui
   module SinatraRoutes
     module Organizations
       def self.registered(app)
-
         app.get ORGANIZATIONS do
           require_login
 
@@ -75,6 +74,7 @@ module Uhuru::Webui
         end
 
         app.post '/createOrganization' do
+          require_login
 
           if $config[:billing][:provider] == 'stripe'
             if params[:stripeToken] == nil
@@ -105,8 +105,9 @@ module Uhuru::Webui
 
 
         app.post '/deleteOrganization' do
-          delete = Library::Organizations.new(session[:token], $cf_target).delete($config, params[:orgGuid])
+          require_login
 
+          delete = Library::Organizations.new(session[:token], $cf_target).delete($config, params[:orgGuid])
           if defined?(delete.message)
             redirect ORGANIZATIONS + "?error=#{delete.description}"
           else
@@ -115,6 +116,8 @@ module Uhuru::Webui
         end
 
         app.post '/updateOrganization' do
+          require_login
+
           if params[:modified_name].size >= 4
             update =  Library::Organizations.new(session[:token], $cf_target).update(params[:modified_name], params[:current_organization])
           else

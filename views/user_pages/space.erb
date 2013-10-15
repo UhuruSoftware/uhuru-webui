@@ -61,9 +61,9 @@
 
 
   <% if current_tab == "members" %>
-      <div class="selected">Users</div>
+      <div class="selected">Members</div>
   <% else %>
-      <div onclick="window.location.assign('<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/spaces/#{current_space}/members" %>');">Users</div>
+      <div onclick="window.location.assign('<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/spaces/#{current_space}/members" %>');">Members</div>
   <% end %>
 
 
@@ -281,17 +281,17 @@
 
     <% routes_list.each do |route| %>
 
-        <a target="_blank" href="http://<%= route.name %>" class="tile_action" title="<%= route.name %>">
+
           <div class="square_tile">
-            <div class="square_tile route">
-              <%= route.name %>
+                <div class="square_tile route">
+                  <a target="_blank" href="http://<%= route.name %>" class="tile_action route_link" title="<%= route.name %>">
+                    <%= route.name %>
+                  </a>
 
-
-              <span class="bottom_left">Route</span>
-              <button type="button" class="image s24px trash" id="<%= route.guid %>" title="<%= route.name %>" />
-            </div>
+                  <span class="bottom_left">Route</span>
+                  <button type="button" class="image s24px trash" id="<%= route.guid %>" title="<%= route.name %>"></button>
+                </div>
           </div>
-        </a>
     <% end %>
 
     <div class="modal delete_confirmation route hide">
@@ -423,6 +423,7 @@
                     :services_list => defined?(services_list) ? services_list : nil,
                     :domains_list => defined?(domains_list) ? domains_list : nil,
                     :domains_list_org => defined?(domains_list_org) ? domains_list_org : nil,
+                    :domains_list_space => defined?(domains_list_space) ? domains_list_space : nil,
                     :feedback_id => defined?(feedback_id) ? feedback_id : nil,
                     :modal_title => defined?(modal_title) ? modal_title : nil
             })

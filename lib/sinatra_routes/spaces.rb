@@ -211,6 +211,8 @@ module Uhuru::Webui
         end
 
         app.post '/createSpace' do
+          require_login
+
           if params[:spaceName].size >= 4
             create = Library::Spaces.new(session[:token], $cf_target).create(params[:org_guid], params[:spaceName])
           else
@@ -225,8 +227,9 @@ module Uhuru::Webui
         end
 
         app.post '/deleteSpace' do
-          delete = Library::Spaces.new(session[:token], $cf_target).delete(params[:spaceGuid])
+          require_login
 
+          delete = Library::Spaces.new(session[:token], $cf_target).delete(params[:spaceGuid])
           if defined?(delete.message)
             redirect ORGANIZATIONS + "/#{params[:org_guid]}/spaces" + "?error=#{delete.description}"
           else
@@ -235,6 +238,8 @@ module Uhuru::Webui
         end
 
         app.post '/updateSpace' do
+          require_login
+
           if params[:modified_name].size >= 4
             update = Library::Spaces.new(session[:token], $cf_target).update(params[:modified_name], params[:current_space])
           else
@@ -247,7 +252,6 @@ module Uhuru::Webui
             redirect ORGANIZATIONS + "/#{params[:current_organization]}/spaces/#{params[:current_space]}/#{params[:current_tab]}"
           end
         end
-
       end
     end
   end

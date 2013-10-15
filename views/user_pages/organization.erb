@@ -281,7 +281,14 @@
 </div>
 
 <% if defined?(include_erb) && include_erb != nil %>
-    <%= erb(include_erb, :layout => false, :locals => { :current_organization => current_organization, :current_tab => current_tab, :current_space => nil, :error_message => error_message }) %>
+    <%= erb(include_erb, :layout => false, :locals =>
+            {
+                    :current_organization => current_organization,
+                    :current_tab => current_tab,
+                    :current_space => nil,
+                    :error_message => error_message
+            })
+    %>
 <% end %>
 
 </div>

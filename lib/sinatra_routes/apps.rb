@@ -10,9 +10,7 @@ module Uhuru::Webui
   module SinatraRoutes
     module Apps
       def self.registered(app)
-
         app.get APP do
-
           require_login
 
           org = Library::Organizations.new(session[:token], $cf_target)
@@ -205,8 +203,6 @@ module Uhuru::Webui
 
           redirect "#{ORGANIZATIONS}/#{params[:app_organization]}/spaces/#{params[:app_space]}/apps/create_app_feedback/#{apps_obj.id}"
         end
-
-
 
         app.post '/updateApp' do
           require_login

@@ -66,8 +66,9 @@ module Uhuru::Webui
 
 
         app.post '/addUser' do
-          user = Library::Users.new(session[:token], $cf_target)
+          require_login
 
+          user = Library::Users.new(session[:token], $cf_target)
           if params[:current_space] == nil || params[:current_space] == ''
             add_user = user.invite_user_with_role_to_org($config, params[:userEmail], params[:current_organization], params[:userType])
 
@@ -88,8 +89,9 @@ module Uhuru::Webui
         end
 
         app.post '/deleteUser' do
-          user = Library::Users.new(session[:token], $cf_target)
+          require_login
 
+          user = Library::Users.new(session[:token], $cf_target)
           if params[:current_space] == nil || params[:current_space] == ''
             delete_user = user.remove_user_with_role_from_org(params[:current_organization], params[:thisUser], params[:thisUserRole])
 
@@ -108,7 +110,6 @@ module Uhuru::Webui
             end
           end
         end
-
       end
     end
   end

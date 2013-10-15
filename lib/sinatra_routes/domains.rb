@@ -4,7 +4,6 @@ module Uhuru::Webui
   module SinatraRoutes
     module Domains
       def self.registered(app)
-
         app.get DOMAINS_CREATE do
           require_login
 
@@ -62,6 +61,8 @@ module Uhuru::Webui
         end
 
         app.post '/createDomain' do
+          require_login
+
           wildcard = params[:domain_wildcard] ? true : false
           create = Library::Domains.new(session[:token], $cf_target).create(params[:domainName], params[:org_guid], wildcard, params[:space_guid])
 
@@ -81,8 +82,9 @@ module Uhuru::Webui
         end
 
         app.post '/deleteDomain' do
-          delete = Library::Domains.new(session[:token], $cf_target).delete(params[:domainGuid])
+          require_login
 
+          delete = Library::Domains.new(session[:token], $cf_target).delete(params[:domainGuid])
           if defined?(delete.message)
             redirect ORGANIZATIONS + "/#{params[:org_guid]}/domains" + "?error=#{delete.description}"
           else
@@ -91,8 +93,9 @@ module Uhuru::Webui
         end
 
         app.post '/unmapFromSpace' do
-          unmap = Library::Domains.new(session[:token], $cf_target).unmap_domain(params[:domainGuid], nil, params[:current_space])
+          require_login
 
+          unmap = Library::Domains.new(session[:token], $cf_target).unmap_domain(params[:domainGuid], nil, params[:current_space])
           if defined?(unmap.message)
             if params[:current_tab].to_s == 'space'
               redirect ORGANIZATIONS + "/#{params[:current_organization]}/spaces/#{params[:current_space]}/domains" + "?error=#{unmapp.description}"

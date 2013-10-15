@@ -4,7 +4,6 @@ module Uhuru::Webui
   module SinatraRoutes
     module Services
       def self.registered(app)
-
         app.get SERVICES_CREATE do
           require_login
 

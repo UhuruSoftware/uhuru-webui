@@ -4,7 +4,6 @@ module Uhuru::Webui
   module SinatraRoutes
     module CloudFeedback
       def self.registered(app)
-
         app.get FEEDBACK do
           require_login
           feedback_id = params[:id]
