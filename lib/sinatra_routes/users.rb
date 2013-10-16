@@ -1,13 +1,9 @@
-require 'sinatra/base'
-
 module Uhuru::Webui
   module SinatraRoutes
     module Users
       def self.registered(app)
-
         app.get ORGANIZATION_MEMBERS_ADD do
           require_login
-
           org = Library::Organizations.new(session[:token], $cf_target)
           org.set_current_org(params[:org_guid])
 
@@ -34,7 +30,6 @@ module Uhuru::Webui
 
         app.get SPACE_MEMBERS_ADD do
           require_login
-
           org = Library::Organizations.new(session[:token], $cf_target)
           space = Library::Spaces.new(session[:token], $cf_target)
           space.set_current_space(params[:space_guid])
@@ -62,51 +57,44 @@ module Uhuru::Webui
               }
         end
 
-
-
-
         app.post '/addUser' do
           require_login
-
           user = Library::Users.new(session[:token], $cf_target)
-          if params[:current_space] == nil || params[:current_space] == ''
-            add_user = user.invite_user_with_role_to_org($config, params[:userEmail], params[:current_organization], params[:userType])
 
-            if defined?(add_user.message)
-              redirect ORGANIZATIONS + "/#{params[:current_organization]}/#{params[:current_tab]}/add_user" + "?error=#{add_user.description}"
-            else
-              redirect ORGANIZATIONS + "/#{params[:current_organization]}/#{params[:current_tab]}"
+          if params[:current_space] == nil || params[:current_space] == ''
+            begin
+              user.invite_user_with_role_to_org($config, params[:userEmail], params[:current_organization], params[:userType])
+              return switch_to_get ORGANIZATIONS + "/#{params[:current_organization]}/#{params[:current_tab]}"
+            rescue Library::Users::UserError => e
+              return switch_to_get ORGANIZATIONS + "/#{params[:current_organization]}/#{params[:current_tab]}/add_user" + "?error=#{e.description}"
             end
           else
-            add_user = user.invite_user_with_role_to_space($config, params[:userEmail], params[:current_space], params[:userType])
-
-            if defined?(add_user.message)
-              redirect ORGANIZATIONS + "/#{params[:current_organization]}/spaces/#{params[:current_space]}/#{params[:current_tab]}/add_user/new" + "?error=#{add_user.description}"
-            else
-              redirect ORGANIZATIONS + "/#{params[:current_organization]}/spaces/#{params[:current_space]}/#{params[:current_tab]}"
+            begin
+              user.invite_user_with_role_to_space($config, params[:userEmail], params[:current_space], params[:userType])
+              return switch_to_get ORGANIZATIONS + "/#{params[:current_organization]}/spaces/#{params[:current_space]}/#{params[:current_tab]}"
+            rescue Library::Users::UserError => e
+              return switch_to_get ORGANIZATIONS + "/#{params[:current_organization]}/spaces/#{params[:current_space]}/#{params[:current_tab]}/add_user/new" + "?error=#{e.description}"
             end
           end
         end
 
         app.post '/deleteUser' do
           require_login
-
           user = Library::Users.new(session[:token], $cf_target)
-          if params[:current_space] == nil || params[:current_space] == ''
-            delete_user = user.remove_user_with_role_from_org(params[:current_organization], params[:thisUser], params[:thisUserRole])
 
-            if defined?(delete_user.message)
-              redirect ORGANIZATIONS + "/#{params[:current_organization]}/#{params[:current_tab]}" + "?error=#{delete_user.description}"
-            else
-              redirect ORGANIZATIONS + "/#{params[:current_organization]}/#{params[:current_tab]}"
+          if params[:current_space] == nil || params[:current_space] == ''
+            begin
+              user.remove_user_with_role_from_org(params[:current_organization], params[:thisUser], params[:thisUserRole])
+              return switch_to_get ORGANIZATIONS + "/#{params[:current_organization]}/#{params[:current_tab]}"
+            rescue Library::Users::UserError => e
+              return switch_to_get ORGANIZATIONS + "/#{params[:current_organization]}/#{params[:current_tab]}" + "?error=#{e.description}"
             end
           else
-            delete_user = user.remove_user_with_role_from_space(params[:current_space], params[:thisUser], params[:thisUserRole])
-
-            if defined?(delete_user.message)
-              redirect ORGANIZATIONS + "/#{params[:current_organization]}/spaces/#{params[:current_space]}/#{params[:current_tab]}" + "?error=#{delete_user.description}"
-            else
-              redirect ORGANIZATIONS + "/#{params[:current_organization]}/spaces/#{params[:current_space]}/#{params[:current_tab]}"
+            begin
+              user.remove_user_with_role_from_space(params[:current_space], params[:thisUser], params[:thisUserRole])
+              return switch_to_get ORGANIZATIONS + "/#{params[:current_organization]}/spaces/#{params[:current_space]}/#{params[:current_tab]}"
+            rescue Library::Users::UserError => e
+              return switch_to_get ORGANIZATIONS + "/#{params[:current_organization]}/spaces/#{params[:current_space]}/#{params[:current_tab]}" + "?error=#{e.description}"
             end
           end
         end

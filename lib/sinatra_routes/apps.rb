@@ -1,18 +1,9 @@
-require 'sinatra/base'
-
-
-#
-#    TODO:: There are some variables in this code that should not be hardcoded
-#
-
-
 module Uhuru::Webui
   module SinatraRoutes
     module Apps
       def self.registered(app)
         app.get APP do
           require_login
-
           org = Library::Organizations.new(session[:token], $cf_target)
           space = Library::Spaces.new(session[:token], $cf_target)
           app = TemplateApps.new
@@ -45,7 +36,6 @@ module Uhuru::Webui
 
         app.get APP_CREATE do
           require_login
-
           org = Library::Organizations.new(session[:token], $cf_target)
           space = Library::Spaces.new(session[:token], $cf_target)
           app = TemplateApps.new
@@ -77,7 +67,6 @@ module Uhuru::Webui
 
         app.get '/get_logo/:app_id' do
           require_login
-
           collection = TemplateApps.new
           apps = collection.read_collections
           app_id = params[:app_id]
@@ -87,18 +76,15 @@ module Uhuru::Webui
 
         app.post '/get_service_data' do
           require_login
-
           space = Library::Spaces.new(session[:token], $cf_target)
           space.set_current_space(params[:current_space])
           services = space.read_service_instances(params[:current_space])
           service = services.find { |s| s.name.to_s == params[:service_name].to_s }
-
           "{ \"type\": \"#{service.type}\", \"plan\": \"#{service.plan}\" } "
         end
 
         app.get '/download_app/:app_id' do
           require_login
-
           collection = TemplateApps.new
           apps = collection.read_collections
           source = nil
@@ -114,7 +100,6 @@ module Uhuru::Webui
 
         app.get APP_CREATE_FEEDBACK do
           require_login
-
           org = Library::Organizations.new(session[:token], $cf_target)
           space = Library::Spaces.new(session[:token], $cf_target)
 
@@ -141,7 +126,6 @@ module Uhuru::Webui
 
         app.get APP_UPDATE_FEEDBACK do
           require_login
-
           org = Library::Organizations.new(session[:token], $cf_target)
           space = Library::Spaces.new(session[:token], $cf_target)
 
@@ -185,7 +169,6 @@ module Uhuru::Webui
           end
 
           stack = manifest['applications'][0]['stack']
-
           apps_obj = Applications.new(session[:token], $cf_target)
           apps_obj.start_feedback
 
@@ -201,17 +184,15 @@ module Uhuru::Webui
             end
           end
 
-          redirect "#{ORGANIZATIONS}/#{params[:app_organization]}/spaces/#{params[:app_space]}/apps/create_app_feedback/#{apps_obj.id}"
+          switch_to_get "#{ORGANIZATIONS}/#{params[:app_organization]}/spaces/#{params[:app_space]}/apps/create_app_feedback/#{apps_obj.id}"
         end
 
         app.post '/updateApp' do
           require_login
-
           apps_object = Applications.new(session[:token], $cf_target)
           apps_object.start_feedback
 
           space = Library::Spaces.new(session[:token], $cf_target)
-          domain = Library::Domains.new(session[:token], $cf_target)
           space.set_current_space(params[:current_space])
           apps_list = space.read_apps(params[:current_space])
 
@@ -230,21 +211,13 @@ module Uhuru::Webui
             apps_object.close_feedback
           end
 
-          redirect ORGANIZATIONS + "/#{params[:current_organization]}/spaces/#{params[:current_space]}/apps/update_app_feedback/#{apps_object.id}"
+          switch_to_get ORGANIZATIONS + "/#{params[:current_organization]}/spaces/#{params[:current_space]}/apps/update_app_feedback/#{apps_object.id}"
         end
-
-
 
         app.post '/deleteApp' do
           require_login
-
-          delete = Applications.new(session[:token], $cf_target).delete(params[:appName])
-
-          if defined?(delete.message)
-            redirect ORGANIZATIONS + "/#{params[:current_organization]}/spaces/#{params[:current_space]}/#{params[:current_tab]}" + "?error=#{delete.description}"
-          else
-            redirect ORGANIZATIONS + "/#{params[:current_organization]}/spaces/#{params[:current_space]}/#{params[:current_tab]}"
-          end
+          Applications.new(session[:token], $cf_target).delete(params[:appName])
+          switch_to_get ORGANIZATIONS + "/#{params[:current_organization]}/spaces/#{params[:current_space]}/#{params[:current_tab]}"
         end
       end
     end

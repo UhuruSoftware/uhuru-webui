@@ -15,14 +15,12 @@
           <% end %>
         </select>
       </p>
-
-    </div>
-
-    <div class="modal_footer">
       <% unless error_message.nil? || error_message.empty? %>
           <div class="error"> <%= error_message %> </div>
       <% end %>
+    </div>
 
+    <div class="modal_footer">
       <div>
         <button type="button" onclick="window.location.assign('<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/spaces/#{current_space}/domains" %>');">Cancel</button>
         <input type="hidden" name="org_guid" value="<%= current_organization %>" />
