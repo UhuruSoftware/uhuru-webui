@@ -46,7 +46,9 @@ module Uhuru::Webui
   class Webui < Sinatra::Base
 
     ENV_COPY  = %w[ REQUEST_METHOD HTTP_COOKIE rack.request.cookie_string
-                rack.session rack.session.options rack.input]
+                rack.session rack.session.options rack.input SERVER_SOFTWARE SERVER_NAME
+                rack.version rack.errors rack.multithread rack.run_once SERVER_PORT SERVER_PROTOCOL
+                rack.url_scheme REMOTE_ADDR sinatra.commaonlogger rack.logger ]
 
     set :root, File.expand_path("../../", __FILE__)
     set :views, File.expand_path("../../views", __FILE__)
@@ -119,7 +121,7 @@ module Uhuru::Webui
     end
 
     error do
-      $logger.error("An error occurred: #{env['sinatra.error'].message} - #{env['sinatra.error'].backtrace} ")
+      $logger.error("An error occurred (#{env['sinatra.error'].class}): #{env['sinatra.error'].message} - #{env['sinatra.error'].backtrace} ")
 
       erb :'errors/error500', {
           :layout => :'layouts/layout_error',

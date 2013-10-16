@@ -85,19 +85,13 @@ module Library
           app_uris << Applications::Url.new(r.host, r.domain.name)
         end
 
-        # This call eventually reaches DEAs, so it may fail if the app is still staging, or there are timeouts
-        begin
-          running_instances = app.running_instances
-        rescue
-          running_instances = 0
-        end
-
-        apps_list << Applications::Application.new(app.name, app.guid, app.stack, app.state, app_service_instances, app_uris, app.total_instances, app.memory, app.running?, running_instances)
+        apps_list << Applications::Application.new(app.name, app.guid, app.stack, app.state, app_service_instances, app_uris, app.total_instances, app.memory, false)
 
       end
 
       apps_list
     end
+
 
     def read_service_instances(space_guid)
       services_list = []

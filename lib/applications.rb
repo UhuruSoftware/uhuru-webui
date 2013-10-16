@@ -252,9 +252,9 @@ class Applications < Uhuru::Webui::ClassWithFeedback
   end
 
   class Application
-    attr_reader :name, :guid, :stack, :state, :services, :uris, :instances, :memory, :running, :running_instances
+    attr_reader :name, :guid, :stack, :state, :services, :uris, :instances, :memory, :running
 
-    def initialize(name, guid, stack, state, services, uris, instances, memory, running, running_instances)
+    def initialize(name, guid, stack, state, services, uris, instances, memory, running)
       @name = name
       @guid = guid
       @stack = stack
@@ -264,7 +264,6 @@ class Applications < Uhuru::Webui::ClassWithFeedback
       @instances = instances
       @memory = memory
       @running = running
-      @running_instances = running_instances
     end
   end
 

@@ -121,13 +121,13 @@ module Uhuru::Webui
           if params[:modified_name].size >= 4
             update =  Library::Organizations.new(session[:token], $cf_target).update(params[:modified_name], params[:current_organization])
           else
-            redirect redirect ORGANIZATIONS + "/#{params[:current_organization]}/#{params[:current_tab]}" + '?error=The name is too short (min. 4 characters)'
+            switch_to_get ORGANIZATIONS + "/#{params[:current_organization]}/#{params[:current_tab]}" + '?error=The name is too short (min. 4 characters)'
           end
 
           if defined?(update.message)
-            redirect redirect ORGANIZATIONS + "/#{params[:current_organization]}/#{params[:current_tab]}" + "?error=#{update.description}"
+            switch_to_get ORGANIZATIONS + "/#{params[:current_organization]}/#{params[:current_tab]}" + "?error=#{update.description}"
           else
-            redirect ORGANIZATIONS + "/#{params[:current_organization]}/#{params[:current_tab]}"
+            switch_to_get ORGANIZATIONS + "/#{params[:current_organization]}/#{params[:current_tab]}"
           end
         end
 

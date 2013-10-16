@@ -64,19 +64,19 @@ module Uhuru::Webui
           require_login
 
           wildcard = params[:domain_wildcard] ? true : false
-          create = Library::Domains.new(session[:token], $cf_target).create(params[:domainName], params[:org_guid], wildcard, params[:space_guid])
+          begin
+            create = Library::Domains.new(session[:token], $cf_target).create(params[:domainName], params[:org_guid], wildcard, params[:space_guid])
 
-          if defined?(create.message)
-            if params[:current_tab].to_s == 'space'
-              redirect ORGANIZATIONS + "/#{params[:org_guid]}/spaces/#{params[:space_guid]}/domains/map_domain/new" + "?error=#{create.description}"
-            else
-              redirect ORGANIZATIONS + "/#{params[:org_guid]}/domains/add_domains" + "?error=#{create.description}"
-            end
-          else
             if params[:current_tab].to_s == 'space'
               redirect ORGANIZATIONS + "/#{params[:org_guid]}/spaces/#{params[:space_guid]}/domains"
             else
               redirect ORGANIZATIONS + "/#{params[:org_guid]}/domains"
+            end
+          rescue CFoundry::DomainInvalid => e
+            if params[:current_tab].to_s == 'space'
+              redirect ORGANIZATIONS + "/#{params[:org_guid]}/spaces/#{params[:space_guid]}/domains/map_domain/new" + "?error=#{e.description}"
+            else
+              redirect ORGANIZATIONS + "/#{params[:org_guid]}/domains/add_domains" + "?error=#{e.description}"
             end
           end
         end

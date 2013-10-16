@@ -2,6 +2,12 @@
     <h3>500 - An error has occurred on our server</h3>
     <p><%= defined?(error) ? error : '' %></p>
     <p>We apologize for the inconvenience, click the button bellow to go to the home page</p>
-    <button type="button" onclick="window.location = '<%= Uhuru::Webui::SinatraRoutes::INDEX %>';">Home Page</button>
+
+    <% if session[:logged_in] %>
+      <button type="button" onclick="window.location.assign('<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS %>');">Home Page</button>
+    <% else %>
+      <button type="button" onclick="window.location.assign('<%= Uhuru::Webui::SinatraRoutes::INDEX %>');">Home Page</button>
+    <% end %>
+
 </div>
 
