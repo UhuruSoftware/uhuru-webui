@@ -91,7 +91,6 @@ module Library
       org = @client.organization(org_guid)
       org.name = name
       org.update!
-
     end
 
     def delete(config, org_guid)

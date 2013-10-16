@@ -1,17 +1,13 @@
-require 'sinatra/base'
-
 module Uhuru::Webui
   module SinatraRoutes
     module Domains
       def self.registered(app)
         app.get DOMAINS_CREATE do
           require_login
-
           org = Library::Organizations.new(session[:token], $cf_target)
           domain = Library::Domains.new(session[:token], $cf_target)
           org.set_current_org(params[:org_guid])
           domains_list = domain.read_domains(params[:org_guid])
-
           error_message = params[:error] if defined?(params[:error])
 
           erb :'user_pages/organization',
@@ -30,17 +26,13 @@ module Uhuru::Webui
 
         app.get DOMAINS_MAP_SPACE do
           require_login
-
           org = Library::Organizations.new(session[:token], $cf_target)
           space = Library::Spaces.new(session[:token], $cf_target)
           domain = Library::Domains.new(session[:token], $cf_target)
           org.set_current_org(params[:org_guid])
           space.set_current_space(params[:space_guid])
-
           domains_list = domain.read_domains(nil, params[:space_guid])
-
           domains_list_org = domain.read_domains(params[:org_guid])
-
           error_message = params[:error] if defined?(params[:error])
 
           erb :'user_pages/space',
@@ -62,55 +54,41 @@ module Uhuru::Webui
 
         app.post '/createDomain' do
           require_login
-
           wildcard = params[:domain_wildcard] ? true : false
+
           begin
-            create = Library::Domains.new(session[:token], $cf_target).create(params[:domainName], params[:org_guid], wildcard, params[:space_guid])
+            Library::Domains.new(session[:token], $cf_target).create(params[:domainName], params[:org_guid], wildcard, params[:space_guid])
 
             if params[:current_tab].to_s == 'space'
-              redirect ORGANIZATIONS + "/#{params[:org_guid]}/spaces/#{params[:space_guid]}/domains"
+              switch_to_get ORGANIZATIONS + "/#{params[:org_guid]}/spaces/#{params[:space_guid]}/domains"
             else
-              redirect ORGANIZATIONS + "/#{params[:org_guid]}/domains"
+              switch_to_get ORGANIZATIONS + "/#{params[:org_guid]}/domains"
             end
           rescue CFoundry::DomainInvalid => e
             if params[:current_tab].to_s == 'space'
-              redirect ORGANIZATIONS + "/#{params[:org_guid]}/spaces/#{params[:space_guid]}/domains/map_domain/new" + "?error=#{e.description}"
+              switch_to_get ORGANIZATIONS + "/#{params[:org_guid]}/spaces/#{params[:space_guid]}/domains/map_domain/new" + "?error=#{e.description}"
             else
-              redirect ORGANIZATIONS + "/#{params[:org_guid]}/domains/add_domains" + "?error=#{e.description}"
+              switch_to_get ORGANIZATIONS + "/#{params[:org_guid]}/domains/add_domains" + "?error=#{e.description}"
             end
           end
         end
 
         app.post '/deleteDomain' do
           require_login
-
-          delete = Library::Domains.new(session[:token], $cf_target).delete(params[:domainGuid])
-          if defined?(delete.message)
-            redirect ORGANIZATIONS + "/#{params[:org_guid]}/domains" + "?error=#{delete.description}"
-          else
-            redirect ORGANIZATIONS + "/#{params[:org_guid]}/domains"
-          end
+          Library::Domains.new(session[:token], $cf_target).delete(params[:domainGuid])
+          switch_to_get ORGANIZATIONS + "/#{params[:org_guid]}/domains"
         end
 
         app.post '/unmapFromSpace' do
           require_login
+          Library::Domains.new(session[:token], $cf_target).unmap_domain(params[:domainGuid], nil, params[:current_space])
 
-          unmap = Library::Domains.new(session[:token], $cf_target).unmap_domain(params[:domainGuid], nil, params[:current_space])
-          if defined?(unmap.message)
-            if params[:current_tab].to_s == 'space'
-              redirect ORGANIZATIONS + "/#{params[:current_organization]}/spaces/#{params[:current_space]}/domains" + "?error=#{unmapp.description}"
-            else
-              redirect ORGANIZATIONS + "/#{params[:current_organization]}/domains" + "?error=#{unmapp.description}"
-            end
+          if params[:current_tab].to_s == 'space'
+            switch_to_get ORGANIZATIONS + "/#{params[:current_organization]}/spaces/#{params[:current_space]}/domains"
           else
-            if params[:current_tab].to_s == 'space'
-              redirect ORGANIZATIONS + "/#{params[:current_organization]}/spaces/#{params[:current_space]}/domains"
-            else
-              redirect ORGANIZATIONS + "/#{params[:current_organization]}/domains"
-            end
+            switch_to_get ORGANIZATIONS + "/#{params[:current_organization]}/domains"
           end
         end
-
       end
     end
   end

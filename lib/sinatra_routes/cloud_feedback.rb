@@ -1,5 +1,3 @@
-require 'sinatra/base'
-
 module Uhuru::Webui
   module SinatraRoutes
     module CloudFeedback
