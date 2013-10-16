@@ -393,7 +393,7 @@ app_push:
     margin_color: '#ffffff'
     li:
       background-color: 'transparent'
-      border-color: 'transparent'
+      border-color: '#2F2F2F'
     selected_li:
       background-color: 'transparent'
       border-color: '#ffffff'

@@ -27,6 +27,10 @@ class ServiceInstances
     service_instance
   end
 
+  def get_service_by_name(name, space_guid)
+    @client.service_instances_by_name(name).find {|s| s.space.guid = space_guid }
+  end
+
   def read_service_plans()
     @client.service_plans
   end

@@ -51,7 +51,7 @@ class Applications < Uhuru::Webui::ClassWithFeedback
     if new_app.create!
       ok_ln("OK")
 
-      info("Uploading bits (#{ File.size(path) / (1024 * 1024) }MB)...")
+      info("Uploading bits (#{ (File.size(path) / (1024.0 * 1024)).round(2) }MB)...")
 
       new_app.upload path
 
@@ -59,12 +59,15 @@ class Applications < Uhuru::Webui::ClassWithFeedback
 
       info_ln("Setting up services ...")
 
+      service_instances = ServiceInstances.new(@client.base.token, @client.target)
+
       app_services.each do |service|
 
         info("  Creating service '#{service[:name]}'.")
 
+
         begin
-          service_db_name = ServiceInstances.new(@client.base.token, @client.target).create_service_by_names(service[:name], space_guid, service[:plan] || 'free', service[:type])
+          service_db = service_instances.create_service_by_names(service[:name], space_guid, service[:plan] || 'free', service[:type])
           ok_ln("Done")
         rescue => e
           error_ln("Failed")
@@ -76,7 +79,8 @@ class Applications < Uhuru::Webui::ClassWithFeedback
         info("  Binding service '#{service[:name]}'.")
 
         begin
-          app.bind(service_db_name)
+          service_db = service_instances.get_service_by_name(service[:name], space_guid)
+          app.bind(service_db)
           ok_ln("Done")
         rescue => e
           error_ln("Failed")

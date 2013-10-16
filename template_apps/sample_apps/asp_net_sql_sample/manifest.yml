@@ -1,0 +1,15 @@
+---
+applications:
+- name: asp_net_sql_sample
+  memory: 128M
+  instances: 1
+  host: asp_net_sql_sample
+  domain: cf.me
+  path: .
+  stack: win2012
+  services:
+    asp_net_sql_sample_db:
+      label: mssql
+      provider: core
+      version: '2008'
+      plan: free
