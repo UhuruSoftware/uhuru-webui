@@ -217,8 +217,9 @@
           <div class="square_tile owner" title="<%= owner.email %>">
             <span><%= owner.email %></span>
             <span class="bottom_left">Owner</span>
-            <button type="button" class="image s24px trash" id="<%= owner.guid %>" title="<%= owner.email %>" onclick="deleteUserModal(this, 'owner');" />
-
+            <% if owners_list.count > 1 %>
+                <button type="button" class="image s24px trash" id="<%= owner.guid %>" title="<%= owner.email %>" onclick="deleteUserModal(this, 'owner');" />
+            <% end %>
             <span class="span_bg_icon"></span>
           </div>
         </div>
