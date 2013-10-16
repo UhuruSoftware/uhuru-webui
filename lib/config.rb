@@ -83,13 +83,6 @@ class Uhuru::Webui::Config < VCAP::Config
           :components => {
           :deas                           =>Array,
           :services                       =>Array,
-          },
-          :buildpacks => {
-            :dotNet                       =>String,
-            :java                         =>String,
-            :nodejs                       =>String,
-            :php                          =>String,
-            :ruby                         =>String,
           }
       },
       :admin_config_file                  =>String
