@@ -1,12 +1,9 @@
-require 'sinatra/base'
-
 module Uhuru::Webui
   module SinatraRoutes
     module Services
       def self.registered(app)
         app.get SERVICES_CREATE do
           require_login
-
           org = Library::Organizations.new(session[:token], $cf_target)
           space = Library::Spaces.new(session[:token], $cf_target)
           space.set_current_space(params[:space_guid])
@@ -34,30 +31,22 @@ module Uhuru::Webui
           require_login
 
           if params[:serviceName].size >= 4
-            create = ServiceInstances.new(session[:token], $cf_target).create_service_instance(params[:serviceName], params[:current_space], params[:service_plan])
+            begin
+              ServiceInstances.new(session[:token], $cf_target).create_service_instance(params[:serviceName], params[:current_space], params[:service_plan])
+              return switch_to_get ORGANIZATIONS + "/#{params[:current_organization]}/spaces/#{params[:current_space]}/#{params[:current_tab]}"
+            rescue Exception => e
+              return switch_to_get ORGANIZATIONS + "/#{params[:current_organization]}/spaces/#{params[:current_space]}/#{params[:current_tab]}/create_service/new" + "?error=#{e.description}"
+            end
           else
-            redirect ORGANIZATIONS + "/#{params[:current_organization]}/spaces/#{params[:current_space]}/#{params[:current_tab]}/create_service/new" + '?error=The service name is too short.'
-          end
-
-          if defined?(create.message)
-            redirect ORGANIZATIONS + "/#{params[:current_organization]}/spaces/#{params[:current_space]}/#{params[:current_tab]}/create_service/new" + "?error=#{create.description}"
-          else
-            redirect ORGANIZATIONS + "/#{params[:current_organization]}/spaces/#{params[:current_space]}/#{params[:current_tab]}"
+            return switch_to_get ORGANIZATIONS + "/#{params[:current_organization]}/spaces/#{params[:current_space]}/#{params[:current_tab]}/create_service/new" + '?error=The service name is too short.'
           end
         end
 
         app.post '/deleteService' do
           require_login
-
-          delete = ServiceInstances.new(session[:token], $cf_target).delete(params[:serviceGuid])
-
-          if defined?(delete.message)
-            redirect ORGANIZATIONS + "/#{params[:current_organization]}/spaces/#{params[:current_space]}/#{params[:current_tab]}" + "?error=#{delete.description}"
-          else
-            redirect ORGANIZATIONS + "/#{params[:current_organization]}/spaces/#{params[:current_space]}/#{params[:current_tab]}"
-          end
+          ServiceInstances.new(session[:token], $cf_target).delete(params[:serviceGuid])
+          switch_to_get ORGANIZATIONS + "/#{params[:current_organization]}/spaces/#{params[:current_space]}/#{params[:current_tab]}"
         end
-
       end
     end
   end

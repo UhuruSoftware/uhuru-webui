@@ -11,7 +11,6 @@ require 'rack/recaptcha'
 require 'uri'
 require 'base32'
 
-
 require 'sinatra/session'
 require 'sinatra/base'
 require 'sinatra_routes/route_definitions'
@@ -39,7 +38,6 @@ require 'routes'
 require 'dev_utils'
 
 require 'billing/provider'
-
 
 
 module Uhuru::Webui
@@ -96,10 +94,9 @@ module Uhuru::Webui
       switch_to uri, "POST"
     end
 
-
     def require_login
-      if  CFoundry::V2::Client.new($cf_target, session[:token]).token == nil
-        redirect SinatraRoutes::LOGIN + "?error=Session has expired, please login again."
+      if session[:token] == nil
+        redirect SinatraRoutes::TOKEN_EXPIRED
       end
 
       unless session[:logged_in]
@@ -109,7 +106,7 @@ module Uhuru::Webui
 
     def require_admin
       if session[:logged_in] == false || session[:logged_in] == nil || session[:is_admin] == false
-        redirect SinatraRoutes::INDEX
+        switch_to_get SinatraRoutes::INDEX
       end
     end
 
@@ -147,7 +144,6 @@ module Uhuru::Webui
       }
     end
 
-
     get '/design' do
       erb :'design/design_test.html', {:layout => :'layouts/user'}
     end
@@ -184,6 +180,5 @@ module Uhuru::Webui
               :page_title => 'Monitoring'
           }
     end
-
   end
 end
