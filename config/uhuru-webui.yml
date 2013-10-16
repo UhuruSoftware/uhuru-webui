@@ -3,7 +3,7 @@ pid_filename: /tmp/uhuru_webui.pid
 local_route: 10.0.0.1
 port: 4567
 dev_mode: true
-cloud_controller_url: http://api.rarunchiu.com
+cloud_controller_url: http://api.cf.me
 message_bus_uri: nats://116e42690e023d88a208bff76eca54ca:8889dd351e08cc6f076bc02344320fbc@10.0.100.45:4222
 domain: www.rarunchiu.com
 bind_address: 10.0.102.200
@@ -20,9 +20,9 @@ uaadb:
   port: 2544
   dbname: 'uaa'
 uaa:
-  url: http://uaa.rarunchiu.com
+  url: http://uaa.cf.me
   client_id: webui
-  client_secret: 930b02497aab3d499abf8bae04e69dc7
+  client_secret: 3502490972ebfed99f406795f865fb99
 logging:
   level: debug
   file: /tmp/uhuru_webui.log

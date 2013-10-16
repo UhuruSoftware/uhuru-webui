@@ -1,13 +1,9 @@
-require 'sinatra/base'
-
 module Uhuru::Webui
   module SinatraRoutes
     module Spaces
       def self.registered(app)
-
         app.get ORGANIZATION do
           require_login
-
           org = Library::Organizations.new(session[:token], $cf_target)
           domain = Library::Domains.new(session[:token], $cf_target)
           org.set_current_org(params[:org_guid])
@@ -76,14 +72,10 @@ module Uhuru::Webui
             else
               raise Sinatra::NotFound.new
           end
-
-
-
         end
 
         app.get SPACES_CREATE do
           require_login
-
           org = Library::Organizations.new(session[:token], $cf_target)
           org.set_current_org(params[:org_guid])
 
@@ -106,7 +98,6 @@ module Uhuru::Webui
 
         app.get SPACE do
           require_login
-
           org = Library::Organizations.new(session[:token], $cf_target)
           space = Library::Spaces.new(session[:token], $cf_target)
           app = TemplateApps.new
@@ -214,42 +205,35 @@ module Uhuru::Webui
           require_login
 
           if params[:spaceName].size >= 4
-            create = Library::Spaces.new(session[:token], $cf_target).create(params[:org_guid], params[:spaceName])
+            begin
+              Library::Spaces.new(session[:token], $cf_target).create(params[:org_guid], params[:spaceName])
+              return switch_to_get ORGANIZATIONS + "/#{params[:org_guid]}/spaces"
+            rescue CFoundry::SpaceNameTaken => e
+              return switch_to_get ORGANIZATIONS + "/#{params[:org_guid]}/spaces/create_space" + "?error=#{e.description}"
+            end
           else
-            redirect ORGANIZATIONS + "/#{params[:org_guid]}/spaces/create_space" + '?error=The space name is to short.'
-          end
-
-          if defined?(create.message)
-            redirect ORGANIZATIONS + "/#{params[:org_guid]}/spaces/create_space" + "?error=#{create.description}"
-          else
-            redirect ORGANIZATIONS + "/#{params[:org_guid]}/spaces"
+            return switch_to_get ORGANIZATIONS + "/#{params[:org_guid]}/spaces/create_space" + '?error=The space name is to short.'
           end
         end
 
         app.post '/deleteSpace' do
           require_login
-
-          delete = Library::Spaces.new(session[:token], $cf_target).delete(params[:spaceGuid])
-          if defined?(delete.message)
-            redirect ORGANIZATIONS + "/#{params[:org_guid]}/spaces" + "?error=#{delete.description}"
-          else
-            redirect ORGANIZATIONS + "/#{params[:org_guid]}/spaces"
-          end
+          Library::Spaces.new(session[:token], $cf_target).delete(params[:spaceGuid])
+          switch_to_get ORGANIZATIONS + "/#{params[:org_guid]}/spaces"
         end
 
         app.post '/updateSpace' do
           require_login
 
           if params[:modified_name].size >= 4
-            update = Library::Spaces.new(session[:token], $cf_target).update(params[:modified_name], params[:current_space])
+            begin
+              Library::Spaces.new(session[:token], $cf_target).update(params[:modified_name], params[:current_space])
+              return switch_to_get ORGANIZATIONS + "/#{params[:current_organization]}/spaces/#{params[:current_space]}/#{params[:current_tab]}"
+            rescue CFoundry::SpaceNameTaken => e
+              return switch_to_get ORGANIZATIONS + "/#{params[:current_organization]}/spaces/#{params[:current_space]}/#{params[:current_tab]}" + "?error=#{e.description}"
+            end
           else
-            redirect ORGANIZATIONS + "/#{params[:current_organization]}/spaces/#{params[:current_space]}/#{params[:current_tab]}" + '?error=The space name is to short.'
-          end
-
-          if defined?(update.message)
-            redirect ORGANIZATIONS + "/#{params[:current_organization]}/spaces/#{params[:current_space]}/#{params[:current_tab]}" + "?error=#{update.description}"
-          else
-            redirect ORGANIZATIONS + "/#{params[:current_organization]}/spaces/#{params[:current_space]}/#{params[:current_tab]}"
+            return switch_to_get ORGANIZATIONS + "/#{params[:current_organization]}/spaces/#{params[:current_space]}/#{params[:current_tab]}" + '?error=The space name is to short.'
           end
         end
       end

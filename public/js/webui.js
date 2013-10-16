@@ -468,3 +468,49 @@ if (($('#service_type').length > 0))
         fillSelect(window.all_services);
     });
 }
+
+/*********************************************************************************************************/
+/*                                            APPLICATION STATUS                           */
+/*********************************************************************************************************/
+
+function getAppStatus(app_id){
+
+    var request = $.ajax(
+        {
+            url: "/app/status/" + app_id,
+            type: 'GET',
+            cache: false,
+            error: function(data)
+            {
+
+            },
+            success: function(response)
+            {
+                var content = $.parseJSON(response);
+
+                var current_status = $("#" + app_id).text().trim();
+
+                var status = content['running'] ? 'RUNNING' : current_status;
+
+                status = status + " (" + content['running_instances'] + "/" + content['instances'] + ')';
+
+                $("#" + app_id).text(status);
+            }
+        });
+}
+
+$(".app_status").each(function(index, status_element)
+{
+    var app_id = status_element.id;
+
+    var current_status = $("#" + app_id).text().trim();
+
+    if (current_status.toLowerCase() == 'started')
+    {
+        getAppStatus(app_id);
+    }
+    else
+    {
+        $("#" + app_id).text(current_status);
+    }
+})

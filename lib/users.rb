@@ -245,14 +245,3 @@ module Library
 
   end
 end
-
-
-#private
-
-#def create_user(user_guid)
-#  user = @client.user
-#  user.guid = user_guid
-#  return user.create!
-#rescue Exception => e
-#  false
-#end

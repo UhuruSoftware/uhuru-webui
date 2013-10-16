@@ -1,4 +1,3 @@
-require 'sinatra/base'
 require "admin_settings"
 
 module Uhuru::Webui

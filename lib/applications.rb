@@ -16,6 +16,23 @@ class Applications < Uhuru::Webui::ClassWithFeedback
     org.domains
   end
 
+  def get_app_running_status(app_guid)
+    app = @client.app(app_guid)
+
+    # This call can fail because it eventually has to reach DEAs - it can timeout, staging may not be done yet, etc.
+    begin
+      running_instances = app.running_instances
+    rescue
+      running_instances = 0
+    end
+
+    {
+        running: app.running?,
+        instances: app.total_instances,
+        running_instances: running_instances,
+    }
+  end
+
   # parameters with default arguments (= nil) may be
   def create!(org_guid, space_guid, name, instances, memory, domain_name, host_name, path, app_services, stack=nil)
     info_ln("Pushing app '#{name}' ...")
@@ -252,9 +269,9 @@ class Applications < Uhuru::Webui::ClassWithFeedback
   end
 
   class Application
-    attr_reader :name, :guid, :stack, :state, :services, :uris, :instances, :memory, :running
+    attr_reader :name, :guid, :stack, :state, :services, :uris, :instances, :memory
 
-    def initialize(name, guid, stack, state, services, uris, instances, memory, running)
+    def initialize(name, guid, stack, state, services, uris, instances, memory)
       @name = name
       @guid = guid
       @stack = stack
@@ -263,7 +280,6 @@ class Applications < Uhuru::Webui::ClassWithFeedback
       @uris = uris
       @instances = instances
       @memory = memory
-      @running = running
     end
   end
 
