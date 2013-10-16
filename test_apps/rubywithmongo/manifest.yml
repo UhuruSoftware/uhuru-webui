@@ -1,0 +1,14 @@
+---
+applications:
+- name: rubywithmongo-monit-7a79f
+  memory: 128M
+  instances: 1
+  host: rubywithmongo-monit-7a79f
+  domain: apps.ccng-dev.net
+  path: .
+  services:
+    rubytomongodb20:
+      label: mongodb
+      provider: core
+      version: '2.2'
+      plan: free

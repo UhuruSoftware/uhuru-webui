@@ -261,16 +261,6 @@ def set_cfoundry_environment
 
 end
 
-def get_buildpacks
-  buildpacks = []
-  existing_dea = @components[:deas].map { |dea| dea["name"] }
-  $config[:monitoring][:buildpacks].each do |k, v|
-    buildpacks << v.to_s if k.to_s != "dotNet" && existing_dea.include?("dea")
-    buildpacks << v.to_s if k.to_s == "dotNet" && existing_dea.include?("win_dea")
-  end
-
-  buildpacks
-end
 
 def get_services
   services = []
@@ -282,8 +272,7 @@ def get_services
   return services
 end
 
-def set_buildpacks_services
-  buildpacks = get_buildpacks
+def set_services
   services = get_services
 
   @app_definitions.each do |app|
@@ -293,12 +282,12 @@ def set_buildpacks_services
       begin
         manifest = YAML.load_file(File.join(@manifest_dir, app_name, 'manifest.yml'))
 
-        app_buildpack = manifest['applications'][0]['buildpack']
         app_service = manifest['applications'][0]['services'].first[1]['label']
 
-        if buildpacks.include?(app_buildpack) && services.include?(app_service)
+        if services.include?(app_service)
 
           @apps_to_monitor << app_name
+
         end
       rescue => e
         logger.warn("Can't read manifest for app #{app_name} - #{e.message}:#{e.backtrace}")
@@ -423,10 +412,7 @@ def main_apps
           databases << s[1]["label"]
         end
 
-        framework = $config[:monitoring][:buildpacks].inject() do |r, (k, v)|
-          r = k if v == manifest_hash['buildpack']
-          r.to_s
-        end
+        framework = app.to_s.split("with")[0]
 
         #mutex.synchronize {
           faulty_apps << {
@@ -677,7 +663,7 @@ def main
     @client = CFoundry::V2::Client.new(@cloud_target, token)
 
     set_cfoundry_environment
-    set_buildpacks_services
+    set_services
   rescue => e
     exception = "#{e.message}:#{e.backtrace}"
     send_email("#{@domain} QoS Monitoring [FAILURE]", 'There was a problem logging into the cloud.')

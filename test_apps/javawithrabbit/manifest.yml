@@ -6,7 +6,6 @@ applications:
   host: javawithrabbit
   domain: apps.ccng-dev.net
   path: javawithrabbit.war
-  buildpack: https://github.com/ramnivas/cloudfoundry-buildpack-java
   services:
     javarabbitmq-monit:
       label: rabbitmq
