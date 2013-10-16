@@ -92,13 +92,12 @@
                   </div>
               <% end %>
           </div>
-      </div>
-
-      <div class="modal_footer">
         <% unless error_message.nil? || error_message.empty? %>
             <div class="error"> <%= error_message %> </div>
         <% end %>
+      </div>
 
+      <div class="modal_footer">
         <div>
           <form method="post" action="/push" class="create_app_form">
             <button type="button" onclick="window.location.assign('<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/spaces/#{current_space}/apps" %>');">Close</button>

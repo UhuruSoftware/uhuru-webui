@@ -1,13 +1,9 @@
-require 'organizations'
-
-
 module Uhuru::Webui
   module SinatraRoutes
     module Organizations
       def self.registered(app)
         app.get ORGANIZATIONS do
           require_login
-
           organizations_list = Library::Organizations.new(session[:token], $cf_target).read_all
           error_message = params[:error] if defined?(params[:error])
 
@@ -23,10 +19,8 @@ module Uhuru::Webui
 
         app.get ORGANIZATIONS_CREATE do
           require_login
-
           organizations_list = Library::Organizations.new(session[:token], $cf_target).read_all
           error_message = params[:error] if defined?(params[:error])
-
           months = []
           years = []
 
@@ -78,59 +72,52 @@ module Uhuru::Webui
 
           if $config[:billing][:provider] == 'stripe'
             if params[:stripeToken] == nil
-              redirect ORGANIZATIONS_CREATE + "?error=Could retrieve your credit card information. Please contact support."
+              return switch_to_get "#{ORGANIZATIONS_CREATE}?error=Could retrieve your credit card information. Please contact support."
             end
           end
 
           if params[:orgName].size < 4
-            redirect ORGANIZATIONS_CREATE + '?error=The name is too short (min. 4 characters)'
+            return switch_to_get "#{ORGANIZATIONS_CREATE}?error=The name is too short (min. 4 characters)"
           end
 
-          create = Library::Organizations.new(session[:token], $cf_target).create($config, params[:orgName], session[:user_guid])
-
-          if defined?(create.message)
-            redirect ORGANIZATIONS_CREATE + "?error=#{create.description}"
-          else
-            begin
-              customer = Uhuru::Webui::Billing::Provider.provider.create_customer(session[:username], params[:stripeToken])
-              Uhuru::Webui::Billing::Provider.provider.add_billing_binding(customer, create)
-            rescue => e
-              $logger.error("Error while trying to create an org for #{session[:user_guid]} - #{e.message}:#{e.backtrace}")
-              Library::Organizations.new(session[:token], $cf_target).delete($config, create)
-              redirect ORGANIZATIONS_CREATE + "?error=Could not setup your credit card information. Please contact support."
-            end
+          begin
+            Library::Organizations.new(session[:token], $cf_target).create($config, params[:orgName], session[:user_guid])
+          rescue CFoundry::OrganizationNameTaken => e
+            return switch_to_get "#{ORGANIZATIONS_CREATE}?error=#{e.description}"
           end
-          redirect ORGANIZATIONS
+
+          begin
+            customer = Uhuru::Webui::Billing::Provider.provider.create_customer(session[:username], params[:stripeToken])
+            Uhuru::Webui::Billing::Provider.provider.add_billing_binding(customer, create)
+          rescue => e
+            $logger.error("Error while trying to create an org for #{session[:user_guid]} - #{e.message}:#{e.backtrace}")
+            Library::Organizations.new(session[:token], $cf_target).delete($config, create)
+            return switch_to_get "#{ORGANIZATIONS_CREATE}?error=Could not setup your credit card information. Please contact support."
+          end
+
+          switch_to_get ORGANIZATIONS
         end
-
 
         app.post '/deleteOrganization' do
           require_login
-
-          delete = Library::Organizations.new(session[:token], $cf_target).delete($config, params[:orgGuid])
-          if defined?(delete.message)
-            redirect ORGANIZATIONS + "?error=#{delete.description}"
-          else
-            redirect ORGANIZATIONS
-          end
+          Library::Organizations.new(session[:token], $cf_target).delete($config, params[:orgGuid])
+          switch_to_get ORGANIZATIONS
         end
 
         app.post '/updateOrganization' do
           require_login
 
           if params[:modified_name].size >= 4
-            update =  Library::Organizations.new(session[:token], $cf_target).update(params[:modified_name], params[:current_organization])
+            begin
+              Library::Organizations.new(session[:token], $cf_target).update(params[:modified_name], params[:current_organization])
+              return switch_to_get "#{ORGANIZATIONS}/#{params[:current_organization]}/#{params[:current_tab]}"
+            rescue CFoundry::OrganizationNameTaken => e
+              return switch_to_get ORGANIZATIONS + "/#{params[:current_organization]}/#{params[:current_tab]}" + "?error=#{e.description}"
+            end
           else
-            switch_to_get ORGANIZATIONS + "/#{params[:current_organization]}/#{params[:current_tab]}" + '?error=The name is too short (min. 4 characters)'
-          end
-
-          if defined?(update.message)
-            switch_to_get ORGANIZATIONS + "/#{params[:current_organization]}/#{params[:current_tab]}" + "?error=#{update.description}"
-          else
-            switch_to_get ORGANIZATIONS + "/#{params[:current_organization]}/#{params[:current_tab]}"
+            return switch_to_get ORGANIZATIONS + "/#{params[:current_organization]}/#{params[:current_tab]}" + '?error=The name is too short (min. 4 characters)'
           end
         end
-
       end
     end
   end

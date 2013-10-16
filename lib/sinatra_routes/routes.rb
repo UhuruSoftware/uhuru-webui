@@ -1,12 +1,9 @@
-require 'sinatra/base'
-
 module Uhuru::Webui
   module SinatraRoutes
     module Routes
       def self.registered(app)
         app.get ROUTES_CREATE do
           require_login
-
           org = Library::Organizations.new(session[:token], $cf_target)
           space = Library::Spaces.new(session[:token], $cf_target)
           route = Library::Routes.new(session[:token], $cf_target)
@@ -37,25 +34,19 @@ module Uhuru::Webui
         app.post '/createRoute' do
           require_login
 
-          create = Library::Routes.new(session[:token], $cf_target).create(params[:appName], params[:current_space], params[:domain_guid], params[:host])
-          if defined?(create.message)
-            redirect ORGANIZATIONS + "/#{params[:current_organization]}/spaces/#{params[:current_space]}/#{params[:current_tab]}/add_route/new" + "?error=#{create.description}"
-          else
-            redirect ORGANIZATIONS + "/#{params[:current_organization]}/spaces/#{params[:current_space]}/#{params[:current_tab]}"
+          begin
+            Library::Routes.new(session[:token], $cf_target).create(nil, params[:current_space], params[:domain_guid], params[:host])
+            return switch_to_get ORGANIZATIONS + "/#{params[:current_organization]}/spaces/#{params[:current_space]}/#{params[:current_tab]}"
+          rescue CFoundry::RouteInvalid => e
+            return switch_to_get ORGANIZATIONS + "/#{params[:current_organization]}/spaces/#{params[:current_space]}/#{params[:current_tab]}/add_route/new" + "?error=#{e.description}"
           end
         end
 
         app.post '/deleteRoute' do
           require_login
-
-          delete = Library::Routes.new(session[:token], $cf_target).delete(params[:routeGuid])
-          if defined?(delete.message)
-            redirect ORGANIZATIONS + "/#{params[:current_organization]}/spaces/#{params[:current_space]}/#{params[:current_tab]}" + "?error=#{delete.description}"
-          else
-            redirect ORGANIZATIONS + "/#{params[:current_organization]}/spaces/#{params[:current_space]}/#{params[:current_tab]}"
-          end
+          Library::Routes.new(session[:token], $cf_target).delete(params[:routeGuid])
+          switch_to_get ORGANIZATIONS + "/#{params[:current_organization]}/spaces/#{params[:current_space]}/#{params[:current_tab]}"
         end
-
       end
     end
   end

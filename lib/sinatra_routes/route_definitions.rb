@@ -1,5 +1,3 @@
-require 'sinatra/base'
-
 module Uhuru::Webui
   module SinatraRoutes
 
@@ -7,6 +5,7 @@ module Uhuru::Webui
 
     LOGIN                     = "#{INDEX}login"
     SIGNUP                    = "#{INDEX}signup"
+    TOKEN_EXPIRED             = "#{INDEX}token"
     PLEASE_CONFIRM            = "#{INDEX}confirm"
     ACTIVATE_ACCOUNT          = "#{INDEX}activate/:password/:guid/:email"
     ACTIVE                    = "#{INDEX}active"
