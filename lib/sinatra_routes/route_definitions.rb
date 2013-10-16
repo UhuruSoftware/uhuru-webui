@@ -27,6 +27,7 @@ module Uhuru::Webui
 
     SPACE                     = "#{ORGANIZATIONS}/:org_guid/:spaces/:space_guid/:tab"
     APP                       = "#{ORGANIZATIONS}/:org_guid/:spaces/:space_guid/:tab/:app_name"
+    APP_RUNNING_INSTANCES     = "/app/status/:app_guid"
 
     APP_CREATE                = "#{SPACE}/create_app/new"
     APP_CREATE_FEEDBACK       = "#{SPACE}/create_app_feedback/:id"

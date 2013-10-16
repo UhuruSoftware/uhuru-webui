@@ -34,6 +34,11 @@ module Uhuru::Webui
               }
         end
 
+        app.get APP_RUNNING_INSTANCES do
+          require_login
+          Applications.new(session[:token], $cf_target).get_app_running_status(params[:app_guid]).to_json
+        end
+        
         app.get APP_CREATE do
           require_login
           org = Library::Organizations.new(session[:token], $cf_target)

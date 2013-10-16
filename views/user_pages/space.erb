@@ -118,7 +118,10 @@
                     <%= app.uris.size %> route(s)
                   </div>
                   <br/>
-                  <span><%= app.running ? 'RUNNING' : app.state %></span>
+                  <span class="app_status" id="<%= app.guid %>">
+                    <%= app.state %>
+                    <img src="/images/small_loader.gif" />
+                  </span>
                 </div>
             </a>
           </div>
