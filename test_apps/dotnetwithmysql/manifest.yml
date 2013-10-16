@@ -6,7 +6,6 @@ applications:
   host: dotnetwithmysql-monit-30f27
   domain: apps.ccng-dev.net
   path: .
-  buildpack: https://github.com/stefanschneider/dummy-buildpack.git
   stack: iis75
   services:
     dotnetmysqlmonit:

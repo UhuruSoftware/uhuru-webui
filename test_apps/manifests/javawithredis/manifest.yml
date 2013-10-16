@@ -6,7 +6,6 @@ applications:
   host: javawithredis
   domain: apps.ccng-dev.net
   path: javawithredis.war
-  buildpack: https://github.com/ramnivas/cloudfoundry-buildpack-java
   services:
     javaredis-monit:
       label: redis

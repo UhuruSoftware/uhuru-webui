@@ -3,26 +3,28 @@ pid_filename: /tmp/uhuru_webui.pid
 local_route: 10.0.0.1
 port: 4567
 dev_mode: true
-cloud_controller_url: http://api.rarunchiu.com
-message_bus_uri: nats://116e42690e023d88a208bff76eca54ca:8889dd351e08cc6f076bc02344320fbc@10.0.100.45:4222
+cloud_controller_url: "http://api.mitza.net"
+message_bus_uri: nats://96fe61b95f6022d80e33ca58cfba0bc2:10d63f836c585dd3242cae2575dd7e58@10.0.100.45:4222
 domain: www.rarunchiu.com
 bind_address: 10.0.102.200
 ccdb:
-  host: '10.0.7.123'
+  host: "10.0.100.48"
   user: 'root'
-  password: 'root'
+  password: "8641926dc81377b150e1df77242dbe5d"
   port: 2544
-  dbname: 'appcloud_ng'
+  dbname: "ccdb_ng"
 uaadb:
-  host: '10.0.7.123'
+  host: "10.0.100.48"
   user: 'uaa'
-  password: 'uaa'
+  password: "8641926dc81377b150e1df77242dbe5d"
   port: 2544
-  dbname: 'uaa'
+  dbname: "uaa"
+
 uaa:
-  url: http://uaa.rarunchiu.com
-  client_id: webui
-  client_secret: 930b02497aab3d499abf8bae04e69dc7
+  url: "http://uaa.mitza.net"
+  client_id: "webui"
+  client_secret: "15ea03c981afcc6ae95e04b71dc0ab3d"
+
 logging:
   level: debug
   file: /tmp/uhuru_webui.log
@@ -50,52 +52,43 @@ monitoring:
       sample_count: 30
   vmc_executable_path: bash -c "cf"
   cloud_user: monitoring
-  cloud_password: password1234!
+  cloud_password: "70ef08afbf99d921f4fc8e1ae5cbce36"
   default_org: monitoring
   default_space: monitoring
-  apps_domain:
-  - apps.ccng-dev.net
-  email_to: ada.sescu@uhurusoftware.com
+  apps_domain: ["apps.mitza.net"]
+  email_to: "mihai.buzgau@uhurusoftware.com"
   sleep_after_app_push: 240
   pause_after_each_app: 1
   database:
-    database: monitoring
-    host: localhost
-    port: 5432
+    database: "monitoring"
+    host: 10.0.100.48
+    port: 2544
     encoding: utf8
-    username: postgres
-    password: password1234!
+    username: monitoring
+    password: 8641926dc81377b150e1df77242dbe5d
     adapter: postgresql
     timeout: 2000
   components:
     deas:
-    - name: dea
-    - name: win_dea
+    - name: "dea"
+    - name: "win_dea"
     services:
     - name: mysql_node
-      token: ec9743a4-6587-4356-8b9e-72d66b36a7f4
-#    - name: mongodb_node
-#      token: ec9743a4-6587-4356-8b9e-72d66b36a7f4
-#    - name: redis_node
-#      token: ec9743a4-6587-4356-8b9e-72d66b36a7f4
-#    - name: redis_node
-#      token: ec9743a4-6587-4356-8b9e-72d66b36a7f4
-#    - name: rabbit_node
-#      token: ec9743a4-6587-4356-8b9e-72d66b36a7f4
-#    - name: postgresql_node
-#      token: ec9743a4-6587-4356-8b9e-72d66b36a7f4
-#    - name: uhuru_tunnel_node
-#      token: ec9743a4-6587-4356-8b9e-72d66b36a7f4
-#    - name: uhurufs_node
-#      token: ec9743a4-6587-4356-8b9e-72d66b36a7f4
-#    - name: mssql_node
-#      token: ec9743a4-6587-4356-8b9e-72d66b36a7f4
-  buildpacks:
-    dotNet: https://github.com/stefanschneider/dummy-buildpack.git
-    java: https://github.com/ramnivas/cloudfoundry-buildpack-java
-    nodejs: https://github.com/cloudfoundry/heroku-buildpack-nodejs
-    php: https://github.com/heroku/heroku-buildpack-php
-    ruby: https://github.com/cloudfoundry/heroku-buildpack-ruby
+      token: 28cb092d70db7f5720ee8bfe71037625
+#    - name: mongodb_node <- not used yet
+#      token:
+    - name: redis_node
+      token: 3204496267c2d50d6c99a4e0a66d79f4
+    - name: rabbit_node
+      token: b0f23985bdd3597895e9f6f445655b9c
+    - name: postgresql_node
+      token: cca0bec620aa400e9b7280d15944e285
+#    - name: uhuru_tunnel_node <- not used yet
+#      token:
+#    - name: uhurufs_node <- not used yet
+#      token:
+    - name: mssql_node
+      token: 9bdeed706a8f29725c227757a8795357
 
 template_apps_dir: /tmp/template_apps
 admin_config_file: /tmp/admin-settings.yml

@@ -5,7 +5,6 @@ applications:
   instances: 1
   host: phpwithuhurufs
   domain: apps.ccng-dev.net
-  buildpack: https://github.com/heroku/heroku-buildpack-php
   services:
     uhurufs-0.9:
       label: uhurufs

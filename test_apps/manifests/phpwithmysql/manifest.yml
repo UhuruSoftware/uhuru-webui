@@ -5,7 +5,6 @@ applications:
   instances: 1
   host: phpwithmysql
   domain: apps.ccng-dev.net
-  buildpack: https://github.com/heroku/heroku-buildpack-php
   services:
     mysql-5.5:
       label: mysql

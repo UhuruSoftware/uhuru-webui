@@ -1,12 +1,11 @@
 ---
 applications:
-- name: javawithredis-monit-537b0
+- name: javawithredis-monit-83143
   memory: 512M
   instances: 1
-  host: javawithredis-monit-537b0
-  domain: apps.cloudmonit.net
+  host: javawithredis-monit-83143
+  domain: apps.mitza.net
   path: javawithredis.war
-  buildpack: https://github.com/ramnivas/cloudfoundry-buildpack-java
   services:
     javaredis-monit:
       label: redis
