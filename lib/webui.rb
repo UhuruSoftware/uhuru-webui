@@ -10,6 +10,9 @@ require "encryption"
 require 'rack/recaptcha'
 require 'uri'
 require 'base32'
+require 'pg'
+require 'date'
+require 'csv'
 
 require 'sinatra/session'
 require 'sinatra/base'
@@ -36,9 +39,8 @@ require 'readapps'
 require 'domains'
 require 'routes'
 require 'dev_utils'
-
 require 'billing/provider'
-
+require 'reports'
 
 module Uhuru::Webui
   class Webui < Sinatra::Base

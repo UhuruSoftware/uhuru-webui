@@ -4,6 +4,7 @@ require 'vcap/config'
 require "steno"
 require "config"
 require "admin_settings"
+require "reports_config"
 require "thin"
 require "optparse"
 require "class_with_feedback"
@@ -19,6 +20,7 @@ module Uhuru::Webui
 
       # default config path. this may be overridden during opts parsing
       @config_file = File.expand_path("../../config/uhuru-webui.yml", __FILE__)
+      @reports_file = File.expand_path("../../config/reports.yml", __FILE__)
 
 
       parse_options!
@@ -32,6 +34,7 @@ module Uhuru::Webui
       Uhuru::Webui::AdminSettings.bootstrap(@admin_file)
 
       @admin = Uhuru::Webui::AdminSettings.from_file(@admin_file)
+      @reports = Uhuru::Webui::ReportsConfig.from_file(@reports_file)
 
 
       @config[:bind_address] = VCAP.local_ip(@config[:local_route])
@@ -85,6 +88,7 @@ module Uhuru::Webui
       EM.run do
         $config = @config.dup
         $admin = @admin.dup
+        $reports = @reports
 
         TemplateApps.bootstrap
 

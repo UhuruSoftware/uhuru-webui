@@ -1,0 +1,11 @@
+<%=
+    if data.is_a? String
+      data
+    else
+        erb(:'admin/reports/simple_table', :layout => false, :locals => {
+                :data => data,
+                :users => reports.uaa_users,
+                :users_column => users_column
+        })
+    end
+%>

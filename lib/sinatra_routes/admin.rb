@@ -236,6 +236,53 @@ END_OF_MESSAGE
           }
         end
 
+        app.post ADMINISTRATION_REPORTS do
+          require_admin
+
+          query = params[:query]
+
+          reports = Uhuru::Webui::CFReports.new
+          reports.init_users
+
+          begin
+            data = reports.run_query(query)
+          rescue => e
+            data = e.message
+          end
+
+          erb :'admin/reports_view', {
+              :layout => :'layouts/admin',
+              :locals => {
+                  :current_tab => 'reports',
+                  :reports => reports,
+                  :data => data,
+                  :users_column => ["User", "Users"]
+              }
+          }
+        end
+
+        app.get ADMINISTRATION_REPORTS_VIEW do
+          require_admin
+
+          reports = Uhuru::Webui::CFReports.new
+          reports.init_users
+
+          report = params[:report_name].to_sym
+
+          data = reports.run_query(report)
+
+          erb :'admin/reports_view', {
+              :layout => :'layouts/admin',
+              :locals => {
+                  :current_tab => 'reports',
+                  :reports => reports,
+                  :data => data,
+                  :users_column => $reports[:reports][report][:users_column]
+              }
+          }
+        end
+
+
         app.get ADMINISTRATION_TEMPLATES do
           require_admin
 

@@ -3,8 +3,6 @@
   <tr>
     <% data.fields.each do |column| %>
 
-        <% column = users[:label] if (defined? users) && (column == users[:column]) %>
-
         <td style="font-size: 16px; font-weight: bold; border: 1px solid black"><%= column %></td>
 
     <% end %>
@@ -16,7 +14,21 @@
       <tr>
         <% row.each do |column, value| %>
 
-            <% value = users[:data].get_user_label(value) if (defined? users) && (column == users[:column]) %>
+            <%
+               if defined?(users) && users
+                 if defined?(users_column) && users_column
+                   if users_column.include?(column)
+                     if value.is_a?(Integer)
+                       value = users.get_user_label(value)
+                     else
+                       value = value.delete('{}').split(',').map do |user_id|
+                         user_id.downcase == 'null' ? '' : users.get_user_label(user_id)
+                       end.join(', ')
+                     end
+                   end
+                 end
+               end
+            %>
 
             <td style="border: 1px solid black"><%= value %></td>
         <% end %>
