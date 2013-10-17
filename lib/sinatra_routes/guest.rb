@@ -112,7 +112,7 @@ module Uhuru::Webui
 
           begin
             user_sign_up = UsersSetup.new($config)
-            user_sign_up.signup(params[:email], $config[:webui][:activation_link_secret], params[:first_name], params[:last_name])
+            user = user_sign_up.signup(params[:email], $config[:webui][:activation_link_secret], params[:first_name], params[:last_name])
 
             link = "http://#{request.env['HTTP_HOST'].to_s}/activate/#{URI.encode(Base32.encode(pass))}/#{URI.encode(Base32.encode(user.guid))}/#{params[:email]}"
             email_body = $config[:email][:registration_email]
