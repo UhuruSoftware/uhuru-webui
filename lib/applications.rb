@@ -34,7 +34,7 @@ class Applications < Uhuru::Webui::ClassWithFeedback
   end
 
   # parameters with default arguments (= nil) may be
-  def create!(org_guid, space_guid, name, instances, memory, domain_name, host_name, path, app_services, stack=nil)
+  def create!(org_guid, space_guid, name, instances, memory, domain_name, host_name, path, app_services, stack=nil, buildpack)
     info_ln("Pushing app '#{name}' ...")
 
     space = @client.space(space_guid)
@@ -45,6 +45,11 @@ class Applications < Uhuru::Webui::ClassWithFeedback
     new_app.total_instances = instances
     new_app.memory = memory
     new_app.stack = @client.stack_by_name(stack) if stack
+    new_app.buildpack = buildpack if buildpack
+
+    if new_app.buildpack
+      info("Using buildpack <b><a href='#{new_app.buildpack}' target='_blank'>#{new_app.buildpack}</a></b>")
+    end
 
     info("Creating app '#{name}' with #{memory}MB memory and #{instances} instances...")
 
@@ -101,9 +106,12 @@ class Applications < Uhuru::Webui::ClassWithFeedback
         warning_ln("    #{e.message}")
       end
       begin
-        info("Starting the application...")
-        new_app.start!
-        ok_ln("OK")
+        info_ln("Starting the application...")
+        new_app.start! do |response|
+          new_app.stream_update_log(response) do |log_entry|
+            info_ln("  #{log_entry.gsub(/\r/, '').gsub(/\n/, '<br/>')}")
+          end
+        end
       rescue => e
         error_ln("Failed")
         warning_ln("    #{e.message}")

@@ -1,0 +1,7 @@
+name: PHP Info
+id: php_info
+tags: ['PHP']
+description: "This is just a PHP index file that displays the results of phpinfo(). It uses a custom buildpack, found here: https://github.com/heroku/heroku-buildpack-php"
+uuid: b20f00da-ddcd-48b6-b609-812c18d51b43
+can_download: true
+buildpack: php

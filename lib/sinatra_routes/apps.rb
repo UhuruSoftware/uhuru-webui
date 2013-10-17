@@ -174,12 +174,13 @@ module Uhuru::Webui
           end
 
           stack = manifest['applications'][0]['stack']
+          buildpack = manifest['applications'][0]['buildpack']
           apps_obj = Applications.new(session[:token], $cf_target)
           apps_obj.start_feedback
 
           Thread.new() do
             begin
-              apps_obj.create!(params[:app_organization], params[:app_space], name, instances.to_i, memory.to_i, domain_name, host_name, src, app_services, stack)
+              apps_obj.create!(params[:app_organization], params[:app_space], name, instances.to_i, memory.to_i, domain_name, host_name, src, app_services, stack, buildpack)
             rescue => e
               apps_obj.info_ln('')
               apps_obj.error_ln('There was an error while processing the push request - please contact support')
