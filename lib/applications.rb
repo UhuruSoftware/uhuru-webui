@@ -172,7 +172,7 @@ class Applications < Uhuru::Webui::ClassWithFeedback
       element = JSON.parse(services).find { |s| s['name'] == service.name }
       if element == nil
         begin
-          info("  Unbinding service '#{service['name']} ... ")
+          info("  Unbinding service '#{service.name} ... ")
           unbind_app_services(app_name, service.name)
           ok_ln("OK")
         rescue => e
@@ -198,12 +198,11 @@ class Applications < Uhuru::Webui::ClassWithFeedback
       end
     end
 
-
     app.uris.each do |uri|
       element = JSON.parse(urls).find { |u| u['host'] == uri.host }
       if element == nil
         begin
-          info("  Unbinding url '#{url['host']}' ...")
+          info("  Unbinding url '#{uri.host}' ...")
           unbind_app_url(app_name, uri.host, uri.domain)
           ok_ln("OK")
         rescue => e

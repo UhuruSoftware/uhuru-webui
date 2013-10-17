@@ -81,7 +81,7 @@ module Uhuru::Webui
           end
 
           begin
-            Library::Organizations.new(session[:token], $cf_target).create($config, params[:orgName], session[:user_guid])
+            create = Library::Organizations.new(session[:token], $cf_target).create($config, params[:orgName], session[:user_guid])
           rescue CFoundry::OrganizationNameTaken => e
             return switch_to_get "#{ORGANIZATIONS_CREATE}?error=#{e.description}"
           end

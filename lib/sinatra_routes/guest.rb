@@ -76,7 +76,7 @@ module Uhuru::Webui
               return switch_to_get LOGIN + "?error=Invalid Username or Password&username=#{params[:username]}"
             end
           else
-            switch_to_get LOGIN
+            redirect LOGIN
           end
         end
 
@@ -131,14 +131,14 @@ module Uhuru::Webui
             session[:secret] = session[:session_id]
             session[:logged_in] = true
 
-            return switch_to_get PLEASE_CONFIRM
+            redirect PLEASE_CONFIRM
           rescue CF::UAA::TargetError => e
             return switch_to_get SIGNUP + "?message=#This username is already taken!&username=#{params[:email]}&first_name=#{params[:first_name]}&last_name=#{params[:last_name]}"
           end
         end
 
         app.get LOGOUT do
-          switch_to_get INDEX
+          redirect INDEX
         end
 
         app.get PLEASE_CONFIRM do
