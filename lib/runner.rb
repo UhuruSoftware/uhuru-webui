@@ -21,7 +21,7 @@ module Uhuru::Webui
       # default config path. this may be overridden during opts parsing
       @config_file = File.expand_path("../../config/uhuru-webui.yml", __FILE__)
       @reports_file = File.expand_path("../../config/reports.yml", __FILE__)
-
+      @countries_file = File.expand_path("../../config/countries.txt", __FILE__)
 
       parse_options!
 
@@ -94,7 +94,7 @@ module Uhuru::Webui
 
         # Only load the Web UI after configurations are initialized and we're ready to run.
         require "webui"
-
+        $config[:countries_file] = @countries_file
         webui = Uhuru::Webui::Webui.new
 
         app = Rack::Builder.new do

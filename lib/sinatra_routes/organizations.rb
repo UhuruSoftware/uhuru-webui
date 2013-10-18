@@ -50,7 +50,7 @@ module Uhuru::Webui
             y += 1
           end
 
-          list = File.open("../config/countries.txt", "rb").read
+          list = File.open($config[:countries_file], "rb").read
           countries = list.split(';')
 
           erb :'user_pages/organizations',
