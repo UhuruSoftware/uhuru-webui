@@ -4,9 +4,9 @@ applications:
   memory: 128M
   instances: 1
   host: dotnetwithmysql-monit-30f27
-  domain: apps.ccng-dev.net
+  domain: apps.cf.me
   path: .
-  stack: iis75
+  stack: win2012
   services:
     dotnetmysqlmonit:
       label: mysql
