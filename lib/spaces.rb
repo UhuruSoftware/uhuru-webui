@@ -14,30 +14,6 @@ module Library
 
     end
 
-    def isBillable(space_guid)
-      false
-
-    end
-
-    def readBillingManagers(space_guid)
-      billing_managers = @client.space(space_guid).auditors
-
-      emails_list = "'#{billing_managers.map { |x| x.email }.join("','")}'"
-      emails_list
-    end
-
-    def set_current_space(space_guid)
-      space = nil
-      unless space_guid != nil
-        space = @client.space(space_guid)
-      end
-
-      @client.current_space = space
-
-    rescue Exception => e
-      raise "#{e.inspect}"
-    end
-
     def create(org_guid, name)
 
       org = @client.organization(org_guid)
@@ -77,7 +53,7 @@ module Library
         app_service_instances = []
         app.services.each do |s|
           type = s.service_plan.service.label
-          app_service_instances << ServiceInstances::Service.new(s.name, type, s.guid, "free")
+          app_service_instances << ServiceInstances::Service.new(s.name, type, s.guid, s.service_plan.name)
         end
 
         app_uris = []
@@ -99,7 +75,7 @@ module Library
 
       services.each do |service|
         type = service.service_plan.service.label
-        services_list << ServiceInstances::Service.new(service.name, type, service.guid, "free")
+        services_list << ServiceInstances::Service.new(service.name, type, service.guid, service.service_plan.name)
       end
 
       services_list

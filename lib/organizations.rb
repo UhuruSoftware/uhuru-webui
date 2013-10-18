@@ -52,18 +52,6 @@ module Library
 
     end
 
-    def set_current_org(org_guid)
-      org = nil
-      unless org_guid != nil
-        org = @client.organization(org_guid)
-      end
-
-      @client.current_organization = org
-
-    rescue Exception => e
-      raise "#{e.inspect}"
-    end
-
     def create(config, name, user_guid)
 
       token = @client.token

@@ -8,7 +8,6 @@ module Uhuru::Webui
           space = Library::Spaces.new(session[:token], $cf_target)
           route = Library::Routes.new(session[:token], $cf_target)
           domain = Library::Domains.new(session[:token], $cf_target)
-          space.set_current_space(params[:space_guid])
 
           routes_list = route.read_routes(params[:space_guid])
           domains_list_space = domain.read_domains(params[:org_guid], params[:space_guid])

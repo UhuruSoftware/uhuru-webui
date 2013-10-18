@@ -8,7 +8,6 @@ module Uhuru::Webui
           space = Library::Spaces.new(session[:token], $cf_target)
           app = TemplateApps.new
           domain = Library::Domains.new(session[:token], $cf_target)
-          space.set_current_space(params[:space_guid])
 
           apps_list = space.read_apps(params[:space_guid])
           services_list = space.read_service_instances(params[:space_guid])
@@ -45,7 +44,6 @@ module Uhuru::Webui
           space = Library::Spaces.new(session[:token], $cf_target)
           app = TemplateApps.new
           domain = Library::Domains.new(session[:token], $cf_target)
-          space.set_current_space(params[:space_guid])
 
           apps_list = space.read_apps(params[:space_guid])
           domains_list = domain.read_domains()
@@ -82,7 +80,6 @@ module Uhuru::Webui
         app.post '/get_service_data' do
           require_login
           space = Library::Spaces.new(session[:token], $cf_target)
-          space.set_current_space(params[:current_space])
           services = space.read_service_instances(params[:current_space])
           service = services.find { |s| s.name.to_s == params[:service_name].to_s }
           "{ \"type\": \"#{service.type}\", \"plan\": \"#{service.plan}\" } "
@@ -108,7 +105,6 @@ module Uhuru::Webui
           org = Library::Organizations.new(session[:token], $cf_target)
           space = Library::Spaces.new(session[:token], $cf_target)
 
-          space.set_current_space(params[:space_guid])
           apps_list = space.read_apps(params[:space_guid])
 
           erb :'user_pages/space',
@@ -134,7 +130,6 @@ module Uhuru::Webui
           org = Library::Organizations.new(session[:token], $cf_target)
           space = Library::Spaces.new(session[:token], $cf_target)
 
-          space.set_current_space(params[:space_guid])
           apps_list = space.read_apps(params[:space_guid])
 
           erb :'user_pages/space',
@@ -170,7 +165,7 @@ module Uhuru::Webui
           service_list = manifest['applications'][0]['services'] || []
           app_services = []
           service_list.each do |service|
-            app_services << { :name => service[0], :type => service[1]['label'], :plan => service[1]['plan'] }
+            app_services << { :name => "#{name}DB-#{SecureRandom.uuid.slice(0, 5)}", :type => service[1]['label'], :plan => service[1]['plan'] }
           end
 
           stack = manifest['applications'][0]['stack']
@@ -180,7 +175,7 @@ module Uhuru::Webui
 
           Thread.new() do
             begin
-              apps_obj.create!(params[:app_organization], params[:app_space], name, instances.to_i, memory.to_i, domain_name, host_name, src, app_services, stack, buildpack)
+              apps_obj.create!(params[:app_space], name, instances.to_i, memory.to_i, domain_name, host_name, src, app_services, stack, buildpack)
             rescue => e
               apps_obj.info_ln('')
               apps_obj.error_ln('There was an error while processing the push request - please contact support')
@@ -199,7 +194,6 @@ module Uhuru::Webui
           apps_object.start_feedback
 
           space = Library::Spaces.new(session[:token], $cf_target)
-          space.set_current_space(params[:current_space])
           apps_list = space.read_apps(params[:current_space])
 
           Thread.new() do

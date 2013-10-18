@@ -168,6 +168,8 @@ $('#app_state').click(function(){
 var selected_service_name = $('.selected_service').children(":selected").val();
 var selected_service_type = $('.get_service_type').html();
 var selected_service_plan = $('.get_service_plan').html();
+//selected_service_guid will appear in services only when a service is added to an app when update app
+var selected_service_guid = $('.get_service_guid').val();
 var selected_url_host;
 var selected_url_domain = $('.get_url_domain').children(":selected").html();
 var selected_url_domain_guid = $('.get_url_domain').children(":selected").val();
@@ -256,7 +258,7 @@ var add_service = function(){
 
     if (exists == false)
     {
-        services.push({ name: selected_service_name, type: selected_service_type, plan: selected_service_plan });
+        services.push({ name: selected_service_name, type: selected_service_type, plan: selected_service_plan, guid: selected_service_guid });
 
         var table = document.getElementById('services_list');
         var row = table.insertRow(1);

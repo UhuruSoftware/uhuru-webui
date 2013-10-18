@@ -38,6 +38,7 @@
               <td>Type</td>
               <td>Plan</td>
               <td></td>
+              <td></td>
             </tr>
 
             <% app.services.each do |service| %>
@@ -48,6 +49,7 @@
                   <td class="action">
                     <button type="button" class="image s24px trash remove_service" title="Remove '<%= service.name %>'" id="<%= service.name %>" onclick="removeService(this)"></button>
                   </td>
+                  <td></td>
                 </tr>
             <% end %>
 
@@ -67,6 +69,9 @@
               </td>
               <td class="action">
                 <button id="add_service" type="button" class="image s24px plus" title="Bind Service"></button>
+              </td>
+              <td id="refresh_service_guid">
+                <input type="hidden" class="get_service_guid" value="<%= defined?(services_list[0].guid) ? services_list[0].guid : '' %>" />
               </td>
             </tr>
           </table>

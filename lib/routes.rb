@@ -8,14 +8,6 @@ module Library
       @client = CFoundry::V2::Client.new(target, token)
     end
 
-    def initialize_with_client(client)
-      @client = client
-    end
-
-    def self.initialize_client_for_template_apps(client)
-      @client = client
-    end
-
     # will read all routes in space, if domain_guid is specified will filter for the domain given
     def read_routes(space_guid, domain_guid = nil)
       routes = []
@@ -35,8 +27,8 @@ module Library
 
     # create is used: - to create a route (url) and map it to an app
     #                 - just to map a route (url) to an app if the route exists
-    def create(app_name, space_guid, domain_guid, host = nil)
-      app = @client.apps.find { |a| a.name == app_name }
+    def create(app_guid, space_guid, domain_guid, host = nil)
+      app = @client.app(app_guid)
       space = @client.space(space_guid)
       domain = @client.domain(domain_guid)
 

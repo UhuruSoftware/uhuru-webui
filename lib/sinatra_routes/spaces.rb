@@ -6,7 +6,6 @@ module Uhuru::Webui
           require_login
           org = Library::Organizations.new(session[:token], $cf_target)
           domain = Library::Domains.new(session[:token], $cf_target)
-          org.set_current_org(params[:org_guid])
 
           organization_name = org.get_name(params[:org_guid])
           organization_guid = params[:org_guid]
@@ -77,7 +76,6 @@ module Uhuru::Webui
         app.get SPACES_CREATE do
           require_login
           org = Library::Organizations.new(session[:token], $cf_target)
-          org.set_current_org(params[:org_guid])
 
           spaces_list = org.read_spaces(params[:org_guid])
           error_message = params[:error] if defined?(params[:error])
@@ -103,7 +101,6 @@ module Uhuru::Webui
           app = TemplateApps.new
           route = Library::Routes.new(session[:token], $cf_target)
           domain = Library::Domains.new(session[:token], $cf_target)
-          space.set_current_space(params[:space_guid])
 
           organization_name = org.get_name(params[:org_guid])
           space_name = space.get_name(params[:space_guid])

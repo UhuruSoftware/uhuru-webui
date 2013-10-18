@@ -6,7 +6,6 @@ module Uhuru::Webui
           require_login
           org = Library::Organizations.new(session[:token], $cf_target)
           space = Library::Spaces.new(session[:token], $cf_target)
-          space.set_current_space(params[:space_guid])
 
           services_list = space.read_service_instances(params[:space_guid])
           error_message = params[:error] if defined?(params[:error])

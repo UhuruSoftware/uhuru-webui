@@ -34,7 +34,7 @@ class Applications < Uhuru::Webui::ClassWithFeedback
   end
 
   # parameters with default arguments (= nil) may be
-  def create!(org_guid, space_guid, name, instances, memory, domain_name, host_name, path, app_services, stack=nil, buildpack)
+  def create!(space_guid, name, instances, memory, domain_name, host_name, path, app_services, stack=nil, buildpack)
     info_ln("Pushing app '#{name}' ...")
 
     space = @client.space(space_guid)
@@ -79,7 +79,7 @@ class Applications < Uhuru::Webui::ClassWithFeedback
           warning_ln("    #{e.message}")
         end
 
-        app = @client.apps.find { |a| a.name == name }
+        app = @client.app(new_app.guid)
 
         info("  Binding service '#{service[:name]}'.")
 
@@ -99,7 +99,7 @@ class Applications < Uhuru::Webui::ClassWithFeedback
 
       begin
         info("Setting up application route '#{name}.#{domain_name}'...")
-        Library::Routes.new(@client.base.token, @client.target).create(name, space_guid, domain.guid, host_name)
+        Library::Routes.new(@client.base.token, @client.target).create(new_app.guid, space_guid, domain.guid, host_name)
         ok_ln("Done")
       rescue => e
         error_ln("Failed")
@@ -130,13 +130,15 @@ class Applications < Uhuru::Webui::ClassWithFeedback
       app = a.name == app_name ? a.clone : nil
     end
 
+    application = @client.app(app.guid)
+
     info_ln("#{app_name} is now being updated ...")
     #applying the current state
 
     if state == 'true'
       begin
         info("Starting the app ...")
-        start_app(app_name)
+        application.start!
         ok_ln("OK")
       rescue => e
         error_ln("Failed")
@@ -145,7 +147,7 @@ class Applications < Uhuru::Webui::ClassWithFeedback
     else
       begin
         info("Stopping the app ...")
-        stop_app(app_name)
+        application.stop!
         ok_ln("OK")
       rescue => e
         error_ln("Failed")
@@ -155,7 +157,7 @@ class Applications < Uhuru::Webui::ClassWithFeedback
 
     #modify app details
     info_ln("Setting up #{instances} instances for the app, each with #{memory}MB ...")
-    application = @client.apps.find { |a| a.name == app_name }
+
     application.total_instances = instances
     application.memory = memory
 
@@ -167,7 +169,7 @@ class Applications < Uhuru::Webui::ClassWithFeedback
       if element == nil
         begin
           info("  Binding service '#{service['name']} ... ")
-          bind_app_services(app_name, service['name'])
+          bind_app_services(application, service['guid'])
           ok_ln("OK")
         rescue => e
           error_ln("Failed")
@@ -181,7 +183,7 @@ class Applications < Uhuru::Webui::ClassWithFeedback
       if element == nil
         begin
           info("  Unbinding service '#{service.name} ... ")
-          unbind_app_services(app_name, service.name)
+          unbind_app_services(application, service.guid)
           ok_ln("OK")
         rescue => e
           error_ln("Failed")
@@ -197,7 +199,7 @@ class Applications < Uhuru::Webui::ClassWithFeedback
       if element == nil
         begin
           info("  Binding url '#{url['host']}' ...")
-          binding_object.create(app_name, current_space, url['domain_guid'], url['host'])
+          binding_object.create(app.guid, current_space, url['domain_guid'], url['host'])
           ok_ln("OK")
         rescue => e
           error_ln("Failed")
@@ -206,12 +208,13 @@ class Applications < Uhuru::Webui::ClassWithFeedback
       end
     end
 
+
     app.uris.each do |uri|
       element = JSON.parse(urls).find { |u| u['host'] == uri.host }
       if element == nil
         begin
           info("  Unbinding url '#{uri.host}' ...")
-          unbind_app_url(app_name, uri.host, uri.domain)
+          unbind_app_url(application, uri.host, uri.domain)
           ok_ln("OK")
         rescue => e
           error_ln("Failed")
@@ -231,11 +234,9 @@ class Applications < Uhuru::Webui::ClassWithFeedback
 
   end
 
-  def delete(app_name)
+  def delete(app_guid)
 
-    app = @client.app_by_name(app_name)
-
-    #app = @client.find { |a| a.name == app_name }
+    app = @client.app(app_guid)
 
     if app
       app.delete!
@@ -243,21 +244,10 @@ class Applications < Uhuru::Webui::ClassWithFeedback
   end
 
 
- private
+  private
 
-  def start_app(app_name)
-    app = @client.apps.find { |a| a.name == app_name }
-    app.start!
-  end
-
-  def stop_app(app_name)
-    app = @client.apps.find { |a| a.name == app_name }
-    app.stop!
-  end
-
-  def bind_app_services(app_name, service_instance_name)
-    app = @client.apps.find { |a| a.name == app_name }
-    service_instance = @client.service_instances.find { |s| s.name == service_instance_name }
+  def bind_app_services(app, service_instance_guid)
+    service_instance = @client.service_instance(service_instance_guid)
     service_binding = @client.service_binding
     service_binding.app = app
     service_binding.service_instance = service_instance
@@ -265,15 +255,13 @@ class Applications < Uhuru::Webui::ClassWithFeedback
 
   end
 
-  def unbind_app_services(app_name, service_instance_name)
-    app = @client.apps.find { |a| a.name == app_name }
-    service_instance = @client.service_instances.find { |s| s.name == service_instance_name }
+  def unbind_app_services(app, service_instance_guid)
+    service_instance = @client.service_instance(service_instance_guid)
     app.unbind(service_instance)
 
   end
 
-  def unbind_app_url(app_name, host, domain)
-    app = @client.apps.find { |a| a.name == app_name }
+  def unbind_app_url(app, host, domain)
     route = @client.routes.find { |r| r.host == host && r.domain.name == domain }
     app.remove_route(route)
 

@@ -5,7 +5,6 @@ module Uhuru::Webui
         app.get ORGANIZATION_MEMBERS_ADD do
           require_login
           org = Library::Organizations.new(session[:token], $cf_target)
-          org.set_current_org(params[:org_guid])
 
           owners_list = org.read_owners($config, params[:org_guid])
           billings_list = org.read_billings($config, params[:org_guid])
@@ -32,7 +31,6 @@ module Uhuru::Webui
           require_login
           org = Library::Organizations.new(session[:token], $cf_target)
           space = Library::Spaces.new(session[:token], $cf_target)
-          space.set_current_space(params[:space_guid])
 
           owners_list = space.read_owners($config, params[:space_guid])
           developers_list = space.read_developers($config, params[:space_guid])

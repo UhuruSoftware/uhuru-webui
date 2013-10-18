@@ -6,7 +6,6 @@ module Uhuru::Webui
           require_login
           org = Library::Organizations.new(session[:token], $cf_target)
           domain = Library::Domains.new(session[:token], $cf_target)
-          org.set_current_org(params[:org_guid])
           domains_list = domain.read_domains(params[:org_guid])
           error_message = params[:error] if defined?(params[:error])
 
@@ -29,8 +28,6 @@ module Uhuru::Webui
           org = Library::Organizations.new(session[:token], $cf_target)
           space = Library::Spaces.new(session[:token], $cf_target)
           domain = Library::Domains.new(session[:token], $cf_target)
-          org.set_current_org(params[:org_guid])
-          space.set_current_space(params[:space_guid])
           domains_list = domain.read_domains(nil, params[:space_guid])
           domains_list_org = domain.read_domains(params[:org_guid])
           error_message = params[:error] if defined?(params[:error])
