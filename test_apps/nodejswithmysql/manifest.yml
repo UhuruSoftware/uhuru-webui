@@ -1,9 +1,9 @@
 ---
 applications:
-- name: nodejswithmysql-monit-fc351
+- name: nodejswithmysql
   memory: 64M
   instances: 1
-  host: nodejswithmysql-monit-fc351
+  host: nodejswithmysql
   domain: apps.mitza.net
   command: node app.js
   services:
