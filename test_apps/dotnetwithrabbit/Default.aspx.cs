@@ -23,8 +23,8 @@ public partial class _Default : System.Web.UI.Page
             connectionFactory.UserName = ConfigurationManager.AppSettings["username"];
             connectionFactory.Password = ConfigurationManager.AppSettings["password"];
             connectionFactory.Port = Convert.ToInt32(ConfigurationManager.AppSettings["port"]);
+            connectionFactory.VirtualHost = ConfigurationManager.AppSettings["vhost"];  
             connectionFactory.Protocol = Protocols.FromEnvironment();
-            connectionFactory.VirtualHost = GetVirtualHost();
 
             //Response.Write(connectionFactory.HostName + " " + connectionFactory.UserName + " " +
             //                    connectionFactory.Port.ToString() + " " + connectionFactory.Password);
@@ -82,19 +82,5 @@ public partial class _Default : System.Web.UI.Page
 
             Response.Write(ex.Message + Environment.NewLine + ex.StackTrace);
         }
-    }
-
-    private string GetVirtualHost()
-    {
-        string vcapInfo = ConfigurationManager.AppSettings["VCAP_SERVICES"];
-       
-        var json_serializer = new JavaScriptSerializer();
-        Dictionary<string, object> values = (Dictionary<string, object>)json_serializer.DeserializeObject(vcapInfo);
-        
-        object[] tmp = values["rabbitmq-2.4"] as object[];
-        values = tmp[0] as Dictionary<string, object>;
-        values = values["credentials"] as Dictionary<string, object>;
-        
-        return values["vhost"].ToString();
     }
 }

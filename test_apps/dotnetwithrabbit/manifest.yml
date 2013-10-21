@@ -1,12 +1,12 @@
 ---
 applications:
 - name: dotnetwithrabbit
-  memory: 128M
+  memory: 256M
   instances: 1
   host: dotnetwithrabbit
-  domain: apps.ccng-dev.net
+  domain: apps.mitza.net
   path: .
-  stack: iis75
+  stack: win2012
   services:
     dotnetrabbitmonit:
       label: rabbitmq
