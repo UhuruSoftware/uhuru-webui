@@ -72,8 +72,13 @@ class Applications < Uhuru::Webui::ClassWithFeedback
 
 
         begin
-          service_db = service_instances.create_service_by_names(service[:name], space_guid, service[:plan] || 'free', service[:type])
-          ok_ln("Done")
+          service_create = service_instances.create_service_by_names(service[:name], space_guid, service[:plan] || 'free', service[:type])
+          if service_create != false
+            ok_ln("Done")
+          else
+            error_ln("Failed")
+            warning_ln("    The service type does not exist.")
+          end
         rescue => e
           error_ln("Failed")
           warning_ln("    #{e.message}")
@@ -84,9 +89,14 @@ class Applications < Uhuru::Webui::ClassWithFeedback
         info("  Binding service '#{service[:name]}'.")
 
         begin
-          service_db = service_instances.get_service_by_name(service[:name], space_guid)
-          app.bind(service_db)
-          ok_ln("Done")
+          if service_create != false
+            service_bind = service_instances.get_service_by_name(service[:name], space_guid)
+            app.bind(service_bind)
+            ok_ln("Done")
+          else
+            error_ln("Failed")
+            warning_ln("    The service does not exist")
+          end
         rescue => e
           error_ln("Failed")
           warning_ln("    #{e.message}")

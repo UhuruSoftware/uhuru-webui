@@ -38,7 +38,6 @@ require 'users_setup'
 require 'readapps'
 require 'domains'
 require 'routes'
-require 'dev_utils'
 require 'billing/provider'
 require 'reports'
 
@@ -107,8 +106,8 @@ module Uhuru::Webui
     end
 
     def require_admin
-      if session[:logged_in] == false || session[:logged_in] == nil || session[:is_admin] == false
-        switch_to_get SinatraRoutes::INDEX
+      if session[:logged_in] == false || session[:logged_in] == nil || session[:is_admin] == false || session[:is_admin] == nil
+        redirect SinatraRoutes::LOGIN
       end
     end
 
