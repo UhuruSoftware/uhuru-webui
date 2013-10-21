@@ -61,3 +61,6 @@
 - name: "rubywithpostgresql"
   framework: "Ruby"
   service: "PostgreSQL"
+- name: "rubywithrabbit"
+  framework: "Ruby"
+  service: "RabbitMQ"
