@@ -64,3 +64,6 @@
 - name: "rubywithrabbit"
   framework: "Ruby"
   service: "RabbitMQ"
+- name: "rubywithredis"
+  framework: "Ruby"
+  service: "Redis"

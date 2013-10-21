@@ -1,0 +1,14 @@
+---
+applications:
+- name: rubywithredis
+  memory: 256M
+  instances: 1
+  host: rubywithredis
+  domain: apps.mitza.net
+  path: .
+  services:
+    redis-e8ea1:
+      label: redis
+      provider: core
+      version: '2.6'
+      plan: free
