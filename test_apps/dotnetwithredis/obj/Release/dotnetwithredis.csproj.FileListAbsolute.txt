@@ -1,0 +1,12 @@
+E:\dotnetwithredis\dotnetwithredis\bin\ServiceStack.Text.dll
+E:\dotnetwithredis\dotnetwithredis\bin\ServiceStack.Common.dll
+E:\dotnetwithredis\dotnetwithredis\bin\ServiceStack.Interfaces.dll
+E:\dotnetwithredis\dotnetwithredis\bin\ServiceStack.Redis.dll
+E:\dotnetwithredis\dotnetwithredis\bin\ServiceStack.Common.xml
+E:\dotnetwithredis\dotnetwithredis\bin\ServiceStack.Interfaces.xml
+E:\dotnetwithredis\dotnetwithredis\bin\ServiceStack.Redis.xml
+E:\dotnetwithredis\dotnetwithredis\bin\ServiceStack.Text.xml
+E:\dotnetwithredis\dotnetwithredis\obj\Release\dotnetwithredis.dll
+E:\dotnetwithredis\dotnetwithredis\obj\Release\dotnetwithredis.pdb
+E:\dotnetwithredis\dotnetwithredis\bin\dotnetwithredis.dll
+E:\dotnetwithredis\dotnetwithredis\bin\dotnetwithredis.pdb
