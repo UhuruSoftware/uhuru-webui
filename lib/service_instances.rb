@@ -10,9 +10,12 @@ class ServiceInstances
   def create_service_by_names(name, space_guid, service_plan_name, service_type_name)
     service = @client.services.select{ |s| s.label == service_type_name }
 
-    service_plan_id = @client.service_plans_by_service_guid(service.first.guid).each.find { |current_plan| current_plan.name == service_plan_name }.guid
-
-    create_service_instance(name, space_guid, service_plan_id)
+    if service != []
+      service_plan_id = @client.service_plans_by_service_guid(service.first.guid).each.find { |current_plan| current_plan.name == service_plan_name }.guid
+      create_service_instance(name, space_guid, service_plan_id)
+    else
+      return false
+    end
   end
 
   def create_service_instance(name, space_guid, service_plan_id)
