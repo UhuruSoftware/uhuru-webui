@@ -58,3 +58,6 @@
 #- name: "rubywithredis"
 #  framework: "Ruby"
 #  service: "Redis"
+- name: "rubywithpostgresql"
+  framework: "Ruby"
+  service: "PostgreSQL"

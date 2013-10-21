@@ -1,0 +1,14 @@
+---
+applications:
+- name: rubywithpostgresql
+  memory: 256M
+  instances: 1
+  host: rubywithpostgresql
+  domain: apps.mitza.net
+  path: .
+  services:
+    postgresql-3f3f1:
+      label: postgresql
+      provider: core
+      version: '9.2'
+      plan: free
