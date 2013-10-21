@@ -11,9 +11,8 @@ get '/' do
   begin
     redis = Redis.new( :host => credentials["host"],
                        :port => credentials["port"],
-                       :password => credentials["password"],
-                       :db => "salam") #credentials["name"] )
-    redis.set "foo", "Success"    
+                       :password => credentials["password"])
+    redis.set "foo", "Success #{SecureRandom.uuid.to_s}"    
     output = redis.get "foo"
     "<h3>#{output.to_s}</h1>"
   rescue => e
