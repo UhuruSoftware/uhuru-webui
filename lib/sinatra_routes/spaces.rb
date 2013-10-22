@@ -96,17 +96,22 @@ module Uhuru::Webui
 
         app.get SPACE do
           require_login
-          org = Library::Organizations.new(session[:token], $cf_target)
-          space = Library::Spaces.new(session[:token], $cf_target)
-          app = TemplateApps.new
-          route = Library::Routes.new(session[:token], $cf_target)
-          domain = Library::Domains.new(session[:token], $cf_target)
 
-          organization_name = org.get_name(params[:org_guid])
-          space_name = space.get_name(params[:space_guid])
+          begin
+            org = Library::Organizations.new(session[:token], $cf_target)
+            space = Library::Spaces.new(session[:token], $cf_target)
+            app = TemplateApps.new
+            route = Library::Routes.new(session[:token], $cf_target)
+            domain = Library::Domains.new(session[:token], $cf_target)
 
-          collections = app.read_collections
-          error_message = params[:error] if defined?(params[:error])
+            organization_name = org.get_name(params[:org_guid])
+            space_name = space.get_name(params[:space_guid])
+
+            collections = app.read_collections
+            error_message = params[:error] if defined?(params[:error])
+          rescue CFoundry::NotAuthorized => e
+            return switch_to_get ORGANIZATIONS + "/#{params[:org_guid]}/spaces" + "?error=#{e.description}"
+          end
 
           case params[:tab]
             when 'apps'
@@ -207,6 +212,8 @@ module Uhuru::Webui
               return switch_to_get ORGANIZATIONS + "/#{params[:org_guid]}/spaces"
             rescue CFoundry::SpaceNameTaken => e
               return switch_to_get ORGANIZATIONS + "/#{params[:org_guid]}/spaces/create_space" + "?error=#{e.description}"
+            rescue CFoundry::NotAuthorized => e
+              return switch_to_get ORGANIZATIONS + "/#{params[:org_guid]}/spaces/create_space" + "?error=#{e.description}"
             end
           else
             return switch_to_get ORGANIZATIONS + "/#{params[:org_guid]}/spaces/create_space" + '?error=The space name is to short.'
@@ -215,7 +222,16 @@ module Uhuru::Webui
 
         app.post '/deleteSpace' do
           require_login
-          Library::Spaces.new(session[:token], $cf_target).delete(params[:spaceGuid])
+          begin
+            delete = Library::Spaces.new(session[:token], $cf_target).delete(params[:spaceGuid])
+            #delete space may not raise an API error, so we should check it manually3
+            if delete == false
+              return switch_to_get ORGANIZATIONS + "/#{params[:org_guid]}/spaces" + "?error=You are not authorized to delete this space."
+            end
+
+            rescue CFoundry::NotAuthorized => e
+              return switch_to_get ORGANIZATIONS + "/#{params[:org_guid]}/spaces" + "?error=#{e.description}"
+          end
           switch_to_get ORGANIZATIONS + "/#{params[:org_guid]}/spaces"
         end
 
@@ -227,6 +243,8 @@ module Uhuru::Webui
               Library::Spaces.new(session[:token], $cf_target).update(params[:modified_name], params[:current_space])
               return switch_to_get ORGANIZATIONS + "/#{params[:current_organization]}/spaces/#{params[:current_space]}/#{params[:current_tab]}"
             rescue CFoundry::SpaceNameTaken => e
+              return switch_to_get ORGANIZATIONS + "/#{params[:current_organization]}/spaces/#{params[:current_space]}/#{params[:current_tab]}" + "?error=#{e.description}"
+            rescue CFoundry::NotAuthorized => e
               return switch_to_get ORGANIZATIONS + "/#{params[:current_organization]}/spaces/#{params[:current_space]}/#{params[:current_tab]}" + "?error=#{e.description}"
             end
           else

@@ -35,6 +35,8 @@ module Uhuru::Webui
               return switch_to_get ORGANIZATIONS + "/#{params[:current_organization]}/spaces/#{params[:current_space]}/#{params[:current_tab]}"
             rescue Exception => e
               return switch_to_get ORGANIZATIONS + "/#{params[:current_organization]}/spaces/#{params[:current_space]}/#{params[:current_tab]}/create_service/new" + "?error=#{e.description}"
+            rescue CFoundry::NotAuthorized => e
+              return switch_to_get ORGANIZATIONS + "/#{params[:current_organization]}/spaces/#{params[:current_space]}/#{params[:current_tab]}/create_service/new" + "?error=#{e.description}"
             end
           else
             return switch_to_get ORGANIZATIONS + "/#{params[:current_organization]}/spaces/#{params[:current_space]}/#{params[:current_tab]}/create_service/new" + '?error=The service name is too short.'
@@ -43,7 +45,11 @@ module Uhuru::Webui
 
         app.post '/deleteService' do
           require_login
-          ServiceInstances.new(session[:token], $cf_target).delete(params[:serviceGuid])
+          begin
+            ServiceInstances.new(session[:token], $cf_target).delete(params[:serviceGuid])
+          rescue CFoundry::NotAuthorized => e
+            return switch_to_get ORGANIZATIONS + "/#{params[:current_organization]}/spaces/#{params[:current_space]}/#{params[:current_tab]}/services" + "?error=#{e.description}"
+          end
           switch_to_get ORGANIZATIONS + "/#{params[:current_organization]}/spaces/#{params[:current_space]}/#{params[:current_tab]}"
         end
       end

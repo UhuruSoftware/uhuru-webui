@@ -61,24 +61,47 @@ module Uhuru::Webui
             else
               switch_to_get ORGANIZATIONS + "/#{params[:org_guid]}/domains"
             end
+
           rescue CFoundry::DomainInvalid => e
             if params[:current_tab].to_s == 'space'
               switch_to_get ORGANIZATIONS + "/#{params[:org_guid]}/spaces/#{params[:space_guid]}/domains/map_domain/new" + "?error=#{e.description}"
             else
               switch_to_get ORGANIZATIONS + "/#{params[:org_guid]}/domains/add_domains" + "?error=#{e.description}"
             end
+
+          rescue CFoundry::NotAuthorized => e
+            if params[:current_tab].to_s == 'space'
+              return switch_to_get ORGANIZATIONS + "/#{params[:org_guid]}/spaces/#{params[:space_guid]}/domains/map_domain/new" + "?error=#{e.description}"
+            else
+              return switch_to_get ORGANIZATIONS + "/#{params[:org_guid]}/domains/add_domains" + "?error=#{e.description}"
+            end
           end
         end
 
         app.post '/deleteDomain' do
           require_login
-          Library::Domains.new(session[:token], $cf_target).delete(params[:domainGuid])
+          begin
+            delete = Library::Domains.new(session[:token], $cf_target).delete(params[:domainGuid])
+            if delete == false
+              return switch_to_get ORGANIZATIONS + "/#{params[:org_guid]}/spaces/#{params[:space_guid]}/domains" + "?error=#{e.description}"
+            end
+          rescue CFoundry::NotAuthorized => e
+            return switch_to_get ORGANIZATIONS + "/#{params[:org_guid]}/spaces/#{params[:space_guid]}/domains" + "?error=#{e.description}"
+          end
           switch_to_get ORGANIZATIONS + "/#{params[:org_guid]}/domains"
         end
 
         app.post '/unmapFromSpace' do
           require_login
-          Library::Domains.new(session[:token], $cf_target).unmap_domain(params[:domainGuid], nil, params[:current_space])
+          begin
+            Library::Domains.new(session[:token], $cf_target).unmap_domain(params[:domainGuid], nil, params[:current_space])
+          rescue CFoundry::NotAuthorized => e
+            if params[:current_tab].to_s == 'space'
+              return switch_to_get ORGANIZATIONS + "/#{params[:current_organization]}/spaces/#{params[:current_space]}/domains" + "?error=#{e.description}"
+            else
+              return switch_to_get ORGANIZATIONS + "/#{params[:current_organization]}/domains" + "?error=#{e.description}"
+            end
+          end
 
           if params[:current_tab].to_s == 'space'
             switch_to_get ORGANIZATIONS + "/#{params[:current_organization]}/spaces/#{params[:current_space]}/domains"
