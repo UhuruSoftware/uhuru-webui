@@ -100,7 +100,11 @@ module Uhuru::Webui
 
         app.post '/deleteOrganization' do
           require_login
-          Library::Organizations.new(session[:token], $cf_target).delete($config, params[:orgGuid])
+          begin
+            Library::Organizations.new(session[:token], $cf_target).delete($config, params[:orgGuid])
+          rescue CFoundry::NotAuthorized => e
+            return switch_to_get "#{ORGANIZATIONS_CREATE}?error=#{e.description}"
+          end
           switch_to_get ORGANIZATIONS
         end
 
@@ -112,6 +116,8 @@ module Uhuru::Webui
               Library::Organizations.new(session[:token], $cf_target).update(params[:modified_name], params[:current_organization])
               return switch_to_get "#{ORGANIZATIONS}/#{params[:current_organization]}/#{params[:current_tab]}"
             rescue CFoundry::OrganizationNameTaken => e
+              return switch_to_get ORGANIZATIONS + "/#{params[:current_organization]}/#{params[:current_tab]}" + "?error=#{e.description}"
+            rescue CFoundry::NotAuthorized => e
               return switch_to_get ORGANIZATIONS + "/#{params[:current_organization]}/#{params[:current_tab]}" + "?error=#{e.description}"
             end
           else

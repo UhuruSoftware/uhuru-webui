@@ -126,7 +126,7 @@ module Uhuru::Webui
             session[:token] = user.token
             session[:fname] = user.first_name
             session[:lname] = user.last_name
-            session[:username] = params[:username]
+            session[:username] = params[:email]
             session[:user_guid] = user.guid
             session[:secret] = session[:session_id]
             session[:logged_in] = true

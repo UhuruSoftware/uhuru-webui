@@ -38,12 +38,18 @@ module Uhuru::Webui
             return switch_to_get ORGANIZATIONS + "/#{params[:current_organization]}/spaces/#{params[:current_space]}/#{params[:current_tab]}"
           rescue CFoundry::RouteInvalid => e
             return switch_to_get ORGANIZATIONS + "/#{params[:current_organization]}/spaces/#{params[:current_space]}/#{params[:current_tab]}/add_route/new" + "?error=#{e.description}"
+          rescue CFoundry::NotAuthorized => e
+            return switch_to_get ORGANIZATIONS + "/#{params[:current_organization]}/spaces/#{params[:current_space]}/#{params[:current_tab]}/add_route/new" + "?error=#{e.description}"
           end
         end
 
         app.post '/deleteRoute' do
           require_login
-          Library::Routes.new(session[:token], $cf_target).delete(params[:routeGuid])
+          begin
+            Library::Routes.new(session[:token], $cf_target).delete(params[:routeGuid])
+          rescue CFoundry::NotAuthorized => e
+            return switch_to_get ORGANIZATIONS + "/#{params[:current_organization]}/spaces/#{params[:current_space]}/#{params[:current_tab]}/routes" + "?error=#{e.description}"
+          end
           switch_to_get ORGANIZATIONS + "/#{params[:current_organization]}/spaces/#{params[:current_space]}/#{params[:current_tab]}"
         end
       end

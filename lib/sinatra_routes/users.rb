@@ -65,12 +65,16 @@ module Uhuru::Webui
               return switch_to_get ORGANIZATIONS + "/#{params[:current_organization]}/#{params[:current_tab]}"
             rescue Library::Users::UserError => e
               return switch_to_get ORGANIZATIONS + "/#{params[:current_organization]}/#{params[:current_tab]}/add_user" + "?error=#{e.description}"
+            rescue CFoundry::NotAuthorized => e
+              return switch_to_get ORGANIZATIONS + "/#{params[:current_organization]}/#{params[:current_tab]}/add_user" + "?error=#{e.description}"
             end
           else
             begin
               user.invite_user_with_role_to_space($config, params[:userEmail], params[:current_space], params[:userType])
               return switch_to_get ORGANIZATIONS + "/#{params[:current_organization]}/spaces/#{params[:current_space]}/#{params[:current_tab]}"
             rescue Library::Users::UserError => e
+              return switch_to_get ORGANIZATIONS + "/#{params[:current_organization]}/spaces/#{params[:current_space]}/#{params[:current_tab]}/add_user/new" + "?error=#{e.description}"
+            rescue CFoundry::NotAuthorized => e
               return switch_to_get ORGANIZATIONS + "/#{params[:current_organization]}/spaces/#{params[:current_space]}/#{params[:current_tab]}/add_user/new" + "?error=#{e.description}"
             end
           end
@@ -86,12 +90,16 @@ module Uhuru::Webui
               return switch_to_get ORGANIZATIONS + "/#{params[:current_organization]}/#{params[:current_tab]}"
             rescue Library::Users::UserError => e
               return switch_to_get ORGANIZATIONS + "/#{params[:current_organization]}/#{params[:current_tab]}" + "?error=#{e.description}"
+            rescue CFoundry::NotAuthorized => e
+              return switch_to_get ORGANIZATIONS + "/#{params[:current_organization]}/#{params[:current_tab]}" + "?error=#{e.description}"
             end
           else
             begin
               user.remove_user_with_role_from_space(params[:current_space], params[:thisUser], params[:thisUserRole])
               return switch_to_get ORGANIZATIONS + "/#{params[:current_organization]}/spaces/#{params[:current_space]}/#{params[:current_tab]}"
             rescue Library::Users::UserError => e
+              return switch_to_get ORGANIZATIONS + "/#{params[:current_organization]}/spaces/#{params[:current_space]}/#{params[:current_tab]}" + "?error=#{e.description}"
+            rescue CFoundry::NotAuthorized => e
               return switch_to_get ORGANIZATIONS + "/#{params[:current_organization]}/spaces/#{params[:current_space]}/#{params[:current_tab]}" + "?error=#{e.description}"
             end
           end
