@@ -1,0 +1,14 @@
+---
+applications:
+- name: nodejswithredis
+  memory: 128M
+  instances: 1
+  host: nodejswithredis
+  domain: apps.mitza.net
+  command: node app.js
+  services:
+    nodejsredismonit:
+      label: redis
+      provider: core
+      version: '2.6'
+      plan: free

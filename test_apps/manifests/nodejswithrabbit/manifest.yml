@@ -1,0 +1,14 @@
+---
+applications:
+- name: nodejswithrabbit
+  memory: 128M
+  instances: 1
+  host: nodejswithrabbit
+  domain: apps.mitza.net
+  command: node app.js
+  services:
+    nodejsrabbitmonit:
+      label: rabbitmq
+      provider: core
+      version: '3.0'
+      plan: free
