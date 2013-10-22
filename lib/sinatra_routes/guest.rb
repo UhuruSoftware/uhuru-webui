@@ -115,6 +115,7 @@ module Uhuru::Webui
             user = user_sign_up.signup(params[:email], $config[:webui][:activation_link_secret], params[:first_name], params[:last_name])
 
             link = "http://#{request.env['HTTP_HOST'].to_s}/activate/#{URI.encode(Base32.encode(pass))}/#{URI.encode(Base32.encode(user.guid))}/#{params[:email]}"
+
             email_body = $config[:email][:registration_email]
             email_body.gsub!('#ACTIVATION_LINK#', link)
             email_body.gsub!('#FIRST_NAME#', params[:first_name])
@@ -123,13 +124,10 @@ module Uhuru::Webui
 
             Email::send_email(params[:email], 'Uhuru account confirmation', email_body)
 
-            session[:token] = user.token
-            session[:fname] = user.first_name
-            session[:lname] = user.last_name
-            session[:username] = params[:email]
-            session[:user_guid] = user.guid
-            session[:secret] = session[:session_id]
-            session[:logged_in] = true
+            email_body.gsub!(link, '#ACTIVATION_LINK#')
+            email_body.gsub!( params[:first_name], '#FIRST_NAME#')
+            email_body.gsub!(params[:last_name], '#LAST_NAME#')
+            email_body.gsub!( "http://#{$config[:domain]}", '#WEBSITE_URL#')
 
             redirect PLEASE_CONFIRM
           rescue CF::UAA::TargetError => e
@@ -171,6 +169,11 @@ module Uhuru::Webui
           email_body.gsub!('#WEBSITE_URL#', "http://#{$config[:domain]}")
 
           Email::send_email(params[:email], 'Uhuru account confirmation', email_body)
+
+          email_body.gsub!( user_detail["name"]["givenname"], '#FIRST_NAME#')
+          email_body.gsub!(user_detail["name"]["familyname"], '#LAST_NAME#')
+          email_body.gsub!("http://#{$config[:domain]}", '#WEBSITE_URL#')
+
           switch_to_get ACTIVE
         end
 

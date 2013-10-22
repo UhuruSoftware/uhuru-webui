@@ -13,7 +13,6 @@ module Uhuru::Webui
 
 
     ACCOUNT                   = "#{INDEX}account"
-    INFO_PAGE                 = "#{INDEX}info"
 
     ORGANIZATIONS             = "#{INDEX}organizations"
     ORGANIZATIONS_CREATE      = "#{ORGANIZATIONS}/create_organization"
