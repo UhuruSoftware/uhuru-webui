@@ -100,12 +100,23 @@ module Uhuru::Webui
 
         app.post '/deleteOrganization' do
           require_login
-          begin
-            Library::Organizations.new(session[:token], $cf_target).delete($config, params[:orgGuid])
-          rescue CFoundry::NotAuthorized => e
-            return switch_to_get "#{ORGANIZATIONS_CREATE}?error=#{e.description}"
+
+          org = Library::Organizations.new(session[:token], $cf_target)
+          is_an_owner = false
+          org.read_owners($config, params[:orgGuid]).each do |owner|
+            if owner.email == session[:username]
+              is_an_owner = true
+            end
           end
-          switch_to_get ORGANIZATIONS
+
+          #we should raise an error if an auditor or billing manager tries to delete an organization
+          if is_an_owner
+            Library::Organizations.new(session[:token], $cf_target).delete($config, params[:orgGuid])
+          else
+            return switch_to_get "#{ORGANIZATIONS}" + "?error=You are not authorized to remove this organization."
+          end
+
+          redirect ORGANIZATIONS
         end
 
         app.post '/updateOrganization' do
