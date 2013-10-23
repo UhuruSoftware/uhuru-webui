@@ -110,6 +110,7 @@ module Uhuru::Webui
           #we should raise an error if an auditor or billing manager tries to delete an organization
           if is_an_owner
             Library::Organizations.new(session[:token], $cf_target).delete($config, params[:orgGuid])
+            Uhuru::Webui::Billing::Provider.provider.delete_credit_card_org(params[:orgGuid])
           else
             return switch_to_get "#{ORGANIZATIONS}" + "?error=You are not authorized to remove this organization."
           end

@@ -21,7 +21,7 @@ module Uhuru::Webui::Billing
       require "billing/#{provider.to_s}"
     end
 
-      def self.provider
+    def self.provider
       @current_provider = @current_provider || $config[:billing][:provider]
 
       if (@provider == nil) || (@current_provider != $config[:billing][:provider])
@@ -51,6 +51,10 @@ module Uhuru::Webui::Billing
       raise "Not implemented!"
     end
 
+    def update_credit_card_org(username, org_guid)
+      raise "Not implemented!"
+    end
+
     def delete_credit_card_org(org_guid)
       raise "Not implemented!"
     end
@@ -67,8 +71,16 @@ module Uhuru::Webui::Billing
     rescue => e
       raise "Unable to add credit card binding: #{e.message}:#{e.backtrace}"
     end
-  end
 
+    def delete_billing_binding(org_guid)
+      unless @data["bindings"].delete(org_guid)
+        File.write(@data_file, @data.to_yaml)
+      end
+    rescue => e
+      raise "Unable to remove credit card binding: #{e.message}:#{e.backtrace}"
+    end
+
+  end
 
   class CreditCard
     attr_reader :last4, :type, :name, :exp_month, :exp_year
