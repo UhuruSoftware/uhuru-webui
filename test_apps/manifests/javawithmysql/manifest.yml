@@ -1,7 +1,7 @@
 ---
 applications:
 - name: javawithmysql
-  memory: 256M
+  memory: 512M
   instances: 1
   host: javawithmysql
   domain: apps.mitza.net
