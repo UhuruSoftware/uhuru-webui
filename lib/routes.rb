@@ -45,7 +45,8 @@ module Library
         route.create!
       end
 
-      if app
+      #@client.app(app_guid) will get an empty instance of Application, so we check that guid exists
+      if app.guid
         app.add_route(route)
       end
       route
