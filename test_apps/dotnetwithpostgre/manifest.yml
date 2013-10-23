@@ -1,12 +1,12 @@
 ---
 applications:
-- name: dotnetwithpostgre
-  memory: 128M
+- name: dotnetpostgres
+  memory: 256M
   instances: 1
-  host: dotnetwithpostgre
-  domain: apps.ccng-dev.net
+  host: dotnetpostgres
+  domain: apps.mitza.net
   path: .
-  stack: iis75
+  stack: win2012
   services:
     dotnetpostgremonit:
       label: postgresql
