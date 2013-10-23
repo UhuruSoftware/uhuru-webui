@@ -5,7 +5,7 @@ applications:
   instances: 1
   host: javawithrabbit
   domain: apps.ccng-dev.net
-  path: javawithrabbit.war
+  path: .
   services:
     javarabbitmq-monit:
       label: rabbitmq
