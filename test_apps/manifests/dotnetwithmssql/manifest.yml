@@ -1,15 +1,15 @@
 ---
 applications:
-- name: dotnetwithmssql
-  memory: 128M
+- name: dotnetmssql
+  memory: 256M
   instances: 1
-  host: dotnetwithmssql
-  domain: apps.ccng-dev.net
+  host: dotnetmssql
+  domain: apps.mitza.net
   path: .
-  stack: iis75
+  stack: win2012
   services:
     dotnetmssqlmonit:
       label: mssql
       provider: core
-      version: '0.9'
+      version: '2008'
       plan: free
