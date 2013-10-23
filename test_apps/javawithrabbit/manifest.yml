@@ -1,11 +1,11 @@
 ---
 applications:
 - name: javawithrabbit
-  memory: 512M
+  memory: 256M
   instances: 1
   host: javawithrabbit
-  domain: apps.ccng-dev.net
-  path: javawithrabbit.war
+  domain: apps.mitza.net
+  path: .
   services:
     javarabbitmq-monit:
       label: rabbitmq
