@@ -103,10 +103,10 @@ module Uhuru::Webui
             if params[:password] == params[:confirm_password]
               pass = Encryption.encrypt_text(params[:password], key)
             else
-              return switch_to_get SIGNUP + "?username=#{params[:email]}&first_name=#{params[:first_name]}&last_name=#{params[:last_name]}&message=Confirm the password correctly"
+              return switch_to_get SIGNUP + "?username=#{params[:email]}&first_name=#{params[:first_name]}&last_name=#{params[:last_name]}&message=Confirm password is not correct"
             end
           else
-            return switch_to_get SIGNUP + "?username=#{params[:email]}&first_name=#{params[:first_name]}&last_name=#{params[:last_name]}&message=The password is not strong enough"
+            return switch_to_get SIGNUP + "?username=#{params[:email]}&first_name=#{params[:first_name]}&last_name=#{params[:last_name]}&message=The password is not strong enough(min 8 characters)"
           end
 
 
