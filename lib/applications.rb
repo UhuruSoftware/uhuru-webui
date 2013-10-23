@@ -142,29 +142,6 @@ class Applications < Uhuru::Webui::ClassWithFeedback
 
     application = @client.app(app.guid)
 
-    info_ln("#{app_name} is now being updated ...")
-    #applying the current state
-
-    if state == 'true'
-      begin
-        info("Starting the app ...")
-        application.start!
-        ok_ln("OK")
-      rescue => e
-        error_ln("Failed")
-        warning_ln("  #{e.message}")
-      end
-    else
-      begin
-        info("Stopping the app ...")
-        application.stop!
-        ok_ln("OK")
-      rescue => e
-        error_ln("Failed")
-        warning_ln("  #{e.message}")
-      end
-    end
-
     #modify app details
     info_ln("Setting up #{instances} instances for the app, each with #{memory}MB ...")
 
@@ -230,6 +207,30 @@ class Applications < Uhuru::Webui::ClassWithFeedback
           error_ln("Failed")
           warning_ln("    #{e.message}")
         end
+      end
+    end
+
+    info_ln("#{app_name} is now being updated ...")
+    #applying the current state
+
+    if state == 'true'
+      begin
+        info("Starting the app ...")
+        application.stop!
+        application.start!
+        ok_ln("OK")
+      rescue => e
+        error_ln("Failed")
+        warning_ln("  #{e.message}")
+      end
+    else
+      begin
+        info("Stopping the app ...")
+        application.stop!
+        ok_ln("OK")
+      rescue => e
+        error_ln("Failed")
+        warning_ln("  #{e.message}")
       end
     end
 

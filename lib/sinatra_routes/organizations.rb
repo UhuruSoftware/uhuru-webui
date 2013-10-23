@@ -37,9 +37,7 @@ module Uhuru::Webui
            {:name => 'October', :value => 10},
            {:name => 'November', :value => 11},
            {:name => 'December', :value => 12}].each do |month|
-             if month[:value] >= current_month
-               months.push(month)
-             end
+              months.push(month)
            end
 
           current_year = Date.today.strftime("%Y").to_i
