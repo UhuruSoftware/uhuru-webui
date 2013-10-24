@@ -1,0 +1,14 @@
+C:\Users\florin.dragos\Documents\Visual Studio 2012\Projects\SampleApp\SampleApp\bin\SampleApp.dll
+C:\Users\florin.dragos\Documents\Visual Studio 2012\Projects\SampleApp\SampleApp\bin\SampleApp.pdb
+C:\Users\florin.dragos\Documents\Visual Studio 2012\Projects\SampleApp\SampleApp\bin\Antlr3.Runtime.dll
+C:\Users\florin.dragos\Documents\Visual Studio 2012\Projects\SampleApp\SampleApp\bin\AspNet.ScriptManager.jQuery.dll
+C:\Users\florin.dragos\Documents\Visual Studio 2012\Projects\SampleApp\SampleApp\bin\AspNet.ScriptManager.jQuery.UI.Combined.dll
+C:\Users\florin.dragos\Documents\Visual Studio 2012\Projects\SampleApp\SampleApp\bin\Microsoft.AspNet.Web.Optimization.WebForms.dll
+C:\Users\florin.dragos\Documents\Visual Studio 2012\Projects\SampleApp\SampleApp\bin\Microsoft.ScriptManager.MSAjax.dll
+C:\Users\florin.dragos\Documents\Visual Studio 2012\Projects\SampleApp\SampleApp\bin\Microsoft.ScriptManager.WebForms.dll
+C:\Users\florin.dragos\Documents\Visual Studio 2012\Projects\SampleApp\SampleApp\bin\Microsoft.Web.Infrastructure.dll
+C:\Users\florin.dragos\Documents\Visual Studio 2012\Projects\SampleApp\SampleApp\bin\System.Web.Optimization.dll
+C:\Users\florin.dragos\Documents\Visual Studio 2012\Projects\SampleApp\SampleApp\bin\System.Web.Providers.dll
+C:\Users\florin.dragos\Documents\Visual Studio 2012\Projects\SampleApp\SampleApp\bin\WebGrease.dll
+C:\Users\florin.dragos\Documents\Visual Studio 2012\Projects\SampleApp\SampleApp\obj\Debug\SampleApp.dll
+C:\Users\florin.dragos\Documents\Visual Studio 2012\Projects\SampleApp\SampleApp\obj\Debug\SampleApp.pdb
