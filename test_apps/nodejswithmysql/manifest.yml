@@ -1,7 +1,7 @@
 ---
 applications:
 - name: nodejswithmysql
-  memory: 64M
+  memory: 128M
   instances: 1
   host: nodejswithmysql
   domain: apps.mitza.net

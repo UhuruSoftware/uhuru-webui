@@ -1,7 +1,7 @@
 ---
 applications:
 - name: dotnetwithmysql-monit-30f27
-  memory: 128M
+  memory: 256M
   instances: 1
   host: dotnetwithmysql-monit-30f27
   domain: apps.cf.me

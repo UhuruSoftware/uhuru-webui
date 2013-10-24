@@ -1,7 +1,7 @@
 ---
 applications:
 - name: dotnetmysql
-  memory: 128M
+  memory: 256M
   instances: 1
   host: dotnetmysql
   domain: apps.ccng-dev.net
