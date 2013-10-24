@@ -1,7 +1,7 @@
 ---
 applications:
 - name: asp_net_sql_sample
-  memory: 128M
+  memory: 256M
   instances: 1
   host: asp_net_sql_sample
   domain: cf.me
