@@ -73,7 +73,7 @@ module Uhuru::Webui::Billing
     end
 
     def delete_billing_binding(org_guid)
-      unless @data["bindings"].delete(org_guid)
+      if @data["bindings"].delete(org_guid)
         File.write(@data_file, @data.to_yaml)
       end
     rescue => e
