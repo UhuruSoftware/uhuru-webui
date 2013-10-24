@@ -159,7 +159,7 @@ class Applications < Uhuru::Webui::ClassWithFeedback
     #cloning the app object
     app = nil
     apps_list.each do |a|
-      app = a.name == app_name ? a.clone : nil
+      app = a.dup if a.name == app_name
     end
 
     application = @client.app(app.guid)
