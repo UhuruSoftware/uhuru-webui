@@ -102,7 +102,7 @@
               </a>
             </div>
 
-            <button type="button" id="<%= app.name %>" title="Delete '<%= app.name %>'" class="image s24px trash" />
+            <button type="button" id="id_<%= app.guid %>" title="Delete '<%= app.name %>'" class="image s24px trash" />
           </div>
 
           <div class="tile bottom">
@@ -150,7 +150,7 @@
                 <button type="button" class="cancel_button">Cancel</button>
                 <button type="submit" value="Delete" >Delete</button>
                 <!-- the element selected_guid in this case is the app name -->
-                <input type="hidden" name="appGuid" value="<%= app.guid %>" />
+                <input type="hidden" name="appGuid" class="selected_guid" />
                 <input type="hidden" name="current_organization" value="<%= current_organization %>" />
                 <input type="hidden" name="current_space" value="<%= current_space %>" />
                 <input type="hidden" name="current_tab" value="<%= current_tab %>" />

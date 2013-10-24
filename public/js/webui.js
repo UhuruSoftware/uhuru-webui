@@ -73,6 +73,13 @@ var delete_selected_element = function(){
 
     show_modal($('.delete_confirmation'));
 }
+
+var delete_selected_app = function(){
+    $('.selected_guid').val($(this).attr("id").substring(3));
+    $('.selected_name').text($(this).attr("title"));
+
+    show_modal($('.delete_confirmation'));
+}
 function deleteUserModal(this_, role)
 {
     $('.selected_guid').val($(this_).attr("id"));
@@ -83,10 +90,11 @@ function deleteUserModal(this_, role)
 }
 $('.tile.org .tile.top :button').click(delete_selected_element);
 $('.tile.space .tile.top :button').click(delete_selected_element);
-$('.tile.app .tile.top :button').click(delete_selected_element);
 $('.tile.service .tile.top :button').click(delete_selected_element);
 $('.square_tile .square_tile.domain :button').click(delete_selected_element);
 $('.square_tile .square_tile.route :button').click(delete_selected_element);
+
+$('.tile.app .tile.top :button').click(delete_selected_app);
 
 
 
