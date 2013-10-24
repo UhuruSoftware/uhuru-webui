@@ -158,7 +158,7 @@ module Uhuru::Webui
           host_name = params[:app_host]
           memory = params[:app_memory]
           instances = params[:app_instances]
-          src = params[:app_src] + params[:app_id] + '.zip'
+          src = params[:app_src] + params[:app_id]
 
           location = File.expand_path(params[:app_src] + 'manifest.yml', __FILE__)
           manifest = YAML.load_file location
@@ -175,7 +175,7 @@ module Uhuru::Webui
 
           Thread.new() do
             begin
-              apps_obj.create!(params[:app_space], name, instances.to_i, memory.to_i, domain_name, host_name, src, app_services, stack, buildpack)
+              apps_obj.create!(params[:app_space], name, instances.to_i, memory.to_i, domain_name, host_name, src, app_services, stack, buildpack, params[:app_id])
             rescue => e
               apps_obj.info_ln('')
               apps_obj.error_ln('There was an error while processing the push request - please contact support')

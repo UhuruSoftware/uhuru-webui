@@ -34,7 +34,7 @@ class Applications < Uhuru::Webui::ClassWithFeedback
   end
 
   # parameters with default arguments (= nil) may be
-  def create!(space_guid, name, instances, memory, domain_name, host_name, path, app_services, stack=nil, buildpack)
+  def create!(space_guid, name, instances, memory, domain_name, host_name, path, app_services, stack=nil, buildpack, app_id)
     info_ln("Pushing app '#{name}' ...")
 
     space = @client.space(space_guid)
@@ -54,13 +54,12 @@ class Applications < Uhuru::Webui::ClassWithFeedback
     info("Creating app '#{name}' with #{memory}MB memory and #{instances} instances...")
 
     if new_app.create!
-      ok_ln("OK")
 
-      info("Uploading bits (#{ (File.size(path) / (1024.0 * 1024)).round(2) }MB)...")
-
-      new_app.upload path
-
-      ok_ln("OK")
+      if app_id != "asp_net_sql_sample"
+        info("Uploading bits (#{ (File.size(path) / (1024.0 * 1024)).round(2) }MB)...")
+        new_app.upload path
+        ok_ln("OK")
+      end
 
       info_ln("Setting up services ...")
 
@@ -70,10 +69,16 @@ class Applications < Uhuru::Webui::ClassWithFeedback
 
         info("  Creating service '#{service[:name]}'.")
 
-
         begin
           service_create = service_instances.create_service_by_names(service[:name], space_guid, service[:plan] || 'free', service[:type])
           if service_create != false
+            if app_id == "asp_net_sql_sample"
+              write_app_config(path, service_create.name)
+              info("Uploading bits (#{ (File.size(path) / (1024.0 * 1024)).round(2) }MB)...")
+              new_app.upload path
+              ok_ln("OK")
+            end
+
             ok_ln("Done")
           else
             error_ln("Failed")
@@ -130,6 +135,24 @@ class Applications < Uhuru::Webui::ClassWithFeedback
     ok_ln("Complete!")
   rescue => e
     error_ln(e.message)
+  end
+
+  def write_app_config (path, service_name)
+
+    #copy the config file with all the string keys set
+    sample = File.read(path + "/config_sample/Web.config")
+    config = File.open(path + "/Web.config", "w")
+    config.puts sample.to_s
+    config.close
+
+    #open and change the app config file according to the sample config file
+    config = File.read(path + "/Web.config")
+    replacement = config.gsub("SERVICE_NAME", service_name)
+
+    #write and save the app config file
+    finished = File.open(path + "/Web.config", "w")
+    finished.puts replacement.to_s
+    finished.close
   end
 
   ####################    update app details new data    ###########################
