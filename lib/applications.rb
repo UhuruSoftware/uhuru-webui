@@ -73,10 +73,15 @@ class Applications < Uhuru::Webui::ClassWithFeedback
           service_create = service_instances.create_service_by_names(service[:name], space_guid, service[:plan] || 'free', service[:type])
           if service_create != false
             if app_id == "asp_net_sql_sample"
-              write_app_config(path, service_create.name)
-              info("Uploading bits (#{ (File.size(path) / (1024.0 * 1024)).round(2) }MB)...")
+              value = write_app_config(path, service_create.name)
+
+              #write and save the app config file
+              File.open(path + "/Web.config", "w"){ |file| file.write(value.to_s) }
+              ok("OK")
+
+              info_ln("")
+              info_ln("Uploading bits (#{ (File.size(path) / (1024.0 * 1024)).round(2) }MB)...")
               new_app.upload path
-              ok_ln("OK")
             end
 
             ok_ln("Done")
@@ -141,18 +146,12 @@ class Applications < Uhuru::Webui::ClassWithFeedback
 
     #copy the config file with all the string keys set
     sample = File.read(path + "/config_sample/Web.config")
-    config = File.open(path + "/Web.config", "w")
-    config.puts sample.to_s
-    config.close
+    config = File.open(path + "/Web.config", "w"){ |file| file << sample.to_s }
 
     #open and change the app config file according to the sample config file
     config = File.read(path + "/Web.config")
     replacement = config.gsub("SERVICE_NAME", service_name)
-
-    #write and save the app config file
-    finished = File.open(path + "/Web.config", "w")
-    finished.puts replacement.to_s
-    finished.close
+    return replacement
   end
 
   ####################    update app details new data    ###########################
