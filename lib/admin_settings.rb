@@ -15,7 +15,7 @@ class Uhuru::Webui::AdminSettings < VCAP::Config
         },
 
         :recaptcha => {
-            :use_recaptcha                    => TrueClass,
+            :use_recaptcha                    => FalseClass,
             :recaptcha_private_key            => String,
             :recaptcha_public_key             => String
         },
@@ -55,7 +55,8 @@ class Uhuru::Webui::AdminSettings < VCAP::Config
             :auth_method                      => Symbol,
             :enable_tls                       => Object,
             :registration_email               => String,
-            :welcome_email                    => String
+            :welcome_email                    => String,
+            :password_recovery_email          => String
         },
 
         :billing => {
