@@ -96,8 +96,11 @@ module Uhuru::Webui
     end
 
     def require_login
-      if session[:token] == nil
-        redirect SinatraRoutes::TOKEN_EXPIRED
+
+      begin
+        Library::Organizations.new(session[:token], $cf_target).read_all
+      rescue CFoundry::InvalidAuthToken => e
+        return redirect SinatraRoutes::TOKEN_EXPIRED
       end
 
       unless session[:logged_in]
