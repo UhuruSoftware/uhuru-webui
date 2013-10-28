@@ -203,10 +203,10 @@ module Uhuru::Webui
         end
 
         app.post FORGOT_PASSWORD do
-          random_password = (0..8).map { (65 + rand(26)).chr }.join
+          random_password = (0..7).map { (65 + rand(26)).chr }.join
           user_id = UsersSetup.new($config).uaa_get_user_by_name(params[:email])
 
-          link = "http://#{request.env['HTTP_HOST'].to_s}/reset_old_password/#{URI.encode(Base32.encode(user_id))}/#{URI.encode(Base32.encode(random_password))}/#{params[:email]}"
+          link = "http://#{request.env['HTTP_HOST'].to_s}/reset_old_password/#{URI.encode(Base32.encode(user_id))}/#{URI.encode(Base32.encode(random_password))}"
           email_body = $config[:email][:password_recovery_email]
           email_body.gsub!('#FIRST_NAME#', params[:email])
           email_body.gsub!('#ACTIVATION_LINK#', link)
