@@ -22,6 +22,7 @@ module Uhuru::Webui
 
 
     ORGANIZATION              = "#{ORGANIZATIONS}/:org_guid/:tab"
+    CHANGE_CARD               = "#{ORGANIZATION}/change_credit_card"
     SPACES_CREATE             = "#{ORGANIZATION}/create_space"
     ORGANIZATION_MEMBERS_ADD  = "#{ORGANIZATION}/add_user"
     DOMAINS_CREATE            = "#{ORGANIZATION}/add_domains"

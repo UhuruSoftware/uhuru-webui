@@ -21,35 +21,10 @@ module Uhuru::Webui
           require_login
           organizations_list = Library::Organizations.new(session[:token], $cf_target).read_all
           error_message = params[:error] if defined?(params[:error])
-          months = []
-          years = []
 
-          current_month = Date.today.strftime("%m").to_i
-          [{:name => 'January', :value => 1},
-           {:name => 'February', :value => 2},
-           {:name => 'March', :value => 3},
-           {:name => 'April', :value => 4},
-           {:name => 'May', :value => 6},
-           {:name => 'June', :value => 6},
-           {:name => 'July', :value => 7},
-           {:name => 'August', :value => 8},
-           {:name => 'September', :value => 9},
-           {:name => 'October', :value => 10},
-           {:name => 'November', :value => 11},
-           {:name => 'December', :value => 12}].each do |month|
-              months.push(month)
-           end
-
-          current_year = Date.today.strftime("%Y").to_i
-          y = current_year
-          #max credit card lifespan is in 20 - 25 years
-          while y <= current_year + 30 do
-            years.push(y)
-            y += 1
-          end
-
-          list = File.open($config[:countries_file], "rb").read
-          countries = list.split(';')
+          months = Uhuru::Webui::Billing::Provider.months
+          years = Uhuru::Webui::Billing::Provider.years
+          countries = Uhuru::Webui::Billing::Provider.countries
 
           erb :'user_pages/organizations',
               {
@@ -134,6 +109,52 @@ module Uhuru::Webui
             return switch_to_get ORGANIZATIONS + "/#{params[:current_organization]}/#{params[:current_tab]}" + '?error=The name is too short (min. 4 characters)'
           end
         end
+
+        app.get CHANGE_CARD do
+          require_login
+
+          error_message = params[:error] if defined?(params[:error])
+
+          months = Uhuru::Webui::Billing::Provider.months
+          years = Uhuru::Webui::Billing::Provider.years
+          countries = Uhuru::Webui::Billing::Provider.countries
+
+          card = Uhuru::Webui::Billing::Provider.provider.read_credit_card_org(params[:org_guid])
+
+          erb :"user_pages/modals/update_card_#{ $config[:billing][:provider] }",
+              {
+                  :layout => :'layouts/user',
+                  :locals => {
+                      :current_organization => params[:org_guid],
+                      :error_message => error_message,
+                      :months => months,
+                      :years => years,
+                      :countries => countries,
+                      :card => card
+                  }
+              }
+        end
+
+        app.post CHANGE_CARD do
+          require_login
+
+          if $config[:billing][:provider] == 'stripe'
+            if params[:stripeToken] == nil
+              return switch_to_get "#{CHANGE_CARD}?error=Could retrieve your credit card information. Please contact support."
+            end
+          end
+
+          begin
+            Uhuru::Webui::Billing::Provider.provider.update_credit_card_org(session[:username], params[:stripeToken], params[:org_guid])
+          rescue => e
+            p "#{e.message}:#{e.backtrace}"
+            $logger.error("Error while trying to change credit card information for #{session[:user_guid]} - #{e.message}:#{e.backtrace}")
+            return switch_to_get "#{Uhuru::Webui::SinatraRoutes::ORGANIZATIONS}/#{params[:org_guid]}/credit_cards/change_credit_card?error=Could not setup your credit card information. Please contact support."
+          end
+
+          switch_to_get "#{Uhuru::Webui::SinatraRoutes::ORGANIZATIONS}/#{params[:org_guid]}/credit_cards"
+        end
+
       end
     end
   end

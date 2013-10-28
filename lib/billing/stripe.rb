@@ -17,8 +17,12 @@ module Uhuru::Webui::Billing
       customer_id = @data['bindings'][org_guid]
 
       if customer_id
-        card = ::Stripe::Customer.retrieve(customer_id).cards.data[0]
-        credit_card = CreditCard.new(card.last4, card.type, card.name, card.exp_month, card.exp_year)
+        customer = ::Stripe::Customer.retrieve(customer_id)
+
+        if customer
+          card = customer.cards.data[0]
+          credit_card = CreditCard.new(card.last4, card.type, card.name, card.exp_month, card.exp_year, card.address_line1, card.address_city, card.address_state, card.address_zip, card.address_country)
+        end
       end
 
       credit_card
@@ -35,10 +39,10 @@ module Uhuru::Webui::Billing
       save_billing_binding(customer_id, org_guid)
     end
 
-    def update_credit_card_org(username, org_guid)
-      customer = create_customer(username, org_guid)
-      delete_credit_card_org(org_guid)
-      add_billing_binding(customer, org_guid)
+    def update_credit_card_org(username, token, org_guid)
+      customer = self.create_customer(username, token)
+      self.delete_credit_card_org(org_guid)
+      self.add_billing_binding(customer, org_guid)
     end
 
     def delete_credit_card_org(org_guid)
