@@ -15,7 +15,6 @@ class Uhuru::Webui::AdminSettings < VCAP::Config
         },
 
         :recaptcha => {
-            :use_recaptcha                    => FalseClass,
             :recaptcha_private_key            => String,
             :recaptcha_public_key             => String
         },
