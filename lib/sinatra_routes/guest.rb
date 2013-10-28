@@ -189,6 +189,48 @@ module Uhuru::Webui
                   }
               }
         end
+
+        # the page that asks for the user email and forms a random password and sends it
+        app.get FORGOT_PASSWORD do
+          erb :'guest_pages/forgot_password',
+              {
+                  :layout => :'layouts/guest',
+                  :locals => {
+                      :page_title => $config[:webui][:page_title],
+                      :welcome_message => $config[:webui][:welcome_message],
+                  }
+              }
+        end
+
+        app.post FORGOT_PASSWORD do
+          random_password = (0..8).map { (65 + rand(26)).chr }.join
+          user_id = UsersSetup.new($config).uaa_get_user_by_name(params[:email])
+
+          link = "http://#{request.env['HTTP_HOST'].to_s}/reset_old_password/#{URI.encode(Base32.encode(user_id))}/#{URI.encode(Base32.encode(random_password))}/#{params[:email]}"
+          email_body = $config[:email][:password_recovery_email]
+          email_body.gsub!('#FIRST_NAME#', params[:email])
+          email_body.gsub!('#ACTIVATION_LINK#', link)
+          email_body.gsub!('#PASSWORD#', random_password)
+
+          Email::send_email(params[:email], 'Uhuru password recovery', email_body)
+
+          email_body.gsub!(params[:email], '#FIRST_NAME#')
+          email_body.gsub!(link, '#ACTIVATION_LINK#')
+          email_body.gsub!(random_password, '#PASSWORD#')
+          redirect PLEASE_CONFIRM
+        end
+
+        # apply the new password
+        app.get RESET_OLD_PASSWORD do
+          password = Base32.decode(params[:random_password])
+          user_id = Base32.decode(params[:user_id])
+          key = $config[:webui][:activation_link_secret]
+
+          user = UsersSetup.new($config)
+          user.recover_password(user_id, password)
+
+          redirect LOGIN
+        end
       end
     end
   end

@@ -122,6 +122,10 @@ class UsersSetup
     uaac.delete(:user, user_id)
   end
 
+  def recover_password(user_id, password)
+    get_uaa_client.change_password(user_id, password)
+  end
+
   def uaa_get_user_by_name(username)
     uaac = get_uaa_client
     begin

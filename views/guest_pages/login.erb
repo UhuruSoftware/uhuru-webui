@@ -19,7 +19,8 @@
     <div class="modal_footer">
 
         <div>
-            <button type="button" class="cancel_button" onclick="window.location = '<%= Uhuru::Webui::SinatraRoutes::INDEX %>';">Cancel</button>
+          <a href="<%= Uhuru::Webui::SinatraRoutes::FORGOT_PASSWORD %>">Forgot password?</a>
+            <button type="button" class="cancel_button" onclick="window.location.assign('<%= Uhuru::Webui::SinatraRoutes::INDEX %>');">Cancel</button>
             <button type="submit">Login</button>
         </div>
     </div>

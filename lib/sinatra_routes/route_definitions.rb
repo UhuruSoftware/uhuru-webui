@@ -11,6 +11,9 @@ module Uhuru::Webui
     ACTIVE                    = "#{INDEX}active"
     LOGOUT                    = "#{INDEX}logout"
 
+    FORGOT_PASSWORD           = "#{INDEX}forgot_password"
+    RESET_OLD_PASSWORD        = "#{INDEX}reset_old_password/:user_id/:random_password/:email"
+
 
     ACCOUNT                   = "#{INDEX}account"
 

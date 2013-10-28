@@ -147,7 +147,8 @@ module Uhuru::Webui
                   :auth_method => $admin[:email][:auth_method],
                   :enable_tls => $admin[:email][:enable_tls],
                   :registration_email => $admin[:email][:registration_email],
-                  :welcome_email => $admin[:email][:welcome_email]
+                  :welcome_email => $admin[:email][:welcome_email],
+                  :password_recovery_email => $admin[:email][:password_recovery_email]
               }
           }
         end
