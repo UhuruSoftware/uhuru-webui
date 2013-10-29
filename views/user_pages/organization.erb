@@ -229,6 +229,7 @@
           <div class="square_tile credit_card" title="<%= credit_card.name %>">
             <span><%= credit_card.name %></span>
             <span class="bottom_left">****-****-****-<%= credit_card.last4 %></span>
+            <button type="button" id="<%= current_organization %>" class="image s24px edit" title="Change '****-****-****-<%= credit_card.last4 %>'" onclick="window.location.assign('<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/#{current_tab}/change_credit_card" %>');"></button>
           </div>
         </div>
       <% end %>

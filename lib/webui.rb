@@ -98,7 +98,7 @@ module Uhuru::Webui
     def require_login
 
       begin
-        Library::Organizations.new(session[:token], $cf_target).read_all
+        Library::Organizations.new(session[:token], $cf_target).read_all(session[:user_guid])
       rescue CFoundry::InvalidAuthToken => e
         return redirect SinatraRoutes::TOKEN_EXPIRED
       end

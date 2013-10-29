@@ -9,12 +9,18 @@ module Library
       @client = CFoundry::V2::Client.new(target, token)
     end
 
-    def read_all
+    def read_all(user_guid)
       organizations_list = []
       orgs_list = @client.organizations
 
       orgs_list.each do |org|
-        organizations_list << Organization.new(org.name, 0, org.users.count, [], org.guid, false)
+        owner = org.managers.find { |u| u.guid == user_guid }
+        billing = org.billing_managers.find { |u| u.guid == user_guid }
+        auditor = org.auditors.find { |u| u.guid == user_guid }
+
+        if owner || billing || auditor
+          organizations_list << Organization.new(org.name, 0, org.users.count, [], org.guid, false)
+        end
       end
 
       organizations_list.sort! { |a, b| a.name.downcase <=> b.name.downcase }

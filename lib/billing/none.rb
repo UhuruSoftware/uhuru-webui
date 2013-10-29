@@ -16,7 +16,7 @@ module Uhuru::Webui::Billing
     def add_billing_binding(customer_id, org_guid)
     end
 
-    def update_credit_card_org(username, org_guid)
+    def update_credit_card(org_guid, token)
     end
 
     def delete_credit_card_org(org_guid)

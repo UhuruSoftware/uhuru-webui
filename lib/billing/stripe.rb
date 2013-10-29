@@ -17,8 +17,9 @@ module Uhuru::Webui::Billing
       customer_id = @data['bindings'][org_guid]
 
       if customer_id
-        card = ::Stripe::Customer.retrieve(customer_id).cards.data[0]
-        credit_card = CreditCard.new(card.last4, card.type, card.name, card.exp_month, card.exp_year)
+        customer = ::Stripe::Customer.retrieve(customer_id)
+        card = customer.cards.retrieve(customer.default_card)
+        credit_card = CreditCard.new(card.last4, card.type, card.name, card.exp_month, card.exp_year, card.address_line1, card.address_city, card.address_state, card.address_zip, card.address_country)
       end
 
       credit_card
@@ -35,28 +36,32 @@ module Uhuru::Webui::Billing
       save_billing_binding(customer_id, org_guid)
     end
 
-    def update_credit_card_org(username, org_guid)
-      customer = create_customer(username, org_guid)
-      delete_credit_card_org(org_guid)
-      add_billing_binding(customer, org_guid)
+    def update_credit_card(org_guid, token)
+      customer_id = @data['bindings'][org_guid]
+      if customer_id
+        customer = ::Stripe::Customer.retrieve(customer_id)
+        customer.cards.create(:card => token)
+        old_card = customer.cards.retrieve(customer.default_card)
+        old_card.delete()
+      else
+        raise ArgumentError, "Broken billing binding. Credit Card could not de added.", caller
+      end
+
     end
 
     def delete_credit_card_org(org_guid)
       customer_id = @data['bindings'][org_guid]
       if customer_id
         customer = ::Stripe::Customer.retrieve(customer_id)
+        card = customer.cards.retrieve(customer.default_card)
+        card.delete()
+        customer.delete()
 
-        if customer
-          card = customer.cards.data[0]
-          if card
-            card.delete()
-          end
-
-          customer.delete()
-        end
+        delete_billing_binding(org_guid)
+      else
+        raise ArgumentError, "Broken billing binding. Credit Card could not de deleted.", caller
       end
 
-      delete_billing_binding(org_guid)
     end
   end
 end

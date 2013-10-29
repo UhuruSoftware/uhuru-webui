@@ -34,6 +34,48 @@ module Uhuru::Webui::Billing
       @provider
     end
 
+    def self.months
+      months = []
+
+      current_month = Date.today.strftime("%m").to_i
+      [{:name => 'January', :value => 1},
+       {:name => 'February', :value => 2},
+       {:name => 'March', :value => 3},
+       {:name => 'April', :value => 4},
+       {:name => 'May', :value => 6},
+       {:name => 'June', :value => 6},
+       {:name => 'July', :value => 7},
+       {:name => 'August', :value => 8},
+       {:name => 'September', :value => 9},
+       {:name => 'October', :value => 10},
+       {:name => 'November', :value => 11},
+       {:name => 'December', :value => 12}].each do |month|
+        months.push(month)
+      end
+
+      months
+    end
+
+    def self.years
+      years = []
+
+      current_year = Date.today.strftime("%Y").to_i
+      y = current_year
+      #max credit card lifespan is in 20 - 25 years
+      while y <= current_year + 30 do
+        years.push(y)
+        y += 1
+      end
+
+      years
+    end
+
+    def self.countries
+      list = File.open($config[:countries_file], "rb").read
+      countries = list.split(';')
+      countries
+    end
+
     def initialize
       @data = {}
       @data_file = $config[:billing_data][:connection]
@@ -51,7 +93,7 @@ module Uhuru::Webui::Billing
       raise "Not implemented!"
     end
 
-    def update_credit_card_org(username, org_guid)
+    def update_credit_card(org_guid, token)
       raise "Not implemented!"
     end
 
@@ -83,14 +125,19 @@ module Uhuru::Webui::Billing
   end
 
   class CreditCard
-    attr_reader :last4, :type, :name, :exp_month, :exp_year
+    attr_reader :last4, :type, :name, :exp_month, :exp_year, :address_street, :address_city, :address_state, :address_zip, :address_country
 
-    def initialize(last4, type, name, exp_month, exp_year)
+    def initialize(last4, type, name, exp_month, exp_year, address_street = nil, address_city = nil, address_state = nil, address_zip = nil, address_country = nil)
       @last4 = last4
       @type = type
       @name = name
       @exp_month = exp_month
       @exp_year = exp_year
+      @address_street = address_street
+      @address_city = address_city
+      @address_state = address_state
+      @address_zip = address_zip
+      @address_country = address_country
     end
   end
 end
