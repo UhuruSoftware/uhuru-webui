@@ -111,9 +111,6 @@
                     <% end %>
 
                     <input type="hidden" id="<%= app_id %>_selected_id" value="<%= app_id %>" >
-                    <input type="hidden" id="<%= app_id %>_selected_src" value="<%= app['app_src'].sub('template_manifest.yml', '') %>" >
-                    <input type="hidden" id="<%= app_id %>_selected_memory" value="<%= app['manifest']['applications'][0]['memory'] %>" >
-                    <input type="hidden" id="<%= app_id %>_selected_instances" value="<%= app['manifest']['applications'][0]['instances'] %>" >
                     <input type="hidden" name="app_space" value="<%= current_space %>" >
                     <input type="hidden" name="app_organization" value="<%= current_organization %>" >
               <% end %>
@@ -122,9 +119,6 @@
             <input type="hidden" name="app_id" id="current_app_id" />
             <input type="hidden" name="app_domain" id="current_app_domain" />
             <input type="hidden" name="app_host" id="current_app_host" />
-            <input type="hidden" name="app_src" id="current_app_src" />
-            <input type="hidden" name="app_memory" id="current_app_memory" />
-            <input type="hidden" name="app_instances" id="current_app_instances" />
           </form>
         </div>
       </div>
@@ -211,17 +205,11 @@
         var app_id = $(this).attr("id") + '_id';
         var domain = $(this).attr("id") + '_domain';
         var host = $(this).attr("id") + '_host';
-        var src = $(this).attr("id") + '_src';
-        var memory = $(this).attr("id") + '_memory';
-        var instances = $(this).attr("id") + '_instances';
 
         $('#current_app_name').val($('#' + name).val());
         $('#current_app_id').val($('#' + app_id).val());
         $('#current_app_domain').val($('#' + domain).val());
         $('#current_app_host').val($('#' + host).val());
-        $('#current_app_src').val($('#' + src).val());
-        $('#current_app_memory').val($('#' + memory).val());
-        $('#current_app_instances').val($('#' + instances).val());
     });
 </script>
 

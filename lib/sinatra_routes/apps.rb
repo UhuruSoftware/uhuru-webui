@@ -153,14 +153,28 @@ module Uhuru::Webui
         app.post '/push' do
           require_login
 
-          name = params[:app_name]
-          domain_name = params[:app_domain]
-          host_name = params[:app_host]
-          memory = params[:app_memory]
-          instances = params[:app_instances]
-          src = params[:app_src] + params[:app_id]
+          app = TemplateApps.new
+          apps_list = app.read_collections
 
-          location = File.expand_path(params[:app_src] + 'manifest.yml', __FILE__)
+          name = nil
+          domain_name = nil
+          host_name = nil
+          memory = nil
+          instances = nil
+          src = nil
+
+          apps_list.each do |app_id, app|
+            if params[:app_id] == app_id
+              name = params[:app_name]
+              domain_name = params[:app_domain]
+              host_name = params[:app_host]
+              memory = app['manifest']['applications'][0]['memory']
+              instances = app['manifest']['applications'][0]['instances']
+              src = app['app_src'].sub('template_manifest.yml', '')
+            end
+          end
+
+          location = File.expand_path(src + 'manifest.yml', __FILE__)
           manifest = YAML.load_file location
           service_list = manifest['applications'][0]['services'] || []
           app_services = []
@@ -175,7 +189,7 @@ module Uhuru::Webui
 
           Thread.new() do
             begin
-              apps_obj.create!(params[:app_space], name, instances.to_i, memory.to_i, domain_name, host_name, src, app_services, stack, buildpack, params[:app_id])
+              apps_obj.create!(params[:app_space], name, instances.to_i, memory.to_i, domain_name, host_name, src + params[:app_id], app_services, stack, buildpack, params[:app_id])
             rescue => e
               apps_obj.info_ln('')
               apps_obj.error_ln('There was an error while processing the push request - please contact support')
