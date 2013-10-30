@@ -56,7 +56,7 @@ module Uhuru::Webui
           begin
             create = Library::Organizations.new(session[:token], $cf_target).create($config, params[:orgName], session[:user_guid])
           rescue CFoundry::OrganizationNameTaken => e
-            return switch_to_get "#{ORGANIZATIONS_CREATE}?error=#{e.description}"
+            return switch_to_get "#{ORGANIZATIONS_CREATE}?error=#{e.description}" if params[:stripeToken] == nil
           end
 
           begin
@@ -64,8 +64,14 @@ module Uhuru::Webui
             Uhuru::Webui::Billing::Provider.provider.add_billing_binding(customer, create)
           rescue => e
             $logger.error("Error while trying to create an org for #{session[:user_guid]} - #{e.message}:#{e.backtrace}")
-            Library::Organizations.new(session[:token], $cf_target).delete($config, create)
-            return switch_to_get "#{ORGANIZATIONS_CREATE}?error=Could not setup your credit card information. Please contact support."
+            #the following if and the 'if params[:stripeToken] == nil' from OrganizationNameTaken exception, is a an check
+            #for the case when the org has been created but the stripe operation goes in timeout(30 seconds),
+            #so the second time when post is called would have been displayed a OrganizationNameTaken but the org and
+            #the credit card would have been created
+            if !e.message.include?("You cannot use a Stripe token more than once")
+              Library::Organizations.new(session[:token], $cf_target).delete($config, create)
+              return switch_to_get "#{ORGANIZATIONS_CREATE}?error=Error while trying to create an org: #{e.message}"
+            end
           end
 
           switch_to_get ORGANIZATIONS
@@ -76,24 +82,30 @@ module Uhuru::Webui
 
           org = Library::Organizations.new(session[:token], $cf_target)
           is_an_owner = false
-          org.read_owners($config, params[:orgGuid]).each do |owner|
-            if owner.email == session[:username]
-              is_an_owner = true
-            end
-          end
 
-          #we should raise an error if an auditor or billing manager tries to delete an organization
-          if is_an_owner
-            Library::Organizations.new(session[:token], $cf_target).delete($config, params[:orgGuid])
-            begin
-              Uhuru::Webui::Billing::Provider.provider.delete_credit_card_org(params[:orgGuid])
-            rescue => e
-              $logger.error("Error while trying to delete credit card information for #{session[:user_guid]} - #{e.message}:#{e.backtrace}")
-              return switch_to_get "/deleteOrganization?error=Could retrieve your credit card information. Please contact support."
+          #this is a an double check that prevents a 500 error to be displayed for the case when an org has been deleted,
+          #but the stripe operation goes in timeout(30 seconds), so the second time when post is called
+          #a 500 error would have been displayed
+          if org.org_exists?(params[:orgGuid])
+            org.read_owners($config, params[:orgGuid]).each do |owner|
+              if owner.email == session[:username]
+                is_an_owner = true
+              end
             end
 
-          else
-            return switch_to_get "#{ORGANIZATIONS}" + "?error=You are not authorized to remove this organization."
+            #we should raise an error if an auditor or billing manager tries to delete an organization
+            if is_an_owner
+              Library::Organizations.new(session[:token], $cf_target).delete($config, params[:orgGuid])
+              begin
+                Uhuru::Webui::Billing::Provider.provider.delete_credit_card_org(params[:orgGuid])
+              rescue => e
+                $logger.error("Error while trying to delete an org for #{session[:user_guid]} - #{e.message}:#{e.backtrace}")
+                return switch_to_get "/deleteOrganization?error=Error while trying to delete an org: #{e.message}"
+              end
+
+            else
+              return switch_to_get "#{ORGANIZATIONS}" + "?error=You are not authorized to remove this organization."
+            end
           end
 
           redirect ORGANIZATIONS
@@ -154,8 +166,11 @@ module Uhuru::Webui
             Uhuru::Webui::Billing::Provider.provider.update_credit_card(params[:org_guid], params[:stripeToken])
           rescue => e
             $logger.error("Error while trying to change credit card information for #{session[:user_guid]} - #{e.message}:#{e.backtrace}")
+            #the following if is a an check for the case when the stripe operation goes in timeout(30 seconds),
+            #so the second time when post is called if the message 'You cannot use a Stripe token more than once'
+            #would have been displayed, the credit card info was already updated and there's no need to show this message to the user
             if !e.message.include?("You cannot use a Stripe token more than once")
-              return switch_to_get "#{Uhuru::Webui::SinatraRoutes::ORGANIZATIONS}/#{params[:org_guid]}/credit_cards/change_credit_card?error=Could retrieve your credit card information. Please contact support."
+              return switch_to_get "#{Uhuru::Webui::SinatraRoutes::ORGANIZATIONS}/#{params[:org_guid]}/credit_cards/change_credit_card?error=Error while trying to change credit card information: #{e.message}"
             end
           end
 

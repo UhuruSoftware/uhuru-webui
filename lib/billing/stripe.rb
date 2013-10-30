@@ -17,9 +17,13 @@ module Uhuru::Webui::Billing
       customer_id = @data['bindings'][org_guid]
 
       if customer_id
-        customer = ::Stripe::Customer.retrieve(customer_id)
-        card = customer.cards.retrieve(customer.default_card)
-        credit_card = CreditCard.new(card.last4, card.type, card.name, card.exp_month, card.exp_year, card.address_line1, card.address_city, card.address_state, card.address_zip, card.address_country)
+        begin
+          customer = ::Stripe::Customer.retrieve(customer_id)
+          card = customer.cards.retrieve(customer.default_card)
+          credit_card = CreditCard.new(card.last4, card.type, card.name, card.exp_month, card.exp_year, card.address_line1, card.address_city, card.address_state, card.address_zip, card.address_country)
+        rescue => e
+          $logger.error("Error while trying to receive credit card information: #{e.message}:#{e.backtrace}")
+        end
       end
 
       credit_card
@@ -44,7 +48,7 @@ module Uhuru::Webui::Billing
         old_card = customer.cards.retrieve(customer.default_card)
         old_card.delete()
       else
-        raise ArgumentError, "Broken billing binding. Credit Card could not de added.", caller
+        raise ArgumentError, "Broken billing binding. Credit Card could not be updated.", caller
       end
 
     end
@@ -59,7 +63,7 @@ module Uhuru::Webui::Billing
 
         delete_billing_binding(org_guid)
       else
-        raise ArgumentError, "Broken billing binding. Credit Card could not de deleted.", caller
+        raise ArgumentError, "Broken billing binding. Credit Card could not be deleted.", caller
       end
 
     end

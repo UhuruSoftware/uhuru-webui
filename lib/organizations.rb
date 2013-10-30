@@ -156,6 +156,11 @@ module Library
       users_list
     end
 
+    def org_exists?(org_guid)
+      org = @client.organization(org_guid)
+      org.exists?
+    end
+
     class Organization
       attr_reader :name, :cost, :members_count, :roles, :guid, :is_paid
 
