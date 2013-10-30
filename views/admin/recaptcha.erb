@@ -1,0 +1,19 @@
+<form action="<%= Uhuru::Webui::SinatraRoutes::ADMINISTRATION_RECAPTCHA %>" method="post">
+
+  <h2>Recaptcha settings</h2>
+
+  <table>
+    <tr>
+      <td><h3>Recaptcha public key</h3></td>
+      <td><input type="text" name="recaptcha_public_key" size="50" value="<%= recaptcha_public_key %>" /></td>
+    </tr>
+
+    <tr>
+      <td><h3>Recaptcha private key</h3></td>
+      <td><input type="text" name="recaptcha_private_key" size="50" value="<%= recaptcha_private_key %>" /></td>
+    </tr>
+  </table>
+
+  <input type="submit" value="Save" />
+
+</form>
