@@ -16,6 +16,61 @@ module Uhuru::Webui
           }
         end
 
+        app.get ADMINISTRATION_SETTINGS do
+          require_admin
+
+          erb :'admin/settings', {
+              :layout => :'layouts/admin',
+              :locals => {
+                  :current_tab => 'settings',
+                  :message => ''
+              }
+          }
+        end
+
+        app.post ADMINISTRATION_SETTINGS do
+          require_admin
+          message = ""
+
+          if params.has_key? ("btn_export")
+            send_file $config[:admin_config_file], :filename => "admin_settings.yml", :type => 'Application/octet-stream'
+          elsif params.has_key? ("btn_import")
+            if params.has_key?("file_input")
+              tempfile = params['file_input'][:tempfile]
+              settings = YAML.load_file(tempfile)
+              if(settings)
+                settings = VCAP.symbolize_keys(settings)
+                new_settings = $admin.dup
+
+                begin
+                  Uhuru::Webui::AdminSettings.import_settings!(settings, new_settings)
+                  Uhuru::Webui::AdminSettings.schema.validate(new_settings)
+                  $admin = new_settings.dup
+                  Uhuru::Webui::AdminSettings.save_changed_value
+                  message = "Import successful!"
+                rescue Membrane::SchemaValidationError => error
+                  message = "Error: #{error.message}"
+                end
+              else
+                message = "Could not parse yaml file"
+              end
+
+            else
+              message = "No import file specified"
+            end
+
+            erb :'admin/settings', {
+                :layout => :'layouts/admin',
+                :locals => {
+                    :current_tab => 'settings',
+                    :message => message
+                }
+            }
+          else
+            redirect ADMINISTRATION_SETTINGS
+          end
+        end
+
         app.get ADMINISTRATION_WEBUI do
           require_admin
 
@@ -72,30 +127,6 @@ module Uhuru::Webui
           Uhuru::Webui::AdminSettings.save_changed_value
 
           redirect ADMINISTRATION_WEBUI
-        end
-
-        app.get ADMINISTRATION_RECAPTCHA do
-          require_admin
-
-          erb :'admin/recaptcha', {
-              :layout => :'layouts/admin',
-              :locals => {
-                  :current_tab => 'recaptcha',
-                  :recaptcha_public_key => $admin[:recaptcha][:recaptcha_public_key],
-                  :recaptcha_private_key => $admin[:recaptcha][:recaptcha_private_key]
-              }
-          }
-        end
-
-        app.post ADMINISTRATION_RECAPTCHA do
-          require_admin
-
-          $admin[:recaptcha][:recaptcha_public_key] = params[:recaptcha_public_key]
-          $admin[:recaptcha][:recaptcha_private_key] = params[:recaptcha_private_key]
-
-          Uhuru::Webui::AdminSettings.save_changed_value
-
-          redirect ADMINISTRATION_RECAPTCHA
         end
 
         app.get ADMINISTRATION_CONTACT do
