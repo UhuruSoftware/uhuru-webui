@@ -112,7 +112,12 @@
               <span>mem: <%= app.memory %> MB</span>
             </div>
 
-            <a target="_blank" title="Click to open in browser" href="<%= app_uri %>">
+            <% if app_uri != "#" %>
+                <a target="_blank" title="Click to open in browser" href="<%= app_uri %>">
+            <% else %>
+                <a title="Click to open in browser" href="<%= app_uri %>">
+            <% end %>
+
                 <div class="tile right">
                   <div>
                     <%= app.uris.size %> route(s)
