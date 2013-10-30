@@ -70,6 +70,28 @@ module Uhuru::Webui
 
     def initialize()
       $cf_target = $config[:cloud_controller_url]
+
+      #add owner role to cloud controller admin for sys-org and monitoring organizations
+      begin
+        users = UsersSetup.new($config)
+        uaa_users = users.uaa_get_users
+
+        admin = uaa_users.select {|u| u[:is_admin] == true && u[:email] != "services"}.first
+        admin_guid = admin[:id]
+
+        admin_token = users.get_admin_token
+
+        org = Library::Organizations.new(admin_token, $cf_target)
+        monitoring_org = org.get_organization_by_name("monitoring")
+        sys_org = org.get_organization_by_name("sys-org")
+
+        cf_users = Library::Users.new(admin_token, $cf_target)
+        cf_users.add_user_to_org_with_role(sys_org.guid, admin_guid, ["owner"])
+        cf_users.add_user_to_org_with_role(monitoring_org.guid, admin_guid, ["owner"])
+      rescue => e
+        $logger.error("Error while trying to add Owner role to the cloud controller admin for sys-org and monitoring - #{e.message}:#{e.backtrace}")
+      end
+
       super()
     end
 
