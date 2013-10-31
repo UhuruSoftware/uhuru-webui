@@ -129,6 +129,30 @@ module Uhuru::Webui
           redirect ADMINISTRATION_WEBUI
         end
 
+        app.get ADMINISTRATION_RECAPTCHA do
+          require_admin
+
+          erb :'admin/recaptcha', {
+              :layout => :'layouts/admin',
+              :locals => {
+                  :current_tab => 'recaptcha',
+                  :recaptcha_public_key => $admin[:recaptcha][:recaptcha_public_key],
+                  :recaptcha_private_key => $admin[:recaptcha][:recaptcha_private_key]
+              }
+          }
+        end
+
+        app.post ADMINISTRATION_RECAPTCHA do
+          require_admin
+
+          $admin[:recaptcha][:recaptcha_public_key] = params[:recaptcha_public_key]
+          $admin[:recaptcha][:recaptcha_private_key] = params[:recaptcha_private_key]
+
+          Uhuru::Webui::AdminSettings.save_changed_value
+
+          redirect ADMINISTRATION_RECAPTCHA
+        end
+
         app.get ADMINISTRATION_CONTACT do
           require_admin
 
