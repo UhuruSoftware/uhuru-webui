@@ -93,7 +93,7 @@ module Library
       if user_guid
         add_user_to_org_with_role(org_guid, user_guid, [role])
       else
-        raise UserError.new('inexistent', 'The user does not exist in the UAA database!')
+        raise UserError.new('inexistent', 'Cannot find this e-mail address. Users have to register to the cloud before they can be invited to join an organization.')
       end
     end
 
@@ -104,7 +104,7 @@ module Library
       if user_guid
         add_user_with_role_to_space(space_guid, user_guid, [role])
       else
-        raise UserError.new('inexistent', 'The user does not exist in the UAA database!')
+        raise UserError.new('inexistent', 'Cannot find this e-mail address. Users have to register to the cloud before they can be invited to join a space.')
       end
     end
 
