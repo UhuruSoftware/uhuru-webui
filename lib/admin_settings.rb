@@ -70,6 +70,27 @@ class Uhuru::Webui::AdminSettings < VCAP::Config
 
     unless File.exist?(destination_file)
       FileUtils.cp original_file, destination_file
+    else
+      settings = YAML.load_file(destination_file)
+      if(settings)
+        settings = VCAP.symbolize_keys(settings)
+        new_settings = from_file(original_file)
+
+        begin
+          Uhuru::Webui::AdminSettings.import_settings!(settings, new_settings)
+          Uhuru::Webui::AdminSettings.schema.validate(new_settings)
+
+          settings = stringify_keys(new_settings.dup)
+
+          File.open(destination_file, "w+") do |f|
+            f.sync = true
+            f.write(settings.to_yaml)
+            f.flush()
+          end
+        end
+      else
+        FileUtils.cp original_file, destination_file
+      end
     end
   end
 
@@ -106,13 +127,13 @@ class Uhuru::Webui::AdminSettings < VCAP::Config
   end
 
   def self.import_settings!(source, dest)
-    dest.each do |key, value|
-      if dest[key].is_a?(Hash)
-        if (source.has_key?(key) && source[key].is_a?(Hash))
+    dest.each do |key|
+      if source.has_key?(key)
+        if (dest[key].is_a?(Hash) && source[key].is_a?(Hash))
           import_settings!(source[key], dest[key])
+        else
+          dest[key] = source[key]
         end
-      else
-        dest[key] = source[key]
       end
     end
   end
