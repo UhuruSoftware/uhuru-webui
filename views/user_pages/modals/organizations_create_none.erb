@@ -6,21 +6,20 @@
     <span>Create organization</span>
   </div>
 
-  <form action="/createOrganization" method="post" id="payment-form">
+  <form action="/createOrganization" method="post" id="nonpayment-form">
     <div class="modal_content">
       <div>Organization Name</div>
       <input type="text" id="org_name" name="orgName" class="modal_input_box" autofocus />
       <br />
 
-      <% unless error_message.nil? || error_message.empty? %>
-          <div class="error"> <%= error_message %> </div>
-      <% end %>
+      <div class="error_container"></div>
       <div class="payment-errors error hide"></div>
     </div>
     <div class="modal_footer">
       <div>
+        <div id="org_spinner" class="hide"><img src="/images/small_loader.gif" /></div>
         <button type="button" onclick="window.location.assign('<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS %>');">Cancel</button>
-        <button type="submit">Create</button>
+        <button type="submit" onclick="$('#org_spinner').show(); $('.error').hide();">Create</button>
       </div>
     </div>
   </form>

@@ -45,18 +45,22 @@ module Uhuru::Webui
 
           if $config[:billing][:provider] == 'stripe'
             if params[:stripeToken] == nil
-              return switch_to_get "#{ORGANIZATIONS_CREATE}?error=Could retrieve your credit card information. Please contact support."
+              return {:error => "Could retrieve your credit card information. Please contact support."}.to_json
             end
           end
 
           if params[:orgName].size < 4
-            return switch_to_get "#{ORGANIZATIONS_CREATE}?error=The name is too short (min. 4 characters)"
+            return {:error => "The name is too short (min. 4 characters)"}.to_json
           end
 
           begin
             create = Library::Organizations.new(session[:token], $cf_target).create($config, params[:orgName], session[:user_guid])
           rescue CFoundry::OrganizationNameTaken => e
-            return switch_to_get "#{ORGANIZATIONS_CREATE}?error=#{e.description}" if params[:stripeToken] == nil
+            if params[:stripeToken] == nil
+              return {:error => "#{e.description}"}.to_json
+            else
+              return {:error => "#{e.description}"}.to_json
+            end
           end
 
           begin
@@ -70,11 +74,11 @@ module Uhuru::Webui
             #the credit card would have been created
             if !e.message.include?("You cannot use a Stripe token more than once")
               Library::Organizations.new(session[:token], $cf_target).delete($config, create)
-              return switch_to_get "#{ORGANIZATIONS_CREATE}?error=Error while trying to create an org: #{e.message}"
+              return {:error => "Error while trying to create an org: #{e.message}"}.to_json
             end
           end
 
-          switch_to_get ORGANIZATIONS
+          return {:error => "OK"}.to_json
         end
 
         app.post '/deleteOrganization' do

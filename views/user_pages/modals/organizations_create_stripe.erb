@@ -23,7 +23,41 @@
               // Insert the token into the form so it gets submitted to the server
               $form.append($('<input type="hidden" name="stripeToken" />').val(token));
               // and re-submit
-              $form.get(0).submit();
+
+              var org = $('#org_name').val();
+              var stripe = token;
+
+              $.ajax({
+                  url: "/createOrganization",
+                  type: 'POST',
+                  cache: false,
+                  data: { orgName: org, stripeToken: stripe }
+              })
+
+                      .done(function( data ) {
+                          var values = jQuery.parseJSON( data );
+                          error = values.error;
+
+                          if(error == "OK")
+                          {
+                              window.location.href = '/organizations';
+                          }
+                          else
+                          {
+                              $('.error_container').html('');
+                              $('.error_container').append("<div class='error'>" + error + "</div>");
+                              $('#org_spinner').hide();
+                              $form.find('button').prop('disabled', false);
+                              $form.find('submit').prop('disabled', false);
+                          }
+                      }   )
+                      .fail(function() {
+                          $('.error_container').html('');
+                          $('.error_container').append("<div class='error'>An internal server error occurred, please try again.</div>");
+                          $('#org_spinner').hide();
+                          $form.find('button').prop('disabled', false);
+                          $form.find('submit').prop('disabled', false);
+                      }   );
           }
       };
       jQuery(function($) {
@@ -34,6 +68,7 @@
               {
                   $form.find('.payment-errors').text("The name is too short (min. 4 characters)");
                   $form.find('.payment-errors').show();
+                  $('#org_spinner').hide();
               }
               else
               {
@@ -41,8 +76,9 @@
                           $("#address_state").val() != '' && $("#address_zip").val() != '' && $("#address_country").val() != '')
                   {
                       $form.find('.payment-errors').hide();
-                      // Disable the submit button to prevent repeated clicks
+                      // Disable the submit button and cancel button to prevent repeated clicks
                       $form.find('button').prop('disabled', true);
+                      $form.find('submit').prop('disabled', true);
 
                       Stripe.createToken($form, stripeResponseHandler);
                   }
@@ -50,6 +86,7 @@
                   {
                       $form.find('.payment-errors').text("Please complete all fields");
                       $form.find('.payment-errors').show();
+                      $('#org_spinner').hide();
                   }
               }
 
@@ -125,12 +162,14 @@
       <% unless error_message.nil? || error_message.empty? %>
           <div class="error"> <%= error_message %> </div>
       <% end %>
+      <div class="error_container"></div>
       <div class="payment-errors error hide"></div>
     </div>
     <div class="modal_footer">
       <div>
+        <div id="org_spinner" class="hide"><img src="/images/small_loader.gif" /></div>
         <button type="button" onclick="window.location.assign('<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS %>');">Cancel</button>
-        <button type="submit">Create</button>
+        <button type="submit" onclick="$('#org_spinner').show(); $('.error').hide();">Create</button>
       </div>
     </div>
   </form>
