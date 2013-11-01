@@ -524,3 +524,40 @@ $(".app_status").each(function(index, status_element)
         $("#" + app_id).text(current_status);
     }
 })
+
+
+
+/*********************************   create organization action   **********************************************/
+
+$('#nonpayment-form').submit(function( event ){
+    event.preventDefault();
+    var org = $('#org_name').val();
+
+    $.ajax({
+        url: "/createOrganization",
+        type: 'POST',
+        cache: false,
+        data: { orgName: org }
+    })
+
+        .done(function( data ) {
+            var values = jQuery.parseJSON( data );
+            error = values.error;
+
+            if(error == "OK")
+            {
+                window.location.href = '/organizations';
+            }
+            else
+            {
+                $('.error_container').html('');
+                $('.error_container').append("<div class='error'>" + error + "</div>");
+                $('#org_spinner').hide();
+            }
+        }   )
+        .fail(function() {
+                $('.error_container').html('');
+                $('.error_container').append("<div class='error'>An internal server error occurred, please try again.</div>");
+            $('#org_spinner').hide();
+        }   );
+});
