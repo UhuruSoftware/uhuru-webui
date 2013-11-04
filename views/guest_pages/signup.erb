@@ -34,7 +34,7 @@
             <input type="text" name="last_name" value = "<%= error_last_name %>" />
             <br />
             <br />
-            <% if $config[:recaptcha][:use_recaptcha] == true %>
+            <% if $config[:recaptcha][:use_recaptcha] == true || $config[:recaptcha][:use_recaptcha] == "true" %>
                 <%= recaptcha_tag :challenge, :language => :en, :ssl => true %>
             <% end %>
 
