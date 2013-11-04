@@ -48,7 +48,7 @@ module Uhuru::Webui
           begin
             ServiceInstances.new(session[:token], $cf_target).delete(params[:serviceGuid])
           rescue CFoundry::NotAuthorized => e
-            return switch_to_get ORGANIZATIONS + "/#{params[:current_organization]}/spaces/#{params[:current_space]}/#{params[:current_tab]}/services" + "?error=#{e.description}"
+            return switch_to_get ORGANIZATIONS + "/#{params[:current_organization]}/spaces/#{params[:current_space]}/#{params[:current_tab]}" + "?error=#{e.description}"
           end
           switch_to_get ORGANIZATIONS + "/#{params[:current_organization]}/spaces/#{params[:current_space]}/#{params[:current_tab]}"
         end

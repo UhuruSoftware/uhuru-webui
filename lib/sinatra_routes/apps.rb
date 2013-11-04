@@ -11,6 +11,7 @@ module Uhuru::Webui
 
           apps_list = space.read_apps(params[:space_guid])
           services_list = space.read_service_instances(params[:space_guid])
+          routes_list = Library::Routes.new(session[:token], $cf_target).read_routes(params[:space_guid])
           domains_list = domain.read_domains()
           error_message = params[:error] if defined?(params[:error])
 
@@ -26,6 +27,7 @@ module Uhuru::Webui
                       :apps_list => apps_list,
                       :services_list => services_list,
                       :domains_list => domains_list,
+                      :routes_list => routes_list,
                       :error_message => error_message,
                       :app => params[:app]
                       #does not need to include an erb, the app details erb is a bigger modal

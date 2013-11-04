@@ -50,7 +50,7 @@ module Uhuru::Webui
           begin
             Library::Routes.new(session[:token], $cf_target).delete(params[:routeGuid])
           rescue CFoundry::NotAuthorized => e
-            return switch_to_get ORGANIZATIONS + "/#{params[:current_organization]}/spaces/#{params[:current_space]}/#{params[:current_tab]}/routes" + "?error=#{e.description}"
+            return switch_to_get ORGANIZATIONS + "/#{params[:current_organization]}/spaces/#{params[:current_space]}/#{params[:current_tab]}" + "?error=#{e.description}"
           end
           switch_to_get ORGANIZATIONS + "/#{params[:current_organization]}/spaces/#{params[:current_space]}/#{params[:current_tab]}"
         end
