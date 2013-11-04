@@ -37,6 +37,11 @@ module Library
         end
       end
 
+      #apparently cfoundry api doesn't manage org - users relationship
+      existing_users = org.users
+      existing_users << @client.user(user_guid)
+      org.users = existing_users
+
       org.update!
     end
 
@@ -121,7 +126,6 @@ module Library
             else
               return false
             end
-
           when 'billing'
             user = org.billing_managers.find { |u| u.guid == user_guid }
             if user != nil
@@ -141,6 +145,20 @@ module Library
 
       correct_roles
     end
+
+    def any_org_roles?(config, org_guid, username)
+      user_setup_obj = UsersSetup.new(config)
+      user_guid = user_setup_obj.uaa_get_user_by_name(username)
+
+      org = @client.organization(org_guid)
+
+      owner = org.managers.find { |u| u.guid == user_guid }
+      billing = org.billing_managers.find { |u| u.guid == user_guid }
+      auditor = org.auditors.find { |u| u.guid == user_guid }
+
+      owner != nil || billing != nil || auditor != nil
+    end
+
 
     def get_user_guid
       user = @client.current_user

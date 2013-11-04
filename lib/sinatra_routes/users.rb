@@ -9,6 +9,9 @@ module Uhuru::Webui
           owners_list = org.read_owners($config, params[:org_guid])
           billings_list = org.read_billings($config, params[:org_guid])
           auditors_list = org.read_auditors($config, params[:org_guid])
+
+          see_cards = Library::Users.new(session[:token], $cf_target).check_user_org_roles(params[:org_guid], session[:user_guid], ["owner", "billing"])
+
           error_message = params[:error] if defined?(params[:error])
 
           erb :'user_pages/organization',
@@ -21,6 +24,7 @@ module Uhuru::Webui
                       :owners_list => owners_list,
                       :billings_list => billings_list,
                       :auditors_list => auditors_list,
+                      :see_cards => see_cards,
                       :error_message => error_message,
                       :include_erb => :'user_pages/modals/members_add'
                   }
@@ -70,6 +74,10 @@ module Uhuru::Webui
             end
           else
             begin
+              if !user.any_org_roles?($config, params[:current_organization], params[:userEmail])
+                user.invite_user_with_role_to_org($config, params[:userEmail], params[:current_organization], "auditor")
+              end
+
               user.invite_user_with_role_to_space($config, params[:userEmail], params[:current_space], params[:userType])
               return switch_to_get ORGANIZATIONS + "/#{params[:current_organization]}/spaces/#{params[:current_space]}/#{params[:current_tab]}"
             rescue Library::Users::UserError => e

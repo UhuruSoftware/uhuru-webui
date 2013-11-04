@@ -7,6 +7,7 @@ module Uhuru::Webui
           org = Library::Organizations.new(session[:token], $cf_target)
           domain = Library::Domains.new(session[:token], $cf_target)
           domains_list = domain.read_domains(params[:org_guid])
+          see_cards = Library::Users.new(session[:token], $cf_target).check_user_org_roles(params[:org_guid], session[:user_guid], ["owner", "billing"])
           error_message = params[:error] if defined?(params[:error])
 
           erb :'user_pages/organization',
@@ -17,6 +18,7 @@ module Uhuru::Webui
                       :current_organization => params[:org_guid],
                       :current_tab => params[:tab],
                       :domains_list => domains_list,
+                      :see_cards => see_cards,
                       :error_message => error_message,
                       :include_erb => :'user_pages/modals/domains_create'
                   }

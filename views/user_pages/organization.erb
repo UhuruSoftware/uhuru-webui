@@ -59,7 +59,9 @@
       <% if current_tab == "credit_cards" %>
           <div class="selected">Credit Cards</div>
       <% else %>
-          <div onclick="window.location.assign('<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/credit_cards" %>');">Credit Cards</div>
+          <% if see_cards %>
+            <div onclick="window.location.assign('<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/credit_cards" %>');">Credit Cards</div>
+        <% end %>
       <% end %>
     <div class="tab_menu_end">&nbsp;</div>
   </div>

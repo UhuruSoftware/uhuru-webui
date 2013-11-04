@@ -13,7 +13,7 @@ module Library
       routes = []
 
       @client.routes.each do |r|
-        if r.space.guid == space_guid
+        if r.space && r.space.guid == space_guid
           if domain_guid != nil
             routes << Route.new(r.name, r.guid) if r.domain.guid == domain_guid
           else

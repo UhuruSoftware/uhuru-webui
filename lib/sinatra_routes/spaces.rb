@@ -9,6 +9,9 @@ module Uhuru::Webui
 
           organization_name = org.get_name(params[:org_guid])
           organization_guid = params[:org_guid]
+
+          see_cards = Library::Users.new(session[:token], $cf_target).check_user_org_roles(organization_guid, session[:user_guid], ["owner", "billing"])
+
           error_message = params[:error] if defined?(params[:error])
 
           case params[:tab]
@@ -22,6 +25,7 @@ module Uhuru::Webui
                           :current_organization => organization_guid,
                           :current_tab => params[:tab],
                           :spaces_list => spaces_list,
+                          :see_cards => see_cards,
                           :error_message => error_message
                       }
                   }
@@ -39,6 +43,7 @@ module Uhuru::Webui
                           :owners_list => owners_list,
                           :billings_list => billings_list,
                           :auditors_list => auditors_list,
+                          :see_cards => see_cards,
                           :error_message => error_message
                       }
                   }
@@ -52,6 +57,7 @@ module Uhuru::Webui
                           :current_organization => organization_guid,
                           :current_tab => params[:tab],
                           :domains_list => domains_list,
+                          :see_cards => see_cards,
                           :error_message => error_message
                       }
                   }
@@ -65,6 +71,7 @@ module Uhuru::Webui
                           :current_organization => organization_guid,
                           :current_tab => params[:tab],
                           :credit_card => credit_card,
+                          :see_cards => see_cards,
                           :error_message => error_message
                       }
                   }
@@ -78,6 +85,7 @@ module Uhuru::Webui
           org = Library::Organizations.new(session[:token], $cf_target)
 
           spaces_list = org.read_spaces(params[:org_guid])
+          see_cards = Library::Users.new(session[:token], $cf_target).check_user_org_roles(params[:org_guid], session[:user_guid], ["owner", "billing"])
           error_message = params[:error] if defined?(params[:error])
 
           erb :'user_pages/organization',
@@ -88,6 +96,7 @@ module Uhuru::Webui
                       :current_organization => params[:org_guid],
                       :current_tab => params[:tab],
                       :spaces_list => spaces_list,
+                      :see_cards => see_cards,
                       :error_message => error_message,
                       :include_erb => :'user_pages/modals/spaces_create'
                   }
