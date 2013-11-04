@@ -83,7 +83,7 @@ module Uhuru::Webui
           begin
             delete = Library::Domains.new(session[:token], $cf_target).delete(params[:domainGuid])
             if delete == false
-              return switch_to_get ORGANIZATIONS + "/#{params[:org_guid]}/spaces/#{params[:space_guid]}/domains" + "?error=#{e.description}"
+              return switch_to_get ORGANIZATIONS + "/#{params[:org_guid]}/spaces/#{params[:space_guid]}/domains" + "?error=There was an error removing this domain, if the problem persists please contact support."
             end
           rescue CFoundry::NotAuthorized => e
             return switch_to_get ORGANIZATIONS + "/#{params[:org_guid]}/spaces/#{params[:space_guid]}/domains" + "?error=#{e.description}"
