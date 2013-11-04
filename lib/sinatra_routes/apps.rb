@@ -232,7 +232,11 @@ module Uhuru::Webui
 
         app.post '/deleteApp' do
           require_login
-          Applications.new(session[:token], $cf_target).delete(params[:appGuid])
+          begin
+            Applications.new(session[:token], $cf_target).delete(params[:appGuid])
+          rescue CFoundry::NotAuthorized => e
+            return switch_to_get ORGANIZATIONS + "/#{params[:current_organization]}/spaces/#{params[:current_space]}/apps" + "?error=#{e.description}"
+          end
           switch_to_get ORGANIZATIONS + "/#{params[:current_organization]}/spaces/#{params[:current_space]}/#{params[:current_tab]}"
         end
       end
