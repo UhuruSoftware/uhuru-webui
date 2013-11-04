@@ -136,6 +136,7 @@ module Uhuru::Webui
               :layout => :'layouts/admin',
               :locals => {
                   :current_tab => 'recaptcha',
+                  :use_recaptcha => $admin[:recaptcha][:use_recaptcha],
                   :recaptcha_public_key => $admin[:recaptcha][:recaptcha_public_key],
                   :recaptcha_private_key => $admin[:recaptcha][:recaptcha_private_key]
               }
@@ -145,6 +146,7 @@ module Uhuru::Webui
         app.post ADMINISTRATION_RECAPTCHA do
           require_admin
 
+          $admin[:recaptcha][:use_recaptcha] = params[:use_recaptcha]
           $admin[:recaptcha][:recaptcha_public_key] = params[:recaptcha_public_key]
           $admin[:recaptcha][:recaptcha_private_key] = params[:recaptcha_private_key]
 
@@ -249,6 +251,7 @@ module Uhuru::Webui
           end
           $admin[:email][:registration_email] = params[:registration_email]
           $admin[:email][:welcome_email] = params[:welcome_email]
+          $admin[:email][:password_recovery_email] = params[:password_recovery_email]
           Uhuru::Webui::AdminSettings.save_changed_value()
 
           redirect ADMINISTRATION_EMAIL

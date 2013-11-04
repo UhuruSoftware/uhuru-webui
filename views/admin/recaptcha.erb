@@ -4,6 +4,21 @@
 
   <table>
     <tr>
+      <td><h3>Use recaptcha?</h3></td>
+      <td>
+        <select name="use_recaptcha">
+          <% if use_recaptcha == 'true' || use_recaptcha == true %>
+              <option value="true" selected>Yes</option>
+              <option value="false">no</option>
+          <% else %>
+              <option value="true">Yes</option>
+              <option value="false" selected>no</option>
+          <% end %>
+        </select>
+      </td>
+    </tr>
+
+    <tr>
       <td><h3>Recaptcha public key</h3></td>
       <td><input type="text" name="recaptcha_public_key" size="50" value="<%= recaptcha_public_key %>" /></td>
     </tr>
