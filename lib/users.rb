@@ -170,34 +170,27 @@ module Library
       org = @client.organization(org_guid)
       user = @client.user(user_guid)
 
-      # if user have no roles in org will be removed also from table users
-      remove_user = true
-
       case role
         when 'owner'
-          user_find = org.managers.find { |u| u.guid == user_guid }
-          remove_user = remove_user && true if user_find == nil
-
           existing_managers = org.managers
           existing_managers.delete(user)
           org.managers = existing_managers
         when 'billing'
-          user_find = org.billing_managers.find { |u| u.guid == user_guid }
-          remove_user = remove_user && true if user_find == nil
-
           existing_billing_managers = org.billing_managers
           existing_billing_managers.delete(user)
           org.billing_managers = existing_billing_managers
         when 'auditor'
-          user_find = org.auditors.find { |u| u.guid == user_guid }
-          remove_user = remove_user && true if user_find == nil
-
           existing_auditors = org.auditors
           existing_auditors.delete(user)
           org.auditors = existing_auditors
       end
 
-      if (remove_user)
+      # if the last role from org is removed, user will be removed from table org_users too
+      owner = org.managers.find { |u| u.guid == user_guid }
+      billing = org.billing_managers.find { |u| u.guid == user_guid }
+      auditor = org.auditors.find { |u| u.guid == user_guid }
+
+      if (owner == nil && billing == nil && auditor == nil)
         existing_users = org.users
         existing_users.delete(user)
         org.users = existing_users
