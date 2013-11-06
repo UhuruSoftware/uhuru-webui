@@ -64,27 +64,41 @@ module Uhuru::Webui
           user = Library::Users.new(session[:token], $cf_target)
 
           if params[:current_space] == nil || params[:current_space] == ''
-            begin
-              user.invite_user_with_role_to_org($config, params[:userEmail], params[:current_organization], params[:userType])
-              return switch_to_get ORGANIZATIONS + "/#{params[:current_organization]}/#{params[:current_tab]}"
-            rescue Library::Users::UserError => e
-              return switch_to_get ORGANIZATIONS + "/#{params[:current_organization]}/#{params[:current_tab]}/add_user" + "?error=#{e.description}"
-            rescue CFoundry::NotAuthorized => e
-              return switch_to_get ORGANIZATIONS + "/#{params[:current_organization]}/#{params[:current_tab]}/add_user" + "?error=#{e.description}"
-            end
-          else
-            begin
-              if !user.any_org_roles?($config, params[:current_organization], params[:userEmail])
-                user.invite_user_with_role_to_org($config, params[:userEmail], params[:current_organization], "auditor")
+              unless /\b[A-Z0-9._%a-z\-]+@(?:[A-Z0-9a-z\-]+\.)+[A-Za-z]{2,4}\z/.match(params[:userEmail])
+                return switch_to_get ORGANIZATIONS + "/#{params[:current_organization]}/#{params[:current_tab]}/add_user" + "?error=This is not a valid email address!"
               end
 
-              user.invite_user_with_role_to_space($config, params[:userEmail], params[:current_space], params[:userType])
-              return switch_to_get ORGANIZATIONS + "/#{params[:current_organization]}/spaces/#{params[:current_space]}/#{params[:current_tab]}"
-            rescue Library::Users::UserError => e
-              return switch_to_get ORGANIZATIONS + "/#{params[:current_organization]}/spaces/#{params[:current_space]}/#{params[:current_tab]}/add_user/new" + "?error=#{e.description}"
-            rescue CFoundry::NotAuthorized => e
-              return switch_to_get ORGANIZATIONS + "/#{params[:current_organization]}/spaces/#{params[:current_space]}/#{params[:current_tab]}/add_user/new" + "?error=#{e.description}"
-            end
+              begin
+                user.invite_user_with_role_to_org($config, params[:userEmail], params[:current_organization], params[:userType])
+                return switch_to_get ORGANIZATIONS + "/#{params[:current_organization]}/#{params[:current_tab]}"
+
+              rescue Library::Users::DoesNotExist => e
+                return switch_to_get ORGANIZATIONS + "/#{params[:current_organization]}/#{params[:current_tab]}/add_user" + "?error=#{e.description}"
+              rescue Library::Users::IsNotActive => e
+                return switch_to_get ORGANIZATIONS + "/#{params[:current_organization]}/#{params[:current_tab]}/add_user" + "?error=#{e.description}"
+              rescue CFoundry::NotAuthorized => e
+                return switch_to_get ORGANIZATIONS + "/#{params[:current_organization]}/#{params[:current_tab]}/add_user" + "?error=#{e.description}"
+              end
+          else
+
+              unless /\b[A-Z0-9._%a-z\-]+@(?:[A-Z0-9a-z\-]+\.)+[A-Za-z]{2,4}\z/.match(params[:userEmail])
+                return switch_to_get ORGANIZATIONS + "/#{params[:current_organization]}/spaces/#{params[:current_space]}/#{params[:current_tab]}/add_user/new" + "?error=This is not a valid email address!"
+              end
+
+              begin
+                if !user.any_org_roles?($config, params[:current_organization], params[:userEmail])
+                  user.invite_user_with_role_to_org($config, params[:userEmail], params[:current_organization], "auditor")
+                end
+                user.invite_user_with_role_to_space($config, params[:userEmail], params[:current_space], params[:userType])
+                return switch_to_get ORGANIZATIONS + "/#{params[:current_organization]}/spaces/#{params[:current_space]}/#{params[:current_tab]}"
+
+              rescue Library::Users::DoesNotExist => e
+                return switch_to_get ORGANIZATIONS + "/#{params[:current_organization]}/spaces/#{params[:current_space]}/#{params[:current_tab]}/add_user/new" + "?error=#{e.description}"
+              rescue Library::Users::IsNotActive => e
+                return switch_to_get ORGANIZATIONS + "/#{params[:current_organization]}/spaces/#{params[:current_space]}/#{params[:current_tab]}/add_user/new" + "?error=#{e.description}"
+              rescue CFoundry::NotAuthorized => e
+                return switch_to_get ORGANIZATIONS + "/#{params[:current_organization]}/spaces/#{params[:current_space]}/#{params[:current_tab]}/add_user/new" + "?error=#{e.description}"
+              end
           end
         end
 
