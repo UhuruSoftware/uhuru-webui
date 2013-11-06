@@ -94,22 +94,36 @@ module Library
     def invite_user_with_role_to_org(config, username, org_guid, role)
       user_setup_obj = UsersSetup.new(config)
       user_guid = user_setup_obj.uaa_get_user_by_name(username)
+      admin_token = user_setup_obj.get_admin_token
+      admin_user = Library::Users.new(admin_token, $cf_target)
+      active_user = admin_user.get_user_from_ccng(user_guid)
 
       if user_guid
-        add_user_to_org_with_role(org_guid, user_guid, [role])
+        if active_user
+          add_user_to_org_with_role(org_guid, user_guid, [role])
+        else
+          raise IsNotActive.new('not active', 'The user you are trying to invite does not confirmed his account yet.')
+        end
       else
-        raise UserError.new('inexistent', 'Cannot find this e-mail address. Users have to register to the cloud before they can be invited to join an organization.')
+        raise DoesNotExist.new('inexistent', 'Cannot find this e-mail address. Users have to register to the cloud before they can be invited to join an organization.')
       end
     end
 
     def invite_user_with_role_to_space(config, username, space_guid, role)
       user_setup_obj = UsersSetup.new(config)
       user_guid = user_setup_obj.uaa_get_user_by_name(username)
+      admin_token = user_setup_obj.get_admin_token
+      admin_user = Library::Users.new(admin_token, $cf_target)
+      active_user = admin_user.get_user_from_ccng(user_guid)
 
       if user_guid
-        add_user_with_role_to_space(space_guid, user_guid, [role])
+        if active_user
+          add_user_with_role_to_space(space_guid, user_guid, [role])
+        else
+          raise IsNotActive.new('not active', 'The user you are trying to invite does not confirmed his account yet.')
+        end
       else
-        raise UserError.new('inexistent', 'Cannot find this e-mail address. Users have to register to the cloud before they can be invited to join a space.')
+        raise DoesNotExist.new('inexistent', 'Cannot find this e-mail address. Users have to register to the cloud before they can be invited to join a space.')
       end
     end
 
@@ -233,6 +247,12 @@ module Library
       end
     end
 
+    def get_user_from_ccng(user_guid)
+      @client.users.find { |u|
+        u.guid == user_guid
+      }
+    end
+
     class User
       attr_reader :email, :role, :verified, :guid
 
@@ -244,7 +264,17 @@ module Library
       end
     end
 
-    class UserError < Exception
+    class DoesNotExist < Exception
+      attr_reader :message, :description
+
+      def initialize(message, description)
+        super(message)
+        @message = message
+        @description = description
+      end
+    end
+
+    class IsNotActive < Exception
       attr_reader :message, :description
 
       def initialize(message, description)
