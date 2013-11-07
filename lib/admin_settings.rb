@@ -125,7 +125,7 @@ class Uhuru::Webui::AdminSettings < VCAP::Config
   end
 
   def self.import_settings!(source, dest)
-    dest.each do |key|
+    dest.each do |key, value|
       if source.has_key?(key)
         if (dest[key].is_a?(Hash) && source[key].is_a?(Hash))
           import_settings!(source[key], dest[key])
