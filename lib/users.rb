@@ -105,7 +105,7 @@ module Library
           raise IsNotActive.new('not active', 'The user you are trying to invite does not confirmed his account yet.')
         end
       else
-        raise DoesNotExist.new('inexistent', 'Cannot find this e-mail address. Users have to register to the cloud before they can be invited to join an organization.')
+        raise DoesNotExist.new('Cannot find this e-mail address. Users have to register to the cloud before they can be invited to join an organization.', 'An email has been send to the user you have tried to invite asking if it wants to join the community.')
       end
     end
 
@@ -123,7 +123,7 @@ module Library
           raise IsNotActive.new('not active', 'The user you are trying to invite does not confirmed his account yet.')
         end
       else
-        raise DoesNotExist.new('inexistent', 'Cannot find this e-mail address. Users have to register to the cloud before they can be invited to join a space.')
+        raise DoesNotExist.new('Cannot find this e-mail address. Users have to register to the cloud before they can be invited to join a space.', 'An email has been send to the user you have tried to invite asking if it wants to join the community.')
       end
     end
 
@@ -251,6 +251,21 @@ module Library
       @client.users.find { |u|
         u.guid == user_guid
       }
+    end
+
+    def send_invitation_email(host, config, email, invited_by, role, org, space)
+      #creating a json string that contains all data
+      data = "{\"email\" : \"#{email}\", \"invited_by\" : \"#{invited_by}\", \"role\" : \"#{role}\", \"org\" : \"#{org}\", \"space\" : \"#{space}\"}"
+      link = "http://#{host}/invitation/#{URI.encode(Base32.encode(data))}"
+
+      email_body = config[:email][:invitation_email]
+      email_body.gsub!('#BY_USER_NAME#', invited_by)
+      email_body.gsub!('#INVITATION_LINK#', link)
+
+      Email::send_email(email, 'Uhuru Cloud invitation', email_body)
+
+      email_body.gsub!(link, '#INVITATION_LINK#')
+      email_body.gsub!(invited_by, '#BY_USER_NAME#')
     end
 
     class User

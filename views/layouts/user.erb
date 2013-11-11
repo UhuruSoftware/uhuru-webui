@@ -130,7 +130,7 @@
                 <button type="button" onclick="window.location.assign('<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/spaces/#{current_space}/#{current_tab}" %>');">Close</button>
               </div>
             </div>
-            <script type="text/javascript">show_modal(document.getElementById("errror_modal"), false);</script>
+            <script type="text/javascript">show_modal(document.getElementById("error_modal"), false);</script>
         <% end %>
     <% elsif defined?(current_organization) && current_organization %>
         <% if (request.path == Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/#{current_tab}") %>
@@ -148,7 +148,7 @@
                 <button type="button" onclick="window.location.assign('<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/#{current_tab}" %>');">Close</button>
               </div>
             </div>
-            <script type="text/javascript">show_modal(document.getElementById("errror_modal"), false);</script>
+            <script type="text/javascript">show_modal(document.getElementById("error_modal"), false);</script>
         <% end %>
     <% else %>
         <% if (request.path == Uhuru::Webui::SinatraRoutes::ORGANIZATIONS) %>
@@ -166,7 +166,7 @@
                 <button type="button" onclick="window.location.assign('<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS %>');">Close</button>
               </div>
             </div>
-            <script type="text/javascript">show_modal(document.getElementById("errror_modal"), false);</script>
+            <script type="text/javascript">show_modal(document.getElementById("error_modal"), false);</script>
         <% end %>
     <% end %>
 <% end %>

@@ -113,23 +113,62 @@ module Uhuru::Webui
           begin
             user_sign_up = UsersSetup.new($config)
             user = user_sign_up.signup(params[:email], $config[:webui][:activation_link_secret], params[:first_name], params[:last_name])
+            user_guid = user.guid
 
-            link = "http://#{request.env['HTTP_HOST'].to_s}/activate/#{URI.encode(Base32.encode(pass))}/#{URI.encode(Base32.encode(user.guid))}/#{params[:email]}"
+            #verify if the user is invited by someone or it is a normal signup
+            if session[:invitation_invited_by] == nil || session[:invitation_role] == nil || session[:invitation_org] == nil
+              link = "http://#{request.env['HTTP_HOST'].to_s}/activate/#{URI.encode(Base32.encode(pass))}/#{URI.encode(Base32.encode(user.guid))}/#{params[:email]}"
 
-            email_body = $config[:email][:registration_email]
-            email_body.gsub!('#ACTIVATION_LINK#', link)
-            email_body.gsub!('#FIRST_NAME#', params[:first_name])
-            email_body.gsub!('#LAST_NAME#', params[:last_name])
-            email_body.gsub!('#WEBSITE_URL#', "http://#{$config[:domain]}")
+              email_body = $config[:email][:registration_email]
+              email_body.gsub!('#ACTIVATION_LINK#', link)
+              email_body.gsub!('#FIRST_NAME#', params[:first_name])
+              email_body.gsub!('#LAST_NAME#', params[:last_name])
+              email_body.gsub!('#WEBSITE_URL#', "http://#{$config[:domain]}")
 
-            Email::send_email(params[:email], 'Uhuru account confirmation', email_body)
+              Email::send_email(params[:email], 'Uhuru account confirmation', email_body)
 
-            email_body.gsub!(link, '#ACTIVATION_LINK#')
-            email_body.gsub!( params[:first_name], '#FIRST_NAME#')
-            email_body.gsub!(params[:last_name], '#LAST_NAME#')
-            email_body.gsub!( "http://#{$config[:domain]}", '#WEBSITE_URL#')
+              email_body.gsub!(link, '#ACTIVATION_LINK#')
+              email_body.gsub!( params[:first_name], '#FIRST_NAME#')
+              email_body.gsub!(params[:last_name], '#LAST_NAME#')
+              email_body.gsub!( "http://#{$config[:domain]}", '#WEBSITE_URL#')
 
-            redirect PLEASE_CONFIRM
+              redirect PLEASE_CONFIRM
+            else
+              begin
+                #change the secret password
+                user = UsersSetup.new($config)
+                user.change_password(user_guid, params[:password], $config[:webui][:signup_user_password])
+
+                #make an action (read orgs) with the user token in order to activate it user in the ccdb
+                active_user = user.login(params[:email], params[:password])
+                target = $config[:cloud_controller_url]
+                CFoundry::V2::Client.new(target, active_user.token).organizations
+
+                #make the invitation afther the user is active ...
+                admin = UsersSetup.new($config)
+                admin_token = admin.get_admin_token
+                invite = Library::Users.new(admin_token, target)
+
+                if session[:invitation_space] == nil || session[:invitation_space] == ""
+                  invite.invite_user_with_role_to_org($config, params[:email], session[:invitation_org], session[:invitation_role])
+                else
+                  if !invite.any_org_roles?($config, session[:invitation_org], params[:email])
+                    invite.invite_user_with_role_to_org($config, params[:email], session[:invitation_org], "auditor")
+                  end
+                  invite.invite_user_with_role_to_space($config, params[:email], session[:invitation_space], session[:invitation_role])
+                end
+              rescue Exception => e
+                return switch_to_get SIGNUP + "?message=A an error occurred on your invitation from #{session[:invitation_invited_by]}."
+              end
+
+              session[:invitation_invited_email] = nil
+              session[:invitation_invited_by] = nil
+              session[:invitation_org] = nil
+              session[:invitation_space] = nil
+              session[:invitation_role] = nil
+
+              redirect ACTIVE
+            end
           rescue CF::UAA::TargetError => e
             return switch_to_get SIGNUP + "?message=#This username is already taken!&username=#{params[:email]}&first_name=#{params[:first_name]}&last_name=#{params[:last_name]}"
           end
@@ -230,6 +269,21 @@ module Uhuru::Webui
           user.recover_password(user_id, password)
 
           redirect LOGIN
+        end
+
+
+        # invite user
+        app.get INVITE_USER do
+          hashed_data = Base32.decode(params[:data])
+          data = JSON.parse(hashed_data)
+
+          session[:invitation_invited_email] = data['email']
+          session[:invitation_invited_by] = data['invited_by']
+          session[:invitation_role] = data['role']
+          session[:invitation_org] = data['org']
+          session[:invitation_space] = data['space']
+
+          return switch_to_get SIGNUP
         end
       end
     end

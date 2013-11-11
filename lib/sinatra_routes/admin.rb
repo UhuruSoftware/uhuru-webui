@@ -229,7 +229,8 @@ module Uhuru::Webui
                   :enable_tls => $admin[:email][:enable_tls],
                   :registration_email => $admin[:email][:registration_email],
                   :welcome_email => $admin[:email][:welcome_email],
-                  :password_recovery_email => $admin[:email][:password_recovery_email]
+                  :password_recovery_email => $admin[:email][:password_recovery_email],
+                  :invitation_email => $admin[:email][:invitation_email]
               }
           }
         end
@@ -252,6 +253,7 @@ module Uhuru::Webui
           $admin[:email][:registration_email] = params[:registration_email]
           $admin[:email][:welcome_email] = params[:welcome_email]
           $admin[:email][:password_recovery_email] = params[:password_recovery_email]
+          $admin[:email][:invitation_email] = params[:invitation_email]
           Uhuru::Webui::AdminSettings.save_changed_value()
 
           redirect ADMINISTRATION_EMAIL

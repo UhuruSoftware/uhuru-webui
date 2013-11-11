@@ -13,6 +13,7 @@ module Uhuru::Webui
 
     FORGOT_PASSWORD           = "#{INDEX}forgot_password"
     RESET_OLD_PASSWORD        = "#{INDEX}reset_old_password/:user_id/:random_password"
+    INVITE_USER               = "#{INDEX}invitation/:data"
 
 
     ACCOUNT                   = "#{INDEX}account"

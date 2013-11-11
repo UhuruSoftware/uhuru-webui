@@ -13,6 +13,7 @@ module Uhuru::Webui
           see_cards = Library::Users.new(session[:token], $cf_target).check_user_org_roles(params[:org_guid], session[:user_guid], ["owner", "billing"])
 
           error_message = params[:error] if defined?(params[:error])
+          warning_message = params[:warning] if defined?(params[:warning])
 
           erb :'user_pages/organization',
               {
@@ -26,6 +27,7 @@ module Uhuru::Webui
                       :auditors_list => auditors_list,
                       :see_cards => see_cards,
                       :error_message => error_message,
+                      :warning_message => warning_message,
                       :include_erb => :'user_pages/modals/members_add'
                   }
               }
@@ -40,6 +42,7 @@ module Uhuru::Webui
           developers_list = space.read_developers($config, params[:space_guid])
           auditors_list = space.read_auditors($config, params[:space_guid])
           error_message = params[:error] if defined?(params[:error])
+          warning_message = params[:warning] if defined?(params[:warning])
 
           erb :'user_pages/space',
               {
@@ -54,6 +57,7 @@ module Uhuru::Webui
                       :auditors_list => auditors_list,
                       :developers_list => developers_list,
                       :error_message => error_message,
+                      :warning_message => warning_message,
                       :include_erb => :'user_pages/modals/members_add'
                   }
               }
@@ -73,14 +77,14 @@ module Uhuru::Webui
                 return switch_to_get ORGANIZATIONS + "/#{params[:current_organization]}/#{params[:current_tab]}"
 
               rescue Library::Users::DoesNotExist => e
-                return switch_to_get ORGANIZATIONS + "/#{params[:current_organization]}/#{params[:current_tab]}/add_user" + "?error=#{e.description}"
+                user.send_invitation_email(request.env['HTTP_HOST'].to_s, $config, params[:userEmail], session[:username], params[:userType], params[:current_organization], params[:current_space])
+                return switch_to_get ORGANIZATIONS + "/#{params[:current_organization]}/#{params[:current_tab]}/add_user" + "?error=#{e.message}&warning=#{e.description}"
               rescue Library::Users::IsNotActive => e
                 return switch_to_get ORGANIZATIONS + "/#{params[:current_organization]}/#{params[:current_tab]}/add_user" + "?error=#{e.description}"
               rescue CFoundry::NotAuthorized => e
                 return switch_to_get ORGANIZATIONS + "/#{params[:current_organization]}/#{params[:current_tab]}/add_user" + "?error=#{e.description}"
               end
           else
-
               unless /\b[A-Z0-9._%a-z\-]+@(?:[A-Z0-9a-z\-]+\.)+[A-Za-z]{2,4}\z/.match(params[:userEmail])
                 return switch_to_get ORGANIZATIONS + "/#{params[:current_organization]}/spaces/#{params[:current_space]}/#{params[:current_tab]}/add_user/new" + "?error=This is not a valid email address!"
               end
@@ -93,7 +97,8 @@ module Uhuru::Webui
                 return switch_to_get ORGANIZATIONS + "/#{params[:current_organization]}/spaces/#{params[:current_space]}/#{params[:current_tab]}"
 
               rescue Library::Users::DoesNotExist => e
-                return switch_to_get ORGANIZATIONS + "/#{params[:current_organization]}/spaces/#{params[:current_space]}/#{params[:current_tab]}/add_user/new" + "?error=#{e.description}"
+                user.send_invitation_email(request.env['HTTP_HOST'].to_s, $config, params[:userEmail], session[:username], params[:userType], params[:current_organization], params[:current_space])
+                return switch_to_get ORGANIZATIONS + "/#{params[:current_organization]}/spaces/#{params[:current_space]}/#{params[:current_tab]}/add_user/new" + "?error=#{e.message}&warning=#{e.description}"
               rescue Library::Users::IsNotActive => e
                 return switch_to_get ORGANIZATIONS + "/#{params[:current_organization]}/spaces/#{params[:current_space]}/#{params[:current_tab]}/add_user/new" + "?error=#{e.description}"
               rescue CFoundry::NotAuthorized => e

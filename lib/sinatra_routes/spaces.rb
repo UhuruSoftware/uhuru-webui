@@ -13,6 +13,7 @@ module Uhuru::Webui
           see_cards = Library::Users.new(session[:token], $cf_target).check_user_org_roles(organization_guid, session[:user_guid], ["owner", "billing"])
 
           error_message = params[:error] if defined?(params[:error])
+          warning_message = params[:warning] if defined?(params[:warning])
 
           case params[:tab]
             when 'spaces'
@@ -44,7 +45,8 @@ module Uhuru::Webui
                           :billings_list => billings_list,
                           :auditors_list => auditors_list,
                           :see_cards => see_cards,
-                          :error_message => error_message
+                          :error_message => error_message,
+                          :warning_message => warning_message
                       }
                   }
             when 'domains'
@@ -118,6 +120,7 @@ module Uhuru::Webui
 
             collections = app.read_collections
             error_message = params[:error] if defined?(params[:error])
+            warning_message = params[:warning] if defined?(params[:warning])
           rescue CFoundry::NotAuthorized => e
             return switch_to_get ORGANIZATIONS + "/#{params[:org_guid]}/spaces" + "?error=#{e.description}"
           end
@@ -172,7 +175,8 @@ module Uhuru::Webui
                           :owners_list => owners_list,
                           :auditors_list => auditors_list,
                           :developers_list => developers_list,
-                          :error_message => error_message
+                          :error_message => error_message,
+                          :warning_message => warning_message
                       }
                   }
             when 'routes'

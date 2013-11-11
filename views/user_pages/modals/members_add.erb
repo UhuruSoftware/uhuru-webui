@@ -25,6 +25,9 @@
         <% unless error_message.nil? || error_message.empty? %>
             <div class="error"> <%= error_message %> </div>
         <% end %>
+        <% unless warning_message.nil? || warning_message.empty? %>
+            <div class="warning"> <%= warning_message %> </div>
+        <% end %>
       </div>
 
       <div class="modal_footer">

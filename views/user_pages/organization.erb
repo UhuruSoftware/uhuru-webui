@@ -291,7 +291,8 @@
                     :current_organization => current_organization,
                     :current_tab => current_tab,
                     :current_space => nil,
-                    :error_message => error_message
+                    :error_message => error_message,
+                    :warning_message => defined?(warning_message) ? warning_message : nil
             })
     %>
 <% end %>

@@ -14,9 +14,15 @@
         </div>
 
         <div class="modal_content">
-            <div>E-mail</div>
-            <input type="text" name="email" value = "<%= error_username %>" autocomplete="off" autofocus />
-            <br />
+          <% if defined?(session[:invitation_invited_email]) && session[:invitation_invited_email] != nil %>
+              <div>E-mail</div>
+              <input type="text" name="email" value = "<%= session[:invitation_invited_email] %>" readonly />
+              <br />
+          <% else %>
+              <div>E-mail</div>
+              <input type="text" name="email" value = "<%= error_username %>" autocomplete="off" autofocus />
+              <br />
+          <% end %>
 
             <div>Password (minimum 8 characters)</div>
             <input type="password" name="password" autocomplete="off" />

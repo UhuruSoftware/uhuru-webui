@@ -55,7 +55,8 @@ class Uhuru::Webui::AdminSettings < VCAP::Config
             :enable_tls                       => Object,
             :registration_email               => String,
             :welcome_email                    => String,
-            :password_recovery_email          => String
+            :password_recovery_email          => String,
+            :invitation_email                 => String
         },
 
         :billing => {

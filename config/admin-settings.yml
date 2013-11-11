@@ -5,9 +5,9 @@ contact:
   phone: +1 (425) 406-6383
   email: uhuru@uhurusoftware.com
 recaptcha:
-  use_recaptcha: false
-  recaptcha_public_key: 6LfuXN4SAAAAAAVoUDfpUzxftBrpecXQSzTuKcZk
-  recaptcha_private_key: 6LfuXN4SAAAAAEuH--10s_lH_HMeYdjQtxha3UKd
+  use_recaptcha: 'false'
+  recaptcha_public_key: 6LdDtekSAAAAAOwfbDSke_AIACFj9Re3ZLR3c3Me
+  recaptcha_private_key: 6LdDtekSAAAAAAKWoEsECzJnSBGAIri8UsCcqf-w
 webui:
   page_title: Uhuru WebUi
   site_tab: Uhuru
@@ -27,10 +27,10 @@ webui:
   eclipse_url: http://docs.cloudfoundry.com/tools/STS/configuring-STS.html
   company_link: http://www.uhurusoftware.com
   support_link: http://uhurusoftware.zendesk.com
-  start_page_text: ! "<h1>Ready To Go</h1>\r\n<h3> Host your web applications in
-    minutes. We support apps written in PHP, Node.js, Ruby, Java and .NET. Sign up
-    for your free beta account now. Find more details about the Uhuru App Cloud features
-    on our web site. </h3>"
+  start_page_text: ! "<h1>Ready To Go</h1>\r\n<h3> Host your web applications in minutes.
+    We support apps written in PHP, Node.js, Ruby, Java and .NET. Sign up for your
+    free beta account now. Find more details about the Uhuru App Cloud features on
+    our web site. </h3>"
   start_page_splash_text: <h2>Getting Started</h2> <h3> Learn how to register with
     Ready To Go and start hosting your own web applications. See how you can setup
     teams for collaboration on your applications and setup multiple app instances
@@ -44,56 +44,29 @@ email:
   secret: freed0m!
   auth_method: :login
   enable_tls: 'true'
-  registration_email: |
-    <h3>Hello #FIRST_NAME#,</h3>
-    <p>
-      This is the Uhuru Cloud confirmation e-mail.</br>
-      Your account is ready to use. Please click the link bellow in order to continue and finish the sign-up process:
-    </p>
-    <a href="#ACTIVATION_LINK#">#ACTIVATION_LINK#</a>
-
-    <p>
-      If you have not signed-up to Uhuru Cloud, please ignore this email.
-    </p>
-    <p>
-    Thank you,<br/>
-    The Uhuru Cloud Team
-  welcome_email: |
-    <h3>Hello #FIRST_NAME#,</h3>
-    <p>
-      Your Uhuru Cloud account is now active and ready to be used.
-    </p>
-
-    <p>
-      You can start using the cloud by browsing to our <a href="#WEBSITE_URL#">web console</a>.
-    </p>
-
-    Thank you for using our service,<br/>
-    The Uhuru Cloud Team
-  password_recovery_email: |
-    <h3>Hello #FIRST_NAME#,</h3>
-    <p>
-      This is the Uhuru Cloud password reset e-mail request.</br>
-    </p>
-
-    <p>
-      If you have not requested a password recovery, please ignore this email.</br>
-      Your new password is <b>#PASSWORD#</b> to apply it please click the link bellow:
-    </p>
-
-    <a href="#ACTIVATION_LINK#">#ACTIVATION_LINK#</a>
-
-    <p>
-      If you do not want to keep this password, you can change it in the settings panel.
-    </p>
-
-    <p>
-    The Uhuru Cloud Team
-
+  registration_email: ! "<h3>Hello #FIRST_NAME#,</h3>\n<p>\n  This is the Uhuru Cloud
+    confirmation e-mail.</br>\n  Your account is ready to use. Please click the link
+    bellow in order to continue and finish the sign-up process:\n</p>\n<a href=\"#ACTIVATION_LINK#\">#ACTIVATION_LINK#</a>\n\n<p>\n
+    \ If you have not signed-up to Uhuru Cloud, please ignore this email.\n</p>\n<p>\nThank
+    you,<br/>\nThe Uhuru Cloud Team\n"
+  welcome_email: ! "<h3>Hello #FIRST_NAME#,</h3>\n<p>\n  Your Uhuru Cloud account
+    is now active and ready to be used.\n</p>\n\n<p>\n  You can start using the cloud
+    by browsing to our <a href=\"#WEBSITE_URL#\">web console</a>.\n</p>\n\nThank you
+    for using our service,<br/>\nThe Uhuru Cloud Team\n"
+  password_recovery_email: ! "<h3>Hello #FIRST_NAME#,</h3>\n<p>\n  This is the Uhuru
+    Cloud password reset e-mail request.</br>\n</p>\n\n<p>\n  If you have not requested
+    a password recovery, please ignore this email.</br>\n  Your new password is <b>#PASSWORD#</b>
+    to apply it please click the link bellow:\n</p>\n\n<a href=\"#ACTIVATION_LINK#\">#ACTIVATION_LINK#</a>\n\n<p>\n
+    \ If you do not want to keep this password, you can change it in the settings
+    panel.\n</p>\n\n<p>\nThe Uhuru Cloud Team\n"
+  invitation_email: ! "<h3>Hello,</h3>\n<p>\n  You have been invited to join the Uhuru
+    comunity by #BY_USER_NAME#.</br>\n</p>\n\n<p>\n  Click the link bellow or copy/paste
+    it into your prefered browser in order to complete a signup form.\n</p>\n<a href=\"#INVITATION_LINK#\">#INVITATION_LINK#</a>\n\n\n<p>\n
+    \ If you have no desire to join please ignore this email.</br>\n</p>\n\n<p>\nThe
+    Uhuru Cloud Team\n"
 billing:
-  provider: stripe
+  provider: none
   options:
     stripe:
       publishable_key: pk_test_gRsPhGxpLivq7IsDPyuY9zs8
       secret_key: sk_test_fZOqxL3KHooewcpfplMZxVby
-
