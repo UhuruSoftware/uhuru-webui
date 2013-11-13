@@ -141,6 +141,31 @@ class UsersSetup
     uaac.get(:user, user_guid)
   end
 
+  def get_connection
+    conn = PG.connect(
+        host:     $config[:webui_db][:database][:host],
+        port:     $config[:webui_db][:database][:port],
+        dbname:   $config[:webui_db][:database][:dbname],
+        user:     $config[:webui_db][:database][:user],
+        password: $config[:webui_db][:database][:password]
+    )
+
+    return conn
+  end
+
+  def create_promo_code(user_id, user_promo_code)
+    conn = get_connection
+    conn.exec("INSERT INTO user_promo_codes VALUES ('#{user_id}', '#{user_promo_code}');")
+    conn.close
+  end
+
+  def get_all_promo_codes
+    conn = get_connection
+    codes = conn.exec("SELECT * FROM user_promo_codes")
+    conn.close
+
+    return codes
+  end
 
   def get_admin_token
     token_issuer = CF::UAA::TokenIssuer.new(@uaaApi, @client_id, @client_secret)

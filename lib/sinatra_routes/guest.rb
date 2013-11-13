@@ -114,6 +114,11 @@ module Uhuru::Webui
             user_sign_up = UsersSetup.new($config)
             user = user_sign_up.signup(params[:email], $config[:webui][:activation_link_secret], params[:first_name], params[:last_name])
             user_guid = user.guid
+            promo_code = params[:promocode]
+
+            if promo_code != '' && promo_code != nil
+              user_sign_up.create_promo_code(user_guid, promo_code)
+            end
 
             #verify if the user is invited by someone or it is a normal signup
             if session[:invitation_invited_by] == nil || session[:invitation_role] == nil || session[:invitation_org] == nil

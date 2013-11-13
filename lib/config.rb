@@ -20,11 +20,20 @@ class Uhuru::Webui::Config < VCAP::Config
         :client_secret                    => String
       },
       :uaadb => {
-        :host                             => String,
-        :user                             => String,
-        :password                         => String,
-        :port                             => Integer,
-        :dbname                           => String
+          :host                             => String,
+          :user                             => String,
+          :password                         => String,
+          :port                             => Integer,
+          :dbname                           => String
+      },
+      :webui_db => {
+          :database => {
+            :host                             => String,
+            :user                             => String,
+            :password                         => String,
+            :port                             => Integer,
+            :dbname                           => String
+          }
       },
       :ccdb => {
         :host                             => String,

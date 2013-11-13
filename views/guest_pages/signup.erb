@@ -36,8 +36,12 @@
             <input type="text" name="first_name" value = "<%= error_first_name %>" />
             <br />
 
-            <div for="last_name">Last Name: </div>
+            <div for="last_name">Last Name </div>
             <input type="text" name="last_name" value = "<%= error_last_name %>" />
+
+            <div>Promo Code </div>
+            <input type="text" name="promocode" value = "" />
+
             <br />
             <br />
             <% if $config[:recaptcha][:use_recaptcha] == true || $config[:recaptcha][:use_recaptcha] == "true" %>

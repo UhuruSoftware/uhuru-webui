@@ -561,3 +561,18 @@ $('#nonpayment-form').submit(function( event ){
             $('#org_spinner').hide();
         }   );
 });
+
+/****      promo code     ****/
+
+$.getPromocode = function (name) {
+    var results = new RegExp('[\\?&]' + name + '=([^&#]*)').exec(window.location.href);
+    if (!results) {
+        return ;
+    }
+    return results[1] || 0;
+}
+
+$(document).ready(function () {
+    var code = $.getPromocode('promocode');
+    $('input:text[name=promocode]').val(code);
+});

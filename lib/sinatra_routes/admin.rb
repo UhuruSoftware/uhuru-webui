@@ -382,11 +382,23 @@ END_OF_MESSAGE
         app.get ADMINISTRATION_USERS do
           require_admin
 
+          all_users = []
+          promo_codes = UsersSetup.new($config).get_all_promo_codes
+          users = UsersSetup.new($config).uaa_get_users
+
+          users.each do |user|
+            promo_code = promo_codes.find{|code| code['user_id'] == user[:id]}
+            user[:promo_code] = defined?(promo_code['user_promo_code']) ? promo_code['user_promo_code'] : nil
+            all_users << user
+          end
+
+
+
           erb :'admin/users', {
               :layout => :'layouts/admin',
               :locals => {
                   :current_tab => 'users',
-                  :all_users => UsersSetup.new($config).uaa_get_users
+                  :all_users => all_users
               }
           }
         end

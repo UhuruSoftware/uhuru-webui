@@ -40,8 +40,21 @@ require 'domains'
 require 'routes'
 require 'billing/provider'
 require 'reports'
+require 'active_record'
 
 module Uhuru::Webui
+
+
+  class CreateTables < ActiveRecord::Migration
+    def create
+      create_table :user_promo_codes, :id => false do |t|
+        t.string :user_id
+        t.string :user_promo_code
+      end
+    end
+  end
+
+
   class Webui < Sinatra::Base
 
     ENV_COPY  = %w[ REQUEST_METHOD HTTP_COOKIE rack.request.cookie_string
@@ -90,6 +103,20 @@ module Uhuru::Webui
         cf_users.add_user_to_org_with_role(monitoring_org.guid, admin_guid, ["owner"])
       rescue => e
         $logger.error("Error while trying to add Owner role to the cloud controller admin for sys-org and monitoring - #{e.message}:#{e.backtrace}")
+      end
+
+
+      database = $config[:webui_db][:database]
+
+      ActiveRecord::Base.configurations = database
+      ActiveRecord::Base.establish_connection(database)
+
+      begin
+        CreateTables.new.create
+        $logger.warn("Created table in database at path: #{database}")
+      rescue => e
+        $logger.warn("Assuming database tables already exist - #{e.message}:#{e.backtrace}")
+        nil
       end
 
       super()

@@ -4,6 +4,7 @@
         <td><b>E-mail</b></td>
         <td><b>First Name</b></td>
         <td><b>Last Name</b></td>
+        <td><b>Promo Code</b></td>
         <td><b>Is Admin</b></td>
         <td><b>Actions</b></td>
       </tr>
@@ -15,6 +16,7 @@
             <td ><%= user[:email] %></td>
             <td ><%= user[:first_name] %></td>
             <td ><%= user[:last_name] %></td>
+            <td ><%= user[:promo_code] %></td>
             <td ><%= user[:is_admin] %></td>
             <td >
               <form action="<%= Uhuru::Webui::SinatraRoutes::ADMINISTRATION_USERS_DELETE %>" method="POST" onsubmit="return confirm('Are you sure you want to delete the user?')">

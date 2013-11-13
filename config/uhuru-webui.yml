@@ -3,26 +3,36 @@ pid_filename: /tmp/uhuru_webui.pid
 local_route: 10.0.0.1
 port: 4567
 dev_mode: true
-cloud_controller_url: http://api.rarunchiu.com
+cloud_controller_url: http://api.cf.me
 message_bus_uri: nats://116e42690e023d88a208bff76eca54ca:8889dd351e08cc6f076bc02344320fbc@10.0.100.45:4222
 domain: www.rarunchiu.com
 bind_address: 10.0.102.200
 ccdb:
-  host: '10.0.7.123'
+  host: '10.0.21.14'
   user: 'root'
-  password: 'root'
+  password: '686eb12b290d7d8d2ee3df3c106ef987'
   port: 2544
-  dbname: 'appcloud_ng'
+  dbname: 'ccdb_ng'
 uaadb:
-  host: '10.0.7.123'
+  host: '10.0.21.14'
   user: 'uaa'
-  password: 'uaa'
+  password: '686eb12b290d7d8d2ee3df3c106ef987'
   port: 2544
   dbname: 'uaa'
+webui_db:
+  database:
+    host: 'localhost'
+    user: 'postgres'
+    password: 'marius'
+    port: 5432
+    dbname: 'webui_db'
+    encoding: utf8
+    adapter: postgresql
+    timeout: 2000
 uaa:
-  url: http://uaa.rarunchiu.com
+  url: http://uaa.cf.me
   client_id: webui
-  client_secret: dd127b8a3f0a3dd493bc1ef76c23784d
+  client_secret: 3502490972ebfed99f406795f865fb99
 logging:
   level: debug
   file: /tmp/uhuru_webui.log
@@ -98,7 +108,8 @@ monitoring:
     ruby: https://github.com/cloudfoundry/heroku-buildpack-ruby
 
 template_apps_dir: /tmp/template_apps
-admin_config_file: /tmp/admin-settings.yml
+admin_config_file: /home/marius/Documents/code/private-uhuru-webui/config/admin-settings.yml
+
 billing_data:
   provider: yml
   connection: /tmp/billing_bindings.yml
