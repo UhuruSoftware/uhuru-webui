@@ -61,8 +61,8 @@ reports:
       name: guid
       label: User
   apps_detected_buildpack:
-      label: Apps and Users
-      query: "select
+    label: Apps and Users
+    query: "select
               	apps.created_at, apps.name, apps.detected_buildpack, apps.not_deleted,
               	array_agg(routes.host || '.' || domains.name) as appurl,
               	array_agg(distinct spaces_auditors.user_id) as auditor,
@@ -85,22 +85,41 @@ reports:
               where apps.created_at >= '2013-09-20' AND apps.created_at < '2013-10-26' AND apps.detected_buildpack != ''
               group by apps.created_at, apps.name, apps.detected_buildpack, apps.not_deleted
               order by apps.created_at"
-      users_column:
-        name: guid
-        label: User
+    users_column:
+      name: guid
+      label: User
   services:
-      label: Services
-      query: "select
-              	service_instances.created_at, service_instances.name, services.label
-              from
-              	service_instances
-              join
-              	service_plans on service_instances.service_plan_id = service_plans.id
-              join
-              	services on service_plans.service_id = services.id
-              where service_instances.created_at >= '2013-09-20' AND service_instances.created_at < '2013-10-26'
-              group by service_instances.created_at, service_instances.name, services.label
-              order by service_instances.created_at"
-      users_column:
-        name: guid
-        label: User
+    label: Cumulative Usage
+    query: "CREATE OR REPLACE FUNCTION do_cross_cursor(dimx_name varchar,
+                    dimx_source varchar, dimy_name varchar,
+                    dimy_source varchar, expr varchar)
+                RETURNS refcursor AS $$
+                DECLARE
+                col_list text[] := '{}';
+                query text;
+                r RECORD;
+                result refcursor := 'result';
+                BEGIN
+                FOR r IN EXECUTE 'SELECT DISTINCT '
+                  || dimx_name || '::text AS val ' || dimx_source
+                LOOP
+                col_list := array_append(col_list, 'CASE ' || dimx_name
+                 || ' WHEN ' || quote_literal(r.val) || ' THEN COUNT(' || expr
+                 || ') ELSE 0 END AS ' || quote_ident(r.val) || '');
+                END LOOP;
+                query := 'SELECT ' || dimy_name || '::date as created, '
+                 || array_to_string(col_list, ',')
+                 || ', COUNT(' || expr || ') AS Total '
+                 || dimy_source || ' GROUP BY ' || dimx_name || ', created ORDER BY created';
+                OPEN result NO SCROLL FOR EXECUTE query;
+                RETURN result;
+                END;
+                $$ LANGUAGE plpgsql STRICT;
+
+                SELECT do_cross_cursor('buildpack', 'FROM apps','created_at',
+                     'FROM apps a WHERE buildpack IS NOT NULL',
+                     'id');
+                FETCH ALL FROM result;"
+    users_column:
+      name: guid
+      label: User
