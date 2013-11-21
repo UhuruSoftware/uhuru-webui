@@ -4,6 +4,7 @@ module Uhuru
   end
 end
 
+# The class that manages uhuru-webui.yml config file
 class Uhuru::Webui::Config < VCAP::Config
   DEFAULT_CONFIG_PATH = File.expand_path('../../uhuru-webui.yml', __FILE__)
 

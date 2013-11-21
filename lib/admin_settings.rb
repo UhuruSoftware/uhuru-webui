@@ -4,6 +4,7 @@ module Uhuru
   end
 end
 
+# The class that manages admin-settings.yml file
 class Uhuru::Webui::AdminSettings < VCAP::Config
   define_schema do
     {
@@ -64,7 +65,10 @@ class Uhuru::Webui::AdminSettings < VCAP::Config
     }
   end
 
-
+  # Copies the administration settings from the default file, to the one that will be used by the webui.
+  # If destination file doesn't exist will create one.
+  # destination_file = file to be used by webui containing admin settings
+  #
   def self.bootstrap(destination_file)
     original_file = File.expand_path('../../config/admin-settings.yml', __FILE__)
 
@@ -81,56 +85,61 @@ class Uhuru::Webui::AdminSettings < VCAP::Config
 
         settings = stringify_keys(new_settings.dup)
 
-        File.open(destination_file, "w+") do |f|
-          f.sync = true
-          f.write(settings.to_yaml)
-          f.flush()
-        end
+        write_to_file(destination_file, settings)
+
       else
         FileUtils.cp original_file, destination_file
       end
     end
   end
 
-
+  # Loads settings from a file to a Hash validating the file schema
+  # *args = filename, symbolize_keys=true
+  #
   def self.from_file(*args)
     config = super(*args)
     config
   end
 
+  # Save values to the admin configuration file, then merge them into webui configuration file too
+  #
   def self.save_changed_value
-    path = $config[:admin_config_file]
-
-    settings = stringify_keys($admin.dup)
-
-    File.open(path, "w+") do |f|
-      f.sync = true
-      f.write(settings.to_yaml)
-      f.flush()
-    end
+    write_to_file($config[:admin_config_file], stringify_keys($admin.dup))
 
     merge_config($config, $admin)
   end
 
+  # Keep main config file and admin settings file updated, when admin file is modified the modification will
+  # be merged into config file right away
+  # config = hash containing main config settings
+  # admin_settings = hash containing admin settings
+  #
   def self.merge_config(config, admin_settings)
     admin_settings.each do |key|
-      if config.include?key[0]
-        config[key[0]] = admin_settings[key[0]]
+      first_key = key[0]
+      if config.include?first_key
+        config[first_key] = admin_settings[first_key]
       else
-        config = config.merge({key[0] => key[1]})
+        config = config.merge({first_key => key[1]})
       end
     end
 
     config
   end
 
+  # Recursive method that copies key-values pairs from a yml file to another
+  # source = source hash
+  # dest = destination hash
+  #
   def self.import_settings!(source, dest)
-    dest.each do |key, value|
+    dest.each do |key, _|
       if source.has_key?(key)
-        if (dest[key].is_a?(Hash) && source[key].is_a?(Hash))
-          import_settings!(source[key], dest[key])
+        dest_key = dest[key]
+        source_key = source[key]
+        if (dest_key.is_a?(Hash) && source_key.is_a?(Hash))
+          import_settings!(source_key, dest_key)
         else
-          dest[key] = source[key]
+          dest[key] = source_key
         end
       end
     end
@@ -138,13 +147,28 @@ class Uhuru::Webui::AdminSettings < VCAP::Config
 
   private
 
+  # Transforms keys of a hash from string to symbol
+  # hash = the hash containing the keys
+  #
   def self.stringify_keys(hash)
     if hash.is_a? Hash
       new_hash = {}
-      hash.each {|k, v| new_hash[k.to_s] = stringify_keys(v) }
+      hash.each {|key, value| new_hash[key.to_s] = stringify_keys(value) }
       new_hash
     else
       hash
+    end
+  end
+
+  # Writes a hash to a file
+  # file_path = file path where to write
+  # settings = the hash containing the settings
+  #
+  def self.write_to_file(file_path, settings)
+    File.open(file_path, "w+") do |file|
+      file.sync = true
+      file.write(settings.to_yaml)
+      file.flush()
     end
   end
 

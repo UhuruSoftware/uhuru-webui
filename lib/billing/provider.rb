@@ -8,8 +8,10 @@ module Uhuru
 end
 
 module Uhuru::Webui::Billing
+  #Generic class for billing providers
   class Provider
 
+    # List of existing providers
     def self.providers
       {
           :none => "None",
@@ -17,15 +19,18 @@ module Uhuru::Webui::Billing
       }
     end
 
+    # Includes the classes for all providers
     providers.each do |provider, _|
       require "billing/#{provider.to_s}"
     end
 
+    # Defines the current billing provider used for the deployment
     def self.provider
-      @current_provider = @current_provider || $config[:billing][:provider]
+      billing_provider = $config[:billing][:provider]
+      @current_provider = @current_provider || billing_provider
 
-      if (@provider == nil) || (@current_provider != $config[:billing][:provider])
-        @current_provider = $config[:billing][:provider]
+      if (@provider == nil) || (@current_provider != billing_provider)
+        @current_provider = billing_provider
         @provider = case @current_provider
                       when 'stripe' then Stripe.new
                       else None.new
@@ -34,10 +39,10 @@ module Uhuru::Webui::Billing
       @provider
     end
 
+    # Provides a list of months for expiration credit card month
     def self.months
       months = []
 
-      current_month = Date.today.strftime("%m").to_i
       [{:name => 'January', :value => 1},
        {:name => 'February', :value => 2},
        {:name => 'March', :value => 3},
@@ -56,26 +61,28 @@ module Uhuru::Webui::Billing
       months
     end
 
+    # Provides a list of years for expiration credit card year, max credit card lifespan is in 20 - 25 years
     def self.years
       years = []
 
       current_year = Date.today.strftime("%Y").to_i
-      y = current_year
-      #max credit card lifespan is in 20 - 25 years
-      while y <= current_year + 30 do
-        years.push(y)
-        y += 1
+      year = current_year
+      while year <= current_year + 30 do
+        years.push(year)
+        year += 1
       end
 
       years
     end
 
+    # Provides a list of countries for owner credit card country
     def self.countries
       list = File.open($config[:countries_file], "rb").read
       countries = list.split(';')
       countries
     end
 
+    # Loads the file that contains binding between billing provider customer id and organization
     def initialize
       @data = {}
       @data_file = $config[:billing_data][:connection]
@@ -85,45 +92,83 @@ module Uhuru::Webui::Billing
       @data["bindings"] = {} unless @data.has_key?("bindings")
     end
 
+    # Adds a binding between billing provider customer id and organization
+    # customer_id = billing provider customer id
+    # org_guid = organization guid
+    #
     def add_billing_binding(customer_id, org_guid)
       raise "Not implemented!"
     end
 
+    # Reads the billing binding corresponding to organization guid
+    # org_guid = organization guid
+    #
     def read_credit_card_org(org_guid)
       raise "Not implemented!"
     end
 
+    # Updates credit card information on billing provider side
+    # org_guid = organization guid
+    # token = the token from billing provider used for updating credit card info
+    #
     def update_credit_card(org_guid, token)
       raise "Not implemented!"
     end
 
+    # Deletes credit card on billing provider side and from the billing bindings file
+    # org_guid = organization guid
+    #
     def delete_credit_card_org(org_guid)
       raise "Not implemented!"
     end
 
+    # Creates the customer on billing provider side
+    # email = customer email
+    # token = the token from billing provider used to create customer
+    #
     def create_customer(email, token)
       raise "Not implemented!"
     end
 
     protected
 
+    # Saves binding between billing provider customer id and organization in the billing bindings file
+    # customer_id = billing provider customer id
+    # org_guid = organization guid
+    #
     def save_billing_binding(customer_id, org_guid)
       @data["bindings"][org_guid] = customer_id
       File.write(@data_file, @data.to_yaml)
-    rescue => e
-      raise "Unable to add credit card binding: #{e.message}:#{e.backtrace}"
+    rescue => ex
+      raise "Unable to add credit card binding: #{ex.message}:#{ex.backtrace}"
     end
 
+    # Removes the billing binding from the billing bindings file based on organization guid
+    # org_guid = organization guid
+    #
     def delete_billing_binding(org_guid)
       if @data["bindings"].delete(org_guid)
         File.write(@data_file, @data.to_yaml)
       end
-    rescue => e
-      raise "Unable to remove credit card binding: #{e.message}:#{e.backtrace}"
+    rescue => ex
+      raise "Unable to remove credit card binding: #{ex.message}:#{ex.backtrace}"
     end
 
   end
 
+  # Data holder for the tile displayed in organization/credit cards tab
+  #
+  # last4 = last 4 numbers from credit card number
+  # type = credit card type
+  # name = name of the credit card's owner
+  # exp_month = expiration month of the credit card
+  # exp_year = expiration year of the credit card
+  # address_street = street of the credit card's owner
+  # address_city = city of the credit card's owner
+  # address_state = state of the credit card's owner
+  # address_zip = zip code of the credit card's owner
+  # address_country = country of the credit card's owner
+  #
   class CreditCard
     attr_reader :last4, :type, :name, :exp_month, :exp_year, :address_street, :address_city, :address_state, :address_zip, :address_country
 
