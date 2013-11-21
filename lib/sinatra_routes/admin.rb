@@ -1,3 +1,6 @@
+#
+#   NOTE: This is the admin page from a LoggedIn admin user.
+#
 require "admin_settings"
 
 module Uhuru::Webui
@@ -5,6 +8,7 @@ module Uhuru::Webui
     module Administration
       def self.registered(app)
 
+        # Get method for the administration page
         app.get ADMINISTRATION do
           require_admin
 
@@ -16,6 +20,7 @@ module Uhuru::Webui
           }
         end
 
+        # Get method for the settings tab
         app.get ADMINISTRATION_SETTINGS do
           require_admin
 
@@ -28,9 +33,10 @@ module Uhuru::Webui
           }
         end
 
+        # Post method for the settings tab
         app.post ADMINISTRATION_SETTINGS do
           require_admin
-          message = ""
+          message = ''
 
           if params.has_key? ("btn_export")
             send_file $config[:admin_config_file], :filename => "admin_settings.yml", :type => 'Application/octet-stream'
@@ -48,8 +54,9 @@ module Uhuru::Webui
                   $admin = new_settings.dup
                   Uhuru::Webui::AdminSettings.save_changed_value
                   message = "Import successful!"
-                rescue Membrane::SchemaValidationError => error
-                  message = "Error: #{error.message}"
+                rescue Membrane::SchemaValidationError => ex
+                  $logger.error("#{ex.message}:#{ex.backtrace}")
+                  message = "Error: #{ex.message}"
                 end
               else
                 message = "Could not parse yaml file"
@@ -71,6 +78,7 @@ module Uhuru::Webui
           end
         end
 
+        # Get method for the Web UI tab
         app.get ADMINISTRATION_WEBUI do
           require_admin
 
@@ -101,6 +109,7 @@ module Uhuru::Webui
           }
         end
 
+        # Post method for the Web UI tab
         app.post ADMINISTRATION_WEBUI do
           require_admin
 
@@ -129,6 +138,7 @@ module Uhuru::Webui
           redirect ADMINISTRATION_WEBUI
         end
 
+        # Get method for the recaptcha tab
         app.get ADMINISTRATION_RECAPTCHA do
           require_admin
 
@@ -143,6 +153,7 @@ module Uhuru::Webui
           }
         end
 
+        # Post method for the recaptcha tab
         app.post ADMINISTRATION_RECAPTCHA do
           require_admin
 
@@ -155,6 +166,7 @@ module Uhuru::Webui
           redirect ADMINISTRATION_RECAPTCHA
         end
 
+        # Get method for the contact tab
         app.get ADMINISTRATION_CONTACT do
           require_admin
 
@@ -170,6 +182,7 @@ module Uhuru::Webui
           }
         end
 
+        # Post method for the contact tab
         app.post ADMINISTRATION_CONTACT do
           require_admin
 
@@ -182,6 +195,7 @@ module Uhuru::Webui
           redirect ADMINISTRATION_CONTACT
         end
 
+        # Get method for the billing tab
         app.get ADMINISTRATION_BILLING do
           require_admin
 
@@ -193,6 +207,7 @@ module Uhuru::Webui
           }
         end
 
+        # Post method for the billing tab
         app.post ADMINISTRATION_BILLING do
           require_admin
 
@@ -209,6 +224,7 @@ module Uhuru::Webui
           redirect ADMINISTRATION_BILLING
         end
 
+        # Get method for the email tab
         app.get ADMINISTRATION_EMAIL do
           require_admin
 
@@ -235,17 +251,27 @@ module Uhuru::Webui
           }
         end
 
+        # Post method for the email tab
         app.post ADMINISTRATION_EMAIL do
           require_admin
 
-          $admin[:email][:from] = params[:from]
-          $admin[:email][:from_alias] = params[:from_alias]
-          $admin[:email][:server] = params[:server]
-          $admin[:email][:port] = Integer(params[:port])
-          $admin[:email][:user] = params[:user]
-          $admin[:email][:secret] = params[:secret]
-          $admin[:email][:auth_method] = params[:auth_method].to_sym
-          if params[:enable_tls]
+          from = params[:from]
+          from_alias = params[:from_alias]
+          port = params[:port]
+          server = params[:server]
+          user = params[:user]
+          secret = params[:secret]
+          auth_method = params[:auth_method]
+          enable_tls = params[:enable_tls]
+
+          $admin[:email][:from] = from
+          $admin[:email][:from_alias] = from_alias
+          $admin[:email][:server] = server
+          $admin[:email][:port] = Integer(port)
+          $admin[:email][:user] = user
+          $admin[:email][:secret] = secret
+          $admin[:email][:auth_method] = auth_method.to_sym
+          if enable_tls
             $admin[:email][:enable_tls] = 'true'
           else
             $admin[:email][:enable_tls] = 'false'
@@ -259,21 +285,23 @@ module Uhuru::Webui
           redirect ADMINISTRATION_EMAIL
         end
 
+        # Post method for the test email address form
         app.post ADMINISTRATION_EMAIL_TEST do
           require_admin
 
-          unless /\b[A-Z0-9._%a-z\-]+@(?:[A-Z0-9a-z\-]+\.)+[A-Za-z]{2,4}\z/.match(params[:test_email])
+          test_email = params[:test_email]
+          unless /\b[A-Z0-9._%a-z\-]+@(?:[A-Z0-9a-z\-]+\.)+[A-Za-z]{2,4}\z/.match(test_email)
             return switch_to_get "#{ADMINISTRATION_EMAIL}?error=Please input a valid destination e-mail address"
           end
 
-          email_server = params[:server]
-          email_from =  params[:from]
-          email_from_alias =  params[:from_alias]
-          email_port =  Integer(params[:port])
-          email_server_enable_tls = params[:enable_tls]
-          email_server_user =  params[:user]
-          email_server_secret = params[:secret]
-          email_server_auth_method = params[:auth_method].to_sym
+          email_server = server
+          email_from =  from
+          email_from_alias = from_alias
+          email_port =  Integer(port)
+          email_server_enable_tls = enable_tls
+          email_server_user = user
+          email_server_secret = secret
+          email_server_auth_method = auth_method.to_sym
 
 
           client = Net::SMTP.new( email_server,email_port)
@@ -287,7 +315,7 @@ module Uhuru::Webui
 
             msg = <<END_OF_MESSAGE
 From: #{email_from_alias} <#{email_from}>
-To: <#{params[:test_email]}>
+To: <#{test_email}>
 Subject: Test email for Cloud Web UI
 MIME-Version: 1.0
 Content-type: text/html
@@ -301,15 +329,17 @@ END_OF_MESSAGE
                 email_server_user,
                 email_server_secret,
                 email_server_auth_method) do
-              client.send_message msg, email_from, params[:test_email]
+              client.send_message msg, email_from, test_email
 
               switch_to_get "#{ADMINISTRATION_EMAIL}?message=Settings are working correctly."
             end
-          rescue Exception => e
-            switch_to_get "#{ADMINISTRATION_EMAIL}?error=Cannot connect to email server, please verify settings - #{e.message}"
+          rescue Exception => ex
+            $logger.error("#{ex.message}:#{ex.backtrace}")
+            switch_to_get "#{ADMINISTRATION_EMAIL}?error=Cannot connect to email server, please verify settings - #{ex.message}"
           end
         end
 
+        # Get method for the reports tab
         app.get ADMINISTRATION_REPORTS do
           require_admin
 
@@ -321,6 +351,7 @@ END_OF_MESSAGE
           }
         end
 
+        # Post method for the reports tab
         app.post ADMINISTRATION_REPORTS do
           require_admin
 
@@ -331,8 +362,8 @@ END_OF_MESSAGE
 
           begin
             data = reports.run_query(query)
-          rescue => e
-            data = e.message
+          rescue => ex
+            data = ex.message
           end
 
           erb :'admin/reports_view', {
@@ -346,6 +377,7 @@ END_OF_MESSAGE
           }
         end
 
+        # Get method for the reports view
         app.get ADMINISTRATION_REPORTS_VIEW do
           require_admin
 
@@ -367,7 +399,7 @@ END_OF_MESSAGE
           }
         end
 
-
+        # Get method for administration templates tab
         app.get ADMINISTRATION_TEMPLATES do
           require_admin
 
@@ -379,6 +411,7 @@ END_OF_MESSAGE
           }
         end
 
+        # Get method for the users tab
         app.get ADMINISTRATION_USERS do
           require_admin
 
@@ -403,6 +436,7 @@ END_OF_MESSAGE
           }
         end
 
+        # Post method for deleting a user from all users
         app.post ADMINISTRATION_USERS_DELETE do
           require_admin
 
@@ -411,6 +445,7 @@ END_OF_MESSAGE
           redirect ADMINISTRATION_USERS
         end
 
+        # Get method for logs tab
         app.get ADMINISTRATION_LOGS do
           require_admin
 

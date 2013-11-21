@@ -1,3 +1,6 @@
+#
+#   NOTE: A class design for the javascript front-end polling
+#
 module Uhuru::Webui
   module SinatraRoutes
     module CloudFeedback

@@ -1,7 +1,12 @@
+#
+#     NOTE; Get and post methods for the guest page, the page were a user is not signed-in (SignUp and Login methods with the index page)
+#
 module Uhuru::Webui
   module SinatraRoutes
     module Guest
       def self.registered(app)
+
+        # Get method for the index page
         app.get INDEX do
           session[:logged_in] = false
 
@@ -15,10 +20,12 @@ module Uhuru::Webui
               }
         end
 
+        # Get method if the user token has expired(it redirects to the login modal with a specific error)
         app.get TOKEN_EXPIRED do
           switch_to_get "#{SinatraRoutes::LOGIN}?error=#Your token has expired, please login again."
         end
 
+        # Get method for the login modal
         app.get LOGIN do
           error_message = params[:error] if defined?(params[:error])
           error_username = params[:username] if defined?(params[:username])
@@ -36,6 +43,9 @@ module Uhuru::Webui
               }
         end
 
+        # Get method for the SignUp modal
+        #
+        # * This method is also used when a user is invited to join the cloud
         app.get SIGNUP do
           error_username = params[:username] if defined?(params[:username])
           error_first_name = params[:first_name] if defined?(params[:firstname])
@@ -57,6 +67,7 @@ module Uhuru::Webui
               }
         end
 
+        # Post method for the login modal(login for the user)
         app.post LOGIN do
           if params[:username]
             user_login = UsersSetup.new($config)
@@ -65,8 +76,8 @@ module Uhuru::Webui
               user = user_login.login(params[:username], params[:password])
               session[:token] = user.token
               session[:logged_in] = true
-              session[:fname] = user.first_name
-              session[:lname] = user.last_name
+              session[:first_name] = user.first_name
+              session[:last_name] = user.last_name
               session[:username] = params[:username]
               session[:user_guid] = user.guid
               session[:is_admin] = user.is_admin
@@ -80,6 +91,7 @@ module Uhuru::Webui
           end
         end
 
+        # Post method for the SignUp modal (create a new user and sends an email, or just creates the user if the user was invited)
         app.post SIGNUP do
           if $config[:recaptcha][:use_recaptcha] == true
             unless recaptcha_valid?
@@ -162,7 +174,7 @@ module Uhuru::Webui
                   end
                   invite.invite_user_with_role_to_space($config, params[:email], session[:invitation_space], session[:invitation_role])
                 end
-              rescue Exception => e
+              rescue Exception
                 return switch_to_get SIGNUP + "?message=A an error occurred on your invitation from #{session[:invitation_invited_by]}."
               end
 
@@ -174,15 +186,18 @@ module Uhuru::Webui
 
               redirect ACTIVE
             end
-          rescue CF::UAA::TargetError => e
+          rescue CF::UAA::TargetError
+            $logger.error("The username is allready taken")
             return switch_to_get SIGNUP + "?message=#This username is already taken!&username=#{params[:email]}&first_name=#{params[:first_name]}&last_name=#{params[:last_name]}"
           end
         end
 
+        # LogOut modal, the index page will automatically logout the user
         app.get LOGOUT do
           redirect INDEX
         end
 
+        # A confirmation page after the user has created a new account
         app.get PLEASE_CONFIRM do
           session[:logged_in] = false
 
@@ -196,6 +211,7 @@ module Uhuru::Webui
               }
         end
 
+        # The activation page for the new user(when a user clicks the link in the email it will redirect him at this point)
         app.get ACTIVATE_ACCOUNT do
           password_b32 = Base32.decode(params[:password])
           user_guid_b32 = Base32.decode(params[:guid])
@@ -208,6 +224,7 @@ module Uhuru::Webui
           user_detail = user.get_details(user_guid_b32)
           email_body = $config[:email][:welcome_email]
 
+          # Send another email to the user to welcome him
           email_body.gsub!('#FIRST_NAME#', user_detail["name"]["givenname"])
           email_body.gsub!('#LAST_NAME#', user_detail["name"]["familyname"])
           email_body.gsub!('#WEBSITE_URL#', "http://#{$config[:domain]}")
@@ -221,6 +238,7 @@ module Uhuru::Webui
           switch_to_get ACTIVE
         end
 
+        # This page is shown after the user has completed all the signup steps and it is ready to login
         app.get ACTIVE do
           session[:logged_in] = false
 
@@ -234,7 +252,7 @@ module Uhuru::Webui
               }
         end
 
-        # the page that asks for the user email and forms a random password and sends it
+        # The page that asks for the user email if the user forgot the password of the account
         app.get FORGOT_PASSWORD do
           erb :'guest_pages/forgot_password',
               {
@@ -246,6 +264,11 @@ module Uhuru::Webui
               }
         end
 
+        # Post method for the forgot password page, it creates a random password and send an email with a link
+        # If the user clicks the link it confirms the lost password process and the random password will be applied
+        # Also the user will be aware what the random password will be.
+
+        # WARN: We should change this mechanism so the user will not see the random password, and will have a page to change the forgotten password with a new one
         app.post FORGOT_PASSWORD do
           random_password = (0..7).map { (65 + rand(26)).chr }.join
           user_id = UsersSetup.new($config).uaa_get_user_by_name(params[:email])
@@ -264,11 +287,11 @@ module Uhuru::Webui
           redirect PLEASE_CONFIRM
         end
 
-        # apply the new password
+        # apply the random password to the user, at this point the user has a generated random password that he can use
+        # * also he needs to login with this password, and go to settings in order to change it
         app.get RESET_OLD_PASSWORD do
           password = Base32.decode(params[:random_password])
           user_id = Base32.decode(params[:user_id])
-          key = $config[:webui][:activation_link_secret]
 
           user = UsersSetup.new($config)
           user.recover_password(user_id, password)
@@ -277,7 +300,7 @@ module Uhuru::Webui
         end
 
 
-        # invite user
+        # Invite a user that does not have an account on the cloud.
         app.get INVITE_USER do
           hashed_data = Base32.decode(params[:data])
           data = JSON.parse(hashed_data)

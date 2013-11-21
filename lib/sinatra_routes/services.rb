@@ -1,7 +1,12 @@
+#
+#   NOTE: Get and post methods for the services tab
+#
 module Uhuru::Webui
   module SinatraRoutes
     module Services
       def self.registered(app)
+
+        # Create service modal
         app.get SERVICES_CREATE do
           require_login
           org = Library::Organizations.new(session[:token], $cf_target)
@@ -26,6 +31,7 @@ module Uhuru::Webui
               }
         end
 
+        # Post method for create service modal
         app.post '/createService' do
           require_login
 
@@ -33,22 +39,26 @@ module Uhuru::Webui
             begin
               ServiceInstances.new(session[:token], $cf_target).create_service_instance(params[:serviceName], params[:current_space], params[:service_plan])
               return switch_to_get ORGANIZATIONS + "/#{params[:current_organization]}/spaces/#{params[:current_space]}/#{params[:current_tab]}"
-            rescue Exception => e
-              return switch_to_get ORGANIZATIONS + "/#{params[:current_organization]}/spaces/#{params[:current_space]}/#{params[:current_tab]}/create_service/new" + "?error=#{e.description}"
-            rescue CFoundry::NotAuthorized => e
-              return switch_to_get ORGANIZATIONS + "/#{params[:current_organization]}/spaces/#{params[:current_space]}/#{params[:current_tab]}/create_service/new" + "?error=#{e.description}"
+            rescue Exception => ex
+              $logger.error("#{ex.message}:#{ex.backtrace}")
+              return switch_to_get ORGANIZATIONS + "/#{params[:current_organization]}/spaces/#{params[:current_space]}/#{params[:current_tab]}/create_service/new" + "?error=#{ex.description}"
+            rescue CFoundry::NotAuthorized => ex
+              $logger.error("#{ex.message}:#{ex.backtrace}")
+              return switch_to_get ORGANIZATIONS + "/#{params[:current_organization]}/spaces/#{params[:current_space]}/#{params[:current_tab]}/create_service/new" + "?error=#{ex.description}"
             end
           else
             return switch_to_get ORGANIZATIONS + "/#{params[:current_organization]}/spaces/#{params[:current_space]}/#{params[:current_tab]}/create_service/new" + '?error=The service name is too short.'
           end
         end
 
+        # Post method for delete service
         app.post '/deleteService' do
           require_login
           begin
             ServiceInstances.new(session[:token], $cf_target).delete(params[:serviceGuid])
-          rescue CFoundry::NotAuthorized => e
-            return switch_to_get ORGANIZATIONS + "/#{params[:current_organization]}/spaces/#{params[:current_space]}/#{params[:current_tab]}" + "?error=#{e.description}"
+          rescue CFoundry::NotAuthorized => ex
+            $logger.error("#{ex.message}:#{ex.backtrace}")
+            return switch_to_get ORGANIZATIONS + "/#{params[:current_organization]}/spaces/#{params[:current_space]}/#{params[:current_tab]}" + "?error=#{ex.description}"
           end
           switch_to_get ORGANIZATIONS + "/#{params[:current_organization]}/spaces/#{params[:current_space]}/#{params[:current_tab]}"
         end
