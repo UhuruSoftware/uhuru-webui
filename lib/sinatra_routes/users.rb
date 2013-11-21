@@ -1,7 +1,12 @@
+#
+#   NOTE: Get and post methods for the users tab
+#
 module Uhuru::Webui
   module SinatraRoutes
     module Users
       def self.registered(app)
+
+        # Add organization member modal
         app.get ORGANIZATION_MEMBERS_ADD do
           require_login
           org = Library::Organizations.new(session[:token], $cf_target)
@@ -31,6 +36,7 @@ module Uhuru::Webui
               }
         end
 
+        # Add space member modal
         app.get SPACE_MEMBERS_ADD do
           require_login
           org = Library::Organizations.new(session[:token], $cf_target)
@@ -59,6 +65,7 @@ module Uhuru::Webui
               }
         end
 
+        # Post method for adding a user to organization (or to a space, if the space is defined the user is automatically added to the space)
         app.post '/addUser' do
           require_login
           user = Library::Users.new(session[:token], $cf_target)
@@ -102,6 +109,7 @@ module Uhuru::Webui
           end
         end
 
+        # Delete a user from the organization (or from the space if the space is defined)
         app.post '/deleteUser' do
           require_login
           user = Library::Users.new(session[:token], $cf_target)
@@ -110,19 +118,23 @@ module Uhuru::Webui
             begin
               user.remove_user_with_role_from_org(params[:current_organization], params[:thisUser], params[:thisUserRole])
               return switch_to_get ORGANIZATIONS + "/#{params[:current_organization]}/#{params[:current_tab]}"
-            rescue Library::Users::UserError => e
-              return switch_to_get ORGANIZATIONS + "/#{params[:current_organization]}/#{params[:current_tab]}" + "?error=#{e.description}"
-            rescue CFoundry::NotAuthorized => e
-              return switch_to_get ORGANIZATIONS + "/#{params[:current_organization]}/#{params[:current_tab]}" + "?error=#{e.description}"
+            rescue Library::Users::UserError => ex
+              $logger.error("#{ex.message}:#{ex.backtrace}")
+              return switch_to_get ORGANIZATIONS + "/#{params[:current_organization]}/#{params[:current_tab]}" + "?error=#{ex.description}"
+            rescue CFoundry::NotAuthorized => ex
+              $logger.error("#{ex.message}:#{ex.backtrace}")
+              return switch_to_get ORGANIZATIONS + "/#{params[:current_organization]}/#{params[:current_tab]}" + "?error=#{ex.description}"
             end
           else
             begin
               user.remove_user_with_role_from_space(params[:current_space], params[:thisUser], params[:thisUserRole])
               return switch_to_get ORGANIZATIONS + "/#{params[:current_organization]}/spaces/#{params[:current_space]}/#{params[:current_tab]}"
-            rescue Library::Users::UserError => e
-              return switch_to_get ORGANIZATIONS + "/#{params[:current_organization]}/spaces/#{params[:current_space]}/#{params[:current_tab]}" + "?error=#{e.description}"
-            rescue CFoundry::NotAuthorized => e
-              return switch_to_get ORGANIZATIONS + "/#{params[:current_organization]}/spaces/#{params[:current_space]}/#{params[:current_tab]}" + "?error=#{e.description}"
+            rescue Library::Users::UserError => ex
+              $logger.error("#{ex.message}:#{ex.backtrace}")
+              return switch_to_get ORGANIZATIONS + "/#{params[:current_organization]}/spaces/#{params[:current_space]}/#{params[:current_tab]}" + "?error=#{ex.description}"
+            rescue CFoundry::NotAuthorized => ex
+              $logger.error("#{ex.message}:#{ex.backtrace}")
+              return switch_to_get ORGANIZATIONS + "/#{params[:current_organization]}/spaces/#{params[:current_space]}/#{params[:current_tab]}" + "?error=#{ex.description}"
             end
           end
         end

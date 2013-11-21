@@ -1,7 +1,12 @@
+#
+#   NOTE: the get and post methods for the domain tab
+#
 module Uhuru::Webui
   module SinatraRoutes
     module Domains
       def self.registered(app)
+
+        # Get method for the create domain modal
         app.get DOMAINS_CREATE do
           require_login
           org = Library::Organizations.new(session[:token], $cf_target)
@@ -25,6 +30,7 @@ module Uhuru::Webui
               }
         end
 
+        # Get method for the map domain modal inside a space
         app.get DOMAINS_MAP_SPACE do
           require_login
           org = Library::Organizations.new(session[:token], $cf_target)
@@ -51,6 +57,7 @@ module Uhuru::Webui
               }
         end
 
+        # Post method for the create domain(if inside an org) or map a domain to the current space(if inside a space)
         app.post '/createDomain' do
           require_login
           wildcard = params[:domain_wildcard] ? true : false
@@ -64,22 +71,25 @@ module Uhuru::Webui
               switch_to_get ORGANIZATIONS + "/#{params[:org_guid]}/domains"
             end
 
-          rescue CFoundry::DomainInvalid => e
+          rescue CFoundry::DomainInvalid => ex
+            $logger.error("#{ex.message}:#{ex.backtrace}")
             if params[:current_tab].to_s == 'space'
-              switch_to_get ORGANIZATIONS + "/#{params[:org_guid]}/spaces/#{params[:space_guid]}/domains/map_domain/new" + "?error=#{e.description}"
+              switch_to_get ORGANIZATIONS + "/#{params[:org_guid]}/spaces/#{params[:space_guid]}/domains/map_domain/new" + "?error=#{ex.description}"
             else
-              switch_to_get ORGANIZATIONS + "/#{params[:org_guid]}/domains/add_domains" + "?error=#{e.description}"
+              switch_to_get ORGANIZATIONS + "/#{params[:org_guid]}/domains/add_domains" + "?error=#{ex.description}"
             end
 
-          rescue CFoundry::NotAuthorized => e
+          rescue CFoundry::NotAuthorized => ex
+            $logger.error("#{ex.message}:#{ex.backtrace}")
             if params[:current_tab].to_s == 'space'
-              return switch_to_get ORGANIZATIONS + "/#{params[:org_guid]}/spaces/#{params[:space_guid]}/domains/map_domain/new" + "?error=#{e.description}"
+              return switch_to_get ORGANIZATIONS + "/#{params[:org_guid]}/spaces/#{params[:space_guid]}/domains/map_domain/new" + "?error=#{ex.description}"
             else
-              return switch_to_get ORGANIZATIONS + "/#{params[:org_guid]}/domains/add_domains" + "?error=#{e.description}"
+              return switch_to_get ORGANIZATIONS + "/#{params[:org_guid]}/domains/add_domains" + "?error=#{ex.description}"
             end
           end
         end
 
+        # Post method for the delete domain
         app.post '/deleteDomain' do
           require_login
           begin
@@ -87,21 +97,24 @@ module Uhuru::Webui
             if delete == false
               return switch_to_get ORGANIZATIONS + "/#{params[:org_guid]}/spaces/#{params[:space_guid]}/domains" + "?error=There was an error removing this domain, if the problem persists please contact support."
             end
-          rescue CFoundry::NotAuthorized => e
-            return switch_to_get ORGANIZATIONS + "/#{params[:org_guid]}/spaces/#{params[:space_guid]}/domains" + "?error=#{e.description}"
+          rescue CFoundry::NotAuthorized => ex
+            $logger.error("#{ex.message}:#{ex.backtrace}")
+            return switch_to_get ORGANIZATIONS + "/#{params[:org_guid]}/spaces/#{params[:space_guid]}/domains" + "?error=#{ex.description}"
           end
           switch_to_get ORGANIZATIONS + "/#{params[:org_guid]}/domains"
         end
 
+        # Post method for unmapping a domain from a space
         app.post '/unmapFromSpace' do
           require_login
           begin
             Library::Domains.new(session[:token], $cf_target).unmap_domain(params[:domainGuid], nil, params[:current_space])
-          rescue CFoundry::NotAuthorized => e
+          rescue CFoundry::NotAuthorized => ex
+            $logger.error("#{ex.message}:#{ex.backtrace}")
             if params[:current_tab].to_s == 'space'
-              return switch_to_get ORGANIZATIONS + "/#{params[:current_organization]}/spaces/#{params[:current_space]}/domains" + "?error=#{e.description}"
+              return switch_to_get ORGANIZATIONS + "/#{params[:current_organization]}/spaces/#{params[:current_space]}/domains" + "?error=#{ex.description}"
             else
-              return switch_to_get ORGANIZATIONS + "/#{params[:current_organization]}/domains" + "?error=#{e.description}"
+              return switch_to_get ORGANIZATIONS + "/#{params[:current_organization]}/domains" + "?error=#{ex.description}"
             end
           end
 

@@ -1,7 +1,12 @@
+#
+#   NOTE: Get and post methods for the spaces tab tab
+#
 module Uhuru::Webui
   module SinatraRoutes
     module Spaces
       def self.registered(app)
+
+        # Get method for a defined organization (reads all the spaces, users, domains and the organization credit card)
         app.get ORGANIZATION do
           require_login
           org = Library::Organizations.new(session[:token], $cf_target)
@@ -80,6 +85,7 @@ module Uhuru::Webui
           end
         end
 
+        # Crete space modal
         app.get SPACES_CREATE do
           require_login
           org = Library::Organizations.new(session[:token], $cf_target)
@@ -103,6 +109,7 @@ module Uhuru::Webui
               }
         end
 
+        # Get method for a defined space (reads all apps, services, routes, domains and users from the space)
         app.get SPACE do
           require_login
 
@@ -212,6 +219,7 @@ module Uhuru::Webui
           end
         end
 
+        # Post method for create space modal
         app.post '/createSpace' do
           require_login
 
@@ -219,16 +227,19 @@ module Uhuru::Webui
             begin
               Library::Spaces.new(session[:token], $cf_target).create(params[:org_guid], params[:spaceName])
               return switch_to_get ORGANIZATIONS + "/#{params[:org_guid]}/spaces"
-            rescue CFoundry::SpaceNameTaken => e
-              return switch_to_get ORGANIZATIONS + "/#{params[:org_guid]}/spaces/create_space" + "?error=#{e.description}"
-            rescue CFoundry::NotAuthorized => e
-              return switch_to_get ORGANIZATIONS + "/#{params[:org_guid]}/spaces/create_space" + "?error=#{e.description}"
+            rescue CFoundry::SpaceNameTaken => ex
+              $logger.error("#{ex.message}:#{ex.backtrace}")
+              return switch_to_get ORGANIZATIONS + "/#{params[:org_guid]}/spaces/create_space" + "?error=#{ex.description}"
+            rescue CFoundry::NotAuthorized => ex
+              $logger.error("#{ex.message}:#{ex.backtrace}")
+              return switch_to_get ORGANIZATIONS + "/#{params[:org_guid]}/spaces/create_space" + "?error=#{ex.description}"
             end
           else
             return switch_to_get ORGANIZATIONS + "/#{params[:org_guid]}/spaces/create_space" + '?error=The space name is to short.'
           end
         end
 
+        # Post method for delete space modal
         app.post '/deleteSpace' do
           require_login
           begin
@@ -238,12 +249,14 @@ module Uhuru::Webui
               return switch_to_get ORGANIZATIONS + "/#{params[:org_guid]}/spaces" + "?error=You are not authorized to delete this space."
             end
 
-            rescue CFoundry::NotAuthorized => e
-              return switch_to_get ORGANIZATIONS + "/#{params[:org_guid]}/spaces" + "?error=#{e.description}"
+          rescue CFoundry::NotAuthorized => ex
+            $logger.error("#{ex.message}:#{ex.backtrace}")
+            return switch_to_get ORGANIZATIONS + "/#{params[:org_guid]}/spaces" + "?error=#{ex.description}"
           end
           switch_to_get ORGANIZATIONS + "/#{params[:org_guid]}/spaces"
         end
 
+        # Post method for update space name
         app.post '/updateSpace' do
           require_login
 
@@ -251,10 +264,12 @@ module Uhuru::Webui
             begin
               Library::Spaces.new(session[:token], $cf_target).update(params[:modified_name], params[:current_space])
               return switch_to_get ORGANIZATIONS + "/#{params[:current_organization]}/spaces/#{params[:current_space]}/#{params[:current_tab]}"
-            rescue CFoundry::SpaceNameTaken => e
-              return switch_to_get ORGANIZATIONS + "/#{params[:current_organization]}/spaces/#{params[:current_space]}/#{params[:current_tab]}" + "?error=#{e.description}"
-            rescue CFoundry::NotAuthorized => e
-              return switch_to_get ORGANIZATIONS + "/#{params[:current_organization]}/spaces/#{params[:current_space]}/#{params[:current_tab]}" + "?error=#{e.description}"
+            rescue CFoundry::SpaceNameTaken => ex
+              $logger.error("#{ex.message}:#{ex.backtrace}")
+              return switch_to_get ORGANIZATIONS + "/#{params[:current_organization]}/spaces/#{params[:current_space]}/#{params[:current_tab]}" + "?error=#{ex.description}"
+            rescue CFoundry::NotAuthorized => ex
+              $logger.error("#{ex.message}:#{ex.backtrace}")
+              return switch_to_get ORGANIZATIONS + "/#{params[:current_organization]}/spaces/#{params[:current_space]}/#{params[:current_tab]}" + "?error=#{ex.description}"
             end
           else
             return switch_to_get ORGANIZATIONS + "/#{params[:current_organization]}/spaces/#{params[:current_space]}/#{params[:current_tab]}" + '?error=The space name is to short.'
