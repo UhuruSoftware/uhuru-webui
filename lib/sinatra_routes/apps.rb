@@ -1,7 +1,12 @@
+#
+#   NOTE: This is the apps page from a LoggedIn user.
+#
 module Uhuru::Webui
   module SinatraRoutes
     module Apps
       def self.registered(app)
+
+        # Get app details method
         app.get APP do
           require_login
           org = Library::Organizations.new(session[:token], $cf_target)
@@ -35,11 +40,13 @@ module Uhuru::Webui
               }
         end
 
+        # Get a specific app instance
         app.get APP_RUNNING_INSTANCES do
           require_login
           Applications.new(session[:token], $cf_target).get_app_running_status(params[:app_guid]).to_json
         end
-        
+
+        # Get method for create app modal
         app.get APP_CREATE do
           require_login
           org = Library::Organizations.new(session[:token], $cf_target)
@@ -70,6 +77,7 @@ module Uhuru::Webui
               }
         end
 
+        # Retrieves a specific app logo
         app.get '/get_logo/:app_id' do
           require_login
           collection = TemplateApps.new
@@ -79,6 +87,7 @@ module Uhuru::Webui
           send_file apps[app_id]['logo']
         end
 
+        # Retrieves bound services for a specific app
         app.post '/get_service_data' do
           require_login
           space = Library::Spaces.new(session[:token], $cf_target)
@@ -87,6 +96,7 @@ module Uhuru::Webui
           "{ \"type\": \"#{service.type}\", \"plan\": \"#{service.plan}\" } "
         end
 
+        # Retrieves a downloadable package for the app
         app.get '/download_app/:app_id' do
           require_login
           collection = TemplateApps.new
@@ -102,6 +112,7 @@ module Uhuru::Webui
           send_file(source.sub!'template_manifest.yml', params[:app_id] + '.zip')
         end
 
+        # A method user for the javascript polling mechanism to show the state of the app creation process
         app.get APP_CREATE_FEEDBACK do
           require_login
           org = Library::Organizations.new(session[:token], $cf_target)
@@ -127,6 +138,7 @@ module Uhuru::Webui
               }
         end
 
+        # A method user for the javascript polling mechanism to show the state of the app update process
         app.get APP_UPDATE_FEEDBACK do
           require_login
           org = Library::Organizations.new(session[:token], $cf_target)
@@ -152,6 +164,7 @@ module Uhuru::Webui
               }
         end
 
+        # Post method for app push modal
         app.post '/push' do
           require_login
 
@@ -192,10 +205,10 @@ module Uhuru::Webui
           Thread.new() do
             begin
               apps_obj.create!(params[:app_space], name, instances.to_i, memory.to_i, domain_name, host_name, src + params[:app_id], app_services, stack, buildpack, params[:app_id])
-            rescue => e
+            rescue => ex
               apps_obj.info_ln('')
               apps_obj.error_ln('There was an error while processing the push request - please contact support')
-              $logger.error("Push error: #{e.message} - #{e.backtrace}")
+              $logger.error("Push error: #{ex.message} - #{ex.backtrace}")
             ensure
               apps_obj.close_feedback
             end
@@ -204,6 +217,7 @@ module Uhuru::Webui
           switch_to_get "#{ORGANIZATIONS}/#{params[:app_organization]}/spaces/#{params[:app_space]}/apps/create_app_feedback/#{apps_obj.id}"
         end
 
+        # Post method for app update modal
         app.post '/updateApp' do
           require_login
           apps_object = Applications.new(session[:token], $cf_target)
@@ -216,10 +230,10 @@ module Uhuru::Webui
             begin
               binding_object = Library::Routes.new(session[:token], $cf_target)
               apps_object.update(params[:app_name], params[:app_state], params[:app_instances].to_i, params[:app_memory].to_i, params[:app_services], params[:app_urls], binding_object, params[:current_space], apps_list)
-            rescue => e
+            rescue => ex
               apps_object.info_ln('')
               apps_object.error_ln('There was an error while processing the update request - please contact support')
-              $logger.error("Update error: #{e.message} - #{e.backtrace}")
+              $logger.error("Update error: #{ex.message} - #{ex.backtrace}")
             ensure
               apps_object.close_feedback
             end
@@ -230,12 +244,14 @@ module Uhuru::Webui
           switch_to_get ORGANIZATIONS + "/#{params[:current_organization]}/spaces/#{params[:current_space]}/apps/update_app_feedback/#{apps_object.id}"
         end
 
+        # Post method for delete app modal
         app.post '/deleteApp' do
           require_login
           begin
             Applications.new(session[:token], $cf_target).delete(params[:appGuid])
-          rescue CFoundry::NotAuthorized => e
-            return switch_to_get ORGANIZATIONS + "/#{params[:current_organization]}/spaces/#{params[:current_space]}/apps" + "?error=#{e.description}"
+          rescue CFoundry::NotAuthorized => ex
+            $logger.error("#{ex.message}:#{ex.backtrace}")
+            return switch_to_get ORGANIZATIONS + "/#{params[:current_organization]}/spaces/#{params[:current_space]}/apps" + "?error=#{ex.description}"
           end
           switch_to_get ORGANIZATIONS + "/#{params[:current_organization]}/spaces/#{params[:current_space]}/#{params[:current_tab]}"
         end

@@ -1,7 +1,12 @@
+#
+#   NOTE: Get and post methods for the routes tab
+#
 module Uhuru::Webui
   module SinatraRoutes
     module Routes
       def self.registered(app)
+
+        # Get method for create routes modal
         app.get ROUTES_CREATE do
           require_login
           org = Library::Organizations.new(session[:token], $cf_target)
@@ -30,27 +35,33 @@ module Uhuru::Webui
               }
         end
 
+        # Post method for create routes modal
         app.post '/createRoute' do
           require_login
 
           begin
             Library::Routes.new(session[:token], $cf_target).create(nil, params[:current_space], params[:domain_guid], params[:host])
             return switch_to_get ORGANIZATIONS + "/#{params[:current_organization]}/spaces/#{params[:current_space]}/#{params[:current_tab]}"
-          rescue CFoundry::RouteInvalid => e
-            return switch_to_get ORGANIZATIONS + "/#{params[:current_organization]}/spaces/#{params[:current_space]}/#{params[:current_tab]}/add_route/new" + "?error=#{e.description}"
-          rescue CFoundry::RouteHostTaken => e
-            return switch_to_get ORGANIZATIONS + "/#{params[:current_organization]}/spaces/#{params[:current_space]}/#{params[:current_tab]}/add_route/new" + "?error=#{e.description}"
-          rescue CFoundry::NotAuthorized => e
-            return switch_to_get ORGANIZATIONS + "/#{params[:current_organization]}/spaces/#{params[:current_space]}/#{params[:current_tab]}/add_route/new" + "?error=#{e.description}"
+          rescue CFoundry::RouteInvalid => ex
+            $logger.error("#{ex.message}:#{ex.backtrace}")
+            return switch_to_get ORGANIZATIONS + "/#{params[:current_organization]}/spaces/#{params[:current_space]}/#{params[:current_tab]}/add_route/new" + "?error=#{ex.description}"
+          rescue CFoundry::RouteHostTaken => ex
+            $logger.error("#{ex.message}:#{ex.backtrace}")
+            return switch_to_get ORGANIZATIONS + "/#{params[:current_organization]}/spaces/#{params[:current_space]}/#{params[:current_tab]}/add_route/new" + "?error=#{ex.description}"
+          rescue CFoundry::NotAuthorized => ex
+            $logger.error("#{ex.message}:#{ex.backtrace}")
+            return switch_to_get ORGANIZATIONS + "/#{params[:current_organization]}/spaces/#{params[:current_space]}/#{params[:current_tab]}/add_route/new" + "?error=#{ex.description}"
           end
         end
 
+        # Post method for delete routes
         app.post '/deleteRoute' do
           require_login
           begin
             Library::Routes.new(session[:token], $cf_target).delete(params[:routeGuid])
-          rescue CFoundry::NotAuthorized => e
-            return switch_to_get ORGANIZATIONS + "/#{params[:current_organization]}/spaces/#{params[:current_space]}/#{params[:current_tab]}" + "?error=#{e.description}"
+          rescue CFoundry::NotAuthorized => ex
+            $logger.error("#{ex.message}:#{ex.backtrace}")
+            return switch_to_get ORGANIZATIONS + "/#{params[:current_organization]}/spaces/#{params[:current_space]}/#{params[:current_tab]}" + "?error=#{ex.description}"
           end
           switch_to_get ORGANIZATIONS + "/#{params[:current_organization]}/spaces/#{params[:current_space]}/#{params[:current_tab]}"
         end

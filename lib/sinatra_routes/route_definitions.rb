@@ -1,3 +1,6 @@
+#
+#     NOTE: Definitions for all the routes on the website(user, admin user and guest modes)
+#
 module Uhuru::Webui
   module SinatraRoutes
 
