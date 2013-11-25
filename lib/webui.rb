@@ -42,6 +42,7 @@ require 'billing/provider'
 require 'reports'
 
 module Uhuru::Webui
+  # The main class for the website
   class Webui < Sinatra::Base
 
     ENV_COPY  = %w[ REQUEST_METHOD HTTP_COOKIE rack.request.cookie_string
@@ -56,6 +57,7 @@ module Uhuru::Webui
 
     use Rack::Session::Pool
 
+    # register all the necessary classes
     register Uhuru::Webui::SinatraRoutes::Guest
     register Uhuru::Webui::SinatraRoutes::Account
     register Uhuru::Webui::SinatraRoutes::Organizations
@@ -76,7 +78,7 @@ module Uhuru::Webui
         users = UsersSetup.new($config)
         uaa_users = users.uaa_get_users
 
-        admin = uaa_users.select {|u| u[:is_admin] == true && u[:email] != "services"}.first
+        admin = uaa_users.select {|user| user[:is_admin] == true && user[:email] != "services"}.first
         admin_guid = admin[:id]
 
         admin_token = users.get_admin_token
@@ -88,13 +90,14 @@ module Uhuru::Webui
         cf_users = Library::Users.new(admin_token, $cf_target)
         cf_users.add_user_to_org_with_role(sys_org.guid, admin_guid, ["owner"])
         cf_users.add_user_to_org_with_role(monitoring_org.guid, admin_guid, ["owner"])
-      rescue => e
-        $logger.error("Error while trying to add Owner role to the cloud controller admin for sys-org and monitoring - #{e.message}:#{e.backtrace}")
+      rescue => ex
+        $logger.error("Error while trying to add Owner role to the cloud controller admin for sys-org and monitoring - #{ex.message}:#{ex.backtrace}")
       end
 
       super()
     end
 
+    # a switch function for the query strings to be passed directly
     def switch_to(uri, method)
 
       uri_info = URI.parse(URI.escape(uri))
@@ -109,19 +112,22 @@ module Uhuru::Webui
       call( new_env ).last.join
     end
 
+    # switch for get methods
     def switch_to_get(uri)
       switch_to uri, "GET"
     end
 
+    # switch for get methods
     def switch_to_post(uri)
       switch_to uri, "POST"
     end
 
+    # a method that verify if the user is loggedin
+    # this action is called in each get and post methods for verification
     def require_login
-
       begin
         Library::Organizations.new(session[:token], $cf_target).read_all(session[:user_guid])
-      rescue CFoundry::InvalidAuthToken => e
+      rescue CFoundry::InvalidAuthToken
         return redirect SinatraRoutes::TOKEN_EXPIRED
       end
 
@@ -130,6 +136,7 @@ module Uhuru::Webui
       end
     end
 
+    # verify if the user is loggedin and also if it is an admin user(similar to the require_login method)
     def require_admin
       if session[:logged_in] == false || session[:logged_in] == nil || session[:is_admin] == false || session[:is_admin] == nil
         redirect SinatraRoutes::LOGIN
@@ -139,10 +146,12 @@ module Uhuru::Webui
     set :raise_errors, Proc.new { false }
     set :show_exceptions, false
 
+    # a rescue method for the default not_found error page
     not_found do
       erb :'errors/error404', {:layout => :'layouts/layout_error'}
     end
 
+    # a rescue method for all server error page types
     error do
       $logger.error("An error occurred (#{env['sinatra.error'].class}): #{env['sinatra.error'].message} - #{env['sinatra.error'].backtrace} ")
 
@@ -155,8 +164,8 @@ module Uhuru::Webui
       }
     end
 
+    # a method design to fetch the design.yml file for the web layout
     get '/css' do
-
       design = YAML.load_file(File.expand_path('../../config/design.yml', __FILE__))
 
       content_type 'text/css', :charset => 'utf-8'
@@ -170,14 +179,7 @@ module Uhuru::Webui
       }
     end
 
-    get '/design' do
-      erb :'design/design_test.html', {:layout => :'layouts/user'}
-    end
-
-    get '/email' do
-      erb :'guest_pages/email', :locals => { :link => 'http://www.google.com' }
-    end
-
+    # Get method for the monitoring page
     get '/monitoring' do
 
       report = params[:report] || 'half_of_day'

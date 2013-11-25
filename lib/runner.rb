@@ -14,6 +14,7 @@ require "users_setup"
 require "readapps"
 
 module Uhuru::Webui
+# Entry class for the WebUI service
   class Runner
     def initialize(argv)
       @argv = argv
@@ -48,10 +49,10 @@ module Uhuru::Webui
       @config[:logger] = logger
     end
 
+    # returns a logger object
     def logger
       $logger ||= Steno.logger("uhuru-webui.runner")
     end
-
 
     def options_parser
       @parser ||= OptionParser.new do |opts|
@@ -68,22 +69,25 @@ module Uhuru::Webui
       exit 1
     end
 
+    # creates a pid file
     def create_pidfile
       begin
         pid_file = VCAP::PidFile.new(@config[:pid_filename])
         pid_file.unlink_at_exit
-      rescue => e
+      rescue
         puts "ERROR: Can't create pid file #{@config[:pid_filename]}"
         exit 1
       end
     end
 
+    # stops the logging
     def setup_logging
       steno_config = Steno::Config.to_config_hash(@config[:logging])
       steno_config[:context] = Steno::Context::ThreadLocal.new
       Steno.init(Steno::Config.new(steno_config))
     end
 
+    # entry point for the WebUI service
     def run!
       EM.run do
         $config = @config.dup
@@ -131,7 +135,7 @@ module Uhuru::Webui
       end
     end
 
-
+    # stopping the EventMachine and Thin when TERM and INT signals are received
     def trap_signals
       ["TERM", "INT"].each do |signal|
         trap(signal) do
@@ -148,7 +152,7 @@ module Uhuru::Webui
       end
     end
 
-
+    # registers the urls to VCAP_ROUTER trough NATS
     def registrar
       @registrar ||= Cf::Registrar.new(
           :mbus => $config[:message_bus_uri],
@@ -159,6 +163,5 @@ module Uhuru::Webui
           :index => 0
       )
     end
-
   end
 end

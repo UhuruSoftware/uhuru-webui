@@ -12,6 +12,7 @@ class UsersSetup
     @cf_target      = @config[:cloud_controller_url]
   end
 
+  # login functionality for a user
   def login(email, password)
     user_token = get_user_token(email, password)
 
@@ -26,6 +27,7 @@ class UsersSetup
     UserDetails.new(user_token, user_guid, user_detail["name"]["givenname"], user_detail["name"]["familyname"], is_admin)
   end
 
+  # signup functionality for a user
   def signup(email, password, first_name, last_name)
 
     uaac = get_uaa_client
@@ -42,7 +44,7 @@ class UsersSetup
      emails = [email]
       info = {userName: email, password: password, name: {givenName: first_name, familyName: last_name}}
       info[:emails] = emails.respond_to?(:each) ?
-          emails.each_with_object([]) { |email, o| o.unshift({:value => email}) } :
+          emails.each_with_object([]) { |email, obj| obj.unshift({:value => email}) } :
           [{:value => (emails || name)}]
 
       user = uaac.add(:user, info)
@@ -63,6 +65,7 @@ class UsersSetup
     end
   end
 
+  # this method is used for changing the user first name and last name
   def update_user_info(user_guid, given_name, family_name)
     uaac = get_uaa_client
     info = uaac.get(:user, user_guid)
@@ -70,11 +73,14 @@ class UsersSetup
     uaac.put(:user, info)
   end
 
+  # this method is used for changing the user password
   def change_password(user_id, verified_password, old_password)
     uaac = get_uaa_client
     uaac.change_password(user_id, verified_password, old_password)
   end
 
+  # this method returns the uaa client object
+  # (used for connecting to the uaa database)
   def get_uaa_client
     token_issuer = CF::UAA::TokenIssuer.new(@uaaApi, @client_id, @client_secret)
     token = token_issuer.client_credentials_grant()
@@ -84,6 +90,7 @@ class UsersSetup
     uaac
   end
 
+  # this method returns a username from a user guid
   def get_username_from_guid(user_guid)
     uaac = get_uaa_client
     uaa_user = uaac.get(:user, user_guid)
@@ -91,15 +98,7 @@ class UsersSetup
     uaa_user['username']
   end
 
-  # todo: stefi: consider not using this method or at least once per server instance. may have scalability problems
-  # returns an array with all usernames in uaa
-  # added the possibility to filter usernames with 'contains' the string received as a parameter
-  def uaa_get_usernames(filter_by = String.new)
-    uaac = get_uaa_client
-    users = uaac.query(:user, {:attributes => 'username', :filter => 'userName co "' + filter_by + '"' })
-    users['resources'].collect { |u| u['username']}
-  end
-
+  # returns all users from the uaa
   def uaa_get_users()
     uaac = get_uaa_client
 
@@ -116,16 +115,19 @@ class UsersSetup
     all_users
   end
 
+  # delete a user from a user guid
   def delete_user(user_id)
     uaac = get_uaa_client
 
     uaac.delete(:user, user_id)
   end
 
+  # a method user for recovering the user password
   def recover_password(user_id, password)
     get_uaa_client.change_password(user_id, password)
   end
 
+  # returns a user guid from a user object
   def uaa_get_user_by_name(username)
     uaac = get_uaa_client
     begin
@@ -136,24 +138,28 @@ class UsersSetup
     end
   end
 
+  # returns the user object from a user guid
   def get_details(user_guid)
     uaac = get_uaa_client
     uaac.get(:user, user_guid)
   end
 
 
+  # retrieves an admin token
   def get_admin_token
     token_issuer = CF::UAA::TokenIssuer.new(@uaaApi, @client_id, @client_secret)
     token = token_issuer.client_credentials_grant()
     CFoundry::AuthToken.from_uaa_token_info(token)
   end
 
+  # retrieves a user token
   def get_user_token(email, password)
     token_issuer = CF::UAA::TokenIssuer.new(@uaaApi, @client_id, @client_secret)
     token_obj = token_issuer.owner_password_grant(email, password)
     CFoundry::AuthToken.from_uaa_token_info(token_obj)
   end
 
+  # Data holder for the user details
   class UserDetails
     attr_reader :token, :guid, :first_name, :last_name, :is_admin
 

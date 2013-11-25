@@ -1,6 +1,7 @@
 require 'cfoundry'
 require "config"
 
+#this class contains all the functionality that deals with the users inside the cloud controller database
 module Library
   class Users
 
@@ -8,11 +9,12 @@ module Library
       @client = CFoundry::V2::Client.new(target, token)
     end
 
+    # adds a user to the clod inside a specific organization with a user guid and a user role
     def add_user_to_org_with_role(org_guid, user_guid, roles)
       org = @client.organization(org_guid)
-      owner = org.managers.find { |u| u.guid == user_guid }
-      billing = org.billing_managers.find { |u| u.guid == user_guid }
-      auditor = org.auditors.find { |u| u.guid == user_guid }
+      owner = org.managers.find { |user| user.guid == user_guid }
+      billing = org.billing_managers.find { |user| user.guid == user_guid }
+      auditor = org.auditors.find { |user| user.guid == user_guid }
 
       roles.each do |role|
         case role
@@ -45,11 +47,12 @@ module Library
       org.update!
     end
 
+    # adds a user to the clod inside a specific space and organization with a user guid and a user role
     def add_user_with_role_to_space(space_guid, user_guid, roles)
       space = @client.space(space_guid)
-      owner = space.managers.find { |u| u.guid == user_guid }
-      developer = space.developers.find { |u| u.guid == user_guid }
-      auditor = space.auditors.find { |u| u.guid == user_guid }
+      owner = space.managers.find { |usr| usr.guid == user_guid }
+      developer = space.developers.find { |usr| usr.guid == user_guid }
+      auditor = space.auditors.find { |usr| usr.guid == user_guid }
 
       roles.each do |role|
         case role
@@ -88,9 +91,9 @@ module Library
 
       space.update!
     end
-    ##
-    ## FUNCTIONS CALLED FROM ERB POST METHOD
-    ##
+
+    # a method that checks if the user is registered, active or inactive.
+    # if the user is active it calls the add_user_to_org_with_role method and adds the user to the organization
     def invite_user_with_role_to_org(config, username, org_guid, role)
       user_setup_obj = UsersSetup.new(config)
       user_guid = user_setup_obj.uaa_get_user_by_name(username)
@@ -109,6 +112,8 @@ module Library
       end
     end
 
+    # a method that checks if the user is registered, active or inactive.
+    # if the user is active it calls the add_user_with_role_to_space method and adds the user to the space
     def invite_user_with_role_to_space(config, username, space_guid, role)
       user_setup_obj = UsersSetup.new(config)
       user_guid = user_setup_obj.uaa_get_user_by_name(username)
@@ -127,6 +132,7 @@ module Library
       end
     end
 
+    # a method that checks for the user role from a list of roles and a user guid (from an organization)
     def check_user_org_roles(org_guid, user_guid, roles)
       org = @client.organization(org_guid)
       correct_roles = true
@@ -134,21 +140,21 @@ module Library
       roles.each do |role|
         case role
           when 'owner'
-            user = org.managers.find { |u| u.guid == user_guid }
+            user = org.managers.find { |usr| usr.guid == user_guid }
             if user != nil
               correct_roles = correct_roles && true if user != nil
             else
               return false
             end
           when 'billing'
-            user = org.billing_managers.find { |u| u.guid == user_guid }
+            user = org.billing_managers.find { |usr| usr.guid == user_guid }
             if user != nil
               correct_roles = correct_roles && true if user != nil
             else
               return false
             end
           when 'auditor'
-            user = org.auditors.find { |u| u.guid == user_guid }
+            user = org.auditors.find { |usr| usr.guid == user_guid }
             if user != nil
               correct_roles = correct_roles && true if user != nil
             else
@@ -160,25 +166,27 @@ module Library
       correct_roles
     end
 
+    # this method is checking if the user is already added inside of an organization
     def any_org_roles?(config, org_guid, username)
       user_setup_obj = UsersSetup.new(config)
       user_guid = user_setup_obj.uaa_get_user_by_name(username)
 
       org = @client.organization(org_guid)
 
-      owner = org.managers.find { |u| u.guid == user_guid }
-      billing = org.billing_managers.find { |u| u.guid == user_guid }
-      auditor = org.auditors.find { |u| u.guid == user_guid }
+      owner = org.managers.find { |usr| usr.guid == user_guid }
+      billing = org.billing_managers.find { |usr| usr.guid == user_guid }
+      auditor = org.auditors.find { |usr| usr.guid == user_guid }
 
       owner != nil || billing != nil || auditor != nil
     end
 
-
+    #returns the user guid
     def get_user_guid
       user = @client.current_user
       user.guid
     end
 
+    # a method that deletes a user from an organization
     # role is a string ex: 'owner', 'billing', 'auditor'
     def remove_user_with_role_from_org(org_guid, user_guid, role)
       org = @client.organization(org_guid)
@@ -200,9 +208,9 @@ module Library
       end
 
       # if the last role from org is removed, user will be removed from table org_users too
-      owner = org.managers.find { |u| u.guid == user_guid }
-      billing = org.billing_managers.find { |u| u.guid == user_guid }
-      auditor = org.auditors.find { |u| u.guid == user_guid }
+      owner = org.managers.find { |usr| usr.guid == user_guid }
+      billing = org.billing_managers.find { |usr| usr.guid == user_guid }
+      auditor = org.auditors.find { |usr| usr.guid == user_guid }
 
       if (owner == nil && billing == nil && auditor == nil)
         existing_users = org.users
@@ -213,7 +221,8 @@ module Library
       org.update!
     end
 
-     # role is a string ex: 'owner', 'developer', 'auditor'
+    # a method that deletes a user from a space
+    # role is a string ex: 'owner', 'developer', 'auditor'
     def remove_user_with_role_from_space(space_guid, user_guid, role)
       space = @client.space(space_guid)
       user = @client.user(user_guid)
@@ -236,9 +245,10 @@ module Library
       space.update!
     end
 
+    # checks if the user exists
     def user_exists(user_guid)
-      user = @client.users.find { |u|
-        u.guid == user_guid
+      user = @client.users.find { |usr|
+        usr.guid == user_guid
       }
       if user == nil
         return false
@@ -247,12 +257,18 @@ module Library
       end
     end
 
+    # search a user inside the cloud controller database from a user guid
     def get_user_from_ccng(user_guid)
-      @client.users.find { |u|
-        u.guid == user_guid
+      @client.users.find { |user|
+        user.guid == user_guid
       }
     end
 
+    # Data holder for the user that will be displayed in the users tab from organizations and spaces pages
+    # email = the username or the user email
+    # role = the user role(depending on the location if it is space or organization)
+    # verified = if the user credit card was verified
+    # guid = the user id or guid
     class User
       attr_reader :email, :role, :verified, :guid
 
@@ -264,6 +280,7 @@ module Library
       end
     end
 
+    # a class design for custom user error => if the user does not exist (the user does not exist in the uaa database)
     class DoesNotExist < Exception
       attr_reader :message, :description
 
@@ -274,6 +291,7 @@ module Library
       end
     end
 
+    # a class design for the custom user error => if the user is not active (the user is not active if the account was created but it was not user yet)
     class IsNotActive < Exception
       attr_reader :message, :description
 
@@ -283,6 +301,5 @@ module Library
         @description = description
       end
     end
-
   end
 end

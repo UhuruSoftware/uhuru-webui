@@ -1,6 +1,7 @@
 require 'cfoundry'
 require 'config'
 
+#this class contains all the functionality that deals with the routes inside of a specific space
 module Library
   class Routes
 
@@ -12,12 +13,12 @@ module Library
     def read_routes(space_guid, domain_guid = nil)
       routes = []
 
-      @client.routes.each do |r|
-        if r.space && r.space.guid == space_guid
+      @client.routes.each do |route|
+        if route.space && route.space.guid == space_guid
           if domain_guid != nil
-            routes << Route.new(r.name, r.guid) if r.domain.guid == domain_guid
+            routes << Route.new(route.name, route.guid) if route.domain.guid == domain_guid
           else
-            routes << Route.new(r.name, r.guid)
+            routes << Route.new(route.name, route.guid)
           end
         end
       end
@@ -32,8 +33,8 @@ module Library
       space = @client.space(space_guid)
       domain = @client.domain(domain_guid)
 
-      route = @client.routes.find { |r|
-        r.host == host && r.domain == domain && r.space == space
+      route = @client.routes.find { |rt|
+        rt.host == host && rt.domain == domain && rt.space == space
       }
 
       unless route
@@ -52,11 +53,16 @@ module Library
       route
     end
 
+    # deletes the route from the space
     def delete(route_guid)
       route = @client.route(route_guid)
       route.delete!
     end
 
+    # Data holder for the route tile that will be displayed inside a space (visible in the routes tab)
+    # name = the route name (or host name)
+    # app = the app owning the route
+    # guid = the id or guid of the route
     class Route
       attr_reader :name, :guid, :app
 
@@ -65,7 +71,6 @@ module Library
         @guid = guid
         @app = app
       end
-
     end
   end
 end
