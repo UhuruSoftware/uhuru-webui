@@ -25,24 +25,9 @@ require 'email'
 require "users_setup"
 require "cfoundry"
 
-
+# All apps pushed will have this suffix
 APP_NAME_SUFFIX = '-monit-'
 
-class String
-  def from_human_readable_size
-    if self.include? 'B'
-      self.to_f
-    elsif self.include? 'K'
-      self.to_f * 1024
-    elsif self.include? 'M'
-      self.to_f * 1024 ** 2
-    elsif self.include? 'G'
-      self.to_f * 1024 ** 3
-    elsif self.include? 'T'
-      self.to_f * 1024 ** 4
-    end
-  end
-end
 
 def parse_options
   OptionParser.new do |opts|
@@ -57,27 +42,31 @@ def parse_options
   end.parse!
 end
 
+# Class that maps ActiveRecord monitoring table
+#
 class Monitoring < ActiveRecord::Base
   ActiveRecord::Base.default_timezone=:utc
 end
 
+# ActiveRecord::Migration monitoring object
+#
 class Schema < ActiveRecord::Migration
   def change
-    create_table :monitorings do |t|
-      t.string :name
-      t.text :description
-      t.text :push_output_log, :limit => 10000
-      t.datetime :timestamp
-      t.integer :push_status
-      t.integer :http_code
-      t.float :latency
-      t.float :duration
-      t.string :framework
-      t.string :runtime
-      t.string :databases
-      t.string :memory_usage
-      t.integer :http_status
-      t.text :url_content, :limit => 1000
+    create_table :monitorings do |column|
+      column.string :name
+      column.text :description
+      column.text :push_output_log, :limit => 10000
+      column.datetime :timestamp
+      column.integer :push_status
+      column.integer :http_code
+      column.float :latency
+      column.float :duration
+      column.string :framework
+      column.string :runtime
+      column.string :databases
+      column.string :memory_usage
+      column.integer :http_status
+      column.text :url_content, :limit => 1000
     end
 
     add_index(:monitorings, :name)
@@ -90,24 +79,25 @@ def configure
   $config = Uhuru::Webui::Config.from_file(@config_file)
   setup_logging
 
-  @cf = $config[:monitoring][:vmc_executable_path]
+  monitoring_config = $config[:monitoring]
+  @cf = monitoring_config[:vmc_executable_path]
 
   @cloud_target = $config[:cloud_controller_url]
-  @domain = $config[:monitoring][:apps_domain][0]
+  @domain = monitoring_config[:apps_domain][0]
   @app_dir = File.expand_path("../../test_apps", __FILE__)
   @manifest_dir = File.join(@app_dir, 'manifests')
 
-  @username = $config[:monitoring][:cloud_user]
-  @password = $config[:monitoring][:cloud_password]
-  @default_org = $config[:monitoring][:default_org]
-  @default_space = $config[:monitoring][:default_space]
-  @database = $config[:monitoring][:database]
-  @sleep_after_app_push = $config[:monitoring][:sleep_after_app_push]
-  @pause_after_each_app = $config[:monitoring][:pause_after_each_app]
+  @username = monitoring_config[:cloud_user]
+  @password = monitoring_config[:cloud_password]
+  @default_org = monitoring_config[:default_org]
+  @default_space = monitoring_config[:default_space]
+  @database = monitoring_config[:database]
+  @sleep_after_app_push = monitoring_config[:sleep_after_app_push]
+  @pause_after_each_app = monitoring_config[:pause_after_each_app]
 
   @app_definitions = YAML::load_file(File.expand_path("../../config/app-definitions.yml", __FILE__))
   @apps_to_monitor = []
-  @components = $config[:monitoring][:components]
+  @components = monitoring_config[:components]
 
   @admin_file = $config[:admin_config_file]
 
@@ -119,6 +109,10 @@ def configure
 
 end
 
+# Checks that the monitoring organization and space exists, and the monitoring user have the right roles
+# If doesn't exist it will create/add them
+# Adds service authorisation tokens
+#
 def bootstrap_monitoring
   # get monitoring user from uaa
   users_setup = UsersSetup.new($config)
@@ -130,7 +124,7 @@ def bootstrap_monitoring
     emails = [@username]
     info = {userName: @username, password: @password, name: {givenName: "monitoring", familyName: "user"}}
     info[:emails] = emails.respond_to?(:each) ?
-        emails.each_with_object([]) { |email, o| o.unshift({:value => email}) } :
+        emails.each_with_object([]) { |email, obj| obj.unshift({:value => email}) } :
         [{:value => (emails || name)}]
 
     user = uaac.add(:user, info)
@@ -142,9 +136,10 @@ def bootstrap_monitoring
   admin_token = users_setup.get_admin_token
 
   client = CFoundry::V2::Client.new(@cloud_target, admin_token)
+  client_target = client.target
   #check if user exists in ccdb, and create it if not
-  user = client.users.find { |u|
-    u.guid == user_id
+  user = client.users.find { |user|
+    user.guid == user_id
   }
   unless user
     user_cf = client.user
@@ -153,23 +148,23 @@ def bootstrap_monitoring
   end
 
   # check if monitoring org exists
-  org = client.organizations.find { |o|
-    o.name == @default_org
+  org = client.organizations.find { |organization|
+    organization.name == @default_org
   }
   # create monitoring org with admin privileges
   unless org
     new_org = client.organization
     new_org.name = @default_org
     if new_org.create!
-      users_obj = Library::Users.new(client.token, client.target)
+      users_obj = Library::Users.new(admin_token, client_target)
       users_obj.add_user_to_org_with_role(new_org.guid, user_id, ['owner', 'billing'])
     end
     org = new_org
   end
 
   # check if monitoring space exists
-  space = client.spaces.find { |s|
-    s.name == @default_space
+  space = client.spaces.find { |space|
+    space.name == @default_space
   }
   # create monitoring space with admin privileges
   unless space
@@ -177,41 +172,47 @@ def bootstrap_monitoring
     new_space.organization = org
     new_space.name = @default_space
     if new_space.create!
-      users_obj = Library::Users.new(client.token, client.target)
+      users_obj = Library::Users.new(admin_token, client_target)
       users_obj.add_user_with_role_to_space(new_space.guid, user_id, ['owner', 'developer'])
     end
   end
 
   # get existing service authorisation tokens
   existing_service_auth_tokens = []
-  client.service_auth_tokens.each do |s|
-    existing_service_auth_tokens << s.label
+  client.service_auth_tokens.each do |service|
+    existing_service_auth_tokens << service.label
   end
 
   # add service authorisation tokens
-  @components[:services].each do |s|
-    service = s["name"]
-    service.slice!("_node")
+  @components[:services].each do |service|
+    service_name = service["name"]
+    service_name.slice!("_node")
     if !existing_service_auth_tokens.include?(service)
       service_auth_token = client.service_auth_token
-      service_auth_token.label = service
+      service_auth_token.label = service_name
       service_auth_token.provider = "core"
-      service_auth_token.token = s["token"]
+      service_auth_token.token = service["token"]
       service_auth_token.create!
     end
   end
 end
 
+# Setup context for logging
+#
 def setup_logging
   steno_config = Steno::Config.to_config_hash($config[:logging])
   steno_config[:context] = Steno::Context::ThreadLocal.new
   Steno.init(Steno::Config.new(steno_config))
 end
 
+# Initializes logger
+#
 def logger
   @logger ||= Steno.logger("monitoring")
 end
 
+# Initialize activeresource from configuration and creates the monitoring table
+#
 def initialize_activeresource
   ActiveRecord::Base.configurations = @database
   ActiveRecord::Base.establish_connection(@database)
@@ -219,18 +220,24 @@ def initialize_activeresource
   begin
     Schema.new.change
     logger.info("Created table in database at path: #{@database}")
-  rescue => e
-    logger.warn("Assuming database tables already exist - #{e.message}:#{e.backtrace}")
+  rescue => ex
+    logger.warn("Assuming database tables already exist - #{ex.message}:#{ex.backtrace}")
     nil
   end
 end
 
+# Send email containing the problems encounter during a monitor cycle
+# subject = title of the email
+# body = email content
+#
 def send_email(subject, body)
   email = $config[:monitoring][:email_to]
   Email.send_email(email, subject, body)
   logger.info("Email sent to #{email}. Subject: #{subject} Body: #{body}")
 end
 
+# Sets target to the cf gem, from config file
+#
 def cf_target
   target_command = "#{@cf.chomp('"')} --script target #{@cloud_target}" + '"'
   %x(#{target_command})
@@ -239,48 +246,59 @@ def cf_target
   end
 end
 
+# Login cf gem with credentials from config file
+#
 def cf_login
   login_command = "#{@cf.chomp('"')} --script login #{@username} --password #{@password} -o #{@default_org} -s #{@default_space}" + '"'
   login = %x(#{login_command})
-  if login.downcase.include?("error") || login.downcase.include?("problem")
-    logger.error("Unable to login in vmc. vmc error: #{login.strip}")
-    raise Exception, "Unable to login in vmc. vmc error: #{login.strip}"
+  login_downcase = login.downcase
+  if login_downcase.include?("error") || login_downcase.include?("problem")
+    login_strip = login.strip
+    logger.error("Unable to login in vmc. vmc error: #{login_strip}")
+    raise Exception, "Unable to login in vmc. vmc error: #{login_strip}"
   end
 end
 
+# Sets organization and space to tha cf API client
+#
 def set_cfoundry_environment
-  org = @client.organizations.find { |o|
-    o.name == @default_org
+  org = @client.organizations.find { |org|
+    org.name == @default_org
   }
   @client.current_organization = org
 
-  space = @client.spaces.find { |s|
-    s.name == @default_space
+  space = @client.spaces.find { |space|
+    space.name == @default_space
   }
   @client.current_space = space
 
 end
 
-
+# Gets enabled services on the deployment from config file
+#
 def get_services
   services = []
-  @components[:services].each do |s|
-    service = s["name"]
-    service.slice!("_node")
-    services << service
+  @components[:services].each do |service|
+    service_name = service["name"]
+    service_name.slice!("_node")
+    services << service_name
   end
-  return services
+  services
 end
 
+# Sets the list of applications to be monitored, merging deployed services with the list of apps and services
+# that exist to be monitored
+#
 def set_services
   services = get_services
 
   @app_definitions.each do |app|
     app_name = app['name']
 
-    if File.exist?(File.join(@manifest_dir, app_name, 'manifest.yml'))
+    file = File.join(@manifest_dir, app_name, 'manifest.yml')
+    if File.exist?(file)
       begin
-        manifest = YAML.load_file(File.join(@manifest_dir, app_name, 'manifest.yml'))
+        manifest = YAML.load_file(file)
 
         app_service = manifest['applications'][0]['services'].first[1]['label']
 
@@ -289,13 +307,16 @@ def set_services
           @apps_to_monitor << app_name
 
         end
-      rescue => e
-        logger.warn("Can't read manifest for app #{app_name} - #{e.message}:#{e.backtrace}")
+      rescue => ex
+        logger.warn("Can't read manifest for app #{app_name} - #{ex.message}:#{ex.backtrace}")
       end
     end
   end
 end
 
+# Computes app latency URL for a running app after is pushed
+# url = app url
+#
 def app_latency(url)
   duration = Benchmark.measure do
     app_url_content_response_code(url)
@@ -304,22 +325,32 @@ def app_latency(url)
   duration.real.round(2)
 end
 
+# Computes app memory after the app is pushed
+# app_name = app name for which to get memory usage
+#
 def app_mem(app_name)
   app = get_app_by_name(app_name)
   memory = 0
-  if app != nil && app.stats["0"][:state] != "DOWN"
-    memory = app.stats["0"][:stats][:mem_quota]
+  app_state = app.stats["0"][:state] if app != nil
+  if app != nil && app_state != "DOWN"
+    memory = app_state[:mem_quota]
   end
   memory
 end
 
+# Gets cc API App object by name
+# app_name = app name
+#
 def get_app_by_name(app_name)
-  app = @client.apps.find { |a|
-    a.name == app_name
+  app = @client.apps.find { |app|
+    app.name == app_name
   }
   app
 end
 
+# Gets http app url content and response code
+# url = app url
+#
 def app_url_content_response_code(url)
   uri = URI.parse(url)
   content = Net::HTTP.get(uri)
@@ -330,6 +361,9 @@ rescue
   return '', 0
 end
 
+# Deletes an app, it's services if any and the routes associated
+# app_name = app name
+#
 def app_delete_with_service(app_name)
   app = get_app_by_name(app_name)
 
@@ -355,12 +389,16 @@ def app_delete_with_service(app_name)
 
 end
 
-def delete_all_apps_and_services()
+# Deletes all app and services for the monitoring space
+#
+def delete_all_apps_and_services
   @client.apps.each do |app|
     app_delete_with_service(app.name)
   end
 end
 
+# Process apps: push apps to the cc, writes the result in db and send an email with the problems encountered
+#
 def main_apps
   app_names = @apps_to_monitor
   faulty_apps = []
@@ -371,86 +409,87 @@ def main_apps
 
   app_names.each do |app|
     #threads << Thread.new do
+    begin
+      app_new_name = "#{app}#{APP_NAME_SUFFIX}#{SecureRandom.uuid.slice(0, 5)}"
+
       begin
-        app_new_name = "#{app}#{APP_NAME_SUFFIX}#{SecureRandom.uuid.slice(0, 5)}"
+        app_manifest_file = File.join(@manifest_dir, app, 'manifest.yml')
+        app_manifest = YAML.load_file(app_manifest_file)
 
-        begin
-          app_manifest_file = File.join(@manifest_dir, app, 'manifest.yml')
-          app_manifest = YAML.load_file(app_manifest_file)
+        app_manifest_content = app_manifest['applications'][0]
+        app_manifest_content['name'] = "#{app_new_name}"
+        app_manifest_content['host'] = "#{app_new_name}"
+        app_manifest_content[0]['domain'] = "#{@domain}"
 
-          app_manifest['applications'][0]['name'] = "#{app_new_name}"
-          app_manifest['applications'][0]['host'] = "#{app_new_name}"
-          app_manifest['applications'][0]['domain'] = "#{@domain}"
-
-          destination_manifest_file = File.join(@app_dir, app, 'manifest.yml')
-          File.open(destination_manifest_file, "w") { |f| YAML::dump(app_manifest, f) }
-          manifest_hash = app_manifest['applications'][0]
-        rescue Exception => e
-          logger.error("Application '#{app}' manifest doesn't exist or is empty, application will not be processed - #{e.message}:#{e.backtrace}")
-          error_mail_body << "Application '#{app}' manifest doesn't exist or is empty, application will not be processed.<br /><br />"
-        end
-
-        readme_file = File.join(@app_dir, app, 'readme.md')
-        app_description = File.exist?(readme_file) ? File.read(readme_file) : ''
-
-        push_output = ''
-        push_duration = Benchmark.measure do
-          push_command = "#{@cf.chomp('"')} push --script --manifest #{File.join(@app_dir, app, "/manifest.yml")} --trace" + '"'
-          push_output = %x(#{push_command})
-        end
-        push_success = $?.exitstatus == 0 ? 1 : 0
-
-        sleep(@sleep_after_app_push)
-
-        total_mem = app_mem(app_new_name)
-        latency = app_latency("http://#{app_new_name}.#{@domain}/")
-        url_content, response_code = app_url_content_response_code("http://#{app_new_name}.#{@domain}")
-        http_status = response_code == "200" ? 1 : 0
-
-        databases = []
-        manifest_hash['services'].each do |s|
-          databases << s[1]["label"]
-        end
-
-        framework = app.to_s.split("with")[0]
-
-        #mutex.synchronize {
-          faulty_apps << {
-              :name => app,
-              :push_log => push_output,
-              :framework => framework,
-              :services => databases
-          } if push_success * http_status == 0
-        #}
-
-        #db_mutex.synchronize {
-          monit = Monitoring.new
-          monit.name = app_new_name
-          monit.description = app_description
-          monit.push_output_log = push_output
-          monit.timestamp = DateTime.current.new_offset(Rational(0, 24))
-          monit.push_status = push_success
-          monit.http_code = response_code
-          monit.latency = latency
-          monit.duration = push_duration.real.round(2)
-          monit.framework = framework
-          monit.runtime = ""
-          monit.databases = databases.join(", ")
-          monit.memory_usage = total_mem
-          monit.http_status = http_status
-          monit.url_content = url_content
-          monit.save!
-
-          ActiveRecord::Base.connection.close
-        #}
-      rescue => e
-        logger.error("Error processing app #{app} - #{e.message}:#{e.backtrace}")
+        destination_manifest_file = File.join(@app_dir, app, 'manifest.yml')
+        File.open(destination_manifest_file, "w") { |file| YAML::dump(app_manifest, file) }
+        manifest_hash = app_manifest_content
+      rescue Exception => ex
+        logger.error("Application '#{app}' manifest doesn't exist or is empty, application will not be processed - #{ex.message}:#{ex.backtrace}")
+        error_mail_body << "Application '#{app}' manifest doesn't exist or is empty, application will not be processed.<br /><br />"
       end
 
-      logger.info("Finished processing application #{app_new_name}")
+      readme_file = File.join(@app_dir, app, 'readme.md')
+      app_description = File.exist?(readme_file) ? File.read(readme_file) : ''
 
-      app_delete_with_service(app_new_name)
-      logger.info("Application #{app} deleted")
+      push_output = ''
+      push_duration = Benchmark.measure do
+        push_command = "#{@cf.chomp('"')} push --script --manifest #{File.join(@app_dir, app, "/manifest.yml")} --trace" + '"'
+        push_output = %x(#{push_command})
+      end
+      push_success = $?.exitstatus == 0 ? 1 : 0
+
+      sleep(@sleep_after_app_push)
+
+      total_mem = app_mem(app_new_name)
+      latency = app_latency("http://#{app_new_name}.#{@domain}/")
+      url_content, response_code = app_url_content_response_code("http://#{app_new_name}.#{@domain}")
+      http_status = response_code == "200" ? 1 : 0
+
+      databases = []
+      manifest_hash['services'].each do |service|
+        databases << service[1]["label"]
+      end
+
+      framework = app.to_s.split("with")[0]
+
+      #mutex.synchronize {
+      faulty_apps << {
+          :name => app,
+          :push_log => push_output,
+          :framework => framework,
+          :services => databases
+      } if push_success * http_status == 0
+      #}
+
+      #db_mutex.synchronize {
+      monit = Monitoring.new
+      monit.name = app_new_name
+      monit.description = app_description
+      monit.push_output_log = push_output
+      monit.timestamp = DateTime.current.new_offset(Rational(0, 24))
+      monit.push_status = push_success
+      monit.http_code = response_code
+      monit.latency = latency
+      monit.duration = push_duration.real.round(2)
+      monit.framework = framework
+      monit.runtime = ""
+      monit.databases = databases.join(", ")
+      monit.memory_usage = total_mem
+      monit.http_status = http_status
+      monit.url_content = url_content
+      monit.save!
+
+      ActiveRecord::Base.connection.close
+        #}
+    rescue => ex
+      logger.error("Error processing app #{app} - #{ex.message}:#{ex.backtrace}")
+    end
+
+    logger.info("Finished processing application #{app_new_name}")
+
+    app_delete_with_service(app_new_name)
+    logger.info("Application #{app} deleted")
     #end
 
     sleep(@pause_after_each_app)
@@ -467,11 +506,11 @@ You can find a list of malfunctioning frameworks and services below: <br />
 
 <ul>
 #{
-    faulty_apps.map do |faulty_app|
-      if (faulty_app[:push_log] =~ /Error.+$/)
-        error_line = faulty_app[:push_log].split("<<<").select { |x| x[/Error.+$/] }[0].split(">>>", 2)[0].strip
+    faulty_apps.map do |faulty_app_short|
+      if (faulty_app_short[:push_log] =~ /Error.+$/)
+        error_line = faulty_app_short[:push_log].split("<<<").select { |line| line[/Error.+$/] }[0].split(">>>", 2)[0].strip
       end
-      "<li>App: <b>#{faulty_app[:name]}</b>; Framework: <b>#{faulty_app[:framework]}</b>; Services: <b>#{faulty_app[:services].join(', ')}</b>; Error short description: <b>#{error_line}</b></li>"
+      "<li>App: <b>#{faulty_app_short[:name]}</b>; Framework: <b>#{faulty_app_short[:framework]}</b>; Services: <b>#{faulty_app_short[:services].join(', ')}</b>; Error short description: <b>#{error_line}</b></li>"
     end.join
     }
 </ul>
@@ -490,35 +529,44 @@ ERROR_MAIL
   end
 end
 
+# Returns an array of push app result from db within a time span
+# datetime_from = starting date
+# datetime_until = ending date
+#
 def get_apps(datetime_from, datetime_until)
   applications = Monitoring.where("timestamp > ? AND timestamp <= ?", datetime_from, datetime_until).to_a
   return applications
 end
 
-# will return a distinct list of pairs framework-service readed from app-definitions.yml
-# ex: framework_services = get_frameworks_services
+# Return a distinct list of pairs framework-service readed from app-definitions.yml for monitoring report
+#
 def get_frameworks_services
-  apps = @app_definitions.select { |a| @apps_to_monitor.include?(a["name"]) }
+  app_name = app["name"]
+  apps = @app_definitions.select { |app| @apps_to_monitor.include?(app_name) }
 
-  apps.map do |x|
+  apps.map do |app|
     {
-        :name => x["name"],
-        :framework => x["framework"],
-        :service => x["service"]
+        :name => app_name,
+        :framework => app["framework"],
+        :service => app["service"]
     }
   end
 end
 
-
-#resolutionUnit can be: months, weeks, days, hours, minutes
-#last half of day 30 minutes resolution => generate_report("minutes", 24, 30)
+# Generates monitoring report
+# resolution_unit = unit measure for resolution
+# sample_count = how many samples will be displayed in the report
+# resolution = number of resolution units contained in a sample
+# resolution_unit can be: months, weeks, days, hours, minutes
+#
 def generate_report(resolution_unit, sample_count, resolution)
   infos = ["Status", "Push Outcome", "App Online", "Push Duration", "Latency"]
 
   framework_services = get_frameworks_services
   framework_services << {:name => "All", :framework => "All", :service => "All"}
-  framework_services = framework_services.sort { |a, b| [a[:framework], a[:service]] <=> [b[:framework], b[:service]] }
+  framework_services = framework_services.sort { |service_first, service_second| [service_first[:framework], service_first[:service]] <=> [service_second[:framework], service_second[:service]] }
 
+  # prepares the header of the report
   header = ["Info", "Framework", "Service", "Uptime"]
   dashboard = Array.new
   framework_services.each do |sla|
@@ -527,31 +575,37 @@ def generate_report(resolution_unit, sample_count, resolution)
     end
   end
 
+  # calibrates DateTime to UTC
   current_time = DateTime.current.new_offset(Rational(0, 24))
+  current_time_start = current_time.change({:min => 0, :sec => 0})
 
-  minutes = ((current_time - current_time.change({:min => 0, :sec => 0})) * 24 * 60).to_i
-  current_time = minutes > 30 ? current_time.change({:min => 30, :sec => 0}) : current_time.change({:min => 0, :sec => 0})
+  minutes = ((current_time - current_time_start) * 24 * 60).to_i
+  current_time = minutes > 30 ? current_time.change({:min => 30, :sec => 0}) : current_time_start
 
   xy_sum_all_app_online, xy_sum_all_app_count = 0, 0
-  i = sample_count
-  while i > 0
-    t0 = current_time.advance(:"#{resolution_unit}" => resolution * -1 * i)
-    t1 = t0.advance(:"#{resolution_unit}" => resolution)
+  sample_count_i = sample_count
+  while sample_count_i > 0
+    time_from = current_time.advance(:"#{resolution_unit}" => resolution * -1 * sample_count_i)
+    time_to = time_from.advance(:"#{resolution_unit}" => resolution)
+    t0_string = time_from.to_s
 
     y_all_count, y_all_status, y_all_push_outcome, y_all_app_online, y_all_duration, y_all_latency = 0, 0, 0, 0, 0, 0
     x_sum_app_online, x_sum_app_count = 0, 0
-    applications = get_apps(t0, t1)
+    applications = get_apps(time_from, time_to)
 
+    # compute report content fields
     dashboard.each do |item|
       if (item[:framework] != "All" && item[:service] != "All")
 
+        app_timestamp = app.timestamp
         app_hash = applications.select do |app|
           app.name.include?(item[:name]) &&
-              app.timestamp < t1 &&
-              app.timestamp >= t0
+              app_timestamp < time_to &&
+              app_timestamp >= time_from
         end
 
-        if app_hash.count > 0
+        app_hash_count = app_hash.count
+        if app_hash_count > 0
 
           push_outcome = app_hash.inject(0.0) { |result, element| result + element.push_status }
           app_online = app_hash.inject(0.0) { |result, element| result + element.http_status }
@@ -561,66 +615,68 @@ def generate_report(resolution_unit, sample_count, resolution)
 
           case item[:info]
             when "Status"
-              item[:"#{t0.to_s}"] = (status / app_hash.count).round(6)
-              y_all_count = y_all_count + app_hash.count
+              item[:"#{t0_string}"] = (status / app_hash_count).round(6)
+              y_all_count = y_all_count + app_hash_count
               y_all_status = y_all_status + status
               y_all_app_online = y_all_app_online + app_online
               y_all_push_outcome = y_all_push_outcome + push_outcome
               y_all_duration = y_all_duration + duration
               y_all_latency = y_all_latency + latency
               x_sum_app_online = item[:sum_app_online] + app_online
-              x_sum_app_count = item[:sum_app_count] + app_hash.count
+              x_sum_app_count = item[:sum_app_count] + app_hash_count
               xy_sum_all_app_online = xy_sum_all_app_online + app_online
-              xy_sum_all_app_count = xy_sum_all_app_count + app_hash.count
+              xy_sum_all_app_count = xy_sum_all_app_count + app_hash_count
             when "Push Outcome"
-              item[:"#{t0.to_s}"] = (push_outcome / app_hash.count).round(6)
+              item[:"#{t0_string}"] = (push_outcome / app_hash_count).round(6)
             when "App Online"
-              item[:"#{t0.to_s}"] = (app_online / app_hash.count).round(6)
+              item[:"#{t0_string}"] = (app_online / app_hash_count).round(6)
             when "Push Duration"
-              item[:"#{t0.to_s}"] = (duration / app_hash.count).round(6)
+              item[:"#{t0_string}"] = (duration / app_hash_count).round(6)
             when "Latency"
-              item[:"#{t0.to_s}"] = (latency / app_hash.count).round(6)
+              item[:"#{t0_string}"] = (latency / app_hash_count).round(6)
             else
-              item[:"#{t0.to_s}"] = ""
+              item[:"#{t0_string}"] = ""
           end
 
           item[:sum_app_online] = x_sum_app_online
           item[:sum_app_count] = x_sum_app_count
           item[:uptime] = (100 * (x_sum_app_online / x_sum_app_count)).round(4) unless x_sum_app_count == 0
         else
-          item[:"#{t0.to_s}"] = nil
+          item[:"#{t0_string}"] = nil
         end
       end
     end
 
-    dashboard.select { |x| x[:framework] == "All" && x[:service] == "All" }.inject([]) { |result, item|
+    # compute report summary fields fro all frameworks and all services
+    dashboard.select { |element| element[:framework] == "All" && element[:service] == "All" }.inject([]) { |result, item_all|
       if (y_all_count != 0)
-        case item[:info]
+        case item_all[:info]
           when "Status"
-            item[:"#{t0.to_s}"] = (y_all_status / y_all_count).round(6)
+            item_all[:"#{t0_string}"] = (y_all_status / y_all_count).round(6)
           when "Push Outcome"
-            item[:"#{t0.to_s}"] = (y_all_push_outcome / y_all_count).round(6)
+            item_all[:"#{t0_string}"] = (y_all_push_outcome / y_all_count).round(6)
           when "App Online"
-            item[:"#{t0.to_s}"] = (y_all_app_online / y_all_count).round(6)
+            item_all[:"#{t0_string}"] = (y_all_app_online / y_all_count).round(6)
           when "Push Duration"
-            item[:"#{t0.to_s}"] = (y_all_duration / y_all_count).round(6)
+            item_all[:"#{t0_string}"] = (y_all_duration / y_all_count).round(6)
           when "Latency"
-            item[:"#{t0.to_s}"] = (y_all_latency / y_all_count).round(6)
+            item_all[:"#{t0_string}"] = (y_all_latency / y_all_count).round(6)
           else
-            item[:"#{t0.to_s}"] = ""
+            item_all[:"#{t0_string}"] = ""
         end;
-        item[:uptime] = (100 * (xy_sum_all_app_online / xy_sum_all_app_count)).round(4)
+        item_all[:uptime] = (100 * (xy_sum_all_app_online / xy_sum_all_app_count)).round(4)
       else
-        item[:"#{t0.to_s}"] = nil
+        item_all[:"#{t0_string}"] = nil
       end
-      result }
+      result
+    }
 
+    header << t0_string
 
-    header << t0.to_s
-
-    i = i -1
+    sample_count_i = sample_count_i -1
   end
 
+  # removes unused fields from result
   dashboard.each do |hash|
     hash.delete(:name)
     hash.delete(:sum_app_online)
@@ -632,23 +688,31 @@ def generate_report(resolution_unit, sample_count, resolution)
     sort_keys[info] = index
   end
 
-  dashboard.sort! do |a, b|
-    if (a[:framework] == 'All') && (b[:framework] != 'All')
+  # sort report
+  dashboard.sort! do |first, second|
+    first_framework = first[:framework]
+    first_service = first[:service]
+    second_framework = second[:framework]
+    second_service = second[:service]
+    if (first_framework == 'All') && (second_framework != 'All')
       -1
-    elsif (b[:framework] == 'All') && (a[:framework] != 'All')
+    elsif (second_framework == 'All') && (first_framework != 'All')
       1
-    elsif a[:framework] == b[:framework] && a[:service] == b[:service]
-      sort_keys[a[:info]] < sort_keys[b[:info]] ? -1 : 1
+    elsif first_framework == second_framework && first_service == second_service
+      sort_keys[first[:info]] < sort_keys[second[:info]] ? -1 : 1
     else
-      [a[:framework], a[:service]] <=> [b[:framework], b[:service]]
+      [first_framework, first_service] <=> [second_framework, second_service]
     end
   end
 
   return header, dashboard
 end
 
+# Controls workflow for the monitoring job
+#
 def main
 
+  # initializes all tools
   configure
   logger.info("Monitoring started")
   bootstrap_monitoring
@@ -664,14 +728,15 @@ def main
 
     set_cfoundry_environment
     set_services
-  rescue => e
-    exception = "#{e.message}:#{e.backtrace}"
+  rescue => ex
+    exception = "#{ex.message}:#{ex.backtrace}"
     send_email("#{@domain} QoS Monitoring [FAILURE]", 'There was a problem logging into the cloud.')
     logger.error("Uhuru monitoring could not start - #{exception}")
     raise
   end
   interrupted = false
 
+  # loop that will run process apps and generate reports each 25 min
   trap("TERM") { interrupted = true }
   while true
     start_time = DateTime.now
@@ -716,11 +781,8 @@ def main
   end
 
 
-rescue => e
-  puts "#{e.message}: #{e.backtrace}"
-  logger.error("#{e.message} #{e.backtrace}")
+rescue => ex
+  logger.error("#{ex.message} #{ex.backtrace}")
 end
 
 main
-
-

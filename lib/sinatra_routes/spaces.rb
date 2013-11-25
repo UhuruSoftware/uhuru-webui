@@ -116,14 +116,13 @@ module Uhuru::Webui
           begin
             org = Library::Organizations.new(session[:token], $cf_target)
             space = Library::Spaces.new(session[:token], $cf_target)
-            app = TemplateApps.new
             route = Library::Routes.new(session[:token], $cf_target)
             domain = Library::Domains.new(session[:token], $cf_target)
 
             organization_name = org.get_name(params[:org_guid])
             space_name = space.get_name(params[:space_guid])
 
-            collections = app.read_collections
+            collections = TemplateApps.read_collections
             error_message = params[:error] if defined?(params[:error])
           rescue CFoundry::NotAuthorized => ex
             $logger.error("#{ex.message}:#{ex.backtrace}")

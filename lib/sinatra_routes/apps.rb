@@ -51,12 +51,11 @@ module Uhuru::Webui
           require_login
           org = Library::Organizations.new(session[:token], $cf_target)
           space = Library::Spaces.new(session[:token], $cf_target)
-          app = TemplateApps.new
           domain = Library::Domains.new(session[:token], $cf_target)
 
           apps_list = space.read_apps(params[:space_guid])
           domains_list = domain.read_domains()
-          collections = app.read_collections
+          collections = TemplateApps.read_collections
           error_message = params[:error] if defined?(params[:error])
 
           erb :'user_pages/space',
@@ -80,8 +79,7 @@ module Uhuru::Webui
         # Retrieves a specific app logo
         app.get '/get_logo/:app_id' do
           require_login
-          collection = TemplateApps.new
-          apps = collection.read_collections
+          apps = TemplateApps.read_collections
           app_id = params[:app_id]
           content_type 'image/png'
           send_file apps[app_id]['logo']
@@ -99,8 +97,7 @@ module Uhuru::Webui
         # Retrieves a downloadable package for the app
         app.get '/download_app/:app_id' do
           require_login
-          collection = TemplateApps.new
-          apps = collection.read_collections
+          apps = TemplateApps.read_collections
           source = nil
 
           apps.each do |app|
@@ -168,8 +165,7 @@ module Uhuru::Webui
         app.post '/push' do
           require_login
 
-          app = TemplateApps.new
-          apps_list = app.read_collections
+          apps_list = TemplateApps.read_collections
 
           name = nil
           domain_name = nil

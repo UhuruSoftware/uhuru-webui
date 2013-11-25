@@ -1,14 +1,20 @@
 require 'yaml'
 
+# Class used to manage template apps
 class TemplateApps
 
+  # Creates the template app directory if doesn't exist and copies existing template apps in that directory
+  #
   def self.bootstrap
-    FileUtils.mkdir_p $config[:template_apps_dir]
+    template_app_dir = $config[:template_apps_dir]
+    FileUtils.mkdir_p template_app_dir
 
-    FileUtils.cp_r(Dir[File.expand_path('../../template_apps/*', __FILE__)], $config[:template_apps_dir])
+    FileUtils.cp_r(Dir[File.expand_path('../../template_apps/*', __FILE__)], template_app_dir)
   end
 
-  def read_collections
+  # Reads all template apps, and load all the settings from manifests for further use
+  #
+  def self.read_collections
     result = {}
     search_collections =  File.expand_path(File.join($config[:template_apps_dir], '/*/manifest.yml'), __FILE__)
     all_collections = Dir.glob(search_collections)
@@ -29,18 +35,12 @@ class TemplateApps
         app_manifest['app_src'] = app
         app_manifest['logo'] = File.expand_path("../logo.png", app)
         app_manifest['manifest_file'] = File.expand_path("../manifest.yml", app)
-        app_manifest['manifest'] = YAML.load_file app_manifest['manifest_file']
-        service_manifest = YAML.load_file app_manifest['manifest_file']
+        app_manifest_file = YAML.load_file app_manifest['manifest_file']
+        app_manifest['manifest'] = app_manifest_file
+
+        service_manifest = app_manifest_file
         if service_manifest['applications'][0].include?('services')
-          services = service_manifest['applications'][0]['services']
-
-          services.each do |_, value|
-            value.each do |_, service_type|
-              service_types << service_type if _ == "label"
-            end
-          end
-
-          app_manifest['service_type'] = service_types
+          app_manifest['service_type'] = TemplateApps.get_service_types(service_manifest, service_types)
         else
           app_manifest['service_type'] = []
         end
@@ -51,4 +51,21 @@ class TemplateApps
 
     result
   end
+
+  private
+
+  # Gets a list of all service types that the app has in it's manifest
+  #
+  def self.get_service_types(service_manifest, service_types)
+    services = service_manifest['applications'][0]['services']
+
+    services.each do |_, value|
+      value.each do |_, service_type|
+        service_types << service_type if _ == "label"
+      end
+    end
+
+    service_types
+  end
+
 end

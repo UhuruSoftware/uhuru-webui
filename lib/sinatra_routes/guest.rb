@@ -171,7 +171,6 @@ module Uhuru::Webui
           password_b32 = Base32.decode(params[:password])
           user_guid_b32 = Base32.decode(params[:guid])
           key = $config[:webui][:activation_link_secret]
-          user_guid = Encryption.decrypt_text(user_guid_b32, key)
           password = Encryption.decrypt_text(password_b32, key)
 
           user = UsersSetup.new($config)

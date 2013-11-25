@@ -4,6 +4,7 @@ module Uhuru
   end
 end
 
+# Class used to load reports settings from config file
 class Uhuru::Webui::ReportsConfig < VCAP::Config
   define_schema do
     {

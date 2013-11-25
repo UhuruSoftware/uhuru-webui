@@ -2,10 +2,17 @@ require 'net/smtp'
 require 'openssl'
 
 module Email
+  # Method to send an email
+  # to_email = email address where email is sent
+  # subject =  email title
+  # body = email content
+  #
   def self.send_email(to_email, subject, body)
+    email_config = $config[:email]
+    email_from = email_config[:from]
 
     msg = <<END_OF_MESSAGE
-From: #{$config[:email][:from_alias]} <#{$config[:email][:from]}>
+From: #{email_config[:from_alias]} <#{email_from}>
 To: <#{to_email}>
 Subject: #{subject}
 MIME-Version: 1.0
@@ -15,11 +22,11 @@ Content-type: text/html
 END_OF_MESSAGE
 
     client = Net::SMTP.new(
-        $config[:email][:server],
-        $config[:email][:port])
+        email_config[:server],
+        email_config[:port])
 
 
-    if $config[:email][:enable_tls].to_s == 'true'
+    if email_config[:enable_tls].to_s == 'true'
       context = Net::SMTP.default_ssl_context
       client.enable_starttls(context)
     end
@@ -27,11 +34,11 @@ END_OF_MESSAGE
 
     client.start(
         "localhost",
-        $config[:email][:user],
-        $config[:email][:secret],
-        $config[:email][:auth_method]) do
+        email_config[:user],
+        email_config[:secret],
+        email_config[:auth_method]) do
 
-      client.send_message msg, $config[:email][:from], to_email
+      client.send_message msg, email_from, to_email
     end
   end
 end

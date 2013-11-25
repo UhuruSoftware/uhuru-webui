@@ -1,6 +1,7 @@
 
 module Uhuru
   module Webui
+    # Class used to generate reports
     class CFReports
 
       attr_reader :uaa_users
@@ -9,13 +10,16 @@ module Uhuru
         $reports[:reports]
       end
 
+      # Replace the user id from a report column with username
+      #
       def init_users
+        uaadb_config = $config[:uaadb]
         conn = PG.connect(
-            host:     $config[:uaadb][:host],
-            port:     $config[:uaadb][:port],
-            dbname:   $config[:uaadb][:dbname],
-            user:     $config[:uaadb][:user],
-            password: $config[:uaadb][:password]
+            host:     uaadb_config[:host],
+            port:     uaadb_config[:port],
+            dbname:   uaadb_config[:dbname],
+            user:     uaadb_config[:user],
+            password: uaadb_config[:password]
         )
 
         cf_users = run_query('SELECT id, guid FROM USERS')
@@ -24,8 +28,7 @@ module Uhuru
         @uaa_users = {}
 
         uaa_users.each do |user|
-
-          cf_user = cf_users.find { |u| u['guid'] == user['id'] }
+          cf_user = cf_users.find { |cf_user| cf_user['guid'] == user['id'] }
 
           if cf_user
             @uaa_users[cf_user['id']] = {
@@ -48,23 +51,29 @@ module Uhuru
         end
       end
 
-
+      # Connects to the cloud controller db specified in config file
+      #
       def get_connection
+        ccdb_config = $config[:ccdb]
         conn = PG.connect(
-            host:     $config[:ccdb][:host],
-            port:     $config[:ccdb][:port],
-            dbname:   $config[:ccdb][:dbname],
-            user:     $config[:ccdb][:user],
-            password: $config[:ccdb][:password]
+            host:     ccdb_config[:host],
+            port:     ccdb_config[:port],
+            dbname:   ccdb_config[:dbname],
+            user:     ccdb_config[:user],
+            password: ccdb_config[:password]
         )
 
         return conn
       end
 
+      # Initializes the class
+      #
       def initialize
         @conn = get_connection
       end
 
+      # Runs a query and returns query result
+      #
       def run_query(query)
         if query.is_a?(String)
           @conn.exec(query)
