@@ -387,6 +387,8 @@ def app_delete_with_service(app_name)
     end
   end
 
+rescue => ex
+  logger.error("#{ex.message} #{ex.backtrace}")
 end
 
 # Deletes all app and services for the monitoring space
