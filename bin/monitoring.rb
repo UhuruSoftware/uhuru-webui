@@ -598,8 +598,8 @@ def generate_report(resolution_unit, sample_count, resolution)
     dashboard.each do |item|
       if (item[:framework] != "All" && item[:service] != "All")
 
-        app_timestamp = app.timestamp
         app_hash = applications.select do |app|
+          app_timestamp = app.timestamp
           app.name.include?(item[:name]) &&
               app_timestamp < time_to &&
               app_timestamp >= time_from

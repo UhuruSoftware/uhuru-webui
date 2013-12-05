@@ -292,14 +292,14 @@ module Uhuru::Webui
             return switch_to_get "#{ADMINISTRATION_EMAIL}?error=Please input a valid destination e-mail address"
           end
 
-          email_server = server
-          email_from =  from
-          email_from_alias = from_alias
-          email_port =  Integer(port)
-          email_server_enable_tls = enable_tls
-          email_server_user = user
-          email_server_secret = secret
-          email_server_auth_method = auth_method.to_sym
+          email_server = params[:server]
+          email_from =  params[:from]
+          email_from_alias = params[:from_alias]
+          email_port =  Integer(params[:port])
+          email_server_enable_tls = params[:enable_tls]
+          email_server_user = params[:user]
+          email_server_secret = params[:secret]
+          email_server_auth_method = params[:auth_method].to_sym
 
 
           client = Net::SMTP.new( email_server,email_port)

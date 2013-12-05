@@ -243,7 +243,7 @@ class Applications < Uhuru::Webui::ClassWithFeedback
     app_uris = app.uris
     parsed_urls.each do |url|
       url_host = url["host"]
-      element = app_uris.find{ |url| url.host == url_host && url.domain == url['domain'] }
+      element = app_uris.find{ |app_url| app_url.host == url_host && app_url.domain == url['domain'] }
       if element == nil
         begin
           info("  Binding url '#{url_host}' ...")
