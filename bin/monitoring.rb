@@ -187,7 +187,7 @@ def bootstrap_monitoring
   @components[:services].each do |service|
     service_name = service["name"]
     service_name.slice!("_node")
-    if !existing_service_auth_tokens.include?(service)
+    if !existing_service_auth_tokens.include?(service_name)
       service_auth_token = client.service_auth_token
       service_auth_token.label = service_name
       service_auth_token.provider = "core"
@@ -331,9 +331,9 @@ end
 def app_mem(app_name)
   app = get_app_by_name(app_name)
   memory = 0
-  app_state = app.stats["0"][:state] if app != nil
-  if app != nil && app_state != "DOWN"
-    memory = app_state[:mem_quota]
+  app_stats = app.stats["0"] if app != nil
+  if app != nil && app_stats[:state] != "DOWN"
+    memory = app_stats[:stats][:mem_quota]
   end
   memory
 end
@@ -421,7 +421,7 @@ def main_apps
         app_manifest_content = app_manifest['applications'][0]
         app_manifest_content['name'] = "#{app_new_name}"
         app_manifest_content['host'] = "#{app_new_name}"
-        app_manifest_content[0]['domain'] = "#{@domain}"
+        app_manifest_content['domain'] = "#{@domain}"
 
         destination_manifest_file = File.join(@app_dir, app, 'manifest.yml')
         File.open(destination_manifest_file, "w") { |file| YAML::dump(app_manifest, file) }
@@ -543,12 +543,11 @@ end
 # Return a distinct list of pairs framework-service readed from app-definitions.yml for monitoring report
 #
 def get_frameworks_services
-  app_name = app["name"]
-  apps = @app_definitions.select { |app| @apps_to_monitor.include?(app_name) }
+  apps = @app_definitions.select { |app| @apps_to_monitor.include?(app["name"]) }
 
   apps.map do |app|
     {
-        :name => app_name,
+        :name => app["name"],
         :framework => app["framework"],
         :service => app["service"]
     }
