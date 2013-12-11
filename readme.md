@@ -9,6 +9,12 @@ To start the WebUI run the following commands:
  cd bin
  bundle exec ruby webui
 
+To test the WebUI do the following:
+  add you test users password as an environment variable (ex: export WEBUI_USER_PASSWORD=mypassword)
+  run bundle install
+  cd ../path/to/webui_folder/spec
+  run the tests
+    
 
 The UAA target has to have an oauth2 client with secret for the webui
  with the following configs:
