@@ -4,20 +4,21 @@ require 'rubygems'
 require 'rspec'
 require 'vcap/common'
 require 'vcap/config'
-require '../lib/config'
+require './lib/config'
+require './lib/sinatra_routes/cloud_feedback'
 
-require '../lib/email'
-require '../lib/readapps'
-require '../lib/encryption'
+require './lib/email'
+require './lib/readapps'
+require './lib/encryption'
 
-require '../lib/users_setup'
-require '../lib/users'
-require '../lib/organizations'
-require '../lib/spaces'
-require '../lib/applications'
-require '../lib/service_instances'
-require '../lib/domains'
-require '../lib/routes'
+require './lib/users_setup'
+require './lib/users'
+require './lib/organizations'
+require './lib/spaces'
+require './lib/applications'
+require './lib/service_instances'
+require './lib/domains'
+require './lib/routes'
 
 # defining constants for the spec tests
 USER = 'marius.ivan@uhurusoftware.com'
@@ -32,6 +33,7 @@ NEW_SPACE_NAME = 'SOME_SPACE_2'
 DOMAIN_NAME = 'somedomain.net'
 ROUTE_NAME = 'test.route'
 APP_NAME = 'test_app'
+NEW_APP_NAME = 'new_test_app'
 SERVICE_NAME = 'test_service'
 
 TEST_USER = 'some_name@test.com'
@@ -40,19 +42,20 @@ TEST_USER_FIRST_NAME = 'none'
 TEST_USER_LAST_NAME = 'none'
 
 
-
 module Mocking
   # a class used to login the user and create the necessary objects for testing
   class Initializing
     attr_reader :user, :target, :config
 
+    # the basic methods for the user are also tested withing the constructor, the login process and the loading of the config file in each test
     def initialize
       config_file = File.expand_path("../../config/uhuru-webui.yml", __FILE__)
       @config = Uhuru::Webui::Config.from_file(config_file)
       @target = @config[:cloud_controller_url]
       user_login = UsersSetup.new(@config)
+      $config = @config
       begin
-        @user = user_login.login(USER, PASSWORD)
+        @user = user_login.login(ADMIN_USER, ADMIN_PASSWORD)
       rescue
         puts 'There were problems at login. Please rerun the test or check the environment variables'
       end

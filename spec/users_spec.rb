@@ -1,4 +1,4 @@
-require './spec_helper.rb'
+require 'spec_helper.rb'
 
 describe 'Main tests for users' do
   before(:each) do
@@ -18,7 +18,6 @@ describe 'Main tests for users' do
     #@users.user_exists(@user_guid).should == true
     #get_user_from_ccng(user_guid)
   end
-
 
   it 'should add the test user tot the organization' do
     @users.add_user_to_org_with_role(@org_guid, @user_guid, ['owner']).should == true
@@ -44,11 +43,4 @@ describe 'Main tests for users' do
     @users.remove_user_with_role_from_space(@space_guid, @user_guid, 'owner').should == true
   end
 
-  #it 'should create a test user in org' do
-  #  @users.invite_user_with_role_to_org(@testing_data.config, TEST_USER, @org_guid, 'owner')
-  #end
-  #
-  #it 'should create a test user in space' do
-  #  @users.invite_user_with_role_to_space(@testing_data.config, TEST_USER, @space_guid, 'owner')
-  #end
 end

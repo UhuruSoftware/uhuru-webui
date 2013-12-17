@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'Main tests for users organizations' do
+describe 'Main tests for users spaces' do
   before(:each) do
     @testing_data = Mocking::Initializing.new
     @testing_data.clean_previous_tests

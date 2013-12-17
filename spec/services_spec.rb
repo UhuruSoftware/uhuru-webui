@@ -1,6 +1,6 @@
-require './spec_helper.rb'
+require 'spec_helper.rb'
 
-describe 'Main tests for users domains' do
+describe 'Main tests for users services' do
   before(:each) do
     @testing_data = Mocking::Initializing.new
     @testing_data.clean_previous_tests
