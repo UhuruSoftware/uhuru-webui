@@ -1,4 +1,4 @@
-require 'spec_helper'
+require './spec_helper.rb'
 
 describe 'Main tests for users domains' do
   before(:each) do

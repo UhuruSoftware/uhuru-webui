@@ -4,20 +4,20 @@ require 'rubygems'
 require 'rspec'
 require 'vcap/common'
 require 'vcap/config'
-require './lib/config'
+require '../lib/config'
 
-require './lib/email'
-require './lib/readapps'
-require './lib/encryption'
+require '../lib/email'
+require '../lib/readapps'
+require '../lib/encryption'
 
-require './lib/users_setup'
-require './lib/users'
-require './lib/organizations'
-require './lib/spaces'
-require './lib/applications'
-require './lib/service_instances'
-require './lib/domains'
-require './lib/routes'
+require '../lib/users_setup'
+require '../lib/users'
+require '../lib/organizations'
+require '../lib/spaces'
+require '../lib/applications'
+require '../lib/service_instances'
+require '../lib/domains'
+require '../lib/routes'
 
 # defining constants for the spec tests
 USER = 'marius.ivan@uhurusoftware.com'
@@ -30,6 +30,15 @@ NEW_ORGANIZATION_NAME = 'SOME_ORGANIZATION_2'
 SPACE_NAME = 'SOME_SPACE'
 NEW_SPACE_NAME = 'SOME_SPACE_2'
 DOMAIN_NAME = 'somedomain.net'
+ROUTE_NAME = 'test.route'
+APP_NAME = 'test_app'
+SERVICE_NAME = 'test_service'
+
+TEST_USER = 'some_name@test.com'
+TEST_USER_PASSWORD = 'none'
+TEST_USER_FIRST_NAME = 'none'
+TEST_USER_LAST_NAME = 'none'
+
 
 
 module Mocking
