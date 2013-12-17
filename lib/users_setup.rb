@@ -57,7 +57,7 @@ class UsersSetup
       raise 'The username already exists' if defined?(admin_token.info['error']) || defined?(admin_token.info['error_description'])
 
       #the username password should be generated for each user for better security
-      user_token = get_user_token(email, $config[:webui][:activation_link_secret])
+      user_token = get_user_token(email, password)
 
       raise 'The username already exists' if defined?(user_token.info['error']) || defined?(user_token.info['error_description'])
 
