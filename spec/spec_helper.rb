@@ -2,6 +2,7 @@ $:.unshift(File.expand_path("../../lib", __FILE__))
 
 require 'rubygems'
 require 'rspec'
+require 'json'
 require 'vcap/common'
 require 'vcap/config'
 require './lib/config'
@@ -26,7 +27,7 @@ PASSWORD = ENV['WEBUI_USER_PASSWORD']
 ADMIN_USER = 'admin'
 ADMIN_PASSWORD = ENV['WEBUI_ADMIN_PASSWORD']
 
-ORGANIZATION_NAME = 'SOME_ORGANIZATION'
+ORGANIZATION_NAME = 'SOME_ORGANIZATION_1'
 NEW_ORGANIZATION_NAME = 'SOME_ORGANIZATION_2'
 SPACE_NAME = 'SOME_SPACE'
 NEW_SPACE_NAME = 'SOME_SPACE_2'
@@ -49,13 +50,13 @@ module Mocking
 
     # the basic methods for the user are also tested withing the constructor, the login process and the loading of the config file in each test
     def initialize
-      config_file = File.expand_path("../../config/uhuru-webui.yml", __FILE__)
+      config_file = File.expand_path("../../config/uhuru-webui-tests.yml", __FILE__)
       @config = Uhuru::Webui::Config.from_file(config_file)
       @target = @config[:cloud_controller_url]
       user_login = UsersSetup.new(@config)
       $config = @config
       begin
-        @user = user_login.login(ADMIN_USER, ADMIN_PASSWORD)
+        @user = user_login.login(USER, PASSWORD)
       rescue
         puts 'There were problems at login. Please rerun the test or check the environment variables'
       end

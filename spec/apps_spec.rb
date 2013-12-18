@@ -26,25 +26,73 @@ describe 'Main tests for users apps' do
     @apps.start_feedback
     @create_app = nil
 
+    # the stack and the buildpack were set to nil by default
     begin
-      @create_app = @apps.create!(@space_guid, APP_NAME, 1, 128, DOMAIN_NAME, 'host_name', @apps_list['asp_net_razor_sample']['app_src'], @apps_list['asp_net_razor_sample']['service_type'], nil, @apps_list['asp_net_razor_sample']['buildpack'], @apps_list['asp_net_razor_sample']['id'])
+      @create_app = @apps.create!(@space_guid, APP_NAME, 1, 128, DOMAIN_NAME, 'host_name', @apps_list['asp_net_razor_sample']['app_src'], @apps_list['asp_net_razor_sample']['service_type'], nil, nil, @apps_list['asp_net_razor_sample']['id'])
     rescue Exception => ex
       puts ex
     end
 
+    @app = Library::Spaces.new(@testing_data.user.token, @testing_data.target).read_apps(@space_guid).first
+    @app_guid = Library::Spaces.new(@testing_data.user.token, @testing_data.target).read_apps(@space_guid).first.guid
+    @current_app_list = []
+    @current_app_list << @app
     @apps.close_feedback
   end
 
-  it 'should get app status' do
-    #@apps.get_app_running_status(@create_app.guid)
+  it 'should have 1 app inside the space(the test app that was pushed)' do
+    @app_guid.should_not == []
   end
 
-  it 'should update the app' do
-    #@apps.update(app_name, state, instances, memory, services, urls, binding_object, @space_guid, @apps_list)
+  # there should be only one app inside the space
+  it 'should get app status' do
+    @apps.get_app_running_status(@app_guid).should_not == nil
   end
+
+
+  #
+  # update methods
+  #
+  it 'should update the app state to STARTED' do
+    @apps.update(APP_NAME, 'true', 1, 128, '{}', '{}', @routes, @space_guid, @current_app_list)
+    Library::Spaces.new(@testing_data.user.token, @testing_data.target).read_apps(@space_guid).first.state.should == 'STARTED'
+  end
+
+  it 'should update the app state to STOPPED' do
+    @apps.update(APP_NAME, 'false', 1, 128, '{}', '{}', @routes, @space_guid, @current_app_list)
+    Library::Spaces.new(@testing_data.user.token, @testing_data.target).read_apps(@space_guid).first.state.should == 'STOPPED'
+  end
+
+  it 'should update the app instances' do
+    @apps.update(APP_NAME, 'true', 2, 128, '{}', '{}', @routes, @space_guid, @current_app_list)
+    Library::Spaces.new(@testing_data.user.token, @testing_data.target).read_apps(@space_guid).first.instances.should == 2
+  end
+
+  it 'should update the app instances' do
+    @apps.update(APP_NAME, 'true', 1, 256, '{}', '{}', @routes, @space_guid, @current_app_list)
+    Library::Spaces.new(@testing_data.user.token, @testing_data.target).read_apps(@space_guid).first.memory.should == 256
+  end
+
+  it 'should update the app service bindings' do
+    service = Library::Spaces.new(@testing_data.user.token, @testing_data.target).read_service_instances(@space_guid).first
+
+    service_list = "[{ \"name\": \"#{service.name}\", \"type\": \"#{service.type}\", \"plan\": \"#{service.plan}\", \"guid\": \"#{service.guid}\" }]"
+    @apps.update(APP_NAME, 'true', 1, 256, service_list, '{}', @routes, @space_guid, @current_app_list)
+
+    #read the app service bindings
+    Library::Spaces.new(@testing_data.user.token, @testing_data.target).read_apps(@space_guid).first.services.should_not == []
+  end
+
+  it 'should update the app url bindings' do
+    url_list = "[{ \"host\": \"#{ROUTE_NAME}\", \"domain\": \"#{DOMAIN_NAME}\", \"domain_guid\": \"#{@domain_guid}\" }]"
+    @apps.update(APP_NAME, 'true', 1, 256, '{}', url_list, @routes, @space_guid, @current_app_list)
+
+    #read the app url bindings
+    Library::Spaces.new(@testing_data.user.token, @testing_data.target).read_apps(@space_guid).first.uris.should_not == []
+  end
+
 
   it 'should delete the app' do
-    #@apps.delete(@create_app.guid)
+    @apps.delete(@app_guid).should == true
   end
-
 end

@@ -38,12 +38,6 @@ describe 'Main tests for users organizations' do
     spaces.should == []
   end
 
-  # the total amount of members
-  it 'should receive an amount of members for the current organization' do
-    members = @orgs.get_members_count(@org_guid)
-    members.should_not == nil
-  end
-
   # reads all user types an retrieves the amount of each
   # there are users set up by default when an organization is created
   it 'should count owners' do
