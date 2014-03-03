@@ -1,0 +1,15 @@
+---
+applications:
+- name: dotnetmysql
+  memory: 256M
+  instances: 1
+  host: dotnetmysql
+  domain: apps.ccng-dev.net
+  path: .
+  stack: win2012
+  services:
+    dotnetmysqlmonit:
+      label: mysql
+      provider: core
+      version: '5.5'
+      plan: free

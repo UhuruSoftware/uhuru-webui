@@ -1,0 +1,132 @@
+<div class="modal-background"></div>
+
+<div class="modal" >
+
+  <script type="text/javascript" src="https://js.stripe.com/v2/stripe-debug.js"></script>
+  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+
+  <script type="text/javascript">
+      // This identifies your website in the createToken call below
+      Stripe.setPublishableKey('<%= $config[:billing][:options][:stripe][:publishable_key] %>');
+
+      var stripeResponseHandler = function(status, response) {
+          var $form = $('#payment-form');
+
+          if (response.error) {
+              // Show the errors on the form
+              $form.find('.payment-errors').text(response.error.message);
+              $form.find('.payment-errors').show();
+              $form.find('button').prop('disabled', false);
+          } else {
+              // token contains id, last4, and card type
+              var token = response.id;
+              // Insert the token into the form so it gets submitted to the server
+              $form.append($('<input type="hidden" name="stripeToken" />').val(token));
+              // and re-submit
+              $form.get(0).submit();
+          }
+      };
+      jQuery(function($) {
+          $('#payment-form').submit(function(e) {
+              var $form = $(this);
+
+              if ($("#name").val() != '' && $("#address_line1").val() != '' && $("#address_city").val() != '' &&
+                      $("#address_state").val() != '' && $("#address_zip").val() != '' && $("#address_country").val() != '')
+              {
+                  $form.find('.payment-errors').hide();
+                  // Disable the submit button to prevent repeated clicks
+                  $form.find('button').prop('disabled', true);
+
+                  Stripe.createToken($form, stripeResponseHandler);
+              }
+              else
+              {
+                  $form.find('.payment-errors').text("Please complete all fields");
+                  $form.find('.payment-errors').show();
+              }
+              // Prevent the form from submitting with the default action
+              return false;
+          });
+      });
+
+  </script>
+
+  <div class="modal_header">
+    <span>Change Credit Card</span>
+  </div>
+
+  <form action='<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{org_guid}/credit_cards/change_credit_card" %>' method="post" id="payment-form">
+    <div class="modal_content">
+
+      <div>Credit card number</div>
+      <input type="text" size="16" maxlength="16" value="************<%= card.last4 %>" data-stripe="number" />
+      <br />
+
+      <div>Card security code</div>
+      <input type="text" size="4" maxlength="4" data-stripe="cvc" />
+      <br />
+
+      <div>Card expiration date</div>
+      <select data-stripe="exp-month" >
+        <% months.each do |month| %>
+            <option value="<%= month[:value] %>"
+                <% if month[:value] == card.exp_month %>
+                    selected ="selected"
+                <% end %>><%= month[:name] %></option>
+        <% end %>
+      </select>
+
+      <select data-stripe="exp-year">
+        <% years.each do |year| %>
+            <option value="<%= year %>"
+                <% if year == card.exp_year %>
+                    selected="selected"
+                <% end %>><%= year %></option>
+        <% end %>
+      </select>
+
+      <div>Cardholder name</div>
+      <input id="name" type="text" size="20" maxlength="20" value="<%= card.name %>" data-stripe="name" />
+      <br />
+
+      <div>Street</div>
+      <input id="address_line1" type="text" size="20" maxlength="20" value="<%= card.address_street %>" data-stripe="address_line1" />
+      <br />
+
+      <div>City</div>
+      <input id="address_city" type="text" size="20" maxlength="20" value="<%= card.address_city %>" data-stripe="address_city" />
+      <br />
+
+      <div>State/Province</div>
+      <input id="address_state" type="text" size="20" maxlength="20" value="<%= card.address_state %>" data-stripe="address_state" />
+      <br />
+
+      <div>Zip/Postal</div>
+      <input id="address_zip" type="text" size="20" maxlength="20" value="<%= card.address_zip %>" data-stripe="address_zip" />
+      <br />
+
+      <div>Country</div>
+      <select id="address_country" data-stripe="address_country" style="width: 250px;">
+        <% countries.each do |country| %>
+            <option value="<%= country %>"
+                <% if country == card.address_country %>
+                    selected ="selected"
+                <% end %>><%= country %></option>
+        <% end %>
+      </select>
+      <br />
+
+      <% unless error_message.nil? || error_message.empty? %>
+          <div class="error"> <%= error_message %> </div>
+      <% end %>
+      <div class="payment-errors error hide"></div>
+    </div>
+    <div class="modal_footer">
+      <div>
+        <button type="button" onclick="window.location.assign('<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{org_guid}/credit_cards" %>');">Cancel</button>
+        <button type="submit">Change Credit Card</button>
+      </div>
+    </div>
+  </form>
+
+</div>

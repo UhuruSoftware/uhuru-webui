@@ -1,0 +1,7 @@
+name: ASP.NET/SQL Server Sample
+id: asp_net_sql_sample
+tags: ['ASP.NET', 'SQL Server']
+description: This a simple ASP.NET Web Site project, that uses SQL Server to store the IP Addresses of visitors, and displays them in a table.
+uuid: f0e18bdf-e6f8-4527-b11f-d435f53ad5df
+can_download: true
+buildpack: iis8aspnet

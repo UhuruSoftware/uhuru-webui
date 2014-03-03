@@ -1,0 +1,72 @@
+<ul class="breadcrumbs">
+  <li><a href="<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS %>">organizations</a>
+</ul>
+
+<div class="sections" id="organizations_page">
+    <div class="section_title">
+        <p id="organization_name">Organizations</p>
+    </div>
+    <div class="icons_options">
+        <button onclick="window.location.assign('<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS_CREATE %>');" class="image s32px plus"></button>
+    </div>
+
+    <% organizations_list.each do |org| %>
+
+      <div class="tile org">
+
+        <div class="tile top">
+          <a class="tile_action" href="<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{org.guid}/spaces" %>" title="<%= org.name %>">
+                <%= org.name %>
+          </a>
+
+          <button type="button" id="<%= org.guid %>" class="image s24px trash" title="Delete '<%= org.name %>'"></button>
+        </div>
+
+        <div class="tile bottom">
+          <div class="tile left">
+            <div class="tile_action">
+              <%= org.members_count %>
+            </div>
+            <div class="tile_info">members</div>
+          </div>
+
+          <div class="tile right">
+            <div class="tile_action">
+              $<%= org.cost %>
+            </div>
+            <div class="tile_info">monthly</div>
+          </div>
+        </div>
+      </div>
+
+    <% end %>
+</div>
+
+<div class="modal delete_confirmation org hide">
+    <div class="modal_header">
+        <span class="selected_name"></span>
+    </div>
+    <div class="modal_content">
+        <p>
+            Are you sure you want to delete this organization?
+        </p>
+        <p class="warning">
+          WARNING: All contents of this organization will be removed! This action can't be reversed.
+        </p>
+        <br />
+    </div>
+    <div class="modal_footer">
+        <div>
+          <form action="/deleteOrganization" method="post">
+                <button type="button" class="cancel_button">Cancel</button>
+                <button type="submit">Delete</button>
+                <input type="hidden" class="selected_guid" name="orgGuid" />
+            </form>
+        </div>
+    </div>
+</div>
+
+<% if defined?(include_erb) && include_erb != nil %>
+    <%= erb(include_erb, :layout => false, :locals => { :months => defined?(months) ? months : nil, :years => defined?(years) ? years : nil, :countries => defined?(countries) ? countries : nil, :error_message => error_message }) %>
+<% end %>
+

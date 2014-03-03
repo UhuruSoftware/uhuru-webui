@@ -1,0 +1,7 @@
+E:\dotnetwithmysql\bin\dotnetwithmysql.dll
+E:\dotnetwithmysql\bin\dotnetwithmysql.pdb
+E:\dotnetwithmysql\bin\MySql.Data.dll
+E:\dotnetwithmysql\bin\MySql.Data.Entity.dll
+E:\dotnetwithmysql\bin\MySql.Web.dll
+E:\dotnetwithmysql\obj\Release\dotnetwithmysql.dll
+E:\dotnetwithmysql\obj\Release\dotnetwithmysql.pdb

@@ -1,0 +1,13 @@
+---
+applications:
+- name: phpwithmssql
+  memory: 128M
+  instances: 1
+  host: phpwithmssql
+  domain: apps.ccng-dev.net
+  services:
+    mssql-2008:
+      label: mssql
+      provider: core
+      version: '0.9'
+      plan: free

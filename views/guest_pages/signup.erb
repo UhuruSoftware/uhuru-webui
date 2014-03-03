@@ -1,0 +1,53 @@
+<%= erb(:'guest_pages/index', :layout => false, :locals => {:page_title => page_title, :welcome_message => welcome_message}) %>
+
+<div id="modal_signup" class="modal signup hide">
+  <script type="text/javascript">
+    var RecaptchaOptions = {
+        theme : 'blackglass'
+    };
+  </script>
+
+    <form action="/signup" method="post">
+        <div class="modal_header">
+            <a href="<%= Uhuru::Webui::SinatraRoutes::INDEX %>" class="close"></a>
+            Sign Up
+        </div>
+
+        <div class="modal_content">
+            <div>E-mail</div>
+            <input type="text" name="email" value = "<%= error_username %>" autocomplete="off" autofocus />
+            <br />
+
+            <div>Password (minimum 8 characters)</div>
+            <input type="password" name="password" autocomplete="off" />
+            <br />
+
+            <div>Confirm Password</div>
+            <input type="password" name="confirm_password" autocomplete="off" />
+            <br />
+
+            <div>First Name</div>
+            <input type="text" name="first_name" value = "<%= error_first_name %>" />
+            <br />
+
+            <div for="last_name">Last Name: </div>
+            <input type="text" name="last_name" value = "<%= error_last_name %>" />
+            <br />
+            <br />
+            <% if $config[:recaptcha][:use_recaptcha] == true || $config[:recaptcha][:use_recaptcha] == "true" %>
+                <%= recaptcha_tag :challenge, :language => :en, :ssl => true %>
+            <% end %>
+
+            <% unless error_message.nil? || error_message.empty? %>
+              <div class="error"><%= error_message %></div>
+            <% end %>
+        </div>
+
+        <div class="modal_footer">
+          <div>
+              <button type="button" class="cancel_button" onclick="window.location.assign('<%= Uhuru::Webui::SinatraRoutes::INDEX %>');">Cancel</button>
+              <button type="submit">Sign up</button>
+          </div>
+        </div>
+    </form>
+</div>

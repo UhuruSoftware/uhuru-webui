@@ -1,0 +1,15 @@
+---
+applications:
+- name: dotnetpostgres
+  memory: 256M
+  instances: 1
+  host: dotnetpostgres
+  domain: apps.mitza.net
+  path: .
+  stack: win2012
+  services:
+    dotnetpostgremonit:
+      label: postgresql
+      provider: core
+      version: '9.2'
+      plan: free

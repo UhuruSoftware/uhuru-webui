@@ -1,0 +1,42 @@
+<div class="modal-background"> </div>
+
+<div class="modal">
+  <div class="modal_header">
+    <span>Create route</span>
+  </div>
+
+  <form action="/createRoute" method="post">
+      <div class="modal_content">
+        <table style="width: 100%;">
+            <tr>
+              <td><label for="host">host name</label></td>
+              <td><input type="text" name="host" autofocus=""/></td>
+            </tr>
+
+            <tr>
+              <td><label for="domain_guid">domain</label></td>
+              <td>
+                <select name="domain_guid">
+                    <% domains_list_space.each do |domain| %>
+                        <option value="<%= domain.guid %>"><%= domain.name %></option>
+                    <% end %>
+                </select>
+              </td>
+            </tr>
+        </table>
+        <% unless error_message.nil? || error_message.empty? %>
+            <div class="error"> <%= error_message %> </div>
+        <% end %>
+      </div>
+
+      <div class="modal_footer">
+        <div>
+            <button type="button" onclick="window.location.assign('<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/spaces/#{current_space}/routes" %>');">Close</button>
+            <input type="hidden" name="current_organization" value="<%= current_organization %>" />
+            <input type="hidden" name="current_space" value="<%= current_space %>" />
+            <input type="hidden" name="current_tab" value="<%= current_tab %>" />
+            <button type="submit">Create</button>
+        </div>
+      </div>
+  </form>
+</div>

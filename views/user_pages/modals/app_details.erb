@@ -1,0 +1,133 @@
+<div class="modal-background"> </div>
+
+<form action="/updateApp" method="post">
+    <div class="modal app_details" id="details_<%= app.name %>">
+
+      <div class="modal_header">
+        <%= app.name %>
+      </div>
+
+      <div class="modal_content">
+        <div>
+          <span class="app_status">Status: "<%= app.state %>"</span>
+          <div class="app_status_buttons">
+            <label for="app_state">STARTED </label>
+            <input class="checkbox" type="checkbox" name="app_state" id="app_state" value="true" <%= app.state.downcase == 'started' ? 'checked' : '' %>/>
+            <label class="checkbox" for="app_state"></label>
+          </div>
+        </div>
+
+        <div>
+          <div>
+                <span>Instances&nbsp;&nbsp;</span><input type="text" name="app_instances" class="instances_count app_instances" value="<%= app.instances %>" />
+                <button type="button" class="image s24px minus subtract_instance"></button>
+                <button type="button" class="image s24px plus add_instance"></button>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <span>Memory&nbsp;&nbsp;</span><input type="text" name="app_memory" id="app_memory_setup" class="app_memory" value="<%= app.memory %>"/> MB
+                <button type="button" class="image s24px minus subtract_memory"></button>
+                <button type="button" class="image s24px plus add_memory"></button>
+          </div>
+        </div>
+
+        <hr />
+
+        <div>
+          <table id="services_list">
+            <tr>
+              <td>Name</td>
+              <td>Type</td>
+              <td>Plan</td>
+              <td></td>
+              <td></td>
+            </tr>
+
+            <% app.services.each do |service| %>
+                <tr>
+                  <td class="name"><%= service.name %></td>
+                  <td><%= service.type %></td>
+                  <td><%= service.plan %></td>
+                  <td class="action">
+                    <button type="button" class="image s24px trash remove_service" title="Remove '<%= service.name %>'" id="<%= service.name %>" onclick="removeService(this)"></button>
+                  </td>
+                  <td></td>
+                </tr>
+            <% end %>
+
+            <tr>
+              <td>
+                <select class="small_input selected_service">
+                    <% services_list.each do |service| %>
+                        <option value="<%= service.name %>" id="<%= app.name %>"> <%= service.name %> </option>
+                    <% end %>
+                </select>
+              </td>
+              <td id="refresh_service_type">
+                  <label class="get_service_type"><%= defined?(services_list[0].type) ? services_list[0].type : '-' %></label>
+              </td>
+              <td id="refresh_service_plan">
+                  <label class="get_service_plan"><%= defined?(services_list[0].plan) ? services_list[0].plan : '-' %></label>
+              </td>
+              <td class="action">
+                <button id="add_service" type="button" class="image s24px plus" title="Bind Service"></button>
+              </td>
+              <td id="refresh_service_guid">
+                <input type="hidden" class="get_service_guid" value="<%= defined?(services_list[0].guid) ? services_list[0].guid : '' %>" />
+              </td>
+            </tr>
+          </table>
+
+          <table id="urls_list">
+            <tr>
+              <td>Host Name</td>
+              <td>Domain</td>
+              <td></td>
+            </tr>
+
+            <% app.uris.each do |uri| %>
+                <tr>
+                  <td class="name"><%= uri.host %></td>
+                  <td class="url"><%= uri.domain %></td>
+                  <td class="action">
+                    <button type="button" class="image s24px trash remove_url" title="Remove '<%= uri.host %>'" id="<%= uri.host %>" onclick="removeUrl(this)"></button>
+                  </td>
+                </tr>
+            <% end %>
+
+            <tr>
+              <td><input type="text" class="small_input get_url_host" /></td>
+              <td>
+                <select class="small_input get_url_domain">
+                  <% domains_list.each do |domain| %>
+                      <% if domain.owning_org_name == organization_name || domain.owning_org_name == 'Shared' %>
+                          <option value="<%= domain.guid %>"><%= domain.name %></option>
+                      <% end %>
+                  <% end %>
+                </select>
+              </td>
+              <td class="action">
+                <button id="add_url" type="button" class="image s24px plus" title="Add URL"></button>
+              </td>
+            </tr>
+          </table>
+        </div>
+      </div>
+
+      <% unless error_message.nil? || error_message.empty? %>
+          <div class="error"> <%= error_message %> </div>
+      <% end %>
+
+      <div class="modal_footer">
+        <input    name="app_name"               value="<%= app.name %>"              type="hidden" id="app_name"/>
+        <input    name="app_state"              value=""                             type="hidden" id="pass_app_state"/>
+        <textarea name="app_services"           id="app_services"                    class="hide">                       </textarea>
+        <textarea name="app_urls"               id="app_urls"                        class="hide">                       </textarea>
+        <input    name="current_organization"   value="<%= current_organization %>"  type="hidden" id="current_organization"/>
+        <input    name="current_space"          value="<%= current_space %>"         type="hidden" id="current_space"/>
+        <input    name="current_tab"            value="<%= current_tab %>"           type="hidden" id="current_tab" />
+          <div>
+            <button type="button" onclick="window.location.assign('<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/spaces/#{current_space}/apps" %>');">Cancel</button>
+            <button type="submit" id="update_app">Update</button>
+          </div>
+      </div>
+    </div>
+</form>

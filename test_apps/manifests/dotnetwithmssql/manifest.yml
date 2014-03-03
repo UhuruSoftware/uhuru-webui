@@ -1,0 +1,15 @@
+---
+applications:
+- name: dotnetmssql
+  memory: 256M
+  instances: 1
+  host: dotnetmssql
+  domain: apps.mitza.net
+  path: .
+  stack: win2012
+  services:
+    dotnetmssqlmonit:
+      label: mssql
+      provider: core
+      version: '2008'
+      plan: free

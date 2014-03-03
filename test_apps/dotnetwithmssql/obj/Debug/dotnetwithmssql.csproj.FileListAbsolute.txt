@@ -1,0 +1,5 @@
+C:\Users\andreea.mladin.UHURUSOFTWARE\Desktop\dotnetwithmssql\dotnetwithmssql\bin\dotnetwithmssql.dll
+C:\Users\andreea.mladin.UHURUSOFTWARE\Desktop\dotnetwithmssql\dotnetwithmssql\bin\dotnetwithmssql.pdb
+C:\Users\andreea.mladin.UHURUSOFTWARE\Desktop\dotnetwithmssql\dotnetwithmssql\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\andreea.mladin.UHURUSOFTWARE\Desktop\dotnetwithmssql\dotnetwithmssql\obj\Debug\dotnetwithmssql.dll
+C:\Users\andreea.mladin.UHURUSOFTWARE\Desktop\dotnetwithmssql\dotnetwithmssql\obj\Debug\dotnetwithmssql.pdb

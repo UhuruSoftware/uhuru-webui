@@ -1,0 +1,13 @@
+C:\Users\andreea.mladin.UHURUSOFTWARE\Desktop\dotnetwithpostgre\dotnetwithpostgre\bin\dotnetwithpostgre.dll
+C:\Users\andreea.mladin.UHURUSOFTWARE\Desktop\dotnetwithpostgre\dotnetwithpostgre\bin\dotnetwithpostgre.pdb
+C:\Users\andreea.mladin.UHURUSOFTWARE\Desktop\dotnetwithpostgre\dotnetwithpostgre\bin\Npgsql.dll
+C:\Users\andreea.mladin.UHURUSOFTWARE\Desktop\dotnetwithpostgre\dotnetwithpostgre\bin\Npgsql.Provider.dll
+C:\Users\andreea.mladin.UHURUSOFTWARE\Desktop\dotnetwithpostgre\dotnetwithpostgre\bin\Microsoft.VisualStudio.Data.dll
+C:\Users\andreea.mladin.UHURUSOFTWARE\Desktop\dotnetwithpostgre\dotnetwithpostgre\bin\Microsoft.Data.ConnectionUI.dll
+C:\Users\andreea.mladin.UHURUSOFTWARE\Desktop\dotnetwithpostgre\dotnetwithpostgre\bin\Npgsql.Provider.pdb
+C:\Users\andreea.mladin.UHURUSOFTWARE\Desktop\dotnetwithpostgre\dotnetwithpostgre\bin\Microsoft.VisualStudio.Data.xml
+C:\Users\andreea.mladin.UHURUSOFTWARE\Desktop\dotnetwithpostgre\dotnetwithpostgre\bin\Microsoft.Data.ConnectionUI.xml
+C:\Users\andreea.mladin.UHURUSOFTWARE\Desktop\dotnetwithpostgre\dotnetwithpostgre\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\andreea.mladin.UHURUSOFTWARE\Desktop\dotnetwithpostgre\dotnetwithpostgre\obj\Debug\dotnetwithpostgre.dll
+C:\Users\andreea.mladin.UHURUSOFTWARE\Desktop\dotnetwithpostgre\dotnetwithpostgre\obj\Debug\dotnetwithpostgre.pdb
+C:\Users\andreea.mladin.UHURUSOFTWARE\Desktop\dotnetwithpostgre\dotnetwithpostgre\bin\Mono.Security.dll

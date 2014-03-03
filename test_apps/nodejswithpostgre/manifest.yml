@@ -1,0 +1,14 @@
+---
+applications:
+- name: nodejswithpostgre
+  memory: 128M
+  instances: 1
+  host: nodejswithpostgre
+  domain: apps.mitza.net
+  command: node app.js
+  services:
+    nodejspostgremonit:
+      label: postgresql
+      provider: core
+      version: '9.2'
+      plan: free

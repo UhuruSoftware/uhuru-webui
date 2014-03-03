@@ -1,0 +1,27 @@
+<div class="modal-background"></div>
+
+<div class="modal">
+    <div class="modal_header">
+        <span>Create space</span>
+    </div>
+
+    <form action="/createSpace" method="post">
+        <div class="modal_content">
+            <p>
+                <label for="team_name">space name</label>
+                <input type="text" id="org_name" name="spaceName" class="modal_input_box space_name_i" autofocus />
+                <input type="hidden" name="org_guid" value="<%= current_organization %>" />
+            </p>
+          <% unless error_message.nil? || error_message.empty? %>
+              <div class="error"> <%= error_message %> </div>
+          <% end %>
+        </div>
+
+        <div class="modal_footer">
+          <div>
+              <button type="button" onclick="window.location = '<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/spaces" %>';">Cancel</button>
+              <button type="submit">Create</button>
+          </div>
+        </div>
+    </form>
+</div>

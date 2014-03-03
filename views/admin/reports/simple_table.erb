@@ -1,0 +1,39 @@
+<table>
+  <thead>
+  <tr>
+    <% data.fields.each do |column| %>
+
+        <td style="font-size: 16px; font-weight: bold; border: 1px solid black"><%= column %></td>
+
+    <% end %>
+
+  </tr>
+  </thead>
+  <tbody>
+  <% data.each do |row| %>
+      <tr>
+        <% row.each do |column, value| %>
+
+            <%
+               if defined?(users) && users
+                 if defined?(users_column) && users_column
+                   if users_column.include?(column)
+                     if value.is_a?(Integer)
+                       value = users.get_user_label(value)
+                     else
+                       value = value.delete('{}').split(',').map do |user_id|
+                         user_id.downcase == 'null' ? '' : users.get_user_label(user_id)
+                       end.join(', ')
+                     end
+                   end
+                 end
+               end
+            %>
+
+            <td style="border: 1px solid black"><%= value %></td>
+        <% end %>
+      </tr>
+  <% end %>
+  </tbody>
+
+</table>

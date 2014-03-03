@@ -1,0 +1,9 @@
+---
+applications:
+- name: php_info
+  buildpack: https://github.com/heroku/heroku-buildpack-php
+  memory: 128M
+  instances: 1
+  host: php_info
+  domain: cf.me
+  path: .

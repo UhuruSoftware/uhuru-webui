@@ -1,0 +1,99 @@
+---
+contact:
+  company: Uhuru Software, Inc.
+  address: 17530 NE Union Hill Road, Suite 120, Redmond, WA 98052, USA.
+  phone: +1 (555) 123-4567
+  email: uhuru@uhurusoftware.com
+recaptcha:
+  use_recaptcha: false
+  recaptcha_public_key: 1111111111111111111111111111111111111111
+  recaptcha_private_key: 1111111111111111111111111111111111111111
+webui:
+  page_title: Uhuru WebUi
+  site_tab: Uhuru
+  welcome_message: Uhuru AppClound NG
+  copyright_message: © Copyright Uhuru Software 2012
+  domain: 192.168.100.100
+  activation_link_secret: terceseht
+  more_videos_link: http://support.uhurusoftware.com/forums/20507726-uhuru-knowledge-bases
+  guest_feedback_link: http://bit.ly/uhrbloglife
+  twitter_link: https://www.twitter.com/uhurusoftware
+  facebook_link: https://www.facebook.com/uhurusoftware
+  terms_of_services_link: http://uhurusoftware.com/tos
+  privacy_policy_link: http://uhurusoftware.com/privacy/
+  visual_studio_plugin_link: http://www.uhurucloud.com/tools/visualstudio
+  app_cloud_admin_link: http://www.uhurucloud.com/tools/cloudadmin
+  command_line_link: http://docs.cloudfoundry.com/tools/vmc/installing-vmc.html
+  eclipse_url: http://docs.cloudfoundry.com/tools/STS/configuring-STS.html
+  company_link: http://www.uhurusoftware.com
+  support_link: http://uhurusoftware.zendesk.com
+  start_page_text: ! "<h1>Ready To Go</h1>\r\n<h3> Host your web applications in
+    minutes. We support apps written in PHP, Node.js, Ruby, Java and .NET. Sign up
+    for your free beta account now. Find more details about the Uhuru App Cloud features
+    on our web site. </h3>"
+  start_page_splash_text: <h2>Getting Started</h2> <h3> Learn how to register with
+    Ready To Go and start hosting your own web applications. See how you can setup
+    teams for collaboration on your applications and setup multiple app instances
+    for load balancing and fault tolerance</h3>
+email:
+  from: mailer@company.com
+  from_alias: Uhuru Cloud
+  server: smpt.server.net
+  port: 587
+  user: mailer
+  secret: password
+  auth_method: :login
+  enable_tls: 'true'
+  registration_email: |
+    <h3>Hello #FIRST_NAME#,</h3>
+    <p>
+      This is the Uhuru Cloud confirmation e-mail.</br>
+      Your account is ready to use. Please click the link bellow in order to continue and finish the sign-up process:
+    </p>
+    <a href="#ACTIVATION_LINK#">#ACTIVATION_LINK#</a>
+
+    <p>
+      If you have not signed-up to Uhuru Cloud, please ignore this email.
+    </p>
+    <p>
+    Thank you,<br/>
+    The Uhuru Cloud Team
+  welcome_email: |
+    <h3>Hello #FIRST_NAME#,</h3>
+    <p>
+      Your Uhuru Cloud account is now active and ready to be used.
+    </p>
+
+    <p>
+      You can start using the cloud by browsing to our <a href="#WEBSITE_URL#">web console</a>.
+    </p>
+
+    Thank you for using our service,<br/>
+    The Uhuru Cloud Team
+  password_recovery_email: |
+    <h3>Hello #FIRST_NAME#,</h3>
+    <p>
+      This is the Uhuru Cloud password reset e-mail request.</br>
+    </p>
+
+    <p>
+      If you have not requested a password recovery, please ignore this email.</br>
+      Your new password is <b>#PASSWORD#</b> to apply it please click the link bellow:
+    </p>
+
+    <a href="#ACTIVATION_LINK#">#ACTIVATION_LINK#</a>
+
+    <p>
+      If you do not want to keep this password, you can change it in the settings panel.
+    </p>
+
+    <p>
+    The Uhuru Cloud Team
+
+billing:
+  provider: stripe
+  options:
+    stripe:
+      publishable_key: pk_test_111111111111111111111111
+      secret_key: sk_test_111111111111111111111111
+

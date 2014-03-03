@@ -1,0 +1,14 @@
+---
+applications:
+- name: rubywithmysql
+  memory: 256M
+  instances: 1
+  host: rubywithmysql
+  domain: cf.me
+  path: .
+  services:
+    mysql-61a93:
+      label: mysql
+      provider: core
+      version: '5.5'
+      plan: free

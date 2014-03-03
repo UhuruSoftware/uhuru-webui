@@ -1,0 +1,18 @@
+<div class="modal-background"> </div>
+
+<div class="modal cloud_feedback_modal">
+  <div class="modal_header">
+    <%= modal_title %>
+  </div>
+
+  <div class="modal_content">
+    <div id="<%= feedback_id %>" class="cloud_feedback">
+
+    </div>
+  </div>
+
+  <div class="modal_footer">
+    <img class="feedback_loading hide" src="/images/feedback_loading.gif"/>
+    <button type="button" onclick="window.location.assign('<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/spaces/#{current_space}/apps" %>');">Close</button>
+  </div>
+</div>

@@ -1,0 +1,55 @@
+
+<table>
+  <form action="/updateUserName" method="post">
+    <tr >
+      <td colspan="2" ><h3>Account Information</h3></td>
+    </tr>
+
+    <tr >
+      <td ><label for="first_name" >First Name</label></td>
+      <td ><input type="text" id="first_name" name="first_name" value="<%= first_name %>" placeholder = "... first name" /></td>
+    </tr>
+
+    <tr >
+      <td ><label for="last_name" >Last Name</label></td>
+      <td ><input type="text" id="last_name" name="last_name" value="<%= last_name %>" placeholder = "... last name" /></td>
+    </tr>
+
+    <tr >
+      <td ></td>
+      <td class="button_row">
+        <button type="submit">Update</button></td>
+    </tr>
+  </form>
+  <form action="/updateUserPassword" method="post">
+    <tr >
+      <td colspan="2"><h3>Password Update</h3></td>
+    </tr>
+
+    <tr >
+      <td ><label for="old_pass" >Old Password</label></td>
+      <td ><input type="password" id="old_pass" name="old_pass"  /></td>
+    </tr>
+
+    <tr >
+      <td ><label for="new_pass1" >New Password</label></td>
+      <td ><input type="password" id="new_pass1" name="new_pass1"  /></td>
+    </tr>
+
+    <tr >
+      <td ><label for="new_pass2" >Confirm New Password</label></td>
+      <td ><input type="password" id="new_pass2" name="new_pass2"  /></td>
+    </tr>
+
+    <tr >
+      <td ></td>
+      <td class="button_row"><button type="submit">Update</button></td>
+    </tr>
+  </form>
+</table>
+
+<br /><br />
+
+<% if (defined? error_message) && (error_message != nil) && (!error_message.empty?) %>
+    <span class="error"><%= error_message %></span>
+<% end %>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+  <title>Uhuru Web-UI Administration</title>
+  <meta charset="utf-8" />
+  <link rel="stylesheet" type="text/css" href="/css/administration.css"/>
+
+  <script type="text/javascript" src="/editor/scripts/jquery-1.3.2.js"></script>
+  <script type="text/javascript" src="/editor/scripts/jHtmlArea-0.7.5.js"></script>
+
+  <script type="text/javascript" src="/editor/scripts/jHtmlArea-0.7.5.js"></script>
+
+
+  <link rel="Stylesheet" type="text/css" href="/editor/style/jHtmlArea.css" />
+
+</head>
+
+<body>
+<a href="/organizations">Back to site</a>
+<h1>Administration</h1>
+
+<div class="tab_menu">
+
+  <div class="tab_menu_start">&nbsp;</div>
+
+  <div class="<%= current_tab == 'info' ? 'selected' : '' %>" onclick="window.location.assign('<%= Uhuru::Webui::SinatraRoutes::ADMINISTRATION %>');">Info</div>
+  <div class="<%= current_tab == 'webui' ? 'selected' : '' %>" onclick="window.location.assign('<%= Uhuru::Webui::SinatraRoutes::ADMINISTRATION_WEBUI %>');">Web UI customization</div>
+  <div class="<%= current_tab == 'recaptcha' ? 'selected' : '' %>" onclick="window.location.assign('<%= Uhuru::Webui::SinatraRoutes::ADMINISTRATION_RECAPTCHA %>');">Recaptcha</div>
+  <div class="<%= current_tab == 'contact' ? 'selected' : '' %>" onclick="window.location.assign('<%= Uhuru::Webui::SinatraRoutes::ADMINISTRATION_CONTACT %>');">Contact</div>
+  <div class="<%= current_tab == 'reports' ? 'selected' : '' %>" onclick="window.location.assign('<%= Uhuru::Webui::SinatraRoutes::ADMINISTRATION_REPORTS %>');">Reports</div>
+  <div class="<%= current_tab == 'billing' ? 'selected' : '' %>" onclick="window.location.assign('<%= Uhuru::Webui::SinatraRoutes::ADMINISTRATION_BILLING %>');">Billing</div>
+  <div class="<%= current_tab == 'design' ? 'selected' : '' %>" onclick="window.location.assign('<%= Uhuru::Webui::SinatraRoutes::ADMINISTRATION %>');">Design</div>
+  <div class="<%= current_tab == 'templates' ? 'selected' : '' %>" onclick="window.location.assign('<%= Uhuru::Webui::SinatraRoutes::ADMINISTRATION_TEMPLATES %>');">Templates</div>
+  <div class="<%= current_tab == 'email' ? 'selected' : '' %>" onclick="window.location.assign('<%= Uhuru::Webui::SinatraRoutes::ADMINISTRATION_EMAIL %>');">Email</div>
+  <div class="<%= current_tab == 'logs' ? 'selected' : '' %>" onclick="window.location.assign('<%= Uhuru::Webui::SinatraRoutes::ADMINISTRATION_LOGS %>');">Logs</div>
+  <div class="<%= current_tab == 'users' ? 'selected' : '' %>" onclick="window.location.assign('<%= Uhuru::Webui::SinatraRoutes::ADMINISTRATION_USERS %>');">Users</div>
+  <div class="<%= current_tab == 'settings' ? 'selected' : '' %>" onclick="window.location.assign('<%= Uhuru::Webui::SinatraRoutes::ADMINISTRATION_SETTINGS %>');">Settings</div>
+
+  <div class="tab_menu_end">&nbsp;</div>
+</div>
+
+<%= yield %>
+
+<!--<textarea cols="100" rows="30"></textarea>-->
+
+<script type="text/javascript">
+    $(function() {
+        $("textarea:not(.normal)").htmlarea();
+    });
+</script>
+</body>
+
+</html>

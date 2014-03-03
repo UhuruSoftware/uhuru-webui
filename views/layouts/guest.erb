@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+  <title><%= $config[:webui][:site_tab] || 'Uhuru AppCloud' %></title>
+  <link rel="stylesheet" type="text/css" href="/css"/>
+  <meta charset="utf-8" />
+</head>
+
+<body>
+
+<div id="header_container">
+  <div id="header">
+    <h1>
+      <a href="<%= Uhuru::Webui::SinatraRoutes::INDEX %>" title="Home">Uhuru AppCloud</a>
+
+      <div id="cloud_target">
+        <%= $config[:cloud_controller_url] %>
+      </div>
+    </h1>
+
+    <div id="user_panel">
+      <button class="image s32px key" onclick="window.location.assign('<%= Uhuru::Webui::SinatraRoutes::LOGIN %>');" title="Login"></button>
+    </div>
+
+    <div id="header_links">
+      <a href="<%= $config[:webui][:support_link] %>" target="_blank">SUPPORT</a>
+      <a href="<%= $config[:webui][:company_link] %>" target="_blank">COMPANY</a>
+    </div>
+
+  </div>
+</div>
+
+
+    <div id="container">
+
+    <div class="modal-background hide"></div>
+
+    <%= yield %>
+
+    </div>
+
+
+<div id="footer_container">
+  <div id="footer">
+
+    <div id="footer_links">
+      <a href="<%= $config[:webui][:twitter_link] %>" class="icon-social twitter"></a>
+      <a href="<%= $config[:webui][:facebook_link] %>" class="icon-social facebook"></a>
+    </div>
+
+    <div id="copyright">
+      &copy; 2013 Uhuru Software. All rights reserved.
+    </div>
+
+    <ul id="footer-menu">
+      <li><a href="<%= $config[:webui][:terms_of_services_link] %>" target="_blank">Terms of Service</a></li>
+      <li><a href="<%= $config[:webui][:privacy_policy_link] %>" target="_blank">Privacy Policy</a></li>
+      <li><a href="<%= $config[:webui][:support_link] %>" target="_blank">Support</a></li>
+    </ul>
+  </div>
+</div>
+
+<script type="text/javascript" src="/js/jquery-1.5.js"></script>
+<script type="text/javascript" src="/js/webui.js"></script>
+
+</body>
+
+</html>

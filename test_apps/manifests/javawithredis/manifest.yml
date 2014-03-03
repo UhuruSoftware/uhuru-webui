@@ -1,0 +1,14 @@
+---
+applications:
+- name: javawithredis
+  memory: 512M
+  instances: 1
+  host: javawithredis
+  domain: apps.ccng-dev.net
+  path: .
+  services:
+    javaredis-monit:
+      label: redis
+      provider: core
+      version: '2.6'
+      plan: free

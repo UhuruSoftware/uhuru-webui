@@ -1,0 +1,14 @@
+---
+applications:
+- name: nodejswithmysql
+  memory: 128M
+  instances: 1
+  host: nodejswithmysql
+  domain: apps.ccng-dev.net
+  command: node app.js
+  services:
+    nodejsmysql-monit:
+      label: mysql
+      provider: core
+      version: '5.5'
+      plan: free

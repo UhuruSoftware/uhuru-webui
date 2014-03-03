@@ -1,0 +1,14 @@
+---
+applications:
+- name: javawithrabbit
+  memory: 256M
+  instances: 1
+  host: javawithrabbit
+  domain: apps.mitza.net
+  path: .
+  services:
+    javarabbitmq-monit:
+      label: rabbitmq
+      provider: core
+      version: '3.0'
+      plan: free

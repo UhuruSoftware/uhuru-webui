@@ -1,0 +1,236 @@
+<head>
+  <title>AppCloud NG Design</title>
+  <link rel="stylesheet" type="text/css" href="/css"/>
+</head>
+<div class="breadcrumb" xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html">
+  <span class="breadcrumb_element">...&nbsp;/&nbsp;</span><a href="#" class="breadcrumb_link">organizations</a>
+</div>
+
+
+
+
+<style>
+    ul{list-style: none; margin: 0; padding: 0;}
+    .mask { float:left; margin:0; padding: 0; width:100%; height:200px; overflow:hidden;  }
+    ul.images { position:relative; top:0px;left:0px; height:2660px; }
+    ul.images li { float:left; position:relative; top:0px;left:0px; }
+
+    ul.triggers { position:relative; display: none; }
+    .control {position:relative; color:#fff; cursor:pointer;}
+    .prev {  }
+    .next { margin-left: 30px; }
+</style>
+
+<%
+   asd = Uhuru::Webui::ClassWithFeedback.new()
+   asd.start_feedback
+
+   th = Thread.new() do
+
+     (1..4).each do |i|
+       asd.info("unu #{i}")
+       asd.ok_ln("OK")
+       asd.warning_ln("  doi #{i}")
+       asd.error("    trei #{i}")
+       sleep 1
+     end
+
+     asd.close_feedback
+
+   end
+
+   th.run
+
+%>
+
+
+
+<div class="modal-background"> </div>
+
+<div class="modal cloud_feedback_modal">
+  <div class="modal_header">
+    Pushing your application ...
+  </div>
+
+  <div class="modal_content">
+    <div id="<%= asd.id %>" class="cloud_feedback">
+
+    </div>
+
+  </div>
+
+  <div class="modal_footer">
+    <img class="feedback_loading hide" src="/images/feedback_loading.gif"/>
+    <button type="button" >Close</button>
+  </div>
+</div>
+
+
+<div class="sections" id="organizations_page" style="width: 930px; margin: auto;" >
+  <div class="section_title">
+    <p id="organization_name">Organizations (<%= [1, 2, 3, 4, 5, 6, 7, 8].count %>)</p>
+  </div>
+  <div class="icons_options">
+    <button class="image s32px plus"></button>
+  </div>
+
+
+
+  <% [1, 2, 3, 4, 5, 6, 7, 8].each do |x| %>
+      <div class="tile org">
+        <div class="tile top">
+          <a class="tile_action" href="#" title="Some">
+            TestOrg <%= x %>
+          </a>
+
+          <button type="button" id="<%= 22323 %>" class="image s24px trash" title="Delete 'thing'"></button>
+        </div>
+
+        <div class="tile bottom">
+          <div class="tile left">
+            <div class="tile_action">
+              <%= 22 %>
+            </div>
+            <div class="tile_info">members</div>
+          </div>
+
+          <div class="tile right">
+            <div class="tile_action">
+              $<%= 100 %>
+            </div>
+            <div class="tile_info">monthly</div>
+          </div>
+        </div>
+      </div>
+  <% end %>
+
+
+  <ul class="triggers" style="margin: 0; padding: 0; list-style: none;">
+    <% [1, 2, 3, 4, 5, 6, 7, 8].each do |x| %>
+        <li><%= x %></li>
+    <% end %>
+  </ul>
+  <span class="control prev">Prev</span>
+  <span class="control next">Next</span>
+  <br /><br /><br />
+</div>
+
+
+<div id="content">
+  <div class="square_tile">
+    <div class="square_tile signup" title="Registratiorn ..." id="signup_button" onclick="testThis();">
+      <img src="/images/plus_32px.png" style="position: absolute; top: 110px; right: 39px;" />
+      <span>Organization Name</span>
+    </div>
+  </div>
+</div>
+
+
+
+<script>
+    function testThis()
+    {
+        var request = $.ajax( {
+                    url: "/bindServices",
+                    type: 'POST',
+                    cache: false,
+
+                    data: {  appName: "chacha" ,
+                        serviceName: "chacha",
+                        current_organization: "chacha",
+                        current_space: "chacha",
+                        current_tab: "chacha"  }
+                }
+        );
+
+    }
+</script>
+
+
+
+
+<div class="tile org" style="padding: 0;">
+  <div class="tile top" style="width: 280px; padding: 0; height: 83px; margin: 0; border-color: #000000;">
+    <a class="tile_action" href="#" title="Some">
+      Other org
+    </a>
+
+    <button type="button" id="gg" class="image s24px trash" title="Delete 'thing'"></button>
+  </div>
+
+  <div class="tile bottom" style="width: 280px; padding: 0; height: 83px; margin: 0;">
+    <div class="tile left" style="width: 138px; padding: 0; border-color: #000000;">
+      <div class="tile_action">
+        22
+      </div>
+      <div class="tile_info">members</div>
+    </div>
+
+    <div class="tile right" style="width: 138px; padding: 0; border-color: #000000;">
+      <div class="tile_action">
+        $11
+      </div>
+      <div class="tile_info">monthly</div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+<script type="text/javascript" src="/js/jquery-1.5.js"></script>
+<script type="text/javascript" src="/js/webui.js"></script>
+
+<script type="text/javascript">
+    var triggers = $('ul.triggers li');
+    var images = $('ul.images li');
+    var lastElem = triggers.length-1;
+    var mask = $('.mask ul.images');
+    var imgWidth = images.width();
+    var target;
+
+    triggers.first().addClass('selected');
+    mask.css('width', imgWidth*(lastElem+1) +'px');
+
+    function sliderResponse(target) {
+        mask.stop(true,false).animate({'left':'-'+ imgWidth*target +'px'},300);
+        triggers.removeClass('selected').eq(target).addClass('selected');
+    }
+
+    triggers.click(function() {
+        if ( !$(this).hasClass('selected') ) {
+            target = $(this).index();
+            sliderResponse(target);
+            resetTiming();
+        }
+    });
+    $('.next').click(function() {
+        target = $('ul.triggers li.selected').index();
+        target === lastElem ? target = 0 : target = target+1;
+        sliderResponse(target);
+        resetTiming();
+    });
+    $('.prev').click(function() {
+        target = $('ul.triggers li.selected').index();
+        lastElem = triggers.length-1;
+        target === 0 ? target = lastElem : target = target-1;
+        sliderResponse(target);
+        resetTiming();
+    });
+    function sliderTiming() {
+        target = $('ul.triggers li.selected').index();
+        target === lastElem ? target = 0 : target = target+1;
+        sliderResponse(target);
+    }
+    var timingRun = setInterval(function() { sliderTiming(); },5000);
+    function resetTiming() {
+        clearInterval(timingRun);
+        timingRun = setInterval(function() { sliderTiming(); },5000);
+    }
+</script>
+
+<div class="modal-background hide"></div>

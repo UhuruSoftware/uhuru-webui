@@ -1,0 +1,15 @@
+---
+applications:
+- name: dotnetwithrabbit
+  memory: 256M
+  instances: 1
+  host: dotnetwithrabbit
+  domain: apps.mitza.net
+  path: .
+  stack: win2012
+  services:
+    dotnetrabbitmonit:
+      label: rabbitmq
+      provider: core
+      version: '3.0'
+      plan: free

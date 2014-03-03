@@ -1,0 +1,104 @@
+---
+pid_filename: /tmp/uhuru_webui.pid
+local_route: 10.0.0.1
+port: 4567
+dev_mode: true
+cloud_controller_url: http://api.mycloud.com
+message_bus_uri: nats://116e42690e023d88a208bff76eca54ca:8889dd351e08cc6f076bc02344320fbc@10.0.100.45:4222
+domain: www.mycloud.com
+bind_address: 10.0.102.200
+ccdb:
+  host: '10.0.7.123'
+  user: 'root'
+  password: 'password'
+  port: 2544
+  dbname: 'appcloud_ng'
+uaadb:
+  host: '10.0.7.123'
+  user: 'uaa'
+  password: 'password'
+  port: 2544
+  dbname: 'uaa'
+uaa:
+  url: http://uaa.mycloud.com
+  client_id: webui
+  client_secret: dd127b8a3f0a3dd493bc1ef76c23784d
+logging:
+  level: debug
+  file: /tmp/uhuru_webui.log
+monitoring:
+  reports:
+    half_of_day:
+      resolution: 30
+      resolution_unit: minutes
+      sample_count: 30
+    last_day:
+      resolution: 1
+      resolution_unit: hours
+      sample_count: 30
+    last_week:
+      resolution: 6
+      resolution_unit: hours
+      sample_count: 30
+    last_month:
+      resolution: 1
+      resolution_unit: days
+      sample_count: 30
+    last_year:
+      resolution: 12
+      resolution_unit: days
+      sample_count: 30
+  vmc_executable_path: bash -c "cf"
+  cloud_user: monitoring
+  cloud_password: password
+  default_org: monitoring
+  default_space: monitoring
+  apps_domain:
+  - apps.ccng-dev.net
+  email_to: ada.sescu@uhurusoftware.com
+  sleep_after_app_push: 240
+  pause_after_each_app: 1
+  database:
+    database: monitoring
+    host: localhost
+    port: 5432
+    encoding: utf8
+    username: postgres
+    password: password
+    adapter: postgresql
+    timeout: 2000
+  components:
+    deas:
+    - name: dea
+    - name: win_dea
+    services:
+    - name: mysql_node
+      token: ec9743a4-6587-4356-8b9e-72d66b36a7f4
+#    - name: mongodb_node
+#      token: ec9743a4-6587-4356-8b9e-72d66b36a7f4
+#    - name: redis_node
+#      token: ec9743a4-6587-4356-8b9e-72d66b36a7f4
+#    - name: redis_node
+#      token: ec9743a4-6587-4356-8b9e-72d66b36a7f4
+#    - name: rabbit_node
+#      token: ec9743a4-6587-4356-8b9e-72d66b36a7f4
+#    - name: postgresql_node
+#      token: ec9743a4-6587-4356-8b9e-72d66b36a7f4
+#    - name: uhuru_tunnel_node
+#      token: ec9743a4-6587-4356-8b9e-72d66b36a7f4
+#    - name: uhurufs_node
+#      token: ec9743a4-6587-4356-8b9e-72d66b36a7f4
+#    - name: mssql_node
+#      token: ec9743a4-6587-4356-8b9e-72d66b36a7f4
+  buildpacks:
+    dotNet: https://github.com/stefanschneider/dummy-buildpack.git
+    java: https://github.com/ramnivas/cloudfoundry-buildpack-java
+    nodejs: https://github.com/cloudfoundry/heroku-buildpack-nodejs
+    php: https://github.com/heroku/heroku-buildpack-php
+    ruby: https://github.com/cloudfoundry/heroku-buildpack-ruby
+
+template_apps_dir: /tmp/template_apps
+admin_config_file: /tmp/admin-settings.yml
+billing_data:
+  provider: yml
+  connection: /tmp/billing_bindings.yml

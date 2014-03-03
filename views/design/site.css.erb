@@ -1,0 +1,1190 @@
+<%
+    def html2rgb(html_color, alpha=1)
+        rgb = Color::RGB.from_html(html_color)
+        red = (rgb.r * 255).to_i
+        green = (rgb.g * 255).to_i
+        blue = (rgb.b * 255).to_i
+        "rgba(#{red},#{green},#{blue},#{alpha})"
+    end
+%>
+
+/************************** BODY AND FONTS ****************************/
+
+html, body
+{
+    margin: 0;
+    padding: 0;
+    background-color: <%= design['background-color'] %>;
+
+    /*http://bg.siteorigin.com/*/
+    /*http://colorschemedesigner.com/#0142kuettxQGE*/
+    background-image: <%= design['background-image'] %>;
+
+    background-attachment:fixed;
+    background-position: 50% 0%;
+    font-family: "<%= design['font-family'] %>";
+    font-weight: 200;
+    color: <%= design['font-color'] %>;
+
+
+    background-repeat: <%= design['background-repeat'] ? 'repeat' : 'no-repeat' %>;
+}
+
+body
+{
+    overflow-y: scroll;
+}
+
+body.noscroll
+{
+    position: fixed;
+    width: 100%;
+}
+
+.hide
+{
+    display: none;
+}
+
+a
+{
+    text-decoration: none;
+}
+
+<% design['link'].each do |style, color| %>
+a:<%= style %>
+{
+    color: <%= color %>;
+}
+<% end %>
+
+@font-face {
+    font-family: '<%= design['font-family'] %>';
+    src: url('fonts/Quicksand-Light.eot');
+    src: local('☺'), url('fonts/Quicksand-Light.woff') format('woff'), url('fonts/Quicksand-Light.ttf') format('truetype'), url('fonts/Quicksand-Light.svg') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+/************************** CHECKBOX ****************************/
+input[type=checkbox].checkbox {
+    display:none;
+}
+
+input[type=checkbox].checkbox + label.checkbox {
+    padding-left:29px;
+    height:24px;
+    display:inline-block;
+    line-height:24px;
+    background-repeat:no-repeat;
+    background-position: 0 0;
+    font-size:24px;
+    vertical-align:middle;
+    cursor:pointer;
+    margin-top: -10px;
+}
+
+input[type=checkbox].checkbox:checked + label.checkbox {
+    background-position: 0 -24px;
+}
+label.checkbox {
+    background-image:url(/images/checkbox.png);
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+/************************** ERROR MESSAGES AND WARNINGS ****************************/
+.error
+{
+    margin: 5px;
+    border: 1px solid <%= design['error']['border-color'] %>;
+    color: <%= design['error']['font-color'] %>;
+    background-color: <%= design['error']['background-color'] %>;
+    padding: 5px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    text-align: left;
+}
+.warning
+{
+    margin: 5px;
+    border: 1px solid <%= design['warning']['border-color'] %>;
+    color: <%= design['warning']['font-color'] %>;
+    background-color: <%= design['warning']['background-color'] %>;
+    padding: 5px;
+    text-align: left;
+}
+
+
+
+/************************** HEADER ****************************/
+
+#header_container
+{
+    background-color: <%= design['header']['background-color'] %>;
+
+    background-image: <%= design['header']['background-image'] %>;
+
+    background-repeat: repeat;
+    background-attachment:fixed;
+
+
+    color: <%= design['header']['font-color'] %>;
+    border:3px solid <%= design['header']['border-color'] %>;
+    border-width: 0 0 1px 0;
+    height:60px; left:0;
+    position:fixed;
+    width:100%;
+    top:0;
+    z-index: 5;
+}
+
+<% design['header']['link'].each do |style, color| %>
+#header_container a:<%= style %>
+{
+    color: <%= color %>;
+}
+<% end %>
+
+#header
+{
+    margin:0 auto;
+    width:940px;
+    text-align:center;
+}
+
+#header h1
+{
+    float: left;
+    margin: 0;
+    line-height: 40px;
+    height: 50px;
+    font-size: 30px;
+}
+
+
+#header #login_control
+{
+    float: right;
+    margin-top: 10px;
+}
+
+#cloud_target
+{
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 13px;
+    text-align: right;
+    line-height: 13px;
+}
+
+/************************** USER HEADER PANEL ****************************/
+#user_panel
+{
+    line-height: 50px;
+    height: 50px;
+    float: right;
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+#user_panel button
+{
+    margin-right: 10px;
+    margin-top: 10px;
+}
+
+#header_links
+{
+    /*width: 500px;*/
+    height: 50px;
+    /*margin-right: 130px;*/
+    /*float: right;*/
+    /*text-align: right;*/
+    line-height: 50px;
+    float: right;
+    margin-right: 20px;
+}
+
+
+/****  ORG AND SPACE TITLE WITH CREATE, MODIFY AND DELETE  ****/
+.section_title
+{
+    display: inline-block;
+    position: relative;
+    width: 60%;
+    padding-bottom: 10px;
+}
+.section_title p
+{
+    margin: 0;
+    font-size: 28px;
+    font-weight: 400;
+    padding-bottom: 10px;
+}
+
+.icons_options
+{
+    display: inline-block;
+    position: relative;
+    width: 38%;
+    float: right;
+}
+.icons_options button
+{
+    float: right;
+    margin-right: 7px;
+}
+.sections
+{
+    padding-top: 40px;
+}
+
+/************************** FOOTER ****************************/
+
+
+#footer_container
+{
+    background-repeat: repeat;
+    background-attachment:fixed;
+
+    background-color: <%= design['footer']['background-color'] %>;
+
+    background-image: <%= design['footer']['background-image'] %>;
+
+    color: <%= design['footer']['font-color'] %>;
+
+    border:1px solid <%= design['footer']['border-color'] %>;
+    border-width: 1px 0 0 0;
+
+    bottom:0;
+    height:80px;
+    left:0;
+    position:fixed;
+    width:100%;
+    z-index: 5;
+}
+
+#footer_container a
+{
+    color: <%= design['footer']['link-color'] %>;
+}
+
+#footer
+{
+    margin:0 auto;
+    width:940px;
+    text-align:center;
+}
+
+#footer #footer_links
+{
+    margin: 0;
+    float: right;
+}
+
+#footer #copyright
+{
+    font-size: 13px;
+    padding-top: 40px;
+    display: inline-block;
+}
+
+#footer #footer-menu
+{
+    list-style: none;
+    display: inline-block;
+    float: left;
+    font-size: 13px;
+    text-align: left;
+    padding: 0;
+}
+
+.icon-social
+{
+    display: inline-block;
+    width: 44px;
+    height: 44px;
+    background: transparent url('../images/social_icons.png') no-repeat scroll 0 0;
+    margin: 5px 0;
+}
+
+.icon-social.facebook
+{
+    background-position: 0 0;
+}
+
+.icon-social.twitter
+{
+    background-position: -88px 0;
+}
+
+/************************** BUTTONS ****************************/
+
+button,
+select
+{
+    border: 1px solid <%= design['button']['border-color'] %>;
+    background-color: <%= design['button']['background-color'] %>;
+    font-family: <%= design['font-family'] %>;
+    color: <%= design['button']['font-color'] %>;
+    height: 36px;
+    cursor: pointer;
+    cursor: hand;
+    min-width: 70px;
+    font-size: 14px;
+}
+
+button:hover
+{
+    border: 1px solid <%= design['button']['hover']['border-color'] %>;
+    background-color: <%= design['button']['hover']['background-color'] %>;
+    color: <%= design['button']['hover']['font-color'] %>;
+}
+
+button img
+{
+    vertical-align: middle;
+}
+
+
+/************************** BUTTONS WITH IMAGES ONLY ****************************/
+
+<% design['image-buttons'].each do |size, images| %>
+    <% images.each do |image, src| %>
+button.image.s<%= size %>.<%= image %>
+{
+    min-width: 0;
+    width: <%= size %>;
+    height: <%= size %>;
+    background-image: url('/images/<%= src %>');
+    background-repeat: no-repeat;
+    border: 0;
+    background-color: transparent;
+}
+
+    <% end %>
+<% end %>
+
+
+/************************** SITE CONTAINER ****************************/
+
+#container
+{
+    margin:0 auto;
+    overflow:auto;
+    padding:80px 0;
+    width:940px;
+}
+
+/******************** SITE CONTAINER - INDEX PAGE ***********************/
+.content
+{
+    margin:0 auto;
+    padding: 50px 0 50px 0;
+    width:940px;
+}
+
+#content .splash
+{
+    position: absolute;
+    top: 300px;
+    width: 100%;
+    left: 0;
+    background-color: <%= design['splash']['background-color'] %>;
+    background-image: <%= design['splash']['background-image'] %>;
+    background-repeat: repeat;
+    background-attachment:fixed;
+    color: <%= design['splash']['font-color'] %>;
+    border:3px solid <%= design['splash']['border-color'] %>;
+}
+#content .splash .square_tile
+{
+    padding: 0;
+    margin: 0;
+    cursor: pointer;
+    text-align: left;
+}
+#content .splash .square_tile span
+{
+    padding: 5px 0 0 5px;
+    margin: 0;
+}
+
+#starter_text,
+#register
+{
+    width: 75%;
+    display: inline-block;
+}
+#register
+{
+    width: 220px;
+    float: right;
+    text-align: right;
+}
+
+/************************** SQUARE TILES ****************************/
+
+.square_tile
+{
+    position: relative;
+    display: inline-block;
+    width: 180px;
+    height: 180px;
+    margin: 0 10px 30px 10px;
+    padding: 5px;
+
+}
+
+.square_tile .bottom_left
+{
+    display: block;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 80%;
+    padding: 5px;
+}
+
+.wildcard
+{
+    width: 25px;
+    height: 25px;
+    display: inline-block;
+    background-image: url("/images/<%= design['image-buttons']['24px']['wildcard'] %>");
+    background-repeat: no-repeat;
+    margin-bottom: -3px;
+}
+
+/************************** TILES ****************************/
+
+.tile
+{
+    width: 260px;
+    height: 150px;
+    display: inline-block;
+    margin: 0 10px 30px 10px;
+    padding: 5px;
+    position: relative;
+}
+
+.tile:hover .tile.top,
+.tile:hover .tile.right,
+.tile:hover .tile.left
+{
+    -webkit-box-shadow: 0 0 15px rgba(50, 50, 50, 1);
+    -moz-box-shadow:    0 0 15px rgba(50, 50, 50, 1);
+    box-shadow:         0 0 15px rgba(50, 50, 50, 1);
+}
+
+.tile:hover .tile.top,
+.tile:hover .tile.bottom,
+.square_tile:hover
+{
+    top: -2px;
+    left: -2px;
+}
+
+
+.tile.top
+{
+    width: 260px;
+    height: 75px;
+    margin: 0;
+    position: relative;
+    display: block;
+}
+
+.tile.bottom
+{
+    width: 262px;
+    height: 75px;
+    margin: 0;
+    position: relative;
+}
+
+.tile.left
+{
+    width: 122px;
+    height: 75px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    margin: 0;
+}
+
+.tile.right
+{
+    width: 129px;
+    height: 75px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 0;
+}
+
+.square_tile button,
+.tile.top button
+{
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    margin: 5px;
+}
+
+.tile .tile_action
+{
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    font-size: 25px;
+}
+
+.tile.top .tile_action
+{
+    width: 100%;
+    height: 60px;
+    padding: 0;
+    margin: 0;
+    display: block;
+}
+
+.tile .tile_info
+{
+    font-size: 15px;
+}
+
+/************************** TILE CATEGORIES ****************************/
+/**************************  segmented    *****************************/
+
+<% design['tiles'].each do |tile_type, tile_design| %>
+.tile.<%= tile_type %> .tile.top
+{
+    background-color: <%= html2rgb(tile_design['top']['background-color'], design['tile-options']['opacity']) %>;
+    border: 1px solid <%= tile_design['top']['border-color'] %>;
+    background-image: url('<%= tile_design['top']["image-link"] %>');
+    background-repeat: no-repeat;
+    background-position: 98% 90%;
+    color: <%= tile_design['top']['font-color'] %>;
+}
+
+.tile.<%= tile_type %>:hover .tile.top
+{
+    background-color: <%= html2rgb(tile_design['top']['background-color']) %>;
+}
+
+<% tile_design['top']['link'].each do |style, color| %>
+.tile.<%= tile_type %> .tile.top a:<%= style %>
+{
+    color: <%= color %>;
+}
+<% end %>
+
+.tile.<%= tile_type %> .tile.left
+{
+    background-color: <%= html2rgb(tile_design['left']['background-color'], design['tile-options']['opacity']) %>;
+    border: 1px solid <%= tile_design['left']['border-color'] %>;
+    background-image: url('<%= tile_design['left']["image-link"] %>');
+    background-repeat: no-repeat;
+    background-position: 98% 90%;
+    color: <%= tile_design['left']['font-color'] %>;
+    border-right: 0;
+    border-top: 0;
+}
+
+.tile.<%= tile_type %>:hover .tile.left
+{
+    background-color: <%= html2rgb(tile_design['left']['background-color']) %>;
+}
+
+<% tile_design['left']['link'].each do |style, color| %>
+.tile.<%= tile_type %> .tile.left a:<%= style %>
+{
+    color: <%= color %>;
+}
+<% end %>
+
+.tile.<%= tile_type %> .tile.right
+{
+    background-color: <%= html2rgb(tile_design['right']['background-color'], design['tile-options']['opacity']) %>;
+    border: 1px solid <%= tile_design['right']['border-color'] %>;
+    background-image: url('<%= tile_design['right']["image-link"] %>');
+    background-repeat: no-repeat;
+    background-position: 98% 90%;
+    color: <%= tile_design['right']['font-color'] %>;
+    border-top: 0;
+}
+
+.tile.<%= tile_type %>:hover .tile.right
+{
+    background-color: <%= html2rgb(tile_design['right']['background-color']) %>;
+}
+
+<% tile_design['right']['link'].each do |style, color| %>
+.tile.<%= tile_type %> .tile.right a:<%= style %>
+{
+    color: <%= color %>;
+}
+<% end %>
+
+<% end %>
+
+
+
+/****************************  square    *******************************/
+
+<% design['square_tiles'].each do |tile_type, tile_design| %>
+
+.square_tile.<%= tile_type %>
+{
+    top: 0;
+    left: 0;
+    position: absolute;
+    background-color: <%= html2rgb(tile_design['background-color'], design['tile-options']['opacity']) %>;
+    border: 1px solid <%= tile_design['border-color'] %>;
+    background-image: url('<%= tile_design["image-link"] %>');
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+    color: <%= tile_design['font-color'] %>;
+
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+.square_tile.<%= tile_type %>:hover
+{
+    background-color: <%= html2rgb(tile_design['background-color']) %>;
+    -webkit-box-shadow: 0px 0px 15px rgba(50, 50, 50, 1);
+    -moz-box-shadow:    0px 0px 15px rgba(50, 50, 50, 1);
+    box-shadow:         0px 0px 15px rgba(50, 50, 50, 1);
+}
+
+<% tile_design['link'].each do |style, color| %>
+.square_tile.<%= tile_type %> a:<%= style %>
+{
+    color: <%= color %>;
+}
+<% end %>
+
+
+<% end %>
+
+
+    /************************** TAB MENU ****************************/
+
+.tab_menu
+{
+    width: 100%;
+    margin-bottom: 20px;
+    font-size: 0;
+}
+
+.tab_menu .tab_menu_start
+{
+    width: 10px;
+    cursor: default;
+}
+
+.tab_menu .tab_menu_end
+{
+    width: 100%;
+    cursor: default;
+}
+
+.tab_menu>div
+{
+    text-align: left;
+    display: table-cell;
+    color: <%= design['tab_menu']['font-color'] %>;
+    border-bottom: 1px solid <%= design['tab_menu']['border-color'] %>;
+    font-size: 18px;
+    padding: 2px 10px 2px 10px;
+    white-space: nowrap;
+    cursor: pointer;
+}
+
+.tab_menu>div.selected
+{
+    border: 1px solid <%= design['tab_menu']['border-color'] %>;
+    border-bottom: 0;
+    background-color: <%= design['tab_menu']['selected-item-background'] %>;
+    color: <%= design['tab_menu']['selected-item-foreground'] %>;
+}
+
+<% design['link'].each do |style, color| %>
+.tab_menu a:<%= style %>
+{
+    color: <%= color %>;
+}
+<% end %>
+
+
+
+/************************** MODAL FORM ****************************/
+
+.modal
+{
+    position: absolute;
+    top: 130px;
+    left: 50%;
+    z-index: 15;
+    overflow: auto;
+
+    border:2px solid <%= design['modal']['header']['background-color'] %>;
+
+    width: 500px;
+    margin-left: -250px;
+
+    min-height: 150px;
+}
+
+.profiled
+{
+    z-index: 25;
+}
+
+.modal.hide
+{
+    top: 0;
+    opacity: 0;
+}
+
+.modal-background
+{
+    left: 0;
+    top: 0;
+    background: #000;
+    z-index: 10;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    opacity: 0.7;
+}
+
+.modal .modal_header
+{
+    background:<%= design['modal']['header']['background-color'] %>;
+    color:<%= design['modal']['header']['font-color'] %>;
+    padding:10px;
+    margin: 0;
+    font-size: 20px;
+}
+
+<% design['modal']['header']['link'].each do |style, color| %>
+.modal .modal_header a:<%= style %>
+{
+    color: <%= color %>;
+}
+<% end %>
+
+.modal .modal_content
+{
+    color:<%= design['modal']['content']['font-color'] %>;
+    padding:20px;
+    display: block;
+    background-color: <%= design['modal']['content']['background-color'] %>;
+    min-height: 100px;
+    margin-bottom: 40px;
+}
+
+<% design['modal']['content']['link'].each do |style, color| %>
+.modal .modal_content a:<%= style %>
+{
+    color: <%= color %>;
+}
+<% end %>
+
+.modal .modal_footer
+{
+    background-color: <%= design['modal']['footer']['background-color'] %>;
+    color: <%= design['modal']['footer']['font-color'] %>;
+    padding: 5px;
+    margin: 0;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    text-align: right;
+}
+
+<% design['modal']['footer']['link'].each do |style, color| %>
+.modal .modal_footer a:<%= style %>
+{
+    color: <%= color %>;
+}
+<% end %>
+
+<% design['modal']['definitions'].each do |modal, properties| %>
+.modal.<%= modal %>
+{
+    width: <%= properties['width'] %>px;
+    margin-left: -<%= properties['width'] / 2 %>px;
+}
+<% end %>
+
+
+/************************   APP DETAILS  *************************/
+
+.modal.app_details
+{
+    position: fixed;
+}
+.app_details .modal_content div
+{
+    display: block;
+    position: relative;
+    padding: 0;
+    margin: 5px 0 15px 0;
+}
+.app_details .modal_content div:nth-child(1) .app_status
+{
+    font-size: 26px;
+}
+.app_details .modal_content div:nth-child(1) .app_status_buttons
+{
+    float: right;
+    margin-right: 3px;
+}
+.app_details .modal_content div form
+{
+    width: 100%;
+    padding-top: 5px;
+    height: 45px;
+}
+
+.app_details .modal_content div table
+{
+    display: inline-table;
+    width: <%= design['modal']['definitions']['app_details']['width'] / 2 -40 %>px;
+    margin: 0;
+}
+
+.app_details .modal_content div table tr:nth-child(1)
+{
+    font-weight: 900;
+}
+.app_details .modal_content div table tbody
+{
+    display: inline;
+    width: 100%;
+    text-align: left;
+}
+.app_details .modal_content div table .name
+{
+    min-width: 150px;
+}
+.app_details .modal_content div table .url
+{
+    min-width: 200px;
+}
+.app_details .modal_content div table .action
+{
+    text-align: right;
+    min-width: 30px;
+}
+
+
+
+/************************    APP Push    *************************/
+.modal.app_push .modal_content
+{
+    padding: 20px 3px 20px 3px;
+}
+.app_container
+{
+    margin-top: -20px;
+    margin-bottom: -15px;
+    padding-top: 15px;
+    padding-bottom: 15px;
+
+    margin-left: 199px;
+    border-left: 1px solid <%= design['app_push']['list']['margin_color'] %>;
+}
+.app_push.list
+{
+    display: inline-block;
+    float: left;
+    list-style: none;
+    margin: 0 10px 0 0;
+    padding: 0;
+    width: 200px;
+    min-height: 100%;
+}
+.app_push.list li
+{
+    background-color: <%= design['app_push']['list']['li']['background-color'] %>;
+    border-bottom: 1px solid <%= design['app_push']['list']['li']['border-color'] %>;
+    margin: 2px;
+    padding: 3px 20px 3px 5px;
+    cursor: pointer;
+    text-align: center;
+}
+.app_push.list li.selected
+{
+    background-color: <%= design['app_push']['list']['selected_li']['background-color'] %>;
+    border-bottom: 1px solid <%= design['app_push']['list']['selected_li']['border-color'] %>;
+}
+
+.template_app_name
+{
+    font-size: 26px;
+}
+.template_app_description
+{
+    min-height: 60px;
+    max-width: 80%;
+    display: inline-block;
+    padding-bottom: 35px;
+}
+.template_app_logo
+{
+    float: right;
+    margin: 0 17px 0 0;
+    padding: 5px;
+    background-color: <%= design['modal']['footer']['background-color'] %>;
+}
+.query_link
+{
+    display: inline-block;
+    position: relative;
+    cursor: pointer;
+    width: 24px;
+    height: 24px;
+    background-image: url("/images/link.png");
+}
+
+.tags_div
+{
+    display: inline-block;
+    position: relative;
+    margin: 0 0 0 10px;
+    width: 330px;
+}
+.table_div
+{
+    display: inline-block;
+    position: relative;
+    min-width: 45%;
+}
+.table_div input[type=text],
+.table_div select
+{
+    width: 100% !important;
+    height: 38px !important;
+
+    box-sizing:border-box;
+    -ms-box-sizing:border-box;
+    -moz-box-sizing:border-box;
+    -webkit-box-sizing:border-box;
+}
+ /* place the table directly above the close button */
+.buttons_div table
+{
+    margin-right: -12px;
+    margin-bottom: -10px;
+}
+.template_apps .tag_span,
+.template_apps .publisher_span
+{
+    color: <%= design['app_push']['tags']['tag_color'] %>;
+}
+.template_apps .tags
+{
+    color: <%= design['app_push']['tags']['text_color'] %>;
+}
+.create_app_form
+{
+    width: 100%;
+}
+
+    /********************* invite user modal **************************/
+.invite_user.radio_buttons
+{
+    list-style: none;
+}
+.invite_user.input_box
+{
+    list-style: none;
+}
+
+
+/********************* route link tile fix  ***********************/
+.tile_action.route_link
+{
+    display: block;
+    height: 155px;
+}
+
+/************************** CONTROLS ****************************/
+
+input[type=text], input[type=password], select
+{
+    font-size: 18px;
+    padding: 5px;
+    font-family: '<%= design['font-family'] %>';
+    border: 1px solid <%= design['controls']['text']['border-color'] %>;
+    background-color: <%= design['controls']['text']['background-color'] %>;
+    color: <%= design['controls']['text']['font-color'] %>;
+}
+.small_input
+{
+    width: 130px;
+    height: 14px;
+    font-size: 6px;
+    margin: 0;
+    outline: 0;
+    padding: 1px;
+}
+select.small_input
+{
+    width: 100%;
+    height: 22px;
+    font-size: 14px;
+    margin: 0;
+    outline: 0;
+    padding: 1px;
+}
+
+/************************** BREADCRUMBS ****************************/
+
+
+
+
+
+
+.breadcrumbs{
+    /* Clear floats */
+    overflow: visible;
+    padding: 0;
+    float: right;
+    display: block;
+    margin-right: 20px;
+    font-size: 0;
+    margin-top: -5px;
+}
+
+.breadcrumbs li{
+    display: inline;
+    float: left !important;
+    font-size: 14px;
+}
+
+.breadcrumbs a{
+    padding: 5px 16px 5px 32px;
+    float: left;
+    text-decoration: none;
+    color: <%= design['breadcrumb']['font-color'] %>;
+    position: relative;
+    background-color: <%= design['breadcrumb']['background-color'] %>;
+    border: 1px solid <%= design['breadcrumb']['border-color'] %>;
+    border-right: 0;
+}
+
+.breadcrumbs a:hover{
+    border: 1px solid <%= design['breadcrumb']['hover']['border-color'] %>;
+    border-right: 0;
+}
+
+.breadcrumbs li:first-child a{
+    padding-left: 16px;
+}
+
+.breadcrumbs a:hover{
+    background: <%= design['breadcrumb']['hover']['background-color'] %>;
+    color: <%= design['breadcrumb']['hover']['font-color'] %>;
+}
+
+.breadcrumbs a::after,
+.breadcrumbs a::before{
+    content: "";
+    position: absolute;
+    top: 50%;
+    margin-top: -13px;
+    border-top: 13px solid transparent;
+    border-bottom: 13px solid transparent;
+    border-left: 16px solid;
+    right: -15px;
+}
+
+.breadcrumbs a::after{
+    z-index: 2;
+    border-left-color: <%= design['breadcrumb']['background-color'] %>;
+
+}
+
+.breadcrumbs a::before{
+    border-left-color: <%= design['breadcrumb']['border-color'] %>;
+    right: -16px;
+    z-index: 1;
+}
+
+.breadcrumbs a:hover::after{
+    border-left-color: <%= design['breadcrumb']['hover']['background-color'] %>;
+}
+
+.breadcrumbs a:hover::before{
+    border-left-color: <%= design['breadcrumb']['hover']['border-color'] %>;
+}
+
+.breadcrumbs .current,
+.breadcrumbs .current:hover{
+    font-weight: bold;
+    background: none;
+}
+
+.breadcrumbs .current::after,
+.breadcrumbs .current::before{
+    content: normal;
+}
+
+
+/************************** ACCOUNT SETTINGS PAGE ****************************/
+.button_row
+{
+    text-align: right;
+}
+
+
+/************************** FEEDBACK MESSAGES ****************************/
+.feedback
+{
+    margin: 1px;
+    background-color: transparent;
+    border: 0;
+    padding: 2px;
+    display: inline-block;
+}
+
+<% design['feedback'].each do |type, values| %>
+.feedback.<%= type %>
+{
+    color: <%= values['font-color'] %>;
+    border: 1px solid <%= values['border-color'] %>;
+    background-color: <%= values['background-color'] %>;
+    text-align: left;
+    overflow: auto;
+}
+<% end %>
+
+.cloud_feedback
+{
+    height: 300px;
+    overflow-y: scroll;
+}
+
+.feedback_loading
+{
+    float: left;
+}
+#org_spinner
+{
+    float: left;
+    margin: 5px;
+}

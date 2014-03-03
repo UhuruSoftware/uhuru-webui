@@ -1,0 +1,14 @@
+---
+applications:
+- name: javawithmysql
+  memory: 512M
+  instances: 1
+  host: javawithmysql
+  domain: apps.mitza.net
+  path: .
+  services:
+    mysql-e5a34:
+      label: mysql
+      provider: core
+      version: '5.5'
+      plan: free

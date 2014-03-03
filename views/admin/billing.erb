@@ -1,0 +1,36 @@
+<form action="<%= Uhuru::Webui::SinatraRoutes::ADMINISTRATION_BILLING %>" method="post">
+
+  <h2>Billing configurations</h2>
+
+  <h3>Provider</h3>
+  <select name='provider'>
+    <% Uhuru::Webui::Billing::Provider.providers.each do |provider, label| %>
+        <option <%= ($config[:billing][:provider] == provider.to_s) ? 'selected' : '' %> value="<%= provider %>">
+          <%= label %>
+        </option>
+    <% end %>
+
+  </select>
+
+  <br />
+  <br/>
+  <br/>
+
+
+
+  <% $config[:billing][:options].each do |provider, values| %>
+
+      <h2>Detailed settings for '<%= provider %>'</h2>
+      <table>
+      <% values.each do |key, value| %>
+          <tr>
+            <td><h3><%= key %></h3></td>
+            <td><input type="text" id="<%= key %>" name="<%= provider %>:<%= key %>" size="40" value="<%= value %>" /></td>
+          </tr>
+      <% end %>
+      </table>
+  <% end %>
+
+  <input type="submit" value="Save" />
+
+</form>

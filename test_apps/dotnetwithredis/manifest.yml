@@ -1,0 +1,15 @@
+---
+applications:
+- name: dotnetwithredis
+  memory: 256M
+  instances: 1
+  host: dotnetwithredis
+  domain: apps.mitza.net
+  path: .
+  stack: win2012
+  services:
+    dotnetredismonit:
+      label: redis
+      provider: core
+      version: '2.6'
+      plan: free

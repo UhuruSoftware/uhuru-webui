@@ -1,0 +1,45 @@
+<div class="modal-background"> </div>
+
+<div class="modal">
+  <form action="/addUser" method="post">
+      <div class="modal_header">
+        <span>Invite user</span>
+      </div>
+
+      <div class="modal_content">
+        <ul class="invite_user input_box">
+          <li><label for="userEmail">e-mail address</label><input id="user_email" type="text" name="userEmail" autofocus /></li>
+        </ul>
+
+        <ul class="invite_user radio_buttons">
+          <% if defined?(current_space) && current_space != nil %>
+              <li><input type="radio" name="userType" value="owner" id="owner">Owner</li>
+              <li><input type="radio" name="userType" value="developer" id="developer">Developer</li>
+              <li><input type="radio" name="userType" value="auditor" id="auditor" checked>Auditor</li>
+          <% else %>
+              <li><input type="radio" name="userType" value="owner" id="owner">Owner</li>
+              <li><input type="radio" name="userType" value="billing" id="billing">Billing Manager</li>
+              <li><input type="radio" name="userType" value="auditor" id="auditor" checked>Auditor</li>
+          <% end %>
+        </ul>
+        <% unless error_message.nil? || error_message.empty? %>
+            <div class="error"> <%= error_message %> </div>
+        <% end %>
+      </div>
+
+      <div class="modal_footer">
+        <div>
+            <input type="hidden" name="current_organization" value="<%= current_organization %>" />
+            <input type="hidden" name="current_space" value="<%= current_space %>" />
+            <input type="hidden" name="current_tab" value="<%= current_tab %>" />
+            <% if defined?(current_space) && current_space != nil %>
+              <button type="button" onclick="window.location.assign('<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/spaces/#{current_space}/#{current_tab}" %>');">Cancel</button>
+            <% else %>
+                <button type="button" onclick="window.location.assign('<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/members" %>');">Cancel</button>
+            <% end %>
+            <button type="submit">Invite User</button>
+        </div>
+      </div>
+  </form>
+</div>
+

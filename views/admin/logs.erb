@@ -1,0 +1,23 @@
+    <table class="report_table">
+      <tr >
+        <td>#</td>
+        <td>Time</td>
+        <td>Log Level</td>
+        <td>Message</td>
+      </tr>
+      <% i = original_size %>
+      <% logs.each do |log| %>
+          <tr>
+            <td ><%= i %></td>
+            <td ><%= Time.at(log["timestamp"]) %></td>
+            <td ><%= log['log_level'] %></td>
+            <td >
+              <textarea class="normal">
+                <%= log["message"] %>
+              </textarea>
+            </td>
+          </tr>
+
+          <% i = i - 1 %>
+      <% end%>
+    </table>

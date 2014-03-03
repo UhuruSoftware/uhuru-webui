@@ -1,0 +1,441 @@
+<ul class="breadcrumbs">
+  <li>
+    <a href="<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS %>">organizations</a>
+  </li>
+  <li>
+    <a href="<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/spaces" %>"><%= organization_name %></a>
+  </li>
+  <li>
+    <a href="<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/spaces/#{current_space}/apps" %>"><%= space_name %></a>
+  </li>
+</ul>
+
+
+<div class="sections" id="space_page">
+
+<div class="manage_content_header">
+  <div class="section_title">
+    <p id="space_name">Space <%= space_name %></p>
+  </div>
+  <div class="icons_options">
+    <% if current_tab == "apps" %>
+        <button onclick="window.location.assign('<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/spaces/#{current_space}/#{current_tab}/create_app/new" %>');" class="image s32px plus" />
+    <% end %>
+
+    <% if current_tab == "services" %>
+        <button onclick="window.location.assign('<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/spaces/#{current_space}/#{current_tab}/create_service/new" %>');" class="image s32px plus" />
+    <% end %>
+
+    <% if current_tab == "members" %>
+        <button onclick="window.location.assign('<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/spaces/#{current_space}/#{current_tab}/add_user/new" %>');" class="image s32px plus" />
+    <% end %>
+
+    <% if current_tab == "routes" %>
+        <button onclick="window.location.assign('<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/spaces/#{current_space}/#{current_tab}/add_route/new" %>');" class="image s32px plus" />
+    <% end %>
+
+    <% if current_tab == "domains" %>
+        <button onclick="window.location.assign('<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/spaces/#{current_space}/#{current_tab}/map_domain/new" %>');" class="image s32px plus" />
+    <% end %>
+
+    <button class="image s32px edit" onclick="show_modal($('#edit_current_space_modal'), false);" />
+    <button class="image s32px trash" onclick="show_modal($('#delete_current_space_modal'));" />
+  </div>
+</div>
+
+<div class="tab_menu">
+
+  <div class="tab_menu_start">&nbsp;</div>
+  <% if current_tab == "apps" %>
+      <div class="selected">Apps</div>
+  <% else %>
+      <div onclick="window.location.assign('<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/spaces/#{current_space}/apps" %>');">Apps</div>
+  <% end %>
+
+
+  <% if current_tab == "services" %>
+      <div class="selected">Services</div>
+  <% else %>
+      <div onclick="window.location.assign('<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/spaces/#{current_space}/services" %>');">Services</div>
+  <% end %>
+
+
+  <% if current_tab == "members" %>
+      <div class="selected">Members</div>
+  <% else %>
+      <div onclick="window.location.assign('<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/spaces/#{current_space}/members" %>');">Members</div>
+  <% end %>
+
+
+  <% if current_tab == "routes" %>
+      <div class="selected">Routes</div>
+  <% else %>
+      <div onclick="window.location.assign('<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/spaces/#{current_space}/routes" %>');">Routes</div>
+  <% end %>
+
+
+  <% if current_tab == "domains" %>
+      <div class="selected">Domains</div>
+  <% else %>
+      <div onclick="window.location.assign('<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/spaces/#{current_space}/domains" %>');">Domains</div>
+  <% end %>
+  <div class="tab_menu_end">&nbsp;</div>
+</div>
+
+<% if defined?(current_tab) && current_tab != nil && current_tab == "apps" %>
+    <% apps_list.each do |app| %>
+        <%
+           app_uri = '#'
+           if app.uris.first
+             app_uri = "http://#{app.uris.first.host}.#{app.uris[0].domain}"
+           end
+        %>
+
+        <div class="tile app">
+          <div class="tile top">
+            <div class="tile_action">
+              <a title="Click to update the app's settings" class="tile_action show_this_app_details" href="<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/spaces/#{current_space}/apps/#{app.name}" %>" id="<%= app.name %>">
+                <span class="app_name" id="<%= app.name %>" title="<%= app.name %>"><%= app.name %></span>
+                <span class="app_state" id="<%= app.state %>"></span>
+                <span class="app_instances" id="<%= app.instances %>"></span>
+                <span class="app_memory" id="<%= app.memory %>"></span>
+              </a>
+            </div>
+
+            <button type="button" id="id_<%= app.guid %>" title="Delete '<%= app.name %>'" class="image s24px trash" />
+          </div>
+
+          <div class="tile bottom">
+            <div class="tile left">
+              <span><%= app.stack.name %></span>
+              <span>instances: <%= app.instances %></span>
+              <span>mem: <%= app.memory %> MB</span>
+            </div>
+
+            <% if app_uri != "#" %>
+                <a target="_blank" title="Click to open in browser" href="<%= app_uri %>">
+            <% else %>
+                <a title="Click to open in browser" href="<%= app_uri %>">
+            <% end %>
+
+                <div class="tile right">
+                  <div>
+                    <%= app.uris.size %> route(s)
+                  </div>
+                  <br/>
+                  <span class="app_status" id="<%= app.guid %>">
+                    <%= app.state %>
+                    <img src="/images/small_loader.gif" />
+                  </span>
+                </div>
+            </a>
+          </div>
+
+          <% if params[:app_name] == app.name %>
+              <%= erb(:'user_pages/modals/app_details', :layout => false, :locals => { :current_organization => current_organization, :current_space => current_space, :organization_name => organization_name, :collections => defined?(collections) ? collections : nil, :current_tab => current_tab, :app => app, :services_list => defined?(services_list) ? services_list : nil, :domains_list => defined?(domains_list) ? domains_list : nil, :error_message => error_message }) %>
+          <% end %>
+        </div>
+
+
+        <div class="modal delete_confirmation app hide">
+          <div class="modal_header">
+            <span class="selected_name"></span>
+          </div>
+          <div class="modal_content">
+            <p>
+              Are you sure you want to delete this app?
+            </p>
+            <p class="warning">
+              WARNING! This app will be permanently removed from the cloud.
+            </p>
+          </div>
+          <div class="modal_footer">
+            <div>
+              <form action="/deleteApp" method="post">
+                <button type="button" class="cancel_button">Cancel</button>
+                <button type="submit" value="Delete" >Delete</button>
+                <!-- the element selected_guid in this case is the app name -->
+                <input type="hidden" name="appGuid" class="selected_guid" />
+                <input type="hidden" name="current_organization" value="<%= current_organization %>" />
+                <input type="hidden" name="current_space" value="<%= current_space %>" />
+                <input type="hidden" name="current_tab" value="<%= current_tab %>" />
+              </form>
+            </div>
+          </div>
+        </div>
+    <% end %>
+<% end %>
+
+
+<% if defined?(current_tab) && current_tab != nil && current_tab == "services" %>
+
+    <% services_list.each do |service| %>
+        <div class="tile service">
+          <div class= "tile top">
+            <a class="tile_action" href="#" title="<%= service.name %>">
+              <%= service.name %>
+            </a>
+            <button type="button" class="image s24px trash" id="<%= service.guid %>" title="Delete '<%= service.name %>'" />
+          </div>
+
+          <div class="tile bottom">
+            <div class="tile left">
+              <span><%= service.type %></span>
+            </div>
+            <div class="tile right">
+              <span>Plan: <%= service.plan %></span><br />
+              <span>Cost: <%= service.type %></span>
+            </div>
+          </div>
+        </div>
+    <% end %>
+
+
+    <div class="modal delete_confirmation service hide" id="delete_service">
+      <div class="modal_header">
+        <span class="selected_name"></span>
+      </div>
+      <div class="modal_content">
+        <p>
+          Are you sure you want to delete this service?
+        </p>
+        <p class="warning">
+          WARNING! This service will be permanently removed from the cloud.
+        </p>
+      </div>
+      <div class="modal_footer">
+        <div>
+          <form action="/deleteService" method="post">
+            <button type="button" class="cancel_button">Cancel</button>
+            <button type="submit" value="Delete">Delete</button>
+            <input type="hidden" class="selected_guid" name="serviceGuid" />
+            <input type="hidden" name="current_organization" value="<%= current_organization %>" />
+            <input type="hidden" name="current_space" value="<%= current_space %>" />
+            <input type="hidden" name="current_tab" value="<%= current_tab %>" />
+          </form>
+        </div>
+      </div>
+    </div>
+<% end %>
+
+
+<% if defined?(current_tab) && current_tab != nil && current_tab == "members" %>
+    <% owners_list.each do |owner| %>
+        <div class="square_tile">
+          <div class="square_tile owner" title="<%= owner.email %>">
+            <span><%= owner.email %></span>
+            <span class="bottom_left">Owner</span>
+            <% if owners_list.count > 1 %>
+                <button type="button" class="image s24px trash" id="<%= owner.guid %>" title="<%= owner.email %>" onclick="deleteUserModal(this, 'owner');" />
+            <% end %>
+            <span class="span_bg_icon"></span>
+          </div>
+        </div>
+    <% end %>
+
+    <% developers_list.each do |dev| %>
+        <div class="square_tile">
+          <div class="square_tile developer" title="<%= dev.email %>">
+            <span><%= dev.email %></span>
+            <span class="bottom_left">Developer</span>
+            <button type="button" class="image s24px trash" id="<%= dev.guid %>" title="<%= dev.email %>" onclick="deleteUserModal(this, 'developer');" />
+
+            <span class="span_bg_icon"></span>
+          </div>
+        </div>
+    <% end %>
+
+    <% auditors_list.each do |auditor| %>
+        <div class="square_tile">
+          <div class="square_tile auditor" title="<%= auditor.email %>">
+            <span><%= auditor.email  %></span>
+            <span class="bottom_left">Auditor</span>
+            <button type="button" class="image s24px trash" id="<%= auditor.guid %>" title="<%= auditor.email %>" onclick="deleteUserModal(this, 'auditor');" />
+
+            <span class="span_bg_icon"></span>
+          </div>
+        </div>
+    <% end %>
+
+    <div class="modal delete_confirmation user hide">
+      <div class="modal_header">
+        <span class="selected_name"></span>
+      </div>
+      <div class="modal_content">
+        <p>
+          Are you sure you want to delete this user?
+        </p>
+        <p class="warning">
+          WARNING! This user will be removed from your space.
+        </p>
+      </div>
+      <div class="modal_footer">
+        <div>
+          <form action="/deleteUser" method="post">
+            <button type="button" class="cancel_button">Cancel</button>
+            <button type="submit" value="Delete">Delete</button>
+            <input type="hidden" class="selected_guid" value="" name="thisUser"/>
+            <input type="hidden" id="additional_data" value="" name="thisUserRole"/>
+            <input type="hidden" name="current_organization" value="<%= current_organization %>" />
+            <input type="hidden" name="current_space" value="<%= current_space %>" />
+            <input type="hidden" name="current_tab" value="<%= current_tab %>" />
+          </form>
+        </div>
+      </div>
+    </div>
+<% end %>
+
+
+<% if defined?(current_tab) && current_tab != nil && current_tab == "routes" %>
+
+    <% routes_list.each do |route| %>
+
+
+          <div class="square_tile">
+                <div class="square_tile route">
+                  <a target="_blank" href="http://<%= route.name %>" class="tile_action route_link" title="<%= route.name %>">
+                    <%= route.name %>
+                  </a>
+
+                  <span class="bottom_left">Route</span>
+                  <button type="button" class="image s24px trash" id="<%= route.guid %>" title="<%= route.name %>"></button>
+                </div>
+          </div>
+    <% end %>
+
+    <div class="modal delete_confirmation route hide">
+      <div class="modal_header">
+        <span class="selected_name"></span>
+      </div>
+      <form action="/deleteRoute" method="post">
+        <div class="modal_content">
+          <p>
+            Are you sure you want to delete this route?
+          </p>
+          <p class="warning">
+            WARNING! This route will be removed from your space.
+          </p>
+        </div>
+        <div class="modal_footer">
+          <div>
+            <button type="button" class="cancel_button">Cancel</button>
+            <button type="submit" value="Delete">Delete</button>
+            <input type="hidden" class="selected_guid" name="routeGuid" />
+            <input type="hidden" name="current_organization" value="<%= current_organization %>" />
+            <input type="hidden" name="current_space" value="<%= current_space %>" />
+            <input type="hidden" name="current_tab" value="<%= current_tab %>" />
+          </div>
+        </div>
+      </form>
+    </div>
+<% end %>
+
+
+<% if defined?(current_tab) && current_tab != nil && current_tab == "domains" %>
+
+    <% domains_list.each do |domain| %>
+            <div class="square_tile">
+              <div class="square_tile domain" title="<%= domain.name %>">
+                <span><%= domain.wildcard ? '*.' : '' %><%= domain.name %></span>
+                <span class="bottom_left">
+                  <%= domain.wildcard ? 'Wildcard' : '' %>
+                </span>
+                <button type="button" class="image s24px trash" id="<%= domain.guid %>" title="Un-map '<%= domain.name %>'" />
+              </div>
+            </div>
+    <% end %>
+
+    <div class="modal delete_confirmation domain hide">
+      <div class="modal_header">
+        <span class="selected_name"></span>
+      </div>
+      <div class="modal_content">
+        <p>
+          Are you sure you want to un-map?
+        </p>
+        <p class="warning">
+          WARNING! This domain will be un-mapped from the current space.
+        </p>
+      </div>
+      <div class="modal_footer">
+        <div>
+          <form action="/unmapFromSpace" method="post">
+            <button type="button" class="cancel_button">Cancel</button>
+            <button type="submit" value="Delete">Un-map</button>
+            <input type="hidden" class="selected_guid" name="domainGuid" />
+            <input type="hidden" name="current_organization" value="<%= current_organization %>" />
+            <input type="hidden" name="current_space" value="<%= current_space %>" />
+            <input type="hidden" name="current_tab" value="space" />
+          </form>
+        </div>
+      </div>
+    </div>
+<% end %>
+</div>
+
+
+<div class="modal space hide" id="delete_current_space_modal">
+  <div class="modal_header">
+    <span>Delete '<%= space_name %>'</span>
+  </div>
+  <div class="modal_content">
+    <p>
+      Are you sure you want to delete this space?
+    </p>
+    <p class="warning">
+      WARNING!  This space will be completely removed with all its contents!
+      <br />
+      This action can't be reversed.
+    </p>
+  </div>
+  <div class="modal_footer">
+    <div>
+      <form action="/deleteSpace" method="post">
+        <button type="button" class="cancel_button">Cancel</button>
+        <button type="submit" value="Delete">Delete</button>
+        <input type="hidden" name="spaceGuid" value="<%= current_space %>" />
+        <input type="hidden" name="org_guid" value="<%= current_organization %>" />
+      </form>
+    </div>
+  </div>
+</div>
+
+<div class="modal organization hide" id="edit_current_space_modal">
+  <form action="/updateSpace" method="post">
+    <div class="modal_header">
+      <span><%= space_name %></span>
+    </div>
+    <div class="modal_content">
+      new name <input type="text" value="<%= space_name %>" name="modified_name"/>
+    </div>
+    <div class="modal_footer">
+      <div>
+        <button type="button" class="cancel_button">Cancel</button>
+        <button type="submit" value="Update">Update</button>
+        <input type="hidden" name="current_organization" value="<%= current_organization %>" />
+        <input type="hidden" name="current_space" value="<%= current_space %>" />
+        <input type="hidden" name="current_tab" value="<%= current_tab %>" />
+      </div>
+    </div>
+  </form>
+</div>
+
+<% if defined?(include_erb) && include_erb != nil %>
+    <%= erb(include_erb, :layout => false, :locals =>
+            {
+                    :current_organization => current_organization,
+                    :current_space => current_space,
+                    :organization_name => organization_name,
+                    :collections => defined?(apps) ? apps : nil,
+                    :current_tab => current_tab,
+                    :error_message => error_message,
+                    :services_list => defined?(services_list) ? services_list : nil,
+                    :domains_list => defined?(domains_list) ? domains_list : nil,
+                    :domains_list_org => defined?(domains_list_org) ? domains_list_org : nil,
+                    :domains_list_space => defined?(domains_list_space) ? domains_list_space : nil,
+                    :feedback_id => defined?(feedback_id) ? feedback_id : nil,
+                    :modal_title => defined?(modal_title) ? modal_title : nil
+            })
+    %>
+<% end %>
+

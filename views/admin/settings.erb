@@ -1,0 +1,21 @@
+<form action="<%= Uhuru::Webui::SinatraRoutes::ADMINISTRATION_SETTINGS %>" enctype="multipart/form-data"  method="post">
+  <h2>Export Settings</h2>
+  <input name="btn_export"
+         type="submit"
+         value="Export"/>
+  <br>
+  <h2>Import Settings</h2>
+
+  <input type="file"
+         name="file_input"
+         id="file_upload_field"/>
+  <br>
+  <input name="btn_import"
+         type="submit"
+         value="Import"
+  />
+
+  <br>
+  <label><%= message %></label>
+
+</form>

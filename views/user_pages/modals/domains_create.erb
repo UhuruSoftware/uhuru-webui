@@ -1,0 +1,38 @@
+<div class="modal-background"> </div>
+
+<div class="modal">
+  <div class="modal_header">
+    <span>New domain</span>
+  </div>
+
+  <form action="/createDomain" method="post">
+    <div class="modal_content">
+      <table>
+        <tr>
+          <td><label for="domainName">domain name</label></td>
+          <td><input type="text" name="domainName" autofocus /></td>
+        </tr>
+        <tr>
+          <td><label>is wildcard</label></td>
+          <td>
+            <input class="checkbox" type="checkbox" class="modal_input_box" name="domain_wildcard" id="domain_wildcard"/>
+            <label for="domain_wildcard" class="checkbox"></label>
+          </td>
+        </tr>
+      </table>
+
+      <input type="hidden" name="org_guid" value="<%= current_organization %>" />
+      <% unless error_message.nil? || error_message.empty? %>
+          <div class="error"> <%= error_message %> </div>
+      <% end %>
+    </div>
+
+    <div class="modal_footer">
+      <div>
+        <button type="button" onclick="window.location.assign('<%= Uhuru::Webui::SinatraRoutes::ORGANIZATIONS + "/#{current_organization}/domains" %>');">Cancel</button>
+        <input type="hidden" name="org_guid" value="<%= current_organization %>" />
+        <button type="submit" >Create</button>
+      </div>
+    </div>
+  </form>
+</div>

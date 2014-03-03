@@ -1,0 +1,20 @@
+<% $reports[:reports].each do |name, report| %>
+
+    <a href="<%= Uhuru::Webui::SinatraRoutes::ADMINISTRATION_REPORTS %>/view/<%= name %>"><%= report[:label] %></a>
+    <br/>
+<% end %>
+
+<br/>
+<br/>
+
+<form action="<%= Uhuru::Webui::SinatraRoutes::ADMINISTRATION_REPORTS %>" method="POST">
+
+<h3>Run a custom query</h3>
+<br/>
+<textarea name="query" class="normal">
+  SELECT * FROM USERS
+</textarea>
+
+       <br/>
+  <button type="submit">Execute query</button>
+</form>

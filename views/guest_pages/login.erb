@@ -1,0 +1,29 @@
+<%= erb(:'guest_pages/index', :layout => false, :locals => {:page_title => page_title, :welcome_message => welcome_message}) %>
+
+<div id="modal_login" class="modal login hide">
+  <form action="/login" method="post">
+
+    <div class="modal_header">
+        Login
+    </div>
+
+    <div class="modal_content">
+        <div>Username</div><input type="text" name="username" value = "<%= error_username %>" autofocus="autofocus"/>
+        <br />
+        <div>Password</div><input type="password" name="password" />
+      <% unless error_message.nil? || error_message.empty? %>
+          <div class="error"><%= error_message %></div>
+      <% end %>
+    </div>
+
+    <div class="modal_footer">
+
+        <div>
+          <a href="<%= Uhuru::Webui::SinatraRoutes::FORGOT_PASSWORD %>">Forgot password?</a>
+            <button type="button" class="cancel_button" onclick="window.location.assign('<%= Uhuru::Webui::SinatraRoutes::INDEX %>');">Cancel</button>
+            <button type="submit">Login</button>
+        </div>
+    </div>
+
+  </form>
+</div>

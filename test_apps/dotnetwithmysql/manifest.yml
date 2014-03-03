@@ -1,0 +1,15 @@
+---
+applications:
+- name: dotnetwithmysql-monit-30f27
+  memory: 256M
+  instances: 1
+  host: dotnetwithmysql-monit-30f27
+  domain: apps.cf.me
+  path: .
+  stack: win2012
+  services:
+    dotnetmysqlmonit:
+      label: mysql
+      provider: core
+      version: '5.5'
+      plan: free
