@@ -66,7 +66,9 @@ module Library
           existing_org_domains = org.domains
 
           # if domain exist will check that the  org and domain exists, if not will add it
-          if (!existing_org_domains.include?(domain))
+          if (domain.owning_organization != org)
+            raise CFoundry::DomainInvalid, "Domain already exists"
+          elsif (!existing_org_domains.include?(domain))
             existing_org_domains << domain
             org.domains = existing_org_domains
 
