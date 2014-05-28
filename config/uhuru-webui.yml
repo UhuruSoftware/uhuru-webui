@@ -94,7 +94,7 @@ monitoring:
     dotNet: https://github.com/stefanschneider/dummy-buildpack.git
     java: https://github.com/ramnivas/cloudfoundry-buildpack-java
     nodejs: https://github.com/cloudfoundry/heroku-buildpack-nodejs
-    php: https://github.com/heroku/heroku-buildpack-php
+    php: https://github.com/dmikusa-pivotal/cf-php-build-pack.git
     ruby: https://github.com/cloudfoundry/heroku-buildpack-ruby
 
 template_apps_dir: /tmp/template_apps

@@ -1,7 +1,7 @@
 ---
 applications:
 - name: php_info
-  buildpack: https://github.com/heroku/heroku-buildpack-php
+  buildpack: https://github.com/dmikusa-pivotal/cf-php-build-pack.git
   memory: 128M
   instances: 1
   host: php_info
