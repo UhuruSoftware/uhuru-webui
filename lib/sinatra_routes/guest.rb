@@ -125,7 +125,11 @@ module Uhuru::Webui
           begin
             user_sign_up = UsersSetup.new($config)
             user = user_sign_up.signup(params[:email], $config[:webui][:activation_link_secret], params[:first_name], params[:last_name])
+          rescue CF::UAA::TargetError
+            return switch_to_get SIGNUP + "?message=#This username is already taken!&username=#{params[:email]}&first_name=#{params[:first_name]}&last_name=#{params[:last_name]}"
+          end
 
+          if user != nil
             link = "http://#{request.env['HTTP_HOST'].to_s}/activate/#{URI.encode(Base32.encode(pass))}/#{URI.encode(Base32.encode(user.guid))}/#{params[:email]}"
 
             email_body = $config[:email][:registration_email]
@@ -134,16 +138,19 @@ module Uhuru::Webui
             email_body.gsub!('#LAST_NAME#', params[:last_name])
             email_body.gsub!('#WEBSITE_URL#', "http://#{$config[:domain]}")
 
-            Email::send_email(params[:email], 'Uhuru account confirmation', email_body)
-
-            email_body.gsub!(link, '#ACTIVATION_LINK#')
-            email_body.gsub!( params[:first_name], '#FIRST_NAME#')
-            email_body.gsub!(params[:last_name], '#LAST_NAME#')
-            email_body.gsub!( "http://#{$config[:domain]}", '#WEBSITE_URL#')
-
-            redirect PLEASE_CONFIRM
-          rescue CF::UAA::TargetError
-            return switch_to_get SIGNUP + "?message=#This username is already taken!&username=#{params[:email]}&first_name=#{params[:first_name]}&last_name=#{params[:last_name]}"
+            begin
+              Email::send_email(params[:email], 'Uhuru account confirmation', email_body)
+              redirect PLEASE_CONFIRM
+            rescue Exception => ex
+              UsersSetup.new($config).delete_user(user.guid)
+              $logger.error("#{ex.message}:#{ex.backtrace}")
+              return switch_to_get SIGNUP + "?message=#Internal server error! Please contact the system administrator.&username=#{params[:email]}&first_name=#{params[:first_name]}&last_name=#{params[:last_name]}"
+            ensure
+              email_body.gsub!(link, '#ACTIVATION_LINK#')
+              email_body.gsub!( params[:first_name], '#FIRST_NAME#')
+              email_body.gsub!(params[:last_name], '#LAST_NAME#')
+              email_body.gsub!( "http://#{$config[:domain]}", '#WEBSITE_URL#')
+            end
           end
         end
 
@@ -183,11 +190,15 @@ module Uhuru::Webui
           email_body.gsub!('#LAST_NAME#', user_detail["name"]["familyname"])
           email_body.gsub!('#WEBSITE_URL#', "http://#{$config[:domain]}")
 
-          Email::send_email(params[:email], 'Uhuru account confirmation', email_body)
-
-          email_body.gsub!( user_detail["name"]["givenname"], '#FIRST_NAME#')
-          email_body.gsub!(user_detail["name"]["familyname"], '#LAST_NAME#')
-          email_body.gsub!("http://#{$config[:domain]}", '#WEBSITE_URL#')
+          begin
+            Email::send_email(params[:email], 'Uhuru account confirmation', email_body)
+          rescue Exception => ex
+            $logger.error("#{ex.message}:#{ex.backtrace}")
+          ensure
+            email_body.gsub!( user_detail["name"]["givenname"], '#FIRST_NAME#')
+            email_body.gsub!(user_detail["name"]["familyname"], '#LAST_NAME#')
+            email_body.gsub!("http://#{$config[:domain]}", '#WEBSITE_URL#')
+          end
 
           switch_to_get ACTIVE
         end
@@ -214,6 +225,7 @@ module Uhuru::Webui
                   :locals => {
                       :page_title => $config[:webui][:page_title],
                       :welcome_message => $config[:webui][:welcome_message],
+                      :error_message => nil
                   }
               }
         end
@@ -227,18 +239,49 @@ module Uhuru::Webui
           random_password = (0..7).map { (65 + rand(26)).chr }.join
           user_id = UsersSetup.new($config).uaa_get_user_by_name(params[:email])
 
-          link = "http://#{request.env['HTTP_HOST'].to_s}/reset_old_password/#{URI.encode(Base32.encode(user_id))}/#{URI.encode(Base32.encode(random_password))}"
-          email_body = $config[:email][:password_recovery_email]
-          email_body.gsub!('#FIRST_NAME#', params[:email])
-          email_body.gsub!('#ACTIVATION_LINK#', link)
-          email_body.gsub!('#PASSWORD#', random_password)
+          if user_id != nil
+            link = "http://#{request.env['HTTP_HOST'].to_s}/reset_old_password/#{URI.encode(Base32.encode(user_id))}/#{URI.encode(Base32.encode(random_password))}"
+            email_body = $config[:email][:password_recovery_email]
+            email_body.gsub!('#FIRST_NAME#', params[:email])
+            email_body.gsub!('#ACTIVATION_LINK#', link)
+            email_body.gsub!('#PASSWORD#', random_password)
 
-          Email::send_email(params[:email], 'Uhuru password recovery', email_body)
+            begin
+              Email::send_email(params[:email], 'Uhuru password recovery', email_body)
+              redirect PLEASE_CONFIRM
+            rescue Exception => ex
+              $logger.error("#{ex.message}:#{ex.backtrace}")
+              error_message = "Internal server error! Please contact the system administrator."
 
-          email_body.gsub!(params[:email], '#FIRST_NAME#')
-          email_body.gsub!(link, '#ACTIVATION_LINK#')
-          email_body.gsub!(random_password, '#PASSWORD#')
-          redirect PLEASE_CONFIRM
+              erb :'guest_pages/forgot_password',
+                  {
+                      :layout => :'layouts/guest',
+                      :locals => {
+                          :page_title => $config[:webui][:page_title],
+                          :welcome_message => $config[:webui][:welcome_message],
+                          :error_message => error_message
+                      }
+                  }
+            ensure
+              email_body.gsub!(params[:email], '#FIRST_NAME#')
+              email_body.gsub!(link, '#ACTIVATION_LINK#')
+              email_body.gsub!(random_password, '#PASSWORD#')
+            end
+
+          else
+            error_message = "The username you have entered does not exist."
+            $logger.error(error_message)
+
+            erb :'guest_pages/forgot_password',
+                {
+                    :layout => :'layouts/guest',
+                    :locals => {
+                        :page_title => $config[:webui][:page_title],
+                        :welcome_message => $config[:webui][:welcome_message],
+                        :error_message => error_message
+                    }
+                }
+          end
         end
 
         # apply the random password to the user, at this point the user has a generated random password that he can use
