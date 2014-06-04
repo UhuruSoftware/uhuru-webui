@@ -132,24 +132,19 @@ module Uhuru::Webui
           if user != nil
             link = "http://#{request.env['HTTP_HOST'].to_s}/activate/#{URI.encode(Base32.encode(pass))}/#{URI.encode(Base32.encode(user.guid))}/#{params[:email]}"
 
-            email_body = $config[:email][:registration_email]
-            email_body.gsub!('#ACTIVATION_LINK#', link)
-            email_body.gsub!('#FIRST_NAME#', params[:first_name])
-            email_body.gsub!('#LAST_NAME#', params[:last_name])
-            email_body.gsub!('#WEBSITE_URL#', "http://#{$config[:domain]}")
+            email_message = $config[:email][:registration_email].to_s.dup
+            email_message.gsub!('#ACTIVATION_LINK#', link)
+            email_message.gsub!('#FIRST_NAME#', params[:first_name])
+            email_message.gsub!('#LAST_NAME#', params[:last_name])
+            email_message.gsub!('#WEBSITE_URL#', "http://#{$config[:domain]}")
 
             begin
-              Email::send_email(params[:email], 'Uhuru account confirmation', email_body)
+              Email::send_email(params[:email], 'Uhuru account confirmation', email_message)
               redirect PLEASE_CONFIRM
             rescue Exception => ex
               UsersSetup.new($config).delete_user(user.guid)
               $logger.error("#{ex.message}:#{ex.backtrace}")
               return switch_to_get SIGNUP + "?message=#Internal server error! Please contact the system administrator.&username=#{params[:email]}&first_name=#{params[:first_name]}&last_name=#{params[:last_name]}"
-            ensure
-              email_body.gsub!(link, '#ACTIVATION_LINK#')
-              email_body.gsub!( params[:first_name], '#FIRST_NAME#')
-              email_body.gsub!(params[:last_name], '#LAST_NAME#')
-              email_body.gsub!( "http://#{$config[:domain]}", '#WEBSITE_URL#')
             end
           end
         end
@@ -183,21 +178,17 @@ module Uhuru::Webui
           user = UsersSetup.new($config)
           user.change_password(user_guid_b32, password, $config[:webui][:signup_user_password])
           user_detail = user.get_details(user_guid_b32)
-          email_body = $config[:email][:welcome_email]
 
           # Send another email to the user to welcome him
-          email_body.gsub!('#FIRST_NAME#', user_detail["name"]["givenname"])
-          email_body.gsub!('#LAST_NAME#', user_detail["name"]["familyname"])
-          email_body.gsub!('#WEBSITE_URL#', "http://#{$config[:domain]}")
+          email_message = $config[:email][:welcome_email].to_s.dup
+          email_message.gsub!('#FIRST_NAME#', user_detail["name"]["givenname"])
+          email_message.gsub!('#LAST_NAME#', user_detail["name"]["familyname"])
+          email_message.gsub!('#WEBSITE_URL#', "http://#{$config[:domain]}")
 
           begin
-            Email::send_email(params[:email], 'Uhuru account confirmation', email_body)
+            Email::send_email(params[:email], 'Uhuru account confirmation', email_message)
           rescue Exception => ex
             $logger.error("#{ex.message}:#{ex.backtrace}")
-          ensure
-            email_body.gsub!( user_detail["name"]["givenname"], '#FIRST_NAME#')
-            email_body.gsub!(user_detail["name"]["familyname"], '#LAST_NAME#')
-            email_body.gsub!("http://#{$config[:domain]}", '#WEBSITE_URL#')
           end
 
           switch_to_get ACTIVE
@@ -241,13 +232,14 @@ module Uhuru::Webui
 
           if user_id != nil
             link = "http://#{request.env['HTTP_HOST'].to_s}/reset_old_password/#{URI.encode(Base32.encode(user_id))}/#{URI.encode(Base32.encode(random_password))}"
-            email_body = $config[:email][:password_recovery_email]
-            email_body.gsub!('#FIRST_NAME#', params[:email])
-            email_body.gsub!('#ACTIVATION_LINK#', link)
-            email_body.gsub!('#PASSWORD#', random_password)
+
+            email_message = $config[:email][:password_recovery_email].to_s.dup
+            email_message.gsub!('#FIRST_NAME#', params[:email])
+            email_message.gsub!('#ACTIVATION_LINK#', link)
+            email_message.gsub!('#PASSWORD#', random_password)
 
             begin
-              Email::send_email(params[:email], 'Uhuru password recovery', email_body)
+              Email::send_email(params[:email], 'Uhuru password recovery', email_message)
               redirect PLEASE_CONFIRM
             rescue Exception => ex
               $logger.error("#{ex.message}:#{ex.backtrace}")
@@ -262,10 +254,6 @@ module Uhuru::Webui
                           :error_message => error_message
                       }
                   }
-            ensure
-              email_body.gsub!(params[:email], '#FIRST_NAME#')
-              email_body.gsub!(link, '#ACTIVATION_LINK#')
-              email_body.gsub!(random_password, '#PASSWORD#')
             end
 
           else
