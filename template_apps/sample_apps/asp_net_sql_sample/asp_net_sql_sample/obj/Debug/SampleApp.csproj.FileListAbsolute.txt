@@ -12,3 +12,11 @@ C:\Users\florin.dragos\Documents\Visual Studio 2012\Projects\SampleApp\SampleApp
 C:\Users\florin.dragos\Documents\Visual Studio 2012\Projects\SampleApp\SampleApp\bin\WebGrease.dll
 C:\Users\florin.dragos\Documents\Visual Studio 2012\Projects\SampleApp\SampleApp\obj\Debug\SampleApp.dll
 C:\Users\florin.dragos\Documents\Visual Studio 2012\Projects\SampleApp\SampleApp\obj\Debug\SampleApp.pdb
+E:\Code\uhuru-webui\template_apps\sample_apps\asp_net_sql_sample\asp_net_sql_sample\bin\SampleApp.dll.config
+E:\Code\uhuru-webui\template_apps\sample_apps\asp_net_sql_sample\asp_net_sql_sample\bin\SampleApp.dll
+E:\Code\uhuru-webui\template_apps\sample_apps\asp_net_sql_sample\asp_net_sql_sample\bin\SampleApp.pdb
+E:\Code\uhuru-webui\template_apps\sample_apps\asp_net_sql_sample\asp_net_sql_sample\bin\Microsoft.Web.Infrastructure.dll
+E:\Code\uhuru-webui\template_apps\sample_apps\asp_net_sql_sample\asp_net_sql_sample\bin\Microsoft.Web.Infrastructure.xml
+E:\Code\uhuru-webui\template_apps\sample_apps\asp_net_sql_sample\asp_net_sql_sample\obj\Debug\SampleApp.dll
+E:\Code\uhuru-webui\template_apps\sample_apps\asp_net_sql_sample\asp_net_sql_sample\obj\Debug\SampleApp.pdb
+E:\Code\uhuru-webui\template_apps\sample_apps\asp_net_sql_sample\asp_net_sql_sample\obj\Debug\SampleApp.csprojResolveAssemblyReference.cache

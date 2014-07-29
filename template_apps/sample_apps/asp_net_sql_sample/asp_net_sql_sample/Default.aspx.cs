@@ -18,8 +18,8 @@ WHERE name = N'{0}' AND type = 'U')
 BEGIN
 CREATE TABLE {0} (
 ID INT IDENTITY PRIMARY KEY, 
-DATE DateTime,
-IP Varchar(50)
+DATE Varchar(MAX),
+IP Varchar(MAX)
 )
 
 END";
